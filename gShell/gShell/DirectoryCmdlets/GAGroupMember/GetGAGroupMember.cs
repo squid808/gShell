@@ -161,7 +161,8 @@ namespace gShell.DirectoryCmdlets.GAGroupMember
 
             returnedList.AddRange(execution.MembersValue);
 
-            while (!string.IsNullOrWhiteSpace(execution.NextPageToken))
+            while (!string.IsNullOrWhiteSpace(execution.NextPageToken) && 
+                execution.NextPageToken != request.PageToken)
             {
                 request.PageToken = execution.NextPageToken;
                 UpdateProgressBar(1, 2,
