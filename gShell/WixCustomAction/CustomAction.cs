@@ -3,7 +3,7 @@ using System.IO;
 using System.Configuration;
 using System.Diagnostics;
 using System.Collections.Generic;
-using System.Linq;
+using System.Xml.Linq;
 using System.Text;
 using Microsoft.Deployment.WindowsInstaller;
 using System.Windows.Forms;
@@ -27,7 +27,6 @@ namespace CustomActions
                 session.Log("Updating machine.config file...");
                 UpdateConfigFile();
 
-
                 session.Log("End gShell Install Custom Action");
                 return ActionResult.Success;
             }
@@ -43,77 +42,163 @@ namespace CustomActions
         /// </summary>
         public static void UpdatePowerShellPath() 
         {
-            //TODO: have it check to see if it exists first and, if it does, check if it has this string in it
+            string current = Environment.GetEnvironmentVariable("PSModulePath", EnvironmentVariableTarget.User);
+            string newPath = @"%USERPROFILE%\Documents\WindowsPowerShell\Modules\";
 
-            Environment.SetEnvironmentVariable("PSModulePath", @"%USERPROFILE%\Documents\WindowsPowerShell\Modules\",
-                EnvironmentVariableTarget.User);
+            if (null == current)
+            {
+                Environment.SetEnvironmentVariable("PSModulePath", newPath,
+                    EnvironmentVariableTarget.User);
+            }
+            else if (!current.Contains(newPath))
+            {
+                Environment.SetEnvironmentVariable("PSModulePath",
+                    current + ";" + newPath,
+                    EnvironmentVariableTarget.User);
+            }
         }
 
         public static void UpdateConfigFile()
         {
             try
             {
-                //TODO: Make sure this doesn't happen on subsequent upgrades and installs, multiple times
-                string file = @"C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Config\Machine.Config";                
+                //string file = @"C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Config\Machine.Config";
 
                 XmlDocument doc = new XmlDocument();
-                doc.Load(file);
-                XmlElement node = doc.SelectSingleNode("/configuration") as XmlElement;
+                doc.Load(System.Runtime.InteropServices.RuntimeEnvironment.SystemConfigurationFile);
+
+                XmlElement configurationNode = doc.SelectSingleNode("/configuration") as XmlElement;
 
                 XmlElement runtimeNode = doc.SelectSingleNode("/configuration/runtime") as XmlElement;
 
                 if (runtimeNode == null)
                 {
-                    runtimeNode = node.AppendChild(doc.CreateElement("runtime")) as XmlElement;
+                    //this may have to be added to the <configSections> if it's not already there - that's another battle i'm sure
+                    runtimeNode = configurationNode.AppendChild(doc.CreateElement("runtime")) as XmlElement;
                 }
 
-                
-                XmlElement bindingNode = runtimeNode.AppendChild(doc.CreateElement("assemblyBinding")) as XmlElement;
-                bindingNode.SetAttribute("xmlns", "urn:schemas-microsoft-com:asm.v1");
+                XmlNamespaceManager nsmgr = new XmlNamespaceManager(doc.NameTable);
+                nsmgr.AddNamespace("bind", "urn:schemas-microsoft-com:asm.v1");
 
-                XmlElement dependent1 = bindingNode.AppendChild(doc.CreateElement("dependentAssembly")) as XmlElement;
-                XmlElement id1 = dependent1.AppendChild(doc.CreateElement("assemblyIdentity")) as XmlElement;
-                id1.SetAttribute("name", "System.Runtime");
-                id1.SetAttribute("publicKeyToken", "b03f5f7f11d50a3a");
-                id1.SetAttribute("culture", "neutral");
-                XmlElement redirect1 = dependent1.AppendChild(doc.CreateElement("bindingRedirect")) as XmlElement;
-                redirect1.SetAttribute("oldVersion", "0.0.0.0-2.5.19.0");
-                redirect1.SetAttribute("newVersion", "2.5.19.0");
+                XmlElement bindingNode;
 
-                XmlElement dependent2 = bindingNode.AppendChild(doc.CreateElement("dependentAssembly")) as XmlElement;
-                XmlElement id2 = dependent2.AppendChild(doc.CreateElement("assemblyIdentity")) as XmlElement;
-                id2.SetAttribute("name", "System.Threading.Tasks");
-                id2.SetAttribute("publicKeyToken", "b03f5f7f11d50a3a");
-                id2.SetAttribute("culture", "neutral");
-                XmlElement redirect2 = dependent2.AppendChild(doc.CreateElement("bindingRedirect")) as XmlElement;
-                redirect2.SetAttribute("oldVersion", "0.0.0.0-2.5.19.0");
-                redirect2.SetAttribute("newVersion", "2.5.19.0");
+                if (null == doc.SelectSingleNode("//bind:assemblyBinding", nsmgr))
+                {
+                    bindingNode = runtimeNode.AppendChild(doc.CreateElement("assemblyBinding", nsmgr.LookupNamespace("bind"))) as XmlElement;
+                    bindingNode.SetAttribute("xmlns", "urn:schemas-microsoft-com:asm.v1");
+                }
+                else
+                {
+                    bindingNode = doc.SelectSingleNode("//bind:assemblyBinding", nsmgr) as XmlElement;
+                }
 
-                XmlElement dependent3 = bindingNode.AppendChild(doc.CreateElement("dependentAssembly")) as XmlElement;
-                XmlElement id3 = dependent3.AppendChild(doc.CreateElement("assemblyIdentity")) as XmlElement;
-                id3.SetAttribute("name", "System.Net.Http");
-                id3.SetAttribute("publicKeyToken", "b03f5f7f11d50a3a");
-                id3.SetAttribute("culture", "neutral");
-                XmlElement redirect3 = dependent3.AppendChild(doc.CreateElement("bindingRedirect")) as XmlElement;
-                redirect3.SetAttribute("oldVersion", "0.0.0.0-2.1.10.0");
-                redirect3.SetAttribute("newVersion", "2.1.10.0");
+                CheckNode(
+                    doc, bindingNode, nsmgr,
+                    "System.Runtime", "b03f5f7f11d50a3a",
+                    "0.0.0.0-2.5.19.0", "2.5.19.0"
+                    );
 
-                XmlElement dependent4 = bindingNode.AppendChild(doc.CreateElement("dependentAssembly")) as XmlElement;
-                XmlElement id4 = dependent4.AppendChild(doc.CreateElement("assemblyIdentity")) as XmlElement;
-                id4.SetAttribute("name", "System.Net.Http.Primitives");
-                id4.SetAttribute("publicKeyToken", "b03f5f7f11d50a3a");
-                id4.SetAttribute("culture", "neutral");
-                XmlElement redirect4 = dependent4.AppendChild(doc.CreateElement("bindingRedirect")) as XmlElement;
-                redirect4.SetAttribute("oldVersion", "0.0.0.0-2.1.10.0");
-                redirect4.SetAttribute("newVersion", "2.1.10.0");
+                CheckNode(
+                    doc, bindingNode, nsmgr,
+                    "System.Threading.Tasks", "b03f5f7f11d50a3a",
+                    "0.0.0.0-2.5.19.0", "2.5.19.0"
+                    );
 
-                doc.Save(file);
+                CheckNode(
+                    doc, bindingNode, nsmgr,
+                    "System.Net.Http", "b03f5f7f11d50a3a",
+                    "0.0.0.0-2.1.10.0", "2.1.10.0"
+                    );
+
+                CheckNode(
+                    doc, bindingNode, nsmgr,
+                    "System.Net.Http.Primitives", "b03f5f7f11d50a3a",
+                    "0.0.0.0-2.1.10.0", "2.1.10.0"
+                    );
+
+                doc.Save(System.Runtime.InteropServices.RuntimeEnvironment.SystemConfigurationFile);
             }
             catch
             {
                 MessageBox.Show("Machine.Config failed to update");
             }
             
+        }
+
+        public static void CheckNode(XmlDocument xmlDoc, XmlElement parentNode, XmlNamespaceManager nsmgr,
+            string assemblyName, string assemblyPublicKeyToken,
+            string bindingRedirectOldVersion, string bindingRedirectNewVersion)
+        {
+            XmlNodeList nodeList = xmlDoc.SelectNodes(
+                    string.Format("//bind:assemblyBinding/bind:dependentAssembly/bind:assemblyIdentity[@name='{0}']", assemblyName),
+                    nsmgr);
+
+            if (0 < nodeList.Count)
+            {
+                foreach (XmlNode node in nodeList)
+                {
+                    bool isMatch = true;
+
+                    //first check that the assembly ID matches
+                    XmlElement assemblyIdentity = node as XmlElement;
+
+                    if (assemblyIdentity.HasAttribute("name")
+                        && assemblyIdentity.GetAttribute("name") == assemblyName
+                        && assemblyIdentity.HasAttribute("publicKeyToken")
+                        && assemblyIdentity.GetAttribute("publicKeyToken") == assemblyPublicKeyToken
+                        && assemblyIdentity.HasAttribute("culture")
+                        && assemblyIdentity.GetAttribute("culture") == "neutral")
+                    {
+
+                        //The assemblyIdentity element exists. Now grab the parent and check the other one
+                        XmlNode parent = node.ParentNode;
+
+                        XmlElement redirect = parent.SelectSingleNode(
+                            string.Format("//bind:bindingRedirect[@oldVersion='{0}']", bindingRedirectOldVersion), nsmgr) as XmlElement;
+
+                        if (!redirect.HasAttribute("oldVersion")
+                        || redirect.GetAttribute("oldVersion") != bindingRedirectOldVersion
+                        || !redirect.HasAttribute("newVersion")
+                        || redirect.GetAttribute("newVersion") != bindingRedirectNewVersion)
+                        {
+                            isMatch = false;
+                        }
+                    }
+                    else
+                    {
+                        isMatch = false;
+                    }
+
+                    if (!isMatch)
+                    {
+                        AddNode(xmlDoc, parentNode, nsmgr,
+                            assemblyName, assemblyPublicKeyToken,
+                            bindingRedirectOldVersion, bindingRedirectNewVersion);
+                    }
+                }
+            }
+            else
+            {
+                AddNode(xmlDoc, parentNode, nsmgr,
+                    assemblyName, assemblyPublicKeyToken,
+                    bindingRedirectOldVersion, bindingRedirectNewVersion);
+            }
+        }
+
+        public static void AddNode(XmlDocument xmlDoc, XmlElement parentNode, XmlNamespaceManager nsmgr,
+            string assemblyName, string assemblyPublicKeyToken,
+            string bindingRedirectOldVersion, string bindingRedirectNewVersion)
+        {
+            //XmlElement dependent = parentNode.AppendChild(xmlDoc.CreateElement("dependentAssembly")) as XmlElement;
+            XmlElement dependent = parentNode.AppendChild(xmlDoc.CreateElement(
+                "dependentAssembly", nsmgr.LookupNamespace("bind"))) as XmlElement;
+            XmlElement id = dependent.AppendChild(xmlDoc.CreateElement("assemblyIdentity", nsmgr.LookupNamespace("bind"))) as XmlElement;
+            id.SetAttribute("name", assemblyName);
+            id.SetAttribute("publicKeyToken", assemblyPublicKeyToken);
+            id.SetAttribute("culture", "neutral");
+            XmlElement redirect = dependent.AppendChild(xmlDoc.CreateElement("bindingRedirect", nsmgr.LookupNamespace("bind"))) as XmlElement;
+            redirect.SetAttribute("oldVersion", bindingRedirectOldVersion);
+            redirect.SetAttribute("newVersion", bindingRedirectNewVersion);
         }
     }
 }

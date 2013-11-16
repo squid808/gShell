@@ -33,32 +33,37 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DotNetOpenAuth, Version=4.0.0.11165, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+    <Reference Include="Google.Apis, Version=1.6.0.16897, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Google.Apis.Authentication.1.5.0-beta\lib\net40\DotNetOpenAuth.dll</HintPath>
+      <HintPath>..\packages\Google.Apis.1.6.0-beta\lib\net40\Google.Apis.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Apis, Version=1.5.0.28972, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Google.Apis.Admin.Directory.directory_v1, Version=1.6.0.18, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Google.Apis.1.5.0-beta\lib\net40\Google.Apis.dll</HintPath>
+      <HintPath>..\packages\Google.Apis.Admin.Directory.directory_v1.1.6.0.18-beta\lib\portable-net4+sl4+wp71+win8\Google.Apis.Admin.Directory.directory_v1.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Apis.Admin.Directory.directory_v1, Version=1.5.0.16, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Google.Apis.Auth, Version=1.6.0.16898, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Google.Apis.Admin.Directory.directory_v1.1.5.0.16-beta\lib\portable-net4+sl4+wp71+win8\Google.Apis.Admin.Directory.directory_v1.dll</HintPath>
+      <HintPath>..\packages\Google.Apis.Auth.1.6.0-beta\lib\net40\Google.Apis.Auth.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Apis.Authentication.OAuth2, Version=1.5.0.28991, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Google.Apis.Auth.PlatformServices, Version=1.6.0.16904, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Google.Apis.Authentication.1.5.0-beta\lib\net40\Google.Apis.Authentication.OAuth2.dll</HintPath>
+      <HintPath>..\packages\Google.Apis.Auth.1.6.0-beta\lib\net40\Google.Apis.Auth.PlatformServices.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Apis.Oauth2.v2">
-      <HintPath>..\packages\Google.Apis.Oauth2.v2.1.5.0.54-beta\lib\portable-net4+sl4+wp71+win8\Google.Apis.Oauth2.v2.dll</HintPath>
-    </Reference>
-    <Reference Include="Google.Apis.PlatformServices, Version=1.5.0.28981, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Google.Apis.Drive.v2, Version=1.6.0.105, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Google.Apis.1.5.0-beta\lib\net40\Google.Apis.PlatformServices.dll</HintPath>
+      <HintPath>..\packages\Google.Apis.Drive.v2.1.6.0.105-beta\lib\portable-net4+sl4+wp71+win8\Google.Apis.Drive.v2.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Oauth2.v2, Version=1.6.0.57, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Google.Apis.Oauth2.v2.1.6.0.57-beta\lib\portable-net4+sl4+wp71+win8\Google.Apis.Oauth2.v2.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.PlatformServices, Version=1.6.0.16900, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Google.Apis.1.6.0-beta\lib\net40\Google.Apis.PlatformServices.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=1.2.12.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\log4net.2.0.1\lib\net40-full\log4net.dll</HintPath>
+      <Private>True</Private>
+      <HintPath>..\packages\log4net.2.0.2\lib\net40-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.PowerShell.Commands.Utility, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -72,12 +77,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.16\lib\net40\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop">
+    <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop, Version=1.0.16.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.16\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -90,13 +96,14 @@
     <Reference Include="System.Net.Http, Version=2.1.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Net.Http.2.1.10\lib\net40\System.Net.Http.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Net.Http.Extensions, Version=2.1.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Net.Http.2.1.10\lib\net40\System.Net.Http.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http.Primitives, Version=2.1.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
       <HintPath>..\packages\Microsoft.Net.Http.2.1.10\lib\net40\System.Net.Http.Primitives.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http.WebRequest, Version=2.1.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -135,19 +142,23 @@
     <Compile Include="DirectoryCmdlets\GAUser\NewGAUser.cs" />
     <Compile Include="DirectoryCmdlets\GAUser\RemoveGAUser.cs" />
     <Compile Include="DirectoryCmdlets\GAUser\RestoreGAUser.cs" />
-    <Compile Include="UtilityCmdlets\DefaultDomain\DefaultDomain.cs" />
-    <Compile Include="UtilityCmdlets\DefaultDomain\GetDefaultDomain.cs" />
-    <Compile Include="UtilityCmdlets\DefaultDomain\SetDefaultDomain.cs" />
+    <Compile Include="DriveCmdlets\DriveBase.cs" />
+    <Compile Include="DriveCmdlets\GADriveItem\GetGADriveItem.cs" />
+    <Compile Include="DriveCmdlets\GADriveItem\GetGADriveItemPermissions.cs" />
+    <Compile Include="OAuth2\MemoryObjectDataStore.cs" />
+    <Compile Include="UtilityCmdlets\SavedDomain\RemoveGASavedDomain.cs" />
+    <Compile Include="UtilityCmdlets\SavedDomain\GetGASavedDomainList.cs" />
+    <Compile Include="UtilityCmdlets\SavedDomain\GetGADefaultDomain.cs" />
+    <Compile Include="UtilityCmdlets\SavedDomain\SetGADefaultDomain.cs" />
     <Compile Include="DirectoryCmdlets\DirectoryBase.cs" />
     <Compile Include="DirectoryCmdlets\GAUser\GetGAUser.cs" />
     <Compile Include="DirectoryCmdlets\GAUser\SetGAUser.cs" />
     <Compile Include="OAuth2\OAuth2CmdletBase.cs" />
     <Compile Include="OAuth2\OAuth2Group.cs" />
     <Compile Include="OAuth2\OAuth2Info.cs" />
-    <Compile Include="OAuth2\OAuth2SetupPackage.cs" />
     <Compile Include="OAuth2\SavedFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\AssemblyInfo.log4net.cs" />
+    <Compile Include="UtilityCmdlets\ServiceAccount\SetGAServiceAccount.cs" />
     <Compile Include="UtilityCmdlets\UtilityBase.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -155,6 +166,12 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\typings\google.visualization\google.visualization.d.ts" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

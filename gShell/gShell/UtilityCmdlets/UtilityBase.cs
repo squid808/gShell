@@ -10,6 +10,8 @@ namespace gShell.UtilityCmdlets
             Authenticate(currentDomain);
         }
 
-        protected override void BuildService() { }
+        protected override string BuildService(string givenDomain) {
+            return null;
+        }
     }
 }

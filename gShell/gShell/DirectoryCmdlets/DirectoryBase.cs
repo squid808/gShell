@@ -2,9 +2,10 @@
 using System.Management.Automation;
 using System.Collections.Generic;
 using gShell.OAuth2;
-using gShell.DirectoryCmdlets.GAUserAlias;
+using Google.Apis.Services;
 using Google.Apis.Admin.Directory.directory_v1;
 using Google.Apis.Admin.Directory.directory_v1.Data;
+using gShell.DirectoryCmdlets.GAUserAlias;
 
 namespace gShell.DirectoryCmdlets
 {
@@ -18,7 +19,7 @@ namespace gShell.DirectoryCmdlets
         [ValidateNotNullOrEmpty]
         public string Domain { get; set; }
 
-        protected static Dictionary<string, DirectoryService> directoryServiceDict;
+        //protected static Dictionary<string, DirectoryService> directoryServiceDict;
         protected static Dictionary<string, List<User>> cachedDomainUsers;
         protected static Dictionary<string, List<Group>> cachedDomainGroups;
         protected static Dictionary<string, List<Alias>> cachedDomainAliases;
@@ -29,10 +30,26 @@ namespace gShell.DirectoryCmdlets
             if (null == directoryServiceDict)
             {
                 directoryServiceDict = new Dictionary<string, DirectoryService>();
-                cachedDomainUsers = new Dictionary<string, List<User>>();
-                cachedDomainGroups = new Dictionary<string, List<Group>>();
-                cachedDomainGroupMembers = new Dictionary<string, Dictionary<string, List<Member>>>();
+            }
+
+            if (null == cachedDomainAliases)
+            {
                 cachedDomainAliases = new Dictionary<string, List<Alias>>();
+            }
+
+            if (null == cachedDomainGroupMembers)
+            {
+                cachedDomainGroupMembers = new Dictionary<string, Dictionary<string, List<Member>>>();
+            }
+
+            if (null == cachedDomainGroups)
+            {
+                cachedDomainGroups = new Dictionary<string, List<Group>>();
+            }
+
+            if (null == cachedDomainUsers)
+            {
+                cachedDomainUsers = new Dictionary<string, List<User>>();
             }
         }
 
@@ -41,30 +58,28 @@ namespace gShell.DirectoryCmdlets
             Domain = Authenticate(Domain);
         }
 
-        protected override void BuildService()
+        protected override string BuildService(string givenDomain)
         {
-            if (!directoryServiceDict.ContainsKey(currentDomain))
+            if (string.IsNullOrWhiteSpace(givenDomain) ||
+                !directoryServiceDict.ContainsKey(givenDomain))
             {
-                OAuth2SetupPackage package = packageDict[currentDomain];
-                DirectoryService service = new DirectoryService(package.initializer);
+                DirectoryService service = BuildDirectoryService(givenDomain);
+
+                if (currentDomain == "gmail.com")
+                {
+                    ThrowTerminatingError(new ErrorRecord(new Exception("This cmdlet is not available for a gmail account."),
+                        "", ErrorCategory.InvalidData, currentDomain));
+                }
+
+                //current domain should be set at this point 
                 directoryServiceDict.Add(currentDomain, service);
-            }
-        }
 
-        /// <summary>
-        /// If the given username doesn't contain an @ assume it doesn't contain a domain and add it in.
-        /// </summary>
-        /// <param name="_userName"></param>
-        /// <param name="_domain"></param>
-        /// <returns></returns>
-        protected string GetFullEmailAddress(string _userName, string _domain)
-        {
-            if (!_userName.Contains("@"))
+                return currentDomain;
+            }
+            else
             {
-                _userName += "@" + _domain;
+                return givenDomain;
             }
-
-            return _userName;
         }
     }
 }

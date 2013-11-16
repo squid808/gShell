@@ -2,7 +2,7 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
      xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
   <Product Id="*" Name="gShell PoSh Cmdlets Installer"
-           Language="1033" Version="0.0.1.0" Manufacturer="Spencer Varney"
+           Language="1033" Version="0.0.2.0" Manufacturer="Spencer Varney"
            UpgradeCode="16053A29-5B09-4630-B7B2-ADA5366DA766">
     <Package Id="*" InstallerVersion="200" Compressed="yes" InstallScope="perMachine" InstallPrivileges="elevated" />
 
@@ -17,14 +17,14 @@
 
     <!--Do major updates if anything. Minor updates may not fire properly.-->
     <Upgrade Id="16025265-05DE-4BBD-89C6-AE89F0B7F88D">
-      <!--<UpgradeVersion OnlyDetect='no' Property='SELFFOUND'
+      <UpgradeVersion OnlyDetect='no' Property='SELFFOUND'
         Minimum='0.0.1.0' IncludeMinimum='yes'
-        Maximum='0.0.2.0' IncludeMaximum='no' />-->
+        Maximum='0.0.2.0' IncludeMaximum='no' />
       <UpgradeVersion OnlyDetect='yes' Property='NEWERFOUND'
-        Minimum='0.0.1.0' IncludeMinimum='no' />
+        Minimum='0.0.2.0' IncludeMinimum='no' />
     </Upgrade>
 
-    <CustomAction Id='AlreadyUpdated' Error='[ProductName] has already been updated to 0.0.1.0 or newer.' />
+    <CustomAction Id='AlreadyUpdated' Error='[ProductName] has already been updated to 0.0.2.0 or newer.' />
     <CustomAction Id='NoDowngrade' Error='A later version of [ProductName] is already installed.' />
 
     <InstallExecuteSequence>
@@ -97,7 +97,7 @@
 
       <Component Id="log4net.dll" Guid="B7F4E072-1DE8-4A66-8CC9-A036BE395BE1">
         <File Id="log4net.dll" Name="log4net.dll" DiskId="1"
-              Source="$(var.SolutionDir)packages\log4net.2.0.1\lib\net40-full\log4net.dll"
+              Source="$(var.SolutionDir)packages\log4net.2.0.2\lib\net40-full\log4net.dll"
               KeyPath="yes" Assembly=".net" />
         <RemoveFile Name="log4net.dll" Id="log4net.dll" On="uninstall" />
       </Component>
@@ -123,23 +123,41 @@
               Source="$(var.gShell.TargetDir)/Google.Apis.Admin.Directory.directory_v1.dll" />
         <RemoveFile Name="Google.Apis.Admin.Directory.directory_v1.dll" Id="Google.Apis.Admin.Directory.directory_v1.dll" On="uninstall" />
 
-        <File Id="DotNetOpenAuth.dll"
+        <!--<File Id="DotNetOpenAuth.dll"
               Name="DotNetOpenAuth.dll"
               DiskId="1"
               Source="$(var.gShell.TargetDir)/DotNetOpenAuth.dll" />
-        <RemoveFile Name="DotNetOpenAuth.dll" Id="DotNetOpenAuth.dll" On="uninstall" />
+        <RemoveFile Name="DotNetOpenAuth.dll" Id="DotNetOpenAuth.dll" On="uninstall" />-->
 
-        <File Id="Google.Apis.Authentication.OAuth2.dll"
+        <!--<File Id="Google.Apis.Authentication.OAuth2.dll"
               Name="Google.Apis.Authentication.OAuth2.dll"
               DiskId="1"
               Source="$(var.gShell.TargetDir)/Google.Apis.Authentication.OAuth2.dll" />
-        <RemoveFile Name="Google.Apis.Authentication.OAuth2.dll" Id="Google.Apis.Authentication.OAuth2.dll" On="uninstall" />
+        <RemoveFile Name="Google.Apis.Authentication.OAuth2.dll" Id="Google.Apis.Authentication.OAuth2.dll" On="uninstall" />-->
+
+        <File Id="Google.Apis.Auth.dll"
+              Name="Google.Apis.Auth.dll"
+              DiskId="1"
+              Source="$(var.gShell.TargetDir)/Google.Apis.Auth.dll" />
+        <RemoveFile Name="Google.Apis.Auth.dll" Id="Google.Apis.Auth.dll" On="uninstall" />
+
+        <File Id="Google.Apis.Auth.PlatformServices.dll"
+              Name="Google.Apis.Auth.PlatformServices.dll"
+              DiskId="1"
+              Source="$(var.gShell.TargetDir)/Google.Apis.Auth.PlatformServices.dll" />
+        <RemoveFile Name="Google.Apis.Auth.PlatformServices.dll" Id="Google.Apis.Auth.PlatformServices.dll" On="uninstall" />
 
         <File Id="Google.Apis.dll"
               Name="Google.Apis.dll"
               DiskId="1"
               Source="$(var.gShell.TargetDir)/Google.Apis.dll" />
         <RemoveFile Name="Google.Apis.dll" Id="Google.Apis.dll" On="uninstall" />
+
+        <File Id="Google.Apis.Drive.v2.dll"
+              Name="Google.Apis.Drive.v2.dll"
+              DiskId="1"
+              Source="$(var.gShell.TargetDir)Google.Apis.Drive.v2.dll" />
+        <RemoveFile Name="Google.Apis.Drive.v2.dll" Id="Google.Apis.Drive.v2.dll" On="uninstall" />
 
         <File Id="Google.Apis.Oauth2.v2.dll"
               Name="Google.Apis.Oauth2.v2.dll"

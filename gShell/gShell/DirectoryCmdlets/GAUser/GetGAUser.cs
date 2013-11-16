@@ -56,19 +56,19 @@ namespace gShell.DirectoryCmdlets.GAUser
             }
         }
 
-        private CustomGAUserObject GetOneCustomUser()
+        private GShellUserObject GetOneCustomUser()
         {
-            return (new CustomGAUserObject(GetOneUser(UserName)));
+            return (new GShellUserObject(GetOneUser(UserName)));
         }
 
-        private List<CustomGAUserObject> GetAllCustomUsers()
+        private List<GShellUserObject> GetAllCustomUsers()
         {
-            return (CustomGAUserObject.ConvertList(GetAllUsers()));
+            return (GShellUserObject.ConvertList(GetAllUsers()));
         }
 
-        private List<CustomGAUserObject> GetAllCustomCachedUsers()
+        private List<GShellUserObject> GetAllCustomCachedUsers()
         {
-            return (CustomGAUserObject.ConvertList(RetrieveCachedUsers(ForceCacheReload)));
+            return (GShellUserObject.ConvertList(RetrieveCachedUsers(ForceCacheReload)));
         }
     }
 
@@ -148,7 +148,7 @@ namespace gShell.DirectoryCmdlets.GAUser
     /// <summary>
     /// A custom class to more easily expose common attribtues for viewing
     /// </summary>
-    public class CustomGAUserObject
+    public class GShellUserObject
     {
         public string GivenName;
         public string FamilyName;
@@ -160,7 +160,7 @@ namespace gShell.DirectoryCmdlets.GAUser
 
         public User userObject;
 
-        public CustomGAUserObject(User userObj)
+        public GShellUserObject(User userObj)
         {
             Aliases = new List<string>();
 
@@ -169,10 +169,7 @@ namespace gShell.DirectoryCmdlets.GAUser
             PrimaryEmail = userObj.PrimaryEmail;
             if (null != userObj.Aliases)
             {
-                foreach (string alias in userObj.Aliases)
-                {
-                    Aliases.Add(alias);
-                }
+                Aliases.AddRange(userObj.Aliases);
             }
             if (userObj.Suspended.HasValue)
             {
@@ -184,12 +181,13 @@ namespace gShell.DirectoryCmdlets.GAUser
             userObject = userObj;
         }
 
-        public static List<CustomGAUserObject> ConvertList(List<User> userList) {
-            List<CustomGAUserObject> customList = new List<CustomGAUserObject>();
+        //TODO make this inherit from a superclass with a generic function
+        public static List<GShellUserObject> ConvertList(List<User> userList) {
+            List<GShellUserObject> customList = new List<GShellUserObject>();
 
             foreach (User user in userList)
             {
-                customList.Add(new CustomGAUserObject(user));
+                customList.Add(new GShellUserObject(user));
             }
 
             return (customList);

@@ -1,11 +1,11 @@
 ﻿using System.Management.Automation;
 using gShell.OAuth2;
 
-namespace gShell.UtilityCmdlets.DefaultDomain
+namespace gShell.UtilityCmdlets.SavedDomain
 {
     [Cmdlet(VerbsCommon.Set, "GADefaultDomain",
         SupportsShouldProcess = true)]
-    public class SetDefaultDomainCommand : DefaultDomainObject
+    public class SetGADefaultDomainCommand : UtilityBase
     {
         #region Parameters
 
@@ -25,7 +25,7 @@ namespace gShell.UtilityCmdlets.DefaultDomain
 
         private void SetDefaultDomain()
         {
-            if (SavedFile.ContainsDomain(Domain))
+            if (SavedFile.ContainsUserOrDomain(Domain))
             {
                 SavedFile.SetDefaultDomain(Domain);
                 currentDomain = Domain;

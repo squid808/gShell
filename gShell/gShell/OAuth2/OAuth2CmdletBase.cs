@@ -3,11 +3,18 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Management.Automation;
+using System.Security.Cryptography.X509Certificates;
+using System.Threading;
+using System.Threading.Tasks;
+
 using Google.Apis.Admin.Directory.directory_v1;
+using Google.Apis.Drive.v2;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Json;
 using Google.Apis.Util;
 using Google.Apis.Oauth2.v2;
-using DotNetOpenAuth.OAuth2;
-using Google.Apis.Authentication.OAuth2.DotNetOpenAuth;
+using Google.Apis.Oauth2.v2.Data;
+using Google.Apis.Services;
 
 namespace gShell.OAuth2
 {
@@ -18,53 +25,71 @@ namespace gShell.OAuth2
     public abstract class OAuth2CmdletBase : PSCmdlet
     {
         #region Properties
-        protected string[] scopes = {
-            DirectoryService.Scopes.AdminDirectoryUser.GetStringValue(),
-            DirectoryService.Scopes.AdminDirectoryUserAlias.GetStringValue(),
-            DirectoryService.Scopes.AdminDirectoryUserAlias.GetStringValue(),
-            DirectoryService.Scopes.AdminDirectoryOrgunit.GetStringValue(),
-            DirectoryService.Scopes.AdminDirectoryGroup.GetStringValue(),
-            DirectoryService.Scopes.AdminDirectoryGroupMember.GetStringValue(),
-            Oauth2Service.Scopes.UserinfoEmail.GetStringValue()
-                                  };
+        protected const string appName = "gShellCmdlets";
+        protected static ClientSecrets clientSecrets = new ClientSecrets
+        {
+            ClientId = "431325913325.apps.googleusercontent.com",
+            ClientSecret = "VtfqKqUJsY0yNh0hwreAB-S0"
+        };
 
-        protected static Dictionary<string, IAuthorizationState> AuthStatesDict;
+        //SCOPES
+        protected static string[] directoryScopes = {
+            DirectoryService.Scope.AdminDirectoryUser,
+            DirectoryService.Scope.AdminDirectoryUserAlias,
+            DirectoryService.Scope.AdminDirectoryUserAlias,
+            DirectoryService.Scope.AdminDirectoryOrgunit,
+            DirectoryService.Scope.AdminDirectoryGroup,
+            DirectoryService.Scope.AdminDirectoryGroupMember,
+            DriveService.Scope.Drive,
+            DriveService.Scope.DriveFile,
+            DriveService.Scope.DriveAppdata,
+            DriveService.Scope.DriveScripts,
+            Oauth2Service.Scope.UserinfoEmail
+        };
+
+        protected static string[] serviceAccountScope = {
+            DriveService.Scope.Drive
+        };
+
         protected static string defaultDomain;
         protected static string currentDomain;
-
-        protected static Dictionary<string, OAuth2SetupPackage> packageDict;
+        protected static Userinfo currentUserInfo;
+        protected static UserCredential currentUserCredentials; //the most recent user returned by get user
+        protected static ServiceAccountCredential.Initializer serviceAcctInitializer;
 
         protected static ProgressRecord progressBar;
+
+        protected static Dictionary<string, Userinfo> userInfoDict; //a collection of credentials by domain or email address
+        protected static Dictionary<string, UserCredential> userCredentialsDict; //a collection of credentials by domain or email address
+        protected static Dictionary<string, DirectoryService> directoryServiceDict; //a collection of directory services by domain
+        protected static Dictionary<string, Dictionary<string,DriveService>> driveServiceDict; //a collection of drive services by email address
+
+        private static Clock clock = new Clock();
         #endregion
 
         #region Constructors
         public OAuth2CmdletBase()
         {
-            AuthStatesDict = new Dictionary<string, IAuthorizationState>();
-            packageDict = new Dictionary<string, OAuth2SetupPackage>();
+            if (null == userCredentialsDict)
+            {
+                userCredentialsDict = new Dictionary<string, UserCredential>();
+            }
+
+            if (null == userInfoDict)
+            {
+                userInfoDict = new Dictionary<string, Userinfo>();
+            }
+            
+            //AuthStatesDict = new Dictionary<string, IAuthorizationState>();
+            //packageDict = new Dictionary<string, OAuth2SetupPackage>();
         }
         #endregion
 
         #region AuthenticationAndProcessing
         /// <summary>
-        /// Called each time a new cmdlet is fired.
-        /// </summary>
-        /// <param name="domain"></param>
-        /// <returns></returns>
-        protected string Authenticate(string domain)
-        {
-            domain = ManageDomainAndAuthStates(domain);
-            currentDomain = domain;
-
-            BuildService();
-
-            return domain;
-        }
-
-        /// <summary>
         /// A method specific to each inherited object, called during authentication. Must be implemented.
         /// </summary>
-        protected abstract void BuildService();
+        protected abstract string BuildService(string givenDomain);
 
         /// <summary>
         /// A powershell specific method, called before the cmdlet is run. Must be implemented. 
@@ -72,133 +97,189 @@ namespace gShell.OAuth2
         protected override abstract void BeginProcessing();
 
         /// <summary>
-        /// Makes sure an Auth State is set for a domain.
+        /// Called each time a new cmdlet is fired.
         /// </summary>
-        /// <param name="domain">The domain to use. If unsupplied use default.</param>
-        /// <returns>The domain being used.</returns>
-        protected string ManageDomainAndAuthStates(string domain = null)
+        protected string Authenticate(string domain)
         {
+            //if no domain is provided, check for a current domain in memory
             if (string.IsNullOrWhiteSpace(domain))
             {
-                if (string.IsNullOrWhiteSpace(defaultDomain))
+                if (!string.IsNullOrWhiteSpace(defaultDomain))
                 {
-                    string _domain = string.Empty;
-
+                    //if the current domain exists in memory, set domain to this
+                    domain = defaultDomain;
+                    currentDomain = defaultDomain;
+                }
+                else
+                {
+                    //if no current domain exists in memory, check the file for a current domain
                     if (SavedFile.ContainsDefaultDomain())
                     {
-                        _domain = SavedFile.GetDefaultDomain();
-                        LoadAndSetState(_domain);
+                        //if the file contains a default domain, use this and set it to the current domain
+                        domain = SavedFile.GetDefaultDomain();
+                        defaultDomain = domain;
+                        currentDomain = domain;
                     }
                     else
                     {
-                        _domain = AuthenticateAndSetState();
+                        //no default domains were provided. set all to blanks.
+                        defaultDomain = string.Empty;
+                        currentDomain = string.Empty;
                     }
-
-                    defaultDomain = _domain;
-                    return _domain;
-
                 }
-                else
+            }
+
+            currentDomain = BuildService(domain);
+            return currentDomain;
+        }
+
+        /// <summary>
+        /// Get the Current User's email address.
+        /// </summary>
+        protected string DetermineUserEmail(string userAccount, string domain)
+        {
+            if (string.IsNullOrWhiteSpace(userAccount))
+            {
+                if (null == currentUserInfo || domain != currentUserInfo.Hd)
                 {
-                    return LoadAndSetState(defaultDomain);
+                    GetCurrentUserInfo(ReturnUserCredential(domain));
                 }
+
+                return currentUserInfo.Email;
             }
             else
             {
-                if (AuthStatesDict.ContainsKey(domain))
-                {
-                    return domain;
-                }
-                else if (SavedFile.ContainsDomain(domain))
-                {
-                    return LoadAndSetState(domain);
-                }
-                else
-                {
-                    return AuthenticateAndSetState();
-                }
+                return GetFullEmailAddress(userAccount, domain);
             }
         }
 
         /// <summary>
-        /// Loads the AuthState either from memory or from the file. Also sets up the package.
+        /// Process the user email and domain to store and return user credentials.
         /// </summary>
-        /// <param name="_domain"></param>
-        /// <returns></returns>
-        private string LoadAndSetState(string _domain)
+        private UserCredential HandleUserCredentials(string domain, string userEmail = "")
         {
-            OAuth2SetupPackage package = OAuth2SetupPackage.CreatePackage();
-            package.domain = _domain;
-            package.authState = SavedFile.LoadAuthState(_domain);
-
-            if (!AuthStatesDict.ContainsKey(_domain))
+            if (string.IsNullOrWhiteSpace(userEmail))
             {
-                AuthStatesDict.Add(_domain, package.authState);
+                OAuth2CmdletBase.AwaitUserCredential(domain).Wait();
             }
             else
             {
-                AuthStatesDict[_domain] = package.authState;
+                OAuth2CmdletBase.AwaitUserCredential(userEmail).Wait();
             }
 
-            if (DateTime.Compare((DateTime)package.authState.AccessTokenExpirationUtc, DateTime.UtcNow) <= 0)
-            {
-                package.provider.RefreshToken(package.authState);
-            }
+            GetCurrentUserInfo(currentUserCredentials);
+            string _domain = currentUserInfo.Hd;
 
-            if (!packageDict.ContainsKey(_domain))
+            if (null == currentUserInfo.Hd)
             {
-                packageDict.Add(_domain, package);
+                //a gmail address was returned
+                _domain = "gmail.com";
+
+                userCredentialsDict[currentUserInfo.Email] = currentUserCredentials;
+                userInfoDict[currentUserInfo.Email] = currentUserInfo;
             }
             else
             {
-                packageDict[_domain] = package;
+                //a gmail address was not returned, so save it as the domain instead.
+                userCredentialsDict[currentUserInfo.Hd] = currentUserCredentials;
+                userInfoDict[currentUserInfo.Hd] = currentUserInfo;
             }
 
-            return _domain;
+            currentDomain = _domain;
+
+            SavedFile.SaveToken(currentUserInfo, MemoryObjectDataStore.tokenTemp);
+
+            if (!SavedFile.ContainsDefaultDomain())
+            {
+                SavedFile.SetDefaultDomain(currentDomain);
+            }
+
+            if (string.IsNullOrWhiteSpace(defaultDomain))
+            {
+                defaultDomain = SavedFile.GetDefaultDomain();
+            }
+
+            return currentUserCredentials;
         }
 
         /// <summary>
-        /// Loads an AuthState from the web. Also sets up the package.
+        /// Wrapper to call and store the authentication procedure.
         /// </summary>
-        /// <returns></returns>
-        private string AuthenticateAndSetState()
+        protected UserCredential ReturnUserCredential(string domain, string user="")
         {
-            OAuth2SetupPackage package = OAuth2SetupPackage.CreatePackage();
+            if ("gmail.com" == domain) {
+                if (!string.IsNullOrWhiteSpace(user)) {
+                    string userEmail = GetFullEmailAddress(user, domain);
 
-            package.authState = new AuthorizationState(scopes);
-            package.authState.Callback = new Uri(NativeApplicationClient.OutOfBandCallbackUrl);
-            Uri authUri = package.provider.RequestUserAuthorization(package.authState);
+                    if (userCredentialsDict.ContainsKey(userEmail)) {
+                        currentUserCredentials = userCredentialsDict[userEmail];
+                        currentUserInfo = userInfoDict[userEmail];
+                        currentDomain = domain;
+                        return currentUserCredentials;
+                    } else {
+                        return HandleUserCredentials(domain, userEmail);
+                    }
+                } else if (string.IsNullOrWhiteSpace(user)) {
+                    //check for a default
+                    if (SavedFile.ContainsDomainDefaultUser(domain)) {
+                        //load the default user
+                        string userEmail = SavedFile.GetDomainDefaultUser(domain);
+                        return HandleUserCredentials(domain, userEmail);
+                    } else {
+                        //treat this as the first user for the gmail domain
+                        return HandleUserCredentials(domain);
+                    }
+                }
+            }
 
-            Process.Start(authUri.ToString());
-            string authCode;
-            do
+            //the domain is not gmail, and is either null or something else
+            domain = (string.IsNullOrWhiteSpace(domain)) ? "temp" : domain;
+
+            if (userCredentialsDict.ContainsKey(domain))
             {
-                Collection<PSObject> results = this.InvokeCommand.InvokeScript("Read-Host -Prompt 'Enter Access Code'");
-                authCode = results[0].ToString();
-                authCode.Trim();
-            } while (authCode == null || authCode == string.Empty);
-
-            package.provider.ProcessUserAuthorization(authCode, package.authState);
-
-            Oauth2Service oService = new Oauth2Service(package.initializer);
-            string _domain = oService.Userinfo.Get().Execute().Hd;
-
-            package.domain = _domain;
-
-            if (!packageDict.ContainsKey(_domain))
-            {
-                packageDict.Add(_domain, package);
+                currentUserCredentials = userCredentialsDict[domain];
+                currentUserInfo = userInfoDict[domain];
+                currentDomain = domain;
+                return currentUserCredentials;
             }
             else
             {
-                packageDict[_domain] = package;
+                return HandleUserCredentials(domain);
             }
+        }
 
-            SavedFile.SaveAuthState(_domain, package.authState);
+        /// <summary>
+        /// Authenticates against the web and stores the result in the credential dictionary.
+        /// </summary>
+        private static async Task AwaitUserCredential(string key) 
+        {
+            //only run this if necessary (if currentUserCredentials are not set) - otherwise leave it be;
+            if (null == currentUserCredentials ||
+                !userCredentialsDict.ContainsKey(key) ||
+                currentUserCredentials.Token.IsExpired(clock))
+            {
+                currentUserCredentials = await GoogleWebAuthorizationBroker.AuthorizeAsync(
+                    clientSecrets,
+                    directoryScopes,
+                    key,
+                    CancellationToken.None,
+                    new MemoryObjectDataStore()
+                    );
+            }
+        }
 
-            AuthStatesDict.Add(_domain, package.authState);
+        /// <summary>
+        /// Create a directory service for the provided domain.
+        /// </summary>
+        protected DirectoryService BuildDirectoryService(string givenDomain)
+        {
+            DirectoryService service = new DirectoryService(new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = ReturnUserCredential(givenDomain),
+                ApplicationName = appName,
+            });
 
-            return _domain;
+            return service;
         }
         #endregion
 
@@ -252,8 +333,74 @@ namespace gShell.OAuth2
         }
         #endregion
 
+        #region HelperMethods
+        /// <summary>
+        /// If the given username doesn't contain an @ assume it doesn't contain a domain and add it in.
+        /// </summary>
+        /// <param name="_userName"></param>
+        /// <param name="_domain"></param>
+        /// <returns></returns>
+        protected string GetFullEmailAddress(string _userName, string _domain)
+        {
+            if (!_userName.Contains("@"))
+            {
+                _userName += "@" + _domain;
+            }
+
+            return _userName;
+        }
+
+        public static string GetDomainFromEmail(string userEmail)
+        {
+            return userEmail.Split('@')[1];
+        }
+
+        public static string GetUserFromEmail(string userEmail)
+        {
+            return userEmail.Split('@')[0];
+        }
+
+        /// <summary>
+        /// Returns the domain of the user authenticted to the current domain.
+        /// Useful to double check the domain name after authenticating.
+        /// </summary>
+        /// <returns></returns>
+        public void GetCurrentUserInfo(UserCredential userCredentials)
+        {
+            Oauth2Service oService = new Oauth2Service(new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = userCredentials,
+                ApplicationName = appName,
+            });
+
+            currentUserInfo = oService.Userinfo.Get().Execute();
+        }
+        #endregion
+
         #region Errors
 
         #endregion
+    }
+
+    /// <summary>
+    /// Class required to check the expiration of a token. A bit silly if you ask me.
+    /// </summary>
+    public sealed class Clock : IClock 
+    {
+        public DateTime Now
+        {
+            get
+            {
+                return DateTime.Now;
+            }
+        }
+
+        public DateTime UtcNow
+        {
+            get
+            {
+                return DateTime.UtcNow;
+            }
+        }
     }
 }
