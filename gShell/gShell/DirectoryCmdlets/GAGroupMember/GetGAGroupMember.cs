@@ -121,6 +121,7 @@ namespace gShell.DirectoryCmdlets.GAGroupMember
             return roles;
         }
 
+        //TODO: Combine this to remove ambiguity
         private List<Member> GetMemberList(string groupName)
         {
             if (Cache)
@@ -142,7 +143,15 @@ namespace gShell.DirectoryCmdlets.GAGroupMember
         {
             MembersResource.ListRequest request = directoryServiceDict[Domain].Members.List(groupName);
 
-            request.MaxResults = 200;
+            if (0 != MaxResults && 200 > MaxResults)
+            {
+                request.MaxResults = MaxResults;
+            }
+            else
+            {
+                request.MaxResults = 200;
+            }
+
             request.Roles = DetermineRoles();
 
             StartProgressBar(string.Format("Gathering members for group {0}",
@@ -161,8 +170,9 @@ namespace gShell.DirectoryCmdlets.GAGroupMember
 
             returnedList.AddRange(execution.MembersValue);
 
-            while (!string.IsNullOrWhiteSpace(execution.NextPageToken) && 
-                execution.NextPageToken != request.PageToken)
+            while (!string.IsNullOrWhiteSpace(execution.NextPageToken) &&
+                execution.NextPageToken != request.PageToken &&
+                (0 == MaxResults || returnedList.Count < MaxResults))
             {
                 request.PageToken = execution.NextPageToken;
                 UpdateProgressBar(1, 2,
@@ -227,11 +237,15 @@ namespace gShell.DirectoryCmdlets.GAGroupMember
         /// <summary>
         /// Gets a list of all members from all groups. Calls for cached list of all groups.
         /// </summary>
-        private GAMultiDomainMembersList GetAllGroupsAndMembers()
+        private GAMultiGroupMembersList GetAllGroupsAndMembers()
         {
             List<Group> allGroups = RetrieveCachedGroups(ForceCacheReload);
 
-            GAMultiDomainMembersList multiList = new GAMultiDomainMembersList();
+            GAMultiGroupMembersList multiList = new GAMultiGroupMembersList();
+
+            ////START CUSTOM
+            //WriteWarning(MaxResults.ToString());
+            ////END CUSTOM
 
             foreach (Group group in allGroups)
             {
@@ -246,30 +260,38 @@ namespace gShell.DirectoryCmdlets.GAGroupMember
                     members = GetOneMemberList(group.Email);
                 }
                 multiList.Add(group.Email, members);
+
+                if (multiList.GetMemberCount() >= MaxResults) { break; }
             }
 
             return (multiList);
         }
     }
 
-
-    public class GAMultiDomainMembersList
+    /// <summary>
+    /// A collection of members sorted by group.
+    /// </summary>
+    public class GAMultiGroupMembersList
     {
-        //private Dictionary<string,List<Member>> MembersByGroup;
         public List<GACustomMembersList> membersByGroup;
         private Dictionary<string, int> groupIndex;
+        //public int MemberCount
+        //{
+        //    get { return _count; }
+        //}
+        //private int _count;
 
-        public GAMultiDomainMembersList () {
-            //MembersByGroup = new Dictionary<string, List<Member>>();
+        public GAMultiGroupMembersList () {
             membersByGroup = new List<GACustomMembersList>();
             groupIndex = new Dictionary<string, int>();
         }
 
         public void Add(string groupName, List<Member> membersList)
         {
-            //MembersByGroup[groupName] = membersList;
-            membersByGroup.Add(new GACustomMembersList(groupName, membersList));
+            GACustomMembersList temp = new GACustomMembersList(groupName, membersList);
+            membersByGroup.Add(temp);
             groupIndex[groupName] = membersByGroup.Count - 1;
+            //_count += temp.MembersList.Count;
         }
 
         public List<Member> GetGroupMembers(string groupName)
@@ -295,6 +317,18 @@ namespace gShell.DirectoryCmdlets.GAGroupMember
             }
 
             return singleList;
+        }
+
+        public int GetMemberCount()
+        {
+            int count = 0;
+
+            foreach (GACustomMembersList list in membersByGroup)
+            {
+                count += list.MembersList.Count;
+            }
+
+            return count;
         }
     }
 
@@ -322,6 +356,9 @@ namespace gShell.DirectoryCmdlets.GAGroupMember
         }
     }
 
+    /// <summary>
+    /// Extends the base Member class to include the group it came from.
+    /// </summary>
     public class GACustomMembersListEntry : Member
     {
         public string Group;

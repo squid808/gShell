@@ -62,6 +62,12 @@ namespace gShell.DirectoryCmdlets.GAGroup
 
     public class GetGAGroupBase : DirectoryBase
     {
+        [Parameter()]
+        public int MaxResults { get; set; }
+
+        [Parameter(ParameterSetName = "AllGroups")]
+        public SwitchParameter MultiDomain { get; set; }
+
         protected List<Group> RetrieveCachedGroups(bool forcedReload=false)
         {
             List<Group> groupList = new List<Group>();
@@ -95,9 +101,23 @@ namespace gShell.DirectoryCmdlets.GAGroup
 
             GroupsResource.ListRequest request = directoryServiceDict[Domain].Groups.List();
 
-            request.Domain = Domain;
+            if (MultiDomain)
+            {
+                request.Customer = currentUserInfo.Id;
+            }
+            else
+            {
+                request.Domain = Domain;
+            }
 
-            request.MaxResults = 500;
+            if (0 != MaxResults && 200 > MaxResults)
+            {
+                request.MaxResults = MaxResults;
+            }
+            else
+            {
+                request.MaxResults = 200;
+            }
 
             StartProgressBar("Gathering groups", string.Empty);
 
@@ -112,7 +132,9 @@ namespace gShell.DirectoryCmdlets.GAGroup
 
             int totalAccounts = returnedList.Count;
 
-            while (!string.IsNullOrWhiteSpace(execution.NextPageToken))
+            while (!string.IsNullOrWhiteSpace(execution.NextPageToken) &&
+                execution.NextPageToken != request.PageToken &&
+                (0 == MaxResults || returnedList.Count < MaxResults))
             {
                 request.PageToken = execution.NextPageToken;
                 UpdateProgressBar(5, 10,"Gathering groups",

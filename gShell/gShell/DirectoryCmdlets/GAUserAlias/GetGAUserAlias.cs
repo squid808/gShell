@@ -83,6 +83,9 @@ namespace gShell.DirectoryCmdlets.GAUserAlias
             }
         }
 
+        /// <summary>
+        /// Get a list of users who contain an alias. Makes one main API call to get all users, then parses that list.
+        /// </summary>
         private List<User> GetUsersWithAliases()
         {
             //TODO: figure out how to handle this with a batch call
@@ -111,12 +114,15 @@ namespace gShell.DirectoryCmdlets.GAUserAlias
 
             foreach (Alias alias in aliasList)
             {
-                customAliasList.Add(new GAUserAliasObject(alias.PrimaryEmail, alias.AliasValue));
+                customAliasList.Add(new GAUserAliasObject(alias.PrimaryEmail, alias.AliasValue, alias));
             }
 
             return customAliasList;
         }
 
+        /// <summary>
+        /// Get a list of alias objects, either from cache or from the web.
+        /// </summary>
         private List<Alias> GetAllAliases()
         {
             if (Cache)
@@ -129,6 +135,9 @@ namespace gShell.DirectoryCmdlets.GAUserAlias
             }
         }
 
+        /// <summary>
+        /// Take a list of users who have an alias, and for each user get a list of their aliases. Makes potentially many API calls.
+        /// </summary>
         private List<Alias> ProcessGetAllAliasRequest()
         {
             List<User> usersList = GetUsersWithAliases();
@@ -145,10 +154,13 @@ namespace gShell.DirectoryCmdlets.GAUserAlias
                 aliasList.AddRange(directoryServiceDict[Domain].
                     Users.Aliases.List(user.PrimaryEmail).Execute().AliasesValue);
                 i++;
+
+                if (aliasList.Count >= MaxResults) { break; }
             }
 
             return aliasList;
         }
+
 
         private List<Alias> RetrieveCachedAliases () {
             List<Alias> aliasList = new List<Alias>();
@@ -171,11 +183,13 @@ namespace gShell.DirectoryCmdlets.GAUserAlias
     {
         public string UserName;
         public string Alias;
+        public Alias BaseObject;
 
-        public GAUserAliasObject(string _userName, string _alias)
+        public GAUserAliasObject(string _userName, string _alias, Alias baseAlias)
         {
             UserName = _userName;
             Alias = _alias;
+            BaseObject = baseAlias;
         }
     }
 }

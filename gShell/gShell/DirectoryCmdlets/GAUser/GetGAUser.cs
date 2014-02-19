@@ -74,6 +74,12 @@ namespace gShell.DirectoryCmdlets.GAUser
 
     public class GetGAUserBase : DirectoryBase
     {
+        [Parameter(ParameterSetName = "AllUsers")]
+        public int MaxResults { get; set; }
+
+        [Parameter(ParameterSetName = "AllUsers")]
+        public SwitchParameter MultiDomain { get; set; }
+
         /// <summary>
         /// Retrieve a list of all users from the cache or, if it doesn't exist, the internet.
         /// </summary>
@@ -111,8 +117,23 @@ namespace gShell.DirectoryCmdlets.GAUser
             
             UsersResource.ListRequest request = directoryServiceDict[Domain].Users.List();
 
-            request.Domain = Domain;
-            request.MaxResults = 500;
+            if (MultiDomain)
+            {
+                request.Customer = currentUserInfo.Id;
+            }
+            else
+            {
+                request.Domain = Domain;
+            }
+
+            if (0 != MaxResults && 500 > MaxResults)
+            {
+                request.MaxResults = MaxResults;
+            }
+            else
+            {
+                request.MaxResults = 500;
+            }
 
             StartProgressBar("Gathering accounts",
                 "-Collecting accounts 1 to " + request.MaxResults.ToString());
@@ -126,7 +147,9 @@ namespace gShell.DirectoryCmdlets.GAUser
 
             returnedList.AddRange(execution.UsersValue);
 
-            while (!string.IsNullOrWhiteSpace(execution.NextPageToken))
+            while (!string.IsNullOrWhiteSpace(execution.NextPageToken) &&
+                execution.NextPageToken != request.PageToken &&
+                (0 == MaxResults || returnedList.Count < MaxResults))
             {
                 request.PageToken = execution.NextPageToken;
                 UpdateProgressBar(5, 10,

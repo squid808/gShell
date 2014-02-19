@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
      xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
-  <Product Id="*" Name="gShell PoSh Cmdlets Installer"
+  <Product Id="*" Name="gShell PoSh Cmdlets"
            Language="1033" Version="0.0.2.0" Manufacturer="Spencer Varney"
            UpgradeCode="16053A29-5B09-4630-B7B2-ADA5366DA766">
     <Package Id="*" InstallerVersion="200" Compressed="yes" InstallScope="perMachine" InstallPrivileges="elevated" />
@@ -39,7 +39,9 @@
                   DllEntry="CustomAction1"
                   Execute="immediate" />
     <InstallExecuteSequence>
-      <Custom Action="CustomAction1" After="InstallValidate"/>
+      <Custom Action="CustomAction1" After="InstallValidate">
+        NOT Installed
+      </Custom>
     </InstallExecuteSequence >
 
     <!--Take care of the folder structure for the physical files. All directories must be listed here.-->
