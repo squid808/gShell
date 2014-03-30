@@ -27,7 +27,10 @@ namespace gShell.UtilityCmdlets.ServiceAccount
 
         protected override void ProcessRecord()
         {
-            SavedFile.SetServiceAccountInfo(Email, CertificatePath);
+            if (ShouldProcess(Email, "Set-GAServiceAccount"))
+            {
+                SavedFile.SetServiceAccountInfo(Email, CertificatePath);
+            }
         }
 
     }

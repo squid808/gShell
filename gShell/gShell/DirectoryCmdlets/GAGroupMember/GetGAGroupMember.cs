@@ -57,20 +57,29 @@ namespace gShell.DirectoryCmdlets.GAGroupMember
         {
             if (!string.IsNullOrWhiteSpace(UserName))
             {
-                GroupName = GetFullEmailAddress(GroupName, Domain);
-                WriteObject(GetOneMember());
+                if (ShouldProcess(GroupName, "Get-GAGroupMember"))
+                {
+                    GroupName = GetFullEmailAddress(GroupName, Domain);
+                    WriteObject(GetOneMember());
+                }
             }
             else
             {
                 switch (ParameterSetName)
                 {
                     case "OneGroup":
-                        GroupName = GetFullEmailAddress(GroupName, Domain);
-                        WriteObject(GetMemberList(GroupName));
+                        if (ShouldProcess(GroupName, "Get-GAGroupMember"))
+                        {
+                            GroupName = GetFullEmailAddress(GroupName, Domain);
+                            WriteObject(GetMemberList(GroupName));
+                        }
                         break;
 
                     case "AllGroups":
-                        WriteObject(GetAllGroupsAndMembers());
+                        if (ShouldProcess("All Groups and Members", "Get-GAGroupMember"))
+                        {
+                            WriteObject(GetAllGroupsAndMembers());
+                        }
                         break;
                 }
             }

@@ -42,15 +42,24 @@ namespace gShell.DirectoryCmdlets.GAUser
             switch (ParameterSetName)
             {
                 case "OneUser":
-                    WriteObject(GetOneCustomUser());
+
+                    if (ShouldProcess(UserName, "Get-GAUser"))
+                    {
+                        WriteObject(GetOneCustomUser());
+                    }
                     break;
 
                 case "AllUsers":
-                    if (Cache)
+                    if (ShouldProcess("All Users", "Get-GAUser"))
                     {
-                        WriteObject(GetAllCustomCachedUsers());
-                    } else {
-                        WriteObject(GetAllCustomUsers());
+                        if (Cache)
+                        {
+                            WriteObject(GetAllCustomCachedUsers());
+                        }
+                        else
+                        {
+                            WriteObject(GetAllCustomUsers());
+                        }
                     }
                     break;
             }

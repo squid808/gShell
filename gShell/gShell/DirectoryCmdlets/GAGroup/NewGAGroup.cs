@@ -35,7 +35,10 @@ namespace gShell.DirectoryCmdlets.GAGroup
 
         protected override void ProcessRecord()
         {
-            CreateGroup();
+            if (ShouldProcess(GroupName, "New-GAGroup"))
+            {
+                CreateGroup();
+            }
         }
 
         private void CreateGroup()

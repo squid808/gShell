@@ -37,22 +37,32 @@ namespace gShell.DirectoryCmdlets.GAUser
 
         [Parameter(Position = 5,
             ParameterSetName = "PasswordGenerated")]
-        public int PasswordLength { get; set; }
+        public int? PasswordLength { get; set; }
 
-        [Parameter(Position = 6)]
-        public bool? IncludeInDirectory { get; set; }
+        [Parameter(Position = 6,
+            ParameterSetName = "PasswordGenerated")]
+        public SwitchParameter ShowNewPassword { get; set; }
 
         [Parameter(Position = 7)]
-        public bool? Suspended { get; set; }
+        public bool? IncludeInDirectory { get; set; }
 
         [Parameter(Position = 8)]
+        public bool? Suspended { get; set; }
+
+        [Parameter(Position = 9)]
         public bool? IpWhiteListed { get; set; }
+
+        [Parameter(Position = 10)]
+        public bool? ChangePasswordAtNextLogin { get; set; }
 
         #endregion
 
         protected override void ProcessRecord()
         {
-            CreateUser();
+            if (ShouldProcess(UserName, "New-GAUser"))
+            {
+                CreateUser();
+            }
         }
 
         private void CreateUser()
@@ -72,17 +82,14 @@ namespace gShell.DirectoryCmdlets.GAUser
             switch (ParameterSetName)
             {
                 case "PasswordProvided":
-                    userAcct.Password = Password;
+                    userAcct.HashFunction = "MD5";
+                    userAcct.Password = GetMd5Hash(Password);
                     break;
 
                 case "PasswordGenerated":
-                    Console.WriteLine("Genereated");
-                    if (PasswordLength < 8)
-                    {
-                        PasswordLength = 8;
-                    }
-                    string newPassword = CreatePassword(PasswordLength);
-                    Console.WriteLine(newPassword);
+                    //Console.WriteLine("Generated");
+                    userAcct.HashFunction = "MD5";
+                    userAcct.Password = GeneratePassword(PasswordLength, ShowNewPassword);
                     break;
             }
 
@@ -99,24 +106,12 @@ namespace gShell.DirectoryCmdlets.GAUser
                 userAcct.IpWhitelisted = IpWhiteListed;
             }
 
-            
-            directoryServiceDict[Domain].Users.Insert(userAcct).Execute();
-        }
+            if (ChangePasswordAtNextLogin.HasValue)
+            {
+                userAcct.ChangePasswordAtNextLogin = ChangePasswordAtNextLogin.Value;
+            }
 
-        /// <summary>
-        /// Creates a random password of length.
-        /// </summary>
-        /// <param name="length"></param>
-        /// <returns></returns>
-        /// <see cref="http://stackoverflow.com/questions/54991/generating-random-passwords"/>
-        public string CreatePassword(int length)
-        {
-            string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!-_.%?";
-            string res = "";
-            Random rnd = new Random();
-            while (0 < length--)
-                res += valid[rnd.Next(valid.Length)];
-            return res;
+            directoryServiceDict[Domain].Users.Insert(userAcct).Execute();
         }
     }
 }

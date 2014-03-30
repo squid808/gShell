@@ -40,7 +40,10 @@ namespace gShell.DirectoryCmdlets.GAGroupMember
 
         protected override void ProcessRecord()
         {
-            UpdateGroupMember();
+            if (ShouldProcess(GroupName, "Set-GAGroupMember"))
+            {
+                UpdateGroupMember();
+            }
         }
 
         private void UpdateGroupMember()

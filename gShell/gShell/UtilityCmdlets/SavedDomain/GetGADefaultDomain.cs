@@ -9,7 +9,10 @@ namespace gShell.UtilityCmdlets.SavedDomain
     {
         protected override void ProcessRecord()
         {
-            WriteObject(RetrieveDefaultDomain());
+            if (ShouldProcess("GAShell", "Get-GADefaultDomain"))
+            {
+                WriteObject(RetrieveDefaultDomain());
+            }
         }
 
         private string RetrieveDefaultDomain()

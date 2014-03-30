@@ -10,7 +10,10 @@ namespace gShell.UtilityCmdlets.SavedDomain
     {
         protected override void ProcessRecord()
         {
-            WriteObject(RetrieveAllDomains());
+            if (ShouldProcess("GAShell", "Get-GASavedDomainList"))
+            {
+                WriteObject(RetrieveAllDomains());
+            }
         }
 
         private List<string> RetrieveAllDomains()

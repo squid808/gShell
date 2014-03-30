@@ -36,7 +36,10 @@ namespace gShell.DirectoryCmdlets.GAUser
 
         protected override void ProcessRecord()
         {
-            RestoreUser();
+            if (ShouldProcess(UserID, "Restore-GAUser"))
+            {
+                RestoreUser();
+            }
         }
 
         private void RestoreUser()

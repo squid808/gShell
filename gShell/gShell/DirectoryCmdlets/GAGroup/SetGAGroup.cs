@@ -35,7 +35,10 @@ namespace gShell.DirectoryCmdlets.GAGroup
 
         protected override void ProcessRecord()
         {
-            UpdateGroup();
+            if (ShouldProcess(GroupName, "Set-GAGroup"))
+            {
+                UpdateGroup();
+            }
         }
 
         private void UpdateGroup()

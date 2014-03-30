@@ -22,11 +22,17 @@ namespace gShell.DriveCmdlets.GADriveItem
             switch (ParameterSetName)
             {
                 case "Query":
-                    WriteObject(QueryFile());
+                    if (ShouldProcess("Query", "Get-GADriveItem"))
+                    {
+                        WriteObject(QueryFile());
+                    }
                     break;
 
                 default:
-                    WriteObject(ListAllFiles());
+                    if (ShouldProcess("Drive Item", "Get-GADriveItem"))
+                    {
+                        WriteObject(ListAllFiles());
+                    }
                     break;
             }
         }

@@ -81,5 +81,58 @@ namespace gShell.DirectoryCmdlets
                 return givenDomain;
             }
         }
+
+        protected static string GetMd5Hash(string s)
+        {
+            using (var md5Hasher = System.Security.Cryptography.MD5.Create())
+            {
+                var data = md5Hasher.ComputeHash(System.Text.Encoding.UTF8.GetBytes(s));
+                return BitConverter.ToString(data, 0).Replace("-", string.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Generates a hashed password based on the input.
+        /// </summary>
+        /// <param name="PasswordLength">Min 8, max 100. Defaults to 8 if empty.</param>
+        /// <param name="printPassword">Default false - prints the new password to screen.</param>
+        /// <returns>New password in hex string format.</returns>
+        protected static string GeneratePassword(int? PasswordLength, bool ShowNewPassword)
+        {
+            int PasswordLengthInt;
+            if (PasswordLength < 8 || !PasswordLength.HasValue)
+            {
+                PasswordLength = 8;
+            }
+            else if (PasswordLength > 100)
+            {
+                PasswordLength = 100;
+            }
+            PasswordLengthInt = PasswordLength.Value;
+            string newPassword = CreatePassword(PasswordLengthInt);
+            //Console.WriteLine(newPassword);
+
+            if (ShowNewPassword == true)
+            {
+                Console.WriteLine(newPassword);
+            }
+
+            return GetMd5Hash(newPassword);
+        }
+
+        /// <summary>
+        /// Creates a random password of length.
+        /// </summary>
+        /// <param name="length"></param>
+        /// <see cref="http://stackoverflow.com/questions/54991/generating-random-passwords"/>
+        private static string CreatePassword(int length)
+        {
+            string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!-%?";
+            string res = "";
+            Random rnd = new Random();
+            while (0 < length--)
+                res += valid[rnd.Next(valid.Length)];
+            return res;
+        }
     }
 }

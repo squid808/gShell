@@ -37,7 +37,10 @@ namespace gShell.DriveCmdlets.GADriveItem
 
         protected override void ProcessRecord()
         {
-            GetItemPermissions();
+            if (ShouldProcess("Drive Object", "Get-GADriveItemPermissions"))
+            {
+                GetItemPermissions();
+            }
         }
 
         private void GetItemPermissions()

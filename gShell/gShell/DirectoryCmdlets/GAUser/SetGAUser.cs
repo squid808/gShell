@@ -7,6 +7,7 @@ using Google.Apis.Admin.Directory.directory_v1.Data;
 namespace gShell.DirectoryCmdlets.GAUser
 {
     [Cmdlet(VerbsCommon.Set, "GAUser",
+          DefaultParameterSetName = "NoPasswordProvided",
           SupportsShouldProcess = true)]
     public class SetGAUser : DirectoryBase
     {
@@ -34,11 +35,29 @@ namespace gShell.DirectoryCmdlets.GAUser
         [Parameter(Position = 5)]
         public bool? Suspended { get; set; }
 
+        [Parameter(Position = 6,
+            ParameterSetName = "PasswordProvided")]
+        public string NewPassword { get; set; }
+
+        [Parameter(Position = 7,
+            ParameterSetName = "PasswordGenerated")]
+        public int? PasswordLength { get; set; }
+
+        [Parameter(Position = 8,
+            ParameterSetName = "PasswordGenerated")]
+        public SwitchParameter ShowNewPassword { get; set; }
+
+        [Parameter(Position = 9)]
+        public bool? ChangePasswordAtNextLogin { get; set; }
+
         #endregion
 
         protected override void ProcessRecord()
         {
-            UpdateUser();
+            if (ShouldProcess(UserName, "Set-GAUser"))
+            {
+                UpdateUser();
+            }
         }
 
         private void UpdateUser()
@@ -51,23 +70,27 @@ namespace gShell.DirectoryCmdlets.GAUser
             if (null == userAcct)
             {
                 WriteError(new ErrorRecord(new Exception(
-                    string.Format("No user {0} was found to update.",fullEmail)),
+                    string.Format("No user {0} was found to update.", fullEmail)),
                         "", ErrorCategory.InvalidData, UserName));
             }
 
             if (String.IsNullOrWhiteSpace(NewGivenName) &&
                 String.IsNullOrWhiteSpace(NewFamilyName) &&
                 String.IsNullOrWhiteSpace(NewUserName) &&
-                !Suspended.HasValue)
+                String.IsNullOrWhiteSpace(NewPassword) &&
+                !PasswordLength.HasValue &&
+                ShowNewPassword == false &&
+                !Suspended.HasValue &&
+                !ChangePasswordAtNextLogin.HasValue)
             {
                 WriteError(new ErrorRecord(new Exception(
-                    string.Format("No data was enetered to update {0}.", fullEmail)),
+                    string.Format("No data was entered to update {0}.", fullEmail)),
                         "", ErrorCategory.InvalidData, UserName));
             }
 
             if (Suspended.HasValue)
             {
-                userAcct.Suspended = Suspended;
+                userAcct.Suspended = Suspended.Value;
             }
 
             if (!String.IsNullOrWhiteSpace(NewGivenName))
@@ -85,6 +108,28 @@ namespace gShell.DirectoryCmdlets.GAUser
                 NewUserName = GetFullEmailAddress(NewUserName, Domain);
 
                 userAcct.PrimaryEmail = NewUserName;
+            }
+
+            switch (ParameterSetName)
+            {
+                case "PasswordProvided":
+                    userAcct.HashFunction = "MD5";
+                    userAcct.Password = GetMd5Hash(NewPassword);
+                    break;
+
+                case "PasswordGenerated":
+                    userAcct.HashFunction = "MD5";
+                    userAcct.Password = GeneratePassword(PasswordLength, ShowNewPassword);
+                    break;
+
+                default:
+                    //take no action
+                    break;
+            }
+
+            if (ChangePasswordAtNextLogin.HasValue)
+            {
+                userAcct.ChangePasswordAtNextLogin = ChangePasswordAtNextLogin.Value;
             }
 
             directoryServiceDict[Domain].Users.Patch(userAcct, fullEmail).Execute();

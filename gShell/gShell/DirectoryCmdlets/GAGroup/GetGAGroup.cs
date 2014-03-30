@@ -43,17 +43,23 @@ namespace gShell.DirectoryCmdlets.GAGroup
             switch (ParameterSetName)
             {
                 case "OneGroup":
-                    WriteObject(GetOneGroup(GroupName));
+                    if (ShouldProcess(GroupName, "Get-GAGroup"))
+                    {
+                        WriteObject(GetOneGroup(GroupName));
+                    }
                     break;
 
                 case "AllGroups":
-                    if (Cache)
+                    if (ShouldProcess("All Groups", "Get-GAGroup"))
                     {
-                        WriteObject(RetrieveCachedGroups(ForceCacheReload));
-                    }
-                    else
-                    {
-                        WriteObject(GetAllGroups());
+                        if (Cache)
+                        {
+                            WriteObject(RetrieveCachedGroups(ForceCacheReload));
+                        }
+                        else
+                        {
+                            WriteObject(GetAllGroups());
+                        }
                     }
                     break;
             }

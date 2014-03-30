@@ -39,7 +39,10 @@ namespace gShell.DirectoryCmdlets.GAGroupMember
 
         protected override void ProcessRecord()
         {
-            AddGroupMember();
+            if (ShouldProcess(GroupName, "Add-GAGroupMember"))
+            {
+                AddGroupMember();
+            }
         }
 
         private void AddGroupMember()

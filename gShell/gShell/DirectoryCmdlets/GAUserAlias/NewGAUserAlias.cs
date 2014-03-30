@@ -31,7 +31,10 @@ namespace gShell.DirectoryCmdlets.GAUserAlias
 
         protected override void ProcessRecord()
         {
-            CreateUserAlias();
+            if (ShouldProcess(UserName, "New-GAUserAlias"))
+            {
+                CreateUserAlias();
+            }
         }
 
         private void CreateUserAlias()

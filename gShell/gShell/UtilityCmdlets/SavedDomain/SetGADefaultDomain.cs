@@ -20,7 +20,10 @@ namespace gShell.UtilityCmdlets.SavedDomain
 
         protected override void ProcessRecord()
         {
-            SetDefaultDomain();
+            if (ShouldProcess("Domain", "Set-GADefaultDomain"))
+            {
+                SetDefaultDomain();
+            }
         }
 
         private void SetDefaultDomain()

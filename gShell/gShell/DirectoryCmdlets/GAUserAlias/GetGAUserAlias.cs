@@ -47,11 +47,17 @@ namespace gShell.DirectoryCmdlets.GAUserAlias
             switch (ParameterSetName)
             {
                 case "OneUser":
-                    WriteObject(GetOneUserAlias());
+                    if (ShouldProcess(UserName, "Get-GAUserAlias"))
+                    {
+                        WriteObject(GetOneUserAlias());
+                    }
                     break;
 
                 case "AllUserAliases":
-                    GetAllAliasesMain();
+                    if (ShouldProcess("All User Aliases", "Get-GAUserAlias"))
+                    {
+                        GetAllAliasesMain();
+                    }
                     break;
             }
 
