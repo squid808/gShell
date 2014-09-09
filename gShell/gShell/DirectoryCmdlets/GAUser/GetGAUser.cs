@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Management.Automation;
 using Google.Apis.Admin.Directory.directory_v1;
 using Google.Apis.Admin.Directory.directory_v1.Data;
@@ -188,7 +189,7 @@ namespace gShell.DirectoryCmdlets.GAUser
         public List<string> Aliases;
         public bool Suspended;
         public string OrgUnitPath;
-        public string LastLoginTime;
+        public DateTime? LastLoginTime;
 
         public User userObject;
 

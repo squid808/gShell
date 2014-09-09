@@ -27,7 +27,7 @@ namespace gShell.OAuth2
         /// <summary>
         /// Saves the token to the group with the user email as the key.
         /// </summary>
-        public static void SaveToken(Userinfo userInfo, string tokenInfo)
+        public static void SaveToken(Userinfoplus userInfo, string tokenInfo)
         {
             OAuth2Info info = new OAuth2Info(userInfo, tokenInfo);
 

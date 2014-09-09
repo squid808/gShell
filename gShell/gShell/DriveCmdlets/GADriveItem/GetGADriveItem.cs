@@ -90,8 +90,8 @@ namespace gShell.DriveCmdlets.GADriveItem
         public bool? Shared;
         public string Title;
         public string FileExtension;
-        public string FileSize;
-        public string QuotaBytesUsed;
+        public long? FileSize;
+        public long? QuotaBytesUsed;
         public List<string> OwnerNames;
         public string LastModifyingUserName;
         public string OriginalFileName;

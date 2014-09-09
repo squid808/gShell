@@ -158,7 +158,7 @@ namespace gShell.OAuth2
             }
         }
 
-        public OAuth2Info LoadByUser(Userinfo userInfo)
+        public OAuth2Info LoadByUser(Userinfoplus userInfo)
         {
             return LoadByUser(userInfo.Email);
         }

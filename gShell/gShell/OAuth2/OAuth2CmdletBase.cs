@@ -53,13 +53,13 @@ namespace gShell.OAuth2
 
         protected static string defaultDomain;
         protected static string currentDomain;
-        protected static Userinfo currentUserInfo;
+        protected static Userinfoplus currentUserInfo;
         protected static UserCredential currentUserCredentials; //the most recent user returned by get user
         protected static ServiceAccountCredential.Initializer serviceAcctInitializer;
 
         protected static ProgressRecord progressBar;
 
-        protected static Dictionary<string, Userinfo> userInfoDict; //a collection of credentials by domain or email address
+        protected static Dictionary<string, Userinfoplus> userInfoDict; //a collection of credentials by domain or email address
         protected static Dictionary<string, UserCredential> userCredentialsDict; //a collection of credentials by domain or email address
         protected static Dictionary<string, DirectoryService> directoryServiceDict; //a collection of directory services by domain
         protected static Dictionary<string, Dictionary<string,DriveService>> driveServiceDict; //a collection of drive services by email address
@@ -77,7 +77,7 @@ namespace gShell.OAuth2
 
             if (null == userInfoDict)
             {
-                userInfoDict = new Dictionary<string, Userinfo>();
+                userInfoDict = new Dictionary<string, Userinfoplus>();
             }
             
             //AuthStatesDict = new Dictionary<string, IAuthorizationState>();

@@ -85,21 +85,21 @@
     <ComponentGroup Id="ProgramFileDlls" Directory="gshellProgramFiles">
       <Component Id="System.Net.Http.dll" Guid="766BC3A2-C0E7-4F7A-B117-FE20BBDE3806">
         <File Id="System.Net.Http.dll" Name="System.Net.Http.dll" DiskId="1"
-              Source="$(var.SolutionDir)packages\Microsoft.Net.Http.2.1.10\lib\net40\System.Net.Http.dll"
+              Source="$(var.SolutionDir)packages\Microsoft.Net.Http.2.2.28\lib\net40\System.Net.Http.dll"
               KeyPath="yes" Assembly=".net" />
         <RemoveFile Name="System.Net.Http.dll" Id="System.Net.Http.dll" On="uninstall" />
       </Component>
 
       <Component Id="System.Net.Http.Primitives.dll" Guid="1A79F425-73CE-4ECB-82EE-0D7DFE064724">
         <File Id="System.Net.Http.Primitives.dll" Name="System.Net.Http.Primitives.dll" DiskId="1"
-              Source="$(var.SolutionDir)packages\Microsoft.Net.Http.2.1.10\lib\net40\System.Net.Http.Primitives.dll"
+              Source="$(var.SolutionDir)packages\Microsoft.Net.Http.2.2.28\lib\net40\System.Net.Http.Primitives.dll"
               KeyPath="yes" Assembly=".net" />
         <RemoveFile Name="System.Net.Http.Primitives.dll" Id="System.Net.Http.Primitives.dll" On="uninstall" />
       </Component>
 
       <Component Id="log4net.dll" Guid="B7F4E072-1DE8-4A66-8CC9-A036BE395BE1">
         <File Id="log4net.dll" Name="log4net.dll" DiskId="1"
-              Source="$(var.SolutionDir)packages\log4net.2.0.2\lib\net40-full\log4net.dll"
+              Source="$(var.SolutionDir)packages\log4net.2.0.3\lib\net40-full\log4net.dll"
               KeyPath="yes" Assembly=".net" />
         <RemoveFile Name="log4net.dll" Id="log4net.dll" On="uninstall" />
       </Component>
