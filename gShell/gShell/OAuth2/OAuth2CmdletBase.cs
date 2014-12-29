@@ -6,6 +6,7 @@ using System.Management.Automation;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Reflection;
 
 using Google.Apis.Admin.Directory.directory_v1;
 using Google.Apis.Drive.v2;
@@ -22,9 +23,14 @@ namespace gShell.OAuth2
     /// The base from which all gShell cmdlet type classes must derive containing
     /// authentication and setup logic.
     /// </summary>
-    public abstract class OAuth2CmdletBase : PSCmdlet
+    public abstract class OAuth2CmdletBase : PSCmdlet, IModuleAssemblyInitializer
     {
         #region Properties
+        /// <summary>
+        /// A flag to determine if the assemblies have already been resolved.
+        /// </summary>
+        protected static bool assembliesResolved;
+
         protected const string appName = "gShellCmdlets";
         protected static ClientSecrets clientSecrets = new ClientSecrets
         {
@@ -82,6 +88,45 @@ namespace gShell.OAuth2
             
             //AuthStatesDict = new Dictionary<string, IAuthorizationState>();
             //packageDict = new Dictionary<string, OAuth2SetupPackage>();
+        }
+        #endregion
+
+        #region AssemblyResolution
+        /// <summary>
+        /// Required for the implementation of IModuleAssemblyInitializer - resolves the GAC and machine.config issues
+        /// This gets fired for each cmdlet that inherits this base class when importing the module in PoSh
+        /// </summary>
+        public void OnImport()
+        {
+            if (!assembliesResolved) { //use the static flag to only fire it once
+                AppDomain currentDomain = AppDomain.CurrentDomain;
+                currentDomain.AssemblyResolve += new ResolveEventHandler(ResolveSystemPrimitives);
+                assembliesResolved = true;
+            }
+        }
+
+        /// <summary>
+        /// Provide the appropriate path to the System.Net.Http.Primitives assembly.
+        /// </summary>
+        private static Assembly ResolveSystemPrimitives(object sender, ResolveEventArgs args)
+        {
+            Assembly accurate = Assembly.LoadFrom(System.IO.Path.Combine(AssemblyDirectory, "System.Net.Http.Primitives.dll"));
+            return accurate;
+        }
+
+        /// <summary>
+        /// Provides the location of the executing assembly. Typically %UserProfile%\My Documents\gShell\
+        /// http://stackoverflow.com/questions/52797/how-do-i-get-the-path-of-the-assembly-the-code-is-in
+        /// </summary>
+        public static string AssemblyDirectory
+        {
+            get
+            {
+                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+                UriBuilder uri = new UriBuilder(codeBase);
+                string path = Uri.UnescapeDataString(uri.Path);
+                return System.IO.Path.GetDirectoryName(path);
+            }
         }
         #endregion
 

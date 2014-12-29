@@ -28,54 +28,53 @@ namespace CustomActions
                 session.Log("Updating local psModulePath environmental variable...");
                 UpdatePowerShellPath();
 
-                session.Log("Updating machine.config file...");
+                //session.Log("Updating machine.config file...");
 
-                string path = System.Runtime.InteropServices.RuntimeEnvironment.SystemConfigurationFile;
-                string path32, path64 = string.Empty;
+                //string path = System.Runtime.InteropServices.RuntimeEnvironment.SystemConfigurationFile;
+                //string path32, path64 = string.Empty;
 
 
-                if (path.Contains("Framework64"))
-                {
-                    path64 = path;
-                    path32 = path.Replace("Framework64", "Framework");
-                }
-                else
-                {
-                    path64 = path.Replace("Framework", "Framework64");
-                    path32 = path;
-                }
+                //if (path.Contains("Framework64"))
+                //{
+                //    path64 = path;
+                //    path32 = path.Replace("Framework64", "Framework");
+                //}
+                //else
+                //{
+                //    path64 = path.Replace("Framework", "Framework64");
+                //    path32 = path;
+                //}
 
-                Log(string.Format("System machine.config path: {0}", path));
-                Log(string.Format("32 bit path determined to be: {0}",path32));
-                Log(string.Format("64 bit path determined to be: {0}",path64));
-                //Log(string.Format("{0}",));
+                //Log(string.Format("System machine.config path: {0}", path));
+                //Log(string.Format("32 bit path determined to be: {0}",path32));
+                //Log(string.Format("64 bit path determined to be: {0}",path64));
 
-                bool result32, result64 = false;
+                //bool result32, result64 = false;
 
-                if (File.Exists(path32)) {
-                    result32 = UpdateConfigFile(path32);
-                    Log(string.Format("Check/update for 32 bit config file was success: {0}",result32));
-                } else {
-                    result32 = true;
-                    Log(string.Format("32 bit path file not found; proceeding with install."));
-                }
+                //if (File.Exists(path32)) {
+                //    result32 = UpdateConfigFile(path32);
+                //    Log(string.Format("Check/update for 32 bit config file was success: {0}",result32));
+                //} else {
+                //    result32 = true;
+                //    Log(string.Format("32 bit path file not found; proceeding with install."));
+                //}
 
-                if (File.Exists(path64))
-                {
-                    result64 = UpdateConfigFile(path64);
-                    Log(string.Format("Check/update for 64 bit config file was success: {0}", result64));
-                }
-                else
-                {
-                    result64 = true;
-                    Log(string.Format("64 bit path file not found; proceeding with install."));
-                }
+                //if (File.Exists(path64))
+                //{
+                //    result64 = UpdateConfigFile(path64);
+                //    Log(string.Format("Check/update for 64 bit config file was success: {0}", result64));
+                //}
+                //else
+                //{
+                //    result64 = true;
+                //    Log(string.Format("64 bit path file not found; proceeding with install."));
+                //}
 
-                if (!result32 || !result64)
-                {
-                    Log(string.Format("One of the path updates returned false - aborting install."));
-                    return ActionResult.Failure;
-                }
+                //if (!result32 || !result64)
+                //{
+                //    Log(string.Format("One of the path updates returned false - aborting install."));
+                //    return ActionResult.Failure;
+                //}
 
                 Log(string.Format("Custom install updates completed successfully. Remainder of installation proceeding."));
                 session.Log("End gShell Install Custom Action");
@@ -120,6 +119,11 @@ namespace CustomActions
             Log(string.Format("Updating of the PS Environmental path has completed."));
         }
 
+        /// <summary>
+        /// Updates the Machine.Config file
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static bool UpdateConfigFile(string path)
         {
             try

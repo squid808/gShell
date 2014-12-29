@@ -2,7 +2,7 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
      xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
   <Product Id="*" Name="gShell PoSh Cmdlets"
-           Language="1033" Version="0.0.2.0" Manufacturer="Spencer Varney"
+           Language="1033" Version="0.0.3.0" Manufacturer="Spencer Varney"
            UpgradeCode="16053A29-5B09-4630-B7B2-ADA5366DA766">
     <Package Id="*" InstallerVersion="200" Compressed="yes" InstallScope="perMachine" InstallPrivileges="elevated" />
 
@@ -15,16 +15,17 @@
     <!--Update Information-->
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
 
-    <!--Do major updates if anything. Minor updates may not fire properly.-->
+    <!--Do major updates if anything. Minor updates may not fire properly - the fourth value may be ignored by wix.
+    So always update the 3 values of the higher number below, as well as the version on line 5 above-->
     <Upgrade Id="16025265-05DE-4BBD-89C6-AE89F0B7F88D">
       <UpgradeVersion OnlyDetect='no' Property='SELFFOUND'
         Minimum='0.0.1.0' IncludeMinimum='yes'
-        Maximum='0.0.2.0' IncludeMaximum='no' />
+        Maximum='0.0.3.0' IncludeMaximum='no' />
       <UpgradeVersion OnlyDetect='yes' Property='NEWERFOUND'
-        Minimum='0.0.2.0' IncludeMinimum='no' />
+        Minimum='0.0.3.0' IncludeMinimum='no' />
     </Upgrade>
 
-    <CustomAction Id='AlreadyUpdated' Error='[ProductName] has already been updated to 0.0.2.0 or newer.' />
+    <CustomAction Id='AlreadyUpdated' Error='[ProductName] has already been updated to 0.0.3.0 or newer.' />
     <CustomAction Id='NoDowngrade' Error='A later version of [ProductName] is already installed.' />
 
     <InstallExecuteSequence>
@@ -67,14 +68,14 @@
         </Directory>
       </Directory>
 
-      <Directory Id='ProgramFilesFolder' Name='PFiles'>
+      <!--<Directory Id='ProgramFilesFolder' Name='PFiles'>
         <Directory Id='gshellProgramFiles' Name='gShell'>
           <Component Id='gshellProgramFiles' Guid="797EF579-3E8E-4457-B299-506F56CB7BC5">
             <RemoveFolder Id="gshellProgramFiles" On="uninstall"/>
             <RegistryValue Root="HKCU" Key="Software\gShell" Type="string" Value="1" KeyPath="yes" />
           </Component>
         </Directory>
-      </Directory>
+      </Directory>-->
 
     </Directory>
     <!--Set up components to remove the serialized files on removal-->
@@ -82,6 +83,9 @@
     <!--Take care of the folder structures for the start menu files and shortcuts-->
     <!--Take care of adding the files to the folders defined above-->
 
+    <!-- These files go in the program files in order to work with the -->
+    <!-- OK so turns out this has been resolved and are no longer needed in program files. They can now be with the other main files.
+    
     <ComponentGroup Id="ProgramFileDlls" Directory="gshellProgramFiles">
       <Component Id="System.Net.Http.dll" Guid="766BC3A2-C0E7-4F7A-B117-FE20BBDE3806">
         <File Id="System.Net.Http.dll" Name="System.Net.Http.dll" DiskId="1"
@@ -105,6 +109,7 @@
       </Component>
 
     </ComponentGroup>
+    -->
 
 
 
@@ -173,6 +178,12 @@
               Source="$(var.gShell.TargetDir)/Google.Apis.PlatformServices.dll" />
         <RemoveFile Name="Google.Apis.PlatformServices.dll" Id="Google.Apis.PlatformServices.dll" On="uninstall" />
 
+        <File Id="log4net.dll" 
+              Name="log4net.dll" 
+              DiskId="1"
+              Source="$(var.SolutionDir)packages\log4net.2.0.3\lib\net40-full\log4net.dll" />
+        <RemoveFile Name="log4net.dll" Id="log4net.dll" On="uninstall" />
+
         <File Id="Microsoft.Threading.Tasks.dll"
               Name="Microsoft.Threading.Tasks.dll"
               DiskId="1"
@@ -197,11 +208,23 @@
               Source="$(var.gShell.TargetDir)/Newtonsoft.Json.dll" />
         <RemoveFile Name="Newtonsoft.Json.dll" Id="Newtonsoft.Json.dll" On="uninstall" />
 
+        <File Id="System.Net.Http.dll" 
+              Name="System.Net.Http.dll" 
+              DiskId="1"
+              Source="$(var.SolutionDir)packages\Microsoft.Net.Http.2.2.28\lib\net40\System.Net.Http.dll" />
+        <RemoveFile Name="System.Net.Http.dll" Id="System.Net.Http.dll" On="uninstall" />
+
         <File Id="System.Net.Http.Extensions.dll"
               Name="System.Net.Http.Extensions.dll"
               DiskId="1"
               Source="$(var.gShell.TargetDir)/System.Net.Http.Extensions.dll" />
         <RemoveFile Name="System.Net.Http.Extensions.dll" Id="System.Net.Http.Extensions.dll" On="uninstall" />
+
+        <File Id="System.Net.Http.Primitives.dll" 
+              Name="System.Net.Http.Primitives.dll" 
+              DiskId="1"
+              Source="$(var.SolutionDir)packages\Microsoft.Net.Http.2.2.28\lib\net40\System.Net.Http.Primitives.dll" />
+        <RemoveFile Name="System.Net.Http.Primitives.dll" Id="System.Net.Http.Primitives.dll" On="uninstall" />
 
         <File Id="System.Net.Http.WebRequest.dll"
               Name="System.Net.Http.WebRequest.dll"
@@ -257,9 +280,11 @@
       <ComponentRef Id="INSTALLFOLDER"/>
       <ComponentGroupRef Id="ProductComponents"/>
       <ComponentRef Id="gshellProgramFiles"/>
+      <!--
       <ComponentRef Id="System.Net.Http.dll"/>
       <ComponentRef Id="System.Net.Http.Primitives.dll"/>
       <ComponentRef Id="log4net.dll"/>
+      -->
     </Feature>
 
     <UIRef Id="WixUI_Minimal" />
@@ -272,3 +297,5 @@
 
   </Product>
 </Wix>
+
+<!--Seriously, this has to be one of the most annoying things I've done since I started learning to program. How is this not easier yet??-->
