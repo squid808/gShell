@@ -17,6 +17,8 @@ using Google.Apis.Oauth2.v2;
 using Google.Apis.Oauth2.v2.Data;
 using Google.Apis.Services;
 
+using gShell.Serialization;
+
 namespace gShell.OAuth2
 {
     /// <summary>
@@ -318,11 +320,14 @@ namespace gShell.OAuth2
         /// </summary>
         protected DirectoryService BuildDirectoryService(string givenDomain)
         {
-            DirectoryService service = new DirectoryService(new BaseClientService.Initializer()
+            //use the gInitializer in order to allow for serializing strings to null
+            gInitializer initializer = new gInitializer()
             {
                 HttpClientInitializer = ReturnUserCredential(givenDomain),
                 ApplicationName = appName,
-            });
+            };
+
+            DirectoryService service = new DirectoryService(initializer);
 
             return service;
         }
@@ -395,11 +400,21 @@ namespace gShell.OAuth2
             return _userName;
         }
 
+        /// <summary>
+        /// Return the domain given a full email address.
+        /// </summary>
+        /// <param name="userEmail"></param>
+        /// <returns></returns>
         public static string GetDomainFromEmail(string userEmail)
         {
             return userEmail.Split('@')[1];
         }
 
+        /// <summary>
+        /// Return the username given a full email address.
+        /// </summary>
+        /// <param name="userEmail"></param>
+        /// <returns></returns>
         public static string GetUserFromEmail(string userEmail)
         {
             return userEmail.Split('@')[0];
