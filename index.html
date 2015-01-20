@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>Gshell by squid808</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>Gshell</h1>
+          <h2>PowerShell Cmdlets for Google Apps and Gmail</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/squid808/gShell/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/squid808/gShell/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/squid808/gShell" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <p><img src="http://i.imgur.com/CkAV8GJ.png" alt="gShell Logo"></p>
+
+<h2>
+<a id="welcome-to-gshell" class="anchor" href="#welcome-to-gshell" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to gShell!</h2>
+
+<p>gShell is here to help you access and manage information from your Google Apps domain through the PowerShell scripting language. Please keep an eye on the <a href="https://github.com/squid808/gShell/wiki">Wiki</a> for what is available; this is a work in progress done in my spare time, so things are added irregularly but as frequently as possible. Did I mention your hair looks great today?</p>
+
+<h4>
+<a id="whats-new" class="anchor" href="#whats-new" aria-hidden="true"><span class="octicon octicon-link"></span></a>What's New?</h4>
+
+<p>Version 0.0.5.0 is almost released with a better-than-ever installer, new *GAUserProperties cmdlets that let you add, edit and (almost) remove extended properties, and a brand new wiki with a ton of content. The cmdlets will use the built-in Online Help feature that will redirect you to the appropriate web page to get the help, and will try to stay web-based since you need to be online to use them anyways.</p>
+
+<p>Want to help make this project even better? I'm looking for contributors in the following areas:</p>
+
+<ul>
+<li>Writing code and submitting bug-fixes or new or expanded functionality</li>
+<li>Writing documentation for the wiki or for the help xml files, especially with examples and usage information</li>
+<li>Identifying bugs and things that need fixing</li>
+<li>Ideas on how to make it better and what to add next!</li>
+</ul>
+
+<p>As always if you're interested or have any thoughts or questions, head on over to the <a href="https://github.com/squid808/gShell/wiki/Discussion-Groups">Discussion Groups</a> and let me know!</p>
+
+<h4>
+<a id="quick-examples" class="anchor" href="#quick-examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Quick Examples</h4>
+
+<p>The goal of gShell is to allow you quick and easy access to your Google Apps domain. Down the road, I hope to expand it to include additional google APIs that can be used with <em>ANY</em> Google-based account. Check out some of the following examples to see how this can be helpful to you, once you get past the <em>quick setup</em>.</p>
+
+<p>First, you can grab a user from your domain and get it back as a <em>GAUser</em> object:</p>
+
+<pre><code>PS C:\&gt; Get-GAUser BMcGee mydomain.com
+
+GivenName     : Bobby
+FamilyName    : McGee
+PrimaryEmail  : bmcgee@mydomain.com
+Aliases       : {bobbymcgee@mydomain.com, bobmcgee@mydomain.com}
+Suspended     : False
+OrgUnitPath   : /
+LastLoginTime : 2013-10-25T05:10:40.000Z
+</code></pre>
+
+<p>Or, you can elect to get all users in the domain and throw them in a variable, perhaps to compare against your AD Environment:</p>
+
+<pre><code>PS C:\&gt; $AllUsers = Get-GAUser -all
+
+----
+PS C:\&gt; $AllUsers.Count
+
+9001
+</code></pre>
+
+<p>Better yet, perhaps you need to get a list of all users in all groups? in the domain...</p>
+
+<pre><code>PS C:\&gt; $AllGroups = Get-GAGroup mydomain.com -All -Members -Owners
+#A progress bar will show up for this, since it's potentially a long wait
+
+----
+PS C:\&gt; $AllGroups.Count
+
+42
+</code></pre>
+
+<p>...or you want to find all members of all groups, and throw that in a list for easy export to CSV? Got that covered:</p>
+
+<pre><code>PS C:\&gt; $AllMembers = (Get-GAGroupMember -All).ToSingleList()
+
+----
+PS C:\&gt; $AllMembers[0]
+
+Email : bobbymcgee@mydomain.com
+ETag  : "01...HQ"
+Id    : 12..89
+Kind  : admin#directory#member
+Role  : MEMBER
+Type  : USER
+Group : songcharacters@mydomain.com
+
+----
+PS C:\&gt; $AllMembers | Export-Csv -Path "C:\AllGroupMemberships.csv" -NoTypeInformation
+
+----
+PS C:\&gt; (Get-Content "C:\AllDomainGroupMemberships.csv")[0..1]
+#Let's look directly at the CSV file...
+
+"Email","ETag","Id","Kind","Role","Type","Group"
+,"""01..HQ""","12..89","admin#directory#member","MEMBER","USER"
+,"songcharacters@mydomain.com"
+</code></pre>
+
+<p>This is the tip of the iceberg of what's possible and what's available. If you need help or have questions, requests or you found a bug, drop a line in the <a href="https://github.com/squid808/gShell/wiki/Discussion-Groups">Discussion Groups</a>.</p>
+        </section>
+
+        <footer>
+          Gshell is maintained by <a href="https://github.com/squid808">squid808</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+                  <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-58705092-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+      </div>
+    </div>
+  </body>
+</html>
