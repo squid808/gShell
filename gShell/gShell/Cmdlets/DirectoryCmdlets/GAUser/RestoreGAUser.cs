@@ -8,7 +8,8 @@ using Google.Apis.Admin.Directory.directory_v1.Data;
 namespace gShell.DirectoryCmdlets.GAUser
 {
     [Cmdlet("Restore", "GAUser",
-          SupportsShouldProcess = true)]
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Restore-GAUser")]
     public class RestoreGAUser : DirectoryBase
     {
         #region Properties
@@ -46,8 +47,6 @@ namespace gShell.DirectoryCmdlets.GAUser
         {
             UserUndelete undelete = new UserUndelete();
 
-            //undelete.ETag = "";
-
             if (string.IsNullOrWhiteSpace(OrgUnitPath))
             {
                 undelete.OrgUnitPath = @"/";
@@ -56,8 +55,6 @@ namespace gShell.DirectoryCmdlets.GAUser
             {
                 undelete.OrgUnitPath = OrgUnitPath;
             }
-
-            //undelete.ETag = @"";
 
             directoryServiceDict[Domain].Users.Undelete(undelete, UserID).Execute();
         }

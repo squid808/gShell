@@ -7,7 +7,8 @@ namespace gShell.DirectoryCmdlets.GAGroup
 {
     [Cmdlet(VerbsCommon.Get, "GAGroup",
           DefaultParameterSetName = "OneUser",
-          SupportsShouldProcess = true)]
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAGroup")]
     public class GetGAGroup : GetGAGroupBase
     {
         #region Properties
@@ -71,7 +72,7 @@ namespace gShell.DirectoryCmdlets.GAGroup
 
     public class GetGAGroupBase : DirectoryBase
     {
-        [Parameter()]
+        [Parameter(HelpMessage = "The Maximum number of results to return, up to the total number of results.")]
         public int MaxResults { get; set; }
 
         [Parameter(ParameterSetName = "AllGroups")]

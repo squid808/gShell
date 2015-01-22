@@ -9,7 +9,8 @@ namespace gShell.DirectoryCmdlets.GAGroupMember
 {
     [Cmdlet(VerbsCommon.Add, "GAGroupMember",
           DefaultParameterSetName = "OneGroup",
-          SupportsShouldProcess = true)]
+          SupportsShouldProcess = true,
+          HelpUri=@"https://github.com/squid808/gShell/wiki/Add-GAGroupMember")]
     public class AddGAGroupMember : GetGAGroupBase
     {
         #region Properties

@@ -7,7 +7,8 @@ using Google.Apis.Admin.Directory.directory_v1.Data;
 namespace gShell.DirectoryCmdlets.GAGroup
 {
     [Cmdlet(VerbsCommon.Set, "GAGroup",
-          SupportsShouldProcess = true)]
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAGroup")]
     public class SetGAGroup : DirectoryBase
     {
         #region Properties

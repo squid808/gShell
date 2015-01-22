@@ -8,7 +8,8 @@ namespace gShell.DirectoryCmdlets.GAGroup
 {
     [Cmdlet(VerbsCommon.Remove, "GAGroup",
           DefaultParameterSetName = "GroupName",
-          SupportsShouldProcess = true)]
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAGroup")]
     public class RemoveGAGroup : DirectoryBase
     {
         #region Properties

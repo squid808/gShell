@@ -8,7 +8,8 @@ namespace gShell.DirectoryCmdlets.GAUser
 {
     [Cmdlet(VerbsCommon.Set, "GAUser",
           DefaultParameterSetName = "NoPasswordProvided",
-          SupportsShouldProcess = true)]
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAUser")]
     public class SetGAUser : DirectoryBase
     {
         #region Properties

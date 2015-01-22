@@ -9,7 +9,8 @@ namespace gShell.DirectoryCmdlets.GAGroupMember
 {
     [Cmdlet(VerbsCommon.Get, "GAGroupMember",
           DefaultParameterSetName = "OneGroup",
-          SupportsShouldProcess = true)]
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAGroupMember")]
     public class GetGAGroupMember : GetGAGroupBase
     {
         #region Properties
@@ -277,7 +278,8 @@ namespace gShell.DirectoryCmdlets.GAGroupMember
                 }
                 multiList.Add(group.Email, members);
 
-                if (multiList.GetMemberCount() >= MaxResults) { break; }
+                if (MaxResults != 0 &&
+                    multiList.GetMemberCount() >= MaxResults) { break; }
             }
 
             return (multiList);

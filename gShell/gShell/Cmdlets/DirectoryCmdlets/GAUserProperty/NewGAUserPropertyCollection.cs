@@ -8,7 +8,8 @@ using Google.Apis.Admin.Directory.directory_v1.Data;
 namespace gShell.DirectoryCmdlets.GAUser
 {
     [Cmdlet(VerbsCommon.New, "GAUserPropertyCollection",
-          SupportsShouldProcess = true)]
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/New-GAUserPropertyCollection")]
     public class NewGAUserPropertyCollection : PSCmdlet
     {
         

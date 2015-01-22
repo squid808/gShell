@@ -6,7 +6,8 @@ using gShell.OAuth2;
 namespace gShell.UtilityCmdlets.ServiceAccount
 {
     [Cmdlet(VerbsCommon.Set, "GAServiceAccount",
-          SupportsShouldProcess = true)]
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAServiceAccount")]
     public class SetGAServiceAccount : PSCmdlet
     {
         #region Properties

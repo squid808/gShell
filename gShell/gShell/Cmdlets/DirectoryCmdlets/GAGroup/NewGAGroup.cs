@@ -8,7 +8,8 @@ namespace gShell.DirectoryCmdlets.GAGroup
 {
     [Cmdlet(VerbsCommon.New, "GAGroup",
           DefaultParameterSetName = "PasswordGenerated",
-          SupportsShouldProcess = true)]
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/New-GAGroup")]
     public class NewGAGroup : DirectoryBase
     {
         #region Properties
@@ -19,14 +20,14 @@ namespace gShell.DirectoryCmdlets.GAGroup
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "The email name of the group to be created.")]
         [ValidateNotNullOrEmpty]
-        public string EmailAddress { get; set; }
+        public string GroupName { get; set; }
 
         //Domain position = 1
 
         [Parameter(Position = 2,
             Mandatory = false,
             HelpMessage = "The formatted name of the group to be created.")]
-        public string GroupName { get; set; }
+        public string FormattedName { get; set; }
 
         [Parameter(Position = 3,
             Mandatory = false,
@@ -37,7 +38,7 @@ namespace gShell.DirectoryCmdlets.GAGroup
 
         protected override void ProcessRecord()
         {
-            if (ShouldProcess(GroupName, "New-GAGroup"))
+            if (ShouldProcess(FormattedName, "New-GAGroup"))
             {
                 CreateGroup();
             }
@@ -45,14 +46,14 @@ namespace gShell.DirectoryCmdlets.GAGroup
 
         private void CreateGroup()
         {
-            string fullEmail = GetFullEmailAddress(EmailAddress, Domain);
+            string fullEmail = GetFullEmailAddress(GroupName, Domain);
 
             Group groupAcct = new Group();
 
             groupAcct.Email = fullEmail;
 
-            if (!string.IsNullOrWhiteSpace(GroupName)) {
-                groupAcct.Name = GroupName;
+            if (!string.IsNullOrWhiteSpace(FormattedName)) {
+                groupAcct.Name = FormattedName;
             }
 
             if (!string.IsNullOrWhiteSpace(Description))

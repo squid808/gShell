@@ -14,7 +14,7 @@ namespace gShell.DirectoryCmdlets
         [Parameter(Position = 1,
             Mandatory = false,
             ValueFromPipelineByPropertyName = true,
-            HelpMessage = "The name of the Google Apps domain, ex contoso.com")]
+            HelpMessage = "The name of the Google Apps domain, ex contoso.com. If none is provided the gShell default domain will be used.")]
         [ValidateNotNullOrEmpty]
         public string Domain { get; set; }
 

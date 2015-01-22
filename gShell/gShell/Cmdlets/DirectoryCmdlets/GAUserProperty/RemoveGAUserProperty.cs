@@ -14,7 +14,8 @@ using gShell.Serialization;
 namespace gShell.DirectoryCmdlets.GAUser.GAUserProperties
 {
     [Cmdlet(VerbsCommon.Remove, "GAUserProperty",
-         SupportsShouldProcess = true)]
+         SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAUserProperty")]
     public class RemoveGAUserProperty : GAUserPropertyBase
     {
         #region Properties

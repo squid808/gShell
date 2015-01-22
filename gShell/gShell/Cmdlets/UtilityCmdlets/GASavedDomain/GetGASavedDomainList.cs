@@ -5,7 +5,8 @@ using System.Management.Automation;
 namespace gShell.UtilityCmdlets.SavedDomain
 {
     [Cmdlet(VerbsCommon.Get, "GASavedDomainList",
-          SupportsShouldProcess = true)]
+          SupportsShouldProcess = true,
+          HelpUri=@"https://github.com/squid808/gShell/wiki/Get-GASavedDomainList")]
     public class GetGASavedDomainList : UtilityBase
     {
         protected override void ProcessRecord()

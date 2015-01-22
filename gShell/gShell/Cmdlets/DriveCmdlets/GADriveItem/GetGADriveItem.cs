@@ -8,7 +8,8 @@ using gShell.DriveCmdlets;
 namespace gShell.DriveCmdlets.GADriveItem
 {
     [Cmdlet(VerbsCommon.Get, "GADriveItem",
-          SupportsShouldProcess = true)]
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GADriveItem")]
     public class GetGADriveItem : DriveBase
     {
         [Parameter(Position = 2,

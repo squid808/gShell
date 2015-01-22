@@ -4,7 +4,8 @@ using gShell.OAuth2;
 namespace gShell.UtilityCmdlets.SavedDomain
 {
     [Cmdlet(VerbsCommon.Set, "GADefaultDomain",
-        SupportsShouldProcess = true)]
+        SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GADefaultDomain")]
     public class SetGADefaultDomainCommand : UtilityBase
     {
         #region Parameters

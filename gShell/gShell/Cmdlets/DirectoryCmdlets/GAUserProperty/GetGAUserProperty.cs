@@ -12,7 +12,8 @@ using Newtonsoft.Json.Linq;
 namespace gShell.DirectoryCmdlets.GAUser.GAUserProperties
 {
      [Cmdlet(VerbsCommon.Get, "GAUserProperty",
-          SupportsShouldProcess = true)]
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAUserProperty")]
     public class GetGAUserProperty : GAUserPropertyBase
     {
         #region Properties
@@ -28,14 +29,14 @@ namespace gShell.DirectoryCmdlets.GAUser.GAUserProperties
          public GShellUserObject GShellObject { get; set; }
 
          [Parameter(Position = 3,
-            Mandatory = false,
+            Mandatory = true,
             HelpMessage = "The property type to retrieve for the user. Allowed values are: address, email, externalid, im, organization, phone, relation.",
             ParameterSetName="OneType")]
          [Alias("Type")]
          public GAUserPropertyType PropertyType { get; set; }
 
          [Parameter(Position = 3,
-            Mandatory = false,
+            Mandatory = true,
             HelpMessage = "Get all property types for the given user as a Property Collection.",
             ParameterSetName="AllTypes")]
          public SwitchParameter AllTypes { get; set; }

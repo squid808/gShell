@@ -8,7 +8,8 @@ namespace gShell.DirectoryCmdlets.GAUserAlias
 {
     [Cmdlet(VerbsCommon.New, "GAUserAlias",
           DefaultParameterSetName = "PasswordGenerated",
-          SupportsShouldProcess = true)]
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/New-GAUserAlias")]
     public class NewGAUserAlias : DirectoryBase
     {
         #region Properties

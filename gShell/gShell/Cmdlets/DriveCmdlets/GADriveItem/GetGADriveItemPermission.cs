@@ -7,7 +7,8 @@ using gShell.DriveCmdlets;
 namespace gShell.DriveCmdlets.GADriveItem
 {
     [Cmdlet(VerbsCommon.Get, "GADriveItemPermission",
-          SupportsShouldProcess = true)]
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GADriveItemPermission")]
     public class GetGADriveItemPermission : DriveBase
     {
         [Parameter(Mandatory = false,

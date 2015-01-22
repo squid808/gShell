@@ -8,7 +8,8 @@ namespace gShell.DirectoryCmdlets.GAUser
 {
     [Cmdlet(VerbsCommon.Remove, "GAUser",
         DefaultParameterSetName="UserName",
-        SupportsShouldProcess = true)]
+        SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAUser")]
     public class RemoveGAUser : DirectoryBase
     {
         #region Properties

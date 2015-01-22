@@ -6,7 +6,8 @@ using System.Management.Automation;
 namespace gShell.UtilityCmdlets.SavedDomain
 {
     [Cmdlet(VerbsCommon.Remove, "GASavedDomain",
-          SupportsShouldProcess = true)]
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GASavedDomain")]
     public class RemoveGASavedDomain : UtilityBase
     {
         [Parameter(Position = 0,

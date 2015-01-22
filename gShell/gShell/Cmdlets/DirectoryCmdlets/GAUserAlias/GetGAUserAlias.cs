@@ -8,7 +8,8 @@ namespace gShell.DirectoryCmdlets.GAUserAlias
 {
     [Cmdlet(VerbsCommon.Get, "GAUserAlias",
           DefaultParameterSetName = "OneUser",
-          SupportsShouldProcess = true)]
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAUserAlias")]
     public class GetGAUserAlias : GetGAUserBase
     {
         #region Properties
@@ -161,7 +162,8 @@ namespace gShell.DirectoryCmdlets.GAUserAlias
                     Users.Aliases.List(user.PrimaryEmail).Execute().AliasesValue);
                 i++;
 
-                if (aliasList.Count >= MaxResults) { break; }
+                if (MaxResults != 0 &&
+                    aliasList.Count >= MaxResults) { break; }
             }
 
             return aliasList;

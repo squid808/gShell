@@ -7,7 +7,8 @@ using Google.Apis.Admin.Directory.directory_v1.Data;
 namespace gShell.DirectoryCmdlets.GAUserAlias
 {
     [Cmdlet(VerbsCommon.Remove, "GAUserAlias",
-          SupportsShouldProcess = true)]
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAUserAlias")]
     public class RemoveGAUserAlias : DirectoryBase
     {
         #region Properties
