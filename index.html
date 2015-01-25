@@ -10,7 +10,7 @@
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <title>Gshell by squid808</title>
+    <title>gShell by squid808</title>
   </head>
 
   <body>
@@ -18,7 +18,7 @@
       <div class="inner">
 
         <header>
-          <h1>Gshell</h1>
+          <h1>gShell</h1>
           <h2>PowerShell Cmdlets for Google Apps and Gmail</h2>
         </header>
 
@@ -31,98 +31,94 @@
         <hr>
 
         <section id="main_content">
-          <h2>
-<a id="welcome-to-gshell" class="anchor" href="#welcome-to-gshell" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to gShell!</h2>
+          <h1>
+<a id="welcome-to-gshell" class="anchor" href="#welcome-to-gshell" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to gShell!</h1>
 
-<p>gShell is here to help you access and manage information from your Google Apps domain through the PowerShell scripting language. Please keep an eye on the <a href="https://github.com/squid808/gShell/wiki">Wiki</a> for what is available; this is a work in progress done in my spare time, so things are added irregularly but as frequently as possible. Did I mention your hair looks great today?</p>
+<h3>
+<a id="whats-new" class="anchor" href="#whats-new" aria-hidden="true"><span class="octicon octicon-link"></span></a>What's New?</h3>
 
-<h4>
-<a id="whats-new" class="anchor" href="#whats-new" aria-hidden="true"><span class="octicon octicon-link"></span></a>What's New?</h4>
+<p>Version 0.0.5.0 is now released! The release contains a bug fix and a bunch of new <a href="https://github.com/squid808/gShell/wiki/Working-With-User-Properties">GAUserProperty</a> Cmdlets that will help you work with some additional user attributes. In addition I've completely rewritten all of the documentation in the Wiki. <a href="https://github.com/squid808/gShell/wiki/News">Check out the News page for more!</a></p>
 
-<p>Version 0.0.5.0 is almost released with a better-than-ever installer, new *GAUserProperties cmdlets that let you add, edit and (almost) remove extended properties, and a brand new wiki with a ton of content. The cmdlets will use the built-in Online Help feature that will redirect you to the appropriate web page to get the help, and will try to stay web-based since you need to be online to use them anyways.</p>
+<h3>
+<a id="powershell-cmdlets-for-google-apis" class="anchor" href="#powershell-cmdlets-for-google-apis" aria-hidden="true"><span class="octicon octicon-link"></span></a>PowerShell Cmdlets for Google APIs</h3>
 
-<p>Want to help make this project even better? I'm looking for contributors in the following areas:</p>
+<p>gShell is a toolset that is here to help you access and manage information from your Google Apps domain through <a href="http://en.wikipedia.org/wiki/Windows_PowerShell">Windows PowerShell</a>. The goal is to be the only set of Cmdlets you'll need to use the Google APIs in PowerShell, though it's a long road.</p>
 
-<ul>
-<li>Writing code and submitting bug-fixes or new or expanded functionality</li>
-<li>Writing documentation for the wiki or for the help xml files, especially with examples and usage information</li>
-<li>Identifying bugs and things that need fixing</li>
-<li>Ideas on how to make it better and what to add next!</li>
-</ul>
+<p>Check out the <a href="https://github.com/squid808/gShell/wiki/Getting-Started">Getting Started</a> page to get going, or hop over to <a href="https://github.com/squid808/gShell/wiki/Downloads">Downloads</a> if you want to dive in with the installer.</p>
 
-<p>As always if you're interested or have any thoughts or questions, head on over to the <a href="https://github.com/squid808/gShell/wiki/Discussion-Groups">Discussion Groups</a> and let me know!</p>
+<p>Please keep an eye on the documentation here in the <a href="https://github.com/squid808/gShell/wiki">Wiki</a> for what is available; this is a work in progress done in my spare time so things are added irregularly but as frequently as possible.</p>
+
+<p>Finally, I'm always open to adding something new, so if there is a particular API that you want to use that I don't have yet, <a href="https://github.com/squid808/gShell/wiki/Discussion-Groups">let me know</a>!</p>
 
 <h4>
 <a id="quick-examples" class="anchor" href="#quick-examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Quick Examples</h4>
 
-<p>The goal of gShell is to allow you quick and easy access to your Google Apps domain. Down the road, I hope to expand it to include additional google APIs that can be used with <em>ANY</em> Google-based account. Check out some of the following examples to see how this can be helpful to you, once you get past the <em>quick setup</em>.</p>
+<p>The idea of gShell is to allow you quick and easy access to your Google Apps domain. Down the road, I hope to expand it to include additional Google APIs that can be used with <em>ANY</em> Google-based account. Check out some of the following examples to see how this can be helpful to you, once you get past the <a href="https://github.com/squid808/gShell/wiki/Getting-Started">quick setup</a>.</p>
 
-<p>First, you can grab a user from your domain and get it back as a <em>GAUser</em> object:</p>
+<p>First, you can grab a user from your domain and get it back as a <a href="https://github.com/squid808/gShell/wiki/GAUser">GAUser</a> object:</p>
 
-<pre><code>PS C:\&gt; Get-GAUser BMcGee mydomain.com
+<div class="highlight highlight-PowerShell"><pre>PS C:\&gt; <span class="pl-k"><span class="pl-k">Get-GAUser</span></span> BMcGee mydomain.com
 
 GivenName     : Bobby
 FamilyName    : McGee
 PrimaryEmail  : bmcgee@mydomain.com
 Aliases       : {bobbymcgee@mydomain.com, bobmcgee@mydomain.com}
 Suspended     : False
-OrgUnitPath   : /
-LastLoginTime : 2013-10-25T05:10:40.000Z
-</code></pre>
+OrgUnitPath   : <span class="pl-k">/</span>
+LastLoginTime : <span class="pl-c1">2013</span><span class="pl-k"><span class="pl-k">-</span></span><span class="pl-c1">10</span><span class="pl-k"><span class="pl-k">-</span></span><span class="pl-c1">25</span>T05:<span class="pl-c1">10</span>:<span class="pl-c1">40.00</span>0Z</pre></div>
 
 <p>Or, you can elect to get all users in the domain and throw them in a variable, perhaps to compare against your AD Environment:</p>
 
-<pre><code>PS C:\&gt; $AllUsers = Get-GAUser -all
+<div class="highlight highlight-PowerShell"><pre>PS C:\&gt; <span class="pl-vo">$AllUsers</span> <span class="pl-k">=</span> <span class="pl-k"><span class="pl-k">Get-GAUser</span></span> <span class="pl-k">-</span>all
 
-----
-PS C:\&gt; $AllUsers.Count
+<span class="pl-k">----</span>
+PS C:\&gt; <span class="pl-vo">$AllUsers</span>.Count
 
-9001
-</code></pre>
+<span class="pl-c1">9001</span></pre></div>
 
-<p>Better yet, perhaps you need to get a list of all users in all groups? in the domain...</p>
+<p>Better yet, perhaps you need to get a list of all users in all <a href="https://github.com/squid808/gShell/wiki/GAGroup">groups</a> in the domain...</p>
 
-<pre><code>PS C:\&gt; $AllGroups = Get-GAGroup mydomain.com -All -Members -Owners
-#A progress bar will show up for this, since it's potentially a long wait
+<div class="highlight highlight-PowerShell"><pre>PS C:\&gt; <span class="pl-vo">$AllGroups</span> <span class="pl-k">=</span> <span class="pl-k"><span class="pl-k">Get-GAGroup</span></span> mydomain.com <span class="pl-k">-</span>All <span class="pl-k">-</span>Members <span class="pl-k">-</span>Owners
+<span class="pl-c">#A progress bar will show up for this, since it's potentially a long wait</span>
 
-----
-PS C:\&gt; $AllGroups.Count
+<span class="pl-k">----</span>
+PS C:\&gt; <span class="pl-vo">$AllGroups</span>.Count
 
-42
-</code></pre>
+<span class="pl-c1">42</span></pre></div>
 
-<p>...or you want to find all members of all groups, and throw that in a list for easy export to CSV? Got that covered:</p>
+<p>...or you want to find all members of all groups, and throw that in a list for easy export to CSV Got that covered:</p>
 
-<pre><code>PS C:\&gt; $AllMembers = (Get-GAGroupMember -All).ToSingleList()
+<div class="highlight highlight-PowerShell"><pre>PS C:\&gt; <span class="pl-vo">$AllMembers</span> <span class="pl-k">=</span> (<span class="pl-k"><span class="pl-k">Get-GAGroupMember</span></span> <span class="pl-k">-</span>All).ToSingleList()
 
-----
-PS C:\&gt; $AllMembers[0]
+<span class="pl-k">----</span>
+PS C:\&gt; <span class="pl-vo">$AllMembers</span>[<span class="pl-c1">0</span>]
 
 Email : bobbymcgee@mydomain.com
-ETag  : "01...HQ"
-Id    : 12..89
+ETag  : <span class="pl-s1"><span class="pl-pds">"</span>01...rs/44...HQ<span class="pl-pds">"</span></span>
+Id    : <span class="pl-c1">123456789123456789123</span>
 Kind  : admin#directory#member
 Role  : MEMBER
 Type  : USER
 Group : songcharacters@mydomain.com
 
-----
-PS C:\&gt; $AllMembers | Export-Csv -Path "C:\AllGroupMemberships.csv" -NoTypeInformation
+<span class="pl-k">----</span>
+PS C:\&gt; <span class="pl-vo">$AllMembers</span> <span class="pl-k">|</span> <span class="pl-k"><span class="pl-k">Export-Csv</span></span> <span class="pl-k">-</span>Path <span class="pl-s1"><span class="pl-pds">"</span>C:\AllGroupMemberships.csv<span class="pl-pds">"</span></span> <span class="pl-k">-</span>NoTypeInformation
 
-----
-PS C:\&gt; (Get-Content "C:\AllDomainGroupMemberships.csv")[0..1]
-#Let's look directly at the CSV file...
+<span class="pl-k">----</span>
+PS C:\&gt; (<span class="pl-k"><span class="pl-k">Get-Content</span></span> <span class="pl-s1"><span class="pl-pds">"</span>C:\AllDomainGroupMemberships.csv<span class="pl-pds">"</span></span>)[<span class="pl-c1">0..1</span>]
+<span class="pl-c">#Let's look directly at the CSV file...</span>
 
-"Email","ETag","Id","Kind","Role","Type","Group"
-,"""01..HQ""","12..89","admin#directory#member","MEMBER","USER"
-,"songcharacters@mydomain.com"
-</code></pre>
+<span class="pl-s1"><span class="pl-pds">"</span>Email<span class="pl-pds">"</span></span>,<span class="pl-s1"><span class="pl-pds">"</span>ETag<span class="pl-pds">"</span></span>,<span class="pl-s1"><span class="pl-pds">"</span>Id<span class="pl-pds">"</span></span>,<span class="pl-s1"><span class="pl-pds">"</span>Kind<span class="pl-pds">"</span></span>,<span class="pl-s1"><span class="pl-pds">"</span>Role<span class="pl-pds">"</span></span>,<span class="pl-s1"><span class="pl-pds">"</span>Type<span class="pl-pds">"</span></span>,<span class="pl-s1"><span class="pl-pds">"</span>Group<span class="pl-pds">"</span></span>
+,<span class="pl-s1"><span class="pl-pds">"""</span>01...rs/44...HQ<span class="pl-pds">"""</span></span>,<span class="pl-s1"><span class="pl-pds">"</span>12...23<span class="pl-pds">"</span></span>,<span class="pl-s1"><span class="pl-pds">"</span>admin#directory#member<span class="pl-pds">"</span></span>,<span class="pl-s1"><span class="pl-pds">"</span>MEMBER<span class="pl-pds">"</span></span>,<span class="pl-s1"><span class="pl-pds">"</span>USER<span class="pl-pds">"</span></span>
+,<span class="pl-s1"><span class="pl-pds">"</span>songcharacters@mydomain.com<span class="pl-pds">"</span></span></pre></div>
 
-<p>This is the tip of the iceberg of what's possible and what's available. If you need help or have questions, requests or you found a bug, drop a line in the <a href="https://github.com/squid808/gShell/wiki/Discussion-Groups">Discussion Groups</a>.</p>
+<p>This is the tip of the iceberg of what's possible and what's available. If you need help or have questions, requests or you found a bug, drop a line in the <a href="https://github.com/squid808/gShell/wiki/Discussion-Groups">discussion group</a>.</p>
+
+<p>Stay tuned, and please reach out if you have any questions, concerns or requests.</p>
         </section>
 
         <footer>
-          Gshell is maintained by <a href="https://github.com/squid808">squid808</a><br>
+          gShell is maintained by <a href="https://github.com/squid808">squid808</a><br>
           This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
         </footer>
 
