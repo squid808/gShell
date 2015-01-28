@@ -40,6 +40,15 @@ namespace gShell.DirectoryCmdlets.GAGroup
             HelpMessage = "Force the cmdlet to refresh any cached information. This will ensure you get up-to-date information from the web.")]
         public SwitchParameter ForceCacheReload { get; set; }
 
+        [Parameter(Position = 5,
+            ParameterSetName = "OneUser",
+            Mandatory = true,
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "The email name of the group you want to retrieve. For a group AllThings@domain.com named 'All The Things', use AllThings.")]
+        [ValidateNotNullOrEmpty]
+        public string UserName { get; set; }
+
         #endregion
 
         protected override void ProcessRecord()
@@ -64,6 +73,13 @@ namespace gShell.DirectoryCmdlets.GAGroup
                         {
                             WriteObject(GetAllGroups());
                         }
+                    }
+                    break;
+
+                case "OneUser":
+                    if (ShouldProcess(GroupName, "Get-GAGroup"))
+                    {
+                        WriteObject(GetAllGroups(UserName));
                     }
                     break;
             }
@@ -105,15 +121,15 @@ namespace gShell.DirectoryCmdlets.GAGroup
             return (returnedGroup);
         }
 
-        protected List<Group> GetAllGroups()
+        protected List<Group> GetAllGroups(string userName = "")
         {
             //TODO: Figure out multi-domain accounts
 
             GroupsResource.ListRequest request = directoryServiceDict[Domain].Groups.List();
 
-            if (MultiDomain)
+            if (userName != "")
             {
-                request.Customer = currentUserInfo.Id;
+                request.UserKey = GetFullEmailAddress(userName, Domain);
             }
             else
             {
