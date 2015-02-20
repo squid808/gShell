@@ -32,14 +32,14 @@ namespace gShell.UtilityCmdlets.SavedDomain
             if (SavedFile.ContainsUserOrDomain(Domain))
             {
                 SavedFile.SetDefaultDomain(Domain);
-                currentDomain = Domain;
+                OAuth2Base.SetCurrentDomain(Domain);
             }
             else
             {
-                currentDomain = Authenticate(Domain);
+                OAuth2Base.SetCurrentDomain(Authenticate(Domain));
             }
 
-            defaultDomain = currentDomain;
+            OAuth2Base.SetDefaultDomain(OAuth2Base.currentDomain);
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Management.Automation;
 using Microsoft.PowerShell.Commands;
 using Google.Apis.Admin.Directory.directory_v1;
 using Google.Apis.Admin.Directory.directory_v1.Data;
+using gShell.OAuth2;
 
 namespace gShell.DirectoryCmdlets.GAUser
 {
@@ -75,7 +76,7 @@ namespace gShell.DirectoryCmdlets.GAUser
         /// <returns></returns>
         protected User GetOneUser(string UserName)
         {
-            string fullEmail = GetFullEmailAddress(UserName, Domain);
+            string fullEmail = OAuth2Base.GetFullEmailAddress(UserName, Domain);
 
             User returnedUser = directoryServiceDict[Domain].
                         Users.Get(fullEmail).Execute();
@@ -95,7 +96,7 @@ namespace gShell.DirectoryCmdlets.GAUser
 
             if (MultiDomain)
             {
-                request.Customer = currentUserInfo.Id;
+                request.Customer = OAuth2Base.currentUserInfo.Id;
             }
             else
             {

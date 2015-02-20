@@ -2,6 +2,7 @@
 using System.Management.Automation;
 using Google.Apis.Admin.Directory.directory_v1;
 using Google.Apis.Admin.Directory.directory_v1.Data;
+using gShell.OAuth2;
 
 namespace gShell.DirectoryCmdlets.GAGroup
 {
@@ -97,7 +98,7 @@ namespace gShell.DirectoryCmdlets.GAGroup
 
         protected Group GetOneGroup(string GroupName)
         {
-            string fullEmail = GetFullEmailAddress(GroupName, Domain);
+            string fullEmail = OAuth2Base.GetFullEmailAddress(GroupName, Domain);
 
             Group returnedGroup = directoryServiceDict[Domain].
                         Groups.Get(fullEmail).Execute();
@@ -113,7 +114,7 @@ namespace gShell.DirectoryCmdlets.GAGroup
 
             if (MultiDomain)
             {
-                request.Customer = currentUserInfo.Id;
+                request.Customer = OAuth2Base.currentUserInfo.Id;
             }
             else
             {

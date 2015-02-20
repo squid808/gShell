@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Management.Automation;
 using Google.Apis.Admin.Directory.directory_v1;
 using Google.Apis.Admin.Directory.directory_v1.Data;
+using gShell.OAuth2;
 
 namespace gShell.DirectoryCmdlets.GAUser
 {
@@ -73,7 +74,7 @@ namespace gShell.DirectoryCmdlets.GAUser
             switch (ParameterSetName)
             {
                 case "UserName":
-                    fullEmail = GetFullEmailAddress(UserName, Domain);
+                    fullEmail = OAuth2Base.GetFullEmailAddress(UserName, Domain);
                     break;
 
                 case "GAUserObject":

@@ -15,7 +15,7 @@ namespace gShell.OAuth2
         public OAuth2Info(Userinfoplus UserInfo, string StoredToken)
         {
             this.email = UserInfo.Email;
-            this.domain = OAuth2CmdletBase.GetDomainFromEmail(UserInfo.Email);
+            this.domain = OAuth2Base.GetDomainFromEmail(UserInfo.Email);
             this.storedToken = StoredToken;
         }
     }

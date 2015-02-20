@@ -18,6 +18,9 @@ namespace gShell.DirectoryCmdlets
         [ValidateNotNullOrEmpty]
         public string Domain { get; set; }
 
+
+        protected static Dictionary<string, DirectoryService> directoryServiceDict; //a collection of directory services by domain
+
         //protected static Dictionary<string, DirectoryService> directoryServiceDict;
         protected static Dictionary<string, List<User>> cachedDomainUsers;
         protected static Dictionary<string, List<Group>> cachedDomainGroups;
@@ -64,21 +67,29 @@ namespace gShell.DirectoryCmdlets
             {
                 DirectoryService service = BuildDirectoryService(givenDomain);
 
-                if (currentDomain == "gmail.com")
+                if (OAuth2Base.currentDomain == "gmail.com")
                 {
                     ThrowTerminatingError(new ErrorRecord(new Exception("This cmdlet is not available for a gmail account."),
-                        "", ErrorCategory.InvalidData, currentDomain));
+                        "", ErrorCategory.InvalidData, OAuth2Base.currentDomain));
                 }
 
                 //current domain should be set at this point 
-                directoryServiceDict.Add(currentDomain, service);
+                directoryServiceDict.Add(OAuth2Base.currentDomain, service);
 
-                return currentDomain;
+                return OAuth2Base.currentDomain;
             }
             else
             {
                 return givenDomain;
             }
+        }
+
+        /// <summary>
+        /// Create a directory service for the provided domain.
+        /// </summary>
+        protected DirectoryService BuildDirectoryService(string givenDomain)
+        {
+            return new DirectoryService(OAuth2Base.GetInitializer(givenDomain));
         }
 
         protected static string GetMd5Hash(string s)

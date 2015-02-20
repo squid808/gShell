@@ -4,6 +4,7 @@ using System.Management.Automation;
 using gShell.DirectoryCmdlets.GAGroup;
 using Google.Apis.Admin.Directory.directory_v1;
 using Google.Apis.Admin.Directory.directory_v1.Data;
+using gShell.OAuth2;
 
 namespace gShell.DirectoryCmdlets.GAGroupMember
 {
@@ -67,7 +68,7 @@ namespace gShell.DirectoryCmdlets.GAGroupMember
             {
                 if (ShouldProcess(GroupName, "Get-GAGroupMember"))
                 {
-                    GroupName = GetFullEmailAddress(GroupName, Domain);
+                    GroupName = OAuth2Base.GetFullEmailAddress(GroupName, Domain);
                     WriteObject(GetOneMember());
                 }
             }
@@ -78,7 +79,7 @@ namespace gShell.DirectoryCmdlets.GAGroupMember
                     case "OneGroup":
                         if (ShouldProcess(GroupName, "Get-GAGroupMember"))
                         {
-                            GroupName = GetFullEmailAddress(GroupName, Domain);
+                            GroupName = OAuth2Base.GetFullEmailAddress(GroupName, Domain);
                             WriteObject(GetMemberList(GroupName));
                         }
                         break;
@@ -213,7 +214,7 @@ namespace gShell.DirectoryCmdlets.GAGroupMember
         /// </summary>
         private Member GetOneMember()
         {
-            UserName = GetFullEmailAddress(UserName, Domain);
+            UserName = OAuth2Base.GetFullEmailAddress(UserName, Domain);
 
             Member groupMember = directoryServiceDict[Domain].Members.Get(GroupName, UserName).Execute();
 

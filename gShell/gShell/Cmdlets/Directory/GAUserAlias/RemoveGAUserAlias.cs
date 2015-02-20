@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Management.Automation;
 using Google.Apis.Admin.Directory.directory_v1;
 using Google.Apis.Admin.Directory.directory_v1.Data;
+using gShell.OAuth2;
 
 namespace gShell.DirectoryCmdlets.GAUserAlias
 {
@@ -66,13 +67,13 @@ namespace gShell.DirectoryCmdlets.GAUserAlias
 
         private void RemoveUserAlias()
         {
-            string fullAliasEmail = GetFullEmailAddress(UserAliasName, Domain);
+            string fullAliasEmail = OAuth2Base.GetFullEmailAddress(UserAliasName, Domain);
 
             if (string.IsNullOrWhiteSpace(UserName)) {
                 UserName = directoryServiceDict[Domain].Users.Get(fullAliasEmail).Execute().PrimaryEmail;
             }
 
-            string fullEmail = GetFullEmailAddress(UserName, Domain);
+            string fullEmail = OAuth2Base.GetFullEmailAddress(UserName, Domain);
 
             
 

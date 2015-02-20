@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Management.Automation;
 using Google.Apis.Admin.Directory.directory_v1;
 using Google.Apis.Admin.Directory.directory_v1.Data;
+using gShell.OAuth2;
 
 namespace gShell.DirectoryCmdlets.GAGroup
 {
@@ -47,7 +48,7 @@ namespace gShell.DirectoryCmdlets.GAGroup
 
         private void UpdateGroup()
         {
-            string fullEmail = GetFullEmailAddress(GroupName, Domain);
+            string fullEmail = OAuth2Base.GetFullEmailAddress(GroupName, Domain);
 
             //Group groupAcct = directoryServiceDict[Domain].Groups.Get(fullEmail).Execute();
             Group groupAcct = new Group();
@@ -75,7 +76,7 @@ namespace gShell.DirectoryCmdlets.GAGroup
 
             if (!String.IsNullOrWhiteSpace(NewEmailAddress))
             {
-                string _newEmail = GetFullEmailAddress(NewEmailAddress, Domain);
+                string _newEmail = OAuth2Base.GetFullEmailAddress(NewEmailAddress, Domain);
                 groupAcct.Email = _newEmail;
             }
 

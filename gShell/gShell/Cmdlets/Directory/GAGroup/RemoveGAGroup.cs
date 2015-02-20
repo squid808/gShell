@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Management.Automation;
 using Google.Apis.Admin.Directory.directory_v1;
 using Google.Apis.Admin.Directory.directory_v1.Data;
+using gShell.OAuth2;
 
 namespace gShell.DirectoryCmdlets.GAGroup
 {
@@ -73,7 +74,7 @@ namespace gShell.DirectoryCmdlets.GAGroup
             switch (ParameterSetName)
             {
                 case "GroupName":
-                    fullEmail = GetFullEmailAddress(GroupName, Domain);
+                    fullEmail = OAuth2Base.GetFullEmailAddress(GroupName, Domain);
                     break;
 
                 case "GAGroupObject":

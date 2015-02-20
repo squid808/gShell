@@ -197,7 +197,7 @@ namespace gShell.OAuth2
 
             foreach (string key in storedInfo.Keys)
             {
-                keySet.Add(OAuth2CmdletBase.GetDomainFromEmail(key));
+                keySet.Add(OAuth2Base.GetDomainFromEmail(key));
             }
 
             keys.AddRange(keySet);
@@ -244,7 +244,7 @@ namespace gShell.OAuth2
                 //a user from this domain yet remains
                 foreach (string key in storedInfo.Keys)
                 {
-                    string _domain = OAuth2CmdletBase.GetDomainFromEmail(key);
+                    string _domain = OAuth2Base.GetDomainFromEmail(key);
 
                     if (_domain == domainName)
                     {

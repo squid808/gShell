@@ -4,6 +4,7 @@ using System.Management.Automation;
 using gShell.DirectoryCmdlets.GAGroup;
 using Google.Apis.Admin.Directory.directory_v1;
 using Google.Apis.Admin.Directory.directory_v1.Data;
+using gShell.OAuth2;
 
 namespace gShell.DirectoryCmdlets.GAGroupMember
 {
@@ -67,9 +68,9 @@ namespace gShell.DirectoryCmdlets.GAGroupMember
 
         private void RemoveGroupMember()
         {
-            GroupName = GetFullEmailAddress(GroupName, Domain);
+            GroupName = OAuth2Base.GetFullEmailAddress(GroupName, Domain);
 
-            UserName = GetFullEmailAddress(UserName, Domain);
+            UserName = OAuth2Base.GetFullEmailAddress(UserName, Domain);
 
             directoryServiceDict[Domain].Members.Delete(GroupName, UserName).Execute();
         }

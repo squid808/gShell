@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Management.Automation;
 using Google.Apis.Admin.Directory.directory_v1;
 using Google.Apis.Admin.Directory.directory_v1.Data;
+using gShell.OAuth2;
 
 namespace gShell.DirectoryCmdlets.GAUser
 {
@@ -68,7 +69,7 @@ namespace gShell.DirectoryCmdlets.GAUser
 
         private void CreateUser()
         {
-            string fullEmail = GetFullEmailAddress(UserName, Domain);
+            string fullEmail = OAuth2Base.GetFullEmailAddress(UserName, Domain);
 
             User userAcct = new User();
 

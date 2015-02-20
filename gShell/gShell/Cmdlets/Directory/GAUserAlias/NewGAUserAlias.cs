@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Management.Automation;
 using Google.Apis.Admin.Directory.directory_v1;
 using Google.Apis.Admin.Directory.directory_v1.Data;
+using gShell.OAuth2;
 
 namespace gShell.DirectoryCmdlets.GAUserAlias
 {
@@ -40,11 +41,11 @@ namespace gShell.DirectoryCmdlets.GAUserAlias
 
         private void CreateUserAlias()
         {
-            string fullEmail = GetFullEmailAddress(UserName, Domain);
+            string fullEmail = OAuth2Base.GetFullEmailAddress(UserName, Domain);
 
             Alias aliasBody = new Alias();
 
-            aliasBody.AliasValue = GetFullEmailAddress(Alias, Domain);
+            aliasBody.AliasValue = OAuth2Base.GetFullEmailAddress(Alias, Domain);
 
             directoryServiceDict[Domain].Users.Aliases.Insert(aliasBody, fullEmail).Execute();
         }

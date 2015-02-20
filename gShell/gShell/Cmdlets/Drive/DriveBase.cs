@@ -16,6 +16,10 @@ namespace gShell.DriveCmdlets
     {
         protected static DriveService serviceAccountService;
 
+
+        protected static Dictionary<string, Dictionary<string, DriveService>> driveServiceDict
+            = new Dictionary<string,Dictionary<string,DriveService>>(); //a collection of drive services by email address
+
         [Parameter(Position = 0,
             Mandatory = false,
             ValueFromPipeline = false,
@@ -34,21 +38,21 @@ namespace gShell.DriveCmdlets
 
         public DriveBase()
         {
-            if (null == driveServiceDict)
-            {
-                driveServiceDict = new Dictionary<string, Dictionary<string, DriveService>>();
-            }
+            //if (null == driveServiceDict)
+            //{
+            //    driveServiceDict = new Dictionary<string, Dictionary<string, DriveService>>();
+            //}
 
-            if (null == directoryServiceDict)
-            {
-                directoryServiceDict = new Dictionary<string, DirectoryService>();
-            }
+            //if (null == directoryServiceDict)
+            //{
+            //    directoryServiceDict = new Dictionary<string, DirectoryService>();
+            //}
         }
 
         protected override void BeginProcessing()
         {
             Domain = Authenticate(Domain);
-            User = DetermineUserEmail(User, Domain);
+            User = OAuth2Base.DetermineUserEmail(User, Domain);
         }
 
         protected override string BuildService(string givenDomain)
@@ -56,32 +60,34 @@ namespace gShell.DriveCmdlets
             //first we need to make sure we have the proper domain credentials
 
             if (string.IsNullOrWhiteSpace(givenDomain) ||
-                !userCredentialsDict.ContainsKey(givenDomain))
+                !OAuth2Base.userCredentialsDict.ContainsKey(givenDomain))
             {
-                ReturnUserCredential(givenDomain, User); //we need the user in case of gmail
-            }
-            
-            if (!driveServiceDict.ContainsKey(currentDomain)) {
-                driveServiceDict.Add(currentDomain, new Dictionary<string,DriveService>());
+                OAuth2Base.ReturnUserCredential(givenDomain, User); //we need the user in case of gmail
             }
 
-            User = (null == User) ? currentUserInfo.Email : GetFullEmailAddress(User, currentDomain);
-
-            if (!driveServiceDict[currentDomain].ContainsKey(User))
+            if (!driveServiceDict.ContainsKey(OAuth2Base.currentDomain))
             {
-                if (User == currentUserInfo.Email 
-                    || User == SavedFile.GetDomainDefaultUser(currentDomain)
-                    || currentDomain == "gmail.com")
+                driveServiceDict.Add(OAuth2Base.currentDomain, new Dictionary<string, DriveService>());
+            }
+
+            User = (null == User) ? OAuth2Base.currentUserInfo.Email :
+                OAuth2Base.GetFullEmailAddress(User, OAuth2Base.currentDomain);
+
+            if (!driveServiceDict[OAuth2Base.currentDomain].ContainsKey(User))
+            {
+                if (User == OAuth2Base.currentUserInfo.Email
+                    || User == SavedFile.GetDomainDefaultUser(OAuth2Base.currentDomain)
+                    || OAuth2Base.currentDomain == "gmail.com")
                 {
                     //user was provided, is the current user / default user for the domain OR is a gmail user
-                    CreateUserDriveService(currentDomain);
+                    CreateUserDriveService(OAuth2Base.currentDomain);
                 } else {
                     //user provided is someone in the domain other than the primary user making the calls, so use a service account.
-                    CreateServiceAcctDriveService(currentDomain, User);
+                    CreateServiceAcctDriveService(OAuth2Base.currentDomain, User);
                 }
             }
 
-            return currentDomain;
+            return OAuth2Base.currentDomain;
         }
 
         /// <summary>
@@ -91,13 +97,13 @@ namespace gShell.DriveCmdlets
 
             DriveService service = new DriveService(new BaseClientService.Initializer()
                 {
-                    HttpClientInitializer = ReturnUserCredential(domain),
-                    ApplicationName = appName,
+                    HttpClientInitializer = OAuth2Base.ReturnUserCredential(domain),
+                    ApplicationName = OAuth2Base.appName,
                 });
 
-            driveServiceDict[currentDomain].Add(currentUserInfo.Email, service);
+            driveServiceDict[OAuth2Base.currentDomain].Add(OAuth2Base.currentUserInfo.Email, service);
 
-            User = currentUserInfo.Email;
+            User = OAuth2Base.currentUserInfo.Email;
         }
 
         /// <summary>
@@ -105,29 +111,9 @@ namespace gShell.DriveCmdlets
         /// </summary>
         protected void CreateServiceAcctDriveService(string domain, string userEmail)
         {
-            if (null == serviceAcctInitializer)
-            {
-                serviceAcctInitializer =
-                    new ServiceAccountCredential.Initializer(SavedFile.GetServiceAccountEmail())
-                    {
-                        Scopes = serviceAccountScope,
-                        User = userEmail
-                    }.FromCertificate(SavedFile.GetServiceAccountCert());
-                X509Certificate2 cert = SavedFile.GetServiceAccountCert();
-            }
-            else
-            {
-                serviceAcctInitializer.User = GetFullEmailAddress(userEmail, domain);
-            }
+            ServiceAccountCredential credential = new ServiceAccountCredential(OAuth2Base.GetServiceAccountInitializer(userEmail, domain));
 
-            ServiceAccountCredential credential = new ServiceAccountCredential(serviceAcctInitializer);
-
-            // Create the service.
-            serviceAccountService = new DriveService(new BaseClientService.Initializer()
-            {
-                HttpClientInitializer = credential,
-                ApplicationName = appName,
-            });
+            serviceAccountService = new DriveService(OAuth2Base.GetInitializer(credential));
 
             driveServiceDict[domain].Add(userEmail, serviceAccountService);
         }
