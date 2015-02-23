@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using gShell.OAuth2;
 using System.Management.Automation;
 
-namespace gShell.UtilityCmdlets.SavedDomain
+namespace gShell.Cmdlets.Utilities.GASavedDomain
 {
     [Cmdlet(VerbsCommon.Remove, "GASavedDomain",
           SupportsShouldProcess = true,

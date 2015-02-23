@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Management.Automation;
 using System.Collections.Generic;
-using gShell.OAuth2;
+using gShell.dotNet.Utilities.OAuth2;
 
-namespace gShell.UtilityCmdlets.ServiceAccount
+namespace gShell.Cmdlets.Utilities.GAServiceAccount
 {
     [Cmdlet(VerbsCommon.Set, "GAServiceAccount",
           SupportsShouldProcess = true,

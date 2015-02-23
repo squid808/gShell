@@ -4,9 +4,9 @@ using System.Management.Automation;
 using Microsoft.PowerShell.Commands;
 using Google.Apis.Admin.Directory.directory_v1;
 using Google.Apis.Admin.Directory.directory_v1.Data;
-using gShell.OAuth2;
+using gShell.dotNet.Utilities.OAuth2;
 
-namespace gShell.DirectoryCmdlets.GAUser
+namespace gShell.Cmdlets.Directory.GAUser
 {
     /// <summary>
     /// This class serves as a base for any class that needs to return a google user object, and contains

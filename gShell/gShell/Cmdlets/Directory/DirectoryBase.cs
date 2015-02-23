@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Management.Automation;
 using System.Collections.Generic;
-using gShell.OAuth2;
+using gShell.dotNet.Utilities.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.Admin.Directory.directory_v1;
 using Google.Apis.Admin.Directory.directory_v1.Data;
 using gShell.DirectoryCmdlets.GAUserAlias;
 
-namespace gShell.DirectoryCmdlets
+namespace gShell.Cmdlets.Directory
 {
     public abstract class DirectoryBase : OAuth2CmdletBase
     {

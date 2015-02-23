@@ -1,7 +1,7 @@
-﻿using gShell.OAuth2;
+﻿using gShell.dotNet.Utilities.OAuth2;
 using System.Management.Automation;
 
-namespace gShell.UtilityCmdlets.SavedDomain
+namespace gShell.Cmdlets.Utilities.GASavedDomain
 {
     [Cmdlet(VerbsCommon.Get, "GADefaultDomain",
           SupportsShouldProcess = true,

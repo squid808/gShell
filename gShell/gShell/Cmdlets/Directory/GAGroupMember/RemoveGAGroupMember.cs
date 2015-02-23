@@ -4,9 +4,9 @@ using System.Management.Automation;
 using gShell.DirectoryCmdlets.GAGroup;
 using Google.Apis.Admin.Directory.directory_v1;
 using Google.Apis.Admin.Directory.directory_v1.Data;
-using gShell.OAuth2;
+using gShell.dotNet.Utilities.OAuth2;
 
-namespace gShell.DirectoryCmdlets.GAGroupMember
+namespace gShell.Cmdlets.Directory.GAGroupMember
 {
     [Cmdlet(VerbsCommon.Remove, "GAGroupMember",
           DefaultParameterSetName = "OneGroup",

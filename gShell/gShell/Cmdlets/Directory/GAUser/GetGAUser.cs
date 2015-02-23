@@ -4,7 +4,7 @@ using System.Management.Automation;
 using Google.Apis.Admin.Directory.directory_v1;
 using Google.Apis.Admin.Directory.directory_v1.Data;
 
-namespace gShell.DirectoryCmdlets.GAUser
+namespace gShell.Cmdlets.Directory.GAUser
 {
     [Cmdlet(VerbsCommon.Get, "GAUser",
           DefaultParameterSetName = "OneUser",

@@ -1,7 +1,7 @@
 ﻿using System.Management.Automation;
-using gShell.OAuth2;
+using gShell.dotNet.Utilities.OAuth2;
 
-namespace gShell.UtilityCmdlets
+namespace gShell.Cmdlets.Utilities
 {
     public abstract class UtilityBase : OAuth2CmdletBase
     {

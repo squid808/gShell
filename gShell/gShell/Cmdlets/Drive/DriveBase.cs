@@ -2,7 +2,7 @@
 using System.Management.Automation;
 using System.Collections.Generic;
 //using System.Security.Cryptography;
-using gShell.OAuth2;
+using gShell.dotNet.Utilities.OAuth2;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.Drive.v2;
@@ -10,7 +10,7 @@ using Google.Apis.Drive.v2.Data;
 using Google.Apis.Admin.Directory.directory_v1;
 using System.Security.Cryptography.X509Certificates;
 
-namespace gShell.DriveCmdlets
+namespace gShell.Cmdlets.Drive
 {
     public abstract class DriveBase : OAuth2CmdletBase
     {

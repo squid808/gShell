@@ -4,7 +4,7 @@ using Google.Apis.Json;
 using Newtonsoft.Json;
 using Google.Apis.Services;
 
-namespace gShell.Serialization
+namespace gShell.dotNet.Utilities.CustomSerializer
 {
 
     /// <summary>

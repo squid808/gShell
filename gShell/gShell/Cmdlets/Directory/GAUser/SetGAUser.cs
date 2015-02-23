@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Management.Automation;
 using Google.Apis.Admin.Directory.directory_v1;
 using Google.Apis.Admin.Directory.directory_v1.Data;
-using gShell.OAuth2;
+using gShell.dotNet.Utilities.OAuth2;
 
-namespace gShell.DirectoryCmdlets.GAUser
+namespace gShell.Cmdlets.Directory.GAUser
 {
     [Cmdlet(VerbsCommon.Set, "GAUser",
           DefaultParameterSetName = "NoPasswordProvided",
