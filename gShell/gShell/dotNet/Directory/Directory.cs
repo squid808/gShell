@@ -5,18 +5,14 @@ using Data = Google.Apis.Admin.Directory.directory_v1.Data;
 using gShell.dotNet;
 using gShell.dotNet.Utilities.OAuth2;
 
-namespace gShell.dotNet.Directory
+namespace gShell.dotNet
 {
-    class Directory : ServiceWrapper<directory_v1.DirectoryService>
+    public abstract class Directory : ServiceWrapper<directory_v1.DirectoryService>
     {
-        #region Properties
-        private static string activeDomain;
-        #endregion
-
         #region Inherited Members
-        private static override bool worksWithGmail = false;
+        protected static bool worksWithGmail = false;
 
-        private static override directory_v1.DirectoryService CreateNewService(string domain)
+        protected static directory_v1.DirectoryService CreateNewService(string domain)
         {
             return new directory_v1.DirectoryService(OAuth2Base.GetInitializer(domain));
         }
@@ -28,6 +24,17 @@ namespace gShell.dotNet.Directory
         #region Chromeosdevices
         public class ChromeosDevices
         {
+            public class ChromeosDevicesListProperties
+            {
+                public int maxResults=100;
+                public directory_v1.ChromeosdevicesResource.ListRequest.OrderByEnum? orderBy=null;
+                public directory_v1.ChromeosdevicesResource.ListRequest.ProjectionEnum? projection=null;
+                public directory_v1.ChromeosdevicesResource.ListRequest.SortOrderEnum? sortOrder = null;
+                public Action<string, string> startProgressBar = null;
+                public Action<int, int, string, string> updateProgressBar = null;
+                public int totalResults = 0;
+            }
+
             public static Data.ChromeOsDevice Get(string customerId, string deviceId,
                 directory_v1.ChromeosdevicesResource.GetRequest.ProjectionEnum? projection=null)
             {
@@ -37,32 +44,46 @@ namespace gShell.dotNet.Directory
                 return request.Execute();
             }
 
-            public static List<Data.ChromeOsDevice> List(string customerId, int maxResults=100,
-                directory_v1.ChromeosdevicesResource.ListRequest.OrderByEnum? orderBy=null,
-                directory_v1.ChromeosdevicesResource.ListRequest.ProjectionEnum? projection=null,
-                directory_v1.ChromeosdevicesResource.ListRequest.SortOrderEnum? sortOrder=null)
+            public static List<Data.ChromeOsDevice> List(string customerId, ChromeosDevicesListProperties properties = null)
             {
                 List<Data.ChromeOsDevice> results = new List<Data.ChromeOsDevice>();
 
                 directory_v1.ChromeosdevicesResource.ListRequest request = 
                  services[activeDomain].Chromeosdevices.List(customerId);
 
-                request.MaxResults = maxResults;
-                request.OrderBy = orderBy;
-                request.Projection = projection;
-                request.SortOrder = sortOrder;
+                if (properties != null)
+                {
+                    request.MaxResults = properties.maxResults;
+                    request.OrderBy = properties.orderBy;
+                    request.Projection = properties.projection;
+                    request.SortOrder = properties.sortOrder;
+                }
+
+                string resultObjType = "Chrome OS Devices";
+
+                properties.startProgressBar("Gathering " + resultObjType,
+                    string.Format("-Collecting {0} {1} to {2}", resultObjType, "1", request.MaxResults.ToString()));
 
                 Data.ChromeOsDevices pagedResult = request.Execute();
 
                 results.AddRange(pagedResult.Chromeosdevices);
 
                 while (!string.IsNullOrWhiteSpace(pagedResult.NextPageToken) &&
-                    pagedResult.NextPageToken != request.PageToken)
+                    pagedResult.NextPageToken != request.PageToken &&
+                (properties.totalResults == 0 || results.Count < properties.totalResults))
                 {
                     request.PageToken = pagedResult.NextPageToken;
+                    properties.updateProgressBar(5, 10, "Gathering " + resultObjType,
+                            string.Format("-Collecting {0} {1} to {2}",
+                                resultObjType,
+                                (results.Count + 1).ToString(),
+                                (results.Count + request.MaxResults).ToString()));
                     pagedResult = request.Execute();
                     results.AddRange(pagedResult.Chromeosdevices);
                 }
+
+                properties.updateProgressBar(1, 2, "Gathering " + resultObjType,
+                        string.Format("-Returning {0} results.", results.Count.ToString()));
 
                 return results;
             }
@@ -90,6 +111,17 @@ namespace gShell.dotNet.Directory
         #region Groups
         public class Groups
         {
+            public class GroupsListProperties
+            {
+                public string customer = null;
+                public string domain = null;
+                public string userKey = null;
+                public int maxResults = 200;
+                public Action<string, string> startProgressBar = null;
+                public Action<int, int, string, string> updateProgressBar = null;
+                public int totalResults = 0;
+            }
+
             public static string Delete(string groupKey)
             {
                 return services[activeDomain].Groups.Delete(groupKey).Execute();
@@ -105,40 +137,46 @@ namespace gShell.dotNet.Directory
                 return services[activeDomain].Groups.Insert(body).Execute();
             }
 
-            public static List<Data.Group> List(string domain, int maxResults = 200)
-            {
-                return List(null, domain, null, maxResults);
-            }
-
-            public static List<Data.Group> List(string customer, string domain = null, int maxResults = 200)
-            {
-                return List(customer, domain, null, maxResults);
-            }
-
-            public static List<Data.Group> List(string customer, string domain, string userKey,
-                int maxResults=200)
+            public static List<Data.Group> List(GroupsListProperties properties = null)
             {
                 List<Data.Group> results = new List<Data.Group>();
 
                 directory_v1.GroupsResource.ListRequest request =
                  services[activeDomain].Groups.List();
 
-                request.MaxResults = maxResults;
-                request.Domain = domain;
-                request.Customer = customer;
-                request.UserKey = userKey;
+                if (null != properties)
+                {
+                    request.MaxResults = properties.maxResults;
+                    request.Domain = properties.domain;
+                    request.Customer = properties.customer;
+                    request.UserKey = properties.userKey;
+                }
 
+                string resultObjType = "groups";
+
+                properties.startProgressBar("Gathering " + resultObjType,
+                    string.Format("-Collecting {0} {1} to {2}", resultObjType, "1", request.MaxResults.ToString()));
+                
                 Data.Groups pagedResult = request.Execute();
 
                 results.AddRange(pagedResult.GroupsValue);
 
                 while (!string.IsNullOrWhiteSpace(pagedResult.NextPageToken) &&
-                    pagedResult.NextPageToken != request.PageToken)
+                    pagedResult.NextPageToken != request.PageToken &&
+                (properties.totalResults == 0 || results.Count < properties.totalResults))
                 {
                     request.PageToken = pagedResult.NextPageToken;
+                    properties.updateProgressBar(5, 10, "Gathering " + resultObjType,
+                            string.Format("-Collecting {0} {1} to {2}",
+                                resultObjType,
+                                (results.Count + 1).ToString(),
+                                (results.Count + request.MaxResults).ToString()));
                     pagedResult = request.Execute();
                     results.AddRange(pagedResult.GroupsValue);
                 }
+
+                properties.updateProgressBar(1, 2, "Gathering " + resultObjType,
+                        string.Format("-Returning {0} results.", results.Count.ToString()));
 
                 return results;
             }
@@ -188,6 +226,15 @@ namespace gShell.dotNet.Directory
         #region Members
         public class Members
         {
+            public class MembersListProperties
+            {
+                public string roles = null;
+                public int maxResults = 200;
+                public Action<string, string> startProgressBar = null;
+                public Action<int, int, string, string> updateProgressBar = null;
+                public int totalResults = 0;
+            }
+
             public static string Delete(string groupKey, string memberKey)
             {
                 return services[activeDomain].Members.Delete(groupKey, memberKey).Execute();
@@ -203,28 +250,43 @@ namespace gShell.dotNet.Directory
                 return services[activeDomain].Members.Insert(body, groupKey).Execute();
             }
 
-            public static List<Data.Member> List(string groupKey, int maxResults = 200,
-                string roles = null)
+            public static List<Data.Member> List(string groupKey, MembersListProperties properties = null)
             {
                 List<Data.Member> results = new List<Data.Member>();
-
+                
                 directory_v1.MembersResource.ListRequest request =
                  services[activeDomain].Members.List(groupKey);
 
-                request.MaxResults = maxResults;
-                request.Roles = roles;
+                if (null != properties)
+                {
+                    request.Roles = properties.roles;
+                    request.MaxResults = properties.maxResults;
+                }
+
+                string resultObjType = "group members";
+
+                properties.startProgressBar("Gathering " + resultObjType,
+                    string.Format("-Collecting {0} {1} to {2}", resultObjType, "1", request.MaxResults.ToString()));
 
                 Data.Members pagedResult = request.Execute();
 
                 results.AddRange(pagedResult.MembersValue);
 
                 while (!string.IsNullOrWhiteSpace(pagedResult.NextPageToken) &&
-                    pagedResult.NextPageToken != request.PageToken)
+                    pagedResult.NextPageToken != request.PageToken &&
+                (properties.totalResults == 0 || results.Count < properties.totalResults))
                 {
                     request.PageToken = pagedResult.NextPageToken;
-                    pagedResult = request.Execute();
+                    properties.updateProgressBar(5, 10, "Gathering " + resultObjType,
+                            string.Format("-Collecting {0} {1} to {2}",
+                                resultObjType,
+                                (results.Count + 1).ToString(),
+                                (results.Count + request.MaxResults).ToString()));
                     results.AddRange(pagedResult.MembersValue);
                 }
+
+                properties.updateProgressBar(1, 2, "Gathering " + resultObjType,
+                        string.Format("-Returning {0} results.", results.Count.ToString()));
 
                 return results;
             }
@@ -244,6 +306,17 @@ namespace gShell.dotNet.Directory
         #region MobileDevices
         public class MobileDevices
         {
+            public class MobileDevicesPropertiesList
+            {
+                public int maxResults = 100;
+                public directory_v1.MobiledevicesResource.ListRequest.OrderByEnum? orderBy = null;
+                public directory_v1.MobiledevicesResource.ListRequest.ProjectionEnum? projection = null;
+                public directory_v1.MobiledevicesResource.ListRequest.SortOrderEnum? sortOrder = null;
+                public Action<string, string> startProgressBar = null;
+                public Action<int, int, string, string> updateProgressBar = null;
+                public int totalResults = 0;
+            }
+
             public static string Action(Data.MobileDeviceAction body, string customerId, string resourceId)
             {
                 return services[activeDomain].Mobiledevices.Action(body, customerId, resourceId).Execute();
@@ -263,32 +336,46 @@ namespace gShell.dotNet.Directory
                 return request.Execute();
             }
 
-            public static List<Data.MobileDevice> List(string customerId, int maxResults = 100,
-                directory_v1.MobiledevicesResource.ListRequest.OrderByEnum? orderBy = null,
-                directory_v1.MobiledevicesResource.ListRequest.ProjectionEnum? projection = null,
-                directory_v1.MobiledevicesResource.ListRequest.SortOrderEnum? sortOrder = null)
+            public static List<Data.MobileDevice> List(string customerId,MobileDevicesPropertiesList properties = null)
             {
                 List<Data.MobileDevice> results = new List<Data.MobileDevice>();
 
                 directory_v1.MobiledevicesResource.ListRequest request = 
                     services[activeDomain].Mobiledevices.List(customerId);
 
-                request.MaxResults = maxResults;
-                request.OrderBy = orderBy;
-                request.Projection = projection;
-                request.SortOrder = sortOrder;
+                if (null != properties)
+                {
+                    request.MaxResults = properties.maxResults;
+                    request.OrderBy = properties.orderBy;
+                    request.Projection = properties.projection;
+                    request.SortOrder = properties.sortOrder;
+                }
+
+                string resultObjType = "mobile devices";
+
+                properties.startProgressBar("Gathering " + resultObjType,
+                    string.Format("-Collecting {0} {1} to {2}", resultObjType, "1", request.MaxResults.ToString()));
 
                 Data.MobileDevices pagedResult = request.Execute();
 
                 results.AddRange(pagedResult.Mobiledevices);
 
                 while (!string.IsNullOrWhiteSpace(pagedResult.NextPageToken) &&
-                    pagedResult.NextPageToken != request.PageToken)
+                    pagedResult.NextPageToken != request.PageToken &&
+                (properties.totalResults == 0 || results.Count < properties.totalResults))
                 {
                     request.PageToken = pagedResult.NextPageToken;
+                    properties.updateProgressBar(5, 10, "Gathering " + resultObjType,
+                            string.Format("-Collecting {0} {1} to {2}",
+                                resultObjType,
+                                (results.Count + 1).ToString(),
+                                (results.Count + request.MaxResults).ToString()));
                     pagedResult = request.Execute();
                     results.AddRange(pagedResult.Mobiledevices);
                 }
+
+                properties.updateProgressBar(1, 2, "Gathering " + resultObjType,
+                        string.Format("-Returning {0} results.", results.Count.ToString()));
 
                 return results;
             }
@@ -298,6 +385,11 @@ namespace gShell.dotNet.Directory
         #region Orgunits
         public class Orgunits
         {
+            public class OrgunitsListProperties
+            {
+                public string orgUnitPath=null;
+                public directory_v1.OrgunitsResource.ListRequest.TypeEnum? type=null;
+            }
             public static string Delete(string customerId, Google.Apis.Util.Repeatable<string> orgUnitPath)
             {
                 return services[activeDomain].Orgunits.Delete(customerId, orgUnitPath).Execute();
@@ -313,16 +405,18 @@ namespace gShell.dotNet.Directory
                 return services[activeDomain].Orgunits.Insert(body, customerId).Execute();
             }
 
-            public static List<Data.OrgUnit> List(string customerId, string orgUnitPath=null,
-                directory_v1.OrgunitsResource.ListRequest.TypeEnum? type=null)
+            public static List<Data.OrgUnit> List(string customerId, OrgunitsListProperties properties = null)
             {
                 List<Data.OrgUnit> results = new List<Data.OrgUnit>();
 
                 directory_v1.OrgunitsResource.ListRequest request =
                     services[activeDomain].Orgunits.List(customerId);
 
-                request.OrgUnitPath = orgUnitPath;
-                request.Type = type;
+                if (null != properties)
+                {
+                    request.OrgUnitPath = properties.orgUnitPath;
+                    request.Type = properties.type;
+                }
 
                 Data.OrgUnits pagedResult = request.Execute();
 
@@ -346,6 +440,24 @@ namespace gShell.dotNet.Directory
         #region Users
         public class Users
         {
+            public class UsersListProperties
+            {
+                public string customer = null;
+                public string domain = null;
+                public string fields = null;
+                public int maxResults = 100;
+                public string query = null;
+                public bool showDeleted = false;
+                public directory_v1.UsersResource.ListRequest.OrderByEnum? orderBy = null;
+                public directory_v1.UsersResource.ListRequest.SortOrderEnum? sortOrder = null;
+                public directory_v1.UsersResource.ListRequest.ViewTypeEnum? viewType = null;
+                public directory_v1.UsersResource.ListRequest.ProjectionEnum? projection = null;
+                public string customFieldMask = null;
+                public Action<string, string> startProgressBar = null;
+                public Action<int, int, string, string> updateProgressBar = null;
+                public int totalResults = 0;
+            }
+
             public static string Delete(string userKey)
             {
                 return services[activeDomain].Users.Delete(userKey).Execute();
@@ -369,41 +481,53 @@ namespace gShell.dotNet.Directory
                 return services[activeDomain].Users.Insert(body).Execute();
             }
 
-            public static List<Data.User> List(string customer, string domain, 
-                int maxResults = 100, string query = null, bool showDeleted=false,
-                directory_v1.UsersResource.ListRequest.OrderByEnum? orderBy = null,
-                directory_v1.UsersResource.ListRequest.SortOrderEnum? sortOrder = null,
-                directory_v1.UsersResource.ListRequest.ViewTypeEnum? viewType = null,
-                directory_v1.UsersResource.ListRequest.ProjectionEnum? projection = null,
-                string customFieldMask = null)
+            public static List<Data.User> List(UsersListProperties properties = null)
             {
                 List<Data.User> results = new List<Data.User>();
 
                 directory_v1.UsersResource.ListRequest request =
                     services[activeDomain].Users.List();
 
-                if (null != projection) { request.CustomFieldMask = customFieldMask; }
-                request.Customer = customer;
-                request.Domain = domain;
-                request.MaxResults = maxResults;
-                request.OrderBy = orderBy;
-                request.Projection = projection;
-                request.Query = query;
-                request.ShowDeleted = showDeleted.ToString().ToLower();
-                request.SortOrder = sortOrder;
-                request.ViewType = viewType;
+                if (null != properties)
+                {
+                    if (null != properties.projection) { request.CustomFieldMask = properties.customFieldMask; }
+                    request.Customer = properties.customer;
+                    request.Domain = properties.domain;
+                    request.Fields = properties.fields;
+                    request.MaxResults = properties.maxResults;
+                    request.OrderBy = properties.orderBy;
+                    request.Projection = properties.projection;
+                    request.Query = properties.query;
+                    request.ShowDeleted = properties.showDeleted.ToString().ToLower();
+                    request.SortOrder = properties.sortOrder;
+                    request.ViewType = properties.viewType;
+                }
+
+                string resultObjType = "users";
+
+                properties.startProgressBar("Gathering " + resultObjType,
+                    string.Format("-Collecting {0} {1} to {2}", resultObjType, "1", request.MaxResults.ToString()));
 
                 Data.Users pagedResult = request.Execute();
 
                 results.AddRange(pagedResult.UsersValue);
 
                 while (!string.IsNullOrWhiteSpace(pagedResult.NextPageToken) &&
-                    pagedResult.NextPageToken != request.PageToken)
+                    pagedResult.NextPageToken != request.PageToken &&
+                (properties.totalResults == 0 || results.Count < properties.totalResults))
                 {
                     request.PageToken = pagedResult.NextPageToken;
+                    properties.updateProgressBar(5, 10, "Gathering " + resultObjType,
+                            string.Format("-Collecting {0} {1} to {2}",
+                                resultObjType,
+                                (results.Count + 1).ToString(),
+                                (results.Count + request.MaxResults).ToString()));
                     pagedResult = request.Execute();
                     results.AddRange(pagedResult.UsersValue);
                 }
+
+                properties.updateProgressBar(1, 2, "Gathering " + resultObjType,
+                        string.Format("-Returning {0} results.", results.Count.ToString()));
 
                 return results;
             }
@@ -584,6 +708,15 @@ namespace gShell.dotNet.Directory
         #region Notifications
         public class Notifications
         {
+            public class NotificationsListProperties
+            {
+                public int maxResults = 100;
+                public string language = null;
+                public Action<string, string> startProgressBar = null;
+                public Action<int, int, string, string> updateProgressBar = null;
+                public int totalResults = 0;
+            }
+
             public static string Delete(string customer, string notificationId)
             {
                 return services[activeDomain].Notifications.Delete(customer, notificationId).Execute();
@@ -594,28 +727,44 @@ namespace gShell.dotNet.Directory
                 return services[activeDomain].Notifications.Get(customer, notificationId).Execute();
             }
 
-            public static List<Data.Notification> List(string customer,
-               int maxResults = 100, string language = null)
+            public static List<Data.Notification> List(string customer, NotificationsListProperties properties = null)
             {
                 List<Data.Notification> results = new List<Data.Notification>();
 
                 directory_v1.NotificationsResource.ListRequest request =
                     services[activeDomain].Notifications.List(customer);
 
-                request.Language = language;
-                request.MaxResults = maxResults;
+                if (null != properties)
+                {
+                    request.Language = properties.language;
+                    request.MaxResults = properties.maxResults;
+                }
+
+                string resultObjType = "notifications";
+
+                properties.startProgressBar("Gathering " + resultObjType,
+                    string.Format("-Collecting {0} {1} to {2}", resultObjType, "1", request.MaxResults.ToString()));
 
                 Data.Notifications pagedResult = request.Execute();
 
                 results.AddRange(pagedResult.Items);
 
                 while (!string.IsNullOrWhiteSpace(pagedResult.NextPageToken) &&
-                    pagedResult.NextPageToken != request.PageToken)
+                    pagedResult.NextPageToken != request.PageToken &&
+                (properties.totalResults == 0 || results.Count < properties.totalResults))
                 {
                     request.PageToken = pagedResult.NextPageToken;
+                    properties.updateProgressBar(5, 10, "Gathering " + resultObjType,
+                            string.Format("-Collecting {0} {1} to {2}",
+                                resultObjType,
+                                (results.Count + 1).ToString(),
+                                (results.Count + request.MaxResults).ToString()));
                     pagedResult = request.Execute();
                     results.AddRange(pagedResult.Items);
                 }
+
+                properties.updateProgressBar(1, 2, "Gathering " + resultObjType,
+                        string.Format("-Returning {0} results.", results.Count.ToString()));
 
                 return results;
             }

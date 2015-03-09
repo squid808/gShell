@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Management.Automation;
-using Google.Apis.Admin.Directory.directory_v1;
-using Google.Apis.Admin.Directory.directory_v1.Data;
-using gShell.dotNet.Utilities.OAuth2;
+using Data = Google.Apis.Admin.Directory.directory_v1.Data;
 
 namespace gShell.Cmdlets.Directory.GAUserAlias
 {
@@ -67,17 +65,15 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
 
         private void RemoveUserAlias()
         {
-            string fullAliasEmail = OAuth2Base.GetFullEmailAddress(UserAliasName, Domain);
+            string fullAliasEmail = GetFullEmailAddress(UserAliasName, Domain);
 
             if (string.IsNullOrWhiteSpace(UserName)) {
-                UserName = directoryServiceDict[Domain].Users.Get(fullAliasEmail).Execute().PrimaryEmail;
+                UserName = Users.Get(fullAliasEmail).PrimaryEmail;
             }
 
-            string fullEmail = OAuth2Base.GetFullEmailAddress(UserName, Domain);
+            string fullEmail = GetFullEmailAddress(UserName, Domain);
 
-            
-
-            directoryServiceDict[Domain].Users.Aliases.Delete(fullEmail, fullAliasEmail).Execute();
+            Users.Aliases.Delete(fullEmail, fullAliasEmail);
         }
     }
 }

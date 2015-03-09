@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Management.Automation;
-using gShell.DirectoryCmdlets.GAGroup;
-using Google.Apis.Admin.Directory.directory_v1;
-using Google.Apis.Admin.Directory.directory_v1.Data;
-using gShell.dotNet.Utilities.OAuth2;
+using Data = Google.Apis.Admin.Directory.directory_v1.Data;
 
 namespace gShell.Cmdlets.Directory.GAGroupMember
 {
@@ -12,7 +9,7 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
           DefaultParameterSetName = "OneGroup",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAGroupMember")]
-    public class RemoveGAGroupMember : GetGAGroupBase
+    public class RemoveGAGroupMember : DirectoryBase
     {
         #region Properties
 
@@ -68,11 +65,11 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
 
         private void RemoveGroupMember()
         {
-            GroupName = OAuth2Base.GetFullEmailAddress(GroupName, Domain);
+            GroupName = GetFullEmailAddress(GroupName, Domain);
 
-            UserName = OAuth2Base.GetFullEmailAddress(UserName, Domain);
+            UserName = GetFullEmailAddress(UserName, Domain);
 
-            directoryServiceDict[Domain].Members.Delete(GroupName, UserName).Execute();
+            Members.Delete(GroupName, UserName);
         }
     }
 

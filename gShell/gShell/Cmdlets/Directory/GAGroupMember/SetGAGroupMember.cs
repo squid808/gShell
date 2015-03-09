@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Management.Automation;
-using gShell.DirectoryCmdlets.GAGroup;
-using Google.Apis.Admin.Directory.directory_v1;
-using Google.Apis.Admin.Directory.directory_v1.Data;
-using gShell.dotNet.Utilities.OAuth2;
+using Data = Google.Apis.Admin.Directory.directory_v1.Data;
 
 namespace gShell.Cmdlets.Directory.GAGroupMember
 {
@@ -12,7 +9,7 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
           DefaultParameterSetName = "OneGroup",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAGroupMember")]
-    public class SetGAGroupMember : GetGAGroupBase
+    public class SetGAGroupMember : DirectoryBase
     {
         #region Properties
 
@@ -52,15 +49,15 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
 
         private void UpdateGroupMember()
         {
-            GroupName = OAuth2Base.GetFullEmailAddress(GroupName, Domain);
-            UserName = OAuth2Base.GetFullEmailAddress(UserName, Domain);
+            GroupName = GetFullEmailAddress(GroupName, Domain);
+            UserName = GetFullEmailAddress(UserName, Domain);
             
-            Member member = new Member
+            Data.Member member = new Data.Member
             {
                 Role = this.Role.ToString()
             };
 
-            directoryServiceDict[Domain].Members.Update(member, GroupName, UserName).Execute();
+            Members.Update(member, GroupName, UserName);
         }
     }
 

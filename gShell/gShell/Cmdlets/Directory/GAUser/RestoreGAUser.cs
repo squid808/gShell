@@ -1,11 +1,8 @@
-﻿//TODO: Consider using an SQLite DB to store ETags/UserID on demand when getting users or deleting users
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Management.Automation;
-using Google.Apis.Admin.Directory.directory_v1;
-using Google.Apis.Admin.Directory.directory_v1.Data;
+using Data = Google.Apis.Admin.Directory.directory_v1.Data;
 
-namespace gShell.DirectoryCmdlets.GAUser
+namespace gShell.Cmdlets.Directory.GAUser
 {
     [Cmdlet("Restore", "GAUser",
           SupportsShouldProcess = true,
@@ -45,7 +42,7 @@ namespace gShell.DirectoryCmdlets.GAUser
 
         private void RestoreUser()
         {
-            UserUndelete undelete = new UserUndelete();
+            Data.UserUndelete undelete = new Data.UserUndelete();
 
             if (string.IsNullOrWhiteSpace(OrgUnitPath))
             {
@@ -56,7 +53,7 @@ namespace gShell.DirectoryCmdlets.GAUser
                 undelete.OrgUnitPath = OrgUnitPath;
             }
 
-            directoryServiceDict[Domain].Users.Undelete(undelete, UserID).Execute();
+            Users.Undelete(undelete, UserID);
         }
     }
 }

@@ -1,13 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
+using Google.Apis.Services;
 using Google.Apis.Admin.Directory.directory_v1;
 using Google.Apis.Admin.Reports.reports_v1;
 using Google.Apis.Oauth2.v2;
+using Google.Apis.Oauth2.v2.Data;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Drive.v2;
+
+using gShell.dotNet.CustomSerializer;
+using gShell.dotNet.Utilities.OAuth2;
+using Utils = gShell.dotNet.Utilities;
 
 
 namespace gShell.dotNet.Utilities.OAuth2
@@ -189,7 +196,7 @@ namespace gShell.dotNet.Utilities.OAuth2
             }
             else
             {
-                return GetFullEmailAddress(userAccount, domain);
+                return Utils.GetFullEmailAddress(userAccount, domain);
             }
         }
 
@@ -251,7 +258,7 @@ namespace gShell.dotNet.Utilities.OAuth2
             {
                 if (!string.IsNullOrWhiteSpace(user))
                 {
-                    string userEmail = GetFullEmailAddress(user, domain);
+                    string userEmail = Utils.GetFullEmailAddress(user, domain);
 
                     if (_userCredentialsDict.ContainsKey(userEmail))
                     {
@@ -346,36 +353,6 @@ namespace gShell.dotNet.Utilities.OAuth2
 
         #region HelperMethods
         /// <summary>
-        /// If the given username doesn't contain an @ assume it doesn't contain a domain and add it in.
-        /// </summary>
-        /// <returns></returns>
-        public static string GetFullEmailAddress(string userName, string domain)
-        {
-            if (!userName.Contains("@"))
-            {
-                userName += "@" + domain;
-            }
-
-            return userName;
-        }
-
-        /// <summary>
-        /// Return the domain given a full email address.
-        /// </summary>
-        public static string GetDomainFromEmail(string userEmail)
-        {
-            return userEmail.Split('@')[1];
-        }
-
-        /// <summary>
-        /// Return the username given a full email address.
-        /// </summary>
-        public static string GetUserFromEmail(string userEmail)
-        {
-            return userEmail.Split('@')[0];
-        }
-
-        /// <summary>
         /// Returns the domain of the user authenticated to the current domain.
         /// Useful to double check the domain name after authenticating, in case they provided one domain but authenticated another.
         /// </summary>
@@ -407,7 +384,7 @@ namespace gShell.dotNet.Utilities.OAuth2
             }
             else
             {
-                _serviceAcctInitializer.User = GetFullEmailAddress(userEmail, domain);
+                _serviceAcctInitializer.User = Utils.GetFullEmailAddress(userEmail, domain);
             }
 
             return _serviceAcctInitializer;

@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Management.Automation;
-using gShell.DirectoryCmdlets.GAGroup;
-using Google.Apis.Admin.Directory.directory_v1;
-using Google.Apis.Admin.Directory.directory_v1.Data;
-using gShell.dotNet.Utilities.OAuth2;
+using Data = Google.Apis.Admin.Directory.directory_v1.Data;
 
 namespace gShell.Cmdlets.Directory.GAGroupMember
 {
@@ -12,7 +9,7 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
           DefaultParameterSetName = "OneGroup",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAGroupMember")]
-    public class GetGAGroupMember : GetGAGroupBase
+    public class GetGAGroupMember : DirectoryBase
     {
         #region Properties
 
@@ -68,8 +65,10 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
             {
                 if (ShouldProcess(GroupName, "Get-GAGroupMember"))
                 {
-                    GroupName = OAuth2Base.GetFullEmailAddress(GroupName, Domain);
-                    WriteObject(GetOneMember());
+                    WriteObject(DirectoryBase.Members.Get(
+                        GetFullEmailAddress(GroupName, Domain),
+                        GetFullEmailAddress(UserName, Domain)
+                        ));
                 }
             }
             else
@@ -79,8 +78,8 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
                     case "OneGroup":
                         if (ShouldProcess(GroupName, "Get-GAGroupMember"))
                         {
-                            GroupName = OAuth2Base.GetFullEmailAddress(GroupName, Domain);
-                            WriteObject(GetMemberList(GroupName));
+                            WriteObject(DirectoryBase.Members.List(
+                                GetFullEmailAddress(GroupName, Domain)));
                         }
                         break;
 
@@ -139,148 +138,23 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
             return roles;
         }
 
-        //TODO: Combine this to remove ambiguity
-        private List<Member> GetMemberList(string groupName)
-        {
-            if (Cache)
-            {
-                return (RetrieveCachedGroupMembers(groupName));
-            }
-            else
-            {
-                return (GetOneMemberList(groupName));
-            }
-        }
-
-        /// <summary>
-        /// Returns a list of all members of a given group.
-        /// </summary>
-        /// <param name="groupName"></param>
-        /// <returns></returns>
-        private List<Member> GetOneMemberList(string groupName)
-        {
-            MembersResource.ListRequest request = directoryServiceDict[Domain].Members.List(groupName);
-
-            if (0 != MaxResults && 200 > MaxResults)
-            {
-                request.MaxResults = MaxResults;
-            }
-            else
-            {
-                request.MaxResults = 200;
-            }
-
-            request.Roles = DetermineRoles();
-
-            StartProgressBar(string.Format("Gathering members for group {0}",
-                    groupName), string.Empty);
-
-            UpdateProgressBar(1, 2, string.Format("Gathering members for group {0}",
-                    groupName), "-Collecting members 1 to " + request.MaxResults.ToString());
-
-            Members execution = request.Execute();
-
-            List<Member> returnedList = new List<Member>();
-
-            if (execution.MembersValue == null) {
-                return returnedList;
-            }
-
-            returnedList.AddRange(execution.MembersValue);
-
-            while (!string.IsNullOrWhiteSpace(execution.NextPageToken) &&
-                execution.NextPageToken != request.PageToken &&
-                (0 == MaxResults || returnedList.Count < MaxResults))
-            {
-                request.PageToken = execution.NextPageToken;
-                UpdateProgressBar(1, 2,
-                    string.Format("Gathering members for group {0}",
-                     groupName),
-                    string.Format("-Collecting members {0} to {1}",
-                     (returnedList.Count + 1 ).ToString(),
-                     (returnedList.Count + request.MaxResults).ToString()));
-                execution = request.Execute();
-                returnedList.AddRange(execution.MembersValue);
-            }
-
-            UpdateProgressBar(1, 2, "Gathering accounts",
-                "-Returning " + returnedList.Count.ToString() + " results.");
-
-            return (returnedList);
-        }
-
-        /// <summary>
-        /// Returns a member object for the given user in the given group, if any.
-        /// </summary>
-        private Member GetOneMember()
-        {
-            UserName = OAuth2Base.GetFullEmailAddress(UserName, Domain);
-
-            Member groupMember = directoryServiceDict[Domain].Members.Get(GroupName, UserName).Execute();
-
-            return (groupMember);
-        }
-
-        /// <summary>
-        /// Wrapper method that returns group members from memory if it exists, otherwise the net.
-        /// Assumes other methods will use cached too.
-        /// </summary>
-        /// <param name="groupName"></param>
-        /// <returns></returns>
-        private List<Member> RetrieveCachedGroupMembers(string groupName, 
-            bool forceCacheReload=false)
-        {
-            List<Member> memberList = new List<Member>();
-
-            if (cachedDomainGroupMembers.ContainsKey(Domain) &&
-                cachedDomainGroupMembers[Domain].ContainsKey(groupName) &&
-                !forceCacheReload)
-            {
-                memberList = cachedDomainGroupMembers[Domain][groupName];
-            }
-            else
-            {
-                if (!cachedDomainGroupMembers.ContainsKey(Domain))
-                {
-                    cachedDomainGroupMembers[Domain] = new Dictionary<string, List<Member>>();
-                }
-
-                memberList = GetOneMemberList(groupName);
-                cachedDomainGroupMembers[Domain][groupName] = memberList;
-            }
-
-            return memberList;
-        }
-
         /// <summary>
         /// Gets a list of all members from all groups. Calls for cached list of all groups.
         /// </summary>
         private GAMultiGroupMembersList GetAllGroupsAndMembers()
         {
-            List<Group> allGroups = RetrieveCachedGroups(ForceCacheReload);
+            List<Data.Group> allGroups = Groups.List();
 
             GAMultiGroupMembersList multiList = new GAMultiGroupMembersList();
 
-            ////START CUSTOM
-            //WriteWarning(MaxResults.ToString());
-            ////END CUSTOM
-
-            foreach (Group group in allGroups)
+            foreach (Data.Group group in allGroups)
             {
-                List<Member> members = new List<Member>();
+                List<Data.Member> members = DirectoryBase.Members.List(GetFullEmailAddress(GroupName, Domain));
 
-                if (Cache)
-                {
-                    members = RetrieveCachedGroupMembers(group.Email, ForceCacheReload);
-                }
-                else
-                {
-                    members = GetOneMemberList(group.Email);
-                }
                 multiList.Add(group.Email, members);
 
-                if (MaxResults != 0 &&
-                    multiList.GetMemberCount() >= MaxResults) { break; }
+                //if (MaxResults != 0 &&
+                //    multiList.GetMemberCount() >= MaxResults) { break; }
             }
 
             return (multiList);
@@ -294,26 +168,20 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
     {
         public List<GACustomMembersList> membersByGroup;
         private Dictionary<string, int> groupIndex;
-        //public int MemberCount
-        //{
-        //    get { return _count; }
-        //}
-        //private int _count;
 
         public GAMultiGroupMembersList () {
             membersByGroup = new List<GACustomMembersList>();
             groupIndex = new Dictionary<string, int>();
         }
 
-        public void Add(string groupName, List<Member> membersList)
+        public void Add(string groupName, List<Data.Member> membersList)
         {
             GACustomMembersList temp = new GACustomMembersList(groupName, membersList);
             membersByGroup.Add(temp);
             groupIndex[groupName] = membersByGroup.Count - 1;
-            //_count += temp.MembersList.Count;
         }
 
-        public List<Member> GetGroupMembers(string groupName)
+        public List<Data.Member> GetGroupMembers(string groupName)
         {
             if (groupIndex.ContainsKey(groupName))
             {
@@ -354,9 +222,9 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
     public class GACustomMembersList
     {
         public string GroupName;
-        public List<Member> MembersList;
+        public List<Data.Member> MembersList;
 
-        public GACustomMembersList (string groupName, List<Member> members) {
+        public GACustomMembersList (string groupName, List<Data.Member> members) {
             GroupName = groupName;
             MembersList = members;
         }
@@ -365,7 +233,7 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
         {
             List<GACustomMembersListEntry> customList = new List<GACustomMembersListEntry>();
 
-            foreach (Member member in MembersList)
+            foreach (Data.Member member in MembersList)
             {
                 customList.Add(new GACustomMembersListEntry(
                     GroupName, member));
@@ -378,11 +246,11 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
     /// <summary>
     /// Extends the base Member class to include the group it came from.
     /// </summary>
-    public class GACustomMembersListEntry : Member
+    public class GACustomMembersListEntry : Data.Member
     {
         public string Group;
 
-        public GACustomMembersListEntry(string groupEmail, Member baseMember)
+        public GACustomMembersListEntry(string groupEmail, Data.Member baseMember)
         {
             Email = baseMember.Email;
             ETag = baseMember.ETag;

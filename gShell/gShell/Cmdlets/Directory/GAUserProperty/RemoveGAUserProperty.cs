@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Management.Automation;
-using Google.Apis.Admin.Directory.directory_v1;
-using Google.Apis.Admin.Directory.directory_v1.Data;
+using Data = Google.Apis.Admin.Directory.directory_v1.Data;
 
-using Google.Apis.Requests;
-using gShell.DirectoryCmdlets.GAUser;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using gShell.dotNet.Utilities;
+using gShell.dotNet.CustomSerializer;
 
-using gShell.Serialization;
-
-namespace gShell.DirectoryCmdlets.GAUser.GAUserProperties
+namespace gShell.Cmdlets.Directory.GAUserProperty
 {
     [Cmdlet(VerbsCommon.Remove, "GAUserProperty",
          SupportsShouldProcess = true,
@@ -73,7 +68,7 @@ namespace gShell.DirectoryCmdlets.GAUser.GAUserProperties
                 if (Force || ShouldContinue((String.Format("One or more user property types of type {0} will be removed from {1}@{2}.\nContinue?",
                     PropertyType.ToString(), UserName, Domain)), "Confirm Google Apps User Property Removal"))
                 {
-                    User u = new User();
+                    Data.User u = new Data.User();
 
                     if (null != GShellObject)
                     {
@@ -81,7 +76,7 @@ namespace gShell.DirectoryCmdlets.GAUser.GAUserProperties
                     }
                     else if (!string.IsNullOrWhiteSpace(UserName))
                     {
-                        u = GetOneUser(UserName);
+                        u = Users.Get(Utils.GetFullEmailAddress(UserName, Domain));
                     }
                     else
                     {
@@ -118,9 +113,9 @@ namespace gShell.DirectoryCmdlets.GAUser.GAUserProperties
         /// Remove one property item from a property list of a User.
         /// </summary>
         /// <param name="u"></param>
-        public void RemoveOneProperty(User u) {
+        public void RemoveOneProperty(Data.User u) {
 
-            User userAcct = new User();
+            Data.User userAcct = new Data.User();
 
             //pull it in to a collection in order to access the methods
             GAUserPropertyCollection upc = new GAUserPropertyCollection(u);
@@ -213,16 +208,16 @@ namespace gShell.DirectoryCmdlets.GAUser.GAUserProperties
                     break;
             }
 
-            directoryServiceDict[Domain].Users.Update(userAcct, u.PrimaryEmail).Execute();
+            Users.Update(userAcct, u.PrimaryEmail);
         }
 
         /// <summary>
         /// Clear one property fully from a User account.
         /// </summary>
         /// <param name="u"></param>
-        public void ClearOneProperty(User u)
+        public void ClearOneProperty(Data.User u)
         {
-            User userAcct = new User();
+            Data.User userAcct = new Data.User();
 
             //again, we're only directly setting one attribute and don't have to worry about the other collection information
             switch (PropertyType)
@@ -256,7 +251,7 @@ namespace gShell.DirectoryCmdlets.GAUser.GAUserProperties
                     break;
             }
 
-            directoryServiceDict[Domain].Users.Patch(userAcct, u.PrimaryEmail).Execute();
+            Users.Patch(userAcct, u.PrimaryEmail);
 
         }
 
@@ -264,9 +259,9 @@ namespace gShell.DirectoryCmdlets.GAUser.GAUserProperties
         /// Clear all the properties from a user account.
         /// </summary>
         /// <param name="u"></param>
-        public void ClearAllProperties(User u)
+        public void ClearAllProperties(Data.User u)
         {
-            User userAcct = new User();
+            Data.User userAcct = new Data.User();
 
             userAcct.Addresses = NullTokenProvider.NullToken;
             userAcct.Emails = NullTokenProvider.NullToken;
@@ -276,7 +271,7 @@ namespace gShell.DirectoryCmdlets.GAUser.GAUserProperties
             userAcct.Phones = NullTokenProvider.NullToken;
             userAcct.Relations = NullTokenProvider.NullToken;
 
-            directoryServiceDict[Domain].Users.Patch(userAcct, u.PrimaryEmail).Execute();
+            Users.Patch(userAcct, u.PrimaryEmail);
         }
     }
 }

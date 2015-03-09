@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Management.Automation;
-using Google.Apis.Admin.Directory.directory_v1;
-using Google.Apis.Admin.Directory.directory_v1.Data;
-using gShell.dotNet.Utilities.OAuth2;
+using Data = Google.Apis.Admin.Directory.directory_v1.Data;
 
 namespace gShell.Cmdlets.Directory.GAUser
 {
@@ -33,7 +31,7 @@ namespace gShell.Cmdlets.Directory.GAUser
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "A Google Apps User object")]
         [ValidateNotNullOrEmpty]
-        public User GAUserObject { get; set; }
+        public Data.User GAUserObject { get; set; }
 
         [Parameter(Position = 2)]
         public SwitchParameter Force { get; set; }
@@ -74,7 +72,7 @@ namespace gShell.Cmdlets.Directory.GAUser
             switch (ParameterSetName)
             {
                 case "UserName":
-                    fullEmail = OAuth2Base.GetFullEmailAddress(UserName, Domain);
+                    fullEmail = GetFullEmailAddress(UserName, Domain);
                     break;
 
                 case "GAUserObject":
@@ -82,7 +80,7 @@ namespace gShell.Cmdlets.Directory.GAUser
                     break;
             }
 
-            directoryServiceDict[Domain].Users.Delete(fullEmail).Execute();
+            Users.Delete(fullEmail);
         }
     }
 }

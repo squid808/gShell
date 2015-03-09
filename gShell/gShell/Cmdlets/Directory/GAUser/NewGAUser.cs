@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Management.Automation;
-using Google.Apis.Admin.Directory.directory_v1;
-using Google.Apis.Admin.Directory.directory_v1.Data;
-using gShell.dotNet.Utilities.OAuth2;
+using Data = Google.Apis.Admin.Directory.directory_v1.Data;
 
 namespace gShell.Cmdlets.Directory.GAUser
 {
@@ -69,11 +67,11 @@ namespace gShell.Cmdlets.Directory.GAUser
 
         private void CreateUser()
         {
-            string fullEmail = OAuth2Base.GetFullEmailAddress(UserName, Domain);
+            string fullEmail = GetFullEmailAddress(UserName, Domain);
 
-            User userAcct = new User();
+            Data.User userAcct = new Data.User();
 
-            userAcct.Name = new UserName();
+            userAcct.Name = new Data.UserName();
 
             userAcct.Name.GivenName = GivenName;
 
@@ -89,7 +87,6 @@ namespace gShell.Cmdlets.Directory.GAUser
                     break;
 
                 case "PasswordGenerated":
-                    //Console.WriteLine("Generated");
                     userAcct.HashFunction = "MD5";
                     userAcct.Password = GeneratePassword(PasswordLength, ShowNewPassword);
                     break;
@@ -113,7 +110,7 @@ namespace gShell.Cmdlets.Directory.GAUser
                 userAcct.ChangePasswordAtNextLogin = ChangePasswordAtNextLogin.Value;
             }
 
-            directoryServiceDict[Domain].Users.Insert(userAcct).Execute();
+            Users.Insert(userAcct);
         }
     }
 }

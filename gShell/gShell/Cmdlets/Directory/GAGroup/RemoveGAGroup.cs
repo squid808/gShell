@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Management.Automation;
-using Google.Apis.Admin.Directory.directory_v1;
-using Google.Apis.Admin.Directory.directory_v1.Data;
-using gShell.dotNet.Utilities.OAuth2;
+using Data = Google.Apis.Admin.Directory.directory_v1.Data;
 
 namespace gShell.Cmdlets.Directory.GAGroup
 {
@@ -32,7 +30,7 @@ namespace gShell.Cmdlets.Directory.GAGroup
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "A Google Apps Group object representing the group. Retrieved from Get-GAGroup.")]
         [ValidateNotNullOrEmpty]
-        public Group GAGroupObject { get; set; }
+        public Data.Group GAGroupObject { get; set; }
 
         [Parameter(Position = 2,
             HelpMessage = "Force the action to complete without a prompt to continue.")]
@@ -74,7 +72,7 @@ namespace gShell.Cmdlets.Directory.GAGroup
             switch (ParameterSetName)
             {
                 case "GroupName":
-                    fullEmail = OAuth2Base.GetFullEmailAddress(GroupName, Domain);
+                    fullEmail = GetFullEmailAddress(GroupName, Domain);
                     break;
 
                 case "GAGroupObject":
@@ -82,8 +80,7 @@ namespace gShell.Cmdlets.Directory.GAGroup
                     break;
             }
 
-            Console.WriteLine(fullEmail);
-            directoryServiceDict[Domain].Groups.Delete(fullEmail).Execute();
+            Groups.Delete(fullEmail);
         }
     }
 }

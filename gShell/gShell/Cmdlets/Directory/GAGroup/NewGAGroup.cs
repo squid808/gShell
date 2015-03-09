@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Management.Automation;
-using Google.Apis.Admin.Directory.directory_v1;
-using Google.Apis.Admin.Directory.directory_v1.Data;
-using gShell.dotNet.Utilities.OAuth2;
+using Data = Google.Apis.Admin.Directory.directory_v1.Data;
 
 namespace gShell.Cmdlets.Directory.GAGroup
 {
@@ -47,9 +45,9 @@ namespace gShell.Cmdlets.Directory.GAGroup
 
         private void CreateGroup()
         {
-            string fullEmail = OAuth2Base.GetFullEmailAddress(GroupName, Domain);
+            string fullEmail = GetFullEmailAddress(GroupName, Domain);
 
-            Group groupAcct = new Group();
+            Data.Group groupAcct = new Data.Group();
 
             groupAcct.Email = fullEmail;
 
@@ -62,7 +60,7 @@ namespace gShell.Cmdlets.Directory.GAGroup
                 groupAcct.Description = Description;
             }
 
-            directoryServiceDict[Domain].Groups.Insert(groupAcct).Execute();
+            Groups.Insert(groupAcct);
         }
 
     }

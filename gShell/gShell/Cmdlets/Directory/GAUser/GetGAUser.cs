@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Management.Automation;
-using Google.Apis.Admin.Directory.directory_v1;
-using Google.Apis.Admin.Directory.directory_v1.Data;
+using Data = Google.Apis.Admin.Directory.directory_v1.Data;
 
 namespace gShell.Cmdlets.Directory.GAUser
 {
@@ -10,7 +9,7 @@ namespace gShell.Cmdlets.Directory.GAUser
           DefaultParameterSetName = "OneUser",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAUser")]
-    public class GetGAUser : GetGAUserBase
+    public class GetGAUser : DirectoryBase
     {
         #region Properties
 
@@ -31,14 +30,9 @@ namespace gShell.Cmdlets.Directory.GAUser
         public SwitchParameter All { get; set; }
 
         [Parameter(Position = 3,
-            ParameterSetName = "AllUsers",
-            HelpMessage = "Retrieves the information from local memory if it already exists, this may not get up-to-date information from the web.")]
-        public SwitchParameter Cache { get; set; }
-
-        [Parameter(Position = 4,
-            ParameterSetName = "AllUsers",
-            HelpMessage = "Force the cmdlet to refresh any cached information. This will ensure you get up-to-date information from the web.")]
-        public SwitchParameter ForceCacheReload { get; set; }
+            Mandatory=false,
+            ParameterSetName = "AllUsers")]
+        public int MaxResults { get; set; }
 
         #endregion
 
@@ -50,21 +44,17 @@ namespace gShell.Cmdlets.Directory.GAUser
 
                     if (ShouldProcess(UserName, "Get-GAUser"))
                     {
-                        WriteObject(GetOneCustomUser(UserName));
+                        WriteObject(new GShellUserObject(Users.Get(GetFullEmailAddress(UserName,Domain))));
                     }
                     break;
 
                 case "AllUsers":
                     if (ShouldProcess("All Users", "Get-GAUser"))
                     {
-                        if (Cache)
+                        WriteObject(GShellUserObject.ConvertList(Users.List(new dotNet.Directory.Users.UsersListProperties()
                         {
-                            WriteObject(GetAllCustomCachedUsers(ForceCacheReload));
-                        }
-                        else
-                        {
-                            WriteObject(GetAllCustomUsers());
-                        }
+                            totalResults = MaxResults
+                        })));
                     }
                     break;
             }

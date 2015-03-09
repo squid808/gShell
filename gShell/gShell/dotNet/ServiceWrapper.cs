@@ -13,13 +13,35 @@ namespace gShell.dotNet
     public abstract class ServiceWrapper<T> where T : BaseClientService
     {
         #region Properties
-        protected static abstract Dictionary<string, T> services = new Dictionary<string,T>();
+        /// <summary>
+        /// A collection of services keyed by the domain name. TODO: have an alternate set for gmail users
+        /// </summary>
+        protected static Dictionary<string, T> services = new Dictionary<string,T>();
+            
+        /// <summary>
+        /// Indicates if this set of services will work with Gmail (as opposed to Google Apps). 
+        /// This will cause authentication to fail if false and the user attempts to authenticate with
+        /// a gmail address.
+        /// </summary>
+        protected static bool worksWithGmail { get; }
 
-        protected static virtual bool worksWithGmail;
+        /// <summary>
+        /// Returns the currently authenticated domain. This could be null if nothing has yet been authenticated.
+        /// </summary>
+        protected static string activeDomain
+        {
+            get
+            {
+                return GetCurrentDomain();
+            }
+        }
         #endregion
 
         #region Accessors
-        public static abstract T GetService(string domain)
+        /// <summary>
+        /// Returns the loaded and authenticated service for this domain. Returns null if it doesn't exist.
+        /// </summary>
+        public static T GetService(string domain)
         {
             if (ContainsService(domain))
             {
@@ -31,20 +53,35 @@ namespace gShell.dotNet
             }
         }
 
-        public static abstract bool ContainsService(string domain)
+        /// <summary>
+        /// Do the loaded and authenticated domains contain a service for this domain?
+        /// </summary>
+        public static bool ContainsService(string domain)
         {
             return services.ContainsKey(domain);
         }
 
+        /// <summary>
+        /// Returns the default domain. This could be null if nothing has yet been authenticated.
+        /// </summary>
         protected static string GetDefaultDomain()
         {
             return OAuth2Base.defaultDomain;
+        }
+
+        /// <summary>
+        /// Returns the currently authenticated domain. This could be null if nothing has yet been authenticated.
+        /// </summary>
+        protected static string GetCurrentDomain()
+        {
+            return OAuth2Base.currentDomain;
         }
         #endregion
 
         #region Authenticate
         /// <summary>
-        /// Authenticates the given domain and creates a service for it, if necessary.
+        /// Authenticates the given domain and creates a service for it, if necessary. 
+        /// The process of authenticating will update the default and current domains.
         /// </summary>
         public static string Authenticate(string domain)
         {
@@ -56,7 +93,7 @@ namespace gShell.dotNet
         /// <summary>
         /// Build the service and return the domain the service is working on.
         /// </summary>
-        private static abstract string BuildService(string domain)
+        protected static string BuildService(string domain)
         {
             if (string.IsNullOrWhiteSpace(domain) ||
                 !services.ContainsKey(domain))
@@ -82,10 +119,10 @@ namespace gShell.dotNet
             }
         }
 
-        /// <summary>
-        /// Create a new instance of the service.
-        /// </summary>
-        private static virtual T CreateNewService(string domain);
+        ///// <summary>
+        ///// Create a new instance of the service.
+        ///// </summary>
+        //protected static virtual T CreateNewService(string domain);
         #endregion
 
         #region MultiPageResult Helpers
@@ -93,16 +130,5 @@ namespace gShell.dotNet
 
 
         #endregion
-    }
-
-    public class thing<T, U, V>
-    {
-        public string DoSome(string a, int b){
-            return "Hi";
-        }
-
-        public int DoOther(string c, string d) {
-            return 0;
-        }
     }
 }

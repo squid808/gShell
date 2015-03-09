@@ -139,6 +139,7 @@
   <ItemGroup>
     <Compile Include="Cmdlets\Reports\ReportsBase.cs" />
     <Compile Include="dotNet\Directory\Directory.cs" />
+    <Compile Include="dotNet\IServiceWrapper.cs" />
     <Compile Include="dotNet\Utilities\CustomSerializer\CustomSerializer.cs" />
     <Compile Include="Cmdlets\Directory\GAGroupMember\AddGAGroupMember.cs" />
     <Compile Include="Cmdlets\Directory\GAGroupMember\GetGAGroupMember.cs" />
@@ -151,7 +152,6 @@
     <Compile Include="Cmdlets\Directory\GAUserAlias\GetGAUserAlias.cs" />
     <Compile Include="Cmdlets\Directory\GAUserAlias\NewGAUserAlias.cs" />
     <Compile Include="Cmdlets\Directory\GAUserAlias\RemoveGAUserAlias.cs" />
-    <Compile Include="Cmdlets\Directory\GAUser\GetGAUserBase.cs" />
     <Compile Include="Cmdlets\Directory\GAUser\NewGAUser.cs" />
     <Compile Include="Cmdlets\Directory\GAUser\RemoveGAUser.cs" />
     <Compile Include="Cmdlets\Directory\GAUser\RestoreGAUser.cs" />
@@ -178,6 +178,7 @@
     <Compile Include="dotNet\Utilities\OAuth2\OAuth2Group.cs" />
     <Compile Include="dotNet\Utilities\OAuth2\OAuth2Info.cs" />
     <Compile Include="dotNet\Utilities\SavedFile.cs" />
+    <Compile Include="dotNet\Utilities\Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Cmdlets\Utilities\GAServiceAccount\SetGAServiceAccount.cs" />
     <Compile Include="Cmdlets\Utilities\UtilityBase.cs" />

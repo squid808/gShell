@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Management.Automation;
-using Google.Apis.Admin.Directory.directory_v1;
-using Google.Apis.Admin.Directory.directory_v1.Data;
-using gShell.dotNet.Utilities.OAuth2;
+using Data = Google.Apis.Admin.Directory.directory_v1.Data;
+
+using gShell.Cmdlets.Directory.GAUserProperty;
 
 namespace gShell.Cmdlets.Directory.GAUser
 {
@@ -76,10 +76,10 @@ namespace gShell.Cmdlets.Directory.GAUser
 
         private void UpdateUser()
         {
-            string fullEmail = OAuth2Base.GetFullEmailAddress(UserName, Domain);
+            string fullEmail = GetFullEmailAddress(UserName, Domain);
 
             //User userAcct = directoryServiceDict[Domain].Users.Get(fullEmail).Execute();
-            User userAcct = new User();
+            Data.User userAcct = new Data.User();
 
             if (null == userAcct)
             {
@@ -112,7 +112,7 @@ namespace gShell.Cmdlets.Directory.GAUser
             {
                 if (userAcct.Name == null)
                 {
-                    userAcct.Name = new UserName();
+                    userAcct.Name = new Data.UserName();
                 }
                 userAcct.Name.GivenName = NewGivenName;
             }
@@ -121,14 +121,14 @@ namespace gShell.Cmdlets.Directory.GAUser
             {
                 if (userAcct.Name == null)
                 {
-                    userAcct.Name = new UserName();
+                    userAcct.Name = new Data.UserName();
                 }
                 userAcct.Name.FamilyName = NewFamilyName;
             }
 
             if (!String.IsNullOrWhiteSpace(NewUserName))
             {
-                NewUserName = OAuth2Base.GetFullEmailAddress(NewUserName, Domain);
+                NewUserName = GetFullEmailAddress(NewUserName, Domain);
 
                 userAcct.PrimaryEmail = NewUserName;
             }
@@ -190,7 +190,7 @@ namespace gShell.Cmdlets.Directory.GAUser
                 }
             }
 
-            directoryServiceDict[Domain].Users.Patch(userAcct, fullEmail).Execute();
+            Users.Patch(userAcct, fullEmail);
         }
     }
 }

@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Management.Automation;
-using gShell.DirectoryCmdlets.GAGroup;
-using Google.Apis.Admin.Directory.directory_v1;
 using Google.Apis.Admin.Directory.directory_v1.Data;
-using gShell.dotNet.Utilities.OAuth2;
 
 namespace gShell.Cmdlets.Directory.GAGroupMember
 {
@@ -12,7 +9,7 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
           DefaultParameterSetName = "OneGroup",
           SupportsShouldProcess = true,
           HelpUri=@"https://github.com/squid808/gShell/wiki/Add-GAGroupMember")]
-    public class AddGAGroupMember : GetGAGroupBase
+    public class AddGAGroupMember : DirectoryBase
     {
         #region Properties
 
@@ -51,14 +48,14 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
 
         private void AddGroupMember()
         {
-            GroupName = OAuth2Base.GetFullEmailAddress(GroupName, Domain);
+            GroupName = GetFullEmailAddress(GroupName, Domain);
 
             Member member = new Member {
-                Email = OAuth2Base.GetFullEmailAddress(UserName, Domain),
+                Email = GetFullEmailAddress(UserName, Domain),
                 Role = this.Role.ToString()
             };
 
-            directoryServiceDict[Domain].Members.Insert(member, GroupName).Execute();
+            Members.Insert(member, GroupName);
         }
     }
 

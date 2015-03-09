@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Management.Automation;
-using Google.Apis.Admin.Directory.directory_v1;
-using Google.Apis.Admin.Directory.directory_v1.Data;
+using Data = Google.Apis.Admin.Directory.directory_v1.Data;
 
-using Google.Apis.Requests;
-using gShell.DirectoryCmdlets.GAUser;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using gShell.dotNet.Utilities;
 
-namespace gShell.DirectoryCmdlets.GAUser.GAUserProperties
+namespace gShell.Cmdlets.Directory.GAUserProperty
 {
      [Cmdlet(VerbsCommon.Get, "GAUserProperty",
           SupportsShouldProcess = true,
@@ -47,7 +42,7 @@ namespace gShell.DirectoryCmdlets.GAUser.GAUserProperties
         {
             if (ShouldProcess(UserName, "Get-GAUserProperty"))
             {
-                User u = new User();
+                Data.User u = new Data.User();
 
                 if (null != GShellObject)
                 {
@@ -55,7 +50,7 @@ namespace gShell.DirectoryCmdlets.GAUser.GAUserProperties
                 }
                 else if (!string.IsNullOrWhiteSpace(UserName))
                 {
-                    u = GetOneUser(UserName);
+                    u = Users.Get(Utils.GetFullEmailAddress(UserName, Domain));
                 }
                 else
                 {
@@ -100,31 +95,5 @@ namespace gShell.DirectoryCmdlets.GAUser.GAUserProperties
                 }
             }
         }
-
-
-
-        /*getproperty
-         * -username
-         * -domain
-         * -userobject
-         * -property
-         * -all
-         * 
-         * addproperty
-         * -username
-         * -domain
-         * -userobject
-         * -oneproperty
-         * -propertyCollection
-         * add
-         * 
-         * removeproperty
-         * -username
-         * -domain
-         * -userobject
-         * -propertyType
-         * -objectIndex
-         * -all
-         * */
     }
 }

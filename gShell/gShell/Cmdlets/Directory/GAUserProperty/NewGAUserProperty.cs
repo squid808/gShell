@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Management.Automation;
-using Google.Apis.Admin.Directory.directory_v1;
-using Google.Apis.Admin.Directory.directory_v1.Data;
+using Data = Google.Apis.Admin.Directory.directory_v1.Data;
 
-namespace gShell.DirectoryCmdlets.GAUser.GAUserProperties
+namespace gShell.Cmdlets.Directory.GAUserProperty
 {
     [Cmdlet(VerbsCommon.New, "GAUserProperty",
           SupportsShouldProcess = true,
@@ -111,10 +110,10 @@ namespace gShell.DirectoryCmdlets.GAUser.GAUserProperties
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
-        private UserAddress GetUserAddress(UserAddressProperties p)
+        private Data.UserAddress GetUserAddress(UserAddressProperties p)
         {
             //GAUserPropertyAddress address = new GAUserPropertyAddress();
-            UserAddress address = new UserAddress();
+            Data.UserAddress address = new Data.UserAddress();
 
             address.Type = p.Type.ToString();
 
@@ -189,9 +188,9 @@ namespace gShell.DirectoryCmdlets.GAUser.GAUserProperties
             return(address);
         }
 
-        private UserEmail GetUserEmail(UserEmailProperties p)
+        private Data.UserEmail GetUserEmail(UserEmailProperties p)
         {
-            UserEmail email = new UserEmail();
+            Data.UserEmail email = new Data.UserEmail();
 
             email.Type = p.Type.ToString();
 
@@ -222,9 +221,9 @@ namespace gShell.DirectoryCmdlets.GAUser.GAUserProperties
             return email;
         }
 
-        private UserExternalId GetUserExternalId(UserExternalIdProperties p)
+        private Data.UserExternalId GetUserExternalId(UserExternalIdProperties p)
         {
-            UserExternalId externalId = new UserExternalId();
+            Data.UserExternalId externalId = new Data.UserExternalId();
 
             externalId.Type = p.Type.ToString();
 
@@ -249,9 +248,9 @@ namespace gShell.DirectoryCmdlets.GAUser.GAUserProperties
             return externalId;
         }
 
-        private UserIm GetUserIm(UserImProperties p)
+        private Data.UserIm GetUserIm(UserImProperties p)
         {
-            UserIm im = new UserIm();
+            Data.UserIm im = new Data.UserIm();
 
             im.Type = p.Type.ToString();
 
@@ -296,9 +295,9 @@ namespace gShell.DirectoryCmdlets.GAUser.GAUserProperties
             return im;
         }
 
-        private UserOrganization GetUserOrganization(UserOrganizationProperties p)
+        private Data.UserOrganization GetUserOrganization(UserOrganizationProperties p)
         {
-            UserOrganization org = new UserOrganization();
+            Data.UserOrganization org = new Data.UserOrganization();
 
             org.Type = p.Type.ToString();
 
@@ -363,9 +362,9 @@ namespace gShell.DirectoryCmdlets.GAUser.GAUserProperties
             return org;
         }
 
-        private UserPhone GetUserPhone(UserPhoneProperties p)
+        private Data.UserPhone GetUserPhone(UserPhoneProperties p)
         {
-            UserPhone phone = new UserPhone();
+            Data.UserPhone phone = new Data.UserPhone();
 
             phone.Type = p.Type.ToString();
 
@@ -395,9 +394,9 @@ namespace gShell.DirectoryCmdlets.GAUser.GAUserProperties
             return phone;
         }
 
-        private UserRelation GetUserRelation(UserRelationProperties p)
+        private Data.UserRelation GetUserRelation(UserRelationProperties p)
         {
-            UserRelation e = new UserRelation();
+            Data.UserRelation e = new Data.UserRelation();
 
             e.Type = p.Type.ToString();
 

@@ -19,7 +19,7 @@ using Google.Apis.Services;
 using Google.Apis.Admin.Reports.reports_v1;
 using Google.Apis.Admin.Reports.reports_v1.Data;
 
-using gShell.Serialization;
+//using gShell.Serialization;
 
 namespace gShell.dotNet.Utilities.OAuth2
 {
@@ -32,12 +32,22 @@ namespace gShell.dotNet.Utilities.OAuth2
         #region Properties
         protected static ProgressRecord progressBar;
 
-        
         /// <summary>
         /// A flag to determine if the assemblies have already been resolved.
         /// </summary>
         public static bool assembliesResolved { get { return _assembliesResolved; } }
         private static bool _assembliesResolved;
+
+
+        /// <summary>
+        /// A delegate to allow the progress bar methods to be static. Assigned in Begin Processing.
+        /// </summary>
+        protected delegate void gWriteProgress(ProgressRecord progressBar);
+
+        /// <summary>
+        /// A static implementation of GWriteProgress
+        /// </summary>
+        protected static gWriteProgress GWriteProgress;
         #endregion
 
         #region AssemblyResolution
@@ -81,7 +91,10 @@ namespace gShell.dotNet.Utilities.OAuth2
         #endregion
 
         #region Constructors
-        public OAuth2CmdletBase() { }
+        public OAuth2CmdletBase() 
+        {
+            GWriteProgress += WriteProgress; //set up the delegate so that the progress bar will work via static calls
+        }
         #endregion
 
         #region Authentication & Processing
@@ -111,7 +124,7 @@ namespace gShell.dotNet.Utilities.OAuth2
         /// </summary>
         /// <param name="activityMessage"></param>
         /// <param name="statusMessage"></param>
-        protected void StartProgressBar(string activityMessage,
+        public static void StartProgressBar(string activityMessage,
             string statusMessage = " ")
         {
             if (string.IsNullOrWhiteSpace(statusMessage))
@@ -122,7 +135,7 @@ namespace gShell.dotNet.Utilities.OAuth2
             progressBar = new ProgressRecord(1, activityMessage, statusMessage);
             progressBar.PercentComplete = 0;
             progressBar.StatusDescription = "0";
-            WriteProgress(progressBar);
+            GWriteProgress(progressBar);
         }
 
 
@@ -132,7 +145,7 @@ namespace gShell.dotNet.Utilities.OAuth2
         /// <param name="activityMessage"></param>
         /// <param name="currentPercentage"></param>
         /// <param name="maxCount"></param>
-        protected void UpdateProgressBar(int currentCount,
+        protected static void UpdateProgressBar(int currentCount,
             int maxCount, string activityMessage = "", string statusDescription = "")
         {
             if (!string.IsNullOrWhiteSpace(activityMessage))
@@ -150,7 +163,7 @@ namespace gShell.dotNet.Utilities.OAuth2
             {
                 progressBar.StatusDescription = statusDescription;
             }
-            WriteProgress(progressBar);
+            GWriteProgress(progressBar);
         }
         #endregion
     }
