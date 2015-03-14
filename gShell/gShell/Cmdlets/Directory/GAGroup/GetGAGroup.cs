@@ -30,6 +30,13 @@ namespace gShell.Cmdlets.Directory.GAGroup
         public SwitchParameter All { get; set; }
 
         [Parameter(Position = 3,
+            ParameterSetName = "OneUser",
+            Mandatory = true,
+            ValueFromPipeline = true)]
+        [ValidateNotNullOrEmpty]
+        public string UserName { get; set; }
+
+        [Parameter(
             Mandatory = false,
             ParameterSetName = "AllGroups")]
         public int MaxResults { get; set; }
@@ -54,6 +61,15 @@ namespace gShell.Cmdlets.Directory.GAGroup
                         {
                             totalResults = MaxResults,
                             domain = Domain
+                        }));
+                    }
+                    break;
+                case "OneUser":
+                    if (ShouldProcess(GroupName, "Get-GAGroup"))
+                    {
+                        WriteObject(groups.List(new dotNet.Directory.Groups.GroupsListProperties(){
+                            userKey = GetFullEmailAddress(UserName, Domain),
+                            totalResults = MaxResults
                         }));
                     }
                     break;
