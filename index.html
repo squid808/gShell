@@ -19,7 +19,7 @@
 
         <header>
           <h1>gShell</h1>
-          <h2>PowerShell Cmdlets for Google Apps and Gmail</h2>
+          <h2>PowerShell Cmdlets and .Net Libraries for Google Apps and Gmail APIs</h2>
         </header>
 
         <section id="downloads" class="clearfix">
@@ -33,6 +33,11 @@
         <section id="main_content">
           <h1>
 <a id="welcome-to-gshell" class="anchor" href="#welcome-to-gshell" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to gShell!</h1>
+
+<h3>
+<a id="what-is-gshell" class="anchor" href="#what-is-gshell" aria-hidden="true"><span class="octicon octicon-link"></span></a>What is gShell?</h3>
+
+<p>gShell is a project that primarily aims to make all Google APIs available through Microsoft PowerShell, starting with the Administrative APIs. As a result, gShell also provides dotNet developers with a framework to ease the burden of <a href="https://github.com/squid808/gShell/wiki/DotNet-Guide">authenticating and calling on the APIs in dotNet</a>.</p>
 
 <h3>
 <a id="powershell-cmdlets-for-google-apis" class="anchor" href="#powershell-cmdlets-for-google-apis" aria-hidden="true"><span class="octicon octicon-link"></span></a>PowerShell Cmdlets for Google APIs</h3>
@@ -52,60 +57,60 @@
 
 <p>First, you can grab a user from your domain and get it back as a <a href="https://github.com/squid808/gShell/wiki/GAUser">GAUser</a> object:</p>
 
-<div class="highlight highlight-PowerShell"><pre>PS C:\&gt; <span class="pl-k"><span class="pl-k">Get-GAUser</span></span> BMcGee mydomain.com
+<div class="highlight highlight-PowerShell"><pre>PS C:\<span class="pl-k">&gt;</span> <span class="pl-s3">Get-GAUser</span> BMcGee mydomain.com
 
 GivenName     : Bobby
 FamilyName    : McGee
 PrimaryEmail  : bmcgee@mydomain.com
-Aliases       : {bobbymcgee@mydomain.com, bobmcgee@mydomain.com}
+Aliases       : {bobbymcgee@mydomain.com<span class="pl-k">,</span> bobmcgee@mydomain.com}
 Suspended     : False
 OrgUnitPath   : <span class="pl-k">/</span>
-LastLoginTime : <span class="pl-c1">2013</span><span class="pl-k"><span class="pl-k">-</span></span><span class="pl-c1">10</span><span class="pl-k"><span class="pl-k">-</span></span><span class="pl-c1">25</span>T05:<span class="pl-c1">10</span>:<span class="pl-c1">40.00</span>0Z</pre></div>
+LastLoginTime : <span class="pl-c1"><span class="pl-sc">2013</span></span><span class="pl-k">-</span><span class="pl-c1"><span class="pl-sc">10</span></span><span class="pl-k">-</span>25T05:<span class="pl-c1"><span class="pl-sc">10</span></span>:<span class="pl-c1"><span class="pl-sc">40</span></span>.000Z</pre></div>
 
 <p>Or, you can elect to get all users in the domain and throw them in a variable, perhaps to compare against your AD Environment:</p>
 
-<div class="highlight highlight-PowerShell"><pre>PS C:\&gt; <span class="pl-vo">$AllUsers</span> <span class="pl-k">=</span> <span class="pl-k"><span class="pl-k">Get-GAUser</span></span> <span class="pl-k">-</span>all
+<div class="highlight highlight-PowerShell"><pre>PS C:\<span class="pl-k">&gt;</span> <span class="pl-k">$</span><span class="pl-vo">AllUsers</span> <span class="pl-k">=</span> <span class="pl-s3">Get-GAUser</span> <span class="pl-k">-</span>all
 
 <span class="pl-k">----</span>
-PS C:\&gt; <span class="pl-vo">$AllUsers</span>.Count
+PS C:\<span class="pl-k">&gt;</span> <span class="pl-k">$</span><span class="pl-vo">AllUsers</span><span class="pl-en">.Count</span>
 
-<span class="pl-c1">9001</span></pre></div>
+<span class="pl-c1"><span class="pl-sc">9001</span></span></pre></div>
 
 <p>Better yet, perhaps you need to get a list of all users in all <a href="https://github.com/squid808/gShell/wiki/GAGroup">groups</a> in the domain...</p>
 
-<div class="highlight highlight-PowerShell"><pre>PS C:\&gt; <span class="pl-vo">$AllGroups</span> <span class="pl-k">=</span> <span class="pl-k"><span class="pl-k">Get-GAGroup</span></span> mydomain.com <span class="pl-k">-</span>All <span class="pl-k">-</span>Members <span class="pl-k">-</span>Owners
+<div class="highlight highlight-PowerShell"><pre>PS C:\<span class="pl-k">&gt;</span> <span class="pl-k">$</span><span class="pl-vo">AllGroups</span> <span class="pl-k">=</span> <span class="pl-s3">Get-GAGroup</span> mydomain.com <span class="pl-k">-</span>All <span class="pl-k">-</span>Members <span class="pl-k">-</span>Owners
 <span class="pl-c">#A progress bar will show up for this, since it's potentially a long wait</span>
 
 <span class="pl-k">----</span>
-PS C:\&gt; <span class="pl-vo">$AllGroups</span>.Count
+PS C:\<span class="pl-k">&gt;</span> <span class="pl-k">$</span><span class="pl-vo">AllGroups</span><span class="pl-en">.Count</span>
 
-<span class="pl-c1">42</span></pre></div>
+<span class="pl-c1"><span class="pl-sc">42</span></span></pre></div>
 
 <p>...or you want to find all members of all groups, and throw that in a list for easy export to CSV Got that covered:</p>
 
-<div class="highlight highlight-PowerShell"><pre>PS C:\&gt; <span class="pl-vo">$AllMembers</span> <span class="pl-k">=</span> (<span class="pl-k"><span class="pl-k">Get-GAGroupMember</span></span> <span class="pl-k">-</span>All).ToSingleList()
+<div class="highlight highlight-PowerShell"><pre>PS C:\<span class="pl-k">&gt;</span> <span class="pl-k">$</span><span class="pl-vo">AllMembers</span> <span class="pl-k">=</span> <span class="pl-k">(</span><span class="pl-s3">Get-GAGroupMember</span> <span class="pl-k">-</span>All<span class="pl-k">)</span>.ToSingleList<span class="pl-k">()</span>
 
 <span class="pl-k">----</span>
-PS C:\&gt; <span class="pl-vo">$AllMembers</span>[<span class="pl-c1">0</span>]
+PS C:\<span class="pl-k">&gt;</span> <span class="pl-k">$</span><span class="pl-vo">AllMembers</span><span class="pl-e">[</span><span class="pl-c1"><span class="pl-sc">0</span></span><span class="pl-e">]</span>
 
 Email : bobbymcgee@mydomain.com
-ETag  : <span class="pl-s1"><span class="pl-pds">"</span>01...rs/44...HQ<span class="pl-pds">"</span></span>
-Id    : <span class="pl-c1">123456789123456789123</span>
-Kind  : admin#directory#member
+ETag  : <span class="pl-s1">"01...rs/44...HQ"</span>
+Id    : <span class="pl-c1"><span class="pl-sc">123456789123456789123</span></span>
+Kind  : admin<span class="pl-c">#directory#member</span>
 Role  : MEMBER
 Type  : USER
 Group : songcharacters@mydomain.com
 
 <span class="pl-k">----</span>
-PS C:\&gt; <span class="pl-vo">$AllMembers</span> <span class="pl-k">|</span> <span class="pl-k"><span class="pl-k">Export-Csv</span></span> <span class="pl-k">-</span>Path <span class="pl-s1"><span class="pl-pds">"</span>C:\AllGroupMemberships.csv<span class="pl-pds">"</span></span> <span class="pl-k">-</span>NoTypeInformation
+PS C:\<span class="pl-k">&gt;</span> <span class="pl-k">$</span><span class="pl-vo">AllMembers</span> <span class="pl-k">|</span> <span class="pl-s3">Export-Csv</span> <span class="pl-k">-</span>Path <span class="pl-s1">"C:\AllGroupMemberships.csv"</span> <span class="pl-k">-</span>NoTypeInformation
 
 <span class="pl-k">----</span>
-PS C:\&gt; (<span class="pl-k"><span class="pl-k">Get-Content</span></span> <span class="pl-s1"><span class="pl-pds">"</span>C:\AllDomainGroupMemberships.csv<span class="pl-pds">"</span></span>)[<span class="pl-c1">0..1</span>]
+PS C:\<span class="pl-k">&gt;</span> <span class="pl-k">(</span><span class="pl-s3">Get-Content</span> <span class="pl-s1">"C:\AllDomainGroupMemberships.csv"</span><span class="pl-k">)</span><span class="pl-e">[</span><span class="pl-c1"><span class="pl-sc">0</span></span><span class="pl-e">..</span><span class="pl-c1"><span class="pl-sc">1</span></span><span class="pl-e">]</span>
 <span class="pl-c">#Let's look directly at the CSV file...</span>
 
-<span class="pl-s1"><span class="pl-pds">"</span>Email<span class="pl-pds">"</span></span>,<span class="pl-s1"><span class="pl-pds">"</span>ETag<span class="pl-pds">"</span></span>,<span class="pl-s1"><span class="pl-pds">"</span>Id<span class="pl-pds">"</span></span>,<span class="pl-s1"><span class="pl-pds">"</span>Kind<span class="pl-pds">"</span></span>,<span class="pl-s1"><span class="pl-pds">"</span>Role<span class="pl-pds">"</span></span>,<span class="pl-s1"><span class="pl-pds">"</span>Type<span class="pl-pds">"</span></span>,<span class="pl-s1"><span class="pl-pds">"</span>Group<span class="pl-pds">"</span></span>
-,<span class="pl-s1"><span class="pl-pds">"""</span>01...rs/44...HQ<span class="pl-pds">"""</span></span>,<span class="pl-s1"><span class="pl-pds">"</span>12...23<span class="pl-pds">"</span></span>,<span class="pl-s1"><span class="pl-pds">"</span>admin#directory#member<span class="pl-pds">"</span></span>,<span class="pl-s1"><span class="pl-pds">"</span>MEMBER<span class="pl-pds">"</span></span>,<span class="pl-s1"><span class="pl-pds">"</span>USER<span class="pl-pds">"</span></span>
-,<span class="pl-s1"><span class="pl-pds">"</span>songcharacters@mydomain.com<span class="pl-pds">"</span></span></pre></div>
+<span class="pl-s1">"Email"</span><span class="pl-k">,</span><span class="pl-s1">"ETag"</span><span class="pl-k">,</span><span class="pl-s1">"Id"</span><span class="pl-k">,</span><span class="pl-s1">"Kind"</span><span class="pl-k">,</span><span class="pl-s1">"Role"</span><span class="pl-k">,</span><span class="pl-s1">"Type"</span><span class="pl-k">,</span><span class="pl-s1">"Group"</span>
+<span class="pl-k">,</span><span class="pl-s1">"<span class="pl-cce">""</span>01...rs/44...HQ<span class="pl-cce">""</span>"</span><span class="pl-k">,</span><span class="pl-s1">"12...23"</span><span class="pl-k">,</span><span class="pl-s1">"admin#directory#member"</span><span class="pl-k">,</span><span class="pl-s1">"MEMBER"</span><span class="pl-k">,</span><span class="pl-s1">"USER"</span>
+<span class="pl-k">,</span><span class="pl-s1">"songcharacters@mydomain.com"</span></pre></div>
 
 <p>This is the tip of the iceberg of what's possible and what's available. If you need help or have questions, requests or you found a bug, drop a line in the <a href="https://github.com/squid808/gShell/wiki/Discussion-Groups">discussion group</a>.</p>
 
@@ -114,7 +119,7 @@ PS C:\&gt; (<span class="pl-k"><span class="pl-k">Get-Content</span></span> <spa
 
         <footer>
           gShell is maintained by <a href="https://github.com/squid808">squid808</a><br>
-          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+          This page was generated by <a href="https://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
         </footer>
 
                   <script type="text/javascript">
