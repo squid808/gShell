@@ -1,5 +1,7 @@
 ﻿using System.Management.Automation;
-using gShell.Cmdlets.Utilities;
+//using gShell.Cmdlets.Utilities;
+using gShell.dotNet.Utilities;
+using gShell.dotNet.Utilities.OAuth2;
 
 namespace gShell.Cmdlets.Utilities.GASavedDomain
 {

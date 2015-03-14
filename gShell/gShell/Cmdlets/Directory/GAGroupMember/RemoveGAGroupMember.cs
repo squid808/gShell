@@ -69,7 +69,7 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
 
             UserName = GetFullEmailAddress(UserName, Domain);
 
-            Members.Delete(GroupName, UserName);
+            members.Delete(GroupName, UserName);
         }
     }
 

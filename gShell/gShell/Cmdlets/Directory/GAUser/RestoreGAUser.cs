@@ -53,7 +53,7 @@ namespace gShell.Cmdlets.Directory.GAUser
                 undelete.OrgUnitPath = OrgUnitPath;
             }
 
-            Users.Undelete(undelete, UserID);
+            users.Undelete(undelete, UserID);
         }
     }
 }

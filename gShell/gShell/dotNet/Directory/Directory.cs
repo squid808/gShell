@@ -7,15 +7,41 @@ using gShell.dotNet.Utilities.OAuth2;
 
 namespace gShell.dotNet
 {
-    public abstract class Directory : ServiceWrapper<directory_v1.DirectoryService>
+    /// <summary>
+    /// A consumer of the Admin Directory API that includes gShell authentication.
+    /// </summary>
+    public class Directory : ServiceWrapper<directory_v1.DirectoryService>
     {
         #region Inherited Members
-        protected static bool worksWithGmail = false;
+        /// <summary>
+        /// Indicates if this set of services will work with Gmail (as opposed to Google Apps). 
+        /// This will cause authentication to fail if false and the user attempts to authenticate with
+        /// a gmail address.
+        /// </summary>
+        protected override bool worksWithGmail { get { return false; } }
 
-        protected static directory_v1.DirectoryService CreateNewService(string domain)
+        /// <summary>
+        /// Initialize and return a new DirectoryService
+        /// </summary>
+        protected override directory_v1.DirectoryService CreateNewService(string domain)
         {
             return new directory_v1.DirectoryService(OAuth2Base.GetInitializer(domain));
         }
+        #endregion
+
+        #region Properties
+        public ChromeosDevices chromeosDevices = new ChromeosDevices();
+        public Groups groups = new Groups();
+        public Members members = new Members();
+        public MobileDevices mobileDevices = new MobileDevices();
+        public Orgunits orgunits = new Orgunits();
+        public Users users = new Users();
+        public Asps asps = new Asps();
+        public Tokens tokens = new Tokens();
+        public VerificationCodes verificationCodes = new VerificationCodes();
+        public Notifications notifications = new Notifications();
+        public Channels channels = new Channels();
+        public Schemas schemas = new Schemas();
         #endregion
 
         #region Wrapped Methods
@@ -35,7 +61,7 @@ namespace gShell.dotNet
                 public int totalResults = 0;
             }
 
-            public static Data.ChromeOsDevice Get(string customerId, string deviceId,
+            public Data.ChromeOsDevice Get(string customerId, string deviceId,
                 directory_v1.ChromeosdevicesResource.GetRequest.ProjectionEnum? projection=null)
             {
                 directory_v1.ChromeosdevicesResource.GetRequest request =
@@ -44,7 +70,7 @@ namespace gShell.dotNet
                 return request.Execute();
             }
 
-            public static List<Data.ChromeOsDevice> List(string customerId, ChromeosDevicesListProperties properties = null)
+            public List<Data.ChromeOsDevice> List(string customerId, ChromeosDevicesListProperties properties = null)
             {
                 List<Data.ChromeOsDevice> results = new List<Data.ChromeOsDevice>();
 
@@ -61,8 +87,11 @@ namespace gShell.dotNet
 
                 string resultObjType = "Chrome OS Devices";
 
-                properties.startProgressBar("Gathering " + resultObjType,
-                    string.Format("-Collecting {0} {1} to {2}", resultObjType, "1", request.MaxResults.ToString()));
+                if (null != properties.startProgressBar)
+                {
+                    properties.startProgressBar("Gathering " + resultObjType,
+                        string.Format("-Collecting {0} {1} to {2}", resultObjType, "1", request.MaxResults.ToString()));
+                }
 
                 Data.ChromeOsDevices pagedResult = request.Execute();
 
@@ -73,22 +102,28 @@ namespace gShell.dotNet
                 (properties.totalResults == 0 || results.Count < properties.totalResults))
                 {
                     request.PageToken = pagedResult.NextPageToken;
-                    properties.updateProgressBar(5, 10, "Gathering " + resultObjType,
-                            string.Format("-Collecting {0} {1} to {2}",
-                                resultObjType,
-                                (results.Count + 1).ToString(),
-                                (results.Count + request.MaxResults).ToString()));
+                    if (null != properties.updateProgressBar)
+                    {
+                        properties.updateProgressBar(5, 10, "Gathering " + resultObjType,
+                                string.Format("-Collecting {0} {1} to {2}",
+                                    resultObjType,
+                                    (results.Count + 1).ToString(),
+                                    (results.Count + request.MaxResults).ToString()));
+                    }
                     pagedResult = request.Execute();
                     results.AddRange(pagedResult.Chromeosdevices);
                 }
 
-                properties.updateProgressBar(1, 2, "Gathering " + resultObjType,
-                        string.Format("-Returning {0} results.", results.Count.ToString()));
+                if (null != properties.updateProgressBar)
+                {
+                    properties.updateProgressBar(1, 2, "Gathering " + resultObjType,
+                            string.Format("-Returning {0} results.", results.Count.ToString()));
+                }
 
                 return results;
             }
 
-            public static Data.ChromeOsDevice Patch(Data.ChromeOsDevice body, string customerId, string deviceId,
+            public Data.ChromeOsDevice Patch(Data.ChromeOsDevice body, string customerId, string deviceId,
                 directory_v1.ChromeosdevicesResource.PatchRequest.ProjectionEnum? projection=null)
             {
                 directory_v1.ChromeosdevicesResource.PatchRequest request =
@@ -97,7 +132,7 @@ namespace gShell.dotNet
                 return request.Execute();
             }
 
-            public static Data.ChromeOsDevice Update(Data.ChromeOsDevice body, string customerId, string deviceId,
+            public Data.ChromeOsDevice Update(Data.ChromeOsDevice body, string customerId, string deviceId,
                 directory_v1.ChromeosdevicesResource.UpdateRequest.ProjectionEnum? projection = null)
             {
                 directory_v1.ChromeosdevicesResource.UpdateRequest request =
@@ -111,6 +146,8 @@ namespace gShell.dotNet
         #region Groups
         public class Groups
         {
+            public Aliases aliases = new Aliases();
+
             public class GroupsListProperties
             {
                 public string customer = null;
@@ -122,22 +159,22 @@ namespace gShell.dotNet
                 public int totalResults = 0;
             }
 
-            public static string Delete(string groupKey)
+            public string Delete(string groupKey)
             {
                 return services[activeDomain].Groups.Delete(groupKey).Execute();
             }
 
-            public static Data.Group Get(string groupKey)
+            public Data.Group Get(string groupKey)
             {
                 return services[activeDomain].Groups.Get(groupKey).Execute();
             }
 
-            public static Data.Group Insert(Data.Group body)
+            public Data.Group Insert(Data.Group body)
             {
                 return services[activeDomain].Groups.Insert(body).Execute();
             }
 
-            public static List<Data.Group> List(GroupsListProperties properties = null)
+            public List<Data.Group> List(GroupsListProperties properties = null)
             {
                 List<Data.Group> results = new List<Data.Group>();
 
@@ -154,8 +191,11 @@ namespace gShell.dotNet
 
                 string resultObjType = "groups";
 
-                properties.startProgressBar("Gathering " + resultObjType,
-                    string.Format("-Collecting {0} {1} to {2}", resultObjType, "1", request.MaxResults.ToString()));
+                if (null != properties.startProgressBar)
+                {
+                    properties.startProgressBar("Gathering " + resultObjType,
+                        string.Format("-Collecting {0} {1} to {2}", resultObjType, "1", request.MaxResults.ToString()));
+                }
                 
                 Data.Groups pagedResult = request.Execute();
 
@@ -166,27 +206,33 @@ namespace gShell.dotNet
                 (properties.totalResults == 0 || results.Count < properties.totalResults))
                 {
                     request.PageToken = pagedResult.NextPageToken;
-                    properties.updateProgressBar(5, 10, "Gathering " + resultObjType,
-                            string.Format("-Collecting {0} {1} to {2}",
-                                resultObjType,
-                                (results.Count + 1).ToString(),
-                                (results.Count + request.MaxResults).ToString()));
+                    if (null != properties.updateProgressBar)
+                    {
+                        properties.updateProgressBar(5, 10, "Gathering " + resultObjType,
+                                string.Format("-Collecting {0} {1} to {2}",
+                                    resultObjType,
+                                    (results.Count + 1).ToString(),
+                                    (results.Count + request.MaxResults).ToString()));
+                    }
                     pagedResult = request.Execute();
                     results.AddRange(pagedResult.GroupsValue);
                 }
 
-                properties.updateProgressBar(1, 2, "Gathering " + resultObjType,
-                        string.Format("-Returning {0} results.", results.Count.ToString()));
+                if (null != properties.updateProgressBar)
+                {
+                    properties.updateProgressBar(1, 2, "Gathering " + resultObjType,
+                            string.Format("-Returning {0} results.", results.Count.ToString()));
 
+                }
                 return results;
             }
 
-            public static Data.Group Patch(Data.Group body, string groupKey)
+            public Data.Group Patch(Data.Group body, string groupKey)
             {
                 return services[activeDomain].Groups.Patch(body, groupKey).Execute();
             }
 
-            public static Data.Group Update(Data.Group body, string groupKey)
+            public Data.Group Update(Data.Group body, string groupKey)
             {
                 return services[activeDomain].Groups.Update(body, groupKey).Execute();
             }
@@ -194,17 +240,17 @@ namespace gShell.dotNet
             #region Groups.aliases
             public class Aliases
             {
-                public static string Delete(string groupKey, string alias)
+                public string Delete(string groupKey, string alias)
                 {
                     return services[activeDomain].Groups.Aliases.Delete(groupKey, alias).Execute();
                 }
 
-                public static Data.Alias Insert(Data.Alias body, string groupKey)
+                public Data.Alias Insert(Data.Alias body, string groupKey)
                 {
                     return services[activeDomain].Groups.Aliases.Insert(body, groupKey).Execute();
                 }
 
-                public static List<Data.Alias> List(string groupKey)
+                public List<Data.Alias> List(string groupKey)
                 {
                     List<Data.Alias> results = new List<Data.Alias>();
 
@@ -235,22 +281,22 @@ namespace gShell.dotNet
                 public int totalResults = 0;
             }
 
-            public static string Delete(string groupKey, string memberKey)
+            public string Delete(string groupKey, string memberKey)
             {
                 return services[activeDomain].Members.Delete(groupKey, memberKey).Execute();
             }
 
-            public static Data.Member Get(string groupKey, string memberKey)
+            public Data.Member Get(string groupKey, string memberKey)
             {
                 return services[activeDomain].Members.Get(groupKey, memberKey).Execute();
             }
 
-            public static Data.Member Insert(Data.Member body, string groupKey)
+            public Data.Member Insert(Data.Member body, string groupKey)
             {
                 return services[activeDomain].Members.Insert(body, groupKey).Execute();
             }
 
-            public static List<Data.Member> List(string groupKey, MembersListProperties properties = null)
+            public List<Data.Member> List(string groupKey, MembersListProperties properties = null)
             {
                 List<Data.Member> results = new List<Data.Member>();
                 
@@ -265,8 +311,11 @@ namespace gShell.dotNet
 
                 string resultObjType = "group members";
 
-                properties.startProgressBar("Gathering " + resultObjType,
-                    string.Format("-Collecting {0} {1} to {2}", resultObjType, "1", request.MaxResults.ToString()));
+                if (null != properties.startProgressBar)
+                {
+                    properties.startProgressBar("Gathering " + resultObjType,
+                        string.Format("-Collecting {0} {1} to {2}", resultObjType, "1", request.MaxResults.ToString()));
+                }
 
                 Data.Members pagedResult = request.Execute();
 
@@ -277,26 +326,32 @@ namespace gShell.dotNet
                 (properties.totalResults == 0 || results.Count < properties.totalResults))
                 {
                     request.PageToken = pagedResult.NextPageToken;
-                    properties.updateProgressBar(5, 10, "Gathering " + resultObjType,
-                            string.Format("-Collecting {0} {1} to {2}",
-                                resultObjType,
-                                (results.Count + 1).ToString(),
-                                (results.Count + request.MaxResults).ToString()));
+                    if (null != properties.updateProgressBar)
+                    {
+                        properties.updateProgressBar(5, 10, "Gathering " + resultObjType,
+                                string.Format("-Collecting {0} {1} to {2}",
+                                    resultObjType,
+                                    (results.Count + 1).ToString(),
+                                    (results.Count + request.MaxResults).ToString()));
+                    }
                     results.AddRange(pagedResult.MembersValue);
                 }
 
-                properties.updateProgressBar(1, 2, "Gathering " + resultObjType,
-                        string.Format("-Returning {0} results.", results.Count.ToString()));
+                if (null != properties.updateProgressBar)
+                {
+                    properties.updateProgressBar(1, 2, "Gathering " + resultObjType,
+                            string.Format("-Returning {0} results.", results.Count.ToString()));
+                }
 
                 return results;
             }
 
-            public static Data.Member Patch(Data.Member body, string groupKey, string memberKey)
+            public Data.Member Patch(Data.Member body, string groupKey, string memberKey)
             {
                 return services[activeDomain].Members.Patch(body, groupKey, memberKey).Execute();
             }
 
-            public static Data.Member Update(Data.Member body, string groupKey, string memberKey)
+            public Data.Member Update(Data.Member body, string groupKey, string memberKey)
             {
                 return services[activeDomain].Members.Update(body, groupKey, memberKey).Execute();
             }
@@ -317,17 +372,17 @@ namespace gShell.dotNet
                 public int totalResults = 0;
             }
 
-            public static string Action(Data.MobileDeviceAction body, string customerId, string resourceId)
+            public string Action(Data.MobileDeviceAction body, string customerId, string resourceId)
             {
                 return services[activeDomain].Mobiledevices.Action(body, customerId, resourceId).Execute();
             }
 
-            public static string Delete(string customerId, string resourceId)
+            public string Delete(string customerId, string resourceId)
             {
                 return services[activeDomain].Mobiledevices.Delete(customerId, resourceId).Execute();
             }
 
-            public static Data.MobileDevice Get(string customerId, string resourceId,
+            public Data.MobileDevice Get(string customerId, string resourceId,
                 directory_v1.MobiledevicesResource.GetRequest.ProjectionEnum? projection = null)
             {
                 directory_v1.MobiledevicesResource.GetRequest request = 
@@ -336,7 +391,7 @@ namespace gShell.dotNet
                 return request.Execute();
             }
 
-            public static List<Data.MobileDevice> List(string customerId,MobileDevicesPropertiesList properties = null)
+            public List<Data.MobileDevice> List(string customerId,MobileDevicesPropertiesList properties = null)
             {
                 List<Data.MobileDevice> results = new List<Data.MobileDevice>();
 
@@ -353,8 +408,11 @@ namespace gShell.dotNet
 
                 string resultObjType = "mobile devices";
 
-                properties.startProgressBar("Gathering " + resultObjType,
-                    string.Format("-Collecting {0} {1} to {2}", resultObjType, "1", request.MaxResults.ToString()));
+                if (null != properties.startProgressBar)
+                {
+                    properties.startProgressBar("Gathering " + resultObjType,
+                        string.Format("-Collecting {0} {1} to {2}", resultObjType, "1", request.MaxResults.ToString()));
+                }
 
                 Data.MobileDevices pagedResult = request.Execute();
 
@@ -365,17 +423,23 @@ namespace gShell.dotNet
                 (properties.totalResults == 0 || results.Count < properties.totalResults))
                 {
                     request.PageToken = pagedResult.NextPageToken;
-                    properties.updateProgressBar(5, 10, "Gathering " + resultObjType,
-                            string.Format("-Collecting {0} {1} to {2}",
-                                resultObjType,
-                                (results.Count + 1).ToString(),
-                                (results.Count + request.MaxResults).ToString()));
+                    if (null != properties.updateProgressBar)
+                    {
+                        properties.updateProgressBar(5, 10, "Gathering " + resultObjType,
+                                string.Format("-Collecting {0} {1} to {2}",
+                                    resultObjType,
+                                    (results.Count + 1).ToString(),
+                                    (results.Count + request.MaxResults).ToString()));
+                    }
                     pagedResult = request.Execute();
                     results.AddRange(pagedResult.Mobiledevices);
                 }
 
-                properties.updateProgressBar(1, 2, "Gathering " + resultObjType,
-                        string.Format("-Returning {0} results.", results.Count.ToString()));
+                if (null != properties.updateProgressBar)
+                {
+                    properties.updateProgressBar(1, 2, "Gathering " + resultObjType,
+                            string.Format("-Returning {0} results.", results.Count.ToString()));
+                }
 
                 return results;
             }
@@ -390,22 +454,22 @@ namespace gShell.dotNet
                 public string orgUnitPath=null;
                 public directory_v1.OrgunitsResource.ListRequest.TypeEnum? type=null;
             }
-            public static string Delete(string customerId, Google.Apis.Util.Repeatable<string> orgUnitPath)
+            public string Delete(string customerId, Google.Apis.Util.Repeatable<string> orgUnitPath)
             {
                 return services[activeDomain].Orgunits.Delete(customerId, orgUnitPath).Execute();
             }
 
-            public static Data.OrgUnit Get(string customerId, Google.Apis.Util.Repeatable<string> orgUnitPath)
+            public Data.OrgUnit Get(string customerId, Google.Apis.Util.Repeatable<string> orgUnitPath)
             {
                 return services[activeDomain].Orgunits.Get(customerId, orgUnitPath).Execute();
             }
 
-            public static Data.OrgUnit Insert(Data.OrgUnit body, string customerId)
+            public Data.OrgUnit Insert(Data.OrgUnit body, string customerId)
             {
                 return services[activeDomain].Orgunits.Insert(body, customerId).Execute();
             }
 
-            public static List<Data.OrgUnit> List(string customerId, OrgunitsListProperties properties = null)
+            public List<Data.OrgUnit> List(string customerId, OrgunitsListProperties properties = null)
             {
                 List<Data.OrgUnit> results = new List<Data.OrgUnit>();
 
@@ -425,12 +489,12 @@ namespace gShell.dotNet
                 return results;
             }
 
-            public static Data.OrgUnit Patch(Data.OrgUnit body, string customerId, Google.Apis.Util.Repeatable<string> orgUnitPath)
+            public Data.OrgUnit Patch(Data.OrgUnit body, string customerId, Google.Apis.Util.Repeatable<string> orgUnitPath)
             {
                 return services[activeDomain].Orgunits.Patch(body, customerId, orgUnitPath).Execute();
             }
 
-            public static Data.OrgUnit Update(Data.OrgUnit body, string customerId, Google.Apis.Util.Repeatable<string> orgUnitPath)
+            public Data.OrgUnit Update(Data.OrgUnit body, string customerId, Google.Apis.Util.Repeatable<string> orgUnitPath)
             {
                 return services[activeDomain].Orgunits.Update(body, customerId, orgUnitPath).Execute();
             }
@@ -440,6 +504,9 @@ namespace gShell.dotNet
         #region Users
         public class Users
         {
+            public Photos photos = new Photos();
+            public Aliases aliases = new Aliases();
+
             public class UsersListProperties
             {
                 public string customer = null;
@@ -458,12 +525,12 @@ namespace gShell.dotNet
                 public int totalResults = 0;
             }
 
-            public static string Delete(string userKey)
+            public string Delete(string userKey)
             {
                 return services[activeDomain].Users.Delete(userKey).Execute();
             }
 
-            public static Data.User Get(string userKey,
+            public Data.User Get(string userKey,
                 directory_v1.UsersResource.GetRequest.ProjectionEnum? projection = null,
                 directory_v1.UsersResource.GetRequest.ViewTypeEnum? viewType = null)
             {
@@ -476,12 +543,12 @@ namespace gShell.dotNet
                 return request.Execute();
             }
 
-            public static Data.User Insert(Data.User body)
+            public Data.User Insert(Data.User body)
             {
                 return services[activeDomain].Users.Insert(body).Execute();
             }
 
-            public static List<Data.User> List(UsersListProperties properties = null)
+            public List<Data.User> List(UsersListProperties properties = null)
             {
                 List<Data.User> results = new List<Data.User>();
 
@@ -505,8 +572,11 @@ namespace gShell.dotNet
 
                 string resultObjType = "users";
 
-                properties.startProgressBar("Gathering " + resultObjType,
-                    string.Format("-Collecting {0} {1} to {2}", resultObjType, "1", request.MaxResults.ToString()));
+                if (null != properties.startProgressBar)
+                {
+                    properties.startProgressBar("Gathering " + resultObjType,
+                        string.Format("-Collecting {0} {1} to {2}", resultObjType, "1", request.MaxResults.ToString()));
+                }
 
                 Data.Users pagedResult = request.Execute();
 
@@ -517,42 +587,48 @@ namespace gShell.dotNet
                 (properties.totalResults == 0 || results.Count < properties.totalResults))
                 {
                     request.PageToken = pagedResult.NextPageToken;
-                    properties.updateProgressBar(5, 10, "Gathering " + resultObjType,
-                            string.Format("-Collecting {0} {1} to {2}",
-                                resultObjType,
-                                (results.Count + 1).ToString(),
-                                (results.Count + request.MaxResults).ToString()));
+                    if (null != properties.updateProgressBar)
+                    {
+                        properties.updateProgressBar(5, 10, "Gathering " + resultObjType,
+                                string.Format("-Collecting {0} {1} to {2}",
+                                    resultObjType,
+                                    (results.Count + 1).ToString(),
+                                    (results.Count + request.MaxResults).ToString()));
+                    }
                     pagedResult = request.Execute();
                     results.AddRange(pagedResult.UsersValue);
                 }
 
-                properties.updateProgressBar(1, 2, "Gathering " + resultObjType,
+                if (null != properties.updateProgressBar)
+                {
+                    properties.updateProgressBar(1, 2, "Gathering " + resultObjType,
                         string.Format("-Returning {0} results.", results.Count.ToString()));
+                }
 
                 return results;
             }
 
-            public static string MakeAdmin(Data.UserMakeAdmin body, string userKey)
+            public string MakeAdmin(Data.UserMakeAdmin body, string userKey)
             {
                 return services[activeDomain].Users.MakeAdmin(body, userKey).Execute();
             }
 
-            public static Data.User Patch(Data.User body, string userKey)
+            public Data.User Patch(Data.User body, string userKey)
             {
                 return services[activeDomain].Users.Patch(body, userKey).Execute();
             }
 
-            public static string Undelete(Data.UserUndelete body, string userKey)
+            public string Undelete(Data.UserUndelete body, string userKey)
             {
                 return services[activeDomain].Users.Undelete(body, userKey).Execute();
             }
 
-            public static Data.User Update(Data.User body, string userKey)
+            public Data.User Update(Data.User body, string userKey)
             {
                 return services[activeDomain].Users.Update(body, userKey).Execute();
             }
 
-            public static Data.Channel Watch(Data.Channel body)
+            public Data.Channel Watch(Data.Channel body)
             {
                 return services[activeDomain].Users.Watch(body).Execute();
             }
@@ -560,17 +636,17 @@ namespace gShell.dotNet
             #region Users.aliases
             public class Aliases
             {
-                public static string Delete(string userKey, string alias)
+                public string Delete(string userKey, string alias)
                 {
                     return services[activeDomain].Users.Aliases.Delete(userKey, alias).Execute();
                 }
 
-                public static Data.Alias Insert(Data.Alias body, string userKey)
+                public Data.Alias Insert(Data.Alias body, string userKey)
                 {
                     return services[activeDomain].Users.Aliases.Insert(body, userKey).Execute();
                 }
 
-                public static List<Data.Alias> List(string userKey)
+                public List<Data.Alias> List(string userKey)
                 {
                     List<Data.Alias> results = new List<Data.Alias>();
 
@@ -584,7 +660,7 @@ namespace gShell.dotNet
                     return results;
                 }
 
-                public static Data.Channel Watch(Data.Channel body, string userKey)
+                public Data.Channel Watch(Data.Channel body, string userKey)
                 {
                     return services[activeDomain].Users.Aliases.Watch(body, userKey).Execute();
                 }
@@ -594,22 +670,22 @@ namespace gShell.dotNet
             #region Users.photos
             public class Photos
             {
-                public static string Delete(string userKey)
+                public string Delete(string userKey)
                 {
                     return services[activeDomain].Users.Photos.Delete(userKey).Execute();
                 }
 
-                public static Data.UserPhoto Get(string userKey)
+                public Data.UserPhoto Get(string userKey)
                 {
                     return services[activeDomain].Users.Photos.Get(userKey).Execute();
                 }
 
-                public static Data.UserPhoto Patch(Data.UserPhoto body, string userKey)
+                public Data.UserPhoto Patch(Data.UserPhoto body, string userKey)
                 {
                     return services[activeDomain].Users.Photos.Patch(body, userKey).Execute();
                 }
 
-                public static Data.UserPhoto Update(Data.UserPhoto body, string userKey)
+                public Data.UserPhoto Update(Data.UserPhoto body, string userKey)
                 {
                     return services[activeDomain].Users.Photos.Update(body, userKey).Execute();
                 }
@@ -621,17 +697,17 @@ namespace gShell.dotNet
         #region Asps
         public class Asps
         {
-            public static string Delete(string userKey, int codeId)
+            public string Delete(string userKey, int codeId)
             {
                 return services[activeDomain].Asps.Delete(userKey, codeId).Execute();
             }
 
-            public static Data.Asp Get(string userKey, int codeId)
+            public Data.Asp Get(string userKey, int codeId)
             {
                 return services[activeDomain].Asps.Get(userKey, codeId).Execute();
             }
 
-            public static List<Data.Asp> List(string userKey)
+            public List<Data.Asp> List(string userKey)
             {
                 List<Data.Asp> results = new List<Data.Asp>();
 
@@ -650,17 +726,17 @@ namespace gShell.dotNet
         #region Tokens
         public class Tokens
         {
-            public static string Delete(string userKey, string clientId)
+            public string Delete(string userKey, string clientId)
             {
                 return services[activeDomain].Tokens.Delete(userKey, clientId).Execute();
             }
 
-            public static Data.Token Get(string userKey, string clientId)
+            public Data.Token Get(string userKey, string clientId)
             {
                 return services[activeDomain].Tokens.Get(userKey, clientId).Execute();
             }
 
-            public static List<Data.Token> List(string userKey)
+            public List<Data.Token> List(string userKey)
             {
                 List<Data.Token> results = new List<Data.Token>();
 
@@ -679,17 +755,17 @@ namespace gShell.dotNet
         #region VerificationCodes
         public class VerificationCodes
         {
-            public static string Generate(string userKey)
+            public string Generate(string userKey)
             {
                 return services[activeDomain].VerificationCodes.Generate(userKey).Execute();
             }
 
-            public static string Invalidate(string userKey)
+            public string Invalidate(string userKey)
             {
                 return services[activeDomain].VerificationCodes.Invalidate(userKey).Execute();
             }
 
-            public static List<Data.VerificationCode> List(string userKey)
+            public List<Data.VerificationCode> List(string userKey)
             {
                 List<Data.VerificationCode> results = new List<Data.VerificationCode>();
 
@@ -717,17 +793,17 @@ namespace gShell.dotNet
                 public int totalResults = 0;
             }
 
-            public static string Delete(string customer, string notificationId)
+            public string Delete(string customer, string notificationId)
             {
                 return services[activeDomain].Notifications.Delete(customer, notificationId).Execute();
             }
 
-            public static Data.Notification Get(string customer, string notificationId)
+            public Data.Notification Get(string customer, string notificationId)
             {
                 return services[activeDomain].Notifications.Get(customer, notificationId).Execute();
             }
 
-            public static List<Data.Notification> List(string customer, NotificationsListProperties properties = null)
+            public List<Data.Notification> List(string customer, NotificationsListProperties properties = null)
             {
                 List<Data.Notification> results = new List<Data.Notification>();
 
@@ -742,8 +818,11 @@ namespace gShell.dotNet
 
                 string resultObjType = "notifications";
 
-                properties.startProgressBar("Gathering " + resultObjType,
-                    string.Format("-Collecting {0} {1} to {2}", resultObjType, "1", request.MaxResults.ToString()));
+                if (null != properties.startProgressBar)
+                {
+                    properties.startProgressBar("Gathering " + resultObjType,
+                        string.Format("-Collecting {0} {1} to {2}", resultObjType, "1", request.MaxResults.ToString()));
+                }
 
                 Data.Notifications pagedResult = request.Execute();
 
@@ -754,27 +833,33 @@ namespace gShell.dotNet
                 (properties.totalResults == 0 || results.Count < properties.totalResults))
                 {
                     request.PageToken = pagedResult.NextPageToken;
-                    properties.updateProgressBar(5, 10, "Gathering " + resultObjType,
-                            string.Format("-Collecting {0} {1} to {2}",
-                                resultObjType,
-                                (results.Count + 1).ToString(),
-                                (results.Count + request.MaxResults).ToString()));
+                    if (null != properties.updateProgressBar)
+                    {
+                        properties.updateProgressBar(5, 10, "Gathering " + resultObjType,
+                                string.Format("-Collecting {0} {1} to {2}",
+                                    resultObjType,
+                                    (results.Count + 1).ToString(),
+                                    (results.Count + request.MaxResults).ToString()));
+                    }
                     pagedResult = request.Execute();
                     results.AddRange(pagedResult.Items);
                 }
 
-                properties.updateProgressBar(1, 2, "Gathering " + resultObjType,
-                        string.Format("-Returning {0} results.", results.Count.ToString()));
+                if (null != properties.updateProgressBar)
+                {
+                    properties.updateProgressBar(1, 2, "Gathering " + resultObjType,
+                            string.Format("-Returning {0} results.", results.Count.ToString()));
+                }
 
                 return results;
             }
 
-            public static Data.Notification Patch(Data.Notification body, string customer, string notificationId)
+            public Data.Notification Patch(Data.Notification body, string customer, string notificationId)
             {
                 return services[activeDomain].Notifications.Patch(body, customer, notificationId).Execute();
             }
 
-            public static Data.Notification Update(Data.Notification body, string customer, string notificationId)
+            public Data.Notification Update(Data.Notification body, string customer, string notificationId)
             {
                 return services[activeDomain].Notifications.Update(body, customer, notificationId).Execute();
             }
@@ -784,7 +869,7 @@ namespace gShell.dotNet
         #region Channels
         public class Channels
         {
-            public static string Stop(Data.Channel body)
+            public string Stop(Data.Channel body)
             {
                 return services[activeDomain].Channels.Stop(body).Execute();
             }
@@ -794,22 +879,22 @@ namespace gShell.dotNet
         #region Schemas
         public class Schemas
         {
-            public static string Delete(string customerId, string schemaKey)
+            public string Delete(string customerId, string schemaKey)
             {
                 return services[activeDomain].Schemas.Delete(customerId, schemaKey).Execute();
             }
 
-            public static Data.Schema Get(string customerId, string schemaKey)
+            public Data.Schema Get(string customerId, string schemaKey)
             {
                 return services[activeDomain].Schemas.Get(customerId, schemaKey).Execute();
             }
 
-            public static Data.Schema Insert(Data.Schema body, string customerId)
+            public Data.Schema Insert(Data.Schema body, string customerId)
             {
                 return services[activeDomain].Schemas.Insert(body, customerId).Execute();
             }
 
-            public static List<Data.Schema> List(string customerId)
+            public List<Data.Schema> List(string customerId)
             {
                 List<Data.Schema> results = new List<Data.Schema>();
 
@@ -823,12 +908,12 @@ namespace gShell.dotNet
                 return results;
             }
 
-            public static Data.Schema Patch(Data.Schema body, string customerId, string schemaKey)
+            public Data.Schema Patch(Data.Schema body, string customerId, string schemaKey)
             {
                 return services[activeDomain].Schemas.Patch(body, customerId, schemaKey).Execute();
             }
 
-            public static Data.Schema Update(Data.Schema body, string customerId, string schemaKey)
+            public Data.Schema Update(Data.Schema body, string customerId, string schemaKey)
             {
                 return services[activeDomain].Schemas.Update(body, customerId, schemaKey).Execute();
             }

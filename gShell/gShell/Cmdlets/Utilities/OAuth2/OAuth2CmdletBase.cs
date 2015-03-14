@@ -98,10 +98,10 @@ namespace gShell.dotNet.Utilities.OAuth2
         #endregion
 
         #region Authentication & Processing
-        /// <summary>
-        /// A method specific to each inherited object, called during authentication. Must be implemented.
-        /// </summary>
-        protected abstract string BuildService(string givenDomain);
+        ///// <summary>
+        ///// A method specific to each inherited object, called during authentication. Must be implemented.
+        ///// </summary>
+        //protected abstract string BuildService(string givenDomain);
 
         /// <summary>
         /// A powershell specific method, called before the cmdlet is run. Must be implemented. 
@@ -111,13 +111,10 @@ namespace gShell.dotNet.Utilities.OAuth2
         /// <summary>
         /// Called each time a new cmdlet is fired.
         /// </summary>
-        protected string Authenticate(string domain)
-        {
-            return OAuth2Base.Authenticate(domain, BuildService);
-        }
+        protected abstract string Authenticate(string domain);
         #endregion
 
-        #region ProgressBarMethods
+        #region ProgressBar Methods
 
         /// <summary>
         /// Set up the progress bar to display to the user.
@@ -164,6 +161,66 @@ namespace gShell.dotNet.Utilities.OAuth2
                 progressBar.StatusDescription = statusDescription;
             }
             GWriteProgress(progressBar);
+        }
+        #endregion
+
+        #region Generic Methods
+        /// <summary>
+        /// Creates a random password of length.
+        /// </summary>
+        /// <param name="length"></param>
+        /// <see cref="http://stackoverflow.com/questions/54991/generating-random-passwords"/>
+        protected string CreatePassword(int length)
+        {
+            string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!-%?";
+            string res = "";
+            Random rnd = new Random();
+            while (0 < length--)
+                res += valid[rnd.Next(valid.Length)];
+            return res;
+        }
+
+        /// <summary>
+        /// Generates a hashed password based on the input.
+        /// </summary>
+        /// <param name="PasswordLength">Min 8, max 100. Defaults to 8 if empty.</param>
+        /// <param name="printPassword">Default false - prints the new password to screen.</param>
+        /// <returns>New password in hex string format.</returns>
+        protected string GeneratePassword(int? PasswordLength, bool ShowNewPassword)
+        {
+            int PasswordLengthInt;
+            if (PasswordLength < 8 || !PasswordLength.HasValue)
+            {
+                PasswordLength = 8;
+            }
+            else if (PasswordLength > 100)
+            {
+                PasswordLength = 100;
+            }
+            PasswordLengthInt = PasswordLength.Value;
+            string newPassword = CreatePassword(PasswordLengthInt);
+            //Console.WriteLine(newPassword);
+
+            if (ShowNewPassword == true)
+            {
+                Console.WriteLine(newPassword);
+            }
+
+            return GetMd5Hash(newPassword);
+        }
+
+        protected string GetMd5Hash(string s)
+        {
+            using (var md5Hasher = System.Security.Cryptography.MD5.Create())
+            {
+                var data = md5Hasher.ComputeHash(System.Text.Encoding.UTF8.GetBytes(s));
+                return BitConverter.ToString(data, 0).Replace("-", string.Empty);
+            }
+        }
+
+        protected string GetFullEmailAddress(string account, string domain)
+        {
+            return Utils.GetFullEmailAddress(account, domain);
         }
         #endregion
     }

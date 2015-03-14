@@ -66,7 +66,7 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
         {
             string fullEmail = GetFullEmailAddress(UserName, Domain);
 
-            List<Data.Alias> aliasList = gShell.dotNet.Directory.Users.Aliases.List(fullEmail);
+            List<Data.Alias> aliasList = users.aliases.List(fullEmail);
 
             return (aliasList);
         }
@@ -103,8 +103,9 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
         private List<Data.Alias> GetAllAliases()
         {
             HashSet<Data.User> usersList = new HashSet<Data.User>();
-            
-            foreach (Data.User user in (Users.List(new dotNet.Directory.Users.UsersListProperties(){
+
+            foreach (Data.User user in (users.List(new dotNet.Directory.Users.UsersListProperties()
+            {
                 fields = "nextPageToken,users(aliases,primaryEmail)"
             }))){
                 if (user.Aliases != null) {
@@ -121,7 +122,7 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
                 UpdateProgressBar(i, usersList.Count, "Gathering aliases",
                     string.Format("-Collecting alias for user {0} of {1}",
                     i, usersList.Count));
-                aliasList.AddRange(Users.Aliases.List(user.PrimaryEmail));
+                aliasList.AddRange(users.aliases.List(user.PrimaryEmail));
                 i++;
             }
 

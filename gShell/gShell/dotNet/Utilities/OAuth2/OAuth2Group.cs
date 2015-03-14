@@ -6,6 +6,8 @@ using System.Security.Cryptography.X509Certificates;
 
 using Google.Apis.Oauth2.v2.Data;
 
+using gShell.dotNet.Utilities;
+
 namespace gShell.dotNet.Utilities.OAuth2
 {
     [Serializable]
@@ -197,7 +199,7 @@ namespace gShell.dotNet.Utilities.OAuth2
 
             foreach (string key in storedInfo.Keys)
             {
-                keySet.Add(OAuth2Base.GetDomainFromEmail(key));
+                keySet.Add(Utils.GetDomainFromEmail(key));
             }
 
             keys.AddRange(keySet);
@@ -244,7 +246,7 @@ namespace gShell.dotNet.Utilities.OAuth2
                 //a user from this domain yet remains
                 foreach (string key in storedInfo.Keys)
                 {
-                    string _domain = OAuth2Base.GetDomainFromEmail(key);
+                    string _domain = Utils.GetDomainFromEmail(key);
 
                     if (_domain == domainName)
                     {

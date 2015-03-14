@@ -2,7 +2,7 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
      xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
   <Product Id="*" Name="gShell PoSh Cmdlets"
-           Language="1033" Version="0.0.5.0" Manufacturer="Spencer Varney"
+           Language="1033" Version="0.0.6.0" Manufacturer="Spencer Varney"
            UpgradeCode="16053A29-5B09-4630-B7B2-ADA5366DA766">
     <Package Id="*" InstallerVersion="200" Compressed="yes" InstallScope="perMachine" InstallPrivileges="elevated" />
 
@@ -20,12 +20,12 @@
     <Upgrade Id="16025265-05DE-4BBD-89C6-AE89F0B7F88D">
       <UpgradeVersion OnlyDetect='no' Property='SELFFOUND'
         Minimum='0.0.1.0' IncludeMinimum='yes'
-        Maximum='0.0.5.0' IncludeMaximum='no' />
+        Maximum='0.0.6.0' IncludeMaximum='no' />
       <UpgradeVersion OnlyDetect='yes' Property='NEWERFOUND'
-        Minimum='0.0.5.0' IncludeMinimum='no' />
+        Minimum='0.0.6.0' IncludeMinimum='no' />
     </Upgrade>
 
-    <CustomAction Id='AlreadyUpdated' Error='[ProductName] has already been updated to 0.0.5.0 or newer.' />
+    <CustomAction Id='AlreadyUpdated' Error='[ProductName] has already been updated to 0.0.6.0 or newer.' />
     <CustomAction Id='NoDowngrade' Error='A later version of [ProductName] is already installed.' />
 
     <InstallExecuteSequence>
@@ -83,36 +83,6 @@
     <!--Take care of the folder structures for the start menu files and shortcuts-->
     <!--Take care of adding the files to the folders defined above-->
 
-    <!-- These files go in the program files in order to work with the -->
-    <!-- OK so turns out this has been resolved and are no longer needed in program files. They can now be with the other main files.
-    
-    <ComponentGroup Id="ProgramFileDlls" Directory="gshellProgramFiles">
-      <Component Id="System.Net.Http.dll" Guid="766BC3A2-C0E7-4F7A-B117-FE20BBDE3806">
-        <File Id="System.Net.Http.dll" Name="System.Net.Http.dll" DiskId="1"
-              Source="$(var.SolutionDir)packages\Microsoft.Net.Http.2.2.28\lib\net40\System.Net.Http.dll"
-              KeyPath="yes" Assembly=".net" />
-        <RemoveFile Name="System.Net.Http.dll" Id="System.Net.Http.dll" On="uninstall" />
-      </Component>
-
-      <Component Id="System.Net.Http.Primitives.dll" Guid="1A79F425-73CE-4ECB-82EE-0D7DFE064724">
-        <File Id="System.Net.Http.Primitives.dll" Name="System.Net.Http.Primitives.dll" DiskId="1"
-              Source="$(var.SolutionDir)packages\Microsoft.Net.Http.2.2.28\lib\net40\System.Net.Http.Primitives.dll"
-              KeyPath="yes" Assembly=".net" />
-        <RemoveFile Name="System.Net.Http.Primitives.dll" Id="System.Net.Http.Primitives.dll" On="uninstall" />
-      </Component>
-
-      <Component Id="log4net.dll" Guid="B7F4E072-1DE8-4A66-8CC9-A036BE395BE1">
-        <File Id="log4net.dll" Name="log4net.dll" DiskId="1"
-              Source="$(var.SolutionDir)packages\log4net.2.0.3\lib\net40-full\log4net.dll"
-              KeyPath="yes" Assembly=".net" />
-        <RemoveFile Name="log4net.dll" Id="log4net.dll" On="uninstall" />
-      </Component>
-
-    </ComponentGroup>
-    -->
-
-
-
     <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
       <Component Id="ProductComponent" Guid="531DCFFD-18E9-46D2-A2CF-7FBB0FD3771D">
         <!--Add physical files-->
@@ -130,17 +100,11 @@
               Source="$(var.gShell.TargetDir)/Google.Apis.Admin.Directory.directory_v1.dll" />
         <RemoveFile Name="Google.Apis.Admin.Directory.directory_v1.dll" Id="Google.Apis.Admin.Directory.directory_v1.dll" On="uninstall" />
 
-        <!--<File Id="DotNetOpenAuth.dll"
-              Name="DotNetOpenAuth.dll"
+        <File Id="Google.Apis.Admin.Reports.reports_v1.dll"
+              Name="Google.Apis.Admin.Reports.reports_v1.dll"
               DiskId="1"
-              Source="$(var.gShell.TargetDir)/DotNetOpenAuth.dll" />
-        <RemoveFile Name="DotNetOpenAuth.dll" Id="DotNetOpenAuth.dll" On="uninstall" />-->
-
-        <!--<File Id="Google.Apis.Authentication.OAuth2.dll"
-              Name="Google.Apis.Authentication.OAuth2.dll"
-              DiskId="1"
-              Source="$(var.gShell.TargetDir)/Google.Apis.Authentication.OAuth2.dll" />
-        <RemoveFile Name="Google.Apis.Authentication.OAuth2.dll" Id="Google.Apis.Authentication.OAuth2.dll" On="uninstall" />-->
+              Source="$(var.gShell.TargetDir)/Google.Apis.Admin.Reports.reports_v1.dll" />
+        <RemoveFile Name="Google.Apis.Admin.Reports.reports_v1.dll" Id="Google.Apis.Admin.Reports.reports_v1.dll" On="uninstall" />
 
         <File Id="Google.Apis.Auth.dll"
               Name="Google.Apis.Auth.dll"

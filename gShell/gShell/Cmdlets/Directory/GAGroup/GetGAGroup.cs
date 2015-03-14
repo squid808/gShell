@@ -30,14 +30,9 @@ namespace gShell.Cmdlets.Directory.GAGroup
         public SwitchParameter All { get; set; }
 
         [Parameter(Position = 3,
-            ParameterSetName = "AllGroups",
-            HelpMessage = "Retrieves the information from local memory if it already exists, this may not get up-to-date information from the web.")]
-        public SwitchParameter Cache { get; set; }
-
-        [Parameter(Position = 4,
-            ParameterSetName = "AllGroups",
-            HelpMessage = "Force the cmdlet to refresh any cached information. This will ensure you get up-to-date information from the web.")]
-        public SwitchParameter ForceCacheReload { get; set; }
+            Mandatory = false,
+            ParameterSetName = "AllGroups")]
+        public int MaxResults { get; set; }
 
         #endregion
 
@@ -48,14 +43,18 @@ namespace gShell.Cmdlets.Directory.GAGroup
                 case "OneGroup":
                     if (ShouldProcess(GroupName, "Get-GAGroup"))
                     {
-                        WriteObject(Groups.Get(GetFullEmailAddress(GroupName, Domain)));
+                        WriteObject(groups.Get(GetFullEmailAddress(GroupName, Domain)));
                     }
                     break;
 
                 case "AllGroups":
                     if (ShouldProcess("All Groups", "Get-GAGroup"))
                     {
-                        WriteObject(Groups.List());
+                        WriteObject(groups.List(new dotNet.Directory.Groups.GroupsListProperties()
+                        {
+                            totalResults = MaxResults,
+                            domain = Domain
+                        }));
                     }
                     break;
             }

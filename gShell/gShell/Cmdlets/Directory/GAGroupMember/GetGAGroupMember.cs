@@ -47,7 +47,7 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
 
         [Parameter(Position = 6,
             HelpMessage = "Include members in the results.")]
-        public SwitchParameter Members { get; set; }
+        public new SwitchParameter Members { get; set; }
 
         [Parameter(Position = 7,
             HelpMessage = "Include managers in the results.")]
@@ -65,7 +65,7 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
             {
                 if (ShouldProcess(GroupName, "Get-GAGroupMember"))
                 {
-                    WriteObject(DirectoryBase.Members.Get(
+                    WriteObject(members.Get(
                         GetFullEmailAddress(GroupName, Domain),
                         GetFullEmailAddress(UserName, Domain)
                         ));
@@ -78,7 +78,7 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
                     case "OneGroup":
                         if (ShouldProcess(GroupName, "Get-GAGroupMember"))
                         {
-                            WriteObject(DirectoryBase.Members.List(
+                            WriteObject(members.List(
                                 GetFullEmailAddress(GroupName, Domain)));
                         }
                         break;
@@ -143,15 +143,15 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
         /// </summary>
         private GAMultiGroupMembersList GetAllGroupsAndMembers()
         {
-            List<Data.Group> allGroups = Groups.List();
+            List<Data.Group> allGroups = groups.List();
 
             GAMultiGroupMembersList multiList = new GAMultiGroupMembersList();
 
             foreach (Data.Group group in allGroups)
             {
-                List<Data.Member> members = DirectoryBase.Members.List(GetFullEmailAddress(GroupName, Domain));
+                List<Data.Member> membersList = members.List(GetFullEmailAddress(GroupName, Domain));
 
-                multiList.Add(group.Email, members);
+                multiList.Add(group.Email, membersList);
 
                 //if (MaxResults != 0 &&
                 //    multiList.GetMemberCount() >= MaxResults) { break; }

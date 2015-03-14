@@ -55,7 +55,7 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
                 Role = this.Role.ToString()
             };
 
-            Members.Insert(member, GroupName);
+            members.Insert(member, GroupName);
         }
     }
 

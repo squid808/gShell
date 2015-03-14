@@ -82,7 +82,7 @@ namespace gShell.Cmdlets.Directory.GAGroup
                 groupAcct.Name = NewName;
             }
 
-            Groups.Patch(groupAcct, fullEmail);
+            groups.Patch(groupAcct, fullEmail);
         }
     }
 }

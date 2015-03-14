@@ -55,6 +55,10 @@ namespace gShell.Cmdlets.Directory.GAUser
         [Parameter(Position = 10)]
         public bool? ChangePasswordAtNextLogin { get; set; }
 
+        [Parameter(
+            HelpMessage = "The full path of the parent organization associated with the user. If the parent organization is the top-level, it is represented as a forward slash (/).")]
+        public string OrgUnitPath { get; set; }
+
         #endregion
 
         protected override void ProcessRecord()
@@ -110,7 +114,12 @@ namespace gShell.Cmdlets.Directory.GAUser
                 userAcct.ChangePasswordAtNextLogin = ChangePasswordAtNextLogin.Value;
             }
 
-            Users.Insert(userAcct);
+            if (!string.IsNullOrWhiteSpace(OrgUnitPath))
+            {
+                userAcct.OrgUnitPath = OrgUnitPath;
+            }
+
+            users.Insert(userAcct);
         }
     }
 }

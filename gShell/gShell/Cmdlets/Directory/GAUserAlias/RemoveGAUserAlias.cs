@@ -68,12 +68,12 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
             string fullAliasEmail = GetFullEmailAddress(UserAliasName, Domain);
 
             if (string.IsNullOrWhiteSpace(UserName)) {
-                UserName = Users.Get(fullAliasEmail).PrimaryEmail;
+                UserName = users.Get(fullAliasEmail).PrimaryEmail;
             }
 
             string fullEmail = GetFullEmailAddress(UserName, Domain);
 
-            Users.Aliases.Delete(fullEmail, fullAliasEmail);
+            users.aliases.Delete(fullEmail, fullAliasEmail);
         }
     }
 }

@@ -80,7 +80,7 @@ namespace gShell.Cmdlets.Directory.GAUser
                     break;
             }
 
-            Users.Delete(fullEmail);
+            users.Delete(fullEmail);
         }
     }
 }

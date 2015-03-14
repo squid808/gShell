@@ -80,7 +80,7 @@ namespace gShell.Cmdlets.Directory.GAGroup
                     break;
             }
 
-            Groups.Delete(fullEmail);
+            groups.Delete(fullEmail);
         }
     }
 }

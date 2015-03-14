@@ -60,7 +60,7 @@ namespace gShell.Cmdlets.Directory.GAGroup
                 groupAcct.Description = Description;
             }
 
-            Groups.Insert(groupAcct);
+            groups.Insert(groupAcct);
         }
 
     }

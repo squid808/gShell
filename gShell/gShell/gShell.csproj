@@ -137,6 +137,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cmdlets\Reports\GRepActivity\Get-GRepActivity.cs" />
+    <Compile Include="Cmdlets\Reports\GRepActivity\WatchGRepActivity.cs" />
+    <Compile Include="Cmdlets\Reports\GRepChannel\StopGRepChannel.cs" />
+    <Compile Include="Cmdlets\Reports\GRepCustomerUsageReport\GetGRepCustomerUsageReport.cs" />
+    <Compile Include="Cmdlets\Reports\GRepUserUsageReport\GetGRepUserUsageReport.cs" />
     <Compile Include="Cmdlets\Reports\ReportsBase.cs" />
     <Compile Include="dotNet\Directory\Directory.cs" />
     <Compile Include="dotNet\IServiceWrapper.cs" />
@@ -193,6 +198,16 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Cmdlets\Directory\GAAsp\" />
+    <Folder Include="Cmdlets\Directory\GAChannel\" />
+    <Folder Include="Cmdlets\Directory\GAChromeosdevice\" />
+    <Folder Include="Cmdlets\Directory\GAMobileDevice\" />
+    <Folder Include="Cmdlets\Directory\GANotification\" />
+    <Folder Include="Cmdlets\Directory\GAOrgUnit\" />
+    <Folder Include="Cmdlets\Directory\GASchema\" />
+    <Folder Include="Cmdlets\Directory\GAToken\" />
+    <Folder Include="Cmdlets\Directory\GAUserPhoto\" />
+    <Folder Include="Cmdlets\Directory\GAVerificationCode\" />
     <Folder Include="dotNet\Drive\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

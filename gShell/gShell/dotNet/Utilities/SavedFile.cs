@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
+using IO = System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
+
 using Google.Apis.Oauth2.v2.Data;
+
 using gShell.dotNet.Utilities.OAuth2;
 
 namespace gShell.dotNet.Utilities
@@ -14,9 +16,9 @@ namespace gShell.dotNet.Utilities
     {
         #region Parameters
         private static byte[] s_aditionalEntropy = { 8, 4, 5, 6, 6, 5, 6, 5, 9, 7, 2, 5, 9, 6, 1, 7, 3, 9 };
-        private static string destFolder = Path.Combine(Environment.GetFolderPath(
+        private static string destFolder = IO.Path.Combine(Environment.GetFolderPath(
             Environment.SpecialFolder.LocalApplicationData), @"gShell\");
-        private static string destFile = Path.Combine(Environment.GetFolderPath(
+        private static string destFile = IO.Path.Combine(Environment.GetFolderPath(
             Environment.SpecialFolder.LocalApplicationData), @"gShell\gShell_OAuth2.bin");
 
         public static OAuth2Group oAuth2Group;
@@ -58,7 +60,7 @@ namespace gShell.dotNet.Utilities
         {
             CheckOrCreateDirectory();
 
-            MemoryStream memoryStream = new MemoryStream();
+            IO.MemoryStream memoryStream = new IO.MemoryStream();
             IFormatter serializer = new BinaryFormatter();
 
             serializer.Serialize(memoryStream, group);
@@ -134,7 +136,7 @@ namespace gShell.dotNet.Utilities
                     byte[] byteArray = ProtectedData.Unprotect(protectedArray, s_aditionalEntropy,
                         DataProtectionScope.CurrentUser);
 
-                    MemoryStream memoryStream = new MemoryStream(byteArray);
+                    IO.MemoryStream memoryStream = new IO.MemoryStream(byteArray);
 
                     BinaryFormatter deserializer = new BinaryFormatter();
 
@@ -219,7 +221,7 @@ namespace gShell.dotNet.Utilities
         #region Helpers
         private static bool FileExists()
         {
-            return (File.Exists(destFile));
+            return (IO.File.Exists(destFile));
         }
 
         public static bool ContainsUserOrDomain(string key)
@@ -296,9 +298,9 @@ namespace gShell.dotNet.Utilities
 
         private static void CheckOrCreateDirectory()
         {
-            if (!Directory.Exists(destFolder))
+            if (!IO.Directory.Exists(destFolder))
             {
-                Directory.CreateDirectory(destFolder);
+                IO.Directory.CreateDirectory(destFolder);
             }
         }
         #endregion

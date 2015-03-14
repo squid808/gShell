@@ -7,10 +7,11 @@ namespace gShell.Cmdlets.Utilities
     {
         protected override void BeginProcessing()
         {
-            Authenticate(OAuth2Base.currentDomain);
+            //Authenticate(OAuth2Base.currentDomain);
         }
 
-        protected override string BuildService(string givenDomain) {
+        protected override string Authenticate(string givenDomain)
+        {
             return null;
         }
     }

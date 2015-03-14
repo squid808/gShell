@@ -171,6 +171,10 @@ namespace gShell.dotNet.Utilities.OAuth2
             return domain;
         }
 
+        /// <summary>
+        /// Determines the actual domain to be used and builds an appropriate service using that domain.
+        /// </summary>
+        /// <returns>the name of the authenticated domain</returns>
         public static string Authenticate(string domain, Func<string, string> buildServiceMethod)
         {
             domain = DetermineDomain(domain);

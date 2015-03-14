@@ -76,7 +76,7 @@ namespace gShell.Cmdlets.Directory.GAUserProperty
                     }
                     else if (!string.IsNullOrWhiteSpace(UserName))
                     {
-                        u = Users.Get(Utils.GetFullEmailAddress(UserName, Domain));
+                        u = users.Get(Utils.GetFullEmailAddress(UserName, Domain));
                     }
                     else
                     {
@@ -208,7 +208,7 @@ namespace gShell.Cmdlets.Directory.GAUserProperty
                     break;
             }
 
-            Users.Update(userAcct, u.PrimaryEmail);
+            users.Update(userAcct, u.PrimaryEmail);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace gShell.Cmdlets.Directory.GAUserProperty
                     break;
             }
 
-            Users.Patch(userAcct, u.PrimaryEmail);
+            users.Patch(userAcct, u.PrimaryEmail);
 
         }
 
@@ -271,7 +271,7 @@ namespace gShell.Cmdlets.Directory.GAUserProperty
             userAcct.Phones = NullTokenProvider.NullToken;
             userAcct.Relations = NullTokenProvider.NullToken;
 
-            Users.Patch(userAcct, u.PrimaryEmail);
+            users.Patch(userAcct, u.PrimaryEmail);
         }
     }
 }

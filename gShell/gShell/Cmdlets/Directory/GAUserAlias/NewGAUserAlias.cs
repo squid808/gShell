@@ -46,7 +46,7 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
                 AliasValue = GetFullEmailAddress(Alias, Domain)
             };
 
-            Users.Aliases.Insert(aliasBody, fullEmail);
+            users.aliases.Insert(aliasBody, fullEmail);
         }
 
     }

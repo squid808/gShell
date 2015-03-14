@@ -44,16 +44,18 @@ namespace gShell.Cmdlets.Directory.GAUser
 
                     if (ShouldProcess(UserName, "Get-GAUser"))
                     {
-                        WriteObject(new GShellUserObject(Users.Get(GetFullEmailAddress(UserName,Domain))));
+                        WriteObject(new GShellUserObject(users.Get(GetFullEmailAddress(UserName, Domain))));
                     }
                     break;
 
                 case "AllUsers":
                     if (ShouldProcess("All Users", "Get-GAUser"))
                     {
-                        WriteObject(GShellUserObject.ConvertList(Users.List(new dotNet.Directory.Users.UsersListProperties()
+                        //Make sure to include the domain here because List could use things other than domain (customer, etc)
+                        WriteObject(GShellUserObject.ConvertList(users.List(new dotNet.Directory.Users.UsersListProperties()
                         {
-                            totalResults = MaxResults
+                            totalResults = MaxResults,
+                            domain = Domain
                         })));
                     }
                     break;

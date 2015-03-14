@@ -61,6 +61,10 @@ namespace gShell.Cmdlets.Directory.GAUser
         public bool? ChangePasswordAtNextLogin { get; set; }
 
         [Parameter(
+            HelpMessage = "The full path of the parent organization associated with the user. If the parent organization is the top-level, it is represented as a forward slash (/).")]
+        public string OrgUnitPath { get; set; }
+
+        [Parameter(
             HelpMessage="A supplied property collection to update the user with. Create with New/Get-GAUserPropertyCollection and update with New/Remove-GauserProperty")]
         public GAUserPropertyCollection PropertyCollection { get; set; }
 
@@ -151,6 +155,11 @@ namespace gShell.Cmdlets.Directory.GAUser
                 userAcct.ChangePasswordAtNextLogin = ChangePasswordAtNextLogin.Value;
             }
 
+            if (!string.IsNullOrWhiteSpace(OrgUnitPath))
+            {
+                userAcct.OrgUnitPath = OrgUnitPath;
+            }
+
             if (null != PropertyCollection)
             {
                 //here we don't check if it's an empty list since that may be on purpose - we check it that list had been updated.
@@ -189,8 +198,7 @@ namespace gShell.Cmdlets.Directory.GAUser
                     userAcct.Relations = PropertyCollection.GetRelations();
                 }
             }
-
-            Users.Patch(userAcct, fullEmail);
+            users.Patch(userAcct, fullEmail);
         }
     }
 }

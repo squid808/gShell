@@ -18,81 +18,45 @@ namespace gShell.Cmdlets.Directory
     public class DirectoryBase : OAuth2CmdletBase
     {
         #region Properties
+        protected static gShell.dotNet.Directory gdirectory = new gDirectory();
+        protected ChromeosDevices chromeosDevices = new ChromeosDevices();
+        protected Groups groups = new Groups();
+        protected Members members = new Members();
+        protected MobileDevices mobileDevices = new MobileDevices();
+        protected Orgunits orgunits = new Orgunits();
+        protected Users users = new Users();
+        protected Asps asps = new Asps();
+        protected Tokens tokens = new Tokens();
+        protected VerificationCodes verificationCodes = new VerificationCodes();
+        protected Notifications notifications = new Notifications();
+        protected Channels channels = new Channels();
+        protected Schemas schemas = new Schemas();
+
         [Parameter(Position = 1,
             Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "The name of the Google Apps domain, ex contoso.com. If none is provided the gShell default domain will be used.")]
         [ValidateNotNullOrEmpty]
         public string Domain { get; set; }
-
-        protected static Dictionary<string, List<Data.User>> cachedDomainUsers;
-        protected static Dictionary<string, List<Data.Group>> cachedDomainGroups;
-        protected static Dictionary<string, List<Data.Alias>> cachedDomainAliases;
-        protected static Dictionary<string, Dictionary<string, List<Data.Member>>> cachedDomainGroupMembers;
         #endregion
 
-        #region Generic Methods
-        protected static string GetFullEmailAddress(string account, string domain)
-        {
-            return Utils.GetFullEmailAddress(account, domain);
-        }
-
+        #region PowerShell Methods
         protected override void BeginProcessing()
         {
+            if (null == gdirectory) { gdirectory = new gDirectory(); }
             Domain = Authenticate(Domain);
-        }
 
-        protected static string GetMd5Hash(string s)
-        {
-            using (var md5Hasher = System.Security.Cryptography.MD5.Create())
-            {
-                var data = md5Hasher.ComputeHash(System.Text.Encoding.UTF8.GetBytes(s));
-                return BitConverter.ToString(data, 0).Replace("-", string.Empty);
-            }
+            GWriteProgress = new gWriteProgress(WriteProgress);
         }
+        #endregion
 
+        #region Authentication & Processing
         /// <summary>
-        /// Generates a hashed password based on the input.
+        /// A method specific to each inherited object, called during authentication. Must be implemented.
         /// </summary>
-        /// <param name="PasswordLength">Min 8, max 100. Defaults to 8 if empty.</param>
-        /// <param name="printPassword">Default false - prints the new password to screen.</param>
-        /// <returns>New password in hex string format.</returns>
-        protected static string GeneratePassword(int? PasswordLength, bool ShowNewPassword)
+        protected override string Authenticate(string domain)
         {
-            int PasswordLengthInt;
-            if (PasswordLength < 8 || !PasswordLength.HasValue)
-            {
-                PasswordLength = 8;
-            }
-            else if (PasswordLength > 100)
-            {
-                PasswordLength = 100;
-            }
-            PasswordLengthInt = PasswordLength.Value;
-            string newPassword = CreatePassword(PasswordLengthInt);
-            //Console.WriteLine(newPassword);
-
-            if (ShowNewPassword == true)
-            {
-                Console.WriteLine(newPassword);
-            }
-
-            return GetMd5Hash(newPassword);
-        }
-
-        /// <summary>
-        /// Creates a random password of length.
-        /// </summary>
-        /// <param name="length"></param>
-        /// <see cref="http://stackoverflow.com/questions/54991/generating-random-passwords"/>
-        protected static string CreatePassword(int length)
-        {
-            string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!-%?";
-            string res = "";
-            Random rnd = new Random();
-            while (0 < length--)
-                res += valid[rnd.Next(valid.Length)];
-            return res;
+            return gdirectory.Authenticate(domain);
         }
         #endregion
 
@@ -102,31 +66,31 @@ namespace gShell.Cmdlets.Directory
         #region Chromeosdevices
         public class ChromeosDevices
         {
-            public static Data.ChromeOsDevice Get(string customerId, string deviceId,
+            public Data.ChromeOsDevice Get(string customerId, string deviceId,
                 directory_v1.ChromeosdevicesResource.GetRequest.ProjectionEnum? projection = null)
             {
-                return gDirectory.ChromeosDevices.Get(customerId, deviceId, projection); 
+                return gdirectory.chromeosDevices.Get(customerId, deviceId, projection); 
             }
 
-            public static List<Data.ChromeOsDevice> List(string customerId, gDirectory.ChromeosDevices.ChromeosDevicesListProperties properties = null)
+            public List<Data.ChromeOsDevice> List(string customerId, gDirectory.ChromeosDevices.ChromeosDevicesListProperties properties = null)
             {
                 properties = (properties != null) ? properties : new gDirectory.ChromeosDevices.ChromeosDevicesListProperties();
                 properties.startProgressBar = StartProgressBar;
                 properties.updateProgressBar = UpdateProgressBar;
 
-                return gDirectory.ChromeosDevices.List(customerId, properties);
+                return gdirectory.chromeosDevices.List(customerId, properties);
             }
 
-            public static Data.ChromeOsDevice Patch(Data.ChromeOsDevice body, string customerId, string deviceId,
+            public Data.ChromeOsDevice Patch(Data.ChromeOsDevice body, string customerId, string deviceId,
                 directory_v1.ChromeosdevicesResource.PatchRequest.ProjectionEnum? projection = null)
             {
-                return gDirectory.ChromeosDevices.Patch(body, customerId, deviceId, projection);
+                return gdirectory.chromeosDevices.Patch(body, customerId, deviceId, projection);
             }
 
-            public static Data.ChromeOsDevice Update(Data.ChromeOsDevice body, string customerId, string deviceId,
+            public Data.ChromeOsDevice Update(Data.ChromeOsDevice body, string customerId, string deviceId,
                 directory_v1.ChromeosdevicesResource.UpdateRequest.ProjectionEnum? projection = null)
             {
-                return gDirectory.ChromeosDevices.Update(body, customerId, deviceId, projection);
+                return gdirectory.chromeosDevices.Update(body, customerId, deviceId, projection);
             }
         }
         #endregion
@@ -134,56 +98,58 @@ namespace gShell.Cmdlets.Directory
         #region Groups
         public class Groups
         {
-            public static string Delete(string groupKey)
+            public Aliases aliases = new Aliases();
+
+            public string Delete(string groupKey)
             {
-                return gDirectory.Groups.Delete(groupKey);
+                return gdirectory.groups.Delete(groupKey);
             }
 
-            public static Data.Group Get(string groupKey)
+            public Data.Group Get(string groupKey)
             {
-                return gDirectory.Groups.Get(groupKey);
+                return gdirectory.groups.Get(groupKey);
             }
 
-            public static Data.Group Insert(Data.Group body)
+            public Data.Group Insert(Data.Group body)
             {
-                return gDirectory.Groups.Insert(body);
+                return gdirectory.groups.Insert(body);
             }
 
-            public static List<Data.Group> List(gDirectory.Groups.GroupsListProperties properties = null)
+            public List<Data.Group> List(gDirectory.Groups.GroupsListProperties properties = null)
             {
                 properties = (properties != null) ? properties : new gDirectory.Groups.GroupsListProperties();
                 properties.startProgressBar = StartProgressBar;
                 properties.updateProgressBar = UpdateProgressBar;
 
-                return gDirectory.Groups.List(properties);
+                return gdirectory.groups.List(properties);
             }
 
-            public static Data.Group Patch(Data.Group body, string groupKey)
+            public Data.Group Patch(Data.Group body, string groupKey)
             {
-                return gDirectory.Groups.Patch(body, groupKey);
+                return gdirectory.groups.Patch(body, groupKey);
             }
 
-            public static Data.Group Update(Data.Group body, string groupKey)
+            public Data.Group Update(Data.Group body, string groupKey)
             {
-                return gDirectory.Groups.Update(body, groupKey);
+                return gdirectory.groups.Update(body, groupKey);
             }
 
             #region Groups.aliases
             public class Aliases
             {
-                public static string Delete(string groupKey, string alias)
+                public string Delete(string groupKey, string alias)
                 {
-                    return gDirectory.Groups.Aliases.Delete(groupKey, alias);
+                    return gdirectory.groups.aliases.Delete(groupKey, alias);
                 }
 
-                public static Data.Alias Insert(Data.Alias body, string groupKey)
+                public Data.Alias Insert(Data.Alias body, string groupKey)
                 {
-                    return gDirectory.Groups.Aliases.Insert(body, groupKey);
+                    return gdirectory.groups.aliases.Insert(body, groupKey);
                 }
 
-                public static List<Data.Alias> List(string groupKey)
+                public List<Data.Alias> List(string groupKey)
                 {
-                    return gDirectory.Groups.Aliases.List(groupKey);
+                    return gdirectory.groups.aliases.List(groupKey);
                 }
             }
             #endregion
@@ -194,38 +160,38 @@ namespace gShell.Cmdlets.Directory
         #region Members
         public class Members
         {
-            public static string Delete(string groupKey, string memberKey)
+            public string Delete(string groupKey, string memberKey)
             {
-                return gDirectory.Members.Delete(groupKey, memberKey);
+                return gdirectory.members.Delete(groupKey, memberKey);
             }
 
-            public static Data.Member Get(string groupKey, string memberKey)
+            public Data.Member Get(string groupKey, string memberKey)
             {
-                return gDirectory.Members.Get(groupKey, memberKey);
+                return gdirectory.members.Get(groupKey, memberKey);
             }
 
-            public static Data.Member Insert(Data.Member body, string groupKey)
+            public Data.Member Insert(Data.Member body, string groupKey)
             {
-                return gDirectory.Members.Insert(body, groupKey);
+                return gdirectory.members.Insert(body, groupKey);
             }
 
-            public static List<Data.Member> List(string groupKey, gDirectory.Members.MembersListProperties properties = null)
+            public List<Data.Member> List(string groupKey, gDirectory.Members.MembersListProperties properties = null)
             {
                 properties = (properties != null) ? properties : new gDirectory.Members.MembersListProperties();
                 properties.startProgressBar = StartProgressBar;
                 properties.updateProgressBar = UpdateProgressBar;
 
-                return gDirectory.Members.List(groupKey, properties);
+                return gdirectory.members.List(groupKey, properties);
             }
 
-            public static Data.Member Patch(Data.Member body, string groupKey, string memberKey)
+            public Data.Member Patch(Data.Member body, string groupKey, string memberKey)
             {
-                return gDirectory.Members.Patch(body, groupKey, memberKey);
+                return gdirectory.members.Patch(body, groupKey, memberKey);
             }
 
-            public static Data.Member Update(Data.Member body, string groupKey, string memberKey)
+            public Data.Member Update(Data.Member body, string groupKey, string memberKey)
             {
-                return gDirectory.Members.Update(body, groupKey, memberKey);
+                return gdirectory.members.Update(body, groupKey, memberKey);
             }
         }
         #endregion
@@ -233,29 +199,29 @@ namespace gShell.Cmdlets.Directory
         #region MobileDevices
         public class MobileDevices
         {
-            public static string Action(Data.MobileDeviceAction body, string customerId, string resourceId)
+            public string Action(Data.MobileDeviceAction body, string customerId, string resourceId)
             {
-                return gDirectory.MobileDevices.Action(body, customerId, resourceId);
+                return gdirectory.mobileDevices.Action(body, customerId, resourceId);
             }
 
-            public static string Delete(string customerId, string resourceId)
+            public string Delete(string customerId, string resourceId)
             {
-                return gDirectory.MobileDevices.Delete(customerId, resourceId);
+                return gdirectory.mobileDevices.Delete(customerId, resourceId);
             }
 
-            public static Data.MobileDevice Get(string customerId, string resourceId,
+            public Data.MobileDevice Get(string customerId, string resourceId,
                 directory_v1.MobiledevicesResource.GetRequest.ProjectionEnum? projection = null)
             {
-                return gDirectory.MobileDevices.Get(customerId, resourceId, projection);
+                return gdirectory.mobileDevices.Get(customerId, resourceId, projection);
             }
 
-            public static List<Data.MobileDevice> List(string customerId, gDirectory.MobileDevices.MobileDevicesPropertiesList properties = null)
+            public List<Data.MobileDevice> List(string customerId, gDirectory.MobileDevices.MobileDevicesPropertiesList properties = null)
             {
                 properties = (properties != null) ? properties : new gDirectory.MobileDevices.MobileDevicesPropertiesList();
                 properties.startProgressBar = StartProgressBar;
                 properties.updateProgressBar = UpdateProgressBar;
 
-                return gDirectory.MobileDevices.List(customerId, properties);
+                return gdirectory.mobileDevices.List(customerId, properties);
             }
         }
         #endregion
@@ -263,34 +229,34 @@ namespace gShell.Cmdlets.Directory
         #region Orgunits
         public class Orgunits
         {
-            public static string Delete(string customerId, Google.Apis.Util.Repeatable<string> orgUnitPath)
+            public string Delete(string customerId, Google.Apis.Util.Repeatable<string> orgUnitPath)
             {
-                return gDirectory.Orgunits.Delete(customerId, orgUnitPath);
+                return gdirectory.orgunits.Delete(customerId, orgUnitPath);
             }
 
-            public static Data.OrgUnit Get(string customerId, Google.Apis.Util.Repeatable<string> orgUnitPath)
+            public Data.OrgUnit Get(string customerId, Google.Apis.Util.Repeatable<string> orgUnitPath)
             {
-                return gDirectory.Orgunits.Get(customerId, orgUnitPath);
+                return gdirectory.orgunits.Get(customerId, orgUnitPath);
             }
 
-            public static Data.OrgUnit Insert(Data.OrgUnit body, string customerId)
+            public Data.OrgUnit Insert(Data.OrgUnit body, string customerId)
             {
-                return gDirectory.Orgunits.Insert(body, customerId);
+                return gdirectory.orgunits.Insert(body, customerId);
             }
 
-            public static List<Data.OrgUnit> List(string customerId, gDirectory.Orgunits.OrgunitsListProperties properties = null)
+            public List<Data.OrgUnit> List(string customerId, gDirectory.Orgunits.OrgunitsListProperties properties = null)
             {
-                return gDirectory.Orgunits.List(customerId, properties);
+                return gdirectory.orgunits.List(customerId, properties);
             }
 
-            public static Data.OrgUnit Patch(Data.OrgUnit body, string customerId, Google.Apis.Util.Repeatable<string> orgUnitPath)
+            public Data.OrgUnit Patch(Data.OrgUnit body, string customerId, Google.Apis.Util.Repeatable<string> orgUnitPath)
             {
-                return gDirectory.Orgunits.Patch(body, customerId, orgUnitPath);
+                return gdirectory.orgunits.Patch(body, customerId, orgUnitPath);
             }
 
-            public static Data.OrgUnit Update(Data.OrgUnit body, string customerId, Google.Apis.Util.Repeatable<string> orgUnitPath)
+            public Data.OrgUnit Update(Data.OrgUnit body, string customerId, Google.Apis.Util.Repeatable<string> orgUnitPath)
             {
-                return gDirectory.Orgunits.Update(body, customerId, orgUnitPath);
+                return gdirectory.orgunits.Update(body, customerId, orgUnitPath);
             }
         }
         #endregion
@@ -298,24 +264,27 @@ namespace gShell.Cmdlets.Directory
         #region Users
         public class Users
         {
-            public static string Delete(string userKey)
+            public Aliases aliases = new Aliases();
+            public Photos photos = new Photos();
+
+            public string Delete(string userKey)
             {
-                return gDirectory.Users.Delete(userKey);
+                return gdirectory.users.Delete(userKey);
             }
 
-            public static Data.User Get(string userKey,
+            public Data.User Get(string userKey,
                 directory_v1.UsersResource.GetRequest.ProjectionEnum? projection = null,
                 directory_v1.UsersResource.GetRequest.ViewTypeEnum? viewType = null)
             {
-                return gDirectory.Users.Get(userKey, projection, viewType);
+                return gdirectory.users.Get(userKey, projection, viewType);
             }
 
-            public static Data.User Insert(Data.User body)
+            public Data.User Insert(Data.User body)
             {
-                return gDirectory.Users.Insert(body);
+                return gdirectory.users.Insert(body);
             }
 
-            public static List<Data.User> List(gDirectory.Users.UsersListProperties properties = null)
+            public List<Data.User> List(gDirectory.Users.UsersListProperties properties = null)
             {
                 properties = (properties != null) ? properties : new gDirectory.Users.UsersListProperties()
                 {
@@ -325,55 +294,55 @@ namespace gShell.Cmdlets.Directory
                 properties.startProgressBar = StartProgressBar;
                 properties.updateProgressBar = UpdateProgressBar;
 
-                return gDirectory.Users.List(properties);
+                return gdirectory.users.List(properties);
             }
 
-            public static string MakeAdmin(Data.UserMakeAdmin body, string userKey)
+            public string MakeAdmin(Data.UserMakeAdmin body, string userKey)
             {
-                return gDirectory.Users.MakeAdmin(body, userKey);
+                return gdirectory.users.MakeAdmin(body, userKey);
             }
 
-            public static Data.User Patch(Data.User body, string userKey)
+            public Data.User Patch(Data.User body, string userKey)
             {
-                return gDirectory.Users.Patch(body, userKey);
+                return gdirectory.users.Patch(body, userKey);
             }
 
-            public static string Undelete(Data.UserUndelete body, string userKey)
+            public string Undelete(Data.UserUndelete body, string userKey)
             {
-                return gDirectory.Users.Undelete(body, userKey);
+                return gdirectory.users.Undelete(body, userKey);
             }
 
-            public static Data.User Update(Data.User body, string userKey)
+            public Data.User Update(Data.User body, string userKey)
             {
-                return gDirectory.Users.Update(body, userKey);
+                return gdirectory.users.Update(body, userKey);
             }
 
-            public static Data.Channel Watch(Data.Channel body)
+            public Data.Channel Watch(Data.Channel body)
             {
-                return gDirectory.Users.Watch(body);
+                return gdirectory.users.Watch(body);
             }
 
             #region Users.aliases
             public class Aliases
             {
-                public static string Delete(string userKey, string alias)
+                public string Delete(string userKey, string alias)
                 {
-                    return gDirectory.Users.Aliases.Delete(userKey, alias);
+                    return gdirectory.users.aliases.Delete(userKey, alias);
                 }
 
-                public static Data.Alias Insert(Data.Alias body, string userKey)
+                public Data.Alias Insert(Data.Alias body, string userKey)
                 {
-                    return gDirectory.Users.Aliases.Insert(body, userKey);
+                    return gdirectory.users.aliases.Insert(body, userKey);
                 }
 
-                public static List<Data.Alias> List(string userKey)
+                public List<Data.Alias> List(string userKey)
                 {
-                    return gDirectory.Users.Aliases.List(userKey);
+                    return gdirectory.users.aliases.List(userKey);
                 }
 
-                public static Data.Channel Watch(Data.Channel body, string userKey)
+                public Data.Channel Watch(Data.Channel body, string userKey)
                 {
-                    return gDirectory.Users.Aliases.Watch(body, userKey);
+                    return gdirectory.users.aliases.Watch(body, userKey);
                 }
             }
             #endregion
@@ -381,24 +350,24 @@ namespace gShell.Cmdlets.Directory
             #region Users.photos
             public class Photos
             {
-                public static string Delete(string userKey)
+                public string Delete(string userKey)
                 {
-                    return gDirectory.Users.Photos.Delete(userKey);
+                    return gdirectory.users.photos.Delete(userKey);
                 }
 
-                public static Data.UserPhoto Get(string userKey)
+                public Data.UserPhoto Get(string userKey)
                 {
-                    return gDirectory.Users.Photos.Get(userKey);
+                    return gdirectory.users.photos.Get(userKey);
                 }
 
-                public static Data.UserPhoto Patch(Data.UserPhoto body, string userKey)
+                public Data.UserPhoto Patch(Data.UserPhoto body, string userKey)
                 {
-                    return gDirectory.Users.Photos.Patch(body, userKey);
+                    return gdirectory.users.photos.Patch(body, userKey);
                 }
 
-                public static Data.UserPhoto Update(Data.UserPhoto body, string userKey)
+                public Data.UserPhoto Update(Data.UserPhoto body, string userKey)
                 {
-                    return gDirectory.Users.Photos.Update(body, userKey);
+                    return gdirectory.users.photos.Update(body, userKey);
                 }
             }
             #endregion
@@ -408,19 +377,19 @@ namespace gShell.Cmdlets.Directory
         #region Asps
         public class Asps
         {
-            public static string Delete(string userKey, int codeId)
+            public string Delete(string userKey, int codeId)
             {
-                return gDirectory.Asps.Delete(userKey, codeId);
+                return gdirectory.asps.Delete(userKey, codeId);
             }
 
-            public static Data.Asp Get(string userKey, int codeId)
+            public Data.Asp Get(string userKey, int codeId)
             {
-                return gDirectory.Asps.Get(userKey, codeId);
+                return gdirectory.asps.Get(userKey, codeId);
             }
 
-            public static List<Data.Asp> List(string userKey)
+            public List<Data.Asp> List(string userKey)
             {
-                return gDirectory.Asps.List(userKey);
+                return gdirectory.asps.List(userKey);
             }
         }
         #endregion
@@ -428,19 +397,19 @@ namespace gShell.Cmdlets.Directory
         #region Tokens
         public class Tokens
         {
-            public static string Delete(string userKey, string clientId)
+            public string Delete(string userKey, string clientId)
             {
-                return gDirectory.Tokens.Delete(userKey, clientId);
+                return gdirectory.tokens.Delete(userKey, clientId);
             }
 
-            public static Data.Token Get(string userKey, string clientId)
+            public Data.Token Get(string userKey, string clientId)
             {
-                return gDirectory.Tokens.Get(userKey, clientId);
+                return gdirectory.tokens.Get(userKey, clientId);
             }
 
-            public static List<Data.Token> List(string userKey)
+            public List<Data.Token> List(string userKey)
             {
-                return gDirectory.Tokens.List(userKey);
+                return gdirectory.tokens.List(userKey);
             }
         }
         #endregion
@@ -448,19 +417,19 @@ namespace gShell.Cmdlets.Directory
         #region VerificationCodes
         public class VerificationCodes
         {
-            public static string Generate(string userKey)
+            public string Generate(string userKey)
             {
-                return gDirectory.VerificationCodes.Generate(userKey);
+                return gdirectory.verificationCodes.Generate(userKey);
             }
 
-            public static string Invalidate(string userKey)
+            public string Invalidate(string userKey)
             {
-                return gDirectory.VerificationCodes.Invalidate(userKey);
+                return gdirectory.verificationCodes.Invalidate(userKey);
             }
 
-            public static List<Data.VerificationCode> List(string userKey)
+            public List<Data.VerificationCode> List(string userKey)
             {
-                return gDirectory.VerificationCodes.List(userKey);
+                return gdirectory.verificationCodes.List(userKey);
             }
         }
         #endregion
@@ -468,33 +437,33 @@ namespace gShell.Cmdlets.Directory
         #region Notifications
         public class Notifications
         {
-            public static string Delete(string customer, string notificationId)
+            public string Delete(string customer, string notificationId)
             {
-                return gDirectory.Notifications.Delete(customer, notificationId);
+                return gdirectory.notifications.Delete(customer, notificationId);
             }
 
-            public static Data.Notification Get(string customer, string notificationId)
+            public Data.Notification Get(string customer, string notificationId)
             {
-                return gDirectory.Notifications.Get(customer, notificationId);
+                return gdirectory.notifications.Get(customer, notificationId);
             }
 
-            public static List<Data.Notification> List(string customer, gDirectory.Notifications.NotificationsListProperties properties = null)
+            public List<Data.Notification> List(string customer, gDirectory.Notifications.NotificationsListProperties properties = null)
             {
                 properties = (properties != null) ? properties : new gDirectory.Notifications.NotificationsListProperties();
                 properties.startProgressBar = StartProgressBar;
                 properties.updateProgressBar = UpdateProgressBar;
 
-                return gDirectory.Notifications.List(customer);
+                return gdirectory.notifications.List(customer);
             }
 
-            public static Data.Notification Patch(Data.Notification body, string customer, string notificationId)
+            public Data.Notification Patch(Data.Notification body, string customer, string notificationId)
             {
-                return gDirectory.Notifications.Patch(body, customer, notificationId);
+                return gdirectory.notifications.Patch(body, customer, notificationId);
             }
 
-            public static Data.Notification Update(Data.Notification body, string customer, string notificationId)
+            public Data.Notification Update(Data.Notification body, string customer, string notificationId)
             {
-                return gDirectory.Notifications.Update(body, customer, notificationId);
+                return gdirectory.notifications.Update(body, customer, notificationId);
             }
         }
         #endregion
@@ -502,9 +471,9 @@ namespace gShell.Cmdlets.Directory
         #region Channels
         public class Channels
         {
-            public static string Stop(Data.Channel body)
+            public string Stop(Data.Channel body)
             {
-                return gDirectory.Channels.Stop(body);
+                return gdirectory.channels.Stop(body);
             }
         }
         #endregion
@@ -512,34 +481,34 @@ namespace gShell.Cmdlets.Directory
         #region Schemas
         public class Schemas
         {
-            public static string Delete(string customerId, string schemaKey)
+            public string Delete(string customerId, string schemaKey)
             {
-                return gDirectory.Schemas.Delete(customerId, schemaKey);
+                return gdirectory.schemas.Delete(customerId, schemaKey);
             }
 
-            public static Data.Schema Get(string customerId, string schemaKey)
+            public Data.Schema Get(string customerId, string schemaKey)
             {
-                return gDirectory.Schemas.Get(customerId, schemaKey);
+                return gdirectory.schemas.Get(customerId, schemaKey);
             }
 
-            public static Data.Schema Insert(Data.Schema body, string customerId)
+            public Data.Schema Insert(Data.Schema body, string customerId)
             {
-                return gDirectory.Schemas.Insert(body, customerId);
+                return gdirectory.schemas.Insert(body, customerId);
             }
 
-            public static List<Data.Schema> List(string customerId)
+            public List<Data.Schema> List(string customerId)
             {
-                return gDirectory.Schemas.List(customerId);
+                return gdirectory.schemas.List(customerId);
             }
 
-            public static Data.Schema Patch(Data.Schema body, string customerId, string schemaKey)
+            public Data.Schema Patch(Data.Schema body, string customerId, string schemaKey)
             {
-                return gDirectory.Schemas.Patch(body, customerId, schemaKey);
+                return gdirectory.schemas.Patch(body, customerId, schemaKey);
             }
 
-            public static Data.Schema Update(Data.Schema body, string customerId, string schemaKey)
+            public Data.Schema Update(Data.Schema body, string customerId, string schemaKey)
             {
-                return gDirectory.Schemas.Update(body, customerId, schemaKey);
+                return gdirectory.schemas.Update(body, customerId, schemaKey);
             }
         }
         #endregion
