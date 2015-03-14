@@ -1,7 +1,10 @@
 #Welcome to gShell!
 
+##What is gShell?
+gShell is a project that primarily aims to make all Google APIs available through Microsoft PowerShell, starting with the Administrative APIs. As a result, gShell also provides dotNet developers with a [framework to ease the burden of authenticating and calling on the APIs in dotNet](https://github.com/squid808/gShell/wiki/DotNet-Guide).
+
 ###What's New?
-Version 0.0.5.0 is now released! The release contains a bug fix and a bunch of new [GAUserProperty](https://github.com/squid808/gShell/wiki/Working-With-User-Properties) Cmdlets that will help you work with some additional user attributes. In addition I've completely rewritten all of the documentation in the Wiki. [Check out the News page for more!](https://github.com/squid808/gShell/wiki/News)
+Version 0.0.6.0 is now released! This release makes the [Directory and Reports APIs available to .Net developers](https://github.com/squid808/gShell/wiki/DotNet-Guide) with the gShell authentication built in. Five new Cmdlets based on the Reports API have been added, a new parameter to update a user's OrgUnit has been added to Set-GAUser, Caching has been removed and the GADrive cmdlets have been removed for the time being. [Check out the News page for more!](https://github.com/squid808/gShell/wiki/News)
 
 ###PowerShell Cmdlets for Google APIs
 
