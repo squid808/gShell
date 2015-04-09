@@ -6,7 +6,7 @@ using Data = Google.Apis.Admin.Directory.directory_v1.Data;
 namespace gShell.Cmdlets.Directory.GAAsp
 {
     [Cmdlet(VerbsCommon.Get, "GAAsp",
-          DefaultParameterSetName = "Get",
+          DefaultParameterSetName = "One",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAAsp")]
     public class GetGAAsp : DirectoryBase
@@ -24,7 +24,7 @@ namespace gShell.Cmdlets.Directory.GAAsp
 
         [Parameter(Position = 2,
             Mandatory = true,
-            ParameterSetName = "Get",
+            ParameterSetName = "One",
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "")]
         [ValidateNotNullOrEmpty]
@@ -45,7 +45,7 @@ namespace gShell.Cmdlets.Directory.GAAsp
             {
                 switch (ParameterSetName)
                 {
-                    case "OneUser":
+                    case "One":
                         WriteObject(asps.Get(UserKey, CodeId));
                         break;
                     case "List":
@@ -87,10 +87,10 @@ namespace gShell.Cmdlets.Directory.GAAsp
 
         protected override void ProcessRecord()
         {
-            if (ShouldProcess(UserKey, "Get-GAAsp"))
+            if (ShouldProcess(UserKey, "Remove-GAAsp"))
             {
                 if (Force || ShouldContinue((String.Format("Asp {0} with CodeID {2} will be removed from the {1} Google Apps domain.\nContinue?",
-                    UserKey, Domain, CodeId)), "Confirm Google Apps User Removal"))
+                    UserKey, Domain, CodeId)), "Confirm Google Apps Asp Removal"))
                 {
                     try
                     {

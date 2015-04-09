@@ -199,8 +199,10 @@ namespace gShell.Cmdlets.Directory
         #region MobileDevices
         public class MobileDevices
         {
-            public string Action(Data.MobileDeviceAction body, string customerId, string resourceId)
+            public string Action(gDirectory.MobileDevices.MobileDeviceAction action, string customerId, string resourceId)
             {
+                Data.MobileDeviceAction body = new Data.MobileDeviceAction();
+                body.Action = action.ToString();
                 return gdirectory.mobileDevices.Action(body, customerId, resourceId);
             }
 

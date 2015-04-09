@@ -372,6 +372,11 @@ namespace gShell.dotNet
                 public int totalResults = 0;
             }
 
+            public enum MobileDeviceAction
+            {
+                admin_remote_wipe, admin_account_wipe, approve, block, cancel_remote_wipe_then_activate, cancel_remote_wipe_then_block
+            }
+
             public string Action(Data.MobileDeviceAction body, string customerId, string resourceId)
             {
                 return services[activeDomain].Mobiledevices.Action(body, customerId, resourceId).Execute();
