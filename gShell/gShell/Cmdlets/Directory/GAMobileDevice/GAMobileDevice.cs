@@ -121,9 +121,9 @@ namespace gShell.Cmdlets.Directory.GAMobileDevice
         }
     }
 
-    [Cmdlet(VerbsOther.Use, "GAMobiledevice",
+    [Cmdlet(VerbsLifecycle.Invoke, "GAMobiledevice",
           SupportsShouldProcess = true,
-          HelpUri = @"https://github.com/squid808/gShell/wiki/Use-GAMobiledevice")]
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Invoke-GAMobiledevice")]
     public class SetGAMobiledevice : DirectoryBase
     {
         #region Properties
@@ -153,7 +153,7 @@ namespace gShell.Cmdlets.Directory.GAMobileDevice
 
         protected override void ProcessRecord()
         {
-            if (ShouldProcess(CustomerId, "Use-GAMobiledevice"))
+            if (ShouldProcess(CustomerId, "Invoke-GAMobiledevice"))
             {
                 WriteObject(mobileDevices.Action(Action, CustomerId, ResourceId));
             }

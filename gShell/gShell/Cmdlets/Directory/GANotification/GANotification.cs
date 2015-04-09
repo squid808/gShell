@@ -152,7 +152,7 @@ namespace gShell.Cmdlets.Directory.GAMobileDevice
 
         protected override void ProcessRecord()
         {
-            if (ShouldProcess(Customer, "Use-Notification"))
+            if (ShouldProcess(Customer, "Set-GANotification"))
             {
                 Data.Notification body = new Data.Notification();
 
