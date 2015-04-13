@@ -39,14 +39,12 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
 
         private void CreateUserAlias()
         {
-            string fullEmail = GetFullEmailAddress(UserName, Domain);
-
             Data.Alias aliasBody = new Data.Alias()
             {
                 AliasValue = GetFullEmailAddress(Alias, Domain)
             };
 
-            users.aliases.Insert(aliasBody, fullEmail);
+            users.aliases.Insert(aliasBody, UserName, Domain);
         }
 
     }

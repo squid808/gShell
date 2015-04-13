@@ -65,11 +65,7 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
 
         private void RemoveGroupMember()
         {
-            GroupName = GetFullEmailAddress(GroupName, Domain);
-
-            UserName = GetFullEmailAddress(UserName, Domain);
-
-            members.Delete(GroupName, UserName);
+            members.Delete(GroupName, Domain, UserName);
         }
     }
 

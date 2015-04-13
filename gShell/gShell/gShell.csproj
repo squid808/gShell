@@ -87,6 +87,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.IO">
       <HintPath>..\packages\Microsoft.Bcl.1.1.9\lib\net40\System.IO.dll</HintPath>
     </Reference>
@@ -131,8 +132,10 @@
     <Compile Include="Cmdlets\Directory\GAChromeosdevice\GAChromeosdevices.cs" />
     <Compile Include="Cmdlets\Directory\GAMobileDevice\GAMobileDevice.cs" />
     <Compile Include="Cmdlets\Directory\GANotification\GANotification.cs" />
+    <Compile Include="Cmdlets\Directory\GAOrgUnit\GAOrgUnit.cs" />
     <Compile Include="Cmdlets\Directory\GASchema\GASchema.cs" />
     <Compile Include="Cmdlets\Directory\GAToken\GAToken.cs" />
+    <Compile Include="Cmdlets\Directory\GAUserPhoto\GAUserPhoto.cs" />
     <Compile Include="Cmdlets\Directory\GAVerificationCode\GAVerificationCode.cs" />
     <Compile Include="Cmdlets\Reports\GRepActivity\Get-GRepActivity.cs" />
     <Compile Include="Cmdlets\Reports\GRepActivity\WatchGRepActivity.cs" />
@@ -195,8 +198,6 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Cmdlets\Directory\GAOrgUnit\" />
-    <Folder Include="Cmdlets\Directory\GAUserPhoto\" />
     <Folder Include="dotNet\Drive\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

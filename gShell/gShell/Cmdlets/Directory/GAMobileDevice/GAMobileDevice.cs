@@ -16,8 +16,7 @@ namespace gShell.Cmdlets.Directory.GAMobileDevice
 
         [Parameter(Position = 0,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string CustomerId { get; set; }
 
@@ -26,20 +25,17 @@ namespace gShell.Cmdlets.Directory.GAMobileDevice
         [Parameter(Position = 2,
             Mandatory = true,
             ParameterSetName = "One",
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string ResourceId { get; set; }
 
         [Parameter(Position = 3,
-            ParameterSetName = "List",
-            HelpMessage = "")]
+            ParameterSetName = "List")]
         public SwitchParameter All { get; set; }
 
         [Parameter(Position = 4,
             Mandatory = true,
-            ParameterSetName = "List",
-            HelpMessage = "")]
+            ParameterSetName = "List")]
         public int MaxResults { get; set; }
 
         #endregion
@@ -73,8 +69,7 @@ namespace gShell.Cmdlets.Directory.GAMobileDevice
 
         [Parameter(Position = 0,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string CustomerId { get; set; }
 
@@ -82,8 +77,7 @@ namespace gShell.Cmdlets.Directory.GAMobileDevice
 
         [Parameter(Position = 2,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string ResourceId { get; set; }
 
@@ -129,8 +123,7 @@ namespace gShell.Cmdlets.Directory.GAMobileDevice
         #region Properties
         [Parameter(Position = 0,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string CustomerId { get; set; }
 
@@ -138,15 +131,13 @@ namespace gShell.Cmdlets.Directory.GAMobileDevice
 
         [Parameter(Position = 2,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string ResourceId { get; set; }
 
         [Parameter(Position = 3,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public gDirectory.MobileDevices.MobileDeviceAction Action { get; set; }
         #endregion

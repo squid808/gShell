@@ -72,7 +72,7 @@ namespace gShell.Cmdlets.Directory.GAGroup
             switch (ParameterSetName)
             {
                 case "GroupName":
-                    fullEmail = GetFullEmailAddress(GroupName, Domain);
+                    fullEmail = GroupName;
                     break;
 
                 case "GAGroupObject":
@@ -80,7 +80,7 @@ namespace gShell.Cmdlets.Directory.GAGroup
                     break;
             }
 
-            groups.Delete(fullEmail);
+            groups.Delete(fullEmail, Domain);
         }
     }
 }

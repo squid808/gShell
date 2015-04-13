@@ -16,8 +16,7 @@ namespace gShell.Cmdlets.Directory.GASchema
 
         [Parameter(Position = 0,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string CustomerId { get; set; }
 
@@ -26,14 +25,12 @@ namespace gShell.Cmdlets.Directory.GASchema
         [Parameter(Position = 2,
             Mandatory = true,
             ParameterSetName = "One",
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string SchemaKey { get; set; }
 
         [Parameter(Position = 3,
-            ParameterSetName = "List",
-            HelpMessage = "")]
+            ParameterSetName = "List")]
         public SwitchParameter All { get; set; }
 
         #endregion
@@ -64,8 +61,7 @@ namespace gShell.Cmdlets.Directory.GASchema
 
         [Parameter(Position = 0,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string CustomerId { get; set; }
 
@@ -73,8 +69,7 @@ namespace gShell.Cmdlets.Directory.GASchema
 
         [Parameter(Position = 2,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string SchemaKey { get; set; }
 
@@ -120,8 +115,7 @@ namespace gShell.Cmdlets.Directory.GASchema
         #region Properties
         [Parameter(Position = 0,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string CustomerId { get; set; }
 
@@ -129,16 +123,14 @@ namespace gShell.Cmdlets.Directory.GASchema
 
         [Parameter(Position = 2,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string SchemaKey { get; set; }
 
         [Parameter(Position = 3,
             Mandatory = true,
             ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public SchemaFieldCollection FieldCollection { get; set; }
         #endregion
@@ -160,8 +152,7 @@ namespace gShell.Cmdlets.Directory.GASchema
         #region Properties
         [Parameter(Position = 0,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string CustomerId { get; set; }
 
@@ -171,8 +162,7 @@ namespace gShell.Cmdlets.Directory.GASchema
             ParameterSetName = "Google",
             Mandatory = true,
             ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public SchemaFieldCollection FieldCollection { get; set; }
         #endregion
@@ -195,65 +185,57 @@ namespace gShell.Cmdlets.Directory.GASchema
         [Parameter(Position = 0,
             ParameterSetName = "New",
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string FieldName { get; set; }
 
         [Parameter(Position = 1,
             ParameterSetName = "New",
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
-        public SchemaFieldType FieldType { get; set; }
+        public SchemaField.SchemaFieldType FieldType { get; set; }
 
         [Parameter(Position = 2,
             ParameterSetName = "New",
             Mandatory = false,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public bool Indexed { get; set; }
 
         [Parameter(Position = 3,
             ParameterSetName = "New",
             Mandatory = false,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public bool MultiValued { get; set; }
 
         [Parameter(Position = 4,
             ParameterSetName = "New",
             Mandatory = false,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public double MinValue { get; set; }
 
         [Parameter(Position = 5,
             ParameterSetName = "New",
             Mandatory = false,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public double MaxValue { get; set; }
 
         [Parameter(Position = 6,
             ParameterSetName = "New",
             Mandatory = false,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
-        public SchemaFieldReadAccessType ReadAccessType { get; set; }
+        public SchemaField.SchemaFieldReadAccessType ReadAccessType { get; set; }
 
         [Parameter(Position = 0,
             ParameterSetName = "Google",
             Mandatory = true,
             ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public Data.SchemaFieldSpec SchemaFieldSpec { get; set; }
         #endregion
@@ -293,8 +275,7 @@ namespace gShell.Cmdlets.Directory.GASchema
             ParameterSetName = "New",
             Mandatory = false,
             ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public SchemaField Field { get; set; }
 
@@ -302,8 +283,7 @@ namespace gShell.Cmdlets.Directory.GASchema
             ParameterSetName = "Google",
             Mandatory = false,
             ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public Data.Schema Schema { get; set; }
         #endregion
@@ -438,6 +418,16 @@ namespace gShell.Cmdlets.Directory.GASchema
     /// </summary>
     public class SchemaField
     {
+        public enum SchemaFieldType
+        {
+            STRING, INT64, BOOL, DOUBLE, EMAIL, PHONE, DATE
+        }
+
+        public enum SchemaFieldReadAccessType
+        {
+            ALL_DOMAIN_USERS, ADMINS_AND_SELF
+        }
+
         #region Properties
         public string fieldName;
         public SchemaFieldType fieldType;
@@ -516,13 +506,5 @@ namespace gShell.Cmdlets.Directory.GASchema
         #endregion
     }
 
-    public enum SchemaFieldType
-    {
-        STRING, INT64, BOOL, DOUBLE, EMAIL, PHONE, DATE
-    }
-
-    public enum SchemaFieldReadAccessType
-    {
-        ALL_DOMAIN_USERS, ADMINS_AND_SELF
-    }
+    
 }

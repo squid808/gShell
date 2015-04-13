@@ -46,14 +46,12 @@ namespace gShell.Cmdlets.Directory.GAGroup
 
         private void UpdateGroup()
         {
-            string fullEmail = GetFullEmailAddress(GroupName, Domain);
-
             Data.Group groupAcct = new Data.Group();
 
             if (null == groupAcct)
             {
                 WriteError(new ErrorRecord(new Exception(
-                    string.Format("No group {0} was found to update.", fullEmail)),
+                    string.Format("No group {0} was found to update.", GroupName)),
                         "", ErrorCategory.InvalidData, GroupName));
             }
 
@@ -62,7 +60,7 @@ namespace gShell.Cmdlets.Directory.GAGroup
                 String.IsNullOrWhiteSpace(NewName))
             {
                 WriteError(new ErrorRecord(new Exception(
-                    string.Format("No data was enetered to update {0}.", fullEmail)),
+                    string.Format("No data was enetered to update {0}.", GroupName)),
                         "", ErrorCategory.InvalidData, GroupName));
             }
 
@@ -82,7 +80,7 @@ namespace gShell.Cmdlets.Directory.GAGroup
                 groupAcct.Name = NewName;
             }
 
-            groups.Patch(groupAcct, fullEmail);
+            groups.Patch(groupAcct, GroupName, Domain);
         }
     }
 }

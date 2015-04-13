@@ -15,8 +15,7 @@ namespace gShell.Cmdlets.Directory.GAAsp
 
         [Parameter(Position = 0,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string UserKey { get; set; }
 
@@ -25,16 +24,14 @@ namespace gShell.Cmdlets.Directory.GAAsp
         [Parameter(Position = 2,
             Mandatory = true,
             ParameterSetName = "One",
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public int CodeId { get; set; }
 
         [Parameter(Position = 3,
             Mandatory = true,
             ParameterSetName = "List",
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         public SwitchParameter All { get; set; }
 
         #endregion
@@ -46,10 +43,10 @@ namespace gShell.Cmdlets.Directory.GAAsp
                 switch (ParameterSetName)
                 {
                     case "One":
-                        WriteObject(asps.Get(UserKey, CodeId));
+                        WriteObject(asps.Get(UserKey, Domain, CodeId));
                         break;
                     case "List":
-                        WriteObject(asps.List(UserKey));
+                        WriteObject(asps.List(UserKey, Domain));
                         break;
                 }
             }
@@ -66,8 +63,7 @@ namespace gShell.Cmdlets.Directory.GAAsp
 
         [Parameter(Position = 0,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string UserKey { get; set; }
 
@@ -75,8 +71,7 @@ namespace gShell.Cmdlets.Directory.GAAsp
 
         [Parameter(Position = 2,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public int CodeId { get; set; }
 
@@ -96,7 +91,7 @@ namespace gShell.Cmdlets.Directory.GAAsp
                     {
                         WriteDebug(string.Format("Attempting to remove Asp {0}...",
                             UserKey));
-                        WriteObject(asps.Delete(UserKey, CodeId));
+                        WriteObject(asps.Delete(UserKey, Domain, CodeId));
                         WriteVerbose(string.Format("Removal of Asp {0} completed without error.",
                             UserKey));
                     }

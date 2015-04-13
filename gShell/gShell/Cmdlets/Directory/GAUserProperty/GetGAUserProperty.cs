@@ -50,7 +50,7 @@ namespace gShell.Cmdlets.Directory.GAUserProperty
                 }
                 else if (!string.IsNullOrWhiteSpace(UserName))
                 {
-                    u = users.Get(Utils.GetFullEmailAddress(UserName, Domain));
+                    u = users.Get(UserName, Domain);
                 }
                 else
                 {

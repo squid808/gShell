@@ -15,8 +15,7 @@ namespace gShell.Cmdlets.Directory.GAToken
 
         [Parameter(Position = 0,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string UserKey { get; set; }
 
@@ -25,14 +24,12 @@ namespace gShell.Cmdlets.Directory.GAToken
         [Parameter(Position = 2,
             Mandatory = true,
             ParameterSetName = "One",
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string ClientId { get; set; }
 
         [Parameter(Position = 3,
-            ParameterSetName = "List",
-            HelpMessage = "")]
+            ParameterSetName = "List")]
         public SwitchParameter All { get; set; }
 
         #endregion
@@ -44,10 +41,10 @@ namespace gShell.Cmdlets.Directory.GAToken
                 switch (ParameterSetName)
                 {
                     case "One":
-                        WriteObject(tokens.Get(UserKey, ClientId));
+                        WriteObject(tokens.Get(UserKey, Domain, ClientId));
                         break;
                     case "List":
-                        WriteObject(tokens.List(UserKey));
+                        WriteObject(tokens.List(UserKey, Domain));
                         break;
                 }
             }
@@ -63,8 +60,7 @@ namespace gShell.Cmdlets.Directory.GAToken
 
         [Parameter(Position = 0,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string ClientId { get; set; }
 
@@ -72,8 +68,7 @@ namespace gShell.Cmdlets.Directory.GAToken
 
         [Parameter(Position = 2,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string UserKey { get; set; }
 
@@ -93,7 +88,7 @@ namespace gShell.Cmdlets.Directory.GAToken
                     {
                         WriteDebug(string.Format("Attempting to remove Token for application {0}...",
                             ClientId));
-                        WriteObject(tokens.Delete(UserKey, ClientId));
+                        WriteObject(tokens.Delete(UserKey, Domain, ClientId));
                         WriteVerbose(string.Format("Removal of Token for application {0} completed without error.",
                             ClientId));
                     }

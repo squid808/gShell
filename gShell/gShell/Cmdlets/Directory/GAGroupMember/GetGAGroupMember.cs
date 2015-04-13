@@ -65,10 +65,7 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
             {
                 if (ShouldProcess(GroupName, "Get-GAGroupMember"))
                 {
-                    WriteObject(members.Get(
-                        GetFullEmailAddress(GroupName, Domain),
-                        GetFullEmailAddress(UserName, Domain)
-                        ));
+                    WriteObject(members.Get(GroupName, Domain, UserName));
                 }
             }
             else
@@ -78,8 +75,7 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
                     case "OneGroup":
                         if (ShouldProcess(GroupName, "Get-GAGroupMember"))
                         {
-                            WriteObject(members.List(
-                                GetFullEmailAddress(GroupName, Domain)));
+                            WriteObject(members.List(GroupName, Domain));
                         }
                         break;
 
@@ -149,7 +145,7 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
 
             foreach (Data.Group group in allGroups)
             {
-                List<Data.Member> membersList = members.List(GetFullEmailAddress(GroupName, Domain));
+                List<Data.Member> membersList = members.List(GroupName, Domain);
 
                 multiList.Add(group.Email, membersList);
 

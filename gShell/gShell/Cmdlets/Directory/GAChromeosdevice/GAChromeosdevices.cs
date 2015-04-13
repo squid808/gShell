@@ -15,8 +15,7 @@ namespace gShell.Cmdlets.Directory.GAChromeosdevice
 
         [Parameter(Position = 0,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string CustomerId { get; set; }
 
@@ -25,20 +24,17 @@ namespace gShell.Cmdlets.Directory.GAChromeosdevice
         [Parameter(Position = 2,
             Mandatory = true,
             ParameterSetName = "One",
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string DeviceId  { get; set; }
 
         [Parameter(Position = 3,
-            ParameterSetName = "List",
-            HelpMessage = "")]
+            ParameterSetName = "List")]
         public SwitchParameter All { get; set; }
 
         [Parameter(Position = 4,
             Mandatory = true,
-            ParameterSetName = "List",
-            HelpMessage = "")]
+            ParameterSetName = "List")]
         public int MaxResults { get; set; }
 
         #endregion
@@ -70,8 +66,7 @@ namespace gShell.Cmdlets.Directory.GAChromeosdevice
         #region Properties
         [Parameter(Position = 0,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string CustomerId { get; set; }
 
@@ -79,36 +74,31 @@ namespace gShell.Cmdlets.Directory.GAChromeosdevice
 
         [Parameter(Position = 2,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string DeviceId { get; set; }
 
         [Parameter(Position = 3,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string AnnotatedLocation { get; set; }
 
         [Parameter(Position = 4,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string AnnotatedUser { get; set; }
 
         [Parameter(Position = 5,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string Notes { get; set; }
 
         [Parameter(Position = 6,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string OrgUnitPath { get; set; }
         #endregion

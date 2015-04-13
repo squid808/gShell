@@ -43,7 +43,7 @@ namespace gShell.Cmdlets.Directory.GAGroup
                 case "OneGroup":
                     if (ShouldProcess(GroupName, "Get-GAGroup"))
                     {
-                        WriteObject(groups.Get(GetFullEmailAddress(GroupName, Domain)));
+                        WriteObject(groups.Get(GroupName, Domain));
                     }
                     break;
 

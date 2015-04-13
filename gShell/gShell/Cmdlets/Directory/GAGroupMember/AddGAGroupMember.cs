@@ -48,14 +48,12 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
 
         private void AddGroupMember()
         {
-            GroupName = GetFullEmailAddress(GroupName, Domain);
-
             Member member = new Member {
                 Email = GetFullEmailAddress(UserName, Domain),
                 Role = this.Role.ToString()
             };
 
-            members.Insert(member, GroupName);
+            members.Insert(member, GroupName, Domain);
         }
     }
 

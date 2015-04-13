@@ -14,8 +14,7 @@ namespace gShell.Cmdlets.Directory.GAVerificationCode
 
         [Parameter(Position = 0,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string UserKey { get; set; }
 
@@ -25,9 +24,9 @@ namespace gShell.Cmdlets.Directory.GAVerificationCode
 
         protected override void ProcessRecord()
         {
-            if (ShouldProcess(UserKey, "Get-GAVerificationCode"))
+            if (ShouldProcess( UserKey, "Get-GAVerificationCode"))
             {
-                WriteObject(verificationCodes.List(UserKey));
+                WriteObject(verificationCodes.List(UserKey, Domain));
             }
         }
     }
@@ -41,8 +40,7 @@ namespace gShell.Cmdlets.Directory.GAVerificationCode
 
         [Parameter(Position = 0,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string UserKey { get; set; }
 
@@ -58,13 +56,13 @@ namespace gShell.Cmdlets.Directory.GAVerificationCode
             if (ShouldProcess(UserKey, "Revoke-GAVerificationCode"))
             {
                 if (Force || ShouldContinue((String.Format("Verification Codes for user {0} will be invalidated on the {1} Google Apps domain.\nContinue?",
-                    UserKey, Domain,)), "Confirm Google Apps Verification Code Invalidation"))
+                    UserKey, Domain)), "Confirm Google Apps Verification Code Invalidation"))
                 {
                     try
                     {
                         WriteDebug(string.Format("Attempting to revoke Verification Codes {0}...",
                             UserKey));
-                        WriteObject(verificationCodes.Invalidate(UserKey));
+                        WriteObject(verificationCodes.Invalidate(UserKey, Domain));
                         WriteVerbose(string.Format("Invalidation of Verification Codes for user {0} completed without error.",
                             UserKey));
                     }
@@ -90,8 +88,7 @@ namespace gShell.Cmdlets.Directory.GAVerificationCode
         #region Properties
         [Parameter(Position = 0,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "")]
+            ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string UserKey { get; set; }
 
@@ -102,7 +99,7 @@ namespace gShell.Cmdlets.Directory.GAVerificationCode
         {
             if (ShouldProcess(UserKey, "New-GAVerificationCode"))
             {
-                WriteObject(verificationCodes.Generate(UserKey));
+                WriteObject(verificationCodes.Generate(UserKey, Domain));
             }
         }
     }

@@ -48,16 +48,13 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
         }
 
         private void UpdateGroupMember()
-        {
-            GroupName = GetFullEmailAddress(GroupName, Domain);
-            UserName = GetFullEmailAddress(UserName, Domain);
-            
+        {            
             Data.Member member = new Data.Member
             {
                 Role = this.Role.ToString()
             };
 
-            members.Update(member, GroupName, UserName);
+            members.Update(member, GroupName, Domain, UserName);
         }
     }
 
