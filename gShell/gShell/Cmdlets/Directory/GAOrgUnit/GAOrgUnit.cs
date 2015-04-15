@@ -158,7 +158,7 @@ namespace gShell.Cmdlets.Directory.GAOrgUnit
             Mandatory = false,
             ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
-        public bool BlockInheritance { get; set; }
+        public bool? BlockInheritance { get; set; }
 
         [Parameter(Position = 6,
             Mandatory = false,
@@ -183,9 +183,9 @@ namespace gShell.Cmdlets.Directory.GAOrgUnit
                     body.ParentOrgUnitPath = ParentOrgUnitPath;
                 }
 
-                if (BlockInheritance != null)
+                if (BlockInheritance.HasValue)
                 {
-                    body.BlockInheritance = BlockInheritance;
+                    body.BlockInheritance = BlockInheritance.Value;
                 }
 
                 if (!string.IsNullOrWhiteSpace(Description))

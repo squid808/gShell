@@ -87,7 +87,6 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.IO">
       <HintPath>..\packages\Microsoft.Bcl.1.1.9\lib\net40\System.IO.dll</HintPath>
     </Reference>
@@ -105,6 +104,7 @@
     </Reference>
     <Reference Include="System.Net.Http.Primitives">
       <HintPath>..\packages\Microsoft.Net.Http.2.2.22\lib\net40\System.Net.Http.Primitives.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Net.Http.WebRequest, Version=2.2.22.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -127,8 +127,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cmdlets\Directory\GAAsp\GAAspCmdlets.cs" />
-    <Compile Include="Cmdlets\Directory\GAChannel\StopGAChannel.cs" />
+    <Compile Include="Cmdlets\Directory\GAAsp\GAAsp.cs" />
+    <Compile Include="Cmdlets\Directory\GAChannel\GAChannel.cs" />
     <Compile Include="Cmdlets\Directory\GAChromeosdevice\GAChromeosdevices.cs" />
     <Compile Include="Cmdlets\Directory\GAMobileDevice\GAMobileDevice.cs" />
     <Compile Include="Cmdlets\Directory\GANotification\GANotification.cs" />

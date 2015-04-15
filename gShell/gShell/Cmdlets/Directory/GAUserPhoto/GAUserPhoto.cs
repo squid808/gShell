@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
+using System.IO;
 using System.Management.Automation;
 using Data = Google.Apis.Admin.Directory.directory_v1.Data;
 using Utils = gShell.dotNet.Utilities.Utils;
@@ -22,11 +22,15 @@ namespace gShell.Cmdlets.Directory.GAUserPhoto
 
         //Domain position = 1
 
-        [Parameter(Position = 0,
-            Mandatory = true,
+        [Parameter(Position = 2,
+            Mandatory = false,
             ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
-        public string Path { get; set; }
+        public string FilePath { get; set; }
+
+        [Parameter(Position = 3,
+            Mandatory = false)]
+        public SwitchParameter NoClobber { get; set; }
 
         #endregion
 
@@ -35,9 +39,18 @@ namespace gShell.Cmdlets.Directory.GAUserPhoto
             if (ShouldProcess(UserKey, "Get-GAUserPhoto"))
             {
                 try {
-                    Data.UserPhoto photo = users.photos.Get(UserKey, Domain);
-                    Image image = Utils.Base64StringToImage(photo.PhotoData);
-                    image.Save(Path);
+                    Data.UserPhoto result = users.photos.Get(UserKey, Domain);
+
+                    if (FilePath != null)
+                    {
+                        FilePath = Path.Combine(Path.GetDirectoryName(FilePath),string.Format("{0}.{1}",Path.GetFileNameWithoutExtension(FilePath),result.MimeType.Split('/')[1]));
+
+                        Utils.SaveImageFromBase64(result.PhotoData, FilePath, NoClobber.IsPresent);
+                    }
+                    else
+                    {
+                        WriteObject(result);
+                    }
                 } catch (Exception e) {
                     WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, UserKey));
                 }
@@ -112,25 +125,25 @@ namespace gShell.Cmdlets.Directory.GAUserPhoto
             Mandatory = true,
             ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
-        public string UserPhotoPath { get; set; }
+        public string Path { get; set; }
 
         [Parameter(Position = 3,
             Mandatory = false,
             ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
-        public int Height { get; set; }
+        public int? Height { get; set; }
 
         [Parameter(Position = 4,
             Mandatory = false,
             ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
-        public MimeTypeEnum MimeType { get; set; }
+        public MimeTypeEnum? MimeType { get; set; }
 
         [Parameter(Position = 5,
             Mandatory = false,
             ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
-        public int Width { get; set; }
+        public int? Width { get; set; }
         #endregion
 
         protected override void ProcessRecord()
@@ -139,24 +152,24 @@ namespace gShell.Cmdlets.Directory.GAUserPhoto
             {
                 Data.UserPhoto body = new Data.UserPhoto();
 
-                if (MimeType != null)
+                if (MimeType.HasValue)
                 {
-                    body.MimeType = MimeType.ToString();
+                    body.MimeType = MimeType.Value.ToString();
                 }
 
-                if (Height != 0)
+                if (Height.HasValue)
                 {
-                    body.Height = Height;
+                    body.Height = Height.Value;
                 }
 
-                if (Width != 0)
+                if (Width.HasValue)
                 {
-                    body.Width = Width;
+                    body.Width = Width.Value;
                 }
 
-                body.PhotoData = Utils.ImageToBase64String(UserPhotoPath);
+                body.PhotoData = Utils.LoadImageToBase64(Path);
 
-                WriteObject(users.photos.Patch(body, UserKey, Domain));
+                WriteObject(users.photos.Update(body, UserKey, Domain));
             }
         }
     }
