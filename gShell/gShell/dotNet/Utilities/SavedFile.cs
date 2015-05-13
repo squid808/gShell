@@ -121,7 +121,7 @@ namespace gShell.dotNet.Utilities
         }
 
         /// <summary>
-        /// Loads the group in to the static member.
+        /// Loads the serialized group information in to the static member.
         /// </summary>
         /// <param name="force"></param>
         /// <returns></returns>
@@ -254,6 +254,8 @@ namespace gShell.dotNet.Utilities
 
         public static string GetDefaultDomain()
         {
+            LoadGroup();
+
             return oAuth2Group.defaultDomain;
         }
 

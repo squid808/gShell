@@ -69,7 +69,7 @@ namespace gShell.Cmdlets.Directory
             public Data.ChromeOsDevice Get(string customerId, string deviceId,
                 directory_v1.ChromeosdevicesResource.GetRequest.ProjectionEnum? projection = null)
             {
-                return gdirectory.chromeosDevices.Get(customerId, deviceId, projection); 
+                return gdirectory.chromeosDevices.Get(Utils.CheckCustomerID(customerId), deviceId, projection); 
             }
 
             public List<Data.ChromeOsDevice> List(string customerId, gDirectory.ChromeosDevices.ChromeosDevicesListProperties properties = null)
@@ -78,19 +78,19 @@ namespace gShell.Cmdlets.Directory
                 properties.startProgressBar = StartProgressBar;
                 properties.updateProgressBar = UpdateProgressBar;
 
-                return gdirectory.chromeosDevices.List(customerId, properties);
+                return gdirectory.chromeosDevices.List(Utils.CheckCustomerID(customerId), properties);
             }
 
             public Data.ChromeOsDevice Patch(Data.ChromeOsDevice body, string customerId, string deviceId,
                 directory_v1.ChromeosdevicesResource.PatchRequest.ProjectionEnum? projection = null)
             {
-                return gdirectory.chromeosDevices.Patch(body, customerId, deviceId, projection);
+                return gdirectory.chromeosDevices.Patch(body, Utils.CheckCustomerID(customerId), deviceId, projection);
             }
 
             public Data.ChromeOsDevice Update(Data.ChromeOsDevice body, string customerId, string deviceId,
                 directory_v1.ChromeosdevicesResource.UpdateRequest.ProjectionEnum? projection = null)
             {
-                return gdirectory.chromeosDevices.Update(body, customerId, deviceId, projection);
+                return gdirectory.chromeosDevices.Update(body, Utils.CheckCustomerID(customerId), deviceId, projection);
             }
         }
         #endregion
@@ -118,6 +118,10 @@ namespace gShell.Cmdlets.Directory
             public List<Data.Group> List(gDirectory.Groups.GroupsListProperties properties = null)
             {
                 properties = (properties != null) ? properties : new gDirectory.Groups.GroupsListProperties();
+                if (properties.userKey != null)
+                {
+                    properties.userKey = Utils.GetFullEmailAddress(properties.userKey, properties.domain);
+                }
                 properties.startProgressBar = StartProgressBar;
                 properties.updateProgressBar = UpdateProgressBar;
 
@@ -203,18 +207,18 @@ namespace gShell.Cmdlets.Directory
             {
                 Data.MobileDeviceAction body = new Data.MobileDeviceAction();
                 body.Action = action.ToString();
-                return gdirectory.mobileDevices.Action(body, customerId, resourceId);
+                return gdirectory.mobileDevices.Action(body, Utils.CheckCustomerID(customerId), resourceId);
             }
 
             public string Delete(string customerId, string resourceId)
             {
-                return gdirectory.mobileDevices.Delete(customerId, resourceId);
+                return gdirectory.mobileDevices.Delete(Utils.CheckCustomerID(customerId), resourceId);
             }
 
             public Data.MobileDevice Get(string customerId, string resourceId,
                 directory_v1.MobiledevicesResource.GetRequest.ProjectionEnum? projection = null)
             {
-                return gdirectory.mobileDevices.Get(customerId, resourceId, projection);
+                return gdirectory.mobileDevices.Get(Utils.CheckCustomerID(customerId), resourceId, projection);
             }
 
             public List<Data.MobileDevice> List(string customerId, gDirectory.MobileDevices.MobileDevicesPropertiesList properties = null)
@@ -223,7 +227,7 @@ namespace gShell.Cmdlets.Directory
                 properties.startProgressBar = StartProgressBar;
                 properties.updateProgressBar = UpdateProgressBar;
 
-                return gdirectory.mobileDevices.List(customerId, properties);
+                return gdirectory.mobileDevices.List(Utils.CheckCustomerID(customerId), properties);
             }
         }
         #endregion
@@ -233,32 +237,32 @@ namespace gShell.Cmdlets.Directory
         {
             public string Delete(string customerId, Google.Apis.Util.Repeatable<string> orgUnitPath)
             {
-                return gdirectory.orgunits.Delete(customerId, orgUnitPath);
+                return gdirectory.orgunits.Delete(Utils.CheckCustomerID(customerId), orgUnitPath);
             }
 
             public Data.OrgUnit Get(string customerId, Google.Apis.Util.Repeatable<string> orgUnitPath)
             {
-                return gdirectory.orgunits.Get(customerId, orgUnitPath);
+                return gdirectory.orgunits.Get(Utils.CheckCustomerID(customerId), orgUnitPath);
             }
 
             public Data.OrgUnit Insert(Data.OrgUnit body, string customerId)
             {
-                return gdirectory.orgunits.Insert(body, customerId);
+                return gdirectory.orgunits.Insert(body, Utils.CheckCustomerID(customerId));
             }
 
             public List<Data.OrgUnit> List(string customerId, gDirectory.Orgunits.OrgunitsListProperties properties = null)
             {
-                return gdirectory.orgunits.List(customerId, properties);
+                return gdirectory.orgunits.List(Utils.CheckCustomerID(customerId), properties);
             }
 
             public Data.OrgUnit Patch(Data.OrgUnit body, string customerId, Google.Apis.Util.Repeatable<string> orgUnitPath)
             {
-                return gdirectory.orgunits.Patch(body, customerId, orgUnitPath);
+                return gdirectory.orgunits.Patch(body, Utils.CheckCustomerID(customerId), orgUnitPath);
             }
 
             public Data.OrgUnit Update(Data.OrgUnit body, string customerId, Google.Apis.Util.Repeatable<string> orgUnitPath)
             {
-                return gdirectory.orgunits.Update(body, customerId, orgUnitPath);
+                return gdirectory.orgunits.Update(body, Utils.CheckCustomerID(customerId), orgUnitPath);
             }
         }
         #endregion
@@ -455,7 +459,7 @@ namespace gShell.Cmdlets.Directory
                 properties.startProgressBar = StartProgressBar;
                 properties.updateProgressBar = UpdateProgressBar;
 
-                return gdirectory.notifications.List(customer);
+                return gdirectory.notifications.List(customer, properties);
             }
 
             public Data.Notification Patch(Data.Notification body, string customer, string notificationId)

@@ -15,7 +15,7 @@ namespace gShell.Cmdlets.Directory.GAOrgUnit
 
         [Parameter(Position = 0,
             ParameterSetName = "One",
-            Mandatory = true,
+            Mandatory = false,
             ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string CustomerId { get; set; }
@@ -24,24 +24,20 @@ namespace gShell.Cmdlets.Directory.GAOrgUnit
 
         [Parameter(Position = 2,
             ParameterSetName = "One",
-            Mandatory = true,
+            Mandatory = false,
             ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNullOrEmpty]
+        [Parameter(Position = 2,
+            ParameterSetName = "List",
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true)]
         public string OrgUnitPath { get; set; }
 
         [Parameter(Position = 3,
-            ParameterSetName = "List",
-            Mandatory = true,
-            ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNullOrEmpty]
-        public string OrgPath { get; set; }
-
-        [Parameter(Position = 4,
             ParameterSetName = "List")]
         public SwitchParameter All { get; set; }
 
-        [Parameter(Position = 5,
-            Mandatory = true,
+        [Parameter(Position = 4,
+            Mandatory = false,
             ParameterSetName = "List",
             ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
@@ -57,7 +53,7 @@ namespace gShell.Cmdlets.Directory.GAOrgUnit
                 {
                     WriteObject(orgunits.List(CustomerId, new dotNet.Directory.Orgunits.OrgunitsListProperties()
                     {
-                        orgUnitPath = OrgPath,
+                        orgUnitPath = OrgUnitPath,
                         type = Type
                     }));
                 } else {
@@ -75,7 +71,7 @@ namespace gShell.Cmdlets.Directory.GAOrgUnit
         #region Properties
 
         [Parameter(Position = 0,
-            Mandatory = true,
+            Mandatory = false,
             ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string CustomerId { get; set; }
@@ -88,7 +84,7 @@ namespace gShell.Cmdlets.Directory.GAOrgUnit
         [ValidateNotNullOrEmpty]
         public string OrgUnitPath { get; set; }
 
-        [Parameter(Position = 2)]
+        [Parameter(Position = 3)]
         public SwitchParameter Force { get; set; }
 
         #endregion
@@ -129,7 +125,7 @@ namespace gShell.Cmdlets.Directory.GAOrgUnit
     {
         #region Properties
         [Parameter(Position = 0,
-            Mandatory = true,
+            Mandatory = false,
             ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string CustomerId { get; set; }
@@ -198,14 +194,14 @@ namespace gShell.Cmdlets.Directory.GAOrgUnit
         }
     }
 
-    [Cmdlet(VerbsCommon.Add, "GAOrgUnit",
+    [Cmdlet(VerbsCommon.New, "GAOrgUnit",
           SupportsShouldProcess = true,
-          HelpUri = @"https://github.com/squid808/gShell/wiki/Add-GAOrgUnit")]
+          HelpUri = @"https://github.com/squid808/gShell/wiki/New-GAOrgUnit")]
     public class NewGAOrgUnit : DirectoryBase
     {
         #region Properties
         [Parameter(Position = 0,
-            Mandatory = true,
+            Mandatory = false,
             ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string CustomerId { get; set; }
@@ -213,7 +209,7 @@ namespace gShell.Cmdlets.Directory.GAOrgUnit
         //Domain position = 1
 
         [Parameter(Position = 2,
-            Mandatory = false,
+            Mandatory = true,
             ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string Name { get; set; }
@@ -235,12 +231,6 @@ namespace gShell.Cmdlets.Directory.GAOrgUnit
             ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string Description { get; set; }
-
-        [Parameter(Position = 6,
-            Mandatory = false,
-            ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNullOrEmpty]
-        public string OrgUnitPath { get; set; }
         #endregion
 
         protected override void ProcessRecord()
@@ -252,8 +242,7 @@ namespace gShell.Cmdlets.Directory.GAOrgUnit
                     Name = this.Name,
                     ParentOrgUnitPath = this.ParentOrgUnitPath,
                     BlockInheritance = this.BlockInheritance,
-                    Description = this.Description,
-                    OrgUnitPath = this.OrgUnitPath
+                    Description = this.Description
                 };
 
                 WriteObject(orgunits.Insert(body, CustomerId));

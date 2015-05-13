@@ -14,7 +14,7 @@ namespace gShell.Cmdlets.Directory.GAChromeosdevice
         #region Properties
 
         [Parameter(Position = 0,
-            Mandatory = true,
+            Mandatory = false, //can use 'my_customer'
             ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string CustomerId { get; set; }
@@ -33,7 +33,6 @@ namespace gShell.Cmdlets.Directory.GAChromeosdevice
         public SwitchParameter All { get; set; }
 
         [Parameter(Position = 4,
-            Mandatory = true,
             ParameterSetName = "List")]
         public int MaxResults { get; set; }
 
@@ -41,6 +40,8 @@ namespace gShell.Cmdlets.Directory.GAChromeosdevice
 
         protected override void ProcessRecord()
         {
+            CustomerId = string.IsNullOrWhiteSpace(CustomerId) ? "my_customer" : CustomerId;
+
             if (ShouldProcess(CustomerId, "Get-GAChromeosdevice"))
             {
                 switch (ParameterSetName)
@@ -65,7 +66,7 @@ namespace gShell.Cmdlets.Directory.GAChromeosdevice
     {
         #region Properties
         [Parameter(Position = 0,
-            Mandatory = true,
+            Mandatory = false, //can use 'my_customer'
             ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string CustomerId { get; set; }
@@ -79,25 +80,25 @@ namespace gShell.Cmdlets.Directory.GAChromeosdevice
         public string DeviceId { get; set; }
 
         [Parameter(Position = 3,
-            Mandatory = true,
+            Mandatory = false,
             ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string AnnotatedLocation { get; set; }
 
         [Parameter(Position = 4,
-            Mandatory = true,
+            Mandatory = false,
             ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string AnnotatedUser { get; set; }
 
         [Parameter(Position = 5,
-            Mandatory = true,
+            Mandatory = false,
             ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string Notes { get; set; }
 
         [Parameter(Position = 6,
-            Mandatory = true,
+            Mandatory = false,
             ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string OrgUnitPath { get; set; }
@@ -105,6 +106,8 @@ namespace gShell.Cmdlets.Directory.GAChromeosdevice
 
         protected override void ProcessRecord()
         {
+            CustomerId = string.IsNullOrWhiteSpace(CustomerId) ? "my_customer" : CustomerId;
+
             if (ShouldProcess(CustomerId, "Set-GAChromeosdevice"))
             {
                 Data.ChromeOsDevice body = new Data.ChromeOsDevice();

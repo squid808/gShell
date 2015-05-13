@@ -72,7 +72,7 @@ namespace gShell.Cmdlets.Directory.GAToken
         [ValidateNotNullOrEmpty]
         public string UserKey { get; set; }
 
-        [Parameter(Position = 2)]
+        [Parameter(Position = 3)]
         public SwitchParameter Force { get; set; }
 
         #endregion

@@ -23,6 +23,22 @@ namespace gShell.dotNet.Utilities
         }
 
         /// <summary>
+        /// Google allows the user to provide a customerID of my_customer for some calls.
+        /// This allows a user to use a blank customerID instead, filling it in for them.
+        /// </summary>
+        public static string CheckCustomerID(string customerId)
+        {
+            if (string.IsNullOrWhiteSpace(customerId))
+            {
+                return "my_customer";
+            }
+            else
+            {
+                return customerId;
+            }
+        }
+
+        /// <summary>
         /// Return the domain given a full email address.
         /// </summary>
         public static string GetDomainFromEmail(string userEmail)

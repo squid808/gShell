@@ -347,7 +347,8 @@ namespace gShell.dotNet.Utilities.OAuth2
         /// </summary>
         public static BaseClientService.Initializer GetInitializer(string domain)
         {
-            gInitializer initializer = new gInitializer()
+            //gInitializer initializer = new gInitializer() //User the custom initializer if you need to use the custom serializer
+            BaseClientService.Initializer initializer = new BaseClientService.Initializer()
             {
                 HttpClientInitializer = ReturnUserCredential(domain),
                 ApplicationName = _appName,
@@ -358,7 +359,8 @@ namespace gShell.dotNet.Utilities.OAuth2
 
         public static BaseClientService.Initializer GetInitializer(Google.Apis.Http.IConfigurableHttpClientInitializer credentials)
         {
-            gInitializer initializer = new gInitializer()
+            //gInitializer initializer = new gInitializer()
+            BaseClientService.Initializer initializer = new BaseClientService.Initializer()
             {
                 HttpClientInitializer = credentials,
                 ApplicationName = _appName,

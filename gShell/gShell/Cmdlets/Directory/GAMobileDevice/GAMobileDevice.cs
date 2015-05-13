@@ -15,7 +15,7 @@ namespace gShell.Cmdlets.Directory.GAMobileDevice
         #region Properties
 
         [Parameter(Position = 0,
-            Mandatory = true,
+            Mandatory = false,
             ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string CustomerId { get; set; }
@@ -34,7 +34,7 @@ namespace gShell.Cmdlets.Directory.GAMobileDevice
         public SwitchParameter All { get; set; }
 
         [Parameter(Position = 4,
-            Mandatory = true,
+            Mandatory = false,
             ParameterSetName = "List")]
         public int MaxResults { get; set; }
 
@@ -68,7 +68,7 @@ namespace gShell.Cmdlets.Directory.GAMobileDevice
         #region Properties
 
         [Parameter(Position = 0,
-            Mandatory = true,
+            Mandatory = false,
             ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string CustomerId { get; set; }
@@ -81,7 +81,7 @@ namespace gShell.Cmdlets.Directory.GAMobileDevice
         [ValidateNotNullOrEmpty]
         public string ResourceId { get; set; }
 
-        [Parameter(Position = 2)]
+        [Parameter(Position = 3)]
         public SwitchParameter Force { get; set; }
 
         #endregion
@@ -122,7 +122,7 @@ namespace gShell.Cmdlets.Directory.GAMobileDevice
     {
         #region Properties
         [Parameter(Position = 0,
-            Mandatory = true,
+            Mandatory = false,
             ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public string CustomerId { get; set; }

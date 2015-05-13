@@ -36,24 +36,14 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
         public SwitchParameter All { get; set; }
 
         [Parameter(Position = 4,
-            ParameterSetName = "AllGroups",
-            HelpMessage = "Retrieves the information from local memory if it already exists, this may not get up-to-date information from the web.")]
-        public SwitchParameter Cache { get; set; }
-
-        [Parameter(Position = 5,
-            ParameterSetName = "AllGroups",
-            HelpMessage = "Force the cmdlet to refresh any cached information. This will ensure you get up-to-date information from the web.")]
-        public SwitchParameter ForceCacheReload { get; set; }
-
-        [Parameter(Position = 6,
             HelpMessage = "Include members in the results.")]
         public new SwitchParameter Members { get; set; }
 
-        [Parameter(Position = 7,
+        [Parameter(Position = 5,
             HelpMessage = "Include managers in the results.")]
         public SwitchParameter Managers { get; set; }
 
-        [Parameter(Position = 8,
+        [Parameter(Position = 6,
             HelpMessage = "Include owners in the results.")]
         public SwitchParameter Owners { get; set; }
 

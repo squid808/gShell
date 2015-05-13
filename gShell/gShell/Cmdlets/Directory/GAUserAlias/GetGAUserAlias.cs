@@ -27,15 +27,7 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
             ParameterSetName = "AllUserAliases")]
         public SwitchParameter All { get; set; }
 
-        [Parameter(Position = 3,
-            ParameterSetName = "AllUserAliases")]
-        public SwitchParameter Cache { get; set; }
-
-        [Parameter(Position = 4,
-            ParameterSetName = "AllUserAliases")]
-        public SwitchParameter ForceCacheReload { get; set; }
-
-        [Parameter(Position = 5,
+        [Parameter(
             ParameterSetName = "AllUserAliases")]
         public SwitchParameter ReturnGoogleAPIObjects { get; set; }
 

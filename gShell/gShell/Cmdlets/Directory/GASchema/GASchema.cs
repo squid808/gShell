@@ -159,7 +159,6 @@ namespace gShell.Cmdlets.Directory.GASchema
         //Domain position = 1
 
         [Parameter(Position = 2,
-            ParameterSetName = "Google",
             Mandatory = true,
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
@@ -178,7 +177,8 @@ namespace gShell.Cmdlets.Directory.GASchema
 
     [Cmdlet(VerbsCommon.New, "GASchemaField",
           SupportsShouldProcess = true,
-          HelpUri = @"https://github.com/squid808/gShell/wiki/New-GASchemaField")]
+          HelpUri = @"https://github.com/squid808/gShell/wiki/New-GASchemaField",
+          DefaultParameterSetName="New")]
     public class NewGASchemaField : PSCmdlet
     {
         #region Properties
@@ -201,35 +201,35 @@ namespace gShell.Cmdlets.Directory.GASchema
             Mandatory = false,
             ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
-        public bool Indexed { get; set; }
+        public bool? Indexed { get; set; }
 
         [Parameter(Position = 3,
             ParameterSetName = "New",
             Mandatory = false,
             ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
-        public bool MultiValued { get; set; }
+        public bool? MultiValued { get; set; }
 
         [Parameter(Position = 4,
             ParameterSetName = "New",
             Mandatory = false,
             ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
-        public double MinValue { get; set; }
+        public double? MinValue { get; set; }
 
         [Parameter(Position = 5,
             ParameterSetName = "New",
             Mandatory = false,
             ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
-        public double MaxValue { get; set; }
+        public double? MaxValue { get; set; }
 
         [Parameter(Position = 6,
             ParameterSetName = "New",
             Mandatory = false,
             ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
-        public SchemaField.SchemaFieldReadAccessType ReadAccessType { get; set; }
+        public SchemaField.SchemaFieldReadAccessType? ReadAccessType { get; set; }
 
         [Parameter(Position = 0,
             ParameterSetName = "Google",
@@ -245,12 +245,13 @@ namespace gShell.Cmdlets.Directory.GASchema
             switch (ParameterSetName)
             {
                 case "New":
+
                     SchemaField field = new SchemaField(FieldName, FieldType)
                     {
-                        indexed = Indexed,
-                        multiValued = MultiValued,
                         minValue = MinValue,
                         maxValue = MaxValue,
+                        indexed = Indexed,
+                        multiValued = MultiValued,
                         readAccessType = ReadAccessType
                     };
 
@@ -267,11 +268,19 @@ namespace gShell.Cmdlets.Directory.GASchema
 
     [Cmdlet(VerbsCommon.New, "GASchemaFieldCollection",
           SupportsShouldProcess = true,
-          HelpUri = @"https://github.com/squid808/gShell/wiki/New-GASchemaFieldCollection")]
+          HelpUri = @"https://github.com/squid808/gShell/wiki/New-GASchemaFieldCollection",
+          DefaultParameterSetName="New")]
     public class NewGASchemaFieldCollection : PSCmdlet
     {
         #region Properties
         [Parameter(Position = 0,
+            ParameterSetName = "New",
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string SchemaName { get; set; }
+
+        [Parameter(Position = 1,
             ParameterSetName = "New",
             Mandatory = false,
             ValueFromPipeline = true,
@@ -292,7 +301,7 @@ namespace gShell.Cmdlets.Directory.GASchema
         {
             if (Field != null)
             {
-                WriteObject(new SchemaFieldCollection(Field));
+                WriteObject(new SchemaFieldCollection(SchemaName, Field));
             }
             else if (Schema != null)
             {
@@ -300,7 +309,7 @@ namespace gShell.Cmdlets.Directory.GASchema
             }
             else
             {
-                WriteObject(new SchemaFieldCollection());
+                WriteObject(new SchemaFieldCollection(SchemaName));
             }
         }
     }
@@ -311,6 +320,8 @@ namespace gShell.Cmdlets.Directory.GASchema
     public class SchemaFieldCollection
     {
         #region Properties
+        public string schemaName;
+
         public List<SchemaField> fields {get {return _fields;}}
 
         private List<SchemaField> _fields = new List<SchemaField>();
@@ -326,7 +337,14 @@ namespace gShell.Cmdlets.Directory.GASchema
         #region Constructors
         public SchemaFieldCollection() { }
 
-        public SchemaFieldCollection(SchemaField field) {
+        public SchemaFieldCollection(string SchemaName) 
+        {
+            schemaName = SchemaName;
+        }
+
+        public SchemaFieldCollection(string SchemaName, SchemaField field)
+        {
+            schemaName = SchemaName;
             Add(field);
         }
         #endregion
@@ -388,6 +406,8 @@ namespace gShell.Cmdlets.Directory.GASchema
         {
             SchemaFieldCollection coll = new SchemaFieldCollection();
 
+            coll.schemaName = schema.SchemaName;
+
             foreach (Data.SchemaFieldSpec spec in schema.Fields)
             {
                 coll.Add((SchemaField)spec);
@@ -402,6 +422,8 @@ namespace gShell.Cmdlets.Directory.GASchema
             {
                 Fields = new List<Data.SchemaFieldSpec>()
             };
+
+            schema.SchemaName = coll.schemaName;
 
             foreach (SchemaField field in coll.fields)
             {
@@ -431,11 +453,11 @@ namespace gShell.Cmdlets.Directory.GASchema
         #region Properties
         public string fieldName;
         public SchemaFieldType fieldType;
-        public bool indexed;
-        public bool multiValued;
-        public double minValue;
-        public double maxValue;
-        public SchemaFieldReadAccessType readAccessType;
+        public bool? indexed;
+        public bool? multiValued;
+        public double? minValue;
+        public double? maxValue;
+        public SchemaFieldReadAccessType? readAccessType;
         #endregion
 
         public SchemaField(string FieldName, SchemaFieldType FieldType){
