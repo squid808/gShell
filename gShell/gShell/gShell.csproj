@@ -56,6 +56,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Google.Apis.Core.1.9.0\lib\portable-net40+sl50+win+wpa81+wp80\Google.Apis.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Google.Apis.Discovery.v1, Version=1.9.0.50, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Discovery.v1.1.9.0.500\lib\portable-net40+sl50+win+wpa81+wp80\Google.Apis.Discovery.v1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Google.Apis.Drive.v2, Version=1.9.0.155, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Google.Apis.Drive.v2.1.9.0.1550\lib\portable-net40+sl50+win+wpa81+wp80\Google.Apis.Drive.v2.dll</HintPath>
