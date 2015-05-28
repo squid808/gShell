@@ -154,6 +154,14 @@ namespace gShell.dotNet.CustomSerializer
             {
                 return default(T);
             }
+
+            //if this input is a result of the discovery api, remove the refs that we don't use to avoid the newtonsoft error
+            //some google responses have a $ref to an object with additional information, and newtonsoft doesn't abide by that
+            if (input.Contains("discovery#restDescription"))
+            {
+                input = input.Replace("$ref", "ref");
+            }
+
             return JsonConvert.DeserializeObject<T>(input);
         }
 

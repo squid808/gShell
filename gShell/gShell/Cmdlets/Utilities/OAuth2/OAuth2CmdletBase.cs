@@ -112,6 +112,37 @@ namespace gShell.dotNet.Utilities.OAuth2
         /// Called each time a new cmdlet is fired.
         /// </summary>
         protected abstract string Authenticate(string domain);
+
+        public void CheckForScopes(string domain)
+        {
+            domain = OAuth2Base.DetermineDomain(domain); //this is likely going to be called again, can't avoid it for now.
+
+            //if no domain is returned, none was provided or none was found as default.
+            if (string.IsNullOrWhiteSpace(domain) || !gShell.dotNet.Utilities.SavedFile.ContainsUserOrDomain(domain))
+            {
+                if (string.IsNullOrWhiteSpace(domain)) { domain = "none provided"; }
+
+                WriteWarning(string.Format("The Cmdlet you've just started is running against a domain ({0}) that doesn't seem to have any authenticated users saved. In order to continue you'll need to choose which permissions gShell can use.", domain));
+
+                string script = "Read-Host '\nWould you like to choose or your API scopes now? y or n'";
+                Collection<PSObject> results = this.InvokeCommand.InvokeScript(script);
+                string result = results[0].ToString().Substring(0, 1).ToLower();
+                if (result == "y")
+                {
+                    results = this.InvokeCommand.InvokeScript(string.Format("Invoke-ScopeManager -Domain {0}", domain));
+                }
+                else
+                {
+                    script = "Write-Host (\"No scopes will be chosen at this time. You can run this process manually with Invoke-ScopeManager later.\") -ForegroundColor \"Red\"";
+                    this.InvokeCommand.InvokeScript(script);
+
+                }
+            }
+            else
+            {
+                OAuth2Base.LoadScopes(domain);
+            }
+        }
         #endregion
 
         #region ProgressBar Methods

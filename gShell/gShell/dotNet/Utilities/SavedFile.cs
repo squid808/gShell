@@ -12,6 +12,11 @@ using gShell.dotNet.Utilities.OAuth2;
 
 namespace gShell.dotNet.Utilities
 {
+    /// <summary>
+    /// A class dedicated to being the intermediate for the saving and loading of content from the saved information.
+    /// TODO: Update the whole friggin back-end system to work better with this file. Rather than
+    /// loading things from here in to memory, just use this as the basis - it's already in memory
+    /// </summary>
     public sealed class SavedFile
     {
         #region Parameters
@@ -22,7 +27,6 @@ namespace gShell.dotNet.Utilities
             Environment.SpecialFolder.LocalApplicationData), @"gShell\gShell_OAuth2.bin");
 
         public static OAuth2Group oAuth2Group;
-        private static OAuth2Info oAuth2Info;
         #endregion
 
         #region Saving
@@ -30,10 +34,8 @@ namespace gShell.dotNet.Utilities
         /// <summary>
         /// Saves the token to the group with the user email as the key.
         /// </summary>
-        public static void SaveToken(Userinfoplus userInfo, string tokenInfo)
+        public static void SaveToken(Userinfoplus userInfo, string tokenInfo, HashSet<string> scopes)
         {
-            OAuth2Info info = new OAuth2Info(userInfo, tokenInfo);
-
             if (null == oAuth2Group)
             {
                 if (FileExists())
@@ -46,7 +48,7 @@ namespace gShell.dotNet.Utilities
                 }
             }
 
-            oAuth2Group.Add(info);
+            oAuth2Group.SetUser(userInfo, tokenInfo, scopes);
 
             SaveGroup();
         }
@@ -68,7 +70,6 @@ namespace gShell.dotNet.Utilities
             byte[] byteArray = memoryStream.ToArray();
             byte[] protectedArray = ProtectedData.Protect(byteArray, s_aditionalEntropy,
                 DataProtectionScope.CurrentUser);
-            
 
             System.IO.File.WriteAllBytes(destFile, protectedArray);
 
@@ -77,47 +78,56 @@ namespace gShell.dotNet.Utilities
             oAuth2Group = group;
         }
 
-        public static void SetServiceAccountInfo(string accountEmail,
-            string certificatePath)
-        {
-            LoadGroup();
+        //public static void SetServiceAccountInfo(string accountEmail,
+        //    string certificatePath)
+        //{
+        //    LoadGroup();
 
-            oAuth2Group.AddCertificate(certificatePath);
-            oAuth2Group.AddServiceAccountEmail(accountEmail);
+        //    oAuth2Group.AddCertificate(certificatePath);
+        //    oAuth2Group.AddServiceAccountEmail(accountEmail);
 
-            SaveGroup();
-        }
+        //    SaveGroup();
+        //}
         #endregion
 
         #region Loading
-        public static string LoadTokenByDomain(string domain)
-        {
-            LoadGroup();
+        //public static string LoadTokenByDomain(string domain)
+        //{
+        //    LoadGroup();
 
+        //    try
+        //    {
+        //        oAuth2Info = oAuth2Group.LoadByDomain(domain);
+        //    }
+        //    catch
+        //    {
+        //        ThrowNoOauthSettingsError(domain);
+        //    }
+
+        //    return (oAuth2Info.storedToken);
+        //}
+
+        /// <summary>
+        /// Called by the async process from google that requests the token. Could pass an email address or a domain.
+        /// </summary>
+        public static string LoadToken(string emailAddress)
+        {
+            //assume the key is the email address until i document better. if this is still here, it didn't fail and i didn't have to troubleshoot, which means i'm right.
             try
             {
-                oAuth2Info = oAuth2Group.LoadByDomain(domain);
+                LoadGroup();
             }
             catch
             {
-                ThrowNoOauthSettingsError(domain);
+                ThrowNoOauthSettingsError(emailAddress);
             }
 
-            return (oAuth2Info.storedToken);
-        }
-
-        public static string LoadToken(string key)
-        {
-            try
+            if (!emailAddress.Contains("@"))
             {
-                oAuth2Info = oAuth2Group.Load(key);
-            }
-            catch
-            {
-                ThrowNoOauthSettingsError(key);
+                emailAddress = oAuth2Group.GetDefaultUser(emailAddress);
             }
 
-            return (oAuth2Info.storedToken);
+            return oAuth2Group.GetUser(emailAddress).storedToken;
         }
 
         /// <summary>
@@ -170,35 +180,47 @@ namespace gShell.dotNet.Utilities
             }
         }
 
-        public static string GetServiceAccountEmail()
-        {
-            LoadGroup();
+        //public static string GetServiceAccountEmail()
+        //{
+        //    LoadGroup();
 
-            if (oAuth2Group.ContainsServiceAccountInfo()){
-                return oAuth2Group.serviceAccountEmail;
-            } else {
-                throw new System.InvalidOperationException(
-                    "No Service Account Information exists.");
-            }
-        }
+        //    if (oAuth2Group.ContainsServiceAccountInfo()){
+        //        return oAuth2Group.serviceAccountEmail;
+        //    } else {
+        //        throw new System.InvalidOperationException(
+        //            "No Service Account Information exists.");
+        //    }
+        //}
 
-        public static X509Certificate2 GetServiceAccountCert()
-        {
-            LoadGroup();
+        //public static X509Certificate2 GetServiceAccountCert()
+        //{
+        //    LoadGroup();
 
-            if (oAuth2Group.ContainsServiceAccountInfo()){
-                return oAuth2Group.serviceAccountCertificate;
-            } else {
-                throw new System.InvalidOperationException(
-                    "No Service Account Information exists.");
-            }
-        }
+        //    if (oAuth2Group.ContainsServiceAccountInfo()){
+        //        return oAuth2Group.serviceAccountCertificate;
+        //    } else {
+        //        throw new System.InvalidOperationException(
+        //            "No Service Account Information exists.");
+        //    }
+        //}
 
         
         #endregion
 
         #region Deleting
-        public static void DeleteToken(string domain)
+        public static void RemoveUser(string userEmail)
+        {
+            LoadGroup();
+
+            if (ContainsUserOrDomain(userEmail))
+            {
+                oAuth2Group.RemoveUser(userEmail);
+            }
+
+            SaveGroup();
+        }
+
+        public static void RemoveDomain(string domain)
         {
             LoadGroup();
             
@@ -224,6 +246,9 @@ namespace gShell.dotNet.Utilities
             return (IO.File.Exists(destFile));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public static bool ContainsUserOrDomain(string key)
         {
             if (!FileExists()) { return false; }
@@ -254,14 +279,50 @@ namespace gShell.dotNet.Utilities
 
         public static string GetDefaultDomain()
         {
-            return oAuth2Group.defaultDomain;
+            LoadGroup();
+
+            return oAuth2Group.GetDefaultDomain();
         }
 
-        public static List<string> GetDomainList()
+        public static ICollection<string> GetDomainList()
         {
             LoadGroup();
 
-            return (oAuth2Group.GetAllDomains());
+            return (oAuth2Group.GetDomains());
+        }
+
+        public static OAuth2Domain GetDomain(string domain)
+        {
+            return oAuth2Group.GetDomain(domain);
+        }
+
+        public static OAuth2DomainUser GetUser(string userEmail)
+        {
+            return oAuth2Group.GetUser(userEmail);
+        }
+
+        /// <summary>
+        /// Returns all saved users for one domain.
+        /// </summary>
+        public static List<OAuth2DomainUser> GetUsers(string domain)
+        {
+            LoadGroup();
+
+            List<OAuth2DomainUser> users = (List<OAuth2DomainUser>)oAuth2Group.GetUsers(domain);
+
+            return users;
+        }
+
+        /// <summary>
+        /// Returns all saved users.
+        /// </summary>
+        public static List<OAuth2DomainUser>  GetUsers()
+        {
+            LoadGroup();
+
+            List<OAuth2DomainUser> users = (List<OAuth2DomainUser>)oAuth2Group.GetUsers();
+
+            return users;
         }
 
         /// <summary>
@@ -271,7 +332,7 @@ namespace gShell.dotNet.Utilities
         {
             LoadGroup();
 
-            return (oAuth2Group.GetDomainDefaultUser(domain));
+            return (oAuth2Group.GetDefaultUser(domain));
         }
 
         /// <summary>
@@ -291,7 +352,14 @@ namespace gShell.dotNet.Utilities
 
         public static void SetDefaultDomain(string domain)
         {
-            oAuth2Group.defaultDomain = domain;
+            oAuth2Group.SetDefaultDomain(domain);
+
+            SaveGroup();
+        }
+
+        public static void SetDefaultUser(string userEmail)
+        {
+            oAuth2Group.SetDefaultUser(userEmail);
 
             SaveGroup();
         }

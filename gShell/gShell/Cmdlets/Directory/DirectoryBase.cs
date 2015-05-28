@@ -44,6 +44,7 @@ namespace gShell.Cmdlets.Directory
         protected override void BeginProcessing()
         {
             if (null == gdirectory) { gdirectory = new gDirectory(); }
+            CheckForScopes(Domain);
             Domain = Authenticate(Domain);
 
             GWriteProgress = new gWriteProgress(WriteProgress);

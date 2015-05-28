@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 using gShell.dotNet;
 //using Google.Apis.Admin.Directory.directory_v1
-using Google.Apis.Admin.Directory.directory_v1.Data;
+//using Google.Apis.Admin.Directory.directory_v1.Data;
+using Google.Apis.Discovery.v1;
+using Google.Apis.Discovery.v1.Data;
+using Google.Apis.Admin.Directory.directory_v1;
+using Google.Apis.Admin.Reports.reports_v1;
 
 namespace gShell_dotNetTest
 {
@@ -14,29 +18,54 @@ namespace gShell_dotNetTest
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Please enter the domain:");
-            string Domain = Console.ReadLine();
+            DiscoveryService service = new DiscoveryService(new gShell.dotNet.CustomSerializer.gInitializer());
 
-            Directory directory = new Directory();
-            
-            try
+            DirectoryService serv2 = new DirectoryService(new gShell.dotNet.CustomSerializer.gInitializer());
+
+            ReportsService serv3 = new ReportsService(new gShell.dotNet.CustomSerializer.gInitializer());
+
+            DirectoryList dlist = service.Apis.List().Execute();
+
+            foreach (DirectoryList.ItemsData data in dlist.Items)
             {
-                directory.Authenticate(Domain);
 
-                List<User> result = directory.users.List(new Directory.Users.UsersListProperties()
+                RestDescription getRests = service.Apis.GetRest(data.Name, data.Version).Execute();
+
+                if (getRests.Auth != null)
                 {
-                    domain = Domain
-                });
+                    Console.WriteLine(data.Name + " " + data.Version);
 
-                Console.WriteLine(result[0].PrimaryEmail);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
+                    foreach (string key in getRests.Auth.Oauth2.Scopes.Keys)
+                    {
+                        Console.WriteLine(key);
+                        Console.WriteLine(getRests.Auth.Oauth2.Scopes[key]);
+                    }
+                }
             }
 
-            Console.WriteLine("\nPress any key to exit");
-            Console.ReadLine();
+            //Console.WriteLine("Please enter the domain:");
+            //string Domain = Console.ReadLine();
+
+            //Directory directory = new Directory();
+            
+            //try
+            //{
+            //    directory.Authenticate(Domain);
+
+            //    List<User> result = directory.users.List(new Directory.Users.UsersListProperties()
+            //    {
+            //        domain = Domain
+            //    });
+
+            //    Console.WriteLine(result[0].PrimaryEmail);
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine(ex.Message);
+            //}
+
+            //Console.WriteLine("\nPress any key to exit");
+            //Console.ReadLine();
         }
     }
 }
