@@ -26,7 +26,14 @@ namespace gShell.dotNet.Utilities
         /// </summary>
         public static string GetDomainFromEmail(string userEmail)
         {
-            return userEmail.Split('@')[1];
+            if (userEmail.Contains("@"))
+            {
+                return userEmail.Split('@')[1];
+            }
+            else
+            {
+                return userEmail;
+            }
         }
 
         /// <summary>
@@ -34,7 +41,14 @@ namespace gShell.dotNet.Utilities
         /// </summary>
         public static string GetUserFromEmail(string userEmail)
         {
-            return userEmail.Split('@')[0];
+            if (!string.IsNullOrWhiteSpace(userEmail) && userEmail.Contains("@"))
+            {
+                return userEmail.Split('@')[0];
+            }
+            else
+            {
+                return userEmail;
+            }
         }
     }
 }

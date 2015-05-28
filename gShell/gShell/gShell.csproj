@@ -118,6 +118,7 @@
     <Reference Include="System.Net.Http.Primitives, Version=2.2.22.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Net.Http.2.2.22\lib\net40\System.Net.Http.Primitives.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Net.Http.WebRequest, Version=2.2.22.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -141,13 +142,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cmdlets\Discovery\DiscoveryBase.cs" />
     <Compile Include="Cmdlets\Reports\GRepActivity\Get-GRepActivity.cs" />
     <Compile Include="Cmdlets\Reports\GRepActivity\WatchGRepActivity.cs" />
     <Compile Include="Cmdlets\Reports\GRepChannel\StopGRepChannel.cs" />
     <Compile Include="Cmdlets\Reports\GRepCustomerUsageReport\GetGRepCustomerUsageReport.cs" />
     <Compile Include="Cmdlets\Reports\GRepUserUsageReport\GetGRepUserUsageReport.cs" />
     <Compile Include="Cmdlets\Reports\ReportsBase.cs" />
+    <Compile Include="Cmdlets\Utilities\GASavedUser\GshellUser.cs" />
+    <Compile Include="Cmdlets\Utilities\GASavedUser\RemoveGshellUser.cs" />
+    <Compile Include="Cmdlets\Utilities\GASavedUser\SetGshellUser.cs" />
     <Compile Include="dotNet\Directory\Directory.cs" />
+    <Compile Include="dotNet\Discovery\Discovery.cs" />
     <Compile Include="dotNet\IServiceWrapper.cs" />
     <Compile Include="dotNet\Utilities\CustomSerializer\CustomSerializer.cs" />
     <Compile Include="Cmdlets\Directory\GAGroupMember\AddGAGroupMember.cs" />
@@ -176,20 +182,20 @@
     <Compile Include="dotNet\Reports\Reports.cs" />
     <Compile Include="dotNet\Utilities\MemoryObjectDataStore.cs" />
     <Compile Include="Cmdlets\Directory\GAUserProperty\RemoveGAUserProperty.cs" />
-    <Compile Include="Cmdlets\Utilities\GASavedDomain\RemoveGASavedDomain.cs" />
-    <Compile Include="Cmdlets\Utilities\GASavedDomain\GetGASavedDomainList.cs" />
-    <Compile Include="Cmdlets\Utilities\GASavedDomain\GetGADefaultDomain.cs" />
-    <Compile Include="Cmdlets\Utilities\GASavedDomain\SetGADefaultDomain.cs" />
+    <Compile Include="Cmdlets\Utilities\GshellSavedDomain\RemoveGshellDomain.cs" />
+    <Compile Include="Cmdlets\Utilities\GshellSavedDomain\GetGASavedDomainList.cs" />
+    <Compile Include="Cmdlets\Utilities\GshellSavedDomain\GshellDomain.cs" />
+    <Compile Include="Cmdlets\Utilities\GshellSavedDomain\SetGshellDomain.cs" />
     <Compile Include="Cmdlets\Directory\DirectoryBase.cs" />
     <Compile Include="Cmdlets\Directory\GAUser\GetGAUser.cs" />
     <Compile Include="Cmdlets\Directory\GAUser\SetGAUser.cs" />
     <Compile Include="Cmdlets\Utilities\OAuth2\OAuth2CmdletBase.cs" />
     <Compile Include="dotNet\Utilities\OAuth2\OAuth2Group.cs" />
-    <Compile Include="dotNet\Utilities\OAuth2\OAuth2Info.cs" />
     <Compile Include="dotNet\Utilities\SavedFile.cs" />
+    <Compile Include="dotNet\Utilities\ScopeManager\ScopeManager.cs" />
     <Compile Include="dotNet\Utilities\Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Cmdlets\Utilities\GAServiceAccount\SetGAServiceAccount.cs" />
+    <Compile Include="Cmdlets\Utilities\GshellServiceAccount\GshellServiceAccount.cs" />
     <Compile Include="Cmdlets\Utilities\UtilityBase.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -9,6 +9,8 @@ using gShell.dotNet;
 //using Google.Apis.Admin.Directory.directory_v1.Data;
 using Google.Apis.Discovery.v1;
 using Google.Apis.Discovery.v1.Data;
+using Google.Apis.Admin.Directory.directory_v1;
+using Google.Apis.Admin.Reports.reports_v1;
 
 namespace gShell_dotNetTest
 {
@@ -17,6 +19,10 @@ namespace gShell_dotNetTest
         static void Main(string[] args)
         {
             DiscoveryService service = new DiscoveryService(new gShell.dotNet.CustomSerializer.gInitializer());
+
+            DirectoryService serv2 = new DirectoryService(new gShell.dotNet.CustomSerializer.gInitializer());
+
+            ReportsService serv3 = new ReportsService(new gShell.dotNet.CustomSerializer.gInitializer());
 
             DirectoryList dlist = service.Apis.List().Execute();
 

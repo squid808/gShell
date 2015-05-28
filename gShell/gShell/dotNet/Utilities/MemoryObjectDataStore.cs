@@ -23,7 +23,7 @@ namespace gShell.dotNet.Utilities
         /// </summary>
         public Task DeleteAsync<T>(string key)
         {
-            SavedFile.DeleteToken(key);
+            SavedFile.RemoveDomain(key);
             return TaskEx.Delay(0);
         }
 
@@ -57,54 +57,54 @@ namespace gShell.dotNet.Utilities
         }
     }
 
-    class GmailObjectDataStore : IDataStore
-    {
-        public static string tokenTemp;
+    //class GmailObjectDataStore : IDataStore
+    //{
+    //    public static string tokenTemp;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public Task StoreAsync<T>(string key, T value)
-        {
-            tokenTemp = NewtonsoftJsonSerializer.Instance.Serialize(value);
-            return TaskEx.Delay(0);
-        }
+    //    /// <summary>
+    //    /// 
+    //    /// </summary>
+    //    public Task StoreAsync<T>(string key, T value)
+    //    {
+    //        tokenTemp = NewtonsoftJsonSerializer.Instance.Serialize(value);
+    //        return TaskEx.Delay(0);
+    //    }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public Task DeleteAsync<T>(string key)
-        {
-            SavedFile.DeleteToken(key);
-            return TaskEx.Delay(0);
-        }
+    //    /// <summary>
+    //    /// 
+    //    /// </summary>
+    //    public Task DeleteAsync<T>(string key)
+    //    {
+    //        SavedFile.DeleteToken(key);
+    //        return TaskEx.Delay(0);
+    //    }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public Task<T> GetAsync<T>(string key)
-        {
-            TaskCompletionSource<T> tcs = new TaskCompletionSource<T>();
+    //    /// <summary>
+    //    /// 
+    //    /// </summary>
+    //    public Task<T> GetAsync<T>(string key)
+    //    {
+    //        TaskCompletionSource<T> tcs = new TaskCompletionSource<T>();
 
-            if (SavedFile.ContainsUserOrDomain(key))
-            {
-                string response = SavedFile.LoadToken(key);
-                tcs.SetResult(NewtonsoftJsonSerializer.Instance.Deserialize<T>(response));
-            }
-            else
-            {
-                tcs.SetResult(default(T));
-            }
-            return tcs.Task;
-        }
+    //        if (SavedFile.ContainsUserOrDomain(key))
+    //        {
+    //            string response = SavedFile.LoadToken(key);
+    //            tcs.SetResult(NewtonsoftJsonSerializer.Instance.Deserialize<T>(response));
+    //        }
+    //        else
+    //        {
+    //            tcs.SetResult(default(T));
+    //        }
+    //        return tcs.Task;
+    //    }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public Task ClearAsync()
-        {
-            SavedFile.ClearAllTokens();
-            return TaskEx.Delay(0);
-        }
-    }
+    //    /// <summary>
+    //    /// 
+    //    /// </summary>
+    //    public Task ClearAsync()
+    //    {
+    //        SavedFile.ClearAllTokens();
+    //        return TaskEx.Delay(0);
+    //    }
+    //}
 }

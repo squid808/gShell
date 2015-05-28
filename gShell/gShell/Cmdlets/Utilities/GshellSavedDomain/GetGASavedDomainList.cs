@@ -18,7 +18,7 @@ namespace gShell.Cmdlets.Utilities.GASavedDomain
             }
         }
 
-        private List<string> RetrieveAllDomains()
+        private ICollection<string> RetrieveAllDomains()
         {
             return SavedFile.GetDomainList();
         }
