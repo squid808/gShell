@@ -354,6 +354,9 @@ namespace gShell.dotNet
                                     (results.Count + 1).ToString(),
                                     (results.Count + request.MaxResults).ToString()));
                     }
+
+                    pagedResult = request.Execute();
+
                     if (pagedResult.MembersValue != null && pagedResult.MembersValue.Count != 0)
                     {
                         results.AddRange(pagedResult.MembersValue);
