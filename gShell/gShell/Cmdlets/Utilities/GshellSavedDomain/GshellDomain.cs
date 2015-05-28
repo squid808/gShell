@@ -216,8 +216,7 @@ namespace gShell.Cmdlets.Utilities.GshellDomain
     public class RemoveGshellUser : UtilityBase
     {
         [Parameter(Position = 0,
-            Mandatory = true,
-            HelpMessage = "")]
+            Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public string UserEmail { get; set; }
 

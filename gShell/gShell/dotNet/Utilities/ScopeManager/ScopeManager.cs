@@ -54,7 +54,7 @@ namespace gShell.dotNet.Utilities.ScopeHandler
             OAuth2Base.SetScopes(CheckForRequiredScope(ScopesDictToHash()));
 
             //Now, authenticate.
-            Google.Apis.Auth.OAuth2.UserCredential userCred = OAuth2Base.ReturnUserCredential(Domain, UserName);
+            Google.Apis.Auth.OAuth2.UserCredential userCred = OAuth2Base.ReturnUserCredential(Domain, UserName, true);
 
             PrintPretty(string.Format("Scopes for user {0} have been authenticated and saved.", OAuth2Base.currentUserInfo.Email), "green");
         }

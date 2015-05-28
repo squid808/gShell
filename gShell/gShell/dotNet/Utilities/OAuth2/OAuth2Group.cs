@@ -300,7 +300,12 @@ namespace gShell.dotNet.Utilities.OAuth2
         {
             string domain = Utils.GetDomainFromEmail(userEmail);
 
-            domains[domain].RemoveUser(userEmail);
+            if (domains[domain].RemoveUser(userEmail) == 0)
+            {
+                domains.Remove(domain);
+            };
+
+            
         }
 
         public HashSet<string> GetScope(Userinfoplus userInfo)
@@ -491,17 +496,27 @@ namespace gShell.dotNet.Utilities.OAuth2
             serviceAccountEmail = emailAddress;
         }
 
-        public void RemoveUser(Userinfoplus userInfo)
+        /// <summary>
+        /// Returns the number of users remaining
+        /// </summary>
+        public int RemoveUser(Userinfoplus userInfo)
         {
-            RemoveUser(userInfo.Email);
+           return RemoveUser(userInfo.Email);
         }
 
-        public void RemoveUser(string userEmail)
+        /// <summary>
+        /// Returns the number of users remaining
+        /// </summary>
+        /// <param name="userEmail"></param>
+        /// <returns></returns>
+        public int RemoveUser(string userEmail)
         {
             if (users.ContainsKey(userEmail))
             {
                 users.Remove(userEmail);
             }
+
+            return users.Count;
         }
         #endregion
     }

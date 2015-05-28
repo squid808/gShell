@@ -259,9 +259,12 @@ namespace gShell.dotNet.Utilities.OAuth2
         /// <summary>
         /// Process the user email and domain to store and return user credentials.
         /// </summary>
-        private static UserCredential HandleUserCredentials(string domain, string userEmail = "")
+        private static UserCredential HandleUserCredentials(string domain, string userEmail = "", bool force= false)
         {
-            if (string.IsNullOrWhiteSpace(userEmail))
+            if (force)
+            {
+                AwaitUserCredential(domain, true).Wait();
+            } else if (string.IsNullOrWhiteSpace(userEmail))
             {
                 AwaitUserCredential(domain).Wait();
             }
@@ -308,8 +311,13 @@ namespace gShell.dotNet.Utilities.OAuth2
         /// <summary>
         /// Wrapper to call and store the authentication procedure.
         /// </summary>
-        public static UserCredential ReturnUserCredential(string domain, string user = "")
+        public static UserCredential ReturnUserCredential(string domain, string user = "", bool force= false)
         {
+            if (force)
+            {
+                return HandleUserCredentials(domain, user, true);
+            }
+
             if ("gmail.com" == domain)
             {
                 if (!string.IsNullOrWhiteSpace(user))
@@ -362,17 +370,23 @@ namespace gShell.dotNet.Utilities.OAuth2
         }
 
         /// <summary>
+        /// Set by the AwaitUserCredential method each time it runs, and available to read by the MemoryObjectDataStore
+        /// </summary>
+        public static bool ForceAuthentication;
+
+        /// <summary>
         /// Authenticates against the web and stores the result in the credential dictionary.
         /// </summary>
-        private static async Task AwaitUserCredential(string key)
+        private static async Task AwaitUserCredential(string key, bool force=false)
         {
-            bool test = (scopes == null);
-
             //only run this if necessary (if currentUserCredentials are not set) - otherwise leave it be;
             if (null == _currentUserCredentials ||
                 !_userCredentialsDict.ContainsKey(key) ||
-                _currentUserCredentials.Token.IsExpired(_clock))
+                _currentUserCredentials.Token.IsExpired(_clock) ||
+                force)
             {
+                ForceAuthentication = force;
+
                 _currentUserCredentials = await GoogleWebAuthorizationBroker.AuthorizeAsync(
                     _clientSecrets,
                     scopes,

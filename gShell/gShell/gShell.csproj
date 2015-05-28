@@ -149,9 +149,6 @@
     <Compile Include="Cmdlets\Reports\GRepCustomerUsageReport\GetGRepCustomerUsageReport.cs" />
     <Compile Include="Cmdlets\Reports\GRepUserUsageReport\GetGRepUserUsageReport.cs" />
     <Compile Include="Cmdlets\Reports\ReportsBase.cs" />
-    <Compile Include="Cmdlets\Utilities\GASavedUser\GshellUser.cs" />
-    <Compile Include="Cmdlets\Utilities\GASavedUser\RemoveGshellUser.cs" />
-    <Compile Include="Cmdlets\Utilities\GASavedUser\SetGshellUser.cs" />
     <Compile Include="dotNet\Directory\Directory.cs" />
     <Compile Include="dotNet\Discovery\Discovery.cs" />
     <Compile Include="dotNet\IServiceWrapper.cs" />
@@ -182,10 +179,7 @@
     <Compile Include="dotNet\Reports\Reports.cs" />
     <Compile Include="dotNet\Utilities\MemoryObjectDataStore.cs" />
     <Compile Include="Cmdlets\Directory\GAUserProperty\RemoveGAUserProperty.cs" />
-    <Compile Include="Cmdlets\Utilities\GshellSavedDomain\RemoveGshellDomain.cs" />
-    <Compile Include="Cmdlets\Utilities\GshellSavedDomain\GetGASavedDomainList.cs" />
     <Compile Include="Cmdlets\Utilities\GshellSavedDomain\GshellDomain.cs" />
-    <Compile Include="Cmdlets\Utilities\GshellSavedDomain\SetGshellDomain.cs" />
     <Compile Include="Cmdlets\Directory\DirectoryBase.cs" />
     <Compile Include="Cmdlets\Directory\GAUser\GetGAUser.cs" />
     <Compile Include="Cmdlets\Directory\GAUser\SetGAUser.cs" />

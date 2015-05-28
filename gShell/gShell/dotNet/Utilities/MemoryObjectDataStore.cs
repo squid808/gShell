@@ -34,7 +34,8 @@ namespace gShell.dotNet.Utilities
         {
             TaskCompletionSource<T> tcs = new TaskCompletionSource<T>();
 
-            if (SavedFile.ContainsUserOrDomain(key))
+            //When OAuth2Base.AwaitUserCredential() is requesting the token, see if there is already one stored.
+            if (SavedFile.ContainsUserOrDomain(key) && !OAuth2.OAuth2Base.ForceAuthentication)
             {
                 string response = SavedFile.LoadToken(key);
                 tokenTemp = response;
