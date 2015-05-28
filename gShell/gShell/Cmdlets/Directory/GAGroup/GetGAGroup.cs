@@ -29,10 +29,20 @@ namespace gShell.Cmdlets.Directory.GAGroup
             HelpMessage = "Indicates if you would like to retrieve the information for all groups in the domain.")]
         public SwitchParameter All { get; set; }
 
-        [Parameter(Position = 3,
+        [Parameter(
             Mandatory = false,
             ParameterSetName = "AllGroups")]
+        [Parameter(
+            Mandatory = false,
+            ParameterSetName = "OneUser")]
         public int MaxResults { get; set; }
+
+        [Parameter(Position = 3,
+            ParameterSetName = "OneUser",
+            Mandatory = true,
+            ValueFromPipeline = true)]
+        [ValidateNotNullOrEmpty]
+        public string UserName { get; set; }
 
         #endregion
 
@@ -40,10 +50,20 @@ namespace gShell.Cmdlets.Directory.GAGroup
         {
             switch (ParameterSetName)
             {
+                case "OneUser":
+                    if (ShouldProcess(GroupName, "Get-GAGroup"))
+                    {
+                        WriteObject(groups.List(new dotNet.Directory.Groups.GroupsListProperties(){
+                            totalResults = MaxResults,
+                            domain = Domain,
+                            userKey = UserName
+                        }));
+                    }
+                    break;
                 case "OneGroup":
                     if (ShouldProcess(GroupName, "Get-GAGroup"))
                     {
-                        WriteObject(groups.Get(GetFullEmailAddress(GroupName, Domain)));
+                        WriteObject(groups.Get(GroupName, Domain));
                     }
                     break;
 

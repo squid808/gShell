@@ -65,15 +65,11 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
 
         private void RemoveUserAlias()
         {
-            string fullAliasEmail = GetFullEmailAddress(UserAliasName, Domain);
-
             if (string.IsNullOrWhiteSpace(UserName)) {
-                UserName = users.Get(fullAliasEmail).PrimaryEmail;
+                UserName = users.Get(UserAliasName, Domain).PrimaryEmail;
             }
 
-            string fullEmail = GetFullEmailAddress(UserName, Domain);
-
-            users.aliases.Delete(fullEmail, fullAliasEmail);
+            users.aliases.Delete(UserName, Domain, UserAliasName);
         }
     }
 }

@@ -36,24 +36,14 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
         public SwitchParameter All { get; set; }
 
         [Parameter(Position = 4,
-            ParameterSetName = "AllGroups",
-            HelpMessage = "Retrieves the information from local memory if it already exists, this may not get up-to-date information from the web.")]
-        public SwitchParameter Cache { get; set; }
-
-        [Parameter(Position = 5,
-            ParameterSetName = "AllGroups",
-            HelpMessage = "Force the cmdlet to refresh any cached information. This will ensure you get up-to-date information from the web.")]
-        public SwitchParameter ForceCacheReload { get; set; }
-
-        [Parameter(Position = 6,
             HelpMessage = "Include members in the results.")]
         public new SwitchParameter Members { get; set; }
 
-        [Parameter(Position = 7,
+        [Parameter(Position = 5,
             HelpMessage = "Include managers in the results.")]
         public SwitchParameter Managers { get; set; }
 
-        [Parameter(Position = 8,
+        [Parameter(Position = 6,
             HelpMessage = "Include owners in the results.")]
         public SwitchParameter Owners { get; set; }
 
@@ -65,10 +55,7 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
             {
                 if (ShouldProcess(GroupName, "Get-GAGroupMember"))
                 {
-                    WriteObject(members.Get(
-                        GetFullEmailAddress(GroupName, Domain),
-                        GetFullEmailAddress(UserName, Domain)
-                        ));
+                    WriteObject(members.Get(GroupName, Domain, UserName));
                 }
             }
             else
@@ -78,8 +65,7 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
                     case "OneGroup":
                         if (ShouldProcess(GroupName, "Get-GAGroupMember"))
                         {
-                            WriteObject(members.List(
-                                GetFullEmailAddress(GroupName, Domain)));
+                            WriteObject(members.List(GroupName, Domain));
                         }
                         break;
 
@@ -149,7 +135,7 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
 
             foreach (Data.Group group in allGroups)
             {
-                List<Data.Member> membersList = members.List(GetFullEmailAddress(GroupName, Domain));
+                List<Data.Member> membersList = members.List(GroupName, Domain);
 
                 multiList.Add(group.Email, membersList);
 

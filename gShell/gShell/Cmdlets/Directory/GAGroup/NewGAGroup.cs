@@ -45,11 +45,9 @@ namespace gShell.Cmdlets.Directory.GAGroup
 
         private void CreateGroup()
         {
-            string fullEmail = GetFullEmailAddress(GroupName, Domain);
-
             Data.Group groupAcct = new Data.Group();
 
-            groupAcct.Email = fullEmail;
+            groupAcct.Email = GetFullEmailAddress(GroupName, Domain);
 
             if (!string.IsNullOrWhiteSpace(FormattedName)) {
                 groupAcct.Name = FormattedName;

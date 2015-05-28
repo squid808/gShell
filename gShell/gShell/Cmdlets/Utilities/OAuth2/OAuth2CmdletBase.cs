@@ -70,8 +70,16 @@ namespace gShell.dotNet.Utilities.OAuth2
         /// </summary>
         private static Assembly ResolveSystemPrimitives(object sender, ResolveEventArgs args)
         {
-            Assembly accurate = Assembly.LoadFrom(System.IO.Path.Combine(AssemblyDirectory, "System.Net.Http.Primitives.dll"));
-            return accurate;
+            if (args.Name.ToLower().StartsWith("system.net.http.primitives"))
+            {
+                string path = System.IO.Path.Combine(AssemblyDirectory, "System.Net.Http.Primitives.dll");
+
+                return Assembly.LoadFrom(path);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>

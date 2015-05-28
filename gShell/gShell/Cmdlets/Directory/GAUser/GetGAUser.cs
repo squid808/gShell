@@ -44,7 +44,7 @@ namespace gShell.Cmdlets.Directory.GAUser
 
                     if (ShouldProcess(UserName, "Get-GAUser"))
                     {
-                        WriteObject(new GShellUserObject(users.Get(GetFullEmailAddress(UserName, Domain))));
+                        WriteObject(new GShellUserObject(users.Get(UserName, Domain)));
                     }
                     break;
 

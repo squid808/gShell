@@ -404,13 +404,13 @@ namespace gShell.Cmdlets.Directory.GAUserProperty
         public List<Data.UserPhone> phones { get { return _phones; } }
         public List<Data.UserRelation> relations { get { return _relations; } }
 
-        private List<Data.UserAddress> _addresses;
-        private List<Data.UserEmail> _emails;
-        private List<Data.UserExternalId> _externalIds;
-        private List<Data.UserIm> _ims;
-        private List<Data.UserOrganization> _organizations;
-        private List<Data.UserPhone> _phones;
-        private List<Data.UserRelation> _relations;
+        private List<Data.UserAddress> _addresses = new List<Data.UserAddress>();
+        private List<Data.UserEmail> _emails = new List<Data.UserEmail>();
+        private List<Data.UserExternalId> _externalIds = new List<Data.UserExternalId>();
+        private List<Data.UserIm> _ims = new List<Data.UserIm>();
+        private List<Data.UserOrganization> _organizations = new List<Data.UserOrganization>();
+        private List<Data.UserPhone> _phones = new List<Data.UserPhone>();
+        private List<Data.UserRelation> _relations = new List<Data.UserRelation>();
         #endregion
 
         #region IsUpdated
@@ -476,27 +476,10 @@ namespace gShell.Cmdlets.Directory.GAUserProperty
         #endregion
 
         #region Constructors
-        public GAUserPropertyCollection()
-        {
-            _addresses = new List<Data.UserAddress>();
-            _emails = new List<Data.UserEmail>();
-            _externalIds = new List<Data.UserExternalId>();
-            _ims = new List<Data.UserIm>();
-            _organizations = new List<Data.UserOrganization>();
-            _phones = new List<Data.UserPhone>();
-            _relations = new List<Data.UserRelation>();
-        }
+        public GAUserPropertyCollection() { }
 
         public GAUserPropertyCollection(Data.User u)
         {
-            _addresses = new List<Data.UserAddress>();
-            _emails = new List<Data.UserEmail>();
-            _externalIds = new List<Data.UserExternalId>();
-            _ims = new List<Data.UserIm>();
-            _organizations = new List<Data.UserOrganization>();
-            _phones = new List<Data.UserPhone>();
-            _relations = new List<Data.UserRelation>();
-
             AddRange(GAUserPropertyBase.GetAddressFromUser(u));
             AddRange(GAUserPropertyBase.GetEmailFromUser(u));
             AddRange(GAUserPropertyBase.GetExIdFromUser(u));

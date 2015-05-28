@@ -72,7 +72,7 @@ namespace gShell.Cmdlets.Directory.GAUser
             switch (ParameterSetName)
             {
                 case "UserName":
-                    fullEmail = GetFullEmailAddress(UserName, Domain);
+                    fullEmail = UserName;
                     break;
 
                 case "GAUserObject":
@@ -80,7 +80,7 @@ namespace gShell.Cmdlets.Directory.GAUser
                     break;
             }
 
-            users.Delete(fullEmail);
+            users.Delete(fullEmail, Domain);
         }
     }
 }

@@ -80,15 +80,13 @@ namespace gShell.Cmdlets.Directory.GAUser
 
         private void UpdateUser()
         {
-            string fullEmail = GetFullEmailAddress(UserName, Domain);
-
             //User userAcct = directoryServiceDict[Domain].Users.Get(fullEmail).Execute();
             Data.User userAcct = new Data.User();
 
             if (null == userAcct)
             {
                 WriteError(new ErrorRecord(new Exception(
-                    string.Format("No user {0} was found to update.", fullEmail)),
+                    string.Format("No user {0} was found to update.", UserName)),
                         "", ErrorCategory.InvalidData, UserName));
             }
 
@@ -103,7 +101,7 @@ namespace gShell.Cmdlets.Directory.GAUser
                 null == PropertyCollection)
             {
                 WriteError(new ErrorRecord(new Exception(
-                    string.Format("No data was entered to update {0}.", fullEmail)),
+                    string.Format("No data was entered to update {0}.", UserName)),
                         "", ErrorCategory.InvalidData, UserName));
             }
 
@@ -198,7 +196,7 @@ namespace gShell.Cmdlets.Directory.GAUser
                     userAcct.Relations = PropertyCollection.GetRelations();
                 }
             }
-            users.Patch(userAcct, fullEmail);
+            users.Patch(userAcct, UserName, Domain);
         }
     }
 }

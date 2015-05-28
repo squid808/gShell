@@ -70,7 +70,7 @@ namespace gShell.Cmdlets.Directory
             public Data.ChromeOsDevice Get(string customerId, string deviceId,
                 directory_v1.ChromeosdevicesResource.GetRequest.ProjectionEnum? projection = null)
             {
-                return gdirectory.chromeosDevices.Get(customerId, deviceId, projection); 
+                return gdirectory.chromeosDevices.Get(Utils.CheckCustomerID(customerId), deviceId, projection); 
             }
 
             public List<Data.ChromeOsDevice> List(string customerId, gDirectory.ChromeosDevices.ChromeosDevicesListProperties properties = null)
@@ -79,19 +79,19 @@ namespace gShell.Cmdlets.Directory
                 properties.startProgressBar = StartProgressBar;
                 properties.updateProgressBar = UpdateProgressBar;
 
-                return gdirectory.chromeosDevices.List(customerId, properties);
+                return gdirectory.chromeosDevices.List(Utils.CheckCustomerID(customerId), properties);
             }
 
             public Data.ChromeOsDevice Patch(Data.ChromeOsDevice body, string customerId, string deviceId,
                 directory_v1.ChromeosdevicesResource.PatchRequest.ProjectionEnum? projection = null)
             {
-                return gdirectory.chromeosDevices.Patch(body, customerId, deviceId, projection);
+                return gdirectory.chromeosDevices.Patch(body, Utils.CheckCustomerID(customerId), deviceId, projection);
             }
 
             public Data.ChromeOsDevice Update(Data.ChromeOsDevice body, string customerId, string deviceId,
                 directory_v1.ChromeosdevicesResource.UpdateRequest.ProjectionEnum? projection = null)
             {
-                return gdirectory.chromeosDevices.Update(body, customerId, deviceId, projection);
+                return gdirectory.chromeosDevices.Update(body, Utils.CheckCustomerID(customerId), deviceId, projection);
             }
         }
         #endregion
@@ -101,14 +101,14 @@ namespace gShell.Cmdlets.Directory
         {
             public Aliases aliases = new Aliases();
 
-            public string Delete(string groupKey)
+            public string Delete(string groupKey, string domain)
             {
-                return gdirectory.groups.Delete(groupKey);
+                return gdirectory.groups.Delete(Utils.GetFullEmailAddress(groupKey, domain));
             }
 
-            public Data.Group Get(string groupKey)
+            public Data.Group Get(string groupKey, string domain)
             {
-                return gdirectory.groups.Get(groupKey);
+                return gdirectory.groups.Get(Utils.GetFullEmailAddress(groupKey, domain));
             }
 
             public Data.Group Insert(Data.Group body)
@@ -119,38 +119,42 @@ namespace gShell.Cmdlets.Directory
             public List<Data.Group> List(gDirectory.Groups.GroupsListProperties properties = null)
             {
                 properties = (properties != null) ? properties : new gDirectory.Groups.GroupsListProperties();
+                if (properties.userKey != null)
+                {
+                    properties.userKey = Utils.GetFullEmailAddress(properties.userKey, properties.domain);
+                }
                 properties.startProgressBar = StartProgressBar;
                 properties.updateProgressBar = UpdateProgressBar;
 
                 return gdirectory.groups.List(properties);
             }
 
-            public Data.Group Patch(Data.Group body, string groupKey)
+            public Data.Group Patch(Data.Group body, string groupKey, string domain)
             {
-                return gdirectory.groups.Patch(body, groupKey);
+                return gdirectory.groups.Patch(body, (Utils.GetFullEmailAddress(groupKey, domain)));
             }
 
-            public Data.Group Update(Data.Group body, string groupKey)
+            public Data.Group Update(Data.Group body, string groupKey, string domain)
             {
-                return gdirectory.groups.Update(body, groupKey);
+                return gdirectory.groups.Update(body, (Utils.GetFullEmailAddress(groupKey, domain)));
             }
 
             #region Groups.aliases
             public class Aliases
             {
-                public string Delete(string groupKey, string alias)
+                public string Delete(string groupKey, string domain, string alias)
                 {
-                    return gdirectory.groups.aliases.Delete(groupKey, alias);
+                    return gdirectory.groups.aliases.Delete(Utils.GetFullEmailAddress(groupKey, domain), alias);
                 }
 
-                public Data.Alias Insert(Data.Alias body, string groupKey)
+                public Data.Alias Insert(Data.Alias body, string groupKey, string domain)
                 {
-                    return gdirectory.groups.aliases.Insert(body, groupKey);
+                    return gdirectory.groups.aliases.Insert(body, (Utils.GetFullEmailAddress(groupKey, domain)));
                 }
 
-                public List<Data.Alias> List(string groupKey)
+                public List<Data.Alias> List(string groupKey, string domain)
                 {
-                    return gdirectory.groups.aliases.List(groupKey);
+                    return gdirectory.groups.aliases.List(Utils.GetFullEmailAddress(groupKey, domain));
                 }
             }
             #endregion
@@ -161,38 +165,38 @@ namespace gShell.Cmdlets.Directory
         #region Members
         public class Members
         {
-            public string Delete(string groupKey, string memberKey)
+            public string Delete(string groupKey, string domain, string memberKey)
             {
-                return gdirectory.members.Delete(groupKey, memberKey);
+                return gdirectory.members.Delete(Utils.GetFullEmailAddress(groupKey, domain), Utils.GetFullEmailAddress(memberKey, domain));
             }
 
-            public Data.Member Get(string groupKey, string memberKey)
+            public Data.Member Get(string groupKey, string domain, string memberKey)
             {
-                return gdirectory.members.Get(groupKey, memberKey);
+                return gdirectory.members.Get(Utils.GetFullEmailAddress(groupKey, domain), Utils.GetFullEmailAddress(memberKey, domain));
             }
 
-            public Data.Member Insert(Data.Member body, string groupKey)
+            public Data.Member Insert(Data.Member body, string groupKey, string domain)
             {
-                return gdirectory.members.Insert(body, groupKey);
+                return gdirectory.members.Insert(body, (Utils.GetFullEmailAddress(groupKey, domain)));
             }
 
-            public List<Data.Member> List(string groupKey, gDirectory.Members.MembersListProperties properties = null)
+            public List<Data.Member> List(string groupKey, string domain, gDirectory.Members.MembersListProperties properties = null)
             {
                 properties = (properties != null) ? properties : new gDirectory.Members.MembersListProperties();
                 properties.startProgressBar = StartProgressBar;
                 properties.updateProgressBar = UpdateProgressBar;
 
-                return gdirectory.members.List(groupKey, properties);
+                return gdirectory.members.List(Utils.GetFullEmailAddress(groupKey, domain), properties);
             }
 
-            public Data.Member Patch(Data.Member body, string groupKey, string memberKey)
+            public Data.Member Patch(Data.Member body, string groupKey, string domain, string memberKey)
             {
-                return gdirectory.members.Patch(body, groupKey, memberKey);
+                return gdirectory.members.Patch(body, Utils.GetFullEmailAddress(groupKey, domain), Utils.GetFullEmailAddress(memberKey, domain));
             }
 
-            public Data.Member Update(Data.Member body, string groupKey, string memberKey)
+            public Data.Member Update(Data.Member body, string groupKey, string domain, string memberKey)
             {
-                return gdirectory.members.Update(body, groupKey, memberKey);
+                return gdirectory.members.Update(body, Utils.GetFullEmailAddress(groupKey, domain), Utils.GetFullEmailAddress(memberKey, domain));
             }
         }
         #endregion
@@ -200,20 +204,22 @@ namespace gShell.Cmdlets.Directory
         #region MobileDevices
         public class MobileDevices
         {
-            public string Action(Data.MobileDeviceAction body, string customerId, string resourceId)
+            public string Action(gDirectory.MobileDevices.MobileDeviceAction action, string customerId, string resourceId)
             {
-                return gdirectory.mobileDevices.Action(body, customerId, resourceId);
+                Data.MobileDeviceAction body = new Data.MobileDeviceAction();
+                body.Action = action.ToString();
+                return gdirectory.mobileDevices.Action(body, Utils.CheckCustomerID(customerId), resourceId);
             }
 
             public string Delete(string customerId, string resourceId)
             {
-                return gdirectory.mobileDevices.Delete(customerId, resourceId);
+                return gdirectory.mobileDevices.Delete(Utils.CheckCustomerID(customerId), resourceId);
             }
 
             public Data.MobileDevice Get(string customerId, string resourceId,
                 directory_v1.MobiledevicesResource.GetRequest.ProjectionEnum? projection = null)
             {
-                return gdirectory.mobileDevices.Get(customerId, resourceId, projection);
+                return gdirectory.mobileDevices.Get(Utils.CheckCustomerID(customerId), resourceId, projection);
             }
 
             public List<Data.MobileDevice> List(string customerId, gDirectory.MobileDevices.MobileDevicesPropertiesList properties = null)
@@ -222,7 +228,7 @@ namespace gShell.Cmdlets.Directory
                 properties.startProgressBar = StartProgressBar;
                 properties.updateProgressBar = UpdateProgressBar;
 
-                return gdirectory.mobileDevices.List(customerId, properties);
+                return gdirectory.mobileDevices.List(Utils.CheckCustomerID(customerId), properties);
             }
         }
         #endregion
@@ -232,32 +238,32 @@ namespace gShell.Cmdlets.Directory
         {
             public string Delete(string customerId, Google.Apis.Util.Repeatable<string> orgUnitPath)
             {
-                return gdirectory.orgunits.Delete(customerId, orgUnitPath);
+                return gdirectory.orgunits.Delete(Utils.CheckCustomerID(customerId), orgUnitPath);
             }
 
             public Data.OrgUnit Get(string customerId, Google.Apis.Util.Repeatable<string> orgUnitPath)
             {
-                return gdirectory.orgunits.Get(customerId, orgUnitPath);
+                return gdirectory.orgunits.Get(Utils.CheckCustomerID(customerId), orgUnitPath);
             }
 
             public Data.OrgUnit Insert(Data.OrgUnit body, string customerId)
             {
-                return gdirectory.orgunits.Insert(body, customerId);
+                return gdirectory.orgunits.Insert(body, Utils.CheckCustomerID(customerId));
             }
 
             public List<Data.OrgUnit> List(string customerId, gDirectory.Orgunits.OrgunitsListProperties properties = null)
             {
-                return gdirectory.orgunits.List(customerId, properties);
+                return gdirectory.orgunits.List(Utils.CheckCustomerID(customerId), properties);
             }
 
             public Data.OrgUnit Patch(Data.OrgUnit body, string customerId, Google.Apis.Util.Repeatable<string> orgUnitPath)
             {
-                return gdirectory.orgunits.Patch(body, customerId, orgUnitPath);
+                return gdirectory.orgunits.Patch(body, Utils.CheckCustomerID(customerId), orgUnitPath);
             }
 
             public Data.OrgUnit Update(Data.OrgUnit body, string customerId, Google.Apis.Util.Repeatable<string> orgUnitPath)
             {
-                return gdirectory.orgunits.Update(body, customerId, orgUnitPath);
+                return gdirectory.orgunits.Update(body, Utils.CheckCustomerID(customerId), orgUnitPath);
             }
         }
         #endregion
@@ -268,16 +274,16 @@ namespace gShell.Cmdlets.Directory
             public Aliases aliases = new Aliases();
             public Photos photos = new Photos();
 
-            public string Delete(string userKey)
+            public string Delete(string userKey, string domain)
             {
-                return gdirectory.users.Delete(userKey);
+                return gdirectory.users.Delete(Utils.GetFullEmailAddress(userKey, domain));
             }
 
-            public Data.User Get(string userKey,
+            public Data.User Get(string userKey, string domain,
                 directory_v1.UsersResource.GetRequest.ProjectionEnum? projection = null,
                 directory_v1.UsersResource.GetRequest.ViewTypeEnum? viewType = null)
             {
-                return gdirectory.users.Get(userKey, projection, viewType);
+                return gdirectory.users.Get(Utils.GetFullEmailAddress(userKey, domain), projection, viewType);
             }
 
             public Data.User Insert(Data.User body)
@@ -298,14 +304,14 @@ namespace gShell.Cmdlets.Directory
                 return gdirectory.users.List(properties);
             }
 
-            public string MakeAdmin(Data.UserMakeAdmin body, string userKey)
+            public string MakeAdmin(Data.UserMakeAdmin body, string userKey, string domain)
             {
-                return gdirectory.users.MakeAdmin(body, userKey);
+                return gdirectory.users.MakeAdmin(body, (Utils.GetFullEmailAddress(userKey, domain)));
             }
 
-            public Data.User Patch(Data.User body, string userKey)
+            public Data.User Patch(Data.User body, string userKey, string domain)
             {
-                return gdirectory.users.Patch(body, userKey);
+                return gdirectory.users.Patch(body, (Utils.GetFullEmailAddress(userKey, domain)));
             }
 
             public string Undelete(Data.UserUndelete body, string userKey)
@@ -313,9 +319,9 @@ namespace gShell.Cmdlets.Directory
                 return gdirectory.users.Undelete(body, userKey);
             }
 
-            public Data.User Update(Data.User body, string userKey)
+            public Data.User Update(Data.User body, string userKey, string domain)
             {
-                return gdirectory.users.Update(body, userKey);
+                return gdirectory.users.Update(body, (Utils.GetFullEmailAddress(userKey, domain)));
             }
 
             public Data.Channel Watch(Data.Channel body)
@@ -326,24 +332,24 @@ namespace gShell.Cmdlets.Directory
             #region Users.aliases
             public class Aliases
             {
-                public string Delete(string userKey, string alias)
+                public string Delete(string userKey, string domain, string alias)
                 {
-                    return gdirectory.users.aliases.Delete(userKey, alias);
+                    return gdirectory.users.aliases.Delete(Utils.GetFullEmailAddress(userKey, domain), Utils.GetFullEmailAddress(alias, domain));
                 }
 
-                public Data.Alias Insert(Data.Alias body, string userKey)
+                public Data.Alias Insert(Data.Alias body, string userKey, string domain)
                 {
-                    return gdirectory.users.aliases.Insert(body, userKey);
+                    return gdirectory.users.aliases.Insert(body, (Utils.GetFullEmailAddress(userKey, domain)));
                 }
 
-                public List<Data.Alias> List(string userKey)
+                public List<Data.Alias> List(string userKey, string domain)
                 {
-                    return gdirectory.users.aliases.List(userKey);
+                    return gdirectory.users.aliases.List(Utils.GetFullEmailAddress(userKey, domain));
                 }
 
-                public Data.Channel Watch(Data.Channel body, string userKey)
+                public Data.Channel Watch(Data.Channel body, string userKey, string domain)
                 {
-                    return gdirectory.users.aliases.Watch(body, userKey);
+                    return gdirectory.users.aliases.Watch(body, (Utils.GetFullEmailAddress(userKey, domain)));
                 }
             }
             #endregion
@@ -351,24 +357,24 @@ namespace gShell.Cmdlets.Directory
             #region Users.photos
             public class Photos
             {
-                public string Delete(string userKey)
+                public string Delete(string userKey, string domain)
                 {
-                    return gdirectory.users.photos.Delete(userKey);
+                    return gdirectory.users.photos.Delete(Utils.GetFullEmailAddress(userKey, domain));
                 }
 
-                public Data.UserPhoto Get(string userKey)
+                public Data.UserPhoto Get(string userKey, string domain)
                 {
-                    return gdirectory.users.photos.Get(userKey);
+                    return gdirectory.users.photos.Get(Utils.GetFullEmailAddress(userKey, domain));
                 }
 
-                public Data.UserPhoto Patch(Data.UserPhoto body, string userKey)
+                public Data.UserPhoto Patch(Data.UserPhoto body, string userKey, string domain)
                 {
-                    return gdirectory.users.photos.Patch(body, userKey);
+                    return gdirectory.users.photos.Patch(body, (Utils.GetFullEmailAddress(userKey, domain)));
                 }
 
-                public Data.UserPhoto Update(Data.UserPhoto body, string userKey)
+                public Data.UserPhoto Update(Data.UserPhoto body, string userKey, string domain)
                 {
-                    return gdirectory.users.photos.Update(body, userKey);
+                    return gdirectory.users.photos.Update(body, (Utils.GetFullEmailAddress(userKey, domain)));
                 }
             }
             #endregion
@@ -378,19 +384,19 @@ namespace gShell.Cmdlets.Directory
         #region Asps
         public class Asps
         {
-            public string Delete(string userKey, int codeId)
+            public string Delete(string userKey, string domain, int codeId)
             {
-                return gdirectory.asps.Delete(userKey, codeId);
+                return gdirectory.asps.Delete(Utils.GetFullEmailAddress(userKey, domain), codeId);
             }
 
-            public Data.Asp Get(string userKey, int codeId)
+            public Data.Asp Get(string userKey, string domain, int codeId)
             {
-                return gdirectory.asps.Get(userKey, codeId);
+                return gdirectory.asps.Get(Utils.GetFullEmailAddress(userKey, domain), codeId);
             }
 
-            public List<Data.Asp> List(string userKey)
+            public List<Data.Asp> List(string userKey, string domain)
             {
-                return gdirectory.asps.List(userKey);
+                return gdirectory.asps.List(Utils.GetFullEmailAddress(userKey, domain));
             }
         }
         #endregion
@@ -398,19 +404,19 @@ namespace gShell.Cmdlets.Directory
         #region Tokens
         public class Tokens
         {
-            public string Delete(string userKey, string clientId)
+            public string Delete(string userKey, string domain, string clientId)
             {
-                return gdirectory.tokens.Delete(userKey, clientId);
+                return gdirectory.tokens.Delete(Utils.GetFullEmailAddress(userKey, domain), clientId);
             }
 
-            public Data.Token Get(string userKey, string clientId)
+            public Data.Token Get(string userKey, string domain, string clientId)
             {
-                return gdirectory.tokens.Get(userKey, clientId);
+                return gdirectory.tokens.Get(Utils.GetFullEmailAddress(userKey, domain), clientId);
             }
 
-            public List<Data.Token> List(string userKey)
+            public List<Data.Token> List(string userKey, string domain)
             {
-                return gdirectory.tokens.List(userKey);
+                return gdirectory.tokens.List(Utils.GetFullEmailAddress(userKey, domain));
             }
         }
         #endregion
@@ -418,19 +424,19 @@ namespace gShell.Cmdlets.Directory
         #region VerificationCodes
         public class VerificationCodes
         {
-            public string Generate(string userKey)
+            public string Generate(string userKey, string domain)
             {
-                return gdirectory.verificationCodes.Generate(userKey);
+                return gdirectory.verificationCodes.Generate(Utils.GetFullEmailAddress(userKey, domain));
             }
 
-            public string Invalidate(string userKey)
+            public string Invalidate(string userKey, string domain)
             {
-                return gdirectory.verificationCodes.Invalidate(userKey);
+                return gdirectory.verificationCodes.Invalidate(Utils.GetFullEmailAddress(userKey, domain));
             }
 
-            public List<Data.VerificationCode> List(string userKey)
+            public List<Data.VerificationCode> List(string userKey, string domain)
             {
-                return gdirectory.verificationCodes.List(userKey);
+                return gdirectory.verificationCodes.List(Utils.GetFullEmailAddress(userKey, domain));
             }
         }
         #endregion
@@ -454,7 +460,7 @@ namespace gShell.Cmdlets.Directory
                 properties.startProgressBar = StartProgressBar;
                 properties.updateProgressBar = UpdateProgressBar;
 
-                return gdirectory.notifications.List(customer);
+                return gdirectory.notifications.List(customer, properties);
             }
 
             public Data.Notification Patch(Data.Notification body, string customer, string notificationId)
