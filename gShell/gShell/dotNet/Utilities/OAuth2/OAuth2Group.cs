@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.Security.Cryptography.X509Certificates;
 
 using Google.Apis.Oauth2.v2.Data;
+using Google.Apis.Auth.OAuth2;
 
 using gShell.dotNet.Utilities;
 
@@ -16,6 +17,34 @@ namespace gShell.dotNet.Utilities.OAuth2
     [Serializable]
     public class OAuth2Group : ISerializable
     {
+        // Summary:
+        //Client credential details for installed and web applications customized for serialization.
+        [Serializable]
+        public class gClientSecrets
+        {
+            public string ClientId { get; set; }
+
+            public string ClientSecret { get; set; }
+
+            public static implicit operator ClientSecrets(gClientSecrets secrets)
+            {
+                return new ClientSecrets()
+                {
+                    ClientId = secrets.ClientId,
+                    ClientSecret = secrets.ClientSecret
+                };
+            }
+
+            public static implicit operator gClientSecrets(ClientSecrets secrets)
+            {
+                return new gClientSecrets()
+                {
+                    ClientId = secrets.ClientId,
+                    ClientSecret = secrets.ClientSecret
+                };
+            }
+        }
+
         #region Properties
 
         /// <summary>
@@ -33,7 +62,28 @@ namespace gShell.dotNet.Utilities.OAuth2
         /// <summary>
         /// A collection of domains that have at least one authenticated user.
         /// </summary>
-        public Dictionary<string, OAuth2Domain> domains = new Dictionary<string,OAuth2Domain>();        
+        public Dictionary<string, OAuth2Domain> domains = new Dictionary<string,OAuth2Domain>();
+
+        public ClientSecrets clientSecrets
+        {
+            get
+            {
+                if (_clientSecretsLoader != null)
+                {
+                    return _clientSecretsLoader;
+                }
+                else
+                {
+                    return _clientSecretsDefault;
+                }
+            }
+        }
+        private gClientSecrets _clientSecretsLoader;
+        private readonly ClientSecrets _clientSecretsDefault = new ClientSecrets
+        {
+            ClientId = "431325913325.apps.googleusercontent.com",
+            ClientSecret = "VtfqKqUJsY0yNh0hwreAB-S0"
+        };
         #endregion
 
         #region Constructors
@@ -72,7 +122,7 @@ namespace gShell.dotNet.Utilities.OAuth2
             domains = (Dictionary<string, OAuth2Domain>)info.GetValue("domains", 
                 typeof(Dictionary<string, OAuth2Domain>));
             _defaultDomain = (string)info.GetValue("defaultDomain", typeof(string));
-
+            _clientSecretsLoader = (gClientSecrets)info.GetValue("clientSecrets", typeof(gClientSecrets));
             
         }
 
@@ -83,6 +133,7 @@ namespace gShell.dotNet.Utilities.OAuth2
 
             info.AddValue("domains", domains, typeof(Dictionary<string, OAuth2Domain>));
             info.AddValue("defaultDomain", defaultDomain, typeof(string));
+            info.AddValue("clientSecrets", _clientSecretsLoader, typeof(gClientSecrets));
         }
         #endregion
 
@@ -324,6 +375,23 @@ namespace gShell.dotNet.Utilities.OAuth2
 
         #region Service Accounts
         //not yet implemented for the second time...
+        #endregion
+
+        #region ClientSecrets
+        public ClientSecrets GetClientSecrets()
+        {
+            return _clientSecretsLoader;
+        }
+
+        public void SetClientSecrets(ClientSecrets secrets)
+        {
+            _clientSecretsLoader = secrets;
+        }
+
+        public void RemoveClientSecrets()
+        {
+            _clientSecretsLoader = null;
+        }
         #endregion
 
         public void ClearAll()

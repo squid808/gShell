@@ -31,12 +31,12 @@ namespace gShell.dotNet.Utilities.OAuth2
         /// <summary>
         /// The client secrets for this Google Console project.
         /// </summary>
-        public static ClientSecrets clientSecrets { get { return _clientSecrets; } }
-        private static ClientSecrets _clientSecrets = new ClientSecrets
-        {
-            ClientId = "431325913325.apps.googleusercontent.com",
-            ClientSecret = "VtfqKqUJsY0yNh0hwreAB-S0"
-        };
+        //public static ClientSecrets clientSecrets { get { return _clientSecrets; } }
+        //private static ClientSecrets _clientSecrets = new ClientSecrets
+        //{
+        //    ClientId = "431325913325.apps.googleusercontent.com",
+        //    ClientSecret = "VtfqKqUJsY0yNh0hwreAB-S0"
+        //};
 
         /// <summary>
         /// A collection of scopes required for the authentication. All scopes used in the toolset are required here.
@@ -388,7 +388,8 @@ namespace gShell.dotNet.Utilities.OAuth2
                 ForceAuthentication = force;
 
                 _currentUserCredentials = await GoogleWebAuthorizationBroker.AuthorizeAsync(
-                    _clientSecrets,
+                    //_clientSecrets,
+                    SavedFile.oAuth2Group.clientSecrets, //using the Get Method would give us the custom secrets only
                     scopes,
                     key,
                     CancellationToken.None,

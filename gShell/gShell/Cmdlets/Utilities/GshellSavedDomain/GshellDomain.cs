@@ -252,4 +252,89 @@ namespace gShell.Cmdlets.Utilities.GshellDomain
         }
     }
     #endregion
+
+    #region GshellClientSecrets
+    [Cmdlet(VerbsCommon.Get, "GshellClientSecrets",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GshellClientSecrets")]
+    public class GetGshellClientSecretsCommand : UtilityBase
+    {
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess("ClientSecrets", "Get-GshellClientSecrets"))
+            {
+                WriteObject(SavedFile.GetClientSecrets());
+            }
+        }
+    }
+
+    [Cmdlet(VerbsCommon.Set, "GshellClientSecrets",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GshellClientSecrets")]
+    public class SetGshellClientSecretsCommand : UtilityBase
+    {
+        #region Parameters
+
+        [Parameter(Position = 0,
+            Mandatory = true)]
+        [ValidateNotNullOrEmpty]
+        public string ClientId { get; set; }
+
+        [Parameter(Position = 1,
+            Mandatory = true)]
+        [ValidateNotNullOrEmpty]
+        public string ClientSecret { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess("ClientSecrets", "Set-GshellClientSecrets"))
+            {
+                SavedFile.SetClientSecrets(new Google.Apis.Auth.OAuth2.ClientSecrets(){
+                    ClientId = this.ClientId,
+                    ClientSecret = this.ClientSecret
+                });
+            }
+        }
+    }
+
+    [Cmdlet(VerbsCommon.Remove, "GshellClientSecrets",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GshellClientSecrets")]
+    public class RemoveGshellClientSecretsCommand : UtilityBase
+    {
+        #region Properties
+        [Parameter(Position = 0)]
+        public SwitchParameter Force { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess("ClientSecrets", "Remove-GshellDomain"))
+            {
+                if (Force || ShouldContinue((String.Format("Custom Client Secrets information for gShell will be deleted.\nContinue?"
+                    )), "Confirm removal of custom Client Secrets"))
+                {
+                    try
+                    {
+                        WriteDebug(string.Format("Attempting to remove custom Client Secrets from gShell"));
+
+                        SavedFile.RemoveClientSecrets();
+
+                        WriteVerbose(string.Format("Removal of custom Client Secrets completed without error."));
+                    }
+                    catch (Exception e)
+                    {
+                        WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, "Client Secrets"));
+                    }
+                }
+                else
+                {
+                    WriteError(new ErrorRecord(new Exception("Deletion of stored authentication information not confirmed"),
+                        "", ErrorCategory.InvalidData, "Client Secrets"));
+                }
+            }
+        }
+    }
+    #endregion
 }

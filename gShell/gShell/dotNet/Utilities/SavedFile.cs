@@ -6,7 +6,9 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 
+using Google.Apis.Oauth2.v2;
 using Google.Apis.Oauth2.v2.Data;
+using Google.Apis.Auth.OAuth2;
 
 using gShell.dotNet.Utilities.OAuth2;
 
@@ -26,7 +28,25 @@ namespace gShell.dotNet.Utilities
         private static string destFile = IO.Path.Combine(Environment.GetFolderPath(
             Environment.SpecialFolder.LocalApplicationData), @"gShell\gShell_OAuth2.bin");
 
-        public static OAuth2Group oAuth2Group;
+        public static OAuth2Group oAuth2Group {
+            get
+            {
+                if (_oAuth2GroupLoader == null)
+                {
+                    if (FileExists())
+                    {
+                        LoadGroup();
+                    }
+                    else
+                    {
+                        _oAuth2GroupLoader = new OAuth2Group();
+                    }
+                }
+
+                return _oAuth2GroupLoader;
+            }
+        }
+        private static OAuth2Group _oAuth2GroupLoader;
         #endregion
 
         #region Saving
@@ -36,17 +56,17 @@ namespace gShell.dotNet.Utilities
         /// </summary>
         public static void SaveToken(Userinfoplus userInfo, string tokenInfo, HashSet<string> scopes)
         {
-            if (null == oAuth2Group)
-            {
-                if (FileExists())
-                {
-                    LoadGroup();
-                }
-                else
-                {
-                    oAuth2Group = new OAuth2Group();
-                }
-            }
+            //if (null == oAuth2Group)
+            //{
+            //    if (FileExists())
+            //    {
+            //        LoadGroup();
+            //    }
+            //    else
+            //    {
+            //        oAuth2Group = new OAuth2Group();
+            //    }
+            //}
 
             oAuth2Group.SetUser(userInfo, tokenInfo, scopes);
 
@@ -75,7 +95,7 @@ namespace gShell.dotNet.Utilities
 
             memoryStream.Close();
 
-            oAuth2Group = group;
+            _oAuth2GroupLoader = group;
         }
 
         //public static void SetServiceAccountInfo(string accountEmail,
@@ -137,7 +157,7 @@ namespace gShell.dotNet.Utilities
         /// <returns></returns>
         private static OAuth2Group LoadGroup(bool force=false)
         {
-            if (null == oAuth2Group || force)
+            if (null == _oAuth2GroupLoader || force)
             {
                 if (FileExists())
                 {
@@ -164,7 +184,7 @@ namespace gShell.dotNet.Utilities
 
                     memoryStream.Close();
 
-                    oAuth2Group = group;
+                    _oAuth2GroupLoader = group;
 
                     return group;
                 }
@@ -210,7 +230,7 @@ namespace gShell.dotNet.Utilities
         #region Deleting
         public static void RemoveUser(string userEmail)
         {
-            LoadGroup();
+            //LoadGroup();
 
             if (ContainsUserOrDomain(userEmail))
             {
@@ -222,7 +242,7 @@ namespace gShell.dotNet.Utilities
 
         public static void RemoveDomain(string domain)
         {
-            LoadGroup();
+            //LoadGroup();
             
             if (ContainsUserOrDomain(domain))
             {
@@ -234,7 +254,7 @@ namespace gShell.dotNet.Utilities
 
         public static void ClearAllTokens()
         {
-            LoadGroup();
+            //LoadGroup();
 
             oAuth2Group.ClearAll();
         }
@@ -253,7 +273,7 @@ namespace gShell.dotNet.Utilities
         {
             if (!FileExists()) { return false; }
 
-            LoadGroup();
+            //LoadGroup();
 
             return (oAuth2Group.ContainsUser(key) ||
                 oAuth2Group.ContainsDomain(key));
@@ -263,7 +283,7 @@ namespace gShell.dotNet.Utilities
         {
             if (!FileExists()) { return false; }
 
-            LoadGroup();
+            //LoadGroup();
 
             return (oAuth2Group.ContainsDomain(domain));
         }
@@ -272,32 +292,36 @@ namespace gShell.dotNet.Utilities
         {
             if (!FileExists()) { return false; }
 
-            LoadGroup();
+            //LoadGroup();
 
             return (!string.IsNullOrWhiteSpace(oAuth2Group.defaultDomain));
         }
 
         public static string GetDefaultDomain()
         {
-            LoadGroup();
+            //LoadGroup();
 
             return oAuth2Group.GetDefaultDomain();
         }
 
         public static ICollection<string> GetDomainList()
         {
-            LoadGroup();
+            //LoadGroup();
 
             return (oAuth2Group.GetDomains());
         }
 
         public static OAuth2Domain GetDomain(string domain)
         {
+            //LoadGroup();
+
             return oAuth2Group.GetDomain(domain);
         }
 
         public static OAuth2DomainUser GetUser(string userEmail)
         {
+            //LoadGroup();
+
             return oAuth2Group.GetUser(userEmail);
         }
 
@@ -306,7 +330,7 @@ namespace gShell.dotNet.Utilities
         /// </summary>
         public static List<OAuth2DomainUser> GetUsers(string domain)
         {
-            LoadGroup();
+            //LoadGroup();
 
             List<OAuth2DomainUser> users = (List<OAuth2DomainUser>)oAuth2Group.GetUsers(domain);
 
@@ -318,7 +342,7 @@ namespace gShell.dotNet.Utilities
         /// </summary>
         public static List<OAuth2DomainUser>  GetUsers()
         {
-            LoadGroup();
+            //LoadGroup();
 
             List<OAuth2DomainUser> users = (List<OAuth2DomainUser>)oAuth2Group.GetUsers();
 
@@ -330,7 +354,7 @@ namespace gShell.dotNet.Utilities
         /// </summary>
         public static string GetDomainDefaultUser(string domain)
         {
-            LoadGroup();
+            //LoadGroup();
 
             return (oAuth2Group.GetDefaultUser(domain));
         }
@@ -352,6 +376,8 @@ namespace gShell.dotNet.Utilities
 
         public static void SetDefaultDomain(string domain)
         {
+            //LoadGroup();
+
             oAuth2Group.SetDefaultDomain(domain);
 
             SaveGroup();
@@ -359,6 +385,8 @@ namespace gShell.dotNet.Utilities
 
         public static void SetDefaultUser(string userEmail)
         {
+            //LoadGroup();
+
             oAuth2Group.SetDefaultUser(userEmail);
 
             SaveGroup();
@@ -370,6 +398,34 @@ namespace gShell.dotNet.Utilities
             {
                 IO.Directory.CreateDirectory(destFolder);
             }
+        }
+
+        /// <summary>
+        /// Returns the custom client secrets, if any.
+        /// </summary>
+        public static ClientSecrets GetClientSecrets()
+        {
+            //LoadGroup();
+
+            return oAuth2Group.GetClientSecrets();
+        }
+
+        public static void SetClientSecrets(ClientSecrets secrets)
+        {
+            //LoadGroup();
+
+            oAuth2Group.SetClientSecrets(secrets);
+
+            SaveGroup();
+        }
+
+        public static void RemoveClientSecrets()
+        {
+            //LoadGroup();
+
+            oAuth2Group.RemoveClientSecrets();
+
+            SaveGroup();
         }
         #endregion
 
