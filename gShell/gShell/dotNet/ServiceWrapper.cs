@@ -16,7 +16,7 @@ namespace gShell.dotNet
         /// <summary>
         /// A collection of services keyed by the domain name. TODO: have an alternate set for gmail users
         /// </summary>
-        protected static Dictionary<string, T> services = new Dictionary<string,T>();
+        public static Dictionary<string, T> services = new Dictionary<string,T>();
             
         /// <summary>
         /// Indicates if this set of services will work with Gmail (as opposed to Google Apps). 

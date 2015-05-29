@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using gShell.dotNet;
-//using Google.Apis.Admin.Directory.directory_v1
-//using Google.Apis.Admin.Directory.directory_v1.Data;
-using Google.Apis.Discovery.v1;
-using Google.Apis.Discovery.v1.Data;
+using gShell.dotNet.Utilities;
+using gShell.dotNet.Utilities.OAuth2;
+
 using Google.Apis.Admin.Directory.directory_v1;
-using Google.Apis.Admin.Reports.reports_v1;
+using Google.Apis.Admin.Directory.directory_v1.Data;
 
 namespace gShell_dotNetTest
 {
@@ -18,54 +14,48 @@ namespace gShell_dotNetTest
     {
         static void Main(string[] args)
         {
-            DiscoveryService service = new DiscoveryService(new gShell.dotNet.CustomSerializer.gInitializer());
+            //You need to pick the scopes you plan on giving gShell permission to. You can use the string from the website or from the services.
+            HashSet<string> scopes = new HashSet<string>();
+            //Add this one first, it's always required.
+            scopes.Add(Google.Apis.Oauth2.v2.Oauth2Service.Scope.UserinfoEmail);
+            // you could also add "https://www.googleapis.com/auth/userinfo.email" if you don't want to add refrences to that package
 
-            DirectoryService serv2 = new DirectoryService(new gShell.dotNet.CustomSerializer.gInitializer());
+            scopes.Add(DirectoryService.Scope.AdminDirectoryUser);
 
-            ReportsService serv3 = new ReportsService(new gShell.dotNet.CustomSerializer.gInitializer());
+            //Set the scopes to the OAuth2Base
+            OAuth2Base.SetScopes(scopes);
 
-            DirectoryList dlist = service.Apis.List().Execute();
+            //Determind your domain
+            Console.WriteLine("Please enter a user in your domain:");
+            string email = Console.ReadLine();
 
-            foreach (DirectoryList.ItemsData data in dlist.Items)
+            string domain = Utils.GetDomainFromEmail(email);
+            string user = Utils.GetUserFromEmail(email);
+
+            //Create a new Directory object from the gShell.dotNet namespace
+            Directory directory = new Directory();
+            
+            try
             {
+                //Tell your domain to authenticate
+                directory.Authenticate(domain);
 
-                RestDescription getRests = service.Apis.GetRest(data.Name, data.Version).Execute();
+                //We make the method call, using the full email since it asks for a userKey
+                User result = directory.users.Get(email);
 
-                if (getRests.Auth != null)
-                {
-                    Console.WriteLine(data.Name + " " + data.Version);
-
-                    foreach (string key in getRests.Auth.Oauth2.Scopes.Keys)
-                    {
-                        Console.WriteLine(key);
-                        Console.WriteLine(getRests.Auth.Oauth2.Scopes[key]);
-                    }
-                }
+                //Let's look at some of the info we found:
+                Console.WriteLine("Email: " + result.PrimaryEmail);
+                Console.WriteLine("Given Name: " + result.Name.GivenName);
+                Console.WriteLine("Family Name: " + result.Name.FamilyName);
+                Console.WriteLine("Aliases: " + result.Aliases.Count.ToString());
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
 
-            //Console.WriteLine("Please enter the domain:");
-            //string Domain = Console.ReadLine();
-
-            //Directory directory = new Directory();
-            
-            //try
-            //{
-            //    directory.Authenticate(Domain);
-
-            //    List<User> result = directory.users.List(new Directory.Users.UsersListProperties()
-            //    {
-            //        domain = Domain
-            //    });
-
-            //    Console.WriteLine(result[0].PrimaryEmail);
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine(ex.Message);
-            //}
-
-            //Console.WriteLine("\nPress any key to exit");
-            //Console.ReadLine();
+            Console.WriteLine("\nPress any key to exit");
+            Console.ReadLine();
         }
     }
 }

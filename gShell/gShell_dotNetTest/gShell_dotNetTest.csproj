@@ -55,6 +55,10 @@
       <HintPath>..\packages\Google.Apis.Discovery.v1.1.9.0.500\lib\portable-net40+sl50+win+wpa81+wp80\Google.Apis.Discovery.v1.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Google.Apis.Oauth2.v2, Version=1.9.0.91, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Oauth2.v2.1.9.0.910\lib\portable-net40+sl50+win+wpa81+wp80\Google.Apis.Oauth2.v2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Google.Apis.PlatformServices">
       <HintPath>..\packages\Google.Apis.1.9.0\lib\net40\Google.Apis.PlatformServices.dll</HintPath>
     </Reference>
