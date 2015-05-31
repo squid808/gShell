@@ -27,15 +27,7 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
             ParameterSetName = "AllUserAliases")]
         public SwitchParameter All { get; set; }
 
-        [Parameter(Position = 3,
-            ParameterSetName = "AllUserAliases")]
-        public SwitchParameter Cache { get; set; }
-
-        [Parameter(Position = 4,
-            ParameterSetName = "AllUserAliases")]
-        public SwitchParameter ForceCacheReload { get; set; }
-
-        [Parameter(Position = 5,
+        [Parameter(
             ParameterSetName = "AllUserAliases")]
         public SwitchParameter ReturnGoogleAPIObjects { get; set; }
 
@@ -64,9 +56,7 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
 
         private List<Data.Alias> GetOneUserAlias()
         {
-            string fullEmail = GetFullEmailAddress(UserName, Domain);
-
-            List<Data.Alias> aliasList = users.aliases.List(fullEmail);
+            List<Data.Alias> aliasList = users.aliases.List(UserName, Domain);
 
             return (aliasList);
         }
@@ -122,7 +112,7 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
                 UpdateProgressBar(i, usersList.Count, "Gathering aliases",
                     string.Format("-Collecting alias for user {0} of {1}",
                     i, usersList.Count));
-                aliasList.AddRange(users.aliases.List(user.PrimaryEmail));
+                aliasList.AddRange(users.aliases.List(user.PrimaryEmail, Domain));
                 i++;
             }
 

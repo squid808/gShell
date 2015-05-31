@@ -38,6 +38,10 @@
     <Reference Include="Google.Apis.Admin.Directory.directory_v1">
       <HintPath>..\packages\Google.Apis.Admin.Directory.directory_v1.1.9.0.500\lib\portable-net40+sl50+win+wpa81+wp80\Google.Apis.Admin.Directory.directory_v1.dll</HintPath>
     </Reference>
+    <Reference Include="Google.Apis.Admin.Reports.reports_v1, Version=1.9.0.46, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Admin.Reports.reports_v1.1.9.0.460\lib\portable-net40+sl50+win+wpa81+wp80\Google.Apis.Admin.Reports.reports_v1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Google.Apis.Auth">
       <HintPath>..\packages\Google.Apis.Auth.1.9.0\lib\net40\Google.Apis.Auth.dll</HintPath>
     </Reference>
@@ -46,6 +50,14 @@
     </Reference>
     <Reference Include="Google.Apis.Core">
       <HintPath>..\packages\Google.Apis.Core.1.9.0\lib\portable-net40+sl50+win+wpa81+wp80\Google.Apis.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Discovery.v1, Version=1.9.0.50, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Discovery.v1.1.9.0.500\lib\portable-net40+sl50+win+wpa81+wp80\Google.Apis.Discovery.v1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.Oauth2.v2, Version=1.9.0.91, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Oauth2.v2.1.9.0.910\lib\portable-net40+sl50+win+wpa81+wp80\Google.Apis.Oauth2.v2.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Google.Apis.PlatformServices">
       <HintPath>..\packages\Google.Apis.1.9.0\lib\net40\Google.Apis.PlatformServices.dll</HintPath>

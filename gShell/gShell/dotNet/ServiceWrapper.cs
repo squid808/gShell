@@ -6,16 +6,6 @@ using gShell.dotNet.Utilities.OAuth2;
 
 namespace gShell.dotNet
 {
-    ///// <summary>
-    ///// An interface for internal wrapper classes to allow them access to the parent object and its members.
-    ///// </summary>
-    //public interface IWrapperInternal<T> where T : ServiceWrapper<Google.Apis.Services.BaseClientService>
-    //{
-    //    protected T root;
-
-    //    public IWrapperInternal(T Root);
-    //}
-
     /// <summary>
     /// This class is a base for any classes that wish to wrap a google apps service with the gShell authentication logic.
     /// All that needs to be added aside from the virtual members is a wrapper of the services and their methods in subclasses.
@@ -26,7 +16,7 @@ namespace gShell.dotNet
         /// <summary>
         /// A collection of services keyed by the domain name. TODO: have an alternate set for gmail users
         /// </summary>
-        protected static Dictionary<string, T> services = new Dictionary<string,T>();
+        public static Dictionary<string, T> services = new Dictionary<string,T>();
             
         /// <summary>
         /// Indicates if this set of services will work with Gmail (as opposed to Google Apps). 
@@ -134,10 +124,6 @@ namespace gShell.dotNet
             }
         }
 
-        ///// <summary>
-        ///// Create a new instance of the service.
-        ///// </summary>
-        //protected virtual T CreateNewService(string domain);
         #endregion
 
         #region MultiPageResult Helpers

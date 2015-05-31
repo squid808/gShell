@@ -31,40 +31,65 @@ namespace gShell.dotNet.Utilities.OAuth2
         /// <summary>
         /// The client secrets for this Google Console project.
         /// </summary>
-        public static ClientSecrets clientSecrets { get { return _clientSecrets; } }
-        private static ClientSecrets _clientSecrets = new ClientSecrets
+        //public static ClientSecrets clientSecrets { get { return _clientSecrets; } }
+        //private static ClientSecrets _clientSecrets = new ClientSecrets
+        //{
+        //    ClientId = "431325913325.apps.googleusercontent.com",
+        //    ClientSecret = "VtfqKqUJsY0yNh0hwreAB-S0"
+        //};
+
+        /// <summary>
+        /// A collection of scopes required for the authentication. All scopes used in the toolset are required here.
+        /// </summary>
+        public static string[] scopes
         {
-            ClientId = "431325913325.apps.googleusercontent.com",
-            ClientSecret = "VtfqKqUJsY0yNh0hwreAB-S0"
-        };
+            get
+            {
+                if (_scopes != null)
+                {
+                    string[] array = new string[_scopes.Count];
+                    _scopes.CopyTo(array);
+                    return array;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        /// <summary>
+        /// A hashset of scopes. To be loaded and set any time a user is loaded or changed.
+        /// </summary>
+        private static HashSet<string> _scopes;
 
         /// <summary>
         /// A collection of scopes required for the authentication. All scopes in the toolset are required here.
         /// </summary>
-        public static string[] scopes { get { return _scopes; } }
-        private static string[] _scopes = {
-            DirectoryService.Scope.AdminDirectoryUser,
-            DirectoryService.Scope.AdminDirectoryUserAlias,
-            DirectoryService.Scope.AdminDirectoryUserAlias,
-            DirectoryService.Scope.AdminDirectoryOrgunit,
-            DirectoryService.Scope.AdminDirectoryGroup,
-            DirectoryService.Scope.AdminDirectoryGroupMember,
-            DriveService.Scope.Drive,
-            DriveService.Scope.DriveFile,
-            DriveService.Scope.DriveAppdata,
-            DriveService.Scope.DriveScripts,
-            ReportsService.Scope.AdminReportsAuditReadonly,
-            ReportsService.Scope.AdminReportsUsageReadonly,
-            Oauth2Service.Scope.UserinfoEmail
-        };
+        //public static string[] scopes { get { return _scopes; } }
+        //private static string[] _scopes = {
+        //    DirectoryService.Scope.AdminDirectoryUser,
+        //    DirectoryService.Scope.AdminDirectoryUserAlias,
+        //    DirectoryService.Scope.AdminDirectoryUserAlias,
+        //    DirectoryService.Scope.AdminDirectoryOrgunit,
+        //    DirectoryService.Scope.AdminDirectoryGroup,
+        //    DirectoryService.Scope.AdminDirectoryGroupMember,
+        //    DriveService.Scope.Drive,
+        //    DriveService.Scope.DriveFile,
+        //    DriveService.Scope.DriveAppdata,
+        //    DriveService.Scope.DriveScripts,
+        //    ReportsService.Scope.AdminReportsAuditReadonly,
+        //    ReportsService.Scope.AdminReportsUsageReadonly,
+        //    Oauth2Service.Scope.UserinfoEmail
+        //};
 
         /// <summary>
         /// A collection of scopes for the service accounts.
         /// </summary>
-        public static string[] serviceAccountScope { get { return _serviceAccountScope; } }
-        private static string[] _serviceAccountScope = {
-            DriveService.Scope.Drive
-        };
+        //public static string[] serviceAccountScope { get { return _serviceAccountScope; } }
+        //private static string[] _serviceAccountScope = {
+        //    DriveService.Scope.Drive
+        //};
 
         //Information relevent to most all services
 
@@ -95,7 +120,7 @@ namespace gShell.dotNet.Utilities.OAuth2
         /// <summary>
         /// The initializer specifically for service account-based services. Use GetServiceAccountInitializer() to access.
         /// </summary>
-        private static ServiceAccountCredential.Initializer _serviceAcctInitializer;
+        //private static ServiceAccountCredential.Initializer _serviceAcctInitializer;
 
         /// <summary>
         /// a collection of credentials by domain or email address
@@ -179,9 +204,36 @@ namespace gShell.dotNet.Utilities.OAuth2
         {
             domain = DetermineDomain(domain);
 
+            //once you have the domain established, load the saved list of scopes
+            LoadScopes(domain);
+
             _currentDomain = buildServiceMethod(domain);
 
             return _currentDomain;
+        }
+
+
+        /// <summary>
+        /// Attempt to load the scopes from the given domain if none are already in memory.
+        /// </summary>
+        /// <param name="domain"></param>
+        public static void LoadScopes(string domain)
+        {
+            HashSet<string> tempScopes;
+
+            if (scopes == null)
+            {
+                try
+                {
+                    tempScopes = SavedFile.oAuth2Group.GetScope(SavedFile.GetDomainDefaultUser(domain));
+                }
+                catch (Exception ex)
+                {
+                    throw (new System.Exception("Scope could not be loaded for domain " + domain, ex));
+                }
+
+                SetScopes(tempScopes);
+            }
         }
 
         /// <summary>
@@ -207,9 +259,12 @@ namespace gShell.dotNet.Utilities.OAuth2
         /// <summary>
         /// Process the user email and domain to store and return user credentials.
         /// </summary>
-        private static UserCredential HandleUserCredentials(string domain, string userEmail = "")
+        private static UserCredential HandleUserCredentials(string domain, string userEmail = "", bool force= false)
         {
-            if (string.IsNullOrWhiteSpace(userEmail))
+            if (force)
+            {
+                AwaitUserCredential(domain, true).Wait();
+            } else if (string.IsNullOrWhiteSpace(userEmail))
             {
                 AwaitUserCredential(domain).Wait();
             }
@@ -238,7 +293,7 @@ namespace gShell.dotNet.Utilities.OAuth2
 
             _currentDomain = _domain;
 
-            SavedFile.SaveToken(_currentUserInfo, MemoryObjectDataStore.tokenTemp);
+            SavedFile.SaveToken(_currentUserInfo, MemoryObjectDataStore.tokenTemp, _scopes);
 
             if (!SavedFile.ContainsDefaultDomain())
             {
@@ -256,8 +311,13 @@ namespace gShell.dotNet.Utilities.OAuth2
         /// <summary>
         /// Wrapper to call and store the authentication procedure.
         /// </summary>
-        public static UserCredential ReturnUserCredential(string domain, string user = "")
+        public static UserCredential ReturnUserCredential(string domain, string user = "", bool force= false)
         {
+            if (force)
+            {
+                return HandleUserCredentials(domain, user, true);
+            }
+
             if ("gmail.com" == domain)
             {
                 if (!string.IsNullOrWhiteSpace(user))
@@ -310,18 +370,27 @@ namespace gShell.dotNet.Utilities.OAuth2
         }
 
         /// <summary>
+        /// Set by the AwaitUserCredential method each time it runs, and available to read by the MemoryObjectDataStore
+        /// </summary>
+        public static bool ForceAuthentication;
+
+        /// <summary>
         /// Authenticates against the web and stores the result in the credential dictionary.
         /// </summary>
-        private static async Task AwaitUserCredential(string key)
+        private static async Task AwaitUserCredential(string key, bool force=false)
         {
             //only run this if necessary (if currentUserCredentials are not set) - otherwise leave it be;
             if (null == _currentUserCredentials ||
                 !_userCredentialsDict.ContainsKey(key) ||
-                _currentUserCredentials.Token.IsExpired(_clock))
+                _currentUserCredentials.Token.IsExpired(_clock) ||
+                force)
             {
+                ForceAuthentication = force;
+
                 _currentUserCredentials = await GoogleWebAuthorizationBroker.AuthorizeAsync(
-                    _clientSecrets,
-                    _scopes,
+                    //_clientSecrets,
+                    SavedFile.oAuth2Group.clientSecrets, //using the Get Method would give us the custom secrets only
+                    scopes,
                     key,
                     CancellationToken.None,
                     new MemoryObjectDataStore()
@@ -341,6 +410,14 @@ namespace gShell.dotNet.Utilities.OAuth2
             };
 
             return initializer;
+        }
+
+        /// <summary>
+        /// Returns an initializer used to create a non-authenticated service.
+        /// </summary>
+        public static BaseClientService.Initializer GetInitializer()
+        {
+            return (new gInitializer());
         }
 
         public static BaseClientService.Initializer GetInitializer(Google.Apis.Http.IConfigurableHttpClientInitializer credentials)
@@ -372,27 +449,42 @@ namespace gShell.dotNet.Utilities.OAuth2
         }
 
         /// <summary>
-        /// Provides a custom Service Account Initializer for the given username and domain.
+        /// Update the internal scopes. Required to be in place before authenticating.
         /// </summary>
-        public static ServiceAccountCredential.Initializer GetServiceAccountInitializer(string userEmail, string domain)
+        public static void SetScopes(HashSet<string> scopes)
         {
-            if (null == _serviceAcctInitializer)
-            {
-                _serviceAcctInitializer =
-                    new ServiceAccountCredential.Initializer(SavedFile.GetServiceAccountEmail())
-                    {
-                        Scopes = serviceAccountScope,
-                        User = userEmail
-                    }.FromCertificate(SavedFile.GetServiceAccountCert());
-                //X509Certificate2 cert = SavedFile.GetServiceAccountCert();
-            }
-            else
-            {
-                _serviceAcctInitializer.User = Utils.GetFullEmailAddress(userEmail, domain);
-            }
-
-            return _serviceAcctInitializer;
+            _scopes = scopes;
         }
+
+        /// <summary>
+        /// Update the internal scopes. Required to be in place before authenticating.
+        /// </summary>
+        public static void SetScopes(IEnumerable<string> scopes)
+        {
+            _scopes = new HashSet<string>(scopes);
+        }
+        ///// <summary>
+        ///// Provides a custom Service Account Initializer for the given username and domain.
+        ///// </summary>
+        //public static ServiceAccountCredential.Initializer GetServiceAccountInitializer(string userEmail, string domain)
+        //{
+        //    if (null == _serviceAcctInitializer)
+        //    {
+        //        _serviceAcctInitializer =
+        //            new ServiceAccountCredential.Initializer(SavedFile.GetServiceAccountEmail())
+        //            {
+        //                Scopes = serviceAccountScope,
+        //                User = userEmail
+        //            }.FromCertificate(SavedFile.GetServiceAccountCert());
+        //        //X509Certificate2 cert = SavedFile.GetServiceAccountCert();
+        //    }
+        //    else
+        //    {
+        //        _serviceAcctInitializer.User = Utils.GetFullEmailAddress(userEmail, domain);
+        //    }
+
+        //    return _serviceAcctInitializer;
+        //}
         #endregion
     }
 }

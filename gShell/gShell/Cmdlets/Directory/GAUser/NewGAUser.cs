@@ -71,8 +71,6 @@ namespace gShell.Cmdlets.Directory.GAUser
 
         private void CreateUser()
         {
-            string fullEmail = GetFullEmailAddress(UserName, Domain);
-
             Data.User userAcct = new Data.User();
 
             userAcct.Name = new Data.UserName();
@@ -81,7 +79,7 @@ namespace gShell.Cmdlets.Directory.GAUser
 
             userAcct.Name.FamilyName = FamilyName;
 
-            userAcct.PrimaryEmail = fullEmail;
+            userAcct.PrimaryEmail = GetFullEmailAddress(UserName, Domain);
 
             switch (ParameterSetName)
             {

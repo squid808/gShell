@@ -95,7 +95,10 @@ namespace gShell.dotNet
 
                 Data.ChromeOsDevices pagedResult = request.Execute();
 
-                results.AddRange(pagedResult.Chromeosdevices);
+                if (pagedResult.Chromeosdevices != null && pagedResult.Chromeosdevices.Count != 0)
+                {
+                    results.AddRange(pagedResult.Chromeosdevices);
+                }
 
                 while (!string.IsNullOrWhiteSpace(pagedResult.NextPageToken) &&
                     pagedResult.NextPageToken != request.PageToken &&
@@ -111,7 +114,11 @@ namespace gShell.dotNet
                                     (results.Count + request.MaxResults).ToString()));
                     }
                     pagedResult = request.Execute();
-                    results.AddRange(pagedResult.Chromeosdevices);
+
+                    if (pagedResult.Chromeosdevices != null && pagedResult.Chromeosdevices.Count != 0)
+                    {
+                        results.AddRange(pagedResult.Chromeosdevices);
+                    }
                 }
 
                 if (null != properties.updateProgressBar)
@@ -199,7 +206,10 @@ namespace gShell.dotNet
                 
                 Data.Groups pagedResult = request.Execute();
 
-                results.AddRange(pagedResult.GroupsValue);
+                if (pagedResult.GroupsValue != null && pagedResult.GroupsValue.Count != 0)
+                {
+                    results.AddRange(pagedResult.GroupsValue);
+                }
 
                 while (!string.IsNullOrWhiteSpace(pagedResult.NextPageToken) &&
                     pagedResult.NextPageToken != request.PageToken &&
@@ -215,7 +225,11 @@ namespace gShell.dotNet
                                     (results.Count + request.MaxResults).ToString()));
                     }
                     pagedResult = request.Execute();
-                    results.AddRange(pagedResult.GroupsValue);
+
+                    if (pagedResult.GroupsValue != null && pagedResult.GroupsValue.Count != 0)
+                    {
+                        results.AddRange(pagedResult.GroupsValue);
+                    }
                 }
 
                 if (null != properties.updateProgressBar)
@@ -259,7 +273,10 @@ namespace gShell.dotNet
 
                     Data.Aliases pagedResult = request.Execute();
 
-                    results.AddRange(pagedResult.AliasesValue);
+                    if (pagedResult.AliasesValue != null && pagedResult.AliasesValue.Count != 0)
+                    {
+                        results.AddRange(pagedResult.AliasesValue);
+                    }
 
                     return results;
                 }
@@ -319,7 +336,10 @@ namespace gShell.dotNet
 
                 Data.Members pagedResult = request.Execute();
 
-                results.AddRange(pagedResult.MembersValue);
+                if (pagedResult.MembersValue != null && pagedResult.MembersValue.Count != 0)
+                {
+                    results.AddRange(pagedResult.MembersValue);
+                }
 
                 while (!string.IsNullOrWhiteSpace(pagedResult.NextPageToken) &&
                     pagedResult.NextPageToken != request.PageToken &&
@@ -334,7 +354,13 @@ namespace gShell.dotNet
                                     (results.Count + 1).ToString(),
                                     (results.Count + request.MaxResults).ToString()));
                     }
-                    results.AddRange(pagedResult.MembersValue);
+
+                    pagedResult = request.Execute();
+
+                    if (pagedResult.MembersValue != null && pagedResult.MembersValue.Count != 0)
+                    {
+                        results.AddRange(pagedResult.MembersValue);
+                    }
                 }
 
                 if (null != properties.updateProgressBar)
@@ -370,6 +396,11 @@ namespace gShell.dotNet
                 public Action<string, string> startProgressBar = null;
                 public Action<int, int, string, string> updateProgressBar = null;
                 public int totalResults = 0;
+            }
+
+            public enum MobileDeviceAction
+            {
+                admin_remote_wipe, admin_account_wipe, approve, block, cancel_remote_wipe_then_activate, cancel_remote_wipe_then_block
             }
 
             public string Action(Data.MobileDeviceAction body, string customerId, string resourceId)
@@ -416,7 +447,10 @@ namespace gShell.dotNet
 
                 Data.MobileDevices pagedResult = request.Execute();
 
-                results.AddRange(pagedResult.Mobiledevices);
+                if (pagedResult.Mobiledevices != null && pagedResult.Mobiledevices.Count != 0)
+                {
+                    results.AddRange(pagedResult.Mobiledevices);
+                }
 
                 while (!string.IsNullOrWhiteSpace(pagedResult.NextPageToken) &&
                     pagedResult.NextPageToken != request.PageToken &&
@@ -432,7 +466,10 @@ namespace gShell.dotNet
                                     (results.Count + request.MaxResults).ToString()));
                     }
                     pagedResult = request.Execute();
-                    results.AddRange(pagedResult.Mobiledevices);
+                    if (pagedResult.Mobiledevices != null && pagedResult.Mobiledevices.Count != 0)
+                    {
+                        results.AddRange(pagedResult.Mobiledevices);
+                    }
                 }
 
                 if (null != properties.updateProgressBar)
@@ -484,7 +521,10 @@ namespace gShell.dotNet
 
                 Data.OrgUnits pagedResult = request.Execute();
 
-                results.AddRange(pagedResult.OrganizationUnits);
+                if (pagedResult.OrganizationUnits != null && pagedResult.OrganizationUnits.Count != 0)
+                {
+                    results.AddRange(pagedResult.OrganizationUnits);
+                }
 
                 return results;
             }
@@ -580,7 +620,10 @@ namespace gShell.dotNet
 
                 Data.Users pagedResult = request.Execute();
 
-                results.AddRange(pagedResult.UsersValue);
+                if (pagedResult.UsersValue != null && pagedResult.UsersValue.Count != 0)
+                {
+                    results.AddRange(pagedResult.UsersValue);
+                }
 
                 while (!string.IsNullOrWhiteSpace(pagedResult.NextPageToken) &&
                     pagedResult.NextPageToken != request.PageToken &&
@@ -596,7 +639,11 @@ namespace gShell.dotNet
                                     (results.Count + request.MaxResults).ToString()));
                     }
                     pagedResult = request.Execute();
-                    results.AddRange(pagedResult.UsersValue);
+
+                    if (pagedResult.UsersValue != null && pagedResult.UsersValue.Count != 0)
+                    {
+                        results.AddRange(pagedResult.UsersValue);
+                    }
                 }
 
                 if (null != properties.updateProgressBar)
@@ -655,7 +702,10 @@ namespace gShell.dotNet
 
                     Data.Aliases pagedResult = request.Execute();
 
-                    results.AddRange(pagedResult.AliasesValue);
+                    if (pagedResult.AliasesValue != null && pagedResult.AliasesValue.Count != 0)
+                    {
+                        results.AddRange(pagedResult.AliasesValue);
+                    }
 
                     return results;
                 }
@@ -716,7 +766,10 @@ namespace gShell.dotNet
 
                 Data.Asps pagedResult = request.Execute();
 
-                results.AddRange(pagedResult.Items);
+                if (pagedResult.Items != null && pagedResult.Items.Count != 0)
+                {
+                    results.AddRange(pagedResult.Items);
+                }
 
                 return results;
             }
@@ -745,7 +798,10 @@ namespace gShell.dotNet
 
                 Data.Tokens pagedResult = request.Execute();
 
-                results.AddRange(pagedResult.Items);
+                if (pagedResult.Items != null && pagedResult.Items.Count != 0)
+                {
+                    results.AddRange(pagedResult.Items);
+                }
 
                 return results;
             }
@@ -774,7 +830,10 @@ namespace gShell.dotNet
 
                 Data.VerificationCodes pagedResult = request.Execute();
 
-                results.AddRange(pagedResult.Items);
+                if (pagedResult.Items != null && pagedResult.Items.Count != 0)
+                {
+                    results.AddRange(pagedResult.Items);
+                }
 
                 return results;
             }
@@ -826,7 +885,10 @@ namespace gShell.dotNet
 
                 Data.Notifications pagedResult = request.Execute();
 
-                results.AddRange(pagedResult.Items);
+                if (pagedResult.Items != null && pagedResult.Items.Count != 0)
+                {
+                    results.AddRange(pagedResult.Items);
+                }
 
                 while (!string.IsNullOrWhiteSpace(pagedResult.NextPageToken) &&
                     pagedResult.NextPageToken != request.PageToken &&
@@ -842,7 +904,11 @@ namespace gShell.dotNet
                                     (results.Count + request.MaxResults).ToString()));
                     }
                     pagedResult = request.Execute();
-                    results.AddRange(pagedResult.Items);
+
+                    if (pagedResult.Items != null && pagedResult.Items.Count != 0)
+                    {
+                        results.AddRange(pagedResult.Items);
+                    }
                 }
 
                 if (null != properties.updateProgressBar)
@@ -903,7 +969,10 @@ namespace gShell.dotNet
 
                 Data.Schemas pagedResult = request.Execute();
 
-                results.AddRange(pagedResult.SchemasValue);
+                if (pagedResult.SchemasValue != null && pagedResult.SchemasValue.Count != 0)
+                {
+                    results.AddRange(pagedResult.SchemasValue);
+                }
 
                 return results;
             }

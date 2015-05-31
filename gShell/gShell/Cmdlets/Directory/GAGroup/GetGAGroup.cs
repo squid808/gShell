@@ -29,6 +29,14 @@ namespace gShell.Cmdlets.Directory.GAGroup
             HelpMessage = "Indicates if you would like to retrieve the information for all groups in the domain.")]
         public SwitchParameter All { get; set; }
 
+        [Parameter(
+            Mandatory = false,
+            ParameterSetName = "AllGroups")]
+        [Parameter(
+            Mandatory = false,
+            ParameterSetName = "OneUser")]
+        public int MaxResults { get; set; }
+
         [Parameter(Position = 3,
             ParameterSetName = "OneUser",
             Mandatory = true,
@@ -36,21 +44,26 @@ namespace gShell.Cmdlets.Directory.GAGroup
         [ValidateNotNullOrEmpty]
         public string UserName { get; set; }
 
-        [Parameter(
-            Mandatory = false,
-            ParameterSetName = "AllGroups")]
-        public int MaxResults { get; set; }
-
         #endregion
 
         protected override void ProcessRecord()
         {
             switch (ParameterSetName)
             {
+                case "OneUser":
+                    if (ShouldProcess(GroupName, "Get-GAGroup"))
+                    {
+                        WriteObject(groups.List(new dotNet.Directory.Groups.GroupsListProperties(){
+                            totalResults = MaxResults,
+                            domain = Domain,
+                            userKey = UserName
+                        }));
+                    }
+                    break;
                 case "OneGroup":
                     if (ShouldProcess(GroupName, "Get-GAGroup"))
                     {
-                        WriteObject(groups.Get(GetFullEmailAddress(GroupName, Domain)));
+                        WriteObject(groups.Get(GroupName, Domain));
                     }
                     break;
 
@@ -61,15 +74,6 @@ namespace gShell.Cmdlets.Directory.GAGroup
                         {
                             totalResults = MaxResults,
                             domain = Domain
-                        }));
-                    }
-                    break;
-                case "OneUser":
-                    if (ShouldProcess(GroupName, "Get-GAGroup"))
-                    {
-                        WriteObject(groups.List(new dotNet.Directory.Groups.GroupsListProperties(){
-                            userKey = GetFullEmailAddress(UserName, Domain),
-                            totalResults = MaxResults
                         }));
                     }
                     break;
