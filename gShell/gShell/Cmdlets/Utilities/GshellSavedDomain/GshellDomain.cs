@@ -4,14 +4,14 @@ using System.Management.Automation;
 using gShell.dotNet.Utilities;
 using gShell.dotNet.Utilities.OAuth2;
 
-namespace gShell.Cmdlets.Utilities.GshellDomain
+namespace gShell.Cmdlets.Utilities.gShellDomain
 {
-    #region Get-GshellDomain
-    [Cmdlet(VerbsCommon.Get, "GshellDomain",
+    #region Get-gShellDomain
+    [Cmdlet(VerbsCommon.Get, "gShellDomain",
           SupportsShouldProcess = true,
           DefaultParameterSetName="All",
-          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GshellDomain")]
-    public class GetGshellDomainCommand : UtilityBase
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-gShellDomain")]
+    public class GetgShellDomainCommand : UtilityBase
     {
         #region Parameters
 
@@ -30,7 +30,7 @@ namespace gShell.Cmdlets.Utilities.GshellDomain
 
         protected override void ProcessRecord()
         {
-            if (ShouldProcess("Domain", "Get-GshellDomain"))
+            if (ShouldProcess("Domain", "Get-gShellDomain"))
             {
                 switch (ParameterSetName)
                 {
@@ -55,12 +55,12 @@ namespace gShell.Cmdlets.Utilities.GshellDomain
     }
     #endregion
 
-    #region Get-GshellUser
-    [Cmdlet(VerbsCommon.Get, "GshellUser",
+    #region Get-gShellUser
+    [Cmdlet(VerbsCommon.Get, "gShellUser",
           SupportsShouldProcess = true,
           DefaultParameterSetName="All",
-          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GshellUser")]
-    public class GetGshellUserCommand : UtilityBase
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-gShellUser")]
+    public class GetgShellUserCommand : UtilityBase
     {
         #region Parameters
 
@@ -87,7 +87,7 @@ namespace gShell.Cmdlets.Utilities.GshellDomain
 
         protected override void ProcessRecord()
         {
-            if (ShouldProcess("Domain", "Get-GshellDomain"))
+            if (ShouldProcess("Domain", "Get-gShellDomain"))
             {
                 switch (ParameterSetName)
                 {
@@ -118,11 +118,11 @@ namespace gShell.Cmdlets.Utilities.GshellDomain
     }
     #endregion
 
-    #region Set-GshellDomain
-    [Cmdlet(VerbsCommon.Set, "GshellDomain",
+    #region Set-gShellDomain
+    [Cmdlet(VerbsCommon.Set, "gShellDomain",
         SupportsShouldProcess = true,
-          HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GshellDomain")]
-    public class SetGshellDomainCommand : UtilityBase
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Set-gShellDomain")]
+    public class SetgShellDomainCommand : UtilityBase
     {
         #region Parameters
 
@@ -145,7 +145,7 @@ namespace gShell.Cmdlets.Utilities.GshellDomain
         {
             if (!string.IsNullOrWhiteSpace(DefaultUser) || SetAsDefault != null)
             {
-                if (ShouldProcess("Domain", "Set-GshellDomain"))
+                if (ShouldProcess("Domain", "Set-gShellDomain"))
                 {
                     if (SetAsDefault)
                     {
@@ -164,11 +164,11 @@ namespace gShell.Cmdlets.Utilities.GshellDomain
     }
     #endregion
 
-    #region Remove-GshellDomain
-    [Cmdlet(VerbsCommon.Remove, "GshellDomain",
+    #region Remove-gShellDomain
+    [Cmdlet(VerbsCommon.Remove, "gShellDomain",
           SupportsShouldProcess = true,
-          HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GshellDomain")]
-    public class RemoveGshellDomain : UtilityBase
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-gShellDomain")]
+    public class RemovegShellDomain : UtilityBase
     {
         [Parameter(Position = 0,
             Mandatory = true,
@@ -181,7 +181,7 @@ namespace gShell.Cmdlets.Utilities.GshellDomain
 
         protected override void ProcessRecord()
         {
-            if (ShouldProcess(Domain, "Remove-GshellDomain"))
+            if (ShouldProcess(Domain, "Remove-gShellDomain"))
             {
                 if (Force || ShouldContinue((String.Format("Stored authentication information for domain {0} will be deleted.\nContinue?",
                     Domain)), "Confirm removal of stored authentication information"))
@@ -209,11 +209,11 @@ namespace gShell.Cmdlets.Utilities.GshellDomain
     }
     #endregion
 
-    #region Remove-GshellUser
-    [Cmdlet(VerbsCommon.Remove, "GshellUser",
+    #region Remove-gShellUser
+    [Cmdlet(VerbsCommon.Remove, "gShellUser",
           SupportsShouldProcess = true,
-          HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GshellUser")]
-    public class RemoveGshellUser : UtilityBase
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-gShellUser")]
+    public class RemovegShellUser : UtilityBase
     {
         [Parameter(Position = 0,
             Mandatory = true)]
@@ -225,7 +225,7 @@ namespace gShell.Cmdlets.Utilities.GshellDomain
 
         protected override void ProcessRecord()
         {
-            if (ShouldProcess(UserEmail, "Remove-GshellDomain"))
+            if (ShouldProcess(UserEmail, "Remove-gShellDomain"))
             {
                 if (Force || ShouldContinue((String.Format("Stored authentication information for user {0} will be deleted.\nContinue?",
                     UserEmail)), "Confirm removal of stored authentication information"))
@@ -253,25 +253,25 @@ namespace gShell.Cmdlets.Utilities.GshellDomain
     }
     #endregion
 
-    #region GshellClientSecrets
-    [Cmdlet(VerbsCommon.Get, "GshellClientSecrets",
+    #region gShellClientSecrets
+    [Cmdlet(VerbsCommon.Get, "gShellClientSecrets",
           SupportsShouldProcess = true,
-          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GshellClientSecrets")]
-    public class GetGshellClientSecretsCommand : UtilityBase
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-gShellClientSecrets")]
+    public class GetgShellClientSecretsCommand : UtilityBase
     {
         protected override void ProcessRecord()
         {
-            if (ShouldProcess("ClientSecrets", "Get-GshellClientSecrets"))
+            if (ShouldProcess("ClientSecrets", "Get-gShellClientSecrets"))
             {
                 WriteObject(SavedFile.GetClientSecrets());
             }
         }
     }
 
-    [Cmdlet(VerbsCommon.Set, "GshellClientSecrets",
+    [Cmdlet(VerbsCommon.Set, "gShellClientSecrets",
           SupportsShouldProcess = true,
-          HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GshellClientSecrets")]
-    public class SetGshellClientSecretsCommand : UtilityBase
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Set-gShellClientSecrets")]
+    public class SetgShellClientSecretsCommand : UtilityBase
     {
         #region Parameters
 
@@ -288,7 +288,7 @@ namespace gShell.Cmdlets.Utilities.GshellDomain
 
         protected override void ProcessRecord()
         {
-            if (ShouldProcess("ClientSecrets", "Set-GshellClientSecrets"))
+            if (ShouldProcess("ClientSecrets", "Set-gShellClientSecrets"))
             {
                 SavedFile.SetClientSecrets(new Google.Apis.Auth.OAuth2.ClientSecrets(){
                     ClientId = this.ClientId,
@@ -298,10 +298,10 @@ namespace gShell.Cmdlets.Utilities.GshellDomain
         }
     }
 
-    [Cmdlet(VerbsCommon.Remove, "GshellClientSecrets",
+    [Cmdlet(VerbsCommon.Remove, "gShellClientSecrets",
           SupportsShouldProcess = true,
-          HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GshellClientSecrets")]
-    public class RemoveGshellClientSecretsCommand : UtilityBase
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-gShellClientSecrets")]
+    public class RemovegShellClientSecretsCommand : UtilityBase
     {
         #region Properties
         [Parameter(Position = 0)]
@@ -310,7 +310,7 @@ namespace gShell.Cmdlets.Utilities.GshellDomain
 
         protected override void ProcessRecord()
         {
-            if (ShouldProcess("ClientSecrets", "Remove-GshellDomain"))
+            if (ShouldProcess("ClientSecrets", "Remove-gShellDomain"))
             {
                 if (Force || ShouldContinue((String.Format("Custom Client Secrets information for gShell will be deleted.\nContinue?"
                     )), "Confirm removal of custom Client Secrets"))

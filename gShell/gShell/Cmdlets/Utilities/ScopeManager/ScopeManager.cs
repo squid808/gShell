@@ -14,7 +14,7 @@ using gReports = gShell.dotNet.Reports;
 
 using Microsoft.PowerShell.Commands; //for invoking ReadHost
 
-namespace gShell.dotNet.Utilities.ScopeHandler
+namespace gShell.Cmdlets.Utilities.ScopeHandler
 {
     [Cmdlet(VerbsLifecycle.Invoke, "ScopeManager",
           SupportsShouldProcess = true,
@@ -181,7 +181,7 @@ namespace gShell.dotNet.Utilities.ScopeHandler
         /// <param name="preferred"></param>
         public List<ApiInfo> GetAPIList(bool preferred = true)
         {
-            Data.DirectoryList dirList = apis.List(new Discovery.Apis.DiscoveryListProperties() { preferred = preferred });
+            Data.DirectoryList dirList = apis.List(new gShell.dotNet.Discovery.Apis.DiscoveryListProperties() { preferred = preferred });
 
             List<ApiInfo> info = new List<ApiInfo>();
 

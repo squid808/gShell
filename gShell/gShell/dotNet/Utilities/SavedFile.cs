@@ -340,11 +340,11 @@ namespace gShell.dotNet.Utilities
         /// <summary>
         /// Returns all saved users.
         /// </summary>
-        public static List<OAuth2DomainUser>  GetUsers()
+        public static List<String>  GetUsers()
         {
             //LoadGroup();
 
-            List<OAuth2DomainUser> users = (List<OAuth2DomainUser>)oAuth2Group.GetUsers();
+            List<string> users = (List<string>)oAuth2Group.GetUsers();
 
             return users;
         }
