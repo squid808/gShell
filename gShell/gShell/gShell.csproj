@@ -147,7 +147,6 @@
     <Compile Include="Cmdlets\Reports\GRepCustomerUsageReport\GetGRepCustomerUsageReport.cs" />
     <Compile Include="Cmdlets\Reports\GRepUserUsageReport\GetGRepUserUsageReport.cs" />
     <Compile Include="Cmdlets\Reports\ReportsBase.cs" />
-    <Compile Include="Cmdlets\Utilities\GShellLogging\GShellLog.cs" />
     <Compile Include="dotNet\Directory\Directory.cs" />
     <Compile Include="dotNet\Discovery\Discovery.cs" />
     <Compile Include="dotNet\IServiceWrapper.cs" />
@@ -173,8 +172,6 @@
     <Compile Include="Cmdlets\Directory\GAUserProperty\GetGAUserProperty.cs" />
     <Compile Include="Cmdlets\Directory\GAUserProperty\NewGAUserProperty.cs" />
     <Compile Include="Cmdlets\Directory\GAUserProperty\NewGAUserPropertyCollection.cs" />
-    <Compile Include="dotNet\Utilities\Logger\ILogger.cs" />
-    <Compile Include="dotNet\Utilities\Logger\Logger.cs" />
     <Compile Include="dotNet\Utilities\OAuth2\OAuth2Base.cs" />
     <Compile Include="dotNet\ServiceWrapper.cs" />
     <Compile Include="dotNet\Reports\Reports.cs" />
