@@ -95,7 +95,8 @@ namespace gShell.dotNet.Utilities
 
         /// <summary>
         /// Custom version of System.Web.UrlTokenDecode found here: http://referencesource.microsoft.com/#System.Web/Util/HttpEncoder.cs,fb2fadc6081d51ed,references
-        /// Normal method only reverses + and / and reads an end char to show how many padding characters were removed. This actually replaces the padding and also handles replacing non-padding = with * and uses . for padding.
+        /// Normal method only reverses + and / and reads an end char to show how many padding characters were removed. 
+        /// This actually replaces the padding and also handles replacing non-padding = with * and uses . for padding.
         /// https://developers.google.com/admin-sdk/directory/v1/reference/users/photos/update
         /// </summary>
         public static byte[] UrlTokenDecode(string input)
@@ -172,7 +173,8 @@ namespace gShell.dotNet.Utilities
 
         /// <summary>
         /// Custom version of System.Web.UrlTokenEncode found here: http://referencesource.microsoft.com/#System.Web/Util/HttpEncoder.cs,0e3cb83cf51ca334,references
-        /// Normal method only replaces + and / and gives an end char to show how many padding characters were removed. This actually replaces the padding and also handles replacing non-padding = with * and uses . for padding.
+        /// Normal method only replaces + and / and gives an end char to show how many padding characters were removed. 
+        /// This actually replaces the padding and also handles replacing non-padding = with * and uses . for padding.
         /// https://developers.google.com/admin-sdk/directory/v1/reference/users/photos/update
         /// </summary>
         public static string UrlTokenEncode(byte[] input)

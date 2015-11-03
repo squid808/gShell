@@ -181,7 +181,7 @@
         <File Id="System.Net.Http.dll" 
               Name="System.Net.Http.dll" 
               DiskId="1"
-              Source="$(var.SolutionDir)packages\Microsoft.Net.Http.2.2.22\lib\net40\System.Net.Http.dll" />
+              Source="$(var.SolutionDir)packages\Microsoft.Net.Http.2.2.29\lib\net40\System.Net.Http.dll" />
         <RemoveFile Name="System.Net.Http.dll" Id="System.Net.Http.dll" On="uninstall" />
 
         <File Id="System.Net.Http.Extensions.dll"
@@ -193,7 +193,7 @@
         <File Id="System.Net.Http.Primitives.dll" 
               Name="System.Net.Http.Primitives.dll" 
               DiskId="1"
-              Source="$(var.SolutionDir)packages\Microsoft.Net.Http.2.2.22\lib\net40\System.Net.Http.Primitives.dll" />
+              Source="$(var.SolutionDir)packages\Microsoft.Net.Http.2.2.29\lib\net40\System.Net.Http.Primitives.dll" />
         <RemoveFile Name="System.Net.Http.Primitives.dll" Id="System.Net.Http.Primitives.dll" On="uninstall" />
 
         <File Id="System.Net.Http.WebRequest.dll"
@@ -202,17 +202,17 @@
               Source="$(var.gShell.TargetDir)/System.Net.Http.WebRequest.dll" />
         <RemoveFile Name="System.Net.Http.WebRequest.dll" Id="System.Net.Http.WebRequest.dll" On="uninstall" />
 
-        <File Id="System.Runtime.dll"
+        <!--<File Id="System.Runtime.dll"
               Name="System.Runtime.dll"
               DiskId="1"
               Source="$(var.gShell.TargetDir)/System.Runtime.dll" />
-        <RemoveFile Name="System.Runtime.dll" Id="System.Runtime.dll" On="uninstall" />
+        <RemoveFile Name="System.Runtime.dll" Id="System.Runtime.dll" On="uninstall" />-->
 
-        <File Id="System.Threading.Tasks.dll"
+        <!--<File Id="System.Threading.Tasks.dll"
               Name="System.Threading.Tasks.dll"
               DiskId="1"
               Source="$(var.gShell.TargetDir)/System.Threading.Tasks.dll" />
-        <RemoveFile Name="System.Threading.Tasks.dll" Id="System.Threading.Tasks.dll" On="uninstall" />
+        <RemoveFile Name="System.Threading.Tasks.dll" Id="System.Threading.Tasks.dll" On="uninstall" />-->
 
         <File Id="Zlib.Portable.dll"
               Name="Zlib.Portable.dll"
