@@ -28,7 +28,7 @@ namespace gShell.dotNet.Utilities
         private static string destFile = IO.Path.Combine(Environment.GetFolderPath(
             Environment.SpecialFolder.LocalApplicationData), @"gShell\gShell_OAuth2.bin");
 
-        public static OAuth2Group oAuth2Group {
+        public static OAuth2Info oAuth2Group {
             get
             {
                 if (_oAuth2GroupLoader == null)
@@ -39,14 +39,14 @@ namespace gShell.dotNet.Utilities
                     }
                     else
                     {
-                        _oAuth2GroupLoader = new OAuth2Group();
+                        _oAuth2GroupLoader = new OAuth2Info();
                     }
                 }
 
                 return _oAuth2GroupLoader;
             }
         }
-        private static OAuth2Group _oAuth2GroupLoader;
+        private static OAuth2Info _oAuth2GroupLoader;
         #endregion
 
         #region Saving
@@ -78,7 +78,7 @@ namespace gShell.dotNet.Utilities
             SaveGroup(oAuth2Group);
         }
 
-        private static void SaveGroup(OAuth2Group group)
+        private static void SaveGroup(OAuth2Info group)
         {
             CheckOrCreateDirectory();
 
@@ -155,7 +155,7 @@ namespace gShell.dotNet.Utilities
         /// </summary>
         /// <param name="force"></param>
         /// <returns></returns>
-        private static OAuth2Group LoadGroup(bool force=false)
+        private static OAuth2Info LoadGroup(bool force=false)
         {
             if (null == _oAuth2GroupLoader || force)
             {
@@ -170,11 +170,11 @@ namespace gShell.dotNet.Utilities
 
                     BinaryFormatter deserializer = new BinaryFormatter();
 
-                    OAuth2Group group;
+                    OAuth2Info group;
 
                     try
                     {
-                        group = (OAuth2Group)deserializer.Deserialize(memoryStream);
+                        group = (OAuth2Info)deserializer.Deserialize(memoryStream);
                     }
                     catch
                     {
