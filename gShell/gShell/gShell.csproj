@@ -172,7 +172,10 @@
     <Compile Include="Cmdlets\Directory\GAUserProperty\GetGAUserProperty.cs" />
     <Compile Include="Cmdlets\Directory\GAUserProperty\NewGAUserProperty.cs" />
     <Compile Include="Cmdlets\Directory\GAUserProperty\NewGAUserPropertyCollection.cs" />
+    <Compile Include="dotNet\Utilities\OAuth2\DataStores\IOAuth2DataStore.cs" />
+    <Compile Include="dotNet\Utilities\OAuth2\OAuth2Authenticator.cs" />
     <Compile Include="dotNet\Utilities\OAuth2\OAuth2Base.cs" />
+    <Compile Include="dotNet\Utilities\OAuth2\OAuth2Base2.cs" />
     <Compile Include="dotNet\ServiceWrapper.cs" />
     <Compile Include="dotNet\Reports\Reports.cs" />
     <Compile Include="dotNet\Utilities\MemoryObjectDataStore.cs" />
@@ -182,7 +185,10 @@
     <Compile Include="Cmdlets\Directory\GAUser\GetGAUser.cs" />
     <Compile Include="Cmdlets\Directory\GAUser\SetGAUser.cs" />
     <Compile Include="Cmdlets\Utilities\OAuth2\OAuth2CmdletBase.cs" />
-    <Compile Include="dotNet\Utilities\OAuth2\OAuth2Group.cs" />
+    <Compile Include="dotNet\Utilities\OAuth2\OAuth2Info.cs" />
+    <Compile Include="dotNet\Utilities\OAuth2\OAuth2InfoConsumer.cs" />
+    <Compile Include="dotNet\Utilities\OAuth2\DataStores\OAuth2JsonDataStore.cs" />
+    <Compile Include="dotNet\Utilities\OAuth2\DataStores\OAuth2SerializerDataStore.cs" />
     <Compile Include="dotNet\Utilities\SavedFile.cs" />
     <Compile Include="Cmdlets\Utilities\ScopeManager\ScopeManager.cs" />
     <Compile Include="dotNet\Utilities\Utils.cs" />

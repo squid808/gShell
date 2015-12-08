@@ -81,15 +81,15 @@ namespace gShell.dotNet.Utilities.OAuth2
         #region Constructors
         public OAuth2Info() { }
         
-        public OAuth2Info(Userinfoplus userInfo, string storedToken, HashSet<string> scopes)
-        {
-            SetUser(userInfo, storedToken, scopes);
-        }
+        //public OAuth2Info(Userinfoplus userInfo, string storedToken, HashSet<string> scopes)
+        //{
+        //    SetUser(userInfo, storedToken, scopes);
+        //}
 
-        public OAuth2Info(string userEmail, string storedToken, HashSet<string> scopes)
-        {
-            SetUser(userEmail, storedToken, scopes);
-        }
+        //public OAuth2Info(string userEmail, string storedToken, HashSet<string> scopes)
+        //{
+        //    SetUser(userEmail, storedToken, scopes);
+        //}
         #endregion
 
         #region Serialization
@@ -131,237 +131,285 @@ namespace gShell.dotNet.Utilities.OAuth2
 
         #region Accessors
 
-        #region Domains
-        /// <summary>
-        /// Returns a list of the domains stored, names only.
-        /// </summary>
-        public ICollection<string> GetDomains()
-        {
-            return domains.Keys;
+        public OAuth2TokenInfo GetTokenAndScopes(string Api, string Domain = null, string User = null){
+            if (Domain == null && defaultDomain == null) return null;
+
+            if (Domain == null) Domain = defaultDomain;
+
+            return domains[Domain].GetTokenAndScopes(Api, User);
         }
 
-        /// <summary>
-        /// Is a domain stored.
-        /// </summary>
+        public void SetTokenAndScopes(string Api, string Token, List<string> Scopes, string User, string Domain)
+        {
+            CheckAndCreateStructure(Domain, User, Api);
+
+            domains[Domain].SetTokenAndScopes(Api, Token, Scopes, User);
+        }
+
+        /// <summary>Checks the file for the provided information and scaffolds out anything that is missing.</summary>
+        /// <param name="Domain">The Domain in @domain.com format.</param>
+        /// <param name="User">The user Email Address in user@domain.com format.</param>
+        /// <param name="Api">The full Api uri.</param>
+        private void CheckAndCreateStructure(string Domain, string User, string Api)
+        {
+            if (!domains.ContainsKey(Domain))
+            {
+                domains.Add(Domain, new OAuth2Domain());
+                domains[Domain].defaultUser = User;
+            }
+
+            OAuth2Domain domain = domains[Domain];
+
+            if (domain.users.ContainsKey(User))
+            {
+                domain.users.Add(User, new OAuth2DomainUser());
+                domain.users[User].email = User;
+            }
+
+            OAuth2DomainUser user = domain.users[User];
+
+            if (!user.tokenAndScopesByApi.ContainsKey(Api))
+            {
+                user.tokenAndScopesByApi.Add(Api, new OAuth2TokenInfo());
+            }
+        }
+
+        #region Domains
+        ///// <summary>
+        ///// Returns a list of the domains stored, names only.
+        ///// </summary>
+        //public ICollection<string> GetDomainNames()
+        //{
+        //    return domains.Keys;
+        //}
+
+        /// <summary>Is the domain stored.</summary>
         public bool ContainsDomain(string domain)
         {
             return (domains.ContainsKey(domain));
         }
 
-        /// <summary>
-        /// Return the default domain stored.
-        /// </summary>
-        public string GetDefaultDomain()
+        /// <summary>Checks for first the domain, then the user name.</summary>
+        public bool ContainsUser(string domain, string userName)
         {
-            return defaultDomain;
+            return domains.ContainsKey(domain)
+                && domains[domain].users.ContainsKey(userName);
         }
 
-        /// <summary>
-        /// Set or update the default domain stored.
-        /// </summary>
-        public void SetDefaultDomain(string domain)
-        {
-            _defaultDomain = domain;
-        }
+        ///// <summary>
+        ///// Return the default domain stored.
+        ///// </summary>
+        //public OAuth2Domain GetDefaultDomain()
+        //{
+        //    return domains[defaultDomain];
+        //}
+
+        ///// <summary>
+        ///// Set or update the default domain stored.
+        ///// </summary>
+        //public void SetDefaultDomain(string domain)
+        //{
+        //    _defaultDomain = domain;
+        //}
 
         /// <summary>
         /// Return a domain. Assumes the domain exists.
         /// </summary>
         public OAuth2Domain GetDomain(string domain)
         {
-            try
-            {
-                return domains[domain];
-            }
-            catch
-            {
-                throw new System.InvalidOperationException(
-                    "No Oauth domain settings exist for " + domain);
-            }
+            return domains[domain];
+        }
+
+        /// <summary>
+        /// Returns a stored user. Assumes it exists.
+        /// </summary>
+        public OAuth2DomainUser GetUser(string userName, string domain)
+        {
+            return domains[domain].GetUser(userName);
         }
 
         //SetDomain - there is no point in setting a domain, since the only reason to do that would be to set a default user, a new user, or a service account.
 
-        /// <summary>
-        /// Removes a domain, if it is stored.
-        /// </summary>
-        public void RemoveDomain(string domain)
-        {
-            if (domains.ContainsKey(domain))
-            {
-                domains.Remove(domain);
-            }
-        }
+        ///// <summary>
+        ///// Removes a domain, if it is stored.
+        ///// </summary>
+        //public void RemoveDomain(string domain)
+        //{
+        //    if (domains.ContainsKey(domain))
+        //    {
+        //        domains.Remove(domain);
+        //    }
+        //}
 
         #endregion
 
         #region Users
         
-        /// <summary>
-        /// Get all users stored in a domain.
-        /// </summary>
-        public ICollection<string> GetUsers(string domain)
-        {
-            return domains[domain].GetUsers();
-        }
+        ///// <summary>
+        ///// Get all users stored in a domain.
+        ///// </summary>
+        //public ICollection<string> GetUsers(string domain)
+        //{
+        //    return domains[domain].GetUsers();
+        //}
 
-        /// <summary>
-        /// Get all users stored in all domains.
-        /// </summary>
-        /// <returns></returns>
-        public ICollection<string> GetUsers()
-        {
-            List<string> users = new List<string>();
+        ///// <summary>
+        ///// Get all users stored in all domains.
+        ///// </summary>
+        ///// <returns></returns>
+        //public ICollection<string> GetUsers()
+        //{
+        //    List<string> users = new List<string>();
 
-            foreach (string key in domains.Keys)
-            {
-                users.AddRange(domains[key].GetUsers());
-            }
+        //    foreach (string key in domains.Keys)
+        //    {
+        //        users.AddRange(domains[key].GetUsers());
+        //    }
 
-            return users;
-        }
+        //    return users;
+        //}
 
-        /// <summary>
-        /// Is a user stored. Domain is implied by the email.
-        /// </summary>
-        public bool ContainsUser(string userEmail)
-        {
-            string domain = Utils.GetDomainFromEmail(userEmail);
-            if (domains.ContainsKey(domain))
-            {
-                return domains[domain].ContainsUser(userEmail);
-            }
-            else
-            {
-                return false; //the entire domain isn't here.
-            }
-        }
+        ///// <summary>
+        ///// Is a user stored. Domain is implied by the email.
+        ///// </summary>
+        //public bool ContainsUser(string userEmail)
+        //{
+        //    string domain = Utils.GetDomainFromEmail(userEmail);
+        //    if (domains.ContainsKey(domain))
+        //    {
+        //        return domains[domain].ContainsUser(userEmail);
+        //    }
+        //    else
+        //    {
+        //        return false; //the entire domain isn't here.
+        //    }
+        //}
 
-        /// <summary>
-        /// Returns the default user for a domain. Assumes it exists.
-        /// </summary>
-        public string GetDefaultUser(string domain)
-        {
-            try
-            {
-                return domains[domain].defaultEmail;
-            }
-            catch
-            {
-                throw new System.InvalidOperationException(
-                    "No Oauth domain settings exist for " + domain);
-            }
-        }
+        ///// <summary>
+        ///// Returns the default user for a domain. Assumes it exists.
+        ///// </summary>
+        //public string GetDefaultUser(string domain)
+        //{
+        //    try
+        //    {
+        //        return domains[domain].defaultEmail;
+        //    }
+        //    catch
+        //    {
+        //        throw new System.InvalidOperationException(
+        //            "No Oauth domain settings exist for " + domain);
+        //    }
+        //}
 
-        /// <summary>
-        /// Set or update the default user stored for a domain.
-        /// </summary>
-        public void SetDefaultUser(Userinfoplus userInfo)
-        {
-            SetDefaultUser(userInfo.Email);
-        }
+        ///// <summary>
+        ///// Set or update the default user stored for a domain.
+        ///// </summary>
+        //public void SetDefaultUser(Userinfoplus userInfo)
+        //{
+        //    SetDefaultUser(userInfo.Email);
+        //}
 
-        /// <summary>
-        /// Set or update the default user stored for a domain.
-        /// </summary>
-        public void SetDefaultUser(string userEmail)
-        {
-            string domain = Utils.GetDomainFromEmail(userEmail);
+        ///// <summary>
+        ///// Set or update the default user stored for a domain.
+        ///// </summary>
+        //public void SetDefaultUser(string userEmail)
+        //{
+        //    string domain = Utils.GetDomainFromEmail(userEmail);
 
-            if (!domains.ContainsKey(domain))
-            {
-                domains.Add(domain, new OAuth2Domain());
-            }
-            domains[domain].SetDefaultUser(userEmail);
-        }
+        //    if (!domains.ContainsKey(domain))
+        //    {
+        //        domains.Add(domain, new OAuth2Domain());
+        //    }
+        //    domains[domain].SetDefaultUser(userEmail);
+        //}
 
-        /// <summary>
-        /// Returns a stored user. Assumes it exists.
-        /// </summary>
-        public OAuth2DomainUser GetUser(Userinfoplus userInfo)
-        {
-            return GetUser(userInfo.Email);
-        }
+        ///// <summary>
+        ///// Returns a stored user. Assumes it exists.
+        ///// </summary>
+        //public OAuth2DomainUser GetUser(Userinfoplus userInfo)
+        //{
+        //    return GetUser(userInfo.Email);
+        //}
 
-        /// <summary>
-        /// Returns a stored user. Assumes it exists.
-        /// </summary>
-        public OAuth2DomainUser GetUser(string userEmail)
-        {
-            string domain = Utils.GetDomainFromEmail(userEmail);
+        ///// <summary>
+        ///// Returns a stored user. Assumes it exists.
+        ///// </summary>
+        //public OAuth2DomainUser GetUser(string userEmail)
+        //{
+        //    string domain = Utils.GetDomainFromEmail(userEmail);
 
-            try {
-                return domains[domain].GetUser(userEmail);
-            } catch {
-                throw new System.InvalidOperationException(
-                    "No Oauth domain settings exist for " + domain);
-            }
-        }
+        //    try {
+        //        return domains[domain].GetUser(userEmail);
+        //    } catch {
+        //        throw new System.InvalidOperationException(
+        //            "No Oauth domain settings exist for " + domain);
+        //    }
+        //}
 
-        /// <summary>
-        /// Set or update a stored user.
-        /// </summary>
-        public void SetUser(Userinfoplus userInfo, string storedToken, HashSet<string> scopes)
-        {
-            SetUser(userInfo.Email, storedToken, scopes);
-        }
+        ///// <summary>
+        ///// Set or update a stored user.
+        ///// </summary>
+        //public void SetUser(Userinfoplus userInfo, string storedToken, HashSet<string> scopes)
+        //{
+        //    SetUser(userInfo.Email, storedToken, scopes);
+        //}
 
-        /// <summary>
-        /// Set or update a stored user.
-        /// </summary>
-        public void SetUser(string userEmail, string storedToken, HashSet<string> scopes)
-        {
-            string domain = Utils.GetDomainFromEmail(userEmail);
+        ///// <summary>
+        ///// Set or update a stored user.
+        ///// </summary>
+        //public void SetUser(string userEmail, string storedToken, HashSet<string> scopes)
+        //{
+        //    string domain = Utils.GetDomainFromEmail(userEmail);
 
-            if (defaultDomain == null)
-            {
-               _defaultDomain = domain;
-            }
+        //    if (defaultDomain == null)
+        //    {
+        //       _defaultDomain = domain;
+        //    }
 
-            if (!domains.ContainsKey(domain))
-            {
-                domains.Add(domain, new OAuth2Domain(userEmail, storedToken, scopes));
-            }
-            else
-            {
-                domains[domain].SetUser(userEmail, storedToken, scopes);
-            }
-        }
+        //    if (!domains.ContainsKey(domain))
+        //    {
+        //        domains.Add(domain, new OAuth2Domain(userEmail, storedToken, scopes));
+        //    }
+        //    else
+        //    {
+        //        domains[domain].SetUser(userEmail, storedToken, scopes);
+        //    }
+        //}
 
-        /// <summary>
-        /// Removes a stored user, if it exists.
-        /// </summary>
-        public void RemoveUser(Userinfoplus userInfo)
-        {
-            RemoveUser(userInfo.Email);
-        }
+        ///// <summary>
+        ///// Removes a stored user, if it exists.
+        ///// </summary>
+        //public void RemoveUser(Userinfoplus userInfo)
+        //{
+        //    RemoveUser(userInfo.Email);
+        //}
 
-        /// <summary>
-        /// Removes a stored user, if it exists.
-        /// </summary>
-        public void RemoveUser(string userEmail)
-        {
-            string domain = Utils.GetDomainFromEmail(userEmail);
+        ///// <summary>
+        ///// Removes a stored user, if it exists.
+        ///// </summary>
+        //public void RemoveUser(string userEmail)
+        //{
+        //    string domain = Utils.GetDomainFromEmail(userEmail);
 
-            if (domains[domain].RemoveUser(userEmail) == 0)
-            {
-                domains.Remove(domain);
-            };
+        //    if (domains[domain].RemoveUser(userEmail) == 0)
+        //    {
+        //        domains.Remove(domain);
+        //    };
 
             
-        }
+        //}
 
-        public HashSet<string> GetScope(Userinfoplus userInfo)
-        {
-            return GetScope(userInfo.Email);
-        }
+        //public HashSet<string> GetScope(Userinfoplus userInfo)
+        //{
+        //    return GetScope(userInfo.Email);
+        //}
 
-        public HashSet<string> GetScope(string userEmail)
-        {
-            OAuth2DomainUser user = GetUser(userEmail);
+        //public HashSet<string> GetScope(string userEmail)
+        //{
+        //    OAuth2DomainUser user = GetUser(userEmail);
 
-            return user.scopes;
-        }
+        //    return user.scopes;
+        //}
 
         #endregion
 
@@ -370,29 +418,30 @@ namespace gShell.dotNet.Utilities.OAuth2
         #endregion
 
         #region ClientSecrets
-        public ClientSecrets GetClientSecrets()
-        {
-            return _clientSecretsLoader;
-        }
+        //public ClientSecrets GetClientSecrets()
+        //{
+        //    return _clientSecretsLoader;
+        //}
 
-        public void SetClientSecrets(ClientSecrets secrets)
-        {
-            _clientSecretsLoader = secrets;
-        }
+        //public void SetClientSecrets(ClientSecrets secrets)
+        //{
+        //    _clientSecretsLoader = secrets;
+        //}
 
-        public void RemoveClientSecrets()
-        {
-            _clientSecretsLoader = null;
-        }
+        //public void RemoveClientSecrets()
+        //{
+        //    _clientSecretsLoader = null;
+        //}
+        //#endregion
+
+        //public void ClearAll()
+        //{
+        //    domains = new Dictionary<string, OAuth2Domain>();
+        //    _defaultDomain = string.Empty;
+        //}
         #endregion
 
-        public void ClearAll()
-        {
-            domains = new Dictionary<string, OAuth2Domain>();
-            _defaultDomain = string.Empty;
-        }
         #endregion
-
     }
 
     /// <summary> A collection of <OAuth2DomainUser/> objects, and a reference to the default account for the domain. </summary>
@@ -401,8 +450,7 @@ namespace gShell.dotNet.Utilities.OAuth2
     {
         #region Properties
         /// <summary> The default user's email for this domain. </summary>
-        public string defaultEmail{ get {return _defaultEmail; }}
-        private string _defaultEmail;
+        public string defaultUser { get; set; }
 
         /// <summary> A collection of users keyed by their email address. </summary>
         public Dictionary<string, OAuth2DomainUser> users  { get; set; }
@@ -424,11 +472,11 @@ namespace gShell.dotNet.Utilities.OAuth2
             certificateByteArray = new byte[0];
         }
 
-        public OAuth2Domain(string userEmail, string storedToken, HashSet<string> scopes) : this()
-        {
-            _defaultEmail = userEmail;
-            users.Add(userEmail, new OAuth2DomainUser(userEmail));
-        }
+        //public OAuth2Domain(string userEmail, string storedToken, HashSet<string> scopes) : this()
+        //{
+        //    _defaultEmail = userEmail;
+        //    users.Add(userEmail, new OAuth2DomainUser(userEmail));
+        //}
         #endregion
         
         #region Serialization
@@ -459,7 +507,7 @@ namespace gShell.dotNet.Utilities.OAuth2
         public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
         {
             info.AddValue("users", users, typeof(Dictionary<string, OAuth2DomainUser>));
-            info.AddValue("defaultEmail", defaultEmail, typeof(string));
+            info.AddValue("defaultUser", defaultUser, typeof(string));
 
             if (string.IsNullOrWhiteSpace(serviceAccountEmail))
             {
@@ -476,31 +524,45 @@ namespace gShell.dotNet.Utilities.OAuth2
     	#endregion
 
         #region Accessors
-        public bool ContainsUser(string userEmail)
+        public OAuth2TokenInfo GetTokenAndScopes(string Api, string User = null)
         {
-            return (users.ContainsKey(userEmail));
+            if (User == null && defaultUser == null) return null;
+
+            if (User == null) User = defaultUser;
+
+            return users[User].GetTokenAndScopes(Api);
         }
 
-        public ICollection<string> GetUsers()
+        public void SetTokenAndScopes(string Api, string Token, List<string> Scopes, string User)
         {
-            return users.Keys;
+            users[User].SetTokenAndScopes(Api, Token, Scopes);
         }
 
-        public string GetDefaultUser()
-        {
-            return defaultEmail;
-        }
+        //public bool ContainsUser(string userEmail)
+        //{
+        //    return (users.ContainsKey(userEmail));
+        //}
 
-        public void SetDefaultUser(string userEmail)
-        {
-            _defaultEmail = userEmail;
-        }
+        //public ICollection<string> GetUsers()
+        //{
+        //    return users.Keys;
+        //}
 
-        public OAuth2DomainUser GetUser(string userEmail)
+        //public string GetDefaultUser()
+        //{
+        //    return defaultEmail;
+        //}
+
+        //public void SetDefaultUser(string userEmail)
+        //{
+        //    _defaultEmail = userEmail;
+        //}
+
+        public OAuth2DomainUser GetUser(string userName)
         {
-            if (users.ContainsKey(userEmail))
+            if (users.ContainsKey(userName))
             {
-                return users[userEmail];
+                return users[userName];
             }
             else
             {
@@ -508,62 +570,62 @@ namespace gShell.dotNet.Utilities.OAuth2
             }
         }
 
-        public OAuth2DomainUser GetUser(Userinfoplus userInfo)
-        {
-            return GetUser(userInfo.Email);
-        }
+        //public OAuth2DomainUser GetUser(Userinfoplus userInfo)
+        //{
+        //    return GetUser(userInfo.Email);
+        //}
 
-        public void SetUser(string userEmail, string storedToken, HashSet<string> scopes)
-        {
-            users[userEmail] = new OAuth2DomainUser(userEmail);
-            users[userEmail].tokenAndScopes.Add(, storedToken, scopes)
+        //public void SetUser(string userEmail, string storedToken, HashSet<string> scopes)
+        //{
+        //    users[userEmail] = new OAuth2DomainUser(userEmail);
+        //    users[userEmail].tokenAndScopes.Add(, storedToken, scopes)
 
-            //set this as the default user if there isn't one already
-            if (_defaultEmail == null)
-            {
-                _defaultEmail = userEmail;
-            }
-        }
+        //    //set this as the default user if there isn't one already
+        //    if (_defaultEmail == null)
+        //    {
+        //        _defaultEmail = userEmail;
+        //    }
+        //}
 
-        public void SetUser(Userinfoplus userInfo, string storedToken, HashSet<string> scopes)
-        {
-            SetUser(userInfo.Email, storedToken, scopes);
-        }
+        //public void SetUser(Userinfoplus userInfo, string storedToken, HashSet<string> scopes)
+        //{
+        //    SetUser(userInfo.Email, storedToken, scopes);
+        //}
 
-        public void GetServiceAccount()
-        {
+        //public void GetServiceAccount()
+        //{
 
-        }
+        //}
 
-        public void SetServiceAccount(string emailAddress, string filePath){
-            serviceAccountCertificate =
-                new X509Certificate2(filePath, "notasecret", X509KeyStorageFlags.Exportable);
+        //public void SetServiceAccount(string emailAddress, string filePath){
+        //    serviceAccountCertificate =
+        //        new X509Certificate2(filePath, "notasecret", X509KeyStorageFlags.Exportable);
 
-            serviceAccountEmail = emailAddress;
-        }
+        //    serviceAccountEmail = emailAddress;
+        //}
 
-        /// <summary>
-        /// Returns the number of users remaining
-        /// </summary>
-        public int RemoveUser(Userinfoplus userInfo)
-        {
-           return RemoveUser(userInfo.Email);
-        }
+        ///// <summary>
+        ///// Returns the number of users remaining
+        ///// </summary>
+        //public int RemoveUser(Userinfoplus userInfo)
+        //{
+        //   return RemoveUser(userInfo.Email);
+        //}
 
-        /// <summary>
-        /// Returns the number of users remaining
-        /// </summary>
-        /// <param name="userEmail"></param>
-        /// <returns></returns>
-        public int RemoveUser(string userEmail)
-        {
-            if (users.ContainsKey(userEmail))
-            {
-                users.Remove(userEmail);
-            }
+        ///// <summary>
+        ///// Returns the number of users remaining
+        ///// </summary>
+        ///// <param name="userEmail"></param>
+        ///// <returns></returns>
+        //public int RemoveUser(string userEmail)
+        //{
+        //    if (users.ContainsKey(userEmail))
+        //    {
+        //        users.Remove(userEmail);
+        //    }
 
-            return users.Count;
-        }
+        //    return users.Count;
+        //}
         #endregion
     }
 
@@ -577,18 +639,18 @@ namespace gShell.dotNet.Utilities.OAuth2
         /// <summary> The email address of this user </summary>
         public string email { get; set; }
 
-        /// <summary> The domain this user is from, derived from the domain. </summary>
+        /// <summary> The domain this user is from, derived from the user email address. </summary>
         public string domain { get { return Utils.GetDomainFromEmail(email); } }
 
         /// <summary> Gets or sets the collection of Api Tokens keyed by their respective Api names. </summary>
-        public Dictionary<string, OAuth2TokenInfo> tokenAndScopes { get; set; }
+        public Dictionary<string, OAuth2TokenInfo> tokenAndScopesByApi { get; set; }
 
         #endregion
 
         #region Constructors
         public OAuth2DomainUser() 
         {
-            tokenAndScopes = new Dictionary<string, OAuth2TokenInfo>();
+            tokenAndScopesByApi = new Dictionary<string, OAuth2TokenInfo>();
         }
 
         public OAuth2DomainUser(string UserEmail) : this()
@@ -602,29 +664,52 @@ namespace gShell.dotNet.Utilities.OAuth2
         public OAuth2DomainUser(SerializationInfo info, StreamingContext ctxt)
         {
             email = (string)info.GetValue("email", typeof(string));
-            tokenAndScopes = (Dictionary<string, OAuth2TokenInfo>)info.GetValue("tokenAndScopes", typeof(Dictionary<string, OAuth2TokenInfo>));
+            tokenAndScopesByApi = (Dictionary<string, OAuth2TokenInfo>)info.GetValue("tokenAndScopes", typeof(Dictionary<string, OAuth2TokenInfo>));
         }
 
         //This serializes the data
         public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
         {
             info.AddValue("email", email, typeof(string));
-            info.AddValue("tokenAndScopes", tokenAndScopes, typeof(Dictionary<string, OAuth2TokenInfo>));
+            info.AddValue("tokenAndScopes", tokenAndScopesByApi, typeof(Dictionary<string, OAuth2TokenInfo>));
         }
+        #endregion
+
+        #region Accessors
+
+        public OAuth2TokenInfo GetTokenAndScopes(string Api){
+            if (tokenAndScopesByApi.ContainsKey(Api))
+            {
+                return tokenAndScopesByApi[Api];
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public void SetTokenAndScopes(string Api, string Token, List<string> Scopes)
+        {
+            //Just overwrite whatever is already there.
+            tokenAndScopesByApi[Api] = new OAuth2TokenInfo(Scopes, Token);
+        }
+
         #endregion
     }
 
     /// <summary> An object that matches a token with the scopes it represents. </summary>
     [Serializable]
-    public struct OAuth2TokenInfo
+    public class OAuth2TokenInfo
     {
         #region Properties
         public List<string> scopes { get; set; }
-        public TokenResponse token { get; set; }
+        public string token { get; set; }
         #endregion
 
         #region Constructors
-        public OAuth2TokenInfo(IEnumerable<string> Scopes, TokenResponse Token)
+        public OAuth2TokenInfo() { }
+
+        public OAuth2TokenInfo(IEnumerable<string> Scopes, string Token)
         {
             scopes = new List<string>(Scopes);
             token = Token;
