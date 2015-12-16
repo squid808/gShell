@@ -27,7 +27,7 @@ namespace gShell.dotNet.Utilities
     /// 
     /// See OAuth2Base for the rest of the logic related to this.
     /// </remarks>
-    class MemoryObjectDataStore : IDataStore
+    public class MemoryObjectDataStore : IDataStore
     {
         private static string token { get; set; }
 

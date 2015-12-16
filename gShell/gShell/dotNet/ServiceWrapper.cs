@@ -16,7 +16,7 @@ namespace gShell.dotNet
         /// <summary>
         /// A collection of services keyed by the domain name. TODO: have an alternate set for gmail users
         /// </summary>
-        public static Dictionary<string, T> services = new Dictionary<string,T>();
+        public static Dictionary<string, T> services { get; set; }
             
         /// <summary>
         /// Indicates if this set of services will work with Gmail (as opposed to Google Apps). 
@@ -32,8 +32,17 @@ namespace gShell.dotNet
         {
             get
             {
-                return GetCurrentDomain();
+                return OAuth2Base.currentAuthInfo.authenticatedDomain;
             }
+        }
+
+        protected abstract string apiNameAndVersion { get; }
+
+        #endregion
+
+        #region Constructors
+        public ServiceWrapper(){
+            services = new Dictionary<string, T>();
         }
         #endregion
 
@@ -61,21 +70,21 @@ namespace gShell.dotNet
             return services.ContainsKey(domain);
         }
 
-        /// <summary>
-        /// Returns the default domain. This could be null if nothing has yet been authenticated.
-        /// </summary>
-        protected static string GetDefaultDomain()
-        {
-            return OAuth2Base.defaultDomain;
-        }
+        ///// <summary>
+        ///// Returns the default domain. This could be null if nothing has yet been authenticated.
+        ///// </summary>
+        //protected static string GetDefaultDomain()
+        //{
+        //    return OAuth2Base.defaultDomain;
+        //}
 
-        /// <summary>
-        /// Returns the currently authenticated domain. This could be null if nothing has yet been authenticated.
-        /// </summary>
-        protected static string GetCurrentDomain()
-        {
-            return OAuth2Base.currentDomain;
-        }
+        ///// <summary>
+        ///// Returns the currently authenticated domain. This could be null if nothing has yet been authenticated.
+        ///// </summary>
+        //protected static string GetCurrentDomain()
+        //{
+        //    return OAuth2Base.currentDomain;
+        //}
         #endregion
 
         #region Authenticate
@@ -83,9 +92,9 @@ namespace gShell.dotNet
         /// Authenticates the given domain and creates a service for it, if necessary. 
         /// The process of authenticating will update the default and current domains.
         /// </summary>
-        public string Authenticate(string domain)
+        public AuthenticationInfo Authenticate()
         {
-            return OAuth2Base.Authenticate(domain, BuildService);
+            return OAuth2Base.Authenticate(apiNameAndVersion);
         }
         #endregion
 
@@ -95,41 +104,41 @@ namespace gShell.dotNet
         /// </summary>
         protected abstract T CreateNewService(string domain);
 
-        /// <summary>
-        /// Build the service and return the domain the service is working on.
-        /// </summary>
-        public string BuildService(string domain)
-        {
-            if (string.IsNullOrWhiteSpace(domain) ||
-                !services.ContainsKey(domain))
-            {
-                //this sets the OAuth2Base current domain and default domain, if necessary
-                T service = CreateNewService(domain);
+        ///// <summary>
+        ///// Build the service and return the domain the service is working on.
+        ///// </summary>
+        //public string BuildService(string domain)
+        //{
+        //    if (string.IsNullOrWhiteSpace(domain) ||
+        //        !services.ContainsKey(domain))
+        //    {
+        //        //this sets the OAuth2Base current domain and default domain, if necessary
+        //        T service = CreateNewService(domain);
 
-                //current domain should be set at this point 
-                if (OAuth2Base.currentDomain == "gmail.com" && !worksWithGmail)
-                {
-                    throw new Exception("This Google API is not available for a Gmail account.");
-                }
-                else
-                {
-                    services.Add(OAuth2Base.currentDomain, service);
+        //        //current domain should be set at this point 
+        //        if (activeDomain == "gmail.com" && !worksWithGmail)
+        //        {
+        //            throw new Exception("This Google API is not available for a Gmail account.");
+        //        }
+        //        else
+        //        {
+        //            services.Add(activeDomain, service);
 
-                    return OAuth2Base.currentDomain;
-                }
-            }
-            else
-            {
-                return domain;
-            }
-        }
+        //            return activeDomain;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return domain;
+        //    }
+        //}
 
         #endregion
 
-        #region MultiPageResult Helpers
+        //#region MultiPageResult Helpers
         
 
 
-        #endregion
+        //#endregion
     }
 }

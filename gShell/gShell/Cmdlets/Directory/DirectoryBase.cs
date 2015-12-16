@@ -18,19 +18,19 @@ namespace gShell.Cmdlets.Directory
     public class DirectoryBase : OAuth2CmdletBase
     {
         #region Properties
-        protected static gShell.dotNet.Directory gdirectory = new gDirectory();
-        protected ChromeosDevices chromeosDevices = new ChromeosDevices();
-        protected Groups groups = new Groups();
-        protected Members members = new Members();
-        protected MobileDevices mobileDevices = new MobileDevices();
-        protected Orgunits orgunits = new Orgunits();
-        protected Users users = new Users();
-        protected Asps asps = new Asps();
-        protected Tokens tokens = new Tokens();
-        protected VerificationCodes verificationCodes = new VerificationCodes();
-        protected Notifications notifications = new Notifications();
-        protected Channels channels = new Channels();
-        protected Schemas schemas = new Schemas();
+        protected static gShell.dotNet.Directory gdirectory { get; set; }
+        protected ChromeosDevices chromeosDevices { get; set; }
+        protected Groups groups { get; set; }
+        protected Members members { get; set; }
+        protected MobileDevices mobileDevices { get; set; }
+        protected Orgunits orgunits { get; set; }
+        protected Users users { get; set; }
+        protected Asps asps { get; set; }
+        protected Tokens tokens { get; set; }
+        protected VerificationCodes verificationCodes { get; set; }
+        protected Notifications notifications { get; set; }
+        protected Channels channels { get; set; }
+        protected Schemas schemas { get; set; }
 
         [Parameter(Position = 1,
             Mandatory = false,
@@ -40,11 +40,30 @@ namespace gShell.Cmdlets.Directory
         public string Domain { get; set; }
         #endregion
 
+        #region Constructors
+        public DirectoryBase()
+        {
+            gdirectory = new gDirectory();
+            chromeosDevices = new ChromeosDevices();
+            groups = new Groups();
+            members = new Members();
+            mobileDevices = new MobileDevices();
+            orgunits = new Orgunits();
+            users = new Users();
+            asps = new Asps();
+            tokens = new Tokens();
+            verificationCodes = new VerificationCodes();
+            notifications = new Notifications();
+            channels = new Channels();
+            schemas = new Schemas();
+        }
+        #endregion
+
         #region PowerShell Methods
         protected override void BeginProcessing()
         {
             if (null == gdirectory) { gdirectory = new gDirectory(); }
-            CheckForScopes(Domain);
+            ShouldPromptForScopes(Domain);
             Domain = Authenticate(Domain);
 
             GWriteProgress = new gWriteProgress(WriteProgress);

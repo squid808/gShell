@@ -7,35 +7,52 @@ using Google.Apis.Oauth2.v2;
 using Google.Apis.Oauth2.v2.Data;
 using Google.Apis.Services;
 
+using gShell.dotNet.CustomSerializer;
+using gShell.dotNet.Utilities.OAuth2;
+
 namespace gShell.dotNet.Utilities.OAuth2
 {
     public class OAuth2Base
     {
         private const string _appName = "gShellCmdlets";
-        public static OAuth2InfoConsumer infoConsumer { get; set; }
+        public static OAuth2InfoConsumer infoConsumer
+        {
+            get
+            {
+                if (_infoConsumer == null) _infoConsumer = new OAuth2InfoConsumer();
+                return _infoConsumer;
+            }
+        }
+        private static OAuth2InfoConsumer _infoConsumer;
 
-        private static MemoryObjectDataStore memoryObjectDataStore {get; set;}
+        public static MemoryObjectDataStore memoryObjectDataStore
+        {
+            get
+            {
+                if (_memoryObjectDataStore == null) _memoryObjectDataStore = new MemoryObjectDataStore();
+                return _memoryObjectDataStore;
+            }
+        }
+        private static MemoryObjectDataStore _memoryObjectDataStore;
 
         private static UserCredential asyncUserCredential { get; set; }
 
-        public OAuth2Base()
-        {
-            infoConsumer = new OAuth2InfoConsumer();
-            memoryObjectDataStore = new MemoryObjectDataStore();
-        }
+        public static AuthenticationInfo currentAuthInfo { get { return _currentAuthInfo; } }
+        private static AuthenticationInfo _currentAuthInfo { get; set; }
+
 
         //Example call: Authenticate("DirectoryV.3", "myDomain.com", "myUser);
 
-        public ApiCallBasicInfo Authenticate(string Api, string Domain = null, string User = null)
+        public static AuthenticationInfo Authenticate(string Api, string Domain = null, string User = null)
         {
-            ApiCallBasicInfo basicInfo = AuthorizeUser(Api, null, Domain, User);
+            _currentAuthInfo = AuthorizeUser(Api, null, Domain, User);
 
-            return basicInfo;
+            return currentAuthInfo;
         }
 
 
         /// <summary>Checks the stored info to see if this domain matches or not.</summary>
-        private string CheckDomain(string Domain = null)
+        public static string CheckDomain(string Domain = null)
         {
             //If null, check for a default but only return it if it exists.
             if (string.IsNullOrWhiteSpace(Domain)) {
@@ -54,7 +71,7 @@ namespace gShell.dotNet.Utilities.OAuth2
         }
 
         /// <summary>Checks the stored info to see if this user matches anything stored or not.</summary>
-        private string CheckUser(string Domain, string User = null)
+        public static string CheckUser(string Domain, string User = null)
         {
             //If null, check for a default but only return it if it exists.
             if (string.IsNullOrWhiteSpace(User))
@@ -73,7 +90,7 @@ namespace gShell.dotNet.Utilities.OAuth2
         }
 
         /// <summary>Authorize the user against Google's servers.</summary>
-        public ApiCallBasicInfo AuthorizeUser(string Api, IEnumerable<string> scopes, string Domain = null, string User = null)
+        public static AuthenticationInfo AuthorizeUser(string Api, IEnumerable<string> scopes, string Domain = null, string User = null)
         {
             //First, if the domain or user are missing, see if we can fill it in using the defaults
             Domain = CheckDomain(Domain);
@@ -115,9 +132,8 @@ namespace gShell.dotNet.Utilities.OAuth2
             //Now for sure we have the user and domain, as well as the token, so we can save it.
             infoConsumer.SaveToken(Api, Domain, User, token, scopes.ToList());
 
-            return new ApiCallBasicInfo(User, Domain);
+            return new AuthenticationInfo(User, Domain);
         }
-
 
         private static async Task AwaitUserCredential(IEnumerable<string> scopes)
         {
@@ -129,13 +145,46 @@ namespace gShell.dotNet.Utilities.OAuth2
                 memoryObjectDataStore
             );
         }
+
+        /// <summary>
+        /// Returns an initializer used to create a new service.
+        /// </summary>
+        public static BaseClientService.Initializer GetInitializer(string domain)
+        {
+            gInitializer initializer = new gInitializer()
+            {
+                HttpClientInitializer = asyncUserCredential,
+                ApplicationName = _appName,
+            };
+
+            return initializer;
+        }
+
+        /// <summary>
+        /// Returns an initializer used to create a non-authenticated service.
+        /// </summary>
+        public static BaseClientService.Initializer GetInitializer()
+        {
+            return (new gInitializer());
+        }
+
+        public static BaseClientService.Initializer GetInitializer(Google.Apis.Http.IConfigurableHttpClientInitializer credentials)
+        {
+            gInitializer initializer = new gInitializer()
+            {
+                HttpClientInitializer = credentials,
+                ApplicationName = _appName,
+            };
+
+            return initializer;
+        }
     }
 
-    public struct ApiCallBasicInfo
+    public struct AuthenticationInfo
     {
-        public ApiCallBasicInfo(string User, string Domain)
+        public AuthenticationInfo(string User, string Domain)
         {
-            authenticatedDomain = Utils.GetUserFromEmail(User);
+            authenticatedUser = Utils.GetUserFromEmail(User);
             authenticatedDomain = Utils.GetDomainFromEmail(Domain);
         }
 

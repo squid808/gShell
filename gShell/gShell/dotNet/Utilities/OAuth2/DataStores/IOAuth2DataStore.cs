@@ -9,7 +9,7 @@ namespace gShell.dotNet.Utilities.OAuth2.DataStores
     /// <summary>Save and load the OAuth Info to and from a datastore.</summary>
     public interface IOAuth2DataStore
     {
-        public OAuth2Info LoadInfo();
-        public void SaveInfo(OAuth2Info infoToSave);
+        OAuth2Info LoadInfo();
+        void SaveInfo(OAuth2Info infoToSave);
     }
 }

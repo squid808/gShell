@@ -10,6 +10,7 @@ namespace gShell.dotNet
     public class Discovery // : ServiceWrapper<discovery_v1.DiscoveryService>
     {
         #region Inherited Members
+        
         /// <summary>
         /// Indicates if this set of services will work with Gmail (as opposed to Google Apps). 
         /// This will cause authentication to fail if false and the user attempts to authenticate with
@@ -24,9 +25,11 @@ namespace gShell.dotNet
         {
             return new discovery_v1.DiscoveryService(OAuth2Base.GetInitializer());
         }
+        
         #endregion
 
         #region Properties
+        
         public Apis apis = new Apis();
 
         public static discovery_v1.DiscoveryService service
@@ -43,6 +46,7 @@ namespace gShell.dotNet
         }
 
         private static discovery_v1.DiscoveryService _service;
+
         #endregion
 
         #region Wrapped Methods

@@ -20,6 +20,7 @@ namespace gShell.Cmdlets.Discovery
         #region Properties
         protected static gShell.dotNet.Discovery gdiscovery = new gDiscovery();
         protected Apis apis = new Apis();
+        public string ApiName = "discovery:v1";
         #endregion
 
         #region PowerShell Methods

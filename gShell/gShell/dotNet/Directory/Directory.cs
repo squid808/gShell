@@ -13,6 +13,7 @@ namespace gShell.dotNet
     public class Directory : ServiceWrapper<directory_v1.DirectoryService>
     {
         #region Inherited Members
+
         /// <summary>
         /// Indicates if this set of services will work with Gmail (as opposed to Google Apps). 
         /// This will cause authentication to fail if false and the user attempts to authenticate with
@@ -27,9 +28,13 @@ namespace gShell.dotNet
         {
             return new directory_v1.DirectoryService(OAuth2Base.GetInitializer(domain));
         }
+
+        protected override string apiNameAndVersion { get { return "admin:directory_v1"; } }
+
         #endregion
 
         #region Properties
+
         public ChromeosDevices chromeosDevices = new ChromeosDevices();
         public Groups groups = new Groups();
         public Members members = new Members();
@@ -42,12 +47,15 @@ namespace gShell.dotNet
         public Notifications notifications = new Notifications();
         public Channels channels = new Channels();
         public Schemas schemas = new Schemas();
+        
         #endregion
 
         #region Wrapped Methods
+
         //the following methods assume that the service has been authenticated first.
 
         #region Chromeosdevices
+
         public class ChromeosDevices
         {
             public class ChromeosDevicesListProperties
@@ -148,9 +156,11 @@ namespace gShell.dotNet
                 return request.Execute();
             }
         }
+
         #endregion
 
         #region Groups
+
         public class Groups
         {
             public Aliases aliases = new Aliases();
@@ -252,6 +262,7 @@ namespace gShell.dotNet
             }
 
             #region Groups.aliases
+
             public class Aliases
             {
                 public string Delete(string groupKey, string alias)
@@ -281,12 +292,15 @@ namespace gShell.dotNet
                     return results;
                 }
             }
+
             #endregion
 
         }
+
         #endregion
 
         #region Members
+
         public class Members
         {
             public class MembersListProperties
@@ -382,9 +396,11 @@ namespace gShell.dotNet
                 return services[activeDomain].Members.Update(body, groupKey, memberKey).Execute();
             }
         }
+
         #endregion
 
         #region MobileDevices
+
         public class MobileDevices
         {
             public class MobileDevicesPropertiesList
@@ -481,9 +497,11 @@ namespace gShell.dotNet
                 return results;
             }
         }
+
         #endregion
 
         #region Orgunits
+
         public class Orgunits
         {
             public class OrgunitsListProperties
@@ -539,9 +557,11 @@ namespace gShell.dotNet
                 return services[activeDomain].Orgunits.Update(body, customerId, orgUnitPath).Execute();
             }
         }
+
         #endregion
 
         #region Users
+
         public class Users
         {
             public Photos photos = new Photos();
@@ -742,9 +762,11 @@ namespace gShell.dotNet
             }
             #endregion
         }
+
         #endregion
 
         #region Asps
+
         public class Asps
         {
             public string Delete(string userKey, int codeId)
@@ -774,9 +796,11 @@ namespace gShell.dotNet
                 return results;
             }
         }
+
         #endregion
 
         #region Tokens
+
         public class Tokens
         {
             public string Delete(string userKey, string clientId)
@@ -806,9 +830,11 @@ namespace gShell.dotNet
                 return results;
             }
         }
+
         #endregion
 
         #region VerificationCodes
+
         public class VerificationCodes
         {
             public string Generate(string userKey)
@@ -838,9 +864,11 @@ namespace gShell.dotNet
                 return results;
             }
         }
+
         #endregion
 
         #region Notifications
+
         public class Notifications
         {
             public class NotificationsListProperties
@@ -930,9 +958,11 @@ namespace gShell.dotNet
                 return services[activeDomain].Notifications.Update(body, customer, notificationId).Execute();
             }
         }
+
         #endregion
 
         #region Channels
+
         public class Channels
         {
             public string Stop(Data.Channel body)
@@ -940,9 +970,11 @@ namespace gShell.dotNet
                 return services[activeDomain].Channels.Stop(body).Execute();
             }
         }
+
         #endregion
 
         #region Schemas
+
         public class Schemas
         {
             public string Delete(string customerId, string schemaKey)
@@ -987,6 +1019,7 @@ namespace gShell.dotNet
                 return services[activeDomain].Schemas.Update(body, customerId, schemaKey).Execute();
             }
         }
+
         #endregion
 
         //end of wrapped methods

@@ -196,6 +196,14 @@ namespace gShell.dotNet.Utilities.OAuth2
                 && domains[domain].users.ContainsKey(userName);
         }
 
+        /// <summary>Checks for first the domain, then the user name, then the api.</summary>
+        public bool ContainsTokenAndScopes(string domain, string userName, string api)
+        {
+            return domains.ContainsKey(domain)
+                && domains[domain].users.ContainsKey(userName)
+                && domains[domain].users[userName].tokenAndScopesByApi.ContainsKey(api);
+        }
+
         ///// <summary>
         ///// Return the default domain stored.
         ///// </summary>

@@ -15,7 +15,8 @@ namespace gShell.dotNet.Utilities.OAuth2
         #region Properties
 
         /// <summary>The data store responsible for saving and loading the OAuth2 information.</summary>
-        private readonly IOAuth2DataStore dataStore { get; set; }
+        private IOAuth2DataStore dataStore { get { return _dataStore; } }
+        private readonly IOAuth2DataStore _dataStore;
 
         /// <summary>An in-memory copy of the stored OAuth2 information.</summary>
         private OAuth2Info info;
@@ -26,7 +27,7 @@ namespace gShell.dotNet.Utilities.OAuth2
 
         public OAuth2InfoConsumer()
         {
-            dataStore = new OAuth2SerializerDataStore();
+            _dataStore = new OAuth2SerializerDataStore();
             info = dataStore.LoadInfo();
             if (info == null)
             {
@@ -37,7 +38,7 @@ namespace gShell.dotNet.Utilities.OAuth2
 
         public OAuth2InfoConsumer(IOAuth2DataStore DataStore)
         {
-            dataStore = DataStore;
+            _dataStore = DataStore;
             info = dataStore.LoadInfo();
             if (info == null)
             {
@@ -101,16 +102,23 @@ namespace gShell.dotNet.Utilities.OAuth2
 
         public bool DomainExists(string Domain)
         {
-            if (info == null) { return false; }
+            if (info == null) return false;
 
             return info.ContainsDomain(Domain);
         }
 
         public bool UserExists(string Domain, string User)
         {
-            if (info == null) { return false; }
+            if (info == null) return false;
 
-            return (DomainExists(Domain) && info.ContainsUser(Domain, User));
+            return (info.ContainsUser(Domain, User));
+        }
+
+        public bool TokenAndScopesExist(string Domain, string User, string Api)
+        {
+            if (info == null) return false;
+
+            return (info.ContainsTokenAndScopes(Domain, User, Api));
         }
 
         #endregion

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Xml;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
@@ -24,71 +25,96 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
         #region Properties
         public static discovery_v1.DiscoveryService service;
 
-        //Each user on each domain should have a set of scopes it has access 
-        // to, in addition to the tokens and information that is stored for that user
-
-        public static HashSet<string> GetScopes()
-        {
-            return new HashSet<string>();
-        }
-
         [Parameter(Position = 0,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
-        public string UserName { get; set; }
+        public string ApiName { get; set; }
 
         [Parameter(Position = 1,
-            Mandatory = true)]
+            Mandatory = false)]
         [ValidateNotNullOrEmpty]
-        public string Domain { get; set; }
+        public string ApiVersion { get; set; }
         #endregion
 
         protected override void ProcessRecord()
         {
-            UserName = Utils.GetUserFromEmail(UserName);
-
             //Gather the information from the user.
-            StartFromScratchLoop();
+            ApiChoice choice = ChooseApiLoop();
+            ChooseApiScopesLoop(choice.Name, choice.Version);
+
+            string script = "Read-Host '\nYou will now authenticate for this API. Press any key to continue.'";
+            Collection<PSObject> results = this.InvokeCommand.InvokeScript(script);
 
             //now, take the list of OAuth just gathered and add it to the main OAuth List
-            OAuth2Base.SetScopes(CheckForRequiredScope(ScopesDictToHash()));
+            //OAuth2Base.SetScopes(CheckForRequiredScope(ScopesDictToHash()));
+
+            HashSet<string> scopes = CheckForRequiredScope(ScopesDictToHash());
 
             //Now, authenticate.
-            Google.Apis.Auth.OAuth2.UserCredential userCred = OAuth2Base.ReturnUserCredential(Domain, UserName, true);
+            OAuth2Base.AuthorizeUser(choice.API, scopes);
 
-            PrintPretty(string.Format("Scopes for user {0} have been authenticated and saved.", OAuth2Base.currentUserInfo.Email), "green");
+            PrintPretty("Scopes have been authenticated and saved.", "green");
         }
     }
 
     public class ScopeHandlerBase : DiscoveryBase
     {
-        /// <summary>
-        /// A list of APIs that are used in gShell. Needs to be maintained.
-        /// </summary>
-        private ApiChoice[] apiChoices = new ApiChoice[]{
-            new ApiChoice(1, "v2", "oauth2"),
-            new ApiChoice(2, "directory_v1","admin"),
-            new ApiChoice(3, "reports_v1","admin"),
-            new ApiChoice(4, "v2", "drive")
-        };
+        #region SubClasses
 
         /// <summary>
-        /// Print to PowerShell using invoke and write-host so as not to return any types via WriteObject
+        /// A collection of the information representing an API.
         /// </summary>
-        public void PrintPretty(string message, string color)
+        public class ApiChoice
         {
-            string script = "Write-Host (\"" + message + "\") -ForegroundColor " + color;
-            this.InvokeCommand.InvokeScript(script);
+            public int Choice;
+            /// <summary>
+            /// The API in Name:Version format, eg. admin:discovery_v1 or calendar:v2
+            /// </summary>
+            public string API
+            {
+                get
+                {
+                    return string.Format("{0}:{1}", Name, Version);
+                    ;
+                }
+            }
+            public string Version { get; set; }
+            public string Name { get; set; }
+
+            public ApiChoice(int choice, string version, string name)
+            {
+                Choice = choice;
+                Version = version;
+                Name = name;
+            }
+
+            public override string ToString()
+            {
+                return string.Format("[{0}]\t{1}", Choice, API);
+            }
         }
 
-        /// <summary>
-        /// A collection of scope results where the key is the scope id in name:version format and the List is the ScopeInfos
-        /// </summary>
-        private Dictionary<string, List<ScopeInfo>> scopesByApiDict = new Dictionary<string,List<ScopeInfo>>();
+        public class ApiInfo
+        {
+            public string description;
+            public string id;
+            public string name
+            {
+                get
+                {
+                    return id.Split(':')[0];
+                }
+            }
+            public string version
+            {
+                get
+                {
+                    return id.Split(':')[1];
+                }
+            }
+        }
 
-        /// <summary>
-        /// An easier-to-use version of the returned class of scope information.
-        /// </summary>
+        /// <summary>An easier-to-use version of the returned class of scope information.</summary>
         public class ScopeInfo
         {
             public string scope;
@@ -122,104 +148,28 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
             }
         }
 
-        /// <summary>
-        /// Ensures the required scopes are in the scopes hash
-        /// </summary>
-        public HashSet<string> CheckForRequiredScope(HashSet<string> scopes)
-        {
-            if (!scopes.Contains("https://www.googleapis.com/auth/userinfo.email"))
-            {
-                scopes.Add("https://www.googleapis.com/auth/userinfo.email");
-            }
+        #endregion
 
-            return scopes;
-        }
+        #region Properties
 
         /// <summary>
-        /// Return a list of scopes with both their scope and description.
+        /// A list of APIs that are used in gShell. Needs to be maintained.
         /// </summary>
-        public List<ScopeInfo> GetScopesForAPI(string api, string version, out string description)
-        {
-            Data.RestDescription restDescription = apis.RestData(api, version);
-
-            var scopesDict = (Dictionary<string, Data.RestDescription.AuthData.Oauth2Data.ScopesDataElement>)restDescription.Auth.Oauth2.Scopes;
-
-            var scopesList = new List<ScopeInfo>();
-
-            foreach (string key in scopesDict.Keys) {
-                scopesList.Add(new ScopeInfo() { scope = key, description = scopesDict[key].Description });
-            }
-
-            description = restDescription.Description;
-
-            return scopesList;
-        }
-
-        public class ApiInfo
-        {
-            public string description;
-            public string id;
-            public string name
-            {
-                get
-                {
-                    return id.Split(':')[0];
-                }
-            }
-            public string version
-            {
-                get
-                {
-                    return id.Split(':')[1];
-                }
-            }
-        }
+        private ApiChoice[] apiChoices = new ApiChoice[]{
+            new ApiChoice(1, "v2", "oauth2"),
+            new ApiChoice(2, "directory_v1","admin"),
+            new ApiChoice(3, "reports_v1","admin")
+        };
 
         /// <summary>
-        /// Get a list of ApiInfo
+        /// A collection of scope results where the key is the scope id in name:version format and the List is the ScopeInfos
         /// </summary>
-        /// <param name="preferred"></param>
-        public List<ApiInfo> GetAPIList(bool preferred = true)
-        {
-            Data.DirectoryList dirList = apis.List(new gShell.dotNet.Discovery.Apis.DiscoveryListProperties() { preferred = preferred });
+        private Dictionary<string, List<ScopeInfo>> scopesByApiDict = new Dictionary<string, List<ScopeInfo>>();
 
-            List<ApiInfo> info = new List<ApiInfo>();
 
-            foreach (Data.DirectoryList.ItemsData dir in dirList.Items)
-            {
-                info.Add(new ApiInfo(){description = dir.Description, id = dir.Id});
-            }
+        #endregion
 
-            return info;
-        }
-
-        public class ApiChoice
-        {
-            public int Choice;
-            public string API
-            {
-                get
-                {
-                    return string.Format("{0}:{1}", Name, Version);
-;                }
-            }
-            private string Version;
-            private string Name;
-
-            public ApiChoice(int choice, string version, string name){
-                Choice = choice;
-                Version = version;
-                Name = name;
-            }
-
-            public string GetVersion() { return Version; }
-            public string GetName() { return Name; }
-
-            public override string ToString()
-            {
-                return string.Format("[{0}]\t{1}", Choice, API);
-            }
-        }
+        #region User Input Loops
 
         /// <summary>
         /// Start the scope logic loop fomr the beginning where the user is asked to start by selecting an API.
@@ -232,50 +182,18 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
             while (keepGoing)
             {
                 ApiChoice choice = ChooseApiLoop();
-                ChooseApiScopesLoop(choice.GetName(), choice.GetVersion());
+                ChooseApiScopesLoop(choice.Name, choice.Version);
 
-                string script = "Read-Host '\nWould you like to choose or update additional API scopes? y or n'";
+                //string script = "Read-Host '\nWould you like to choose or update additional API scopes? y or n'";
+                string script = "Read-Host '\nYou will now authenticate for this API. Press any key to continue.'";
                 Collection<PSObject> results = this.InvokeCommand.InvokeScript(script);
-                string result = results[0].ToString().Substring(0,1).ToLower();
-                if (result == "n"){
-                    keepGoing = false;
-                    break;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Returns the contents of the ScopesByApiDict in to a single hashset.
-        /// </summary>
-        public HashSet<string> ScopesDictToHash()
-        {
-            HashSet<string> scopesHash = new HashSet<string>();
-
-            foreach (string key in scopesByApiDict.Keys)
-            {
-                foreach (ScopeInfo scopeInfo in scopesByApiDict[key])
-                {
-                    scopesHash.Add(scopeInfo.scope);
-                }
-            }
-
-            return scopesHash;
-        }
-
-        public void StartFromInCmdletLoop(string domain)
-        {
-            //WriteWarning(string.Format("The Cmdlet you've just started is running against a domain ({0}) that doesn't seem to have any authenticated users saved. In order to continue you'll need to choose which permissions gShell can use.", domain));
-
-            string script = "Read-Host '\nWould you like to choose or your API scopes now? y or n'";
-            Collection<PSObject> results = this.InvokeCommand.InvokeScript(script);
-            string result = results[0].ToString().Substring(0, 1).ToLower();
-            if (result == "y")
-            {
-                StartFromScratchLoop();
-            }
-            else
-            {
-                PrintPretty(string.Format("No scopes will be chosen at this time. You can run this process manually with Invoke-ScopeManager later."), "Red");
+                //string result = results[0].ToString().Substring(0, 1).ToLower();
+                //if (result == "n")
+                //{
+                //    keepGoing = false;
+                //    break;
+                //}
+                keepGoing = false;
             }
         }
 
@@ -318,19 +236,84 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
                 }
             }
 
-            return apiChoices[result-1];
+            return apiChoices[result - 1];
         }
 
+        public void StartFromInCmdletLoop(string domain)
+        {
+            //WriteWarning(string.Format("The Cmdlet you've just started is running against a domain ({0}) that doesn't seem to have any authenticated users saved. In order to continue you'll need to choose which permissions gShell can use.", domain));
+
+            string script = "Read-Host '\nWould you like to choose or your API scopes now? y or n'";
+            Collection<PSObject> results = this.InvokeCommand.InvokeScript(script);
+            string result = results[0].ToString().Substring(0, 1).ToLower();
+            if (result == "y")
+            {
+                StartFromScratchLoop();
+            }
+            else
+            {
+                PrintPretty(string.Format("No scopes will be chosen at this time. You can run this process manually with Invoke-ScopeManager later."), "Red");
+            }
+        }
+        
         /// <summary>
         /// Part of a loop that will return a chosen subset of scopes from an Api's list.
         /// </summary>
         public void ChooseApiScopesLoop(string api, string version)
         {
+            bool? readOnlyScopes = null;
+
+            bool readOnlyChosen = false;
+
+            while (!readOnlyChosen)
+            {
+                PrintPretty("\nWould you like to view all scopes [a], read-only scopes [r] or non read-only scopes [n]?", "Green");
+
+                string readOnlyResultScript = "Read-Host '\nEnter your choice: '";
+
+                Collection<PSObject> readOnlyResultResults = this.InvokeCommand.InvokeScript(readOnlyResultScript);
+
+                string readOnlyResultResult = readOnlyResultResults[0].ToString().Substring(0, 1).ToLower();
+
+                switch (readOnlyResultResult)
+                {
+                    case "a":
+                        readOnlyScopes = null;
+                        readOnlyChosen = true;
+                        break;
+                    case "r":
+                        readOnlyScopes = true;
+                        readOnlyChosen = true;
+                        break;
+                    case "n":
+                        readOnlyScopes = false;
+                        readOnlyChosen = true;
+                        break;
+                    default:
+                        PrintPretty("\nInvalid choice, please try again.", "Red");
+                        break;
+                }
+            }
+
+
+
             bool success = false;
 
             string description;
 
             List<ScopeInfo> scopes = GetScopesForAPI(api, version, out description);
+
+            if (readOnlyScopes.HasValue)
+            {
+                if (readOnlyScopes.Value == true)
+                {
+                    scopes = scopes.Where(x => x.scope.Contains("readonly")).ToList();
+                }
+                else
+                {
+                    scopes = scopes.Where(x => !x.scope.Contains("readonly")).ToList();
+                }
+            }
 
             List<int> intChoices = new List<int>();
 
@@ -350,7 +333,7 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
 
                 for (int i = 0; i < scopes.Count; i++)
                 {
-                    choices.Add(new ScopeChoice(i+1,scopes[i].scope, scopes[i].description));
+                    choices.Add(new ScopeChoice(i + 1, scopes[i].scope, scopes[i].description));
                 }
 
                 foreach (var choice in choices)
@@ -362,7 +345,7 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
                 Collection<PSObject> results = this.InvokeCommand.InvokeScript(script);
                 string rList = results[0].ToString();
 
-                rList = rList.Replace(" ","");
+                rList = rList.Replace(" ", "");
 
                 List<string> stringChoices = new List<string>(rList.Split(','));
 
@@ -410,7 +393,7 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
                     List<ScopeInfo> results = new List<ScopeInfo>();
                     foreach (int choice in intChoices)
                     {
-                        results.Add(scopes[choice-1 ]);
+                        results.Add(scopes[choice - 1]);
                     }
 
                     scopesByApiDict[api + ":" + version] = results;
@@ -421,5 +404,86 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
                 }
             }
         }
+
+        #endregion
+
+        #region Helper Methods
+
+        /// <summary>Ensures the required scopes (email) are in the scopes hash.</summary>
+        public HashSet<string> CheckForRequiredScope(HashSet<string> scopes)
+        {
+            if (!scopes.Contains("https://www.googleapis.com/auth/userinfo.email"))
+            {
+                scopes.Add("https://www.googleapis.com/auth/userinfo.email");
+            }
+
+            return scopes;
+        }
+
+        /// <summary>
+        /// Print to PowerShell using invoke and write-host so as not to return any types via WriteObject
+        /// </summary>
+        public void PrintPretty(string message, string color)
+        {
+            string script = "Write-Host (\"" + message + "\") -ForegroundColor " + color;
+            this.InvokeCommand.InvokeScript(script);
+        }
+
+        /// <summary>Returns the contents of the ScopesByApiDict in to a single hashset.</summary>
+        public HashSet<string> ScopesDictToHash()
+        {
+            HashSet<string> scopesHash = new HashSet<string>();
+
+            foreach (string key in scopesByApiDict.Keys)
+            {
+                foreach (ScopeInfo scopeInfo in scopesByApiDict[key])
+                {
+                    scopesHash.Add(scopeInfo.scope);
+                }
+            }
+
+            return scopesHash;
+        }
+
+        #endregion
+
+        #region Api Calls
+
+        /// <summary>Return a list of scopes with both their scope and description.</summary>
+        public List<ScopeInfo> GetScopesForAPI(string api, string version, out string description, bool? readOnly = null)
+        {
+            Data.RestDescription restDescription = apis.RestData(api, version);
+
+            var scopesDict = (Dictionary<string, Data.RestDescription.AuthData.Oauth2Data.ScopesDataElement>)restDescription.Auth.Oauth2.Scopes;
+
+            var scopesList = new List<ScopeInfo>();
+
+            foreach (string key in scopesDict.Keys)
+            {
+                scopesList.Add(new ScopeInfo() { scope = key, description = scopesDict[key].Description });
+            }
+
+            description = restDescription.Description;
+
+            return scopesList;
+        }
+
+        /// <summary>Get a list of ApiInfo.</summary>
+        public List<ApiInfo> GetAPIList(bool preferred = true)
+        {
+            Data.DirectoryList dirList = apis.List(new gShell.dotNet.Discovery.Apis.DiscoveryListProperties() { preferred = preferred });
+
+            List<ApiInfo> info = new List<ApiInfo>();
+
+            foreach (Data.DirectoryList.ItemsData dir in dirList.Items)
+            {
+                info.Add(new ApiInfo() { description = dir.Description, id = dir.Id });
+            }
+
+            return info;
+        }
+
+        #endregion
+
     }
 }

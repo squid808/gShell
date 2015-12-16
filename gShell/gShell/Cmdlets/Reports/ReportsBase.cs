@@ -28,6 +28,8 @@ namespace gShell.Cmdlets.Reports
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string Domain { get; set; }
+
+        public string ApiName = "admin:reports_v1";
         #endregion
 
         #region PowerShell Methods
