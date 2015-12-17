@@ -55,7 +55,7 @@ namespace gShell.dotNet.Utilities.OAuth2.DataStores
                 }
             }
 
-            ThrowNoOauthSettingsError();
+            //ThrowNoOauthSettingsError();
             return savedInfo;
         }
 

@@ -66,7 +66,6 @@ namespace gShell.Cmdlets.Directory
         #region PowerShell Methods
         protected override void BeginProcessing()
         {
-            if (null == gdirectory) { gdirectory = new gDirectory(); }
             ShouldPromptForScopes(Domain);
             Domain = Authenticate().authenticatedDomain;
 

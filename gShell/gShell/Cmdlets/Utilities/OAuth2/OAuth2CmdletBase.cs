@@ -19,6 +19,8 @@ using Google.Apis.Services;
 using Google.Apis.Admin.Reports.reports_v1;
 using Google.Apis.Admin.Reports.reports_v1.Data;
 
+using gShell.Cmdlets.Utilities.ScopeHandler;
+
 //using gShell.Serialization;
 
 namespace gShell.dotNet.Utilities.OAuth2
@@ -136,19 +138,22 @@ namespace gShell.dotNet.Utilities.OAuth2
                     + " seem to have any authenticated saved for this API ({1}). In order to continue you'll need to"
                     + " choose which permissions gShell can use for this API.", Domain, apiNameAndVersion));
 
-                string script = "Read-Host '\nWould you like to choose your API scopes now? y or n'";
-                Collection<PSObject> results = this.InvokeCommand.InvokeScript(script);
-                string result = results[0].ToString().Substring(0, 1).ToLower();
+                string chooseApiNowScript = "Read-Host '\nWould you like to choose your API scopes now? y or n'";
+                Collection<PSObject> chooseApiNowResults = this.InvokeCommand.InvokeScript(chooseApiNowScript);
+                string result = chooseApiNowResults[0].ToString().Substring(0, 1).ToLower();
                 if (result == "y")
                 {
-                    results = this.InvokeCommand.InvokeScript(string.Format(
-                        "Invoke-ScopeManager -Domain {0} -ApiName {1} -ApiVersion {2}",
-                        Domain, apiNameAndVersion.Split(':')[0], apiNameAndVersion.Split(':')[1]));
+                    ScopeHandlerBase scopeBase = new ScopeHandlerBase(this);
+
+                    scopeBase.ChooseScopesAndAuthenticate(apiNameAndVersion.Split(':')[0], apiNameAndVersion.Split(':')[1]);
+
+                    //results = this.InvokeCommand.InvokeScript(string.Format(
+                    //    "Invoke-ScopeManager -ApiName {0} -ApiVersion {1}",
+                    //    apiNameAndVersion.Split(':')[0], apiNameAndVersion.Split(':')[1]));
                 }
                 else
                 {
-                    script = "Write-Host (\"No scopes were chosen. You can run this process manually with Invoke-ScopeManager later.\") -ForegroundColor \"Red\"";
-                    this.InvokeCommand.InvokeScript(script);
+                    WriteWarning("No scopes were chosen. You can run this process manually with Invoke-ScopeManager later.");
                 }
             }
         }

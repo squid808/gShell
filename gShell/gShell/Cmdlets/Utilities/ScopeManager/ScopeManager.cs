@@ -26,34 +26,29 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
         public static discovery_v1.DiscoveryService service;
 
         [Parameter(Position = 0,
-            Mandatory = false)]
+            Mandatory = false,
+            ParameterSetName="ApiProvided")]
         [ValidateNotNullOrEmpty]
         public string ApiName { get; set; }
 
         [Parameter(Position = 1,
-            Mandatory = false)]
+            Mandatory = false,
+            ParameterSetName = "ApiProvided")]
         [ValidateNotNullOrEmpty]
         public string ApiVersion { get; set; }
+
         #endregion
 
         protected override void ProcessRecord()
         {
-            //Gather the information from the user.
-            ApiChoice choice = ChooseApiLoop();
-            ChooseApiScopesLoop(choice.Name, choice.Version);
+            if (ParameterSetName != "ApiProvided")
+            {
+                ApiChoice choice = ChooseApiLoop();
+                ApiName = choice.API;
+                ApiVersion = choice.Version;
+            }
 
-            string script = "Read-Host '\nYou will now authenticate for this API. Press any key to continue.'";
-            Collection<PSObject> results = this.InvokeCommand.InvokeScript(script);
-
-            //now, take the list of OAuth just gathered and add it to the main OAuth List
-            //OAuth2Base.SetScopes(CheckForRequiredScope(ScopesDictToHash()));
-
-            HashSet<string> scopes = CheckForRequiredScope(ScopesDictToHash());
-
-            //Now, authenticate.
-            OAuth2Base.AuthorizeUser(choice.API, scopes);
-
-            PrintPretty("Scopes have been authenticated and saved.", "green");
+            ChooseScopesAndAuthenticate(ApiName, ApiVersion);
         }
     }
 
@@ -61,21 +56,16 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
     {
         #region SubClasses
 
-        /// <summary>
-        /// A collection of the information representing an API.
-        /// </summary>
+        /// <summary> A collection of the information representing an API. </summary>
         public class ApiChoice
         {
             public int Choice;
-            /// <summary>
-            /// The API in Name:Version format, eg. admin:discovery_v1 or calendar:v2
-            /// </summary>
+            /// <summary> The API in Name:Version format, eg. admin:discovery_v1 or calendar:v2 </summary>
             public string API
             {
                 get
                 {
                     return string.Format("{0}:{1}", Name, Version);
-                    ;
                 }
             }
             public string Version { get; set; }
@@ -123,28 +113,35 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
 
         public class ScopeChoice
         {
-            public int Choice;
-            public string Scope;
-            public string Description;
+            public int Choice { get; set; }
+            public string Scope { get; set; }
+            public string Description { get; set; }
+            public bool IsChecked { get; set; }
+            private static string CheckMark = "\u221A"; 
 
-            public ScopeChoice(int choice, string scope, string description)
+            public ScopeChoice(int choice, string scope, string description, bool isChecked = false)
             {
                 Choice = choice;
                 Scope = scope;
                 Description = description;
+                IsChecked = isChecked;
+
             }
 
             public override string ToString()
             {
+                return string.Format("[{0}] {1}\t{2} - {3}", IsChecked ? CheckMark : " ", Choice, Scope, Description);
 
-                if (Scope != "https://www.googleapis.com/auth/userinfo.email")
-                {
-                    return string.Format("[{0}]\t{1} - {2}", Choice, Scope, Description);
-                }
-                else
-                {
-                    return string.Format("[-]\t{0} (Required for gShell) - {1}", Scope, Description);
-                }
+
+                //if (Scope != "https://www.googleapis.com/auth/userinfo.email")
+                //{
+                //    return string.Format("[{0}]\t{1} - {2}", Choice, Scope, Description);
+                //}
+                //else
+                //{
+                //    return string.Format("[{2}]\t{0} (Required for gShell) - {1}", 
+                //        Scope, Description, "\u221A");
+                //}
             }
         }
 
@@ -153,7 +150,16 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
         #region Properties
 
         /// <summary>
-        /// A list of APIs that are used in gShell. Needs to be maintained.
+        /// An invokable instance of the PSCmdlet class or a descendent.
+        /// </summary>
+        /// <remarks>
+        /// In some cases where this class isn't called as part of it's own cmdlet, when we have to create it as a
+        /// separate class to work with another cmdlet, we need to supply that class as the instance to work with.
+        /// </remarks>
+        private PSCmdlet invokablePSInstance { get; set; }
+
+        /// <summary>
+        /// A list of APIs that are used in gShell. Needs to be curated manually.
         /// </summary>
         private ApiChoice[] apiChoices = new ApiChoice[]{
             new ApiChoice(1, "v2", "oauth2"),
@@ -161,45 +167,52 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
             new ApiChoice(3, "reports_v1","admin")
         };
 
-        /// <summary>
-        /// A collection of scope results where the key is the scope id in name:version format and the List is the ScopeInfos
-        /// </summary>
-        private Dictionary<string, List<ScopeInfo>> scopesByApiDict = new Dictionary<string, List<ScopeInfo>>();
+        public ScopeHandlerBase() 
+        {
+            invokablePSInstance = this;
+        }
+        public ScopeHandlerBase(PSCmdlet instance)
+        {
+            invokablePSInstance = instance;
+        }
+
+        ///// <summary>
+        ///// A collection of scope results where the key is the scope id in name:version format and the List is the ScopeInfos
+        ///// </summary>
+        //private Dictionary<string, List<ScopeInfo>> scopesByApiDict { get; set; }
 
 
         #endregion
 
         #region User Input Loops
 
-        /// <summary>
-        /// Start the scope logic loop fomr the beginning where the user is asked to start by selecting an API.
-        /// Results in the scopesByApiDict being set up.
-        /// </summary>
-        public void StartFromScratchLoop()
-        {
-            bool keepGoing = true;
+        ///// <summary>
+        ///// Start the scope logic loop fomr the beginning where the user is asked to start by selecting an API.
+        ///// Results in the scopesByApiDict being set up.
+        ///// </summary>
+        //public void StartFromScratchLoop()
+        //{
+        //    bool keepGoing = true;
 
-            while (keepGoing)
-            {
-                ApiChoice choice = ChooseApiLoop();
-                ChooseApiScopesLoop(choice.Name, choice.Version);
+        //    while (keepGoing)
+        //    {
+        //        ApiChoice choice = ChooseApiLoop();
+        //        ChooseApiScopesLoop(choice.Name, choice.Version);
 
-                //string script = "Read-Host '\nWould you like to choose or update additional API scopes? y or n'";
-                string script = "Read-Host '\nYou will now authenticate for this API. Press any key to continue.'";
-                Collection<PSObject> results = this.InvokeCommand.InvokeScript(script);
-                //string result = results[0].ToString().Substring(0, 1).ToLower();
-                //if (result == "n")
-                //{
-                //    keepGoing = false;
-                //    break;
-                //}
-                keepGoing = false;
-            }
-        }
+        //        //string script = "Read-Host '\nWould you like to choose or update additional API scopes? y or n'";
+        //        string script = "Read-Host '\nYou will now authenticate for this API. Press any key to continue.'";
+        //        Collection<PSObject> results = this.InvokeCommand.InvokeScript(script);
+        //        //string result = results[0].ToString().Substring(0, 1).ToLower();
+        //        //if (result == "n")
+        //        //{
+        //        //    keepGoing = false;
+        //        //    break;
+        //        //}
+        //        keepGoing = false;
+        //    }
+        //}
 
-        /// <summary>
-        /// Part of a loop that will return an Api Choice
-        /// </summary>
+        /// <summary> Part of a loop that will return an Api Choice </summary>
         public ApiChoice ChooseApiLoop()
         {
             bool success = false;
@@ -215,7 +228,7 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
                 }
 
                 string script = "Read-Host '\nEnter the number of your choice'";
-                Collection<PSObject> results = this.InvokeCommand.InvokeScript(script);
+                Collection<PSObject> results = invokablePSInstance.InvokeCommand.InvokeScript(script);
                 int temp;
                 try
                 {
@@ -239,170 +252,280 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
             return apiChoices[result - 1];
         }
 
-        public void StartFromInCmdletLoop(string domain)
-        {
-            //WriteWarning(string.Format("The Cmdlet you've just started is running against a domain ({0}) that doesn't seem to have any authenticated users saved. In order to continue you'll need to choose which permissions gShell can use.", domain));
+        //public void StartFromInCmdletLoop(string domain)
+        //{
+        //    //WriteWarning(string.Format("The Cmdlet you've just started is running against a domain ({0}) that doesn't seem to have any authenticated users saved. In order to continue you'll need to choose which permissions gShell can use.", domain));
 
-            string script = "Read-Host '\nWould you like to choose or your API scopes now? y or n'";
-            Collection<PSObject> results = this.InvokeCommand.InvokeScript(script);
-            string result = results[0].ToString().Substring(0, 1).ToLower();
-            if (result == "y")
-            {
-                StartFromScratchLoop();
-            }
-            else
-            {
-                PrintPretty(string.Format("No scopes will be chosen at this time. You can run this process manually with Invoke-ScopeManager later."), "Red");
-            }
-        }
+        //    string script = "Read-Host '\nWould you like to choose or your API scopes now? y or n'";
+        //    Collection<PSObject> results = this.InvokeCommand.InvokeScript(script);
+        //    string result = results[0].ToString().Substring(0, 1).ToLower();
+        //    if (result == "y")
+        //    {
+        //        StartFromScratchLoop();
+        //    }
+        //    else
+        //    {
+        //        PrintPretty(string.Format("No scopes will be chosen at this time. You can run this process manually with Invoke-ScopeManager later."), "Red");
+        //    }
+        //}
         
         /// <summary>
         /// Part of a loop that will return a chosen subset of scopes from an Api's list.
         /// </summary>
-        public void ChooseApiScopesLoop(string api, string version)
+        public HashSet<string> ChooseApiScopesLoop(string api, string version)
         {
             bool? readOnlyScopes = null;
-
             bool readOnlyChosen = false;
-
-            while (!readOnlyChosen)
-            {
-                PrintPretty("\nWould you like to view all scopes [a], read-only scopes [r] or non read-only scopes [n]?", "Green");
-
-                string readOnlyResultScript = "Read-Host '\nEnter your choice: '";
-
-                Collection<PSObject> readOnlyResultResults = this.InvokeCommand.InvokeScript(readOnlyResultScript);
-
-                string readOnlyResultResult = readOnlyResultResults[0].ToString().Substring(0, 1).ToLower();
-
-                switch (readOnlyResultResult)
-                {
-                    case "a":
-                        readOnlyScopes = null;
-                        readOnlyChosen = true;
-                        break;
-                    case "r":
-                        readOnlyScopes = true;
-                        readOnlyChosen = true;
-                        break;
-                    case "n":
-                        readOnlyScopes = false;
-                        readOnlyChosen = true;
-                        break;
-                    default:
-                        PrintPretty("\nInvalid choice, please try again.", "Red");
-                        break;
-                }
-            }
-
-
-
-            bool success = false;
+            bool choicesConfirmed = false;
 
             string description;
+            List<ScopeInfo> possibleScopes = GetScopesForAPI(api, version, out description);
 
-            List<ScopeInfo> scopes = GetScopesForAPI(api, version, out description);
-
-            if (readOnlyScopes.HasValue)
-            {
-                if (readOnlyScopes.Value == true)
+            //while (!choicesConfirmed)
+            //{
+                #region ReadOnly Choice
+                while (!readOnlyChosen)
                 {
-                    scopes = scopes.Where(x => x.scope.Contains("readonly")).ToList();
+                    PrintPretty("\nWould you like to view all scopes [a], read-only scopes [r] or non read-only scopes [n]?", "Green");
+
+                    string readOnlyResultScript = "Read-Host '\nEnter your choice: '";
+
+                    Collection<PSObject> readOnlyResultResults = invokablePSInstance.InvokeCommand.InvokeScript(readOnlyResultScript);
+
+                    string readOnlyResultResult = readOnlyResultResults[0].ToString().Substring(0, 1).ToLower();
+
+                    switch (readOnlyResultResult)
+                    {
+                        case "a":
+                            readOnlyScopes = null;
+                            readOnlyChosen = true;
+                            break;
+                        case "r":
+                            readOnlyScopes = true;
+                            readOnlyChosen = true;
+                            break;
+                        case "n":
+                            readOnlyScopes = false;
+                            readOnlyChosen = true;
+                            break;
+                        default:
+                            PrintPretty("\nInvalid choice, please try again.", "Red");
+                            break;
+                    }
                 }
-                else
+                #endregion
+
+                #region Selecting Scopes
+                bool properlySelected = false;
+                bool hasSelectedOnce = false;
+                HashSet<int> intChoices = new HashSet<int>();
+                List<ScopeChoice> choices = null;
+                bool allChoicesSelected = false;
+
+                if (readOnlyScopes.HasValue)
                 {
-                    scopes = scopes.Where(x => !x.scope.Contains("readonly")).ToList();
+                    if (readOnlyScopes.Value == true)
+                    {
+                        possibleScopes = possibleScopes.Where(x => x.scope.Contains("readonly")).ToList();
+                    }
+                    else
+                    {
+                        possibleScopes = possibleScopes.Where(x => !x.scope.Contains("readonly")).ToList();
+                    }
                 }
-            }
 
-            List<int> intChoices = new List<int>();
-
-            bool all = false;
-
-            while (!success)
-            {
-                intChoices = new List<int>(); //in case we loop, reset it
-
-                PrintPretty("\n" + api + ":" + version + " - " + description + "\n", "Green");
-
-                PrintPretty("\nPlease select the scope(s) you'd like to grant gShell permission to:\n", "Green");
-
-                List<ScopeChoice> choices = new List<ScopeChoice>();
-
-                choices.Add(new ScopeChoice(0, "All", "All scopes in this list."));
-
-                for (int i = 0; i < scopes.Count; i++)
+                while (!properlySelected)
                 {
-                    choices.Add(new ScopeChoice(i + 1, scopes[i].scope, scopes[i].description));
+                    //intChoices = new HashSet<int>(); //in case we loop, reset it
+
+                    #region Print Choices
+                    PrintPretty("\n" + api + ":" + version + " - " + description + "\n", "Green");
+                    if (!hasSelectedOnce)
+                    {
+                        PrintPretty("\nPlease select the scope(s) you'd like to grant gShell permission to:\n", "Green");
+                    }
+                    else
+                    {
+                        PrintPretty("\nPlease confirm the scope(s) you'd like to grant gShell permission to:\n", "Green");
+                    }
+
+                    if (choices == null)
+                    {
+                        choices = new List<ScopeChoice>();
+
+                        choices.Add(new ScopeChoice(0, "All", "All scopes in this list."));
+
+                        for (int i = 0; i < possibleScopes.Count; i++)
+                        {
+                            bool isChecked = false;
+
+                            if (possibleScopes[i].scope == "https://www.googleapis.com/auth/userinfo.email")
+                            {
+                                isChecked = true;
+                            }
+
+                            choices.Add(new ScopeChoice(i + 1, possibleScopes[i].scope, possibleScopes[i].description, isChecked));
+                        }
+                    }
+
+                    foreach (var choice in choices)
+                    {
+                        PrintPretty(choice.ToString(), "Yellow");
+                    }
+                    #endregion
+
+                    string script = string.Empty;
+
+                    if (!hasSelectedOnce)
+                    {
+                        script = "Read-Host '\nEnter your choices, separated by commas'";
+                    }
+                    else
+                    {
+                        script = "Read-Host '\nToggle your choices separated by commas or hit [enter] to finish and authenticate'";
+                    }
+                    Collection<PSObject> results = invokablePSInstance.InvokeCommand.InvokeScript(script);
+                    string rList = results[0].ToString().Replace(" ", "");
+
+                    List<string> stringChoices = new List<string>(rList.Split(','));
+
+                    //Make sure something was chosen
+                    if (stringChoices.Count == 1 && hasSelectedOnce)
+                    {
+                        if (stringChoices[0] == "")
+                        {
+                            properlySelected = true;
+                            break;
+                        }
+                    }
+                    else if (stringChoices.Count == 0 && !hasSelectedOnce)
+                    {
+                        PrintPretty("\nPlease choose one or more scopes to authenticate", "Red");
+                        properlySelected = false;
+                        hasSelectedOnce = false;
+                        break;
+                    }
+
+                    int temp;
+
+                    //Parse the scope choices from the user
+                    try
+                    {
+                        foreach (string sChoice in stringChoices)
+                        {
+                            temp = int.Parse(sChoice);
+
+                            if (temp > 0 && temp <= possibleScopes.Count)
+                            {
+                                if (!intChoices.Contains(temp)) {
+                                    intChoices.Add(temp);
+                                }
+                                else
+                                {
+                                    intChoices.Remove(temp);
+                                    allChoicesSelected = false; //just in case we had all selected and removed one
+                                }
+                            }
+                            else if (temp == 0)
+                            {
+                                if (allChoicesSelected)
+                                {
+                                    //they were all selected before, and now they're being toggled
+                                    intChoices = new HashSet<int>();
+                                    hasSelectedOnce = false;
+                                }
+                                else
+                                {   
+                                    foreach (var choice in choices)
+                                    {
+                                        if (choice.Choice != 0)
+                                        {
+                                            intChoices.Add(choice.Choice);
+                                        }
+                                    }
+                                }
+
+                                allChoicesSelected = !allChoicesSelected;
+                            }
+                            else
+                            {
+                                PrintPretty("\nOne or more selections not within bounds. Please try again.\n", "Red");
+                                properlySelected = false;
+                                break;
+                            }
+
+                            if (intChoices.Count > 0) hasSelectedOnce = true;
+                        }
+
+                        //No errors found in the input, replace the numbers with checkmarks or remove them as needed
+                        foreach (var choice in choices)
+                        {
+                            choice.IsChecked = (intChoices.Contains(choice.Choice)) ? true : false;
+                        }
+                    }
+                    catch
+                    {
+                        PrintPretty("\nInvalid Selection, try again\n", "Red");
+                        properlySelected = false;
+                        hasSelectedOnce = false;
+                    }
                 }
+                #endregion
+
+
+                HashSet<string> scopesResult = new HashSet<string>();
 
                 foreach (var choice in choices)
                 {
-                    PrintPretty(choice.ToString(), "Yellow");
+                    scopesResult.Add(choice.Scope);
                 }
 
-                string script = "Read-Host '\nEnter your choices, separated by commas'";
-                Collection<PSObject> results = this.InvokeCommand.InvokeScript(script);
-                string rList = results[0].ToString();
+                return scopesResult;
 
-                rList = rList.Replace(" ", "");
+                //List<ScopeInfo> results = new List<ScopeInfo>();
 
-                List<string> stringChoices = new List<string>(rList.Split(','));
+                ////Selections have been confirmed and validated, move on.
+                //if (all)
+                //{
+                //    scopesByApiDict[api + ":" + version] = scopes;
+                //}
+                //else
+                //{
+                //    if (intChoices.Count != 0)
+                //    {
+                //        List<ScopeInfo> results = new List<ScopeInfo>();
+                //        foreach (int choice in intChoices)
+                //        {
+                //            results.Add(scopes[choice - 1]);
+                //        }
 
-                int temp;
+                //        scopesByApiDict[api + ":" + version] = results;
+                //    }
+                //    else
+                //    {
+                //        scopesByApiDict[api + ":" + version] = new List<ScopeInfo>();
+                //    }
+                //}
 
-                try
-                {
-                    foreach (string sChoice in stringChoices)
-                    {
-                        temp = int.Parse(sChoice);
+                //Now verify the selection of scopes
+                //PrintPretty("\nPlease review the following scopes")
 
-                        if (temp > 0 && temp <= scopes.Count)
-                        {
-                            intChoices.Add(temp);
-                            success = true;
-                        }
-                        else if (temp == 0)
-                        {
-                            all = true;
-                            success = true;
-                            break;
-                        }
-                        else
-                        {
-                            PrintPretty("\nOne or more selections not within bounds. Please try again.\n", "Red");
-                            success = false;
-                            break;
-                        }
-                    }
-                }
-                catch
-                {
-                    PrintPretty("\nInvalid Selection, try again\n", "Red");
-                }
-            }
+            //}
+        }
 
-            if (all)
-            {
-                scopesByApiDict[api + ":" + version] = scopes;
-            }
-            else
-            {
-                if (intChoices.Count != 0)
-                {
-                    List<ScopeInfo> results = new List<ScopeInfo>();
-                    foreach (int choice in intChoices)
-                    {
-                        results.Add(scopes[choice - 1]);
-                    }
+        public void ChooseScopesAndAuthenticate(string api, string version)
+        {
+            HashSet<string> scopes = ChooseApiScopesLoop(api, version);
 
-                    scopesByApiDict[api + ":" + version] = results;
-                }
-                else
-                {
-                    scopesByApiDict[api + ":" + version] = new List<ScopeInfo>();
-                }
-            }
+            scopes = CheckForRequiredScope(scopes);
+
+            string script = "Read-Host '\nYou will now authenticate for this API. Press any key to continue.'";
+            Collection<PSObject> results = invokablePSInstance.InvokeCommand.InvokeScript(script);
+
+            //Now, authenticate.
+            OAuth2Base.AuthorizeUser(api + ":" + version, scopes);
+
+            PrintPretty("Scopes have been authenticated and saved.", "green");
         }
 
         #endregion
@@ -426,24 +549,24 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
         public void PrintPretty(string message, string color)
         {
             string script = "Write-Host (\"" + message + "\") -ForegroundColor " + color;
-            this.InvokeCommand.InvokeScript(script);
+            invokablePSInstance.InvokeCommand.InvokeScript(script);
         }
 
-        /// <summary>Returns the contents of the ScopesByApiDict in to a single hashset.</summary>
-        public HashSet<string> ScopesDictToHash()
-        {
-            HashSet<string> scopesHash = new HashSet<string>();
+        ///// <summary>Returns the contents of the ScopesByApiDict in to a single hashset.</summary>
+        //public HashSet<string> ScopesDictToHash()
+        //{
+        //    HashSet<string> scopesHash = new HashSet<string>();
 
-            foreach (string key in scopesByApiDict.Keys)
-            {
-                foreach (ScopeInfo scopeInfo in scopesByApiDict[key])
-                {
-                    scopesHash.Add(scopeInfo.scope);
-                }
-            }
+        //    foreach (string key in scopesByApiDict.Keys)
+        //    {
+        //        foreach (ScopeInfo scopeInfo in scopesByApiDict[key])
+        //        {
+        //            scopesHash.Add(scopeInfo.scope);
+        //        }
+        //    }
 
-            return scopesHash;
-        }
+        //    return scopesHash;
+        //}
 
         #endregion
 

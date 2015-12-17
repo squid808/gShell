@@ -18,11 +18,11 @@ namespace gShell.Cmdlets.Reports
     public abstract class ReportsBase : OAuth2CmdletBase
     {
         #region Properties
-        protected static gReports greports = new gReports();
-        protected Activities activities = new Activities();
-        protected Channels channels = new Channels();
-        protected CustomerUsageReports customerUsageReports = new CustomerUsageReports();
-        protected UserUsageReports userUsageReports = new UserUsageReports();
+        protected static gReports greports { get; set; }
+        protected Activities activities { get; set; }
+        protected Channels channels { get; set; }
+        protected CustomerUsageReports customerUsageReports { get; set; }
+        protected UserUsageReports userUsageReports { get; set; }
 
         [Parameter(
             Mandatory = false)]
@@ -30,12 +30,25 @@ namespace gShell.Cmdlets.Reports
         public string Domain { get; set; }
 
         protected override string apiNameAndVersion { get { return greports.apiNameAndVersion; } }
+
+        #endregion
+
+        #region Constructors
+
+        public ReportsBase()
+        {
+            greports = new gReports();
+            activities = new Activities();
+            channels = new Channels();
+            customerUsageReports = new CustomerUsageReports();
+            userUsageReports = new UserUsageReports();
+        }
+
         #endregion
 
         #region PowerShell Methods
         protected override void BeginProcessing()
         {
-            if (null == greports) { greports = new gReports(); }
             ShouldPromptForScopes(Domain);
             Domain = Authenticate().authenticatedDomain;
 
