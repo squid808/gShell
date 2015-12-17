@@ -125,13 +125,24 @@ namespace gShell.dotNet.Utilities.OAuth2
 
         #region Set
 
-        //NOTE: Any time something changes, you MUST update the in-memory OAuth2Info as well.
+        //NOTE: Any time something changes, you MUST update the in-memory OAuth2Info as well - or update the memory and then save
         public void SaveToken(string Api, string Domain, string User, string Token, List<string> Scopes)
         {
             info.SetTokenAndScopes(Api, Token, Scopes, User, Domain);
+            dataStore.SaveInfo(info);
         }
 
+        public void SetDefaultDomain(string Domain)
+        {
+            info.SetDefaultDomain(Domain);
+            dataStore.SaveInfo(info);
+        }
 
+        public void SetDefaultUser(string Domain, string UserName)
+        {
+            info.SetDefaultUser(Domain, UserName);
+            dataStore.SaveInfo(info);
+        }
         #endregion
 
         #region Remove

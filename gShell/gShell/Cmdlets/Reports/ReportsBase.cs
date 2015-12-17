@@ -18,7 +18,7 @@ namespace gShell.Cmdlets.Reports
     public abstract class ReportsBase : OAuth2CmdletBase
     {
         #region Properties
-        protected static gShell.dotNet.Reports greports = new gReports();
+        protected static gReports greports = new gReports();
         protected Activities activities = new Activities();
         protected Channels channels = new Channels();
         protected CustomerUsageReports customerUsageReports = new CustomerUsageReports();
@@ -29,14 +29,15 @@ namespace gShell.Cmdlets.Reports
         [ValidateNotNullOrEmpty]
         public string Domain { get; set; }
 
-        public string ApiName = "admin:reports_v1";
+        protected override string apiNameAndVersion { get { return greports.apiNameAndVersion; } }
         #endregion
 
         #region PowerShell Methods
         protected override void BeginProcessing()
         {
             if (null == greports) { greports = new gReports(); }
-            Domain = Authenticate(Domain);
+            ShouldPromptForScopes(Domain);
+            Domain = Authenticate().authenticatedDomain;
 
             GWriteProgress = new gWriteProgress(WriteProgress);
         }
@@ -46,9 +47,9 @@ namespace gShell.Cmdlets.Reports
         /// <summary>
         /// A method specific to each inherited object, called during authentication. Must be implemented.
         /// </summary>
-        protected override string Authenticate(string domain)
+        protected override AuthenticationInfo Authenticate()
         {
-            return greports.Authenticate(domain);
+            return greports.Authenticate(apiNameAndVersion);
         }
         #endregion
 

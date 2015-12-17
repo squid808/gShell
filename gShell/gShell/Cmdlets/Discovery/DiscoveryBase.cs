@@ -18,9 +18,10 @@ namespace gShell.Cmdlets.Discovery
     public class DiscoveryBase : OAuth2CmdletBase
     {
         #region Properties
-        protected static gShell.dotNet.Discovery gdiscovery = new gDiscovery();
+        protected static gDiscovery gdiscovery = new gDiscovery();
         protected Apis apis = new Apis();
-        public string ApiName = "discovery:v1";
+
+        protected override string apiNameAndVersion { get { return gdiscovery.apiNameAndVersion; } }
         #endregion
 
         #region PowerShell Methods
@@ -31,10 +32,7 @@ namespace gShell.Cmdlets.Discovery
         /// <summary>
         /// A method specific to each inherited object, called during authentication. Must be implemented.
         /// </summary>
-        protected override string Authenticate(string domain)
-        {
-            return null;
-        }
+        protected override AuthenticationInfo Authenticate() { return null; }
         #endregion
 
         #region Apis

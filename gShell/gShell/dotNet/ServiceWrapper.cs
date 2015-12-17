@@ -7,9 +7,15 @@ using gShell.dotNet.Utilities.OAuth2;
 namespace gShell.dotNet
 {
     /// <summary>
-    /// This class is a base for any classes that wish to wrap a google apps service with the gShell authentication logic.
-    /// All that needs to be added aside from the virtual members is a wrapper of the services and their methods in subclasses.
+    /// This class is a base for any classes that wish to wrap a google apps service with the gShell authentication
+    /// logic. All that needs to be added aside from the virtual members is a wrapper of the services and their 
+    /// methods in subclasses.
     /// </summary>
+    /// <remarks>
+    /// In this and other files, the flow assumes that before each API call the Authenticate() method is called, which
+    /// in turn sets the OAuth2Base.currentAuthInfo, which contains the currently authenticated domain and user (and 
+    /// possibly more).
+    /// </remarks>
     public abstract class ServiceWrapper<T> where T : BaseClientService
     {
         #region Properties
@@ -17,7 +23,7 @@ namespace gShell.dotNet
         /// A collection of services keyed by the domain name. TODO: have an alternate set for gmail users
         /// </summary>
         public static Dictionary<string, T> services { get; set; }
-            
+
         /// <summary>
         /// Indicates if this set of services will work with Gmail (as opposed to Google Apps). 
         /// This will cause authentication to fail if false and the user attempts to authenticate with
@@ -36,12 +42,13 @@ namespace gShell.dotNet
             }
         }
 
-        protected abstract string apiNameAndVersion { get; }
+        public abstract string apiNameAndVersion { get; }
 
         #endregion
 
         #region Constructors
-        public ServiceWrapper(){
+        public ServiceWrapper()
+        {
             services = new Dictionary<string, T>();
         }
         #endregion
@@ -92,7 +99,7 @@ namespace gShell.dotNet
         /// Authenticates the given domain and creates a service for it, if necessary. 
         /// The process of authenticating will update the default and current domains.
         /// </summary>
-        public AuthenticationInfo Authenticate()
+        public AuthenticationInfo Authenticate(string apiNameAndVersion)
         {
             return OAuth2Base.Authenticate(apiNameAndVersion);
         }
@@ -136,7 +143,7 @@ namespace gShell.dotNet
         #endregion
 
         //#region MultiPageResult Helpers
-        
+
 
 
         //#endregion

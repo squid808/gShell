@@ -212,13 +212,13 @@ namespace gShell.dotNet.Utilities.OAuth2
         //    return domains[defaultDomain];
         //}
 
-        ///// <summary>
-        ///// Set or update the default domain stored.
-        ///// </summary>
-        //public void SetDefaultDomain(string domain)
-        //{
-        //    _defaultDomain = domain;
-        //}
+        /// <summary>
+        /// Set or update the default domain stored.
+        /// </summary>
+        public void SetDefaultDomain(string domain)
+        {
+            _defaultDomain = domain;
+        }
 
         /// <summary>
         /// Return a domain. Assumes the domain exists.
@@ -317,19 +317,17 @@ namespace gShell.dotNet.Utilities.OAuth2
         //    SetDefaultUser(userInfo.Email);
         //}
 
-        ///// <summary>
-        ///// Set or update the default user stored for a domain.
-        ///// </summary>
-        //public void SetDefaultUser(string userEmail)
-        //{
-        //    string domain = Utils.GetDomainFromEmail(userEmail);
-
-        //    if (!domains.ContainsKey(domain))
-        //    {
-        //        domains.Add(domain, new OAuth2Domain());
-        //    }
-        //    domains[domain].SetDefaultUser(userEmail);
-        //}
+        /// <summary>
+        /// Set or update the default user stored for a domain.
+        /// </summary>
+        public void SetDefaultUser(string domain, string userName)
+        {
+            if (!domains.ContainsKey(domain))
+            {
+                domains.Add(domain, new OAuth2Domain());
+            }
+            domains[domain].defaultUser = Utils.GetFullEmailAddress(userName, domain);
+        }
 
         ///// <summary>
         ///// Returns a stored user. Assumes it exists.
@@ -493,7 +491,7 @@ namespace gShell.dotNet.Utilities.OAuth2
         {
             users = (Dictionary<string, OAuth2DomainUser>)info.GetValue("users",
                 typeof(Dictionary<string, OAuth2DomainUser>));
-            _defaultEmail = (string)info.GetValue("defaultEmail", typeof(string));
+            //_defaultEmail = (string)info.GetValue("defaultEmail", typeof(string));
 
             serviceAccountEmail = (string)info.GetValue("serviceAccountEmail", typeof(string));
             

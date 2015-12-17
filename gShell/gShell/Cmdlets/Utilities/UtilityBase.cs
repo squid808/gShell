@@ -10,7 +10,7 @@ namespace gShell.Cmdlets.Utilities
             //Authenticate(OAuth2Base.currentDomain);
         }
 
-        protected override string Authenticate(string givenDomain)
+        protected override AuthenticationInfo Authenticate()
         {
             return null;
         }

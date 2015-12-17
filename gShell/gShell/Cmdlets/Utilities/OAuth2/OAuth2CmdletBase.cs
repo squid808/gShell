@@ -31,7 +31,7 @@ namespace gShell.dotNet.Utilities.OAuth2
     {
         #region Properties
 
-        protected static ProgressRecord progressBar;
+        protected static ProgressRecord progressBar { get; set; }
 
         /// <summary>Determine if the assemblies have already been resolved.</summary>
         public static bool assembliesResolved { get { return _assembliesResolved; } }
@@ -41,7 +41,9 @@ namespace gShell.dotNet.Utilities.OAuth2
         protected delegate void gWriteProgress(ProgressRecord progressBar);
 
         /// <summary>A static implementation of GWriteProgress.</summary>
-        protected static gWriteProgress GWriteProgress;
+        protected static gWriteProgress GWriteProgress { get; set; }
+
+        protected abstract string apiNameAndVersion { get; }
 
         #endregion
 
@@ -110,29 +112,29 @@ namespace gShell.dotNet.Utilities.OAuth2
         protected override abstract void BeginProcessing();
 
         /// <summary>Load token and scope information for API call, and authenticate if necessary.</summary>
-        protected abstract string Authenticate(string domain);
+        protected abstract AuthenticationInfo Authenticate();
 
         /// <summary>Determines if the user needs to be prompted to select the scopes.</summary>
-        /// <param name="domain"></param>
-        public void ShouldPromptForScopes(string domain)
+        /// <param name="Domain"></param>
+        public void ShouldPromptForScopes(string Domain)
         {
             //Since the domain could be null, see if we have a default ready or if the saved info contains this one
-            domain = OAuth2Base.CheckDomain(domain);
+            Domain = OAuth2Base.CheckDomain(Domain);
 
             string defaultUser = null;
 
-            if (domain != null)
-                 defaultUser = OAuth2Base.infoConsumer.GetDefaultUser(domain);
+            if (Domain != null)
+                 defaultUser = OAuth2Base.infoConsumer.GetDefaultUser(Domain);
 
             //if no domain is returned, none was provided or none was found as default.
-            if (string.IsNullOrWhiteSpace(domain) || string.IsNullOrWhiteSpace(defaultUser) || 
-                !OAuth2Base.infoConsumer.TokenAndScopesExist(domain, defaultUser, ApiName))
+            if (string.IsNullOrWhiteSpace(Domain) || string.IsNullOrWhiteSpace(defaultUser) || 
+                !OAuth2Base.infoConsumer.TokenAndScopesExist(Domain, defaultUser, apiNameAndVersion   ))
             {
-                if (string.IsNullOrWhiteSpace(domain)) domain = "no domain provided";
+                if (string.IsNullOrWhiteSpace(Domain)) Domain = "no domain provided";
 
                 WriteWarning(string.Format("The Cmdlet you've just started is for domain ({0}) doesn't"
                     + " seem to have any authenticated saved for this API ({1}). In order to continue you'll need to"
-                    + " choose which permissions gShell can use for this API.", domain, ApiName));
+                    + " choose which permissions gShell can use for this API.", Domain, apiNameAndVersion));
 
                 string script = "Read-Host '\nWould you like to choose your API scopes now? y or n'";
                 Collection<PSObject> results = this.InvokeCommand.InvokeScript(script);
@@ -141,7 +143,7 @@ namespace gShell.dotNet.Utilities.OAuth2
                 {
                     results = this.InvokeCommand.InvokeScript(string.Format(
                         "Invoke-ScopeManager -Domain {0} -ApiName {1} -ApiVersion {2}",
-                        domain, ApiName.Split(':')[0], ApiName.Split(':')[1]));
+                        Domain, apiNameAndVersion.Split(':')[0], apiNameAndVersion.Split(':')[1]));
                 }
                 else
                 {

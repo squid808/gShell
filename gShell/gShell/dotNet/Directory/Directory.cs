@@ -29,7 +29,7 @@ namespace gShell.dotNet
             return new directory_v1.DirectoryService(OAuth2Base.GetInitializer(domain));
         }
 
-        protected override string apiNameAndVersion { get { return "admin:directory_v1"; } }
+        public override string apiNameAndVersion { get { return "admin:directory_v1"; } }
 
         #endregion
 

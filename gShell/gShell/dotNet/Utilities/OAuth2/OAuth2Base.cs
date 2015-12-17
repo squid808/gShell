@@ -12,6 +12,16 @@ using gShell.dotNet.Utilities.OAuth2;
 
 namespace gShell.dotNet.Utilities.OAuth2
 {
+    /// <summary>
+    /// Responsible for acting as a relay between the info consumer and the API calls; handles the authentication for
+    /// any Google API-based services.
+    /// </summary>
+    /// <remarks>
+    /// In this and other files, the flow assumes that before each API call the Authenticate() method is called, which
+    /// in turn sets the OAuth2Base.currentAuthInfo, which contains the currently authenticated domain and user (and 
+    /// possibly more). Here, the infoConsumer is the relay to the underlying datastore which contains all of the
+    /// stored token information.
+    /// </remarks>
     public class OAuth2Base
     {
         private const string _appName = "gShellCmdlets";
@@ -180,7 +190,7 @@ namespace gShell.dotNet.Utilities.OAuth2
         }
     }
 
-    public struct AuthenticationInfo
+    public class AuthenticationInfo
     {
         public AuthenticationInfo(string User, string Domain)
         {

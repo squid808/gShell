@@ -29,7 +29,7 @@ namespace gShell.dotNet
             return new reports_v1.ReportsService(OAuth2Base.GetInitializer(domain));
         }
 
-        protected override string apiNameAndVersion { get { return "admin:reports_v1"; } }
+        public override string apiNameAndVersion { get { return "admin:reports_v1"; } }
 
         #endregion
 
