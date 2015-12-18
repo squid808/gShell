@@ -35,12 +35,12 @@ namespace gShell.dotNet.Utilities
 
         public Task ClearAsync()
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         public Task DeleteAsync<T>(string key)
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         /// <summary>

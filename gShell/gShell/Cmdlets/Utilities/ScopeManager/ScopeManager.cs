@@ -319,7 +319,7 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
                 bool properlySelected = false;
                 bool hasSelectedOnce = false;
                 HashSet<int> intChoices = new HashSet<int>();
-                List<ScopeChoice> choices = null;
+                List<ScopeChoice> allPossibleChoices = null;
                 bool allChoicesSelected = false;
 
                 if (readOnlyScopes.HasValue)
@@ -349,11 +349,11 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
                         PrintPretty("\nPlease confirm the scope(s) you'd like to grant gShell permission to:\n", "Green");
                     }
 
-                    if (choices == null)
+                    if (allPossibleChoices == null)
                     {
-                        choices = new List<ScopeChoice>();
+                        allPossibleChoices = new List<ScopeChoice>();
 
-                        choices.Add(new ScopeChoice(0, "All", "All scopes in this list."));
+                        allPossibleChoices.Add(new ScopeChoice(0, "All", "All scopes in this list."));
 
                         for (int i = 0; i < possibleScopes.Count; i++)
                         {
@@ -364,11 +364,11 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
                                 isChecked = true;
                             }
 
-                            choices.Add(new ScopeChoice(i + 1, possibleScopes[i].scope, possibleScopes[i].description, isChecked));
+                            allPossibleChoices.Add(new ScopeChoice(i + 1, possibleScopes[i].scope, possibleScopes[i].description, isChecked));
                         }
                     }
 
-                    foreach (var choice in choices)
+                    foreach (var choice in allPossibleChoices)
                     {
                         PrintPretty(choice.ToString(), "Yellow");
                     }
@@ -436,7 +436,7 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
                                 }
                                 else
                                 {   
-                                    foreach (var choice in choices)
+                                    foreach (var choice in allPossibleChoices)
                                     {
                                         if (choice.Choice != 0)
                                         {
@@ -458,7 +458,7 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
                         }
 
                         //No errors found in the input, replace the numbers with checkmarks or remove them as needed
-                        foreach (var choice in choices)
+                        foreach (var choice in allPossibleChoices)
                         {
                             choice.IsChecked = (intChoices.Contains(choice.Choice)) ? true : false;
                         }
@@ -475,9 +475,9 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
 
                 HashSet<string> scopesResult = new HashSet<string>();
 
-                foreach (var choice in choices)
+                foreach (var intChoice in intChoices)
                 {
-                    scopesResult.Add(choice.Scope);
+                    scopesResult.Add(allPossibleChoices[intChoice].Scope);
                 }
 
                 return scopesResult;
@@ -519,7 +519,7 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
 
             scopes = CheckForRequiredScope(scopes);
 
-            string script = "Read-Host '\nYou will now authenticate for this API. Press any key to continue.'";
+            string script = "Read-Host '\nYou will now authenticate for this API. Press any key to continue'";
             Collection<PSObject> results = invokablePSInstance.InvokeCommand.InvokeScript(script);
 
             //Now, authenticate.
