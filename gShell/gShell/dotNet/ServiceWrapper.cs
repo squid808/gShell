@@ -99,9 +99,9 @@ namespace gShell.dotNet
         /// Authenticates the given domain and creates a service for it, if necessary. 
         /// The process of authenticating will update the default and current domains.
         /// </summary>
-        public AuthenticationInfo Authenticate(string apiNameAndVersion)
+        public AuthenticationInfo Authenticate(string apiNameAndVersion, IEnumerable<string> scopes)
         {
-            return OAuth2Base.Authenticate(apiNameAndVersion);
+            return OAuth2Base.Authenticate(apiNameAndVersion, scopes);
         }
         #endregion
 

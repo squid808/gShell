@@ -55,7 +55,7 @@ namespace gShell.dotNet.Utilities.OAuth2
         {
             if (info == null) return null;
 
-            return info.clientSecrets;
+            return info.GetClientSecrets();
         }
 
         public string GetDefaultDomain()
@@ -143,6 +143,13 @@ namespace gShell.dotNet.Utilities.OAuth2
             info.SetDefaultUser(Domain, UserName);
             dataStore.SaveInfo(info);
         }
+
+        public void SetDefaultClientSecrets(ClientSecrets Secrets)
+        {
+            info.SetClientSecrets(Secrets);
+            dataStore.SaveInfo(info);
+        }
+
         #endregion
 
         #region Remove

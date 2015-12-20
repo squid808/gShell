@@ -24,6 +24,7 @@ namespace gShell.dotNet.Utilities.OAuth2
     /// </remarks>
     public class OAuth2Base
     {
+        #region Properties
         private const string _appName = "gShellCmdlets";
         public static OAuth2InfoConsumer infoConsumer
         {
@@ -49,58 +50,24 @@ namespace gShell.dotNet.Utilities.OAuth2
 
         public static AuthenticationInfo currentAuthInfo { get { return _currentAuthInfo; } }
         private static AuthenticationInfo _currentAuthInfo { get; set; }
+    
+        #endregion
 
+        #region Authentication and Authorization
 
         //Example call: Authenticate("DirectoryV.3", "myDomain.com", "myUser);
 
-        public static AuthenticationInfo Authenticate(string Api, string Domain = null, string User = null)
+        public static AuthenticationInfo Authenticate(string Api, IEnumerable<string> Scopes,
+            string Domain = null, string User = null)
         {
-            _currentAuthInfo = AuthorizeUser(Api, null, Domain, User);
+            _currentAuthInfo = AuthorizeUser(Api, Scopes, Domain, User);
 
             return currentAuthInfo;
         }
 
-
-        /// <summary>Checks the stored info to see if this domain matches or not.</summary>
-        public static string CheckDomain(string Domain = null)
-        {
-            //If null, check for a default but only return it if it exists.
-            if (string.IsNullOrWhiteSpace(Domain)) {
-                
-                string DefaultDomain = infoConsumer.GetDefaultDomain();
-
-                if (string.IsNullOrWhiteSpace(DefaultDomain))
-                    { return null; }
-                else
-                    { return DefaultDomain; }
-            }
-
-            if (infoConsumer.DomainExists(Domain)) return Domain;
-
-            return null;
-        }
-
-        /// <summary>Checks the stored info to see if this user matches anything stored or not.</summary>
-        public static string CheckUser(string Domain, string User = null)
-        {
-            //If null, check for a default but only return it if it exists.
-            if (string.IsNullOrWhiteSpace(User))
-            {
-                string DefaultUser = infoConsumer.GetDefaultUser(Domain);
-
-                if (string.IsNullOrWhiteSpace(DefaultUser))
-                    { return null; }
-                else
-                    { return DefaultUser; }
-            }
-
-            if (infoConsumer.UserExists(Domain, User)) return User;
-
-            return null;
-        }
-
         /// <summary>Authorize the user against Google's servers.</summary>
-        public static AuthenticationInfo AuthorizeUser(string Api, IEnumerable<string> scopes, string Domain = null, string User = null)
+        public static AuthenticationInfo AuthorizeUser(string Api, IEnumerable<string> Scopes,
+            string Domain = null, string User = null)
         {
             //First, if the domain or user are missing, see if we can fill it in using the defaults
             Domain = CheckDomain(Domain);
@@ -118,7 +85,7 @@ namespace gShell.dotNet.Utilities.OAuth2
             }
 
             //Populate asyncUserCredential either from the data store or from the web via authorization.
-            AwaitUserCredential(scopes).Wait();
+            AwaitUserCredential(Scopes).Wait();
 
             //Load the token from the temp data store
             string token = memoryObjectDataStore.GetToken();
@@ -140,7 +107,7 @@ namespace gShell.dotNet.Utilities.OAuth2
             }
 
             //Now for sure we have the user and domain, as well as the token, so we can save it.
-            infoConsumer.SaveToken(Api, Domain, User, token, scopes.ToList());
+            infoConsumer.SaveToken(Api, Domain, User, token, Scopes.ToList());
 
             return new AuthenticationInfo(User, Domain);
         }
@@ -156,18 +123,66 @@ namespace gShell.dotNet.Utilities.OAuth2
             );
         }
 
-        /// <summary>
-        /// Returns an initializer used to create a new service.
-        /// </summary>
-        public static BaseClientService.Initializer GetInitializer(string domain)
+        #endregion
+
+        #region Helpers
+
+        /// <summary>Checks the stored info to see if this domain matches or not.</summary>
+        public static string CheckDomain(string Domain = null)
         {
-            gInitializer initializer = new gInitializer()
+            //If null, check for a default but only return it if it exists.
+            if (string.IsNullOrWhiteSpace(Domain))
             {
-                HttpClientInitializer = asyncUserCredential,
-                ApplicationName = _appName,
+
+                string DefaultDomain = infoConsumer.GetDefaultDomain();
+
+                if (string.IsNullOrWhiteSpace(DefaultDomain))
+                { return null; }
+                else
+                { return DefaultDomain; }
+            }
+
+            if (infoConsumer.DomainExists(Domain)) return Domain;
+
+            return null;
+        }
+
+        /// <summary>Checks the stored info to see if this user matches anything stored or not.</summary>
+        public static string CheckUser(string Domain, string User = null)
+        {
+            //If null, check for a default but only return it if it exists.
+            if (string.IsNullOrWhiteSpace(User))
+            {
+                string DefaultUser = infoConsumer.GetDefaultUser(Domain);
+
+                if (string.IsNullOrWhiteSpace(DefaultUser))
+                { return null; }
+                else
+                { return DefaultUser; }
+            }
+
+            if (infoConsumer.UserExists(Domain, User)) return User;
+
+            return null;
+        }
+
+        #endregion
+
+        
+
+        #region Accessors
+
+        /// <summary>
+        /// Set the Client Id and Secret 
+        /// </summary>
+        public static void SetClientSecrets(string ClientId, string ClientSecret, string Domain = null, string UserEmail = null)
+        {
+            ClientSecrets secrets = new ClientSecrets() {
+                ClientId = ClientId,
+                ClientSecret = ClientSecret
             };
 
-            return initializer;
+            infoConsumer.SetDefaultClientSecrets(secrets);
         }
 
         /// <summary>
@@ -188,6 +203,22 @@ namespace gShell.dotNet.Utilities.OAuth2
 
             return initializer;
         }
+
+        /// <summary>
+        /// Returns an initializer used to create a new service.
+        /// </summary>
+        public static BaseClientService.Initializer GetInitializer(string domain)
+        {
+            gInitializer initializer = new gInitializer()
+            {
+                HttpClientInitializer = asyncUserCredential,
+                ApplicationName = _appName,
+            };
+
+            return initializer;
+        }
+
+        #endregion
     }
 
     public class AuthenticationInfo

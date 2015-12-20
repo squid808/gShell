@@ -513,7 +513,7 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
             //}
         }
 
-        public void ChooseScopesAndAuthenticate(string api, string version)
+        public AuthenticationInfo ChooseScopesAndAuthenticate(string api, string version)
         {
             HashSet<string> scopes = ChooseApiScopesLoop(api, version);
 
@@ -523,9 +523,11 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
             Collection<PSObject> results = invokablePSInstance.InvokeCommand.InvokeScript(script);
 
             //Now, authenticate.
-            OAuth2Base.AuthorizeUser(api + ":" + version, scopes);
+            AuthenticationInfo info = OAuth2Base.AuthorizeUser(api + ":" + version, scopes);
 
             PrintPretty("Scopes have been authenticated and saved.", "green");
+
+            return info;
         }
 
         #endregion

@@ -49,8 +49,8 @@ namespace gShell.Cmdlets.Reports
         #region PowerShell Methods
         protected override void BeginProcessing()
         {
-            ShouldPromptForScopes(Domain);
-            Domain = Authenticate().authenticatedDomain;
+            IEnumerable<string> scopes = ShouldPromptForScopes(Domain);
+            Domain = Authenticate(scopes).authenticatedDomain;
 
             GWriteProgress = new gWriteProgress(WriteProgress);
         }
@@ -60,9 +60,9 @@ namespace gShell.Cmdlets.Reports
         /// <summary>
         /// A method specific to each inherited object, called during authentication. Must be implemented.
         /// </summary>
-        protected override AuthenticationInfo Authenticate()
+        protected override AuthenticationInfo Authenticate(IEnumerable<string> Scopes)
         {
-            return greports.Authenticate(apiNameAndVersion);
+            return greports.Authenticate(apiNameAndVersion, Scopes);
         }
         #endregion
 

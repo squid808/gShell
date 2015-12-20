@@ -114,11 +114,11 @@ namespace gShell.dotNet.Utilities.OAuth2
         protected override abstract void BeginProcessing();
 
         /// <summary>Load token and scope information for API call, and authenticate if necessary.</summary>
-        protected abstract AuthenticationInfo Authenticate();
+        protected abstract AuthenticationInfo Authenticate(IEnumerable<string> Scopes);
 
         /// <summary>Determines if the user needs to be prompted to select the scopes.</summary>
-        /// <param name="Domain"></param>
-        public void ShouldPromptForScopes(string Domain)
+        /// <remarks>Api is derived from the class that inherits this. User is the domain's default user.</remarks>
+        public IEnumerable<string> ShouldPromptForScopes(string Domain)
         {
             //Since the domain could be null, see if we have a default ready or if the saved info contains this one
             Domain = OAuth2Base.CheckDomain(Domain);
@@ -128,9 +128,11 @@ namespace gShell.dotNet.Utilities.OAuth2
             if (Domain != null)
                  defaultUser = OAuth2Base.infoConsumer.GetDefaultUser(Domain);
 
+            AuthenticationInfo info = null;
+
             //if no domain is returned, none was provided or none was found as default.
             if (string.IsNullOrWhiteSpace(Domain) || string.IsNullOrWhiteSpace(defaultUser) || 
-                !OAuth2Base.infoConsumer.TokenAndScopesExist(Domain, defaultUser, apiNameAndVersion   ))
+                !OAuth2Base.infoConsumer.TokenAndScopesExist(Domain, defaultUser, apiNameAndVersion))
             {
                 if (string.IsNullOrWhiteSpace(Domain)) Domain = "no domain provided";
 
@@ -145,17 +147,32 @@ namespace gShell.dotNet.Utilities.OAuth2
                 {
                     ScopeHandlerBase scopeBase = new ScopeHandlerBase(this);
 
-                    scopeBase.ChooseScopesAndAuthenticate(apiNameAndVersion.Split(':')[0], apiNameAndVersion.Split(':')[1]);
-
-                    //results = this.InvokeCommand.InvokeScript(string.Format(
-                    //    "Invoke-ScopeManager -ApiName {0} -ApiVersion {1}",
-                    //    apiNameAndVersion.Split(':')[0], apiNameAndVersion.Split(':')[1]));
+                    info = scopeBase.ChooseScopesAndAuthenticate(
+                        apiNameAndVersion.Split(':')[0], apiNameAndVersion.Split(':')[1]);
                 }
                 else
                 {
                     WriteWarning("No scopes were chosen. You can run this process manually with Invoke-ScopeManager later.");
+                    return null;
                 }
             }
+            else
+            {
+                info = new AuthenticationInfo(defaultUser, Domain);
+            }
+
+            return OAuth2Base.infoConsumer.GetTokenInfo(
+                apiNameAndVersion, info.authenticatedDomain, info.authenticatedUser).scopes;
+        }
+
+        /// <summary>Returns the default client secrets.</summary>
+        /// <remarks>
+        /// To be called before having run ShouldPromptForScopes to ensure the right secrets 
+        /// are available to authenticate with.
+        /// </remarks>
+        public ClientSecrets LoadClientSecrets()
+        {
+            return OAuth2Base.infoConsumer.GetClientSecrets();
         }
         #endregion
 

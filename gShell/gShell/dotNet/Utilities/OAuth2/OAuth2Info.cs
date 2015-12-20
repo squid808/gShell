@@ -46,7 +46,7 @@ namespace gShell.dotNet.Utilities.OAuth2
         #region Properties
 
         /// <summary> Increment this number any time you happen to change anything in these files. </summary>
-        public int fileVersion = 3;
+        private int fileVersion = 3;
 
         /// <summary> The overall default domain in gShell. </summary>
         public string defaultDomain { get { return _defaultDomain; } }
@@ -54,32 +54,18 @@ namespace gShell.dotNet.Utilities.OAuth2
         private string _defaultDomain;
 
         /// <summary> A collection of domains that have at least one authenticated user. </summary>
-        public Dictionary<string, OAuth2Domain> domains = new Dictionary<string,OAuth2Domain>();
+        private Dictionary<string, OAuth2Domain> domains { get; set; }
 
-        public ClientSecrets clientSecrets
-        {
-            get
-            {
-                if (_clientSecretsLoader != null)
-                {
-                    return _clientSecretsLoader;
-                }
-                else
-                {
-                    return _clientSecretsDefault;
-                }
-            }
-        }
-        private gClientSecrets _clientSecretsLoader;
-        private readonly ClientSecrets _clientSecretsDefault = new ClientSecrets
-        {
-            ClientId = "431325913325.apps.googleusercontent.com",
-            ClientSecret = "VtfqKqUJsY0yNh0hwreAB-S0"
-        };
+        /// <summary> Gets or sets the default client secrets. </summary>
+        private ClientSecrets defaultClientSecrets { get; set; }
+
         #endregion
 
         #region Constructors
-        public OAuth2Info() { }
+        public OAuth2Info()
+        {
+            domains = new Dictionary<string, OAuth2Domain>();
+        }
         
         //public OAuth2Info(Userinfoplus userInfo, string storedToken, HashSet<string> scopes)
         //{
@@ -114,7 +100,7 @@ namespace gShell.dotNet.Utilities.OAuth2
             domains = (Dictionary<string, OAuth2Domain>)info.GetValue("domains", 
                 typeof(Dictionary<string, OAuth2Domain>));
             _defaultDomain = (string)info.GetValue("defaultDomain", typeof(string));
-            _clientSecretsLoader = (gClientSecrets)info.GetValue("clientSecrets", typeof(gClientSecrets));
+            defaultClientSecrets = (ClientSecrets)info.GetValue("clientSecrets", typeof(ClientSecrets));
             
         }
 
@@ -122,14 +108,30 @@ namespace gShell.dotNet.Utilities.OAuth2
         public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
         {
             info.AddValue("fileVersion", fileVersion, typeof(int));
-
             info.AddValue("domains", domains, typeof(Dictionary<string, OAuth2Domain>));
             info.AddValue("defaultDomain", defaultDomain, typeof(string));
-            info.AddValue("clientSecrets", _clientSecretsLoader, typeof(gClientSecrets));
+            info.AddValue("clientSecrets", defaultClientSecrets, typeof(OAuth2Info.gClientSecrets));
         }
         #endregion
 
         #region Accessors
+
+        /// <summary>
+        /// Returns the email address of the default domain's default user, or null if it doesn't exist.
+        /// </summary>
+        public string GetDefaultUserEmail()
+        {
+            if (domains != null && defaultDomain != null && domains[defaultDomain] != null)
+            {
+                var domain = domains[defaultDomain];
+                if (domain.defaultUser != null && domain.users[domain.defaultUser] != null)
+                {
+                    return domain.users[domain.defaultUser].email;
+                }
+            }
+
+            return null;
+        }
 
         public OAuth2TokenInfo GetTokenAndScopes(string Api, string Domain = null, string User = null){
             if (Domain == null && defaultDomain == null) return null;
@@ -221,19 +223,29 @@ namespace gShell.dotNet.Utilities.OAuth2
         }
 
         /// <summary>
-        /// Return a domain. Assumes the domain exists.
+        /// Return a domain if it exists, or null.
         /// </summary>
         public OAuth2Domain GetDomain(string domain)
         {
-            return domains[domain];
+            if (domains.ContainsKey(domain))
+            {
+                return domains[domain];
+            }
+
+            return null;
         }
 
         /// <summary>
-        /// Returns a stored user. Assumes it exists.
+        /// Returns a stored user if it exists, or null.
         /// </summary>
         public OAuth2DomainUser GetUser(string userName, string domain)
         {
-            return domains[domain].GetUser(userName);
+            if (domains.ContainsKey(domain) && domains[domain].users.ContainsKey(userName))
+            {
+                return domains[domain].users[userName];
+            }
+
+            return null;
         }
 
         //SetDomain - there is no point in setting a domain, since the only reason to do that would be to set a default user, a new user, or a service account.
@@ -424,10 +436,56 @@ namespace gShell.dotNet.Utilities.OAuth2
         #endregion
 
         #region ClientSecrets
-        //public ClientSecrets GetClientSecrets()
-        //{
-        //    return _clientSecretsLoader;
-        //}
+
+        /// <summary>
+        /// Sets the client secrets for the specified domain and user, or if not provided the default client secrets
+        /// for gShell.
+        /// </summary>
+        public ClientSecrets GetClientSecrets(string Domain = null, string UserName = null)
+        {
+            //If empty, try loading the specific client secrets for a default user.
+            if (string.IsNullOrWhiteSpace(Domain) || (string.IsNullOrWhiteSpace(UserName)))
+            {
+                var defaultUser = GetDefaultUserEmail();
+                
+                if (defaultUser != null)
+                {
+                    UserName = Utils.GetUserFromEmail(defaultUser);
+                    Domain = Utils.GetDomainFromEmail(defaultUser);
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(Domain) && (!string.IsNullOrWhiteSpace(UserName)))
+            {
+                var user = GetUser(UserName, Domain);
+
+                if (user != null && user.clientSecrets != null)
+                {
+                    return user.clientSecrets;
+                }
+            }
+                
+            return defaultClientSecrets;
+        }
+
+        public void SetClientSecrets(ClientSecrets Secrets, string Domain = null, string UserEmail = null)
+        {
+            if (!string.IsNullOrWhiteSpace(Domain) && (!string.IsNullOrWhiteSpace(UserEmail)))
+            {
+                var user = GetUser(UserEmail, Domain);
+
+                if (user != null)
+                {
+                    user.clientSecrets = Secrets;
+                }
+            }
+            else
+            {
+                defaultClientSecrets = Secrets;
+            }
+
+
+        }
 
         //public void SetClientSecrets(ClientSecrets secrets)
         //{
@@ -651,6 +709,9 @@ namespace gShell.dotNet.Utilities.OAuth2
         /// <summary> Gets or sets the collection of Api Tokens keyed by their respective Api names. </summary>
         public Dictionary<string, OAuth2TokenInfo> tokenAndScopesByApi { get; set; }
 
+        /// <summary> Gets or sets the client secrets for this user within the domain. </summary>
+        public ClientSecrets clientSecrets { get; set; }
+
         #endregion
 
         #region Constructors
@@ -671,6 +732,7 @@ namespace gShell.dotNet.Utilities.OAuth2
         {
             email = (string)info.GetValue("email", typeof(string));
             tokenAndScopesByApi = (Dictionary<string, OAuth2TokenInfo>)info.GetValue("tokenAndScopes", typeof(Dictionary<string, OAuth2TokenInfo>));
+            clientSecrets = (ClientSecrets)info.GetValue("clientSecrets", typeof(ClientSecrets));
         }
 
         //This serializes the data
@@ -678,6 +740,7 @@ namespace gShell.dotNet.Utilities.OAuth2
         {
             info.AddValue("email", email, typeof(string));
             info.AddValue("tokenAndScopes", tokenAndScopesByApi, typeof(Dictionary<string, OAuth2TokenInfo>));
+            info.AddValue("clientSecrets", clientSecrets, typeof(OAuth2Info.gClientSecrets));
         }
         #endregion
 
