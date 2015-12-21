@@ -27,7 +27,8 @@ namespace gShell.dotNet.Utilities.OAuth2
 
         public OAuth2InfoConsumer()
         {
-            _dataStore = new OAuth2SerializerDataStore();
+            //_dataStore = new OAuth2SerializerDataStore();
+            _dataStore = new OAuth2JsonDataStore();
             info = dataStore.LoadInfo();
             if (info == null)
             {
@@ -75,13 +76,13 @@ namespace gShell.dotNet.Utilities.OAuth2
 
         public string GetDefaultUser(string Domain)
         {
-            //Check for the existance of the domain first
-            OAuth2Domain oDomain = GetDomain(Domain);
+            if (DomainExists(Domain))
+            {
+                OAuth2Domain oDomain = GetDomain(Domain);
+                return oDomain.defaultUser;
+            }
 
-            //throw null if the domain doesn't exist
-            if (oDomain == null) return null;
-
-            return oDomain.defaultUser;
+            return null;
         }
 
         /// <summary>Returns the DomainUser if both it and the domain exist.</summary>
@@ -126,9 +127,10 @@ namespace gShell.dotNet.Utilities.OAuth2
         #region Set
 
         //NOTE: Any time something changes, you MUST update the in-memory OAuth2Info as well - or update the memory and then save
-        public void SaveToken(string Api, string Domain, string User, string Token, List<string> Scopes)
+        public void SaveToken(string Api, string Domain, string User, string TokenString, 
+            Google.Apis.Auth.OAuth2.Responses.TokenResponse TokenResponse, List<string> Scopes)
         {
-            info.SetTokenAndScopes(Api, Token, Scopes, User, Domain);
+            info.SetTokenAndScopes(Api, TokenString, TokenResponse, Scopes, User, Domain);
             dataStore.SaveInfo(info);
         }
 
@@ -147,6 +149,19 @@ namespace gShell.dotNet.Utilities.OAuth2
         public void SetDefaultClientSecrets(ClientSecrets Secrets)
         {
             info.SetClientSecrets(Secrets);
+            dataStore.SaveInfo(info);
+        }
+
+        public void AddDomain(string Domain)
+        {
+            info.AddDomain(Domain);
+            dataStore.SaveInfo(info);
+        }
+
+        public void AddUser(string Domain, string UserName)
+        {
+            info.AddDomain(Domain);
+            info.AddUser(UserName, Domain);
             dataStore.SaveInfo(info);
         }
 

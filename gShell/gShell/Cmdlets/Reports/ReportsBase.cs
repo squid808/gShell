@@ -2,6 +2,7 @@
 using System.Management.Automation;
 using System.Collections.Generic;
 
+using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using reports_v1 = Google.Apis.Admin.Reports.reports_v1;
 using Data = Google.Apis.Admin.Reports.reports_v1.Data;
@@ -49,10 +50,20 @@ namespace gShell.Cmdlets.Reports
         #region PowerShell Methods
         protected override void BeginProcessing()
         {
-            IEnumerable<string> scopes = ShouldPromptForScopes(Domain);
-            Domain = Authenticate(scopes).authenticatedDomain;
+            var secrets = CheckForClientSecrets();
+            if (secrets != null)
+            {
+                IEnumerable<string> scopes = ShouldPromptForScopes(Domain, secrets);
+                Domain = greports.BuildService(Authenticate(scopes, secrets)).Domain;
 
-            GWriteProgress = new gWriteProgress(WriteProgress);
+                GWriteProgress = new gWriteProgress(WriteProgress);
+            }
+            else
+            {
+                WriteError(new ErrorRecord(null, (new Exception(
+                    "Client Secrets must be set before running cmdlets. Run 'Get-Help " 
+                    + "Set-gShellClientSecrets -online' for more information."))));
+            }
         }
         #endregion
 
@@ -60,9 +71,9 @@ namespace gShell.Cmdlets.Reports
         /// <summary>
         /// A method specific to each inherited object, called during authentication. Must be implemented.
         /// </summary>
-        protected override AuthenticationInfo Authenticate(IEnumerable<string> Scopes)
+        protected override AuthenticationInfo Authenticate(IEnumerable<string> Scopes, ClientSecrets Secrets)
         {
-            return greports.Authenticate(apiNameAndVersion, Scopes);
+            return greports.Authenticate(apiNameAndVersion, Scopes, Secrets);
         }
         #endregion
 

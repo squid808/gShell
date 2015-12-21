@@ -46,7 +46,7 @@ namespace gShell.dotNet.Utilities.OAuth2
         }
         private static MemoryObjectDataStore _memoryObjectDataStore;
 
-        private static UserCredential asyncUserCredential { get; set; }
+        public static UserCredential asyncUserCredential { get; set; }
 
         public static AuthenticationInfo currentAuthInfo { get { return _currentAuthInfo; } }
         private static AuthenticationInfo _currentAuthInfo { get; set; }
@@ -57,18 +57,19 @@ namespace gShell.dotNet.Utilities.OAuth2
 
         //Example call: Authenticate("DirectoryV.3", "myDomain.com", "myUser);
 
-        public static AuthenticationInfo Authenticate(string Api, IEnumerable<string> Scopes,
+        public static AuthenticationInfo Authenticate(string Api, IEnumerable<string> Scopes, ClientSecrets Secrets,
             string Domain = null, string User = null)
         {
-            _currentAuthInfo = AuthorizeUser(Api, Scopes, Domain, User);
+            _currentAuthInfo = AuthorizeUser(Api, Scopes, Secrets, Domain, User);
 
             return currentAuthInfo;
         }
 
         /// <summary>Authorize the user against Google's servers.</summary>
-        public static AuthenticationInfo AuthorizeUser(string Api, IEnumerable<string> Scopes,
+        public static AuthenticationInfo AuthorizeUser(string Api, IEnumerable<string> Scopes, ClientSecrets Secrets,
             string Domain = null, string User = null)
         {
+
             //First, if the domain or user are missing, see if we can fill it in using the defaults
             Domain = CheckDomain(Domain);
             if (Domain != null) User = CheckUser(Domain, User);
@@ -76,46 +77,70 @@ namespace gShell.dotNet.Utilities.OAuth2
             //Now let's see if we still have any missing information.
             bool userOrDomainIsNull = User == null || Domain == null;
 
+            OAuth2TokenInfo preTokenInfo = null;
+
             //First, if we are able to load a key based on the domain and user, we do that and add it to the data store.
             // This will make sure that when we authenticate, the Google Flow has something to load.
-            if (!userOrDomainIsNull)
+            if (!userOrDomainIsNull && infoConsumer.TokenAndScopesExist(Domain, User, Api))
             {
-                OAuth2TokenInfo tokenInfo = infoConsumer.GetTokenInfo(Api, Domain, User);
-                memoryObjectDataStore.SetToken(tokenInfo.token);
+                preTokenInfo = infoConsumer.GetTokenInfo(Api, Domain, User);
+                memoryObjectDataStore.SetToken(preTokenInfo.tokenString);
             }
 
             //Populate asyncUserCredential either from the data store or from the web via authorization.
-            AwaitUserCredential(Scopes).Wait();
+            AwaitUserCredential(Scopes, Secrets).Wait();
 
-            //Load the token from the temp data store
-            string token = memoryObjectDataStore.GetToken();
-
-            //At this point we assume the authentication worked and we should have a token. So, make sure we have the 
-            // proper domain and user if we didn't already so that we can save it.
-            if (userOrDomainIsNull)
+            if (preTokenInfo == null || asyncUserCredential.Token.Issued != preTokenInfo.token.Issued ||
+                asyncUserCredential.Token.AccessToken != preTokenInfo.token.AccessToken)
             {
-                using (Oauth2Service oService = new Oauth2Service(new BaseClientService.Initializer()
+
+                //Load the token from the temp data store
+                string tokenString = memoryObjectDataStore.GetToken();
+
+                //At this point we assume the authentication worked and we should have a token. So, make sure we have the 
+                // proper domain and user if we didn't already so that we can save it.
+                if (userOrDomainIsNull)
                 {
-                    HttpClientInitializer = asyncUserCredential,
-                    ApplicationName = _appName + "." + Api,
-                }))
-                {
-                    Userinfoplus userInfoPlus = oService.Userinfo.Get().Execute();
-                    User = Utils.GetUserFromEmail(userInfoPlus.Email);
-                    Domain = userInfoPlus.Hd;
+                    using (Oauth2Service oService = new Oauth2Service(new BaseClientService.Initializer()
+                    {
+                        HttpClientInitializer = asyncUserCredential,
+                        ApplicationName = GetAppName(Api),
+                    }))
+                    {
+                        Userinfoplus userInfoPlus = oService.Userinfo.Get().Execute();
+                        User = Utils.GetUserFromEmail(userInfoPlus.Email);
+                        Domain = userInfoPlus.Hd;
+                    }
                 }
+
+                if (infoConsumer.GetDefaultDomain() == null)
+                {
+                    infoConsumer.SetDefaultDomain(Domain);
+                }
+
+                if (infoConsumer.GetDefaultUser(Domain) == null)
+                {
+                    infoConsumer.SetDefaultUser(Domain, User);
+                }
+
+                //Now for sure we have the user and domain, as well as the token, so we can save it.
+                infoConsumer.SaveToken(Api, Domain, User, tokenString, asyncUserCredential.Token, Scopes.ToList());
             }
 
-            //Now for sure we have the user and domain, as well as the token, so we can save it.
-            infoConsumer.SaveToken(Api, Domain, User, token, Scopes.ToList());
+            memoryObjectDataStore.ClearToken();
 
             return new AuthenticationInfo(User, Domain);
         }
 
-        private static async Task AwaitUserCredential(IEnumerable<string> scopes)
+        public static string GetAppName(string ApiNameAndVersion)
+        {
+            return _appName + "." + ApiNameAndVersion.Replace(':', '.');
+        }
+
+        public static async Task AwaitUserCredential(IEnumerable<string> scopes, ClientSecrets clientSecrets)
         {
             asyncUserCredential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
-                infoConsumer.GetClientSecrets(),
+                clientSecrets,
                 scopes,
                 "UseTempKeysSetterInstead",
                 System.Threading.CancellationToken.None,
@@ -193,26 +218,26 @@ namespace gShell.dotNet.Utilities.OAuth2
             return (new gInitializer());
         }
 
-        public static BaseClientService.Initializer GetInitializer(Google.Apis.Http.IConfigurableHttpClientInitializer credentials)
-        {
-            gInitializer initializer = new gInitializer()
-            {
-                HttpClientInitializer = credentials,
-                ApplicationName = _appName,
-            };
+        //public static BaseClientService.Initializer GetInitializer(Google.Apis.Http.IConfigurableHttpClientInitializer credentials)
+        //{
+        //    gInitializer initializer = new gInitializer()
+        //    {
+        //        HttpClientInitializer = credentials,
+        //        ApplicationName = _appName,
+        //    };
 
-            return initializer;
-        }
+        //    return initializer;
+        //}
 
         /// <summary>
         /// Returns an initializer used to create a new service.
         /// </summary>
-        public static BaseClientService.Initializer GetInitializer(string domain)
+        public static BaseClientService.Initializer GetInitializer(string AppName)
         {
             gInitializer initializer = new gInitializer()
             {
                 HttpClientInitializer = asyncUserCredential,
-                ApplicationName = _appName,
+                ApplicationName = AppName,
             };
 
             return initializer;
@@ -223,13 +248,15 @@ namespace gShell.dotNet.Utilities.OAuth2
 
     public class AuthenticationInfo
     {
-        public AuthenticationInfo(string User, string Domain)
+        public AuthenticationInfo(string User, string UserDomain)
         {
-            authenticatedUser = Utils.GetUserFromEmail(User);
-            authenticatedDomain = Utils.GetDomainFromEmail(Domain);
+            UserName = Utils.GetUserFromEmail(User);
+            Domain = Utils.GetDomainFromEmail(UserDomain);
+            UserEmail = Utils.GetFullEmailAddress(UserName, Domain);
         }
 
-        public string authenticatedUser { get; set; }
-        public string authenticatedDomain { get; set; }
+        public string UserName { get; set; }
+        public string Domain { get; set; }
+        public string UserEmail { get; set; }
     }
 }

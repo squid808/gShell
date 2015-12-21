@@ -5,6 +5,7 @@ using gShell.dotNet;
 using gShell.dotNet.Utilities;
 using gShell.dotNet.Utilities.OAuth2;
 
+using Google.Apis.Auth.OAuth2;
 using Google.Apis.Admin.Directory.directory_v1;
 using Google.Apis.Admin.Directory.directory_v1.Data;
 
@@ -18,12 +19,12 @@ namespace gShell_dotNetTest
             HashSet<string> scopes = new HashSet<string>();
             //Add this one first, it's always required.
             scopes.Add(Google.Apis.Oauth2.v2.Oauth2Service.Scope.UserinfoEmail);
-            // you could also add "https://www.googleapis.com/auth/userinfo.email" if you don't want to add refrences to that package
+            // you could also add "https://www.googleapis.com/auth/userinfo.email" if you don't want to add references to that package
 
             scopes.Add(DirectoryService.Scope.AdminDirectoryUser);
 
             //Set the scopes to the OAuth2Base
-            OAuth2Base.SetScopes(scopes);
+            //OAuth2Base.SetScopes(scopes);
 
             //Determind your domain
             Console.WriteLine("Please enter a user in your domain:");
@@ -34,11 +35,19 @@ namespace gShell_dotNetTest
 
             //Create a new Directory object from the gShell.dotNet namespace
             Directory directory = new Directory();
-            
+
+            ClientSecrets secrets = OAuth2Base.infoConsumer.GetClientSecrets();
+
             try
             {
-                //Tell your domain to authenticate
-                directory.Authenticate(domain);
+                gShell.dotNet.Utilities.OAuth2.AuthenticationInfo authInfo = 
+                    directory.Authenticate(directory.apiNameAndVersion, scopes, secrets);
+
+                //Tell your domain to authenticate and build the service
+                directory.BuildService(authInfo);
+
+                //Get the full email address of the user with the authenticated domain, just in case.
+                email = Utils.GetFullEmailAddress(email, authInfo.Domain);
 
                 //We make the method call, using the full email since it asks for a userKey
                 User result = directory.users.Get(email);

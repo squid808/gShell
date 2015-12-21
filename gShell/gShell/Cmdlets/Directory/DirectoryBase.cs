@@ -2,6 +2,7 @@
 using System.Management.Automation;
 using System.Collections.Generic;
 
+using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using directory_v1 = Google.Apis.Admin.Directory.directory_v1;
 using Data = Google.Apis.Admin.Directory.directory_v1.Data;
@@ -66,10 +67,21 @@ namespace gShell.Cmdlets.Directory
         #region PowerShell Methods
         protected override void BeginProcessing()
         {
-            IEnumerable<string> scopes = ShouldPromptForScopes(Domain);
-            Domain = Authenticate(scopes).authenticatedDomain;
+            var secrets = CheckForClientSecrets();
+            if (secrets != null)
+            {
+                IEnumerable<string> scopes = ShouldPromptForScopes(Domain, secrets);
+                Domain = gdirectory.BuildService(Authenticate(scopes, secrets)).Domain;
 
-            GWriteProgress = new gWriteProgress(WriteProgress);
+                GWriteProgress = new gWriteProgress(WriteProgress);
+            }
+            else
+            {
+                WriteError(new ErrorRecord(new Exception(
+                    "Client Secrets must be set before running cmdlets. Run 'Get-Help "
+                    + "Set-gShellClientSecrets -online' for more information."),"",ErrorCategory.ObjectNotFound,secrets
+                    ));
+            }
         }
         #endregion
 
@@ -78,9 +90,9 @@ namespace gShell.Cmdlets.Directory
         /// <summary>
         /// A method specific to each inherited object, called during authentication. Must be implemented.
         /// </summary>
-        protected override AuthenticationInfo Authenticate(IEnumerable<string> Scopes)
+        protected override AuthenticationInfo Authenticate(IEnumerable<string> Scopes, ClientSecrets Secrets)
         {
-            return gdirectory.Authenticate(apiNameAndVersion, Scopes);
+            return gdirectory.Authenticate(apiNameAndVersion, Scopes, Secrets);
         }
 
         #endregion

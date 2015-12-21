@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Management.Automation;
 
+using Google.Apis.Auth.OAuth2;
 using discovery_v1 = Google.Apis.Discovery.v1;
 using Data = Google.Apis.Discovery.v1.Data;
 
@@ -41,14 +42,24 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
 
         protected override void ProcessRecord()
         {
-            if (ParameterSetName != "ApiProvided")
+            var secrets = CheckForClientSecrets();
+            if (secrets != null)
             {
-                ApiChoice choice = ChooseApiLoop();
-                ApiName = choice.API;
-                ApiVersion = choice.Version;
-            }
+                if (ParameterSetName != "ApiProvided")
+                {
+                    ApiChoice choice = ChooseApiLoop();
+                    ApiName = choice.API;
+                    ApiVersion = choice.Version;
+                }
 
-            ChooseScopesAndAuthenticate(ApiName, ApiVersion);
+                ChooseScopesAndAuthenticate(ApiName, ApiVersion, secrets);
+            }
+            else
+            {
+                WriteError(new ErrorRecord(null, (new Exception(
+                    "Client Secrets must be set before running cmdlets. Run 'Get-Help "
+                    + "Set-gShellClientSecrets -online' for more information."))));
+            }
         }
     }
 
@@ -513,7 +524,7 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
             //}
         }
 
-        public AuthenticationInfo ChooseScopesAndAuthenticate(string api, string version)
+        public AuthenticationInfo ChooseScopesAndAuthenticate(string api, string version, ClientSecrets secrets)
         {
             HashSet<string> scopes = ChooseApiScopesLoop(api, version);
 
@@ -523,7 +534,7 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
             Collection<PSObject> results = invokablePSInstance.InvokeCommand.InvokeScript(script);
 
             //Now, authenticate.
-            AuthenticationInfo info = OAuth2Base.AuthorizeUser(api + ":" + version, scopes);
+            AuthenticationInfo info = OAuth2Base.AuthorizeUser(api + ":" + version, scopes, secrets);
 
             PrintPretty("Scopes have been authenticated and saved.", "green");
 

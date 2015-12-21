@@ -47,6 +47,8 @@ namespace gShell.dotNet.Utilities.OAuth2
 
         protected abstract string apiNameAndVersion { get; }
 
+        //protected static AuthenticationInfo authInfo { get; set; }
+
         #endregion
 
         #region AssemblyResolution
@@ -114,11 +116,11 @@ namespace gShell.dotNet.Utilities.OAuth2
         protected override abstract void BeginProcessing();
 
         /// <summary>Load token and scope information for API call, and authenticate if necessary.</summary>
-        protected abstract AuthenticationInfo Authenticate(IEnumerable<string> Scopes);
+        protected abstract AuthenticationInfo Authenticate(IEnumerable<string> Scopes, ClientSecrets Secrets);
 
         /// <summary>Determines if the user needs to be prompted to select the scopes.</summary>
         /// <remarks>Api is derived from the class that inherits this. User is the domain's default user.</remarks>
-        public IEnumerable<string> ShouldPromptForScopes(string Domain)
+        public IEnumerable<string> ShouldPromptForScopes(string Domain, ClientSecrets Secrets)
         {
             //Since the domain could be null, see if we have a default ready or if the saved info contains this one
             Domain = OAuth2Base.CheckDomain(Domain);
@@ -148,7 +150,8 @@ namespace gShell.dotNet.Utilities.OAuth2
                     ScopeHandlerBase scopeBase = new ScopeHandlerBase(this);
 
                     info = scopeBase.ChooseScopesAndAuthenticate(
-                        apiNameAndVersion.Split(':')[0], apiNameAndVersion.Split(':')[1]);
+                        apiNameAndVersion.Split(':')[0], apiNameAndVersion.Split(':')[1],
+                        Secrets);
                 }
                 else
                 {
@@ -162,17 +165,27 @@ namespace gShell.dotNet.Utilities.OAuth2
             }
 
             return OAuth2Base.infoConsumer.GetTokenInfo(
-                apiNameAndVersion, info.authenticatedDomain, info.authenticatedUser).scopes;
+                apiNameAndVersion, info.Domain, info.UserName).scopes;
         }
 
-        /// <summary>Returns the default client secrets.</summary>
+        /// <summary>Returns the default client secrets or null if they're missing or incomplete.</summary>
         /// <remarks>
         /// To be called before having run ShouldPromptForScopes to ensure the right secrets 
         /// are available to authenticate with.
         /// </remarks>
-        public ClientSecrets LoadClientSecrets()
+        public ClientSecrets CheckForClientSecrets()
         {
-            return OAuth2Base.infoConsumer.GetClientSecrets();
+            ClientSecrets secrets = OAuth2Base.infoConsumer.GetClientSecrets();
+
+            if (secrets != null && !string.IsNullOrWhiteSpace(secrets.ClientSecret) && 
+                !string.IsNullOrWhiteSpace(secrets.ClientId))
+            {
+                return secrets;
+            }
+            else
+            {
+                return null;
+            }
         }
         #endregion
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Management.Automation;
+using Google.Apis.Auth.OAuth2;
 using gShell.dotNet.Utilities.OAuth2;
 
 namespace gShell.Cmdlets.Utilities
@@ -11,7 +12,7 @@ namespace gShell.Cmdlets.Utilities
             //Authenticate(OAuth2Base.currentDomain);
         }
 
-        protected override AuthenticationInfo Authenticate(IEnumerable<string> Scopes) { return null; }
+        protected override AuthenticationInfo Authenticate(IEnumerable<string> Scopes, ClientSecrets Secrets) { return null; }
 
         protected override string apiNameAndVersion { get { return "gShellUtils"; } }
     }

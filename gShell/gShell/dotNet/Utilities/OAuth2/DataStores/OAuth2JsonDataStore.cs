@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace gShell.dotNet.Utilities.OAuth2.DataStores
 {
@@ -14,14 +12,35 @@ namespace gShell.dotNet.Utilities.OAuth2.DataStores
     /// </remarks>
     class OAuth2JsonDataStore : IOAuth2DataStore
     {
+        #region Parameters
+
+        private static string destFolder = Path.Combine(Environment.GetFolderPath(
+            Environment.SpecialFolder.LocalApplicationData), @"gShell\");
+        private static string destFile = Path.Combine(Environment.GetFolderPath(
+            Environment.SpecialFolder.LocalApplicationData), @"gShell\gShell_OAuth2.json");
+
+        #endregion
+
         public OAuth2Info LoadInfo()
         {
-            throw new NotImplementedException();
+            OAuth2Info info = null;
+
+            if (File.Exists(destFile))
+            {
+                using (StreamReader file = File.OpenText(destFile))
+                {
+                    JsonSerializer serializer = new JsonSerializer();
+                    info = (OAuth2Info)serializer.Deserialize(file, typeof(OAuth2Info));
+                }
+            }
+
+            return info;
         }
 
         public void SaveInfo(OAuth2Info infoToSave)
         {
-            throw new NotImplementedException();
+            string json = JsonConvert.SerializeObject(infoToSave, Formatting.Indented);
+            File.WriteAllText(destFile, json);
         }
     }
 }

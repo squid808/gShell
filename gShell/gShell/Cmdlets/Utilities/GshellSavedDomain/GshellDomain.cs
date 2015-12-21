@@ -269,36 +269,36 @@ namespace gShell.Cmdlets.Utilities.gShellDomain
         }
     }
 
-    //[Cmdlet(VerbsCommon.Set, "gShellClientSecrets",
-    //      SupportsShouldProcess = true,
-    //      HelpUri = @"https://github.com/squid808/gShell/wiki/Set-gShellClientSecrets")]
-    //public class SetgShellClientSecretsCommand : UtilityBase
-    //{
-    //    #region Parameters
+    [Cmdlet(VerbsCommon.Set, "gShellClientSecrets",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Set-gShellClientSecrets")]
+    public class SetgShellClientSecretsCommand : UtilityBase
+    {
+        #region Parameters
 
-    //    [Parameter(Position = 0,
-    //        Mandatory = true)]
-    //    [ValidateNotNullOrEmpty]
-    //    public string ClientId { get; set; }
+        [Parameter(Position = 0,
+            Mandatory = true)]
+        [ValidateNotNullOrEmpty]
+        public string ClientId { get; set; }
 
-    //    [Parameter(Position = 1,
-    //        Mandatory = true)]
-    //    [ValidateNotNullOrEmpty]
-    //    public string ClientSecret { get; set; }
-    //    #endregion
+        [Parameter(Position = 1,
+            Mandatory = true)]
+        [ValidateNotNullOrEmpty]
+        public string ClientSecret { get; set; }
+        #endregion
 
-    //    protected override void ProcessRecord()
-    //    {
-    //        if (ShouldProcess("ClientSecrets", "Set-gShellClientSecrets"))
-    //        {
-    //            SavedFile.SetClientSecrets(new Google.Apis.Auth.OAuth2.ClientSecrets()
-    //            {
-    //                ClientId = this.ClientId,
-    //                ClientSecret = this.ClientSecret
-    //            });
-    //        }
-    //    }
-    //}
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess("ClientSecrets", "Set-gShellClientSecrets"))
+            {
+                OAuth2Base.infoConsumer.SetDefaultClientSecrets(new Google.Apis.Auth.OAuth2.ClientSecrets()
+                {
+                    ClientId = this.ClientId,
+                    ClientSecret = this.ClientSecret
+                });
+            }
+        }
+    }
 
     //[Cmdlet(VerbsCommon.Remove, "gShellClientSecrets",
     //      SupportsShouldProcess = true,

@@ -92,7 +92,7 @@ namespace gShell.dotNet
                 List<Data.Activity> results = new List<Data.Activity>();
 
                 reports_v1.ActivitiesResource.ListRequest request =
-                    services[activeDomain].Activities.List(userKey, applicationName);
+                    GetService().Activities.List(userKey, applicationName);
 
                 if (properties != null)
                 {
@@ -155,7 +155,7 @@ namespace gShell.dotNet
             public Data.Channel Watch(
                 Data.Channel body, string userKey, string applicationName)
             {
-                return services[activeDomain].Activities.Watch(body, userKey, applicationName).Execute();
+                return GetService().Activities.Watch(body, userKey, applicationName).Execute();
             }
         }
 
@@ -167,7 +167,7 @@ namespace gShell.dotNet
         {
             public string Stop(Data.Channel body)
             {
-                return services[activeDomain].Channels.Stop(body).Execute();
+                return GetService().Channels.Stop(body).Execute();
             }
         }
         
@@ -197,7 +197,7 @@ namespace gShell.dotNet
                 List<Data.UsageReports.WarningsData> warnings = new List<Data.UsageReports.WarningsData>();
 
                 reports_v1.CustomerUsageReportsResource.GetRequest request =
-                    services[activeDomain].CustomerUsageReports.Get(date);
+                    GetService().CustomerUsageReports.Get(date);
 
                 if (properties != null)
                 {
@@ -285,7 +285,7 @@ namespace gShell.dotNet
                 List<Data.UsageReports.WarningsData> warnings = new List<Data.UsageReports.WarningsData>();
 
                 reports_v1.UserUsageReportResource.GetRequest request =
-                    services[activeDomain].UserUsageReport.Get(userKey, date);
+                    GetService().UserUsageReport.Get(userKey, date);
 
                 if (properties != null)
                 {

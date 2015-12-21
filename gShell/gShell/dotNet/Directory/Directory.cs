@@ -73,7 +73,7 @@ namespace gShell.dotNet
                 directory_v1.ChromeosdevicesResource.GetRequest.ProjectionEnum? projection=null)
             {
                 directory_v1.ChromeosdevicesResource.GetRequest request =
-                 services[activeDomain].Chromeosdevices.Get(customerId, deviceId);
+                 GetService().Chromeosdevices.Get(customerId, deviceId);
                 request.Projection = projection;
                 return request.Execute();
             }
@@ -83,7 +83,7 @@ namespace gShell.dotNet
                 List<Data.ChromeOsDevice> results = new List<Data.ChromeOsDevice>();
 
                 directory_v1.ChromeosdevicesResource.ListRequest request = 
-                 services[activeDomain].Chromeosdevices.List(customerId);
+                 GetService().Chromeosdevices.List(customerId);
 
                 if (properties != null)
                 {
@@ -142,7 +142,7 @@ namespace gShell.dotNet
                 directory_v1.ChromeosdevicesResource.PatchRequest.ProjectionEnum? projection=null)
             {
                 directory_v1.ChromeosdevicesResource.PatchRequest request =
-                 services[activeDomain].Chromeosdevices.Patch(body, customerId, deviceId);
+                 GetService().Chromeosdevices.Patch(body, customerId, deviceId);
                 request.Projection = projection;
                 return request.Execute();
             }
@@ -151,7 +151,7 @@ namespace gShell.dotNet
                 directory_v1.ChromeosdevicesResource.UpdateRequest.ProjectionEnum? projection = null)
             {
                 directory_v1.ChromeosdevicesResource.UpdateRequest request =
-                 services[activeDomain].Chromeosdevices.Update(body, customerId, deviceId);
+                 GetService().Chromeosdevices.Update(body, customerId, deviceId);
                 request.Projection = projection;
                 return request.Execute();
             }
@@ -178,17 +178,17 @@ namespace gShell.dotNet
 
             public string Delete(string groupKey)
             {
-                return services[activeDomain].Groups.Delete(groupKey).Execute();
+                return GetService().Groups.Delete(groupKey).Execute();
             }
 
             public Data.Group Get(string groupKey)
             {
-                return services[activeDomain].Groups.Get(groupKey).Execute();
+                return GetService().Groups.Get(groupKey).Execute();
             }
 
             public Data.Group Insert(Data.Group body)
             {
-                return services[activeDomain].Groups.Insert(body).Execute();
+                return GetService().Groups.Insert(body).Execute();
             }
 
             public List<Data.Group> List(GroupsListProperties properties = null)
@@ -196,7 +196,7 @@ namespace gShell.dotNet
                 List<Data.Group> results = new List<Data.Group>();
 
                 directory_v1.GroupsResource.ListRequest request =
-                 services[activeDomain].Groups.List();
+                 GetService().Groups.List();
 
                 if (null != properties)
                 {
@@ -253,12 +253,12 @@ namespace gShell.dotNet
 
             public Data.Group Patch(Data.Group body, string groupKey)
             {
-                return services[activeDomain].Groups.Patch(body, groupKey).Execute();
+                return GetService().Groups.Patch(body, groupKey).Execute();
             }
 
             public Data.Group Update(Data.Group body, string groupKey)
             {
-                return services[activeDomain].Groups.Update(body, groupKey).Execute();
+                return GetService().Groups.Update(body, groupKey).Execute();
             }
 
             #region Groups.aliases
@@ -267,12 +267,12 @@ namespace gShell.dotNet
             {
                 public string Delete(string groupKey, string alias)
                 {
-                    return services[activeDomain].Groups.Aliases.Delete(groupKey, alias).Execute();
+                    return GetService().Groups.Aliases.Delete(groupKey, alias).Execute();
                 }
 
                 public Data.Alias Insert(Data.Alias body, string groupKey)
                 {
-                    return services[activeDomain].Groups.Aliases.Insert(body, groupKey).Execute();
+                    return GetService().Groups.Aliases.Insert(body, groupKey).Execute();
                 }
 
                 public List<Data.Alias> List(string groupKey)
@@ -280,7 +280,7 @@ namespace gShell.dotNet
                     List<Data.Alias> results = new List<Data.Alias>();
 
                     directory_v1.GroupsResource.AliasesResource.ListRequest request =
-                     services[activeDomain].Groups.Aliases.List(groupKey);
+                     GetService().Groups.Aliases.List(groupKey);
 
                     Data.Aliases pagedResult = request.Execute();
 
@@ -314,17 +314,17 @@ namespace gShell.dotNet
 
             public string Delete(string groupKey, string memberKey)
             {
-                return services[activeDomain].Members.Delete(groupKey, memberKey).Execute();
+                return GetService().Members.Delete(groupKey, memberKey).Execute();
             }
 
             public Data.Member Get(string groupKey, string memberKey)
             {
-                return services[activeDomain].Members.Get(groupKey, memberKey).Execute();
+                return GetService().Members.Get(groupKey, memberKey).Execute();
             }
 
             public Data.Member Insert(Data.Member body, string groupKey)
             {
-                return services[activeDomain].Members.Insert(body, groupKey).Execute();
+                return GetService().Members.Insert(body, groupKey).Execute();
             }
 
             public List<Data.Member> List(string groupKey, MembersListProperties properties = null)
@@ -332,7 +332,7 @@ namespace gShell.dotNet
                 List<Data.Member> results = new List<Data.Member>();
                 
                 directory_v1.MembersResource.ListRequest request =
-                 services[activeDomain].Members.List(groupKey);
+                 GetService().Members.List(groupKey);
 
                 if (null != properties)
                 {
@@ -388,12 +388,12 @@ namespace gShell.dotNet
 
             public Data.Member Patch(Data.Member body, string groupKey, string memberKey)
             {
-                return services[activeDomain].Members.Patch(body, groupKey, memberKey).Execute();
+                return GetService().Members.Patch(body, groupKey, memberKey).Execute();
             }
 
             public Data.Member Update(Data.Member body, string groupKey, string memberKey)
             {
-                return services[activeDomain].Members.Update(body, groupKey, memberKey).Execute();
+                return GetService().Members.Update(body, groupKey, memberKey).Execute();
             }
         }
 
@@ -421,19 +421,19 @@ namespace gShell.dotNet
 
             public string Action(Data.MobileDeviceAction body, string customerId, string resourceId)
             {
-                return services[activeDomain].Mobiledevices.Action(body, customerId, resourceId).Execute();
+                return GetService().Mobiledevices.Action(body, customerId, resourceId).Execute();
             }
 
             public string Delete(string customerId, string resourceId)
             {
-                return services[activeDomain].Mobiledevices.Delete(customerId, resourceId).Execute();
+                return GetService().Mobiledevices.Delete(customerId, resourceId).Execute();
             }
 
             public Data.MobileDevice Get(string customerId, string resourceId,
                 directory_v1.MobiledevicesResource.GetRequest.ProjectionEnum? projection = null)
             {
                 directory_v1.MobiledevicesResource.GetRequest request = 
-                    services[activeDomain].Mobiledevices.Get(customerId, resourceId);
+                    GetService().Mobiledevices.Get(customerId, resourceId);
                 request.Projection = projection;
                 return request.Execute();
             }
@@ -443,7 +443,7 @@ namespace gShell.dotNet
                 List<Data.MobileDevice> results = new List<Data.MobileDevice>();
 
                 directory_v1.MobiledevicesResource.ListRequest request = 
-                    services[activeDomain].Mobiledevices.List(customerId);
+                    GetService().Mobiledevices.List(customerId);
 
                 if (null != properties)
                 {
@@ -511,17 +511,17 @@ namespace gShell.dotNet
             }
             public string Delete(string customerId, Google.Apis.Util.Repeatable<string> orgUnitPath)
             {
-                return services[activeDomain].Orgunits.Delete(customerId, orgUnitPath).Execute();
+                return GetService().Orgunits.Delete(customerId, orgUnitPath).Execute();
             }
 
             public Data.OrgUnit Get(string customerId, Google.Apis.Util.Repeatable<string> orgUnitPath)
             {
-                return services[activeDomain].Orgunits.Get(customerId, orgUnitPath).Execute();
+                return GetService().Orgunits.Get(customerId, orgUnitPath).Execute();
             }
 
             public Data.OrgUnit Insert(Data.OrgUnit body, string customerId)
             {
-                return services[activeDomain].Orgunits.Insert(body, customerId).Execute();
+                return GetService().Orgunits.Insert(body, customerId).Execute();
             }
 
             public List<Data.OrgUnit> List(string customerId, OrgunitsListProperties properties = null)
@@ -529,7 +529,7 @@ namespace gShell.dotNet
                 List<Data.OrgUnit> results = new List<Data.OrgUnit>();
 
                 directory_v1.OrgunitsResource.ListRequest request =
-                    services[activeDomain].Orgunits.List(customerId);
+                    GetService().Orgunits.List(customerId);
 
                 if (null != properties)
                 {
@@ -549,12 +549,12 @@ namespace gShell.dotNet
 
             public Data.OrgUnit Patch(Data.OrgUnit body, string customerId, Google.Apis.Util.Repeatable<string> orgUnitPath)
             {
-                return services[activeDomain].Orgunits.Patch(body, customerId, orgUnitPath).Execute();
+                return GetService().Orgunits.Patch(body, customerId, orgUnitPath).Execute();
             }
 
             public Data.OrgUnit Update(Data.OrgUnit body, string customerId, Google.Apis.Util.Repeatable<string> orgUnitPath)
             {
-                return services[activeDomain].Orgunits.Update(body, customerId, orgUnitPath).Execute();
+                return GetService().Orgunits.Update(body, customerId, orgUnitPath).Execute();
             }
         }
 
@@ -587,7 +587,7 @@ namespace gShell.dotNet
 
             public string Delete(string userKey)
             {
-                return services[activeDomain].Users.Delete(userKey).Execute();
+                return GetService().Users.Delete(userKey).Execute();
             }
 
             public Data.User Get(string userKey,
@@ -595,7 +595,7 @@ namespace gShell.dotNet
                 directory_v1.UsersResource.GetRequest.ViewTypeEnum? viewType = null)
             {
                 directory_v1.UsersResource.GetRequest request = 
-                    services[activeDomain].Users.Get(userKey);
+                    GetService().Users.Get(userKey);
 
                 request.Projection = projection;
                 request.ViewType = viewType;
@@ -605,7 +605,7 @@ namespace gShell.dotNet
 
             public Data.User Insert(Data.User body)
             {
-                return services[activeDomain].Users.Insert(body).Execute();
+                return GetService().Users.Insert(body).Execute();
             }
 
             public List<Data.User> List(UsersListProperties properties = null)
@@ -613,7 +613,7 @@ namespace gShell.dotNet
                 List<Data.User> results = new List<Data.User>();
 
                 directory_v1.UsersResource.ListRequest request =
-                    services[activeDomain].Users.List();
+                    GetService().Users.List();
 
                 if (null != properties)
                 {
@@ -677,27 +677,27 @@ namespace gShell.dotNet
 
             public string MakeAdmin(Data.UserMakeAdmin body, string userKey)
             {
-                return services[activeDomain].Users.MakeAdmin(body, userKey).Execute();
+                return GetService().Users.MakeAdmin(body, userKey).Execute();
             }
 
             public Data.User Patch(Data.User body, string userKey)
             {
-                return services[activeDomain].Users.Patch(body, userKey).Execute();
+                return GetService().Users.Patch(body, userKey).Execute();
             }
 
             public string Undelete(Data.UserUndelete body, string userKey)
             {
-                return services[activeDomain].Users.Undelete(body, userKey).Execute();
+                return GetService().Users.Undelete(body, userKey).Execute();
             }
 
             public Data.User Update(Data.User body, string userKey)
             {
-                return services[activeDomain].Users.Update(body, userKey).Execute();
+                return GetService().Users.Update(body, userKey).Execute();
             }
 
             public Data.Channel Watch(Data.Channel body)
             {
-                return services[activeDomain].Users.Watch(body).Execute();
+                return GetService().Users.Watch(body).Execute();
             }
 
             #region Users.aliases
@@ -705,12 +705,12 @@ namespace gShell.dotNet
             {
                 public string Delete(string userKey, string alias)
                 {
-                    return services[activeDomain].Users.Aliases.Delete(userKey, alias).Execute();
+                    return GetService().Users.Aliases.Delete(userKey, alias).Execute();
                 }
 
                 public Data.Alias Insert(Data.Alias body, string userKey)
                 {
-                    return services[activeDomain].Users.Aliases.Insert(body, userKey).Execute();
+                    return GetService().Users.Aliases.Insert(body, userKey).Execute();
                 }
 
                 public List<Data.Alias> List(string userKey)
@@ -718,7 +718,7 @@ namespace gShell.dotNet
                     List<Data.Alias> results = new List<Data.Alias>();
 
                     directory_v1.UsersResource.AliasesResource.ListRequest request =
-                        services[activeDomain].Users.Aliases.List(userKey);
+                        GetService().Users.Aliases.List(userKey);
 
                     Data.Aliases pagedResult = request.Execute();
 
@@ -732,7 +732,7 @@ namespace gShell.dotNet
 
                 public Data.Channel Watch(Data.Channel body, string userKey)
                 {
-                    return services[activeDomain].Users.Aliases.Watch(body, userKey).Execute();
+                    return GetService().Users.Aliases.Watch(body, userKey).Execute();
                 }
             }
             #endregion
@@ -742,22 +742,22 @@ namespace gShell.dotNet
             {
                 public string Delete(string userKey)
                 {
-                    return services[activeDomain].Users.Photos.Delete(userKey).Execute();
+                    return GetService().Users.Photos.Delete(userKey).Execute();
                 }
 
                 public Data.UserPhoto Get(string userKey)
                 {
-                    return services[activeDomain].Users.Photos.Get(userKey).Execute();
+                    return GetService().Users.Photos.Get(userKey).Execute();
                 }
 
                 public Data.UserPhoto Patch(Data.UserPhoto body, string userKey)
                 {
-                    return services[activeDomain].Users.Photos.Patch(body, userKey).Execute();
+                    return GetService().Users.Photos.Patch(body, userKey).Execute();
                 }
 
                 public Data.UserPhoto Update(Data.UserPhoto body, string userKey)
                 {
-                    return services[activeDomain].Users.Photos.Update(body, userKey).Execute();
+                    return GetService().Users.Photos.Update(body, userKey).Execute();
                 }
             }
             #endregion
@@ -771,12 +771,12 @@ namespace gShell.dotNet
         {
             public string Delete(string userKey, int codeId)
             {
-                return services[activeDomain].Asps.Delete(userKey, codeId).Execute();
+                return GetService().Asps.Delete(userKey, codeId).Execute();
             }
 
             public Data.Asp Get(string userKey, int codeId)
             {
-                return services[activeDomain].Asps.Get(userKey, codeId).Execute();
+                return GetService().Asps.Get(userKey, codeId).Execute();
             }
 
             public List<Data.Asp> List(string userKey)
@@ -784,7 +784,7 @@ namespace gShell.dotNet
                 List<Data.Asp> results = new List<Data.Asp>();
 
                 directory_v1.AspsResource.ListRequest request =
-                    services[activeDomain].Asps.List(userKey);
+                    GetService().Asps.List(userKey);
 
                 Data.Asps pagedResult = request.Execute();
 
@@ -805,12 +805,12 @@ namespace gShell.dotNet
         {
             public string Delete(string userKey, string clientId)
             {
-                return services[activeDomain].Tokens.Delete(userKey, clientId).Execute();
+                return GetService().Tokens.Delete(userKey, clientId).Execute();
             }
 
             public Data.Token Get(string userKey, string clientId)
             {
-                return services[activeDomain].Tokens.Get(userKey, clientId).Execute();
+                return GetService().Tokens.Get(userKey, clientId).Execute();
             }
 
             public List<Data.Token> List(string userKey)
@@ -818,7 +818,7 @@ namespace gShell.dotNet
                 List<Data.Token> results = new List<Data.Token>();
 
                 directory_v1.TokensResource.ListRequest request =
-                    services[activeDomain].Tokens.List(userKey);
+                    GetService().Tokens.List(userKey);
 
                 Data.Tokens pagedResult = request.Execute();
 
@@ -839,12 +839,12 @@ namespace gShell.dotNet
         {
             public string Generate(string userKey)
             {
-                return services[activeDomain].VerificationCodes.Generate(userKey).Execute();
+                return GetService().VerificationCodes.Generate(userKey).Execute();
             }
 
             public string Invalidate(string userKey)
             {
-                return services[activeDomain].VerificationCodes.Invalidate(userKey).Execute();
+                return GetService().VerificationCodes.Invalidate(userKey).Execute();
             }
 
             public List<Data.VerificationCode> List(string userKey)
@@ -852,7 +852,7 @@ namespace gShell.dotNet
                 List<Data.VerificationCode> results = new List<Data.VerificationCode>();
 
                 directory_v1.VerificationCodesResource.ListRequest request =
-                    services[activeDomain].VerificationCodes.List(userKey);
+                    GetService().VerificationCodes.List(userKey);
 
                 Data.VerificationCodes pagedResult = request.Execute();
 
@@ -882,12 +882,12 @@ namespace gShell.dotNet
 
             public string Delete(string customer, string notificationId)
             {
-                return services[activeDomain].Notifications.Delete(customer, notificationId).Execute();
+                return GetService().Notifications.Delete(customer, notificationId).Execute();
             }
 
             public Data.Notification Get(string customer, string notificationId)
             {
-                return services[activeDomain].Notifications.Get(customer, notificationId).Execute();
+                return GetService().Notifications.Get(customer, notificationId).Execute();
             }
 
             public List<Data.Notification> List(string customer, NotificationsListProperties properties = null)
@@ -895,7 +895,7 @@ namespace gShell.dotNet
                 List<Data.Notification> results = new List<Data.Notification>();
 
                 directory_v1.NotificationsResource.ListRequest request =
-                    services[activeDomain].Notifications.List(customer);
+                    GetService().Notifications.List(customer);
 
                 if (null != properties)
                 {
@@ -950,12 +950,12 @@ namespace gShell.dotNet
 
             public Data.Notification Patch(Data.Notification body, string customer, string notificationId)
             {
-                return services[activeDomain].Notifications.Patch(body, customer, notificationId).Execute();
+                return GetService().Notifications.Patch(body, customer, notificationId).Execute();
             }
 
             public Data.Notification Update(Data.Notification body, string customer, string notificationId)
             {
-                return services[activeDomain].Notifications.Update(body, customer, notificationId).Execute();
+                return GetService().Notifications.Update(body, customer, notificationId).Execute();
             }
         }
 
@@ -967,7 +967,7 @@ namespace gShell.dotNet
         {
             public string Stop(Data.Channel body)
             {
-                return services[activeDomain].Channels.Stop(body).Execute();
+                return GetService().Channels.Stop(body).Execute();
             }
         }
 
@@ -979,17 +979,17 @@ namespace gShell.dotNet
         {
             public string Delete(string customerId, string schemaKey)
             {
-                return services[activeDomain].Schemas.Delete(customerId, schemaKey).Execute();
+                return GetService().Schemas.Delete(customerId, schemaKey).Execute();
             }
 
             public Data.Schema Get(string customerId, string schemaKey)
             {
-                return services[activeDomain].Schemas.Get(customerId, schemaKey).Execute();
+                return GetService().Schemas.Get(customerId, schemaKey).Execute();
             }
 
             public Data.Schema Insert(Data.Schema body, string customerId)
             {
-                return services[activeDomain].Schemas.Insert(body, customerId).Execute();
+                return GetService().Schemas.Insert(body, customerId).Execute();
             }
 
             public List<Data.Schema> List(string customerId)
@@ -997,7 +997,7 @@ namespace gShell.dotNet
                 List<Data.Schema> results = new List<Data.Schema>();
 
                 directory_v1.SchemasResource.ListRequest request =
-                    services[activeDomain].Schemas.List(customerId);
+                    GetService().Schemas.List(customerId);
 
                 Data.Schemas pagedResult = request.Execute();
 
@@ -1011,12 +1011,12 @@ namespace gShell.dotNet
 
             public Data.Schema Patch(Data.Schema body, string customerId, string schemaKey)
             {
-                return services[activeDomain].Schemas.Patch(body, customerId, schemaKey).Execute();
+                return GetService().Schemas.Patch(body, customerId, schemaKey).Execute();
             }
 
             public Data.Schema Update(Data.Schema body, string customerId, string schemaKey)
             {
-                return services[activeDomain].Schemas.Update(body, customerId, schemaKey).Execute();
+                return GetService().Schemas.Update(body, customerId, schemaKey).Execute();
             }
         }
 

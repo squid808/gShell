@@ -66,7 +66,7 @@ namespace gShell.dotNet.Utilities.OAuth2
         {
             domains = new Dictionary<string, OAuth2Domain>();
         }
-        
+
         //public OAuth2Info(Userinfoplus userInfo, string storedToken, HashSet<string> scopes)
         //{
         //    SetUser(userInfo, storedToken, scopes);
@@ -97,11 +97,11 @@ namespace gShell.dotNet.Utilities.OAuth2
             }
 
 
-            domains = (Dictionary<string, OAuth2Domain>)info.GetValue("domains", 
+            domains = (Dictionary<string, OAuth2Domain>)info.GetValue("domains",
                 typeof(Dictionary<string, OAuth2Domain>));
             _defaultDomain = (string)info.GetValue("defaultDomain", typeof(string));
             defaultClientSecrets = (ClientSecrets)info.GetValue("clientSecrets", typeof(ClientSecrets));
-            
+
         }
 
         //This serializes the data
@@ -133,7 +133,8 @@ namespace gShell.dotNet.Utilities.OAuth2
             return null;
         }
 
-        public OAuth2TokenInfo GetTokenAndScopes(string Api, string Domain = null, string User = null){
+        public OAuth2TokenInfo GetTokenAndScopes(string Api, string Domain = null, string User = null)
+        {
             if (Domain == null && defaultDomain == null) return null;
 
             if (Domain == null) Domain = defaultDomain;
@@ -141,11 +142,16 @@ namespace gShell.dotNet.Utilities.OAuth2
             return domains[Domain].GetTokenAndScopes(Api, User);
         }
 
-        public void SetTokenAndScopes(string Api, string Token, List<string> Scopes, string User, string Domain)
+        public void SetTokenAndScopes(string Api, string TokenString, TokenResponse TokenResponse, List<string> Scopes, string User, string Domain)
         {
             CheckAndCreateStructure(Domain, User, Api);
 
-            domains[Domain].SetTokenAndScopes(Api, Token, Scopes, User);
+            if (!domains.ContainsKey(Domain))
+            {
+                domains[Domain] = new OAuth2Domain();
+            }
+
+            domains[Domain].SetTokenAndScopes(Api, TokenString, TokenResponse, Scopes, User);
         }
 
         /// <summary>Checks the file for the provided information and scaffolds out anything that is missing.</summary>
@@ -162,7 +168,7 @@ namespace gShell.dotNet.Utilities.OAuth2
 
             OAuth2Domain domain = domains[Domain];
 
-            if (domain.users.ContainsKey(User))
+            if (!domain.users.ContainsKey(User))
             {
                 domain.users.Add(User, new OAuth2DomainUser());
                 domain.users[User].email = User;
@@ -188,6 +194,7 @@ namespace gShell.dotNet.Utilities.OAuth2
         /// <summary>Is the domain stored.</summary>
         public bool ContainsDomain(string domain)
         {
+            if (domains == null) { return false; }
             return (domains.ContainsKey(domain));
         }
 
@@ -205,14 +212,6 @@ namespace gShell.dotNet.Utilities.OAuth2
                 && domains[domain].users.ContainsKey(userName)
                 && domains[domain].users[userName].tokenAndScopesByApi.ContainsKey(api);
         }
-
-        ///// <summary>
-        ///// Return the default domain stored.
-        ///// </summary>
-        //public OAuth2Domain GetDefaultDomain()
-        //{
-        //    return domains[defaultDomain];
-        //}
 
         /// <summary>
         /// Set or update the default domain stored.
@@ -248,6 +247,30 @@ namespace gShell.dotNet.Utilities.OAuth2
             return null;
         }
 
+        public OAuth2Domain AddDomain(string domain)
+        {
+            if (!domains.ContainsKey(domain))
+            {
+                domains.Add(domain, new OAuth2Domain());
+            }
+
+            return domains[domain];
+        }
+
+        public OAuth2DomainUser AddUser(string userName, string domain)
+        {
+            AddDomain(domain);
+
+            OAuth2Domain oDomain = domains[domain];
+
+            if (!oDomain.users.ContainsKey(userName))
+            {
+                oDomain.users.Add(userName, new OAuth2DomainUser());
+            }
+
+            return oDomain.users[userName];
+        }
+
         //SetDomain - there is no point in setting a domain, since the only reason to do that would be to set a default user, a new user, or a service account.
 
         ///// <summary>
@@ -264,7 +287,7 @@ namespace gShell.dotNet.Utilities.OAuth2
         #endregion
 
         #region Users
-        
+
         ///// <summary>
         ///// Get all users stored in a domain.
         ///// </summary>
@@ -338,7 +361,7 @@ namespace gShell.dotNet.Utilities.OAuth2
             {
                 domains.Add(domain, new OAuth2Domain());
             }
-            domains[domain].defaultUser = Utils.GetFullEmailAddress(userName, domain);
+            domains[domain].defaultUser = userName;
         }
 
         ///// <summary>
@@ -414,7 +437,7 @@ namespace gShell.dotNet.Utilities.OAuth2
         //        domains.Remove(domain);
         //    };
 
-            
+
         //}
 
         //public HashSet<string> GetScope(Userinfoplus userInfo)
@@ -447,7 +470,7 @@ namespace gShell.dotNet.Utilities.OAuth2
             if (string.IsNullOrWhiteSpace(Domain) || (string.IsNullOrWhiteSpace(UserName)))
             {
                 var defaultUser = GetDefaultUserEmail();
-                
+
                 if (defaultUser != null)
                 {
                     UserName = Utils.GetUserFromEmail(defaultUser);
@@ -464,7 +487,7 @@ namespace gShell.dotNet.Utilities.OAuth2
                     return user.clientSecrets;
                 }
             }
-                
+
             return defaultClientSecrets;
         }
 
@@ -517,7 +540,7 @@ namespace gShell.dotNet.Utilities.OAuth2
         public string defaultUser { get; set; }
 
         /// <summary> A collection of users keyed by their email address. </summary>
-        public Dictionary<string, OAuth2DomainUser> users  { get; set; }
+        public Dictionary<string, OAuth2DomainUser> users { get; set; }
 
         /// <summary> The email address of the service account for this domain. </summary>
         public string serviceAccountEmail { get; set; }
@@ -542,17 +565,17 @@ namespace gShell.dotNet.Utilities.OAuth2
         //    users.Add(userEmail, new OAuth2DomainUser(userEmail));
         //}
         #endregion
-        
+
         #region Serialization
         //this constructs the class from serialized data
-		public OAuth2Domain(SerializationInfo info, StreamingContext ctxt)
+        public OAuth2Domain(SerializationInfo info, StreamingContext ctxt)
         {
             users = (Dictionary<string, OAuth2DomainUser>)info.GetValue("users",
                 typeof(Dictionary<string, OAuth2DomainUser>));
             //_defaultEmail = (string)info.GetValue("defaultEmail", typeof(string));
 
             serviceAccountEmail = (string)info.GetValue("serviceAccountEmail", typeof(string));
-            
+
             //It's possible this is not declared, so check to see if it's empty or not.
             if (serviceAccountEmail != "temp")
             {
@@ -580,12 +603,12 @@ namespace gShell.dotNet.Utilities.OAuth2
             else
             {
                 info.AddValue("serviceAccountEmail", serviceAccountEmail, typeof(string));
-                info.AddValue("certificateByteArray", 
+                info.AddValue("certificateByteArray",
                     serviceAccountCertificate.Export(X509ContentType.Pkcs12, "notasecret"), typeof(byte[]));
             }
-            
+
         }
-    	#endregion
+        #endregion
 
         #region Accessors
         public OAuth2TokenInfo GetTokenAndScopes(string Api, string User = null)
@@ -597,9 +620,9 @@ namespace gShell.dotNet.Utilities.OAuth2
             return users[User].GetTokenAndScopes(Api);
         }
 
-        public void SetTokenAndScopes(string Api, string Token, List<string> Scopes, string User)
+        public void SetTokenAndScopes(string Api, string TokenString, TokenResponse TokenResponse, List<string> Scopes, string UserName)
         {
-            users[User].SetTokenAndScopes(Api, Token, Scopes);
+            users[UserName].SetTokenAndScopes(Api, TokenString, Scopes, TokenResponse);
         }
 
         //public bool ContainsUser(string userEmail)
@@ -715,12 +738,13 @@ namespace gShell.dotNet.Utilities.OAuth2
         #endregion
 
         #region Constructors
-        public OAuth2DomainUser() 
+        public OAuth2DomainUser()
         {
             tokenAndScopesByApi = new Dictionary<string, OAuth2TokenInfo>();
         }
 
-        public OAuth2DomainUser(string UserEmail) : this()
+        public OAuth2DomainUser(string UserEmail)
+            : this()
         {
             this.email = UserEmail;
         }
@@ -746,7 +770,8 @@ namespace gShell.dotNet.Utilities.OAuth2
 
         #region Accessors
 
-        public OAuth2TokenInfo GetTokenAndScopes(string Api){
+        public OAuth2TokenInfo GetTokenAndScopes(string Api)
+        {
             if (tokenAndScopesByApi.ContainsKey(Api))
             {
                 return tokenAndScopesByApi[Api];
@@ -757,10 +782,10 @@ namespace gShell.dotNet.Utilities.OAuth2
             }
         }
 
-        public void SetTokenAndScopes(string Api, string Token, List<string> Scopes)
+        public void SetTokenAndScopes(string Api, string TokenString, List<string> Scopes, TokenResponse TokenResponse)
         {
             //Just overwrite whatever is already there.
-            tokenAndScopesByApi[Api] = new OAuth2TokenInfo(Scopes, Token);
+            tokenAndScopesByApi[Api] = new OAuth2TokenInfo(Scopes, TokenString, TokenResponse);
         }
 
         #endregion
@@ -772,16 +797,18 @@ namespace gShell.dotNet.Utilities.OAuth2
     {
         #region Properties
         public List<string> scopes { get; set; }
-        public string token { get; set; }
+        public string tokenString { get; set; }
+        public TokenResponse token { get; set; }
         #endregion
 
         #region Constructors
         public OAuth2TokenInfo() { }
 
-        public OAuth2TokenInfo(IEnumerable<string> Scopes, string Token)
+        public OAuth2TokenInfo(IEnumerable<string> scopes, string tokenString, TokenResponse tokenResponse)
         {
-            scopes = new List<string>(Scopes);
-            token = Token;
+            this.scopes = new List<string>(scopes);
+            this.tokenString = tokenString;
+            this.token = tokenResponse;
         }
         #endregion
 

@@ -81,5 +81,10 @@ namespace gShell.dotNet.Utilities
         {
             return token;
         }
+
+        public void ClearToken()
+        {
+            token = null;
+        }
     }
 }
