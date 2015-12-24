@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Google.Apis.Auth.OAuth2;
+using Google.Apis.Auth.OAuth2.Responses;
 using Google.Apis.Oauth2.v2;
 using Google.Apis.Oauth2.v2.Data;
 using Google.Apis.Services;
@@ -48,90 +49,162 @@ namespace gShell.dotNet.Utilities.OAuth2
 
         public static UserCredential asyncUserCredential { get; set; }
 
-        public static AuthenticationInfo currentAuthInfo { get { return _currentAuthInfo; } }
-        private static AuthenticationInfo _currentAuthInfo { get; set; }
-    
+        public static AuthenticatedUserInfo currentAuthInfo { get { return _currentAuthInfo; } }
+        private static AuthenticatedUserInfo _currentAuthInfo { get; set; }
+
+        public static bool IsAuthenticating { get { return _IsAuthenticating; } }
+        private static bool _IsAuthenticating { get; set; }
+
+        /// <summary>A memory swap placeholder for the token when in the middle of authenticating only.</summary>
+        public static TokenResponse AuthTokenTempSwap { get; set; }
+
         #endregion
 
         #region Authentication and Authorization
 
         //Example call: Authenticate("DirectoryV.3", "myDomain.com", "myUser);
 
-        public static AuthenticationInfo Authenticate(string Api, IEnumerable<string> Scopes, ClientSecrets Secrets,
+        public static AuthenticatedUserInfo Authenticate(string Api, IEnumerable<string> Scopes, ClientSecrets Secrets,
             string Domain = null, string User = null)
         {
-            _currentAuthInfo = AuthorizeUser(Api, Scopes, Secrets, Domain, User);
+            _currentAuthInfo = GetAuthTokenFlow(Api, Scopes, Secrets, Domain, User);
 
             return currentAuthInfo;
         }
 
-        /// <summary>Authorize the user against Google's servers.</summary>
-        public static AuthenticationInfo AuthorizeUser(string Api, IEnumerable<string> Scopes, ClientSecrets Secrets,
-            string Domain = null, string User = null)
+        /// <summary>Retrieve an authentication token from memory or from user authentication.</summary>
+        /// <remarks>Also fills out the OAuth2Base currentAuthInfo and asyncUserCredential members.</remarks>
+        public static AuthenticatedUserInfo GetAuthTokenFlow(string Api, IEnumerable<string> Scopes, ClientSecrets Secrets,
+            string Domain = null, string UserName = null)
         {
+            //reset the auth info
+            _currentAuthInfo = new AuthenticatedUserInfo() { scopes = Scopes, apiNameAndVersion = Api };
 
             //First, if the domain or user are missing, see if we can fill it in using the defaults
             Domain = CheckDomain(Domain);
-            if (Domain != null) User = CheckUser(Domain, User);
-
-            //Now let's see if we still have any missing information.
-            bool userOrDomainIsNull = User == null || Domain == null;
-
-            OAuth2TokenInfo preTokenInfo = null;
+            if (Domain != null) UserName = CheckUser(Domain, UserName);
 
             //First, if we are able to load a key based on the domain and user, we do that and add it to the data store.
             // This will make sure that when we authenticate, the Google Flow has something to load.
-            if (!userOrDomainIsNull && infoConsumer.TokenAndScopesExist(Domain, User, Api))
+            if (UserName != null && Domain != null && infoConsumer.TokenAndScopesExist(Domain, UserName, Api))
             {
-                preTokenInfo = infoConsumer.GetTokenInfo(Api, Domain, User);
-                memoryObjectDataStore.SetToken(preTokenInfo.tokenString);
+                OAuth2TokenInfo preTokenInfo = infoConsumer.GetTokenInfo(Api, Domain, UserName);
+                
+                _currentAuthInfo.tokenResponse = preTokenInfo.token;
+                _currentAuthInfo.tokenString = preTokenInfo.tokenString;
+                _currentAuthInfo.scopes = preTokenInfo.scopes; //overwrite any coming in with what is saved
             }
 
-            //Populate asyncUserCredential either from the data store or from the web via authorization.
+            //Set the domain and user now, and we'll check them again later while we authorize.
+            _currentAuthInfo.domain = Domain;
+            _currentAuthInfo.userName = UserName;
+
+            _IsAuthenticating = true;
+
+            //Populate asyncUserCredential, but we don't quite save the token yet...
             AwaitUserCredential(Scopes, Secrets).Wait();
 
-            if (preTokenInfo == null || asyncUserCredential.Token.Issued != preTokenInfo.token.Issued ||
-                asyncUserCredential.Token.AccessToken != preTokenInfo.token.AccessToken)
-            {
+            _IsAuthenticating = false;
 
-                //Load the token from the temp data store
-                string tokenString = memoryObjectDataStore.GetToken();
+            //Now that we have asyncUserCredential filled out, we can actually save the token if we need to.
+            memoryObjectDataStore.StoreAsync<TokenResponse>(string.Empty, AuthTokenTempSwap).Wait();
 
-                //At this point we assume the authentication worked and we should have a token. So, make sure we have the 
-                // proper domain and user if we didn't already so that we can save it.
-                if (userOrDomainIsNull)
-                {
-                    using (Oauth2Service oService = new Oauth2Service(new BaseClientService.Initializer()
-                    {
-                        HttpClientInitializer = asyncUserCredential,
-                        ApplicationName = GetAppName(Api),
-                    }))
-                    {
-                        Userinfoplus userInfoPlus = oService.Userinfo.Get().Execute();
-                        User = Utils.GetUserFromEmail(userInfoPlus.Email);
-                        Domain = userInfoPlus.Hd;
-                    }
-                }
-
-                if (infoConsumer.GetDefaultDomain() == null)
-                {
-                    infoConsumer.SetDefaultDomain(Domain);
-                }
-
-                if (infoConsumer.GetDefaultUser(Domain) == null)
-                {
-                    infoConsumer.SetDefaultUser(Domain, User);
-                }
-
-                //Now for sure we have the user and domain, as well as the token, so we can save it.
-                infoConsumer.SaveToken(Api, Domain, User, tokenString, asyncUserCredential.Token, Scopes.ToList());
-            }
-
-            memoryObjectDataStore.ClearToken();
-
-            return new AuthenticationInfo(User, Domain);
+            //The scopes, domain, user and api have already been set above. the token is set while saving.
+            return currentAuthInfo;
         }
 
+        /// <summary>
+        /// Pulls the authenticated user's information from Google and uses that to update OAuth2Base.currentAuthInfo.
+        /// </summary>
+        /// <remarks>Requires that Authentication has taken place and filled out asyncUserCredential first.</remarks>
+        public static void SetAuthenticatedUserInfo()
+        {
+            using (Oauth2Service oService = new Oauth2Service(new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = asyncUserCredential,
+                ApplicationName = _appName,
+            }))
+            {
+                Userinfoplus userInfoPlus = oService.Userinfo.Get().Execute();
+                _currentAuthInfo.userName = Utils.GetUserFromEmail(userInfoPlus.Email);
+                _currentAuthInfo.domain = userInfoPlus.Hd;
+            }
+        }
+
+        /// <summary>
+        /// Saves the token using information from OAuth2Base.currentAuthInfo.
+        /// </summary>
+        /// <remarks>Requires that authorization has occurred and currentAuthInfo has been filled out.</remarks>
+        public static void SaveToken(string TokenString, TokenResponse TokenResponse)
+        {
+            //Only save if we need to write or overwrite the token, so compare the token coming in with the one in memory.
+            if (!string.IsNullOrWhiteSpace(TokenString) && TokenString != currentAuthInfo.tokenString)
+            {
+                if (infoConsumer.GetDefaultDomain() == null)
+                {
+                    infoConsumer.SetDefaultDomain(currentAuthInfo.domain);
+                }
+
+                if (infoConsumer.GetDefaultUser(currentAuthInfo.domain) == null)
+                {
+                    infoConsumer.SetDefaultUser(currentAuthInfo.domain, currentAuthInfo.userName);
+                }
+
+                infoConsumer.SaveToken(currentAuthInfo.apiNameAndVersion, currentAuthInfo.domain, currentAuthInfo.userName,
+                TokenString, TokenResponse, currentAuthInfo.scopes.ToList());
+            }
+            
+
+            /* 1 - get the token from the caller (string and object)
+             * 
+             * 2 - test if the domain and user exist
+             *     - if not, get them with Oauth call
+             *     
+             * 3 - store it.
+             * 
+             * 
+             * things that need to be stored by Oauth2Base:
+             * Domain
+             * User
+             * Scopes
+             * APi
+             * 
+             * provided by caller MODS:
+             * token(s)
+             * 
+             * for authentication, scopes should always be provided (but only NEED to be provided when authenticating)
+             * 
+             * 1.a - check for pretoken. if exists, sideload it in to the MODS and make note to do OAuth call after
+             * 
+             * 1.b - if we have the token and the scopes, and pull the scopes out as normal for use
+             * 
+             * 2.a- call Await() - if the token exists, it pulls the information in to the awaitusercredentials. if not, it authenticates to do the same.
+             * 
+             * 2.b - if we didn't have a pretoken, call for the oAuth info to get the domain and user to save.
+             * 
+             * 2.c - if we authenticated, using domain, user, api, token(s) and scopes, save the token
+             * 
+             * 3.a - if we didn't authenticate, we have let Await...() build the credentials for us.
+             * 
+             * 4. cache the relevent scopes and other information in to OAuth2Base
+             * 
+             * 5. clear the token info from MODS (we now have it in memory on OA2B
+             * 
+             * end result: needs to have the information loaded in to OAuth2Base.asyncUserCredential (the result of AwaitUserCredential)
+             * 
+             * before service: 
+             * 
+             * the scope, api, token, user and domain should all be set
+             * 
+             * if the service needs to refresh the token it will call MODS.Store() with the token in string form
+             * 
+             * using this we can deserialize it to the object, and then with the info in OA2B we can store it.
+             * */
+        }
+
+        /// <summary>
+        /// Combines the _appName with the api name and version, and replaces ':' with '.'
+        /// </summary>
         public static string GetAppName(string ApiNameAndVersion)
         {
             return _appName + "." + ApiNameAndVersion.Replace(':', '.');
@@ -152,13 +225,12 @@ namespace gShell.dotNet.Utilities.OAuth2
 
         #region Helpers
 
-        /// <summary>Checks the stored info to see if this domain matches or not.</summary>
+        /// <summary>Checks the stored info to see if this domain matches any stored domains.</summary>
         public static string CheckDomain(string Domain = null)
         {
             //If null, check for a default but only return it if it exists.
             if (string.IsNullOrWhiteSpace(Domain))
             {
-
                 string DefaultDomain = infoConsumer.GetDefaultDomain();
 
                 if (string.IsNullOrWhiteSpace(DefaultDomain))
@@ -246,17 +318,34 @@ namespace gShell.dotNet.Utilities.OAuth2
         #endregion
     }
 
-    public class AuthenticationInfo
+    /// <summary>
+    /// Contains all information that results from authenticating a user and gathering a token, and everything
+    /// that might be required to store a token. Does not store the token itself for uses other than comparison.
+    /// </summary>
+    public class AuthenticatedUserInfo
     {
-        public AuthenticationInfo(string User, string UserDomain)
+        public AuthenticatedUserInfo() { }
+
+        public AuthenticatedUserInfo(string User, string UserDomain, string Api, IEnumerable<string> Scopes)
         {
-            UserName = Utils.GetUserFromEmail(User);
-            Domain = Utils.GetDomainFromEmail(UserDomain);
-            UserEmail = Utils.GetFullEmailAddress(UserName, Domain);
+            userName = Utils.GetUserFromEmail(User);
+            domain = Utils.GetDomainFromEmail(UserDomain);
+            apiNameAndVersion = Api;
+            scopes = Scopes;
         }
 
-        public string UserName { get; set; }
-        public string Domain { get; set; }
-        public string UserEmail { get; set; }
+        public string userName { get; set; }
+        public string domain { get; set; }
+        public string userEmail
+        {
+            get
+            {
+                return Utils.GetFullEmailAddress(userName, domain);
+            }
+        }
+        public string apiNameAndVersion { get; set; }
+        public IEnumerable<string> scopes { get; set; }
+        public string tokenString { get; set; }
+        public TokenResponse tokenResponse { get; set; }
     }
 }

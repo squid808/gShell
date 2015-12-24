@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
+
+using Google.Apis.Auth.OAuth2.Responses;
 using Google.Apis.Json;
 using Google.Apis.Util.Store;
 
@@ -29,7 +31,7 @@ namespace gShell.dotNet.Utilities
     /// </remarks>
     public class MemoryObjectDataStore : IDataStore
     {
-        private static string token { get; set; }
+        //private static string token { get; set; }
 
         #region IDataStore Implementation
 
@@ -43,17 +45,24 @@ namespace gShell.dotNet.Utilities
             return null;
         }
 
-        /// <summary>
-        /// Return the token, if there is one. tokenTemp needs to be manually set prior to calling this by 
-        /// authorizing, if possible.
-        /// </summary>
+        /// <summary>Return the token, if there is one.</summary>
+        /// <remarks>
+        /// This is pretty much only called from Authorize at this point in time. It attempts to load the token from
+        /// storage before making the user authenticate instead. In our case, we have manually loaded any possible
+        /// token info in to OAuth2Base.currentAuthInfo, so that becomes our storage. This is looking for the token
+        /// in serialized string form.
+        /// 
+        /// The AuthorizeAsync method then takes this token as part of the info and adds it to the 
+        /// Oauth2Base.asyncUserCredential object, whether it was from the web or storage. It does NOT check for the
+        /// token expiration, that happens in the services.
+        /// </remarks>
         public Task<T> GetAsync<T>(string key)
         {
             TaskCompletionSource<T> tcs = new TaskCompletionSource<T>();
 
-            if (token != null)
+            if (OAuth2Base.currentAuthInfo.tokenString != null)
             {
-                tcs.SetResult(NewtonsoftJsonSerializer.Instance.Deserialize<T>(token));
+                tcs.SetResult(NewtonsoftJsonSerializer.Instance.Deserialize<T>(OAuth2Base.currentAuthInfo.tokenString));
             }
             else
             {
@@ -63,28 +72,57 @@ namespace gShell.dotNet.Utilities
             return tcs.Task;
         }
 
+        /// <summary>
+        /// Store a token.
+        /// </summary>
+        /// <remarks>
+        /// This will occur as a result of either one of two scenarios. First, it will occur when first authorizing
+        /// a user against Google in which case a brand new token is returned. Second, when a service attempts to
+        /// use a token to make an API call and fails due to the token being expired.
+        /// 
+        /// While this overall class is a requirement for the Google APIs, it does not allow for enough information
+        /// to store tokens in gShell (three strings - Domain, User, Api). As such, we must store that information
+        /// elsewhere for use when storing. Similarly, if the Domain or User is missing, we must make a call to the
+        /// OAuth service to gather that from the authenticating user's account.
+        /// 
+        /// We can also be almost 100% sure that T is going to be a TokenResponse, at least at the time of writing.
+        /// </remarks>
         public Task StoreAsync<T>(string key, T value)
         {
-            token = NewtonsoftJsonSerializer.Instance.Serialize(value);
+            TokenResponse tokenResponse = value as TokenResponse; //null if not actually a TokenResponse
+
+            //If we're authenticating we have to delay storing the token so that we can get the user info from google,
+            // which uses information that is only created once authentication finishes. So, we toggle this off after
+            // and then call this again.
+            if (OAuth2Base.IsAuthenticating)
+            {
+                OAuth2Base.AuthTokenTempSwap = tokenResponse;
+            } 
+            else
+            {
+                if (tokenResponse != null)
+                {
+                    string tokenString = NewtonsoftJsonSerializer.Instance.Serialize(value);
+
+                    //This should only matter when authenticating; if no tokens were able to be prefetched, these will
+                    // be blank. When called from a service, we will have authenticated already.
+                    if (OAuth2Base.currentAuthInfo.domain == null || OAuth2Base.currentAuthInfo.userName == null)
+                    {
+                        OAuth2Base.SetAuthenticatedUserInfo();
+                    }
+
+                    OAuth2Base.SaveToken(tokenString, tokenResponse);
+                }
+                else
+                {
+                    throw (new FormatException(string.Format(
+                        "The API Authorization Token was received in an unexpected format: {0}.", typeof(T).ToString())));
+                }
+            }
+
             return TaskEx.Delay(0);
         }
 
         #endregion
-
-        /// <summary>Set the token for the data store to return when requested.</summary>
-        public void SetToken(string Token)
-        {
-            token = Token;
-        }
-
-        public string GetToken()
-        {
-            return token;
-        }
-
-        public void ClearToken()
-        {
-            token = null;
-        }
     }
 }

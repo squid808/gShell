@@ -40,14 +40,14 @@ namespace gShell_dotNetTest
 
             try
             {
-                gShell.dotNet.Utilities.OAuth2.AuthenticationInfo authInfo = 
+                gShell.dotNet.Utilities.OAuth2.AuthenticatedUserInfo authInfo = 
                     directory.Authenticate(directory.apiNameAndVersion, scopes, secrets);
 
                 //Tell your domain to authenticate and build the service
                 directory.BuildService(authInfo);
 
                 //Get the full email address of the user with the authenticated domain, just in case.
-                email = Utils.GetFullEmailAddress(email, authInfo.Domain);
+                email = Utils.GetFullEmailAddress(email, authInfo.domain);
 
                 //We make the method call, using the full email since it asks for a userKey
                 User result = directory.users.Get(email);

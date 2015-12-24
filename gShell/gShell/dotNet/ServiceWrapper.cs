@@ -23,7 +23,7 @@ namespace gShell.dotNet
         /// <summary>
         /// A collection of services keyed by the domain name. TODO: have an alternate set for gmail users
         /// </summary>
-        public static Dictionary<AuthenticationInfo, T> services { get; set; }
+        public static Dictionary<AuthenticatedUserInfo, T> services { get; set; }
 
         /// <summary>
         /// Indicates if this set of services will work with Gmail (as opposed to Google Apps). 
@@ -39,7 +39,7 @@ namespace gShell.dotNet
         {
             get
             {
-                return OAuth2Base.currentAuthInfo.Domain;
+                return OAuth2Base.currentAuthInfo.domain;
             }
         }
 
@@ -50,7 +50,7 @@ namespace gShell.dotNet
         #region Constructors
         public ServiceWrapper()
         {
-            services = new Dictionary<AuthenticationInfo, T>();
+            services = new Dictionary<AuthenticatedUserInfo, T>();
         }
         #endregion
 
@@ -58,7 +58,7 @@ namespace gShell.dotNet
         /// <summary>
         /// Returns the loaded and authenticated service for this domain. Returns null if it doesn't exist.
         /// </summary>
-        public static T GetService(AuthenticationInfo AuthInfo)
+        public static T GetService(AuthenticatedUserInfo AuthInfo)
         {
             if (ContainsService(AuthInfo))
             {
@@ -78,7 +78,7 @@ namespace gShell.dotNet
         /// <summary>
         /// Do the loaded and authenticated domains contain a service for this domain?
         /// </summary>
-        public static bool ContainsService(AuthenticationInfo AuthInfo)
+        public static bool ContainsService(AuthenticatedUserInfo AuthInfo)
         {
             return services.ContainsKey(AuthInfo);
         }
@@ -105,7 +105,7 @@ namespace gShell.dotNet
         /// Authenticates the given domain and creates a service for it, if necessary. 
         /// The process of authenticating will update the default and current domains.
         /// </summary>
-        public AuthenticationInfo Authenticate(string ApiNameAndVersion, IEnumerable<string> scopes, ClientSecrets secrets)
+        public AuthenticatedUserInfo Authenticate(string ApiNameAndVersion, IEnumerable<string> scopes, ClientSecrets secrets)
         {
             return OAuth2Base.Authenticate(ApiNameAndVersion, scopes, secrets);
         }
@@ -120,7 +120,7 @@ namespace gShell.dotNet
         /// <summary>
         /// Build the service and return the domain the service is working on.
         /// </summary>
-        public AuthenticationInfo BuildService(AuthenticationInfo AuthInfo)
+        public AuthenticatedUserInfo BuildService(AuthenticatedUserInfo AuthInfo)
         {
             if (AuthInfo == null) {return null;}
 
@@ -130,7 +130,7 @@ namespace gShell.dotNet
                 T service = CreateNewService(OAuth2Base.GetAppName(apiNameAndVersion));
 
                 //current domain should be set at this point 
-                if (AuthInfo.Domain == "gmail.com" && !worksWithGmail)
+                if (AuthInfo.domain == "gmail.com" && !worksWithGmail)
                 {
                     throw new Exception("This Google API is not available for a Gmail account.");
                 }

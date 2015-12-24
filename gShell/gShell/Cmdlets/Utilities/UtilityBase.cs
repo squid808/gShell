@@ -12,7 +12,7 @@ namespace gShell.Cmdlets.Utilities
             //Authenticate(OAuth2Base.currentDomain);
         }
 
-        protected override AuthenticationInfo Authenticate(IEnumerable<string> Scopes, ClientSecrets Secrets) { return null; }
+        protected override AuthenticatedUserInfo Authenticate(IEnumerable<string> Scopes, ClientSecrets Secrets) { return null; }
 
         protected override string apiNameAndVersion { get { return "gShellUtils"; } }
     }

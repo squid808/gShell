@@ -70,8 +70,8 @@ namespace gShell.Cmdlets.Directory
             var secrets = CheckForClientSecrets();
             if (secrets != null)
             {
-                IEnumerable<string> scopes = ShouldPromptForScopes(Domain, secrets);
-                Domain = gdirectory.BuildService(Authenticate(scopes, secrets)).Domain;
+                IEnumerable<string> scopes = EnsureScopesExist(Domain);
+                Domain = gdirectory.BuildService(Authenticate(scopes, secrets)).domain;
 
                 GWriteProgress = new gWriteProgress(WriteProgress);
             }
@@ -90,7 +90,7 @@ namespace gShell.Cmdlets.Directory
         /// <summary>
         /// A method specific to each inherited object, called during authentication. Must be implemented.
         /// </summary>
-        protected override AuthenticationInfo Authenticate(IEnumerable<string> Scopes, ClientSecrets Secrets)
+        protected override AuthenticatedUserInfo Authenticate(IEnumerable<string> Scopes, ClientSecrets Secrets)
         {
             return gdirectory.Authenticate(apiNameAndVersion, Scopes, Secrets);
         }
