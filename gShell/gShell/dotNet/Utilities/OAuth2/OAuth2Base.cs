@@ -106,8 +106,12 @@ namespace gShell.dotNet.Utilities.OAuth2
 
             _IsAuthenticating = false;
 
-            //Now that we have asyncUserCredential filled out, we can actually save the token if we need to.
-            memoryObjectDataStore.StoreAsync<TokenResponse>(string.Empty, AuthTokenTempSwap).Wait();
+            if (AuthTokenTempSwap != null)
+            {
+                //Now that we have asyncUserCredential filled out, we can actually save the token if we need to.
+                memoryObjectDataStore.StoreAsync<TokenResponse>(string.Empty, AuthTokenTempSwap).Wait();
+                AuthTokenTempSwap = null;
+            }
 
             //The scopes, domain, user and api have already been set above. the token is set while saving.
             return currentAuthInfo;
