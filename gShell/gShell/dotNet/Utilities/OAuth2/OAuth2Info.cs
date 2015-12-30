@@ -49,15 +49,15 @@ namespace gShell.dotNet.Utilities.OAuth2
         private int fileVersion = 3;
 
         /// <summary> The overall default domain in gShell. </summary>
-        public string defaultDomain { get { return _defaultDomain; } }
+        public string defaultDomain { get; set; }
 
-        private string _defaultDomain;
+        //private string _defaultDomain;
 
         /// <summary> A collection of domains that have at least one authenticated user. </summary>
-        private Dictionary<string, OAuth2Domain> domains { get; set; }
+        public Dictionary<string, OAuth2Domain> domains { get; set; }
 
         /// <summary> Gets or sets the default client secrets. </summary>
-        private ClientSecrets defaultClientSecrets { get; set; }
+        public ClientSecrets defaultClientSecrets { get; set; }
 
         #endregion
 
@@ -99,7 +99,7 @@ namespace gShell.dotNet.Utilities.OAuth2
 
             domains = (Dictionary<string, OAuth2Domain>)info.GetValue("domains",
                 typeof(Dictionary<string, OAuth2Domain>));
-            _defaultDomain = (string)info.GetValue("defaultDomain", typeof(string));
+            defaultDomain = (string)info.GetValue("defaultDomain", typeof(string));
             defaultClientSecrets = (ClientSecrets)info.GetValue("clientSecrets", typeof(ClientSecrets));
 
         }
@@ -213,17 +213,13 @@ namespace gShell.dotNet.Utilities.OAuth2
                 && domains[domain].users[userName].tokenAndScopesByApi.ContainsKey(api);
         }
 
-        /// <summary>
-        /// Set or update the default domain stored.
-        /// </summary>
+        /// <summary>Set or update the default domain stored.</summary>
         public void SetDefaultDomain(string domain)
         {
-            _defaultDomain = domain;
+            defaultDomain = domain;
         }
 
-        /// <summary>
-        /// Return a domain if it exists, or null.
-        /// </summary>
+        /// <summary>Return a domain if it exists, or null.</summary>
         public OAuth2Domain GetDomain(string domain)
         {
             if (domains.ContainsKey(domain))
@@ -234,9 +230,14 @@ namespace gShell.dotNet.Utilities.OAuth2
             return null;
         }
 
-        /// <summary>
-        /// Returns a stored user if it exists, or null.
-        /// </summary>
+        /// <summary>Return all domains.</summary>
+        /// <returns></returns>
+        public IEnumerable<OAuth2Domain> GetAllDomains()
+        {
+            return domains.Values;
+        }
+
+        /// <summary>Returns a stored user if it exists, or null.</summary>
         public OAuth2DomainUser GetUser(string userName, string domain)
         {
             if (domains.ContainsKey(domain) && domains[domain].users.ContainsKey(userName))
@@ -245,6 +246,21 @@ namespace gShell.dotNet.Utilities.OAuth2
             }
 
             return null;
+        }
+
+        /// <summary>Get all users in a domain.</summary>
+        public IEnumerable<OAuth2DomainUser> GetUsers(string domain)
+        {
+            if (!domains.ContainsKey(domain)) { return null; }
+
+            List<OAuth2DomainUser> users = new List<OAuth2DomainUser>();
+
+            foreach (string userName in domains[domain].users.Keys)
+            {
+                users.Add(domains[domain].users[userName]);
+            }
+
+            return users;
         }
 
         public OAuth2Domain AddDomain(string domain)
@@ -536,10 +552,11 @@ namespace gShell.dotNet.Utilities.OAuth2
     public class OAuth2Domain
     {
         #region Properties
-        /// <summary> The default user's email for this domain. </summary>
+
+        /// <summary> The default username for this domain. </summary>
         public string defaultUser { get; set; }
 
-        /// <summary> A collection of users keyed by their email address. </summary>
+        /// <summary> A collection of users keyed by their email username. </summary>
         public Dictionary<string, OAuth2DomainUser> users { get; set; }
 
         /// <summary> The email address of the service account for this domain. </summary>
@@ -550,6 +567,7 @@ namespace gShell.dotNet.Utilities.OAuth2
 
         /// <summary> The stored byte array for the service account. </summary>
         public byte[] certificateByteArray { get; set; }
+
         #endregion
 
         #region Constructors
@@ -723,6 +741,7 @@ namespace gShell.dotNet.Utilities.OAuth2
     public class OAuth2DomainUser
     {
         #region Properties
+
         /// <summary> The email address of this user </summary>
         public string email { get; set; }
 

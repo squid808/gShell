@@ -74,6 +74,13 @@ namespace gShell.dotNet.Utilities.OAuth2
             return info.GetDomain(Domain);
         }
 
+        //TODO: Rename this to just GetDomain but give a bool parameter of 'all' to indicate the choice. not nullable
+        /// <summary>Return all Domains.</summary>
+        public IEnumerable<OAuth2Domain> GetAllDomains()
+        {
+            return info.GetAllDomains();
+        }
+
         public string GetDefaultUser(string Domain)
         {
             if (DomainExists(Domain))
@@ -85,12 +92,40 @@ namespace gShell.dotNet.Utilities.OAuth2
             return null;
         }
 
-        /// <summary>Returns the DomainUser if both it and the domain exist.</summary>
-        public OAuth2DomainUser GetUser(string Domain, string User)
+        /// <summary>Returns the DomainUser if both it and the domain exist, and uses the default user if user is blank.</summary>
+        public OAuth2DomainUser GetUser(string Domain, string UserName = null)
         {
-            if (info == null || !info.ContainsUser(Domain, User) || string.IsNullOrWhiteSpace(User)) return null;
+            if (UserName == null) { UserName = info.domains[Domain].defaultUser; }
 
-            return info.GetUser(User, Domain);
+            if (info == null || !info.ContainsUser(Domain, UserName) || string.IsNullOrWhiteSpace(UserName)) return null;
+
+            return info.GetUser(UserName, Domain);
+        }
+
+        public IEnumerable<OAuth2DomainUser> GetAllUsers(string Domain = null)
+        {
+            List<OAuth2DomainUser> users = new List<OAuth2DomainUser>();
+
+            List<string> domains = new List<string>();
+
+            if (Domain != null)
+            {
+                domains.Add(Domain);
+            }
+            else
+            {
+                foreach (var domain in info.domains.Keys)
+                {
+                    domains.Add(domain);
+                }
+            }
+
+            foreach (var domain in domains)
+            {
+                users.AddRange(info.GetUsers(domain));
+            }
+
+            return users;
         }
 
         public OAuth2TokenInfo GetTokenInfo(string Api, string Domain, string User){
@@ -168,10 +203,42 @@ namespace gShell.dotNet.Utilities.OAuth2
         #endregion
 
         #region Remove
-        
 
+        /// <summary>Removes the given domain and any references to it, if matching.</summary>
+        public void RemoveDomain(string Domain)
+        {
+            info.domains.Remove(Domain);
 
+            if (info.defaultDomain == Domain)
+            {
+                info.defaultDomain = null;
+            }
 
+            dataStore.SaveInfo(info);
+        }
+
+        /// <summary>Removes all domains if set to true.</summary>
+        public void RemoveDomain(bool removeAll)
+        {
+            info.domains = new Dictionary<string, OAuth2Domain>();
+
+            info.defaultDomain = null;
+
+            dataStore.SaveInfo(info);
+        }
+
+        public void RemoveUser(string Domain, string UserName)
+        {
+
+            info.domains[Domain].users.Remove(UserName);
+
+            if (info.domains[Domain].defaultUser == UserName)
+            {
+                info.domains[Domain].defaultUser = null;
+            }
+
+            dataStore.SaveInfo(info);
+        }
 
         #endregion
 
@@ -182,6 +249,132 @@ namespace gShell.dotNet.Utilities.OAuth2
             dataStore.SaveInfo(info);
         }
         #endregion
+
+        ////TODO: Remove reliance on the OAuth2Info accessors (and remove them entirely) by handling all of that from the consumer, using the below setup
+        //#region Domains
+
+        ////get
+        ///// <summary>Summary.</summary>
+        //public void DoThing()
+        //{
+        
+        //}
+
+
+        ////set
+        ///// <summary>Summary.</summary>
+        //public void DoThing()
+        //{
+
+        //}
+
+        ////check
+        ///// <summary>Summary.</summary>
+        //public void DoThing()
+        //{
+
+        //}
+
+        ////remove
+        ///// <summary>Summary.</summary>
+        //public void DoThing()
+        //{
+
+        //}
+
+        //#endregion
+
+        //#region Users
+
+        ////get
+
+
+        ////set
+        ///// <summary>Summary.</summary>
+        //public void DoThing()
+        //{
+
+        //}
+
+        ////check
+        ///// <summary>Summary.</summary>
+        //public void DoThing()
+        //{
+
+        //}
+
+        ////remove
+        ///// <summary>Summary.</summary>
+        //public void DoThing()
+        //{
+
+        //}
+
+        //#endregion
+
+        //#region ClientSecrets
+
+        ////get
+        ///// <summary>Summary.</summary>
+        //public void DoThing()
+        //{
+
+        //}
+
+        ////set
+        ///// <summary>Summary.</summary>
+        //public void DoThing()
+        //{
+
+        //}
+
+        ////check
+        ///// <summary>Summary.</summary>
+        //public void DoThing()
+        //{
+
+        //}
+
+        ////remove
+        ///// <summary>Summary.</summary>
+        //public void DoThing()
+        //{
+
+        //}
+
+        //#endregion
+
+        //#region ServiceAccount
+
+        ////get
+        ///// <summary>Summary.</summary>
+        //public void DoThing()
+        //{
+
+        //}
+
+        ////set
+        ///// <summary>Summary.</summary>
+        //public void DoThing()
+        //{
+
+        //}
+
+        ////check
+        ///// <summary>Summary.</summary>
+        //public void DoThing()
+        //{
+
+        //}
+
+        ////remove
+        ///// <summary>Summary.</summary>
+        //public void DoThing()
+        //{
+
+        //}
+
+        //#endregion
 
     }
 }

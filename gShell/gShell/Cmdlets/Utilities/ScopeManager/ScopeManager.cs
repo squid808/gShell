@@ -197,32 +197,6 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
 
         #region User Input Loops
 
-        ///// <summary>
-        ///// Start the scope logic loop fomr the beginning where the user is asked to start by selecting an API.
-        ///// Results in the scopesByApiDict being set up.
-        ///// </summary>
-        //public void StartFromScratchLoop()
-        //{
-        //    bool keepGoing = true;
-
-        //    while (keepGoing)
-        //    {
-        //        ApiChoice choice = ChooseApiLoop();
-        //        ChooseApiScopesLoop(choice.Name, choice.Version);
-
-        //        //string script = "Read-Host '\nWould you like to choose or update additional API scopes? y or n'";
-        //        string script = "Read-Host '\nYou will now authenticate for this API. Press any key to continue.'";
-        //        Collection<PSObject> results = this.InvokeCommand.InvokeScript(script);
-        //        //string result = results[0].ToString().Substring(0, 1).ToLower();
-        //        //if (result == "n")
-        //        //{
-        //        //    keepGoing = false;
-        //        //    break;
-        //        //}
-        //        keepGoing = false;
-        //    }
-        //}
-
         /// <summary> Part of a loop that will return an Api Choice </summary>
         public ApiChoice ChooseApiLoop()
         {
@@ -262,68 +236,58 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
 
             return apiChoices[result - 1];
         }
-
-        //public void StartFromInCmdletLoop(string domain)
-        //{
-        //    //WriteWarning(string.Format("The Cmdlet you've just started is running against a domain ({0}) that doesn't seem to have any authenticated users saved. In order to continue you'll need to choose which permissions gShell can use.", domain));
-
-        //    string script = "Read-Host '\nWould you like to choose or your API scopes now? y or n'";
-        //    Collection<PSObject> results = this.InvokeCommand.InvokeScript(script);
-        //    string result = results[0].ToString().Substring(0, 1).ToLower();
-        //    if (result == "y")
-        //    {
-        //        StartFromScratchLoop();
-        //    }
-        //    else
-        //    {
-        //        PrintPretty(string.Format("No scopes will be chosen at this time. You can run this process manually with Invoke-ScopeManager later."), "Red");
-        //    }
-        //}
         
         /// <summary>
         /// Part of a loop that will return a chosen subset of scopes from an Api's list.
         /// </summary>
         public HashSet<string> ChooseApiScopesLoop(string api, string version)
         {
-            bool? readOnlyScopes = null;
-            bool readOnlyChosen = false;
-            bool choicesConfirmed = false;
+            bool? useReadOnlyScopes = null;
+            bool isReadOnlyChosen = false;
 
             string description;
             List<ScopeInfo> possibleScopes = GetScopesForAPI(api, version, out description);
+            List<ScopeInfo> readOnlyScopes = possibleScopes.Where(x => x.scope.Contains("readonly")).ToList();
+            List<ScopeInfo> actionOnlyScopes = possibleScopes.Where(x => !x.scope.Contains("readonly")).ToList();
 
-            //while (!choicesConfirmed)
-            //{
+            if (readOnlyScopes.Count > 0 && actionOnlyScopes.Count > 0)
+            {
                 #region ReadOnly Choice
-                while (!readOnlyChosen)
+                while (!isReadOnlyChosen)
                 {
-                    PrintPretty("\nWould you like to view all scopes [a], read-only scopes [r] or non read-only scopes [n]?", "Green");
+                    PrintPretty(string.Format("\nWould you like to view all {0} scopes [a], "+
+                        "the {1} read-only scopes [r] or {2} non action-only scopes [o]?",
+                        possibleScopes.Count.ToString(), readOnlyScopes.Count.ToString(), 
+                        actionOnlyScopes.Count.ToString()), "Green");
 
                     string readOnlyResultScript = "Read-Host '\nEnter your choice: '";
 
-                    Collection<PSObject> readOnlyResultResults = invokablePSInstance.InvokeCommand.InvokeScript(readOnlyResultScript);
+                    Collection<PSObject> readOnlyResultResults = 
+                        invokablePSInstance.InvokeCommand.InvokeScript(readOnlyResultScript);
 
                     string readOnlyResultResult = readOnlyResultResults[0].ToString().Substring(0, 1).ToLower();
 
                     switch (readOnlyResultResult)
                     {
                         case "a":
-                            readOnlyScopes = null;
-                            readOnlyChosen = true;
+                            useReadOnlyScopes = null;
+                            isReadOnlyChosen = true;
                             break;
                         case "r":
-                            readOnlyScopes = true;
-                            readOnlyChosen = true;
+                            useReadOnlyScopes = true;
+                            isReadOnlyChosen = true;
                             break;
-                        case "n":
-                            readOnlyScopes = false;
-                            readOnlyChosen = true;
+                        case "o":
+                            useReadOnlyScopes = false;
+                            isReadOnlyChosen = true;
                             break;
                         default:
                             PrintPretty("\nInvalid choice, please try again.", "Red");
                             break;
                     }
                 }
+            }
+
                 #endregion
 
                 #region Selecting Scopes
@@ -333,15 +297,15 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
                 List<ScopeChoice> allPossibleChoices = null;
                 bool allChoicesSelected = false;
 
-                if (readOnlyScopes.HasValue)
+                if (useReadOnlyScopes.HasValue)
                 {
-                    if (readOnlyScopes.Value == true)
+                    if (useReadOnlyScopes.Value == true)
                     {
-                        possibleScopes = possibleScopes.Where(x => x.scope.Contains("readonly")).ToList();
+                        possibleScopes = readOnlyScopes;
                     }
                     else
                     {
-                        possibleScopes = possibleScopes.Where(x => !x.scope.Contains("readonly")).ToList();
+                        possibleScopes = actionOnlyScopes;
                     }
                 }
 
@@ -492,36 +456,6 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
                 }
 
                 return scopesResult;
-
-                //List<ScopeInfo> results = new List<ScopeInfo>();
-
-                ////Selections have been confirmed and validated, move on.
-                //if (all)
-                //{
-                //    scopesByApiDict[api + ":" + version] = scopes;
-                //}
-                //else
-                //{
-                //    if (intChoices.Count != 0)
-                //    {
-                //        List<ScopeInfo> results = new List<ScopeInfo>();
-                //        foreach (int choice in intChoices)
-                //        {
-                //            results.Add(scopes[choice - 1]);
-                //        }
-
-                //        scopesByApiDict[api + ":" + version] = results;
-                //    }
-                //    else
-                //    {
-                //        scopesByApiDict[api + ":" + version] = new List<ScopeInfo>();
-                //    }
-                //}
-
-                //Now verify the selection of scopes
-                //PrintPretty("\nPlease review the following scopes")
-
-            //}
         }
 
         public IEnumerable<string> ChooseScopes(string api, string version) {
