@@ -12,24 +12,29 @@ namespace gShell.dotNet.Utilities.OAuth2.DataStores
     /// <remarks>
     /// This file is saved with encryption based on the user currently executing the assembly.
     /// </remarks>
-    class OAuth2SerializerDataStore : IOAuth2DataStore
+    class OAuth2BinDataStore : DataStoreBase, IOAuth2DataStore
     {
         #region Parameters
         
         private static byte[] s_aditionalEntropy = { 8, 4, 5, 6, 6, 5, 6, 5, 9, 7, 2, 5, 9, 6, 1, 7, 3, 9 };
-        private static string destFolder = Path.Combine(Environment.GetFolderPath(
-            Environment.SpecialFolder.LocalApplicationData), @"gShell\");
-        private static string destFile = Path.Combine(Environment.GetFolderPath(
-            Environment.SpecialFolder.LocalApplicationData), @"gShell\gShell_OAuth2.bin");
+        //private static string destFolder = Path.Combine(Environment.GetFolderPath(
+        //    Environment.SpecialFolder.LocalApplicationData), @"gShell\");
+        //private static string destFile = Path.Combine(Environment.GetFolderPath(
+        //    Environment.SpecialFolder.LocalApplicationData), @"gShell\gShell_OAuth2.bin");
+
+        public override string fileName { get { return "gShell_OAuth2.bin"; } }
 
         #endregion
 
+        public OAuth2BinDataStore(string DestinationFolder) : base(DestinationFolder) { }
+
         #region Interface Implementation
-        public OAuth2Info LoadInfo()
+
+        public override OAuth2Info LoadInfo()
         {
             OAuth2Info savedInfo = null;
 
-            if (FileExists())
+            if (File.Exists(destFile))
             {
                 byte[] protectedArray = System.IO.File.ReadAllBytes(destFile);
 
@@ -59,7 +64,7 @@ namespace gShell.dotNet.Utilities.OAuth2.DataStores
             return savedInfo;
         }
 
-        public void SaveInfo(OAuth2Info infoToSave)
+        public override void SaveInfo(OAuth2Info infoToSave)
         {
             CheckOrCreateDirectory();
 
@@ -74,25 +79,6 @@ namespace gShell.dotNet.Utilities.OAuth2.DataStores
                     DataProtectionScope.CurrentUser);
 
                 System.IO.File.WriteAllBytes(destFile, protectedArray);
-            }
-        }
-
-        #endregion
-
-        #region Helpers
-
-        /// <summary>Checks if the file exists.</summary>
-        private static bool FileExists()
-        {
-            return (File.Exists(destFile));
-        }
-
-        /// <summary>Creates the target directory if it does not already exist.</summary>
-        private static void CheckOrCreateDirectory()
-        {
-            if (!System.IO.Directory.Exists(destFolder))
-            {
-                System.IO.Directory.CreateDirectory(destFolder);
             }
         }
 

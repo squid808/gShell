@@ -1,8 +1,10 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 
 using Google.Apis.Auth.OAuth2;
 using gShell.dotNet.Utilities.OAuth2.DataStores;
+using gShell.dotNet.Utilities.Settings;
 
 namespace gShell.dotNet.Utilities.OAuth2
 {
@@ -13,6 +15,11 @@ namespace gShell.dotNet.Utilities.OAuth2
     public class OAuth2InfoConsumer
     {
         #region Properties
+
+        public gShellSettings settings { get; set; }
+
+        public static string dataStoreLocation { get { return Path.Combine(Environment.GetFolderPath(
+            Environment.SpecialFolder.LocalApplicationData), @"gShell\"); } }
 
         /// <summary>The data store responsible for saving and loading the OAuth2 information.</summary>
         private IOAuth2DataStore dataStore { get { return _dataStore; } }
@@ -27,8 +34,17 @@ namespace gShell.dotNet.Utilities.OAuth2
 
         public OAuth2InfoConsumer()
         {
-            //_dataStore = new OAuth2SerializerDataStore();
-            _dataStore = new OAuth2JsonDataStore();
+            settings = gShellSettingsLoader.Load();
+
+            if (settings != null && settings.SerializeType == gShellSettings.SerializeTypes.Json)
+            {
+                _dataStore = new OAuth2JsonDataStore(dataStoreLocation);
+            }
+            else
+            {
+                _dataStore = new OAuth2BinDataStore(dataStoreLocation);
+            }
+
             info = dataStore.LoadInfo();
             if (info == null)
             {
@@ -240,12 +256,18 @@ namespace gShell.dotNet.Utilities.OAuth2
             dataStore.SaveInfo(info);
         }
 
-        #endregion
-
-        #region Helpers
-        /// <summary>Use this to save the info in order to force you to update and save the in-memory info.</summary>
-        private void SaveInfo()
+        /// <summary>Remove the default client secrets unless a domain and username are provided.</summary>
+        public void RemoveClientSecrets(string Domain = null, string UserName = null)
         {
+            if (Domain == null || UserName == null)
+            {
+                info.defaultClientSecrets = null;
+            }
+            else
+            {
+                info.domains[Domain].users[UserName].clientSecrets = null;
+            }
+
             dataStore.SaveInfo(info);
         }
         #endregion

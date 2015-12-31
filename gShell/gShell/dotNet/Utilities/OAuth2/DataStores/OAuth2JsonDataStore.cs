@@ -10,18 +10,23 @@ namespace gShell.dotNet.Utilities.OAuth2.DataStores
     /// <remarks>
     /// This file is saved without encryption.
     /// </remarks>
-    class OAuth2JsonDataStore : IOAuth2DataStore
+    class OAuth2JsonDataStore : DataStoreBase, IOAuth2DataStore
     {
         #region Parameters
 
-        private static string destFolder = Path.Combine(Environment.GetFolderPath(
-            Environment.SpecialFolder.LocalApplicationData), @"gShell\");
-        private static string destFile = Path.Combine(Environment.GetFolderPath(
-            Environment.SpecialFolder.LocalApplicationData), @"gShell\gShell_OAuth2.json");
+        //private static string destFolder = Path.Combine(Environment.GetFolderPath(
+        //    Environment.SpecialFolder.LocalApplicationData), @"gShell\");
+        //private static string destFile = Path.Combine(Environment.GetFolderPath(
+        //    Environment.SpecialFolder.LocalApplicationData), @"gShell\gShell_OAuth2.json");
+        public override string fileName { get { return "gShell_OAuth2.json"; } }
 
         #endregion
 
-        public OAuth2Info LoadInfo()
+        #region Interface Implementation
+
+        public OAuth2JsonDataStore(string DestinationFolder) : base(DestinationFolder) {}
+
+        public override OAuth2Info LoadInfo()
         {
             OAuth2Info info = null;
 
@@ -37,10 +42,12 @@ namespace gShell.dotNet.Utilities.OAuth2.DataStores
             return info;
         }
 
-        public void SaveInfo(OAuth2Info infoToSave)
+        public override void SaveInfo(OAuth2Info infoToSave)
         {
             string json = JsonConvert.SerializeObject(infoToSave, Formatting.Indented);
             File.WriteAllText(destFile, json);
         }
+
+        #endregion
     }
 }

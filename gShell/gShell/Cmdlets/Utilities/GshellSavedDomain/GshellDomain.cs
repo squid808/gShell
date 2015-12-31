@@ -308,43 +308,43 @@ namespace gShell.Cmdlets.Utilities.gShellDomain
         }
     }
 
-    //[Cmdlet(VerbsCommon.Remove, "gShellClientSecrets",
-    //      SupportsShouldProcess = true,
-    //      HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-gShellClientSecrets")]
-    //public class RemovegShellClientSecretsCommand : UtilityBase
-    //{
-    //    #region Properties
-    //    [Parameter(Position = 0)]
-    //    public SwitchParameter Force { get; set; }
-    //    #endregion
+    [Cmdlet(VerbsCommon.Remove, "gShellClientSecrets",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-gShellClientSecrets")]
+    public class RemovegShellClientSecretsCommand : UtilityBase
+    {
+        #region Properties
+        [Parameter(Position = 0)]
+        public SwitchParameter Force { get; set; }
+        #endregion
 
-    //    protected override void ProcessRecord()
-    //    {
-    //        if (ShouldProcess("ClientSecrets", "Remove-gShellDomain"))
-    //        {
-    //            if (Force || ShouldContinue((String.Format("Custom Client Secrets information for gShell will be deleted.\nContinue?"
-    //                )), "Confirm removal of custom Client Secrets"))
-    //            {
-    //                try
-    //                {
-    //                    WriteDebug(string.Format("Attempting to remove custom Client Secrets from gShell"));
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess("ClientSecrets", "Remove-gShellDomain"))
+            {
+                if (Force || ShouldContinue((String.Format("Custom Client Secrets information for gShell will be deleted.\nContinue?"
+                    )), "Confirm removal of custom Client Secrets"))
+                {
+                    try
+                    {
+                        WriteDebug(string.Format("Attempting to remove custom Client Secrets from gShell"));
 
-    //                    SavedFile.RemoveClientSecrets();
+                        OAuth2Base.infoConsumer.RemoveClientSecrets();
 
-    //                    WriteVerbose(string.Format("Removal of custom Client Secrets completed without error."));
-    //                }
-    //                catch (Exception e)
-    //                {
-    //                    WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, "Client Secrets"));
-    //                }
-    //            }
-    //            else
-    //            {
-    //                WriteError(new ErrorRecord(new Exception("Deletion of stored authentication information not confirmed"),
-    //                    "", ErrorCategory.InvalidData, "Client Secrets"));
-    //            }
-    //        }
-    //    }
-    //}
+                        WriteVerbose(string.Format("Removal of custom Client Secrets completed without error."));
+                    }
+                    catch (Exception e)
+                    {
+                        WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, "Client Secrets"));
+                    }
+                }
+                else
+                {
+                    WriteError(new ErrorRecord(new Exception("Deletion of stored authentication information not confirmed"),
+                        "", ErrorCategory.InvalidData, "Client Secrets"));
+                }
+            }
+        }
+    }
     #endregion
 }
