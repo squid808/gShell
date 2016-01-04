@@ -9,6 +9,7 @@ namespace gShell.dotNet.Utilities.Settings
     {
         public enum SerializeTypes { Bin, Json }
 
+        [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         public SerializeTypes SerializeType { get; set; }
 
         public gShellSettings()

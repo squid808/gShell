@@ -75,7 +75,7 @@ namespace gShell.dotNet.Utilities.OAuth2
         /// <summary>Retrieve an authentication token from memory or from user authentication.</summary>
         /// <remarks>Also fills out the OAuth2Base currentAuthInfo and asyncUserCredential members.</remarks>
         public static AuthenticatedUserInfo GetAuthTokenFlow(string Api, IEnumerable<string> Scopes, ClientSecrets Secrets,
-            string Domain = null, string UserName = null)
+            string Domain = null, string UserName = null, bool force = false)
         {
             //reset the auth info
             _currentAuthInfo = new AuthenticatedUserInfo() { scopes = Scopes, apiNameAndVersion = Api };
@@ -86,7 +86,7 @@ namespace gShell.dotNet.Utilities.OAuth2
 
             //First, if we are able to load a key based on the domain and user, we do that and add it to the data store.
             // This will make sure that when we authenticate, the Google Flow has something to load.
-            if (UserName != null && Domain != null && infoConsumer.TokenAndScopesExist(Domain, UserName, Api))
+            if (UserName != null && Domain != null && infoConsumer.TokenAndScopesExist(Domain, UserName, Api) && !force)
             {
                 OAuth2TokenInfo preTokenInfo = infoConsumer.GetTokenInfo(Api, Domain, UserName);
                 

@@ -16,32 +16,36 @@ namespace gShell.dotNet.Utilities.OAuth2
     [Serializable]
     public class OAuth2Info : ISerializable
     {
-        ///<summary> Client credential details for installed and web applications customized for serialization. </summary>
-        [Serializable]
-        public class gClientSecrets
-        {
-            public string ClientId { get; set; }
+        /////<summary> Client credential details for installed and web applications customized for serialization. </summary>
+        //[Serializable]
+        //public class gClientSecrets
+        //{
+        //    public string ClientId { get; set; }
 
-            public string ClientSecret { get; set; }
+        //    public string ClientSecret { get; set; }
 
-            public static implicit operator ClientSecrets(gClientSecrets secrets)
-            {
-                return new ClientSecrets()
-                {
-                    ClientId = secrets.ClientId,
-                    ClientSecret = secrets.ClientSecret
-                };
-            }
+        //    public static implicit operator ClientSecrets(gClientSecrets secrets)
+        //    {
+        //        if (secrets == null) return null;
 
-            public static implicit operator gClientSecrets(ClientSecrets secrets)
-            {
-                return new gClientSecrets()
-                {
-                    ClientId = secrets.ClientId,
-                    ClientSecret = secrets.ClientSecret
-                };
-            }
-        }
+        //        return new ClientSecrets()
+        //        {
+        //            ClientId = secrets.ClientId,
+        //            ClientSecret = secrets.ClientSecret
+        //        };
+        //    }
+
+        //    public static implicit operator gClientSecrets(ClientSecrets secrets)
+        //    {
+        //        if (secrets == null) return null;
+
+        //        return new gClientSecrets()
+        //        {
+        //            ClientId = secrets.ClientId,
+        //            ClientSecret = secrets.ClientSecret
+        //        };
+        //    }
+        //}
 
         #region Properties
 
@@ -67,15 +71,6 @@ namespace gShell.dotNet.Utilities.OAuth2
             domains = new Dictionary<string, OAuth2Domain>();
         }
 
-        //public OAuth2Info(Userinfoplus userInfo, string storedToken, HashSet<string> scopes)
-        //{
-        //    SetUser(userInfo, storedToken, scopes);
-        //}
-
-        //public OAuth2Info(string userEmail, string storedToken, HashSet<string> scopes)
-        //{
-        //    SetUser(userEmail, storedToken, scopes);
-        //}
         #endregion
 
         #region Serialization
@@ -100,7 +95,11 @@ namespace gShell.dotNet.Utilities.OAuth2
             domains = (Dictionary<string, OAuth2Domain>)info.GetValue("domains",
                 typeof(Dictionary<string, OAuth2Domain>));
             defaultDomain = (string)info.GetValue("defaultDomain", typeof(string));
-            defaultClientSecrets = (ClientSecrets)info.GetValue("clientSecrets", typeof(ClientSecrets));
+            object ClientSecretsObject = info.GetValue("clientSecrets", typeof(Object));
+            if (ClientSecretsObject != null)
+            {
+                defaultClientSecrets = (ClientSecrets)info.GetValue("clientSecrets", typeof(ClientSecrets));
+            }
 
         }
 
@@ -110,7 +109,7 @@ namespace gShell.dotNet.Utilities.OAuth2
             info.AddValue("fileVersion", fileVersion, typeof(int));
             info.AddValue("domains", domains, typeof(Dictionary<string, OAuth2Domain>));
             info.AddValue("defaultDomain", defaultDomain, typeof(string));
-            info.AddValue("clientSecrets", defaultClientSecrets, typeof(OAuth2Info.gClientSecrets));
+            info.AddValue("clientSecrets", defaultClientSecrets, typeof(ClientSecrets));
         }
         #endregion
 
@@ -124,7 +123,9 @@ namespace gShell.dotNet.Utilities.OAuth2
             if (domains != null && defaultDomain != null && domains[defaultDomain] != null)
             {
                 var domain = domains[defaultDomain];
-                if (domain.defaultUser != null && domain.users[domain.defaultUser] != null)
+                if (domain.defaultUser != null &&
+                    domain.users.ContainsKey(domain.defaultUser) &&
+                    domain.users[domain.defaultUser] != null)
                 {
                     return domain.users[domain.defaultUser].email;
                 }
@@ -162,16 +163,21 @@ namespace gShell.dotNet.Utilities.OAuth2
         {
             if (!domains.ContainsKey(Domain))
             {
-                domains.Add(Domain, new OAuth2Domain());
-                domains[Domain].defaultUser = User;
+                domains.Add(Domain, new OAuth2Domain(){
+                 defaultUser = User,
+                 domain = Domain
+                });
             }
 
             OAuth2Domain domain = domains[Domain];
 
             if (!domain.users.ContainsKey(User))
             {
-                domain.users.Add(User, new OAuth2DomainUser());
-                domain.users[User].email = User;
+                domain.users.Add(User, new OAuth2DomainUser()
+                {
+                    userName = User,
+                    domain = Domain
+                });
             }
 
             OAuth2DomainUser user = domain.users[User];
@@ -375,7 +381,10 @@ namespace gShell.dotNet.Utilities.OAuth2
         {
             if (!domains.ContainsKey(domain))
             {
-                domains.Add(domain, new OAuth2Domain());
+                domains.Add(domain, new OAuth2Domain()
+                {
+                    domain = domain
+                });
             }
             domains[domain].defaultUser = userName;
         }
@@ -556,6 +565,9 @@ namespace gShell.dotNet.Utilities.OAuth2
         /// <summary> The default username for this domain. </summary>
         public string defaultUser { get; set; }
 
+        /// <summary>The domain this object represents.</summary>
+        public string domain { get; set; }
+
         /// <summary> A collection of users keyed by their email username. </summary>
         public Dictionary<string, OAuth2DomainUser> users { get; set; }
 
@@ -590,8 +602,9 @@ namespace gShell.dotNet.Utilities.OAuth2
         {
             users = (Dictionary<string, OAuth2DomainUser>)info.GetValue("users",
                 typeof(Dictionary<string, OAuth2DomainUser>));
-            //_defaultEmail = (string)info.GetValue("defaultEmail", typeof(string));
 
+            defaultUser = (string)info.GetValue("defaultUser", typeof(string));
+            domain = (string)info.GetValue("domain", typeof(string));
             serviceAccountEmail = (string)info.GetValue("serviceAccountEmail", typeof(string));
 
             //It's possible this is not declared, so check to see if it's empty or not.
@@ -613,6 +626,7 @@ namespace gShell.dotNet.Utilities.OAuth2
         {
             info.AddValue("users", users, typeof(Dictionary<string, OAuth2DomainUser>));
             info.AddValue("defaultUser", defaultUser, typeof(string));
+            info.AddValue("domain", domain, typeof(string));
 
             if (string.IsNullOrWhiteSpace(serviceAccountEmail))
             {
@@ -742,13 +756,16 @@ namespace gShell.dotNet.Utilities.OAuth2
     {
         #region Properties
 
-        /// <summary> The email address of this user </summary>
-        public string email { get; set; }
+        /// <summary>The username for the user.</summary>
+        public string userName { get; set; }
 
-        /// <summary> The domain this user is from, derived from the user email address. </summary>
-        public string domain { get { return Utils.GetDomainFromEmail(email); } }
+        /// <summary>The domain this user is from.</summary>
+        public string domain { get; set; }
 
-        /// <summary> Gets or sets the collection of Api Tokens keyed by their respective Api names. </summary>
+        /// <summary>The email address of this user </summary>
+        public string email { get { return Utils.GetFullEmailAddress(userName, domain); } }
+
+        /// <summary>Gets or sets the collection of Api Tokens keyed by their respective Api names. </summary>
         public Dictionary<string, OAuth2TokenInfo> tokenAndScopesByApi { get; set; }
 
         /// <summary> Gets or sets the client secrets for this user within the domain. </summary>
@@ -762,18 +779,19 @@ namespace gShell.dotNet.Utilities.OAuth2
             tokenAndScopesByApi = new Dictionary<string, OAuth2TokenInfo>();
         }
 
-        public OAuth2DomainUser(string UserEmail)
-            : this()
-        {
-            this.email = UserEmail;
-        }
+        //public OAuth2DomainUser(string UserEmail)
+        //    : this()
+        //{
+        //    this.email = UserEmail;
+        //}
         #endregion
 
         #region Serialization
         //this constructs the class from serialized data
         public OAuth2DomainUser(SerializationInfo info, StreamingContext ctxt)
         {
-            email = (string)info.GetValue("email", typeof(string));
+            userName = (string)info.GetValue("userName", typeof(string));
+            domain = (string)info.GetValue("domain", typeof(string));
             tokenAndScopesByApi = (Dictionary<string, OAuth2TokenInfo>)info.GetValue("tokenAndScopes", typeof(Dictionary<string, OAuth2TokenInfo>));
             clientSecrets = (ClientSecrets)info.GetValue("clientSecrets", typeof(ClientSecrets));
         }
@@ -781,9 +799,10 @@ namespace gShell.dotNet.Utilities.OAuth2
         //This serializes the data
         public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
         {
-            info.AddValue("email", email, typeof(string));
+            info.AddValue("userName", userName, typeof(string));
+            info.AddValue("domain", domain, typeof(string));
             info.AddValue("tokenAndScopes", tokenAndScopesByApi, typeof(Dictionary<string, OAuth2TokenInfo>));
-            info.AddValue("clientSecrets", clientSecrets, typeof(OAuth2Info.gClientSecrets));
+            info.AddValue("clientSecrets", clientSecrets, typeof(ClientSecrets));
         }
         #endregion
 

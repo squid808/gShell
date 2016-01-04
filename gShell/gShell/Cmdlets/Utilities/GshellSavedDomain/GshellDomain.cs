@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Management.Automation;
 using gShell.dotNet.Utilities;
 using gShell.dotNet.Utilities.OAuth2;
+using gShell.dotNet.Utilities.Settings;
 
 namespace gShell.Cmdlets.Utilities.gShellDomain
 {
@@ -34,16 +35,16 @@ namespace gShell.Cmdlets.Utilities.gShellDomain
             {
                 switch (ParameterSetName)
                 {
-                    case "All":
-                        WriteObject(OAuth2Base.infoConsumer.GetAllDomains());
-                        break;
-
                     case "One":
                         WriteObject(OAuth2Base.infoConsumer.GetDomain(Domain));
                         break;
 
                     case "Default":
                         WriteObject(OAuth2Base.infoConsumer.GetDomain(OAuth2Base.infoConsumer.GetDefaultDomain()));
+                        break;
+
+                    default:
+                        WriteObject(OAuth2Base.infoConsumer.GetAllDomains());
                         break;
                 }
             }
@@ -108,6 +109,7 @@ namespace gShell.Cmdlets.Utilities.gShellDomain
     #endregion
 
     #region Set-gShellDomain
+    
     [Cmdlet(VerbsCommon.Set, "gShellDomain",
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-gShellDomain")]
@@ -150,6 +152,7 @@ namespace gShell.Cmdlets.Utilities.gShellDomain
             }
         }
     }
+
     #endregion
 
     #region Remove-gShellDomain
@@ -346,5 +349,39 @@ namespace gShell.Cmdlets.Utilities.gShellDomain
             }
         }
     }
+    #endregion
+
+    #region gShellSettings
+
+    [Cmdlet(VerbsCommon.Set, "gShellSettings",
+        SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Set-gShellSettings")]
+    public class SetgShellSettingsCommand : UtilityBase
+    {
+        #region Parameters
+
+        [Parameter(Position = 0)]
+        public gShellSettings.SerializeTypes? SerializedFileType { get; set; }
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess("Domain", "Set-gShellDomain"))
+            {
+                if (SerializedFileType.HasValue)
+                {
+                    gShellSettings settings = gShellSettingsLoader.Load();
+
+                    if (settings == null) settings = new gShellSettings();
+
+                    settings.SerializeType = SerializedFileType.Value;
+
+                    gShellSettingsLoader.Save(settings);
+                }
+            }
+        }
+    }
+
     #endregion
 }

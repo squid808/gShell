@@ -140,7 +140,7 @@ namespace gShell.dotNet.Utilities.OAuth2
                 if (string.IsNullOrWhiteSpace(Domain)) Domain = "no domain provided";
 
                 WriteWarning(string.Format("The Cmdlet you've just started is for domain ({0}) doesn't"
-                    + " seem to have any authenticated saved for this API ({1}). In order to continue you'll need to"
+                    + " seem to have any saved authentication for this API ({1}). In order to continue you'll need to"
                     + " choose which permissions gShell can use for this API.", Domain, apiNameAndVersion));
 
                 string chooseApiNowScript = "Read-Host '\nWould you like to choose your API scopes now? y or n'";

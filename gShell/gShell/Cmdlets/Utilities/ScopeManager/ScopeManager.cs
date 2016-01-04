@@ -18,6 +18,8 @@ using Microsoft.PowerShell.Commands; //for invoking ReadHost
 
 namespace gShell.Cmdlets.Utilities.ScopeHandler
 {
+    public enum ScopeSelectionTypes { None, All, ReadOnly, ReadWrite }
+
     [Cmdlet(VerbsLifecycle.Invoke, "ScopeManager",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Invoke-ScopeManager")]
@@ -38,6 +40,12 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
         [ValidateNotNullOrEmpty]
         public string ApiVersion { get; set; }
 
+        [Parameter(Position = 2,
+            Mandatory = false,
+            ParameterSetName = "ApiProvided")]
+        [ValidateNotNullOrEmpty]
+        public ScopeSelectionTypes PreSelectScopes { get; set; }
+
         #endregion
 
         protected override void ProcessRecord()
@@ -48,17 +56,25 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
                 if (ParameterSetName != "ApiProvided")
                 {
                     ApiChoice choice = ChooseApiLoop();
-                    ApiName = choice.API;
+                    ApiName = choice.Name;
                     ApiVersion = choice.Version;
                 }
 
-                ChooseScopesAndAuthenticate(ApiName, ApiVersion, secrets);
+                if (PreSelectScopes != ScopeSelectionTypes.None)
+                {
+                    AuthenticatePreChosenScopes(ApiName, ApiVersion, secrets, PreSelectScopes);
+                }
+                else
+                {
+                    ChooseScopesAndAuthenticate(ApiName, ApiVersion, secrets);
+                }
             }
             else
             {
-                WriteError(new ErrorRecord(null, (new Exception(
+                WriteError(new ErrorRecord(new Exception(
                     "Client Secrets must be set before running cmdlets. Run 'Get-Help "
-                    + "Set-gShellClientSecrets -online' for more information."))));
+                    + "Set-gShellClientSecrets -online' for more information."),
+                    "", ErrorCategory.ObjectNotFound, "Client Secrets"));
             }
         }
     }
@@ -187,12 +203,6 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
             invokablePSInstance = instance;
         }
 
-        ///// <summary>
-        ///// A collection of scope results where the key is the scope id in name:version format and the List is the ScopeInfos
-        ///// </summary>
-        //private Dictionary<string, List<ScopeInfo>> scopesByApiDict { get; set; }
-
-
         #endregion
 
         #region User Input Loops
@@ -256,7 +266,7 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
                 while (!isReadOnlyChosen)
                 {
                     PrintPretty(string.Format("\nWould you like to view all {0} scopes [a], "+
-                        "the {1} read-only scopes [r] or {2} non action-only scopes [o]?",
+                        "the {1} read-only scopes [r] or {2} read-write scopes [w]?",
                         possibleScopes.Count.ToString(), readOnlyScopes.Count.ToString(), 
                         actionOnlyScopes.Count.ToString()), "Green");
 
@@ -277,7 +287,7 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
                             useReadOnlyScopes = true;
                             isReadOnlyChosen = true;
                             break;
-                        case "o":
+                        case "w":
                             useReadOnlyScopes = false;
                             isReadOnlyChosen = true;
                             break;
@@ -478,6 +488,42 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
             PrintPretty(string.Format("{0}:{1} has been authenticated and saved.", api, version), "green");
 
             return info;
+        }
+
+        public AuthenticatedUserInfo AuthenticatePreChosenScopes(string api, string version, ClientSecrets secrets,
+            ScopeSelectionTypes PreSelectScopes = ScopeSelectionTypes.None)
+        {
+            if (PreSelectScopes == ScopeSelectionTypes.None)
+            {
+                return ChooseScopesAndAuthenticate(api, version, secrets);
+            }
+            else
+            {
+                Data.RestDescription restDescription = apis.RestData(api, version);
+
+                HashSet<string> scopes = new HashSet<string>();
+
+                switch (PreSelectScopes)
+                {
+                    case ScopeSelectionTypes.ReadOnly:
+                        scopes.UnionWith(restDescription.Auth.Oauth2.Scopes.Keys.Where(x => x.Contains("readonly")));
+                        break;
+
+                    case ScopeSelectionTypes.ReadWrite:
+                        scopes.UnionWith(restDescription.Auth.Oauth2.Scopes.Keys.Where(x => !x.Contains("readonly")));
+                        break;
+
+                    default:
+                        scopes.UnionWith(restDescription.Auth.Oauth2.Scopes.Keys);
+                        break;
+                }
+
+                scopes = CheckForRequiredScope(scopes);
+
+                AuthenticatedUserInfo info = OAuth2Base.GetAuthTokenFlow(api + ":" + version, scopes, secrets, force:true);
+
+                return info;
+            }
         }
 
         #endregion
