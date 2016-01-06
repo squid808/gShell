@@ -9,7 +9,7 @@ using Google.Apis.Auth.OAuth2;
 using Google.Apis.Admin.Directory.directory_v1;
 using Google.Apis.Admin.Directory.directory_v1.Data;
 
-namespace gShell_dotNetTest
+namespace gShell_dotNetExample
 {
     class Program
     {

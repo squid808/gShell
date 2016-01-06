@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gShell", "gShell\gShell.csproj", "{150FF6C8-7AC1-41A1-AEF4-69151D7D3D19}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WixCustomActions", "WixCustomAction\WixCustomActions.csproj", "{43B462E7-034C-416C-A120-4AE43E24A689}"
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "WixSetupProject", "WixSetupProject\WixSetupProject.wixproj", "{9E4B3352-49E0-474C-853B-FF56E1D599A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gShell_dotNetTest", "gShell_dotNetTest\gShell_dotNetTest.csproj", "{EA23796E-657A-4517-A8AD-00D21B5675A2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gShell_dotNetExample", "gShell_dotNetTest\gShell_dotNetExample.csproj", "{EA23796E-657A-4517-A8AD-00D21B5675A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
