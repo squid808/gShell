@@ -74,7 +74,6 @@ namespace gShell.dotNet.Utilities.OAuth2
 
         #region Domains
 
-
         /// <summary>Returns the Domain if it exists.</summary>
         public OAuth2Domain GetDomain(string Domain)
         {
@@ -94,30 +93,22 @@ namespace gShell.dotNet.Utilities.OAuth2
             return info.domains.Values;
         }
 
-
         /// <summary>Creates and/or overwrites the domain provided.</summary>
         public void SetDomain(OAuth2Domain Domain)
         {
-            if (Domain != null)
+            if (Domain != null && !string.IsNullOrWhiteSpace(Domain.domain))
             {
                 info.domains[Domain.domain] = Domain;
             }
 
-            if (string.IsNullOrWhiteSpace(info.defaultDomain))
-            {
-                SetDefaultDomain(Domain.domain);
-            }
-
             dataStore.SaveInfo(info);
         }
-
 
         /// <summary>Return false if the domain string is blank, if the info or the info.domains are null.</summary>
         public bool DomainExists(string Domain)
         {
             return info.domains.ContainsKey(Domain);
         }
-
 
         /// <summary>Removes the given domain.</summary>
         public void RemoveDomain(string Domain)
@@ -141,12 +132,10 @@ namespace gShell.dotNet.Utilities.OAuth2
 
         #region DefaultDomain
 
-
         public string GetDefaultDomain()
         {
             return info.defaultDomain;
         }
-
 
         public void SetDefaultDomain(string Domain)
         {
@@ -154,12 +143,10 @@ namespace gShell.dotNet.Utilities.OAuth2
             dataStore.SaveInfo(info);
         }
 
-
         public bool DefaultDomainExists()
         {
             return !string.IsNullOrWhiteSpace(info.defaultDomain);
         }
-
 
         public void RemoveDefaultDomain()
         {
@@ -170,7 +157,6 @@ namespace gShell.dotNet.Utilities.OAuth2
         #endregion
 
         #region Users
-
 
         /// <summary>Returns the DomainUser if both it and the domain exist, and uses the default user if user is blank.</summary>
         public OAuth2DomainUser GetUser(string Domain, string UserName)
@@ -214,7 +200,6 @@ namespace gShell.dotNet.Utilities.OAuth2
             return users;
         }
 
-
         /// <summary>Summary.</summary>
         public void SetUser(string Domain, OAuth2DomainUser User)
         {
@@ -227,14 +212,18 @@ namespace gShell.dotNet.Utilities.OAuth2
                 }
                 else
                 {
-                    OAuth2Domain domain = new OAuth2Domain();
+                    OAuth2Domain domain = new OAuth2Domain() { domain = Domain };
                     domain.defaultUser = User.userName;
                     domain.users.Add(User.userName, User);
                     SetDomain(domain);
+
+                    if (!DefaultDomainExists())
+                    {
+                        SetDefaultDomain(Domain);
+                    }
                 }
             }
         }
-
 
         /// <summary>Summary.</summary>
         public bool UserExists(string Domain, string UserName)
@@ -245,7 +234,6 @@ namespace gShell.dotNet.Utilities.OAuth2
 
             return domain.users.ContainsKey(UserName);
         }
-
 
         /// <summary>Summary.</summary>
         public void RemoveUser(string Domain, string UserName)
@@ -265,7 +253,6 @@ namespace gShell.dotNet.Utilities.OAuth2
 
         #region Token and Scope
 
-
         public OAuth2TokenInfo GetTokenInfo(string Domain, string UserName, string Api)
         {
             if (TokenAndScopesExist(Domain, UserName, Api))
@@ -277,7 +264,6 @@ namespace gShell.dotNet.Utilities.OAuth2
                 return null;
             }
         }
-
 
         public void SetTokenAndScopes(string Domain, string UserName, string Api, string TokenString, Google.Apis.Auth.OAuth2.Responses.TokenResponse TokenResponse, List<string> Scopes)
         {
@@ -291,7 +277,6 @@ namespace gShell.dotNet.Utilities.OAuth2
             dataStore.SaveInfo(info);
         }
 
-
         public bool TokenAndScopesExist(string Domain, string UserName, string Api)
         {
             if (DomainExists(Domain) && UserExists(Domain, UserName))
@@ -303,7 +288,6 @@ namespace gShell.dotNet.Utilities.OAuth2
                 return false;
             }
         }
-
 
         public void RemoveTokenAndScopes(string Domain, string UserName, string Api)
         {
@@ -319,7 +303,6 @@ namespace gShell.dotNet.Utilities.OAuth2
 
         #region DefaultUser
 
-
         public string GetDefaultUser(string Domain)
         {
             if (DomainExists(Domain))
@@ -330,14 +313,12 @@ namespace gShell.dotNet.Utilities.OAuth2
             return null;
         }
 
-
         public void SetDefaultUser(string Domain, string UserName)
         {
             info.domains[Domain].defaultUser = UserName;
 
             dataStore.SaveInfo(info);
         }
-
 
         public bool DefaultUserExists(string Domain)
         {
@@ -351,7 +332,6 @@ namespace gShell.dotNet.Utilities.OAuth2
             }
         }
 
-
         public void RemoveDefaultUser(string Domain)
         {
             if (DomainExists(Domain)) {
@@ -362,7 +342,6 @@ namespace gShell.dotNet.Utilities.OAuth2
         #endregion
 
         #region ClientSecrets
-
 
         /// <summary>Summary.</summary>
         public ClientSecrets GetClientSecrets(string Domain, string UserName)
@@ -376,7 +355,6 @@ namespace gShell.dotNet.Utilities.OAuth2
                 return null;
             }
         }
-
 
         /// <summary>Sets the client secrets for the given user.</summary>
         public void SetClientSecrets(string Domain, string UserName, ClientSecrets Secrets)
@@ -396,7 +374,6 @@ namespace gShell.dotNet.Utilities.OAuth2
             }
         }
 
-
         /// <summary>Do the client secrets exist for the given user.</summary>
         public bool ClientSecretsExist(string Domain, string UserName)
         {
@@ -409,7 +386,6 @@ namespace gShell.dotNet.Utilities.OAuth2
                 return false;
             }
         }
-
 
         /// <summary>Removes the client secrets for the user.</summary>
         public void RemoveClientSecrets(string Domain, string UserName)
@@ -457,13 +433,11 @@ namespace gShell.dotNet.Utilities.OAuth2
 
         #region ServiceAccount
 
-
         /// <summary>Summary.</summary>
         public void GetServiceAccount()
         {
             throw new NotImplementedException();
         }
-
 
         /// <summary>Summary.</summary>
         public void SetServiceAccount()
@@ -471,13 +445,11 @@ namespace gShell.dotNet.Utilities.OAuth2
             throw new NotImplementedException();
         }
 
-
         /// <summary>Summary.</summary>
         public void CheckServiceAccount()
         {
             throw new NotImplementedException();
         }
-
 
         /// <summary>Summary.</summary>
         public void RemoveServiceAccount()

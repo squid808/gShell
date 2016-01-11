@@ -130,12 +130,6 @@
               Source="$(var.gShell.TargetDir)/Google.Apis.Core.dll" />
         <RemoveFile Name="Google.Apis.Core.dll" Id="Google.Apis.Core.dll" On="uninstall" />
 
-        <File Id="Google.Apis.Drive.v2.dll"
-              Name="Google.Apis.Drive.v2.dll"
-              DiskId="1"
-              Source="$(var.gShell.TargetDir)Google.Apis.Drive.v2.dll" />
-        <RemoveFile Name="Google.Apis.Drive.v2.dll" Id="Google.Apis.Drive.v2.dll" On="uninstall" />
-
         <File Id="Google.Apis.Oauth2.v2.dll"
               Name="Google.Apis.Oauth2.v2.dll"
               DiskId="1"
