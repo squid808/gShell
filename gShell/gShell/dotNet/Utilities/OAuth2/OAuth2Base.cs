@@ -88,7 +88,7 @@ namespace gShell.dotNet.Utilities.OAuth2
             // This will make sure that when we authenticate, the Google Flow has something to load.
             if (UserName != null && Domain != null && infoConsumer.TokenAndScopesExist(Domain, UserName, Api) && !force)
             {
-                OAuth2TokenInfo preTokenInfo = infoConsumer.GetTokenInfo(Api, Domain, UserName);
+                OAuth2TokenInfo preTokenInfo = infoConsumer.GetTokenInfo(Domain, UserName, Api);
                 
                 _currentAuthInfo.tokenResponse = preTokenInfo.token;
                 _currentAuthInfo.tokenString = preTokenInfo.tokenString;
@@ -154,8 +154,7 @@ namespace gShell.dotNet.Utilities.OAuth2
                     infoConsumer.SetDefaultUser(currentAuthInfo.domain, currentAuthInfo.userName);
                 }
 
-                infoConsumer.SaveToken(currentAuthInfo.apiNameAndVersion, currentAuthInfo.domain, currentAuthInfo.userName,
-                TokenString, TokenResponse, currentAuthInfo.scopes.ToList());
+                infoConsumer.SetTokenAndScopes(currentAuthInfo.domain, currentAuthInfo.userName, currentAuthInfo.apiNameAndVersion, TokenString, TokenResponse, currentAuthInfo.scopes.ToList());
             }
             
 

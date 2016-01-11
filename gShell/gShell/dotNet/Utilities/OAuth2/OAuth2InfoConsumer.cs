@@ -18,8 +18,14 @@ namespace gShell.dotNet.Utilities.OAuth2
 
         public gShellSettings settings { get; set; }
 
-        public static string dataStoreLocation { get { return Path.Combine(Environment.GetFolderPath(
-            Environment.SpecialFolder.LocalApplicationData), @"gShell\"); } }
+        public static string dataStoreLocation
+        {
+            get
+            {
+                return Path.Combine(Environment.GetFolderPath(
+                    Environment.SpecialFolder.LocalApplicationData), @"gShell\");
+            }
+        }
 
         /// <summary>The data store responsible for saving and loading the OAuth2 information.</summary>
         private IOAuth2DataStore dataStore { get { return _dataStore; } }
@@ -66,56 +72,117 @@ namespace gShell.dotNet.Utilities.OAuth2
 
         #endregion
 
-        #region Get
+        #region Domains
 
-        public ClientSecrets GetClientSecrets()
-        {
-            if (info == null) return null;
-
-            return info.GetClientSecrets();
-        }
-
-        public string GetDefaultDomain()
-        {
-            if (info == null || string.IsNullOrWhiteSpace(info.defaultDomain)) return null;
-
-            return info.defaultDomain;
-        }
 
         /// <summary>Returns the Domain if it exists.</summary>
         public OAuth2Domain GetDomain(string Domain)
         {
-            if (info == null || !info.ContainsDomain(Domain) || string.IsNullOrWhiteSpace(Domain)) return null;
-
-            return info.GetDomain(Domain);
+            if (DomainExists(Domain))
+            {
+                return info.domains[Domain];
+            }
+            else
+            {
+                return null;
+            }
         }
 
-        //TODO: Rename this to just GetDomain but give a bool parameter of 'all' to indicate the choice. not nullable
         /// <summary>Return all Domains.</summary>
         public IEnumerable<OAuth2Domain> GetAllDomains()
         {
-            return info.GetAllDomains();
+            return info.domains.Values;
         }
 
-        public string GetDefaultUser(string Domain)
+
+        /// <summary>Creates and/or overwrites the domain provided.</summary>
+        public void SetDomain(OAuth2Domain Domain)
         {
-            if (DomainExists(Domain))
+            if (Domain != null)
             {
-                OAuth2Domain oDomain = GetDomain(Domain);
-                return oDomain.defaultUser;
+                info.domains[Domain.domain] = Domain;
             }
 
-            return null;
+            if (string.IsNullOrWhiteSpace(info.defaultDomain))
+            {
+                SetDefaultDomain(Domain.domain);
+            }
+
+            dataStore.SaveInfo(info);
         }
 
-        /// <summary>Returns the DomainUser if both it and the domain exist, and uses the default user if user is blank.</summary>
-        public OAuth2DomainUser GetUser(string Domain, string UserName = null)
+
+        /// <summary>Return false if the domain string is blank, if the info or the info.domains are null.</summary>
+        public bool DomainExists(string Domain)
         {
-            if (UserName == null) { UserName = info.domains[Domain].defaultUser; }
+            return info.domains.ContainsKey(Domain);
+        }
 
-            if (info == null || !info.ContainsUser(Domain, UserName) || string.IsNullOrWhiteSpace(UserName)) return null;
 
-            return info.GetUser(UserName, Domain);
+        /// <summary>Removes the given domain.</summary>
+        public void RemoveDomain(string Domain)
+        {
+            info.domains.Remove(Domain);
+
+            dataStore.SaveInfo(info);
+        }
+
+        /// <summary>Removes all domains.</summary>
+        public void RemoveAllDomains()
+        {
+            info.domains = new Dictionary<string, OAuth2Domain>();
+
+            info.defaultDomain = null;
+
+            dataStore.SaveInfo(info);
+        }
+
+        #endregion
+
+        #region DefaultDomain
+
+
+        public string GetDefaultDomain()
+        {
+            return info.defaultDomain;
+        }
+
+
+        public void SetDefaultDomain(string Domain)
+        {
+            info.defaultDomain = Domain;
+            dataStore.SaveInfo(info);
+        }
+
+
+        public bool DefaultDomainExists()
+        {
+            return !string.IsNullOrWhiteSpace(info.defaultDomain);
+        }
+
+
+        public void RemoveDefaultDomain()
+        {
+            info.defaultDomain = string.Empty;
+            dataStore.SaveInfo(info);
+        }
+
+        #endregion
+
+        #region Users
+
+
+        /// <summary>Returns the DomainUser if both it and the domain exist, and uses the default user if user is blank.</summary>
+        public OAuth2DomainUser GetUser(string Domain, string UserName)
+        {
+            if (UserExists(Domain, UserName))
+            {
+                return info.domains[Domain].users[UserName];
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public IEnumerable<OAuth2DomainUser> GetAllUsers(string Domain = null)
@@ -138,111 +205,49 @@ namespace gShell.dotNet.Utilities.OAuth2
 
             foreach (var domain in domains)
             {
-                users.AddRange(info.GetUsers(domain));
+                foreach (string userName in info.domains[domain].users.Keys)
+                {
+                    users.Add(info.domains[domain].users[userName]);
+                }
             }
 
             return users;
         }
 
-        public OAuth2TokenInfo GetTokenInfo(string Api, string Domain, string User){
-            return info.GetTokenAndScopes(Api, Domain, User);
-        }
 
-        #endregion
-
-        #region Check
-
-        public bool DomainExists(string Domain)
+        /// <summary>Summary.</summary>
+        public void SetUser(string Domain, OAuth2DomainUser User)
         {
-            if (info == null) return false;
-
-            return info.ContainsDomain(Domain);
-        }
-
-        public bool UserExists(string Domain, string User)
-        {
-            if (info == null) return false;
-
-            return (info.ContainsUser(Domain, User));
-        }
-
-        public bool TokenAndScopesExist(string Domain, string User, string Api)
-        {
-            if (info == null) return false;
-
-            return (info.ContainsTokenAndScopes(Domain, User, Api));
-        }
-
-        #endregion
-
-        #region Set
-
-        //NOTE: Any time something changes, you MUST update the in-memory OAuth2Info as well - or update the memory and then save
-        public void SaveToken(string Api, string Domain, string User, string TokenString, 
-            Google.Apis.Auth.OAuth2.Responses.TokenResponse TokenResponse, List<string> Scopes)
-        {
-            info.SetTokenAndScopes(Api, TokenString, TokenResponse, Scopes, User, Domain);
-            dataStore.SaveInfo(info);
-        }
-
-        public void SetDefaultDomain(string Domain)
-        {
-            info.SetDefaultDomain(Domain);
-            dataStore.SaveInfo(info);
-        }
-
-        public void SetDefaultUser(string Domain, string UserName)
-        {
-            info.SetDefaultUser(Domain, UserName);
-            dataStore.SaveInfo(info);
-        }
-
-        public void SetDefaultClientSecrets(ClientSecrets Secrets)
-        {
-            info.SetClientSecrets(Secrets);
-            dataStore.SaveInfo(info);
-        }
-
-        public void AddDomain(string Domain)
-        {
-            info.AddDomain(Domain);
-            dataStore.SaveInfo(info);
-        }
-
-        public void AddUser(string Domain, string UserName)
-        {
-            info.AddDomain(Domain);
-            info.AddUser(UserName, Domain);
-            dataStore.SaveInfo(info);
-        }
-
-        #endregion
-
-        #region Remove
-
-        /// <summary>Removes the given domain and any references to it, if matching.</summary>
-        public void RemoveDomain(string Domain)
-        {
-            info.domains.Remove(Domain);
-
-            if (info.defaultDomain == Domain)
+            if (User != null)
             {
-                info.defaultDomain = null;
+                if (DomainExists(Domain))
+                {
+                    info.domains[Domain].users[User.userName] = User;
+                    dataStore.SaveInfo(info);
+                }
+                else
+                {
+                    OAuth2Domain domain = new OAuth2Domain();
+                    domain.defaultUser = User.userName;
+                    domain.users.Add(User.userName, User);
+                    SetDomain(domain);
+                }
             }
-
-            dataStore.SaveInfo(info);
         }
 
-        /// <summary>Removes all domains if set to true.</summary>
-        public void RemoveDomain(bool removeAll)
+
+        /// <summary>Summary.</summary>
+        public bool UserExists(string Domain, string UserName)
         {
-            info.domains = new Dictionary<string, OAuth2Domain>();
+            OAuth2Domain domain = GetDomain(Domain);
 
-            info.defaultDomain = null;
+            if (domain == null) return false;
 
-            dataStore.SaveInfo(info);
+            return domain.users.ContainsKey(UserName);
         }
 
+
+        /// <summary>Summary.</summary>
         public void RemoveUser(string Domain, string UserName)
         {
 
@@ -256,147 +261,231 @@ namespace gShell.dotNet.Utilities.OAuth2
             dataStore.SaveInfo(info);
         }
 
-        /// <summary>Remove the default client secrets unless a domain and username are provided.</summary>
-        public void RemoveClientSecrets(string Domain = null, string UserName = null)
+        #endregion
+
+        #region Token and Scope
+
+
+        public OAuth2TokenInfo GetTokenInfo(string Domain, string UserName, string Api)
         {
-            if (Domain == null || UserName == null)
+            if (TokenAndScopesExist(Domain, UserName, Api))
             {
-                info.defaultClientSecrets = null;
+                return info.domains[Domain].users[UserName].tokenAndScopesByApi[Api];
             }
             else
+            {
+                return null;
+            }
+        }
+
+
+        public void SetTokenAndScopes(string Domain, string UserName, string Api, string TokenString, Google.Apis.Auth.OAuth2.Responses.TokenResponse TokenResponse, List<string> Scopes)
+        {
+            if (!UserExists(Domain, UserName))
+            {
+                SetUser(Domain, new OAuth2DomainUser());
+            }
+
+            info.domains[Domain].users[UserName].tokenAndScopesByApi[Api] = new OAuth2TokenInfo(Scopes, TokenString, TokenResponse);
+
+            dataStore.SaveInfo(info);
+        }
+
+
+        public bool TokenAndScopesExist(string Domain, string UserName, string Api)
+        {
+            if (DomainExists(Domain) && UserExists(Domain, UserName))
+            {
+                return (info.domains[Domain].users[UserName].tokenAndScopesByApi.ContainsKey(Api));
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+        public void RemoveTokenAndScopes(string Domain, string UserName, string Api)
+        {
+            if (TokenAndScopesExist(Domain, UserName, Api))
+            {
+                info.domains[Domain].users[UserName].tokenAndScopesByApi.Remove(Api);
+            }
+
+            dataStore.SaveInfo(info);
+        }
+
+        #endregion
+
+        #region DefaultUser
+
+
+        public string GetDefaultUser(string Domain)
+        {
+            if (DomainExists(Domain))
+            {
+                return info.domains[Domain].defaultUser;
+            }
+
+            return null;
+        }
+
+
+        public void SetDefaultUser(string Domain, string UserName)
+        {
+            info.domains[Domain].defaultUser = UserName;
+
+            dataStore.SaveInfo(info);
+        }
+
+
+        public bool DefaultUserExists(string Domain)
+        {
+            if (DomainExists(Domain) && !string.IsNullOrWhiteSpace(info.domains[Domain].defaultUser))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+        public void RemoveDefaultUser(string Domain)
+        {
+            if (DomainExists(Domain)) {
+                info.domains[Domain].defaultUser = string.Empty;
+            }
+        }
+
+        #endregion
+
+        #region ClientSecrets
+
+
+        /// <summary>Summary.</summary>
+        public ClientSecrets GetClientSecrets(string Domain, string UserName)
+        {
+            if (UserExists(Domain, UserName))
+            {
+                return info.domains[Domain].users[UserName].clientSecrets;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+
+        /// <summary>Sets the client secrets for the given user.</summary>
+        public void SetClientSecrets(string Domain, string UserName, ClientSecrets Secrets)
+        {
+            if (!UserExists(Domain, UserName))
+            {
+                OAuth2DomainUser user = new OAuth2DomainUser();
+                user.clientSecrets = Secrets;
+                //create the domain too
+                SetUser(Domain, user);
+            }
+            else
+            {
+                info.domains[Domain].users[UserName].clientSecrets = Secrets;
+
+                dataStore.SaveInfo(info);
+            }
+        }
+
+
+        /// <summary>Do the client secrets exist for the given user.</summary>
+        public bool ClientSecretsExist(string Domain, string UserName)
+        {
+            if (UserExists(Domain, UserName))
+            {
+                return info.domains[Domain].users[UserName].clientSecrets != null;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+        /// <summary>Removes the client secrets for the user.</summary>
+        public void RemoveClientSecrets(string Domain, string UserName)
+        {
+            if (ClientSecretsExist(Domain, UserName))
             {
                 info.domains[Domain].users[UserName].clientSecrets = null;
             }
 
             dataStore.SaveInfo(info);
         }
+
         #endregion
 
-        ////TODO: Remove reliance on the OAuth2Info accessors (and remove them entirely) by handling all of that from the consumer, using the below setup
-        //#region Domains
+        #region DefaultClientSecrets
 
-        ////get
-        ///// <summary>Summary.</summary>
-        //public void DoThing()
-        //{
-        
-        //}
+        public ClientSecrets GetDefaultClientSecrets()
+        {
+            return info.defaultClientSecrets;
+        }
 
+        public void SetDefaultClientSecrets(ClientSecrets Secrets)
+        {
+            if (Secrets != null)
+            {
+                info.defaultClientSecrets = Secrets;
+            }
 
-        ////set
-        ///// <summary>Summary.</summary>
-        //public void DoThing()
-        //{
+            dataStore.SaveInfo(info);
+        }
 
-        //}
+        public bool DefaultClientSecretsExist()
+        {
+            return info.defaultClientSecrets != null;
+        }
 
-        ////check
-        ///// <summary>Summary.</summary>
-        //public void DoThing()
-        //{
+        public void RemoveDefaultClientSecrets()
+        {
+            info.defaultClientSecrets = null;
 
-        //}
+            dataStore.SaveInfo(info);
+        }
 
-        ////remove
-        ///// <summary>Summary.</summary>
-        //public void DoThing()
-        //{
+        #endregion
 
-        //}
-
-        //#endregion
-
-        //#region Users
-
-        ////get
+        #region ServiceAccount
 
 
-        ////set
-        ///// <summary>Summary.</summary>
-        //public void DoThing()
-        //{
+        /// <summary>Summary.</summary>
+        public void GetServiceAccount()
+        {
+            throw new NotImplementedException();
+        }
 
-        //}
 
-        ////check
-        ///// <summary>Summary.</summary>
-        //public void DoThing()
-        //{
+        /// <summary>Summary.</summary>
+        public void SetServiceAccount()
+        {
+            throw new NotImplementedException();
+        }
 
-        //}
 
-        ////remove
-        ///// <summary>Summary.</summary>
-        //public void DoThing()
-        //{
+        /// <summary>Summary.</summary>
+        public void CheckServiceAccount()
+        {
+            throw new NotImplementedException();
+        }
 
-        //}
 
-        //#endregion
+        /// <summary>Summary.</summary>
+        public void RemoveServiceAccount()
+        {
+            throw new NotImplementedException();
+        }
 
-        //#region ClientSecrets
-
-        ////get
-        ///// <summary>Summary.</summary>
-        //public void DoThing()
-        //{
-
-        //}
-
-        ////set
-        ///// <summary>Summary.</summary>
-        //public void DoThing()
-        //{
-
-        //}
-
-        ////check
-        ///// <summary>Summary.</summary>
-        //public void DoThing()
-        //{
-
-        //}
-
-        ////remove
-        ///// <summary>Summary.</summary>
-        //public void DoThing()
-        //{
-
-        //}
-
-        //#endregion
-
-        //#region ServiceAccount
-
-        ////get
-        ///// <summary>Summary.</summary>
-        //public void DoThing()
-        //{
-
-        //}
-
-        ////set
-        ///// <summary>Summary.</summary>
-        //public void DoThing()
-        //{
-
-        //}
-
-        ////check
-        ///// <summary>Summary.</summary>
-        //public void DoThing()
-        //{
-
-        //}
-
-        ////remove
-        ///// <summary>Summary.</summary>
-        //public void DoThing()
-        //{
-
-        //}
-
-        //#endregion
+        #endregion
 
     }
 }

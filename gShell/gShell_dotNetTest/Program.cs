@@ -36,7 +36,7 @@ namespace gShell_dotNetExample
             //Create a new Directory object from the gShell.dotNet namespace
             Directory directory = new Directory();
 
-            ClientSecrets secrets = OAuth2Base.infoConsumer.GetClientSecrets();
+            ClientSecrets secrets = OAuth2Base.infoConsumer.GetDefaultClientSecrets();
 
             try
             {

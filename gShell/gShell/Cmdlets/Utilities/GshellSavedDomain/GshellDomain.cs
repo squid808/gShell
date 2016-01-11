@@ -96,8 +96,9 @@ namespace gShell.Cmdlets.Utilities.gShellDomain
                         break;
 
                     case "Default":
-                        WriteObject(OAuth2Base.infoConsumer.GetUser(
-                            OAuth2Base.infoConsumer.GetDefaultDomain()));
+                        string defaultDomain = OAuth2Base.infoConsumer.GetDefaultDomain();
+                        WriteObject(OAuth2Base.infoConsumer.GetUser(defaultDomain,
+                            OAuth2Base.infoConsumer.GetDefaultUser(Domain)));
                         break;
                     case "Domain":
                         WriteObject(OAuth2Base.infoConsumer.GetAllUsers(Domain));
@@ -275,7 +276,7 @@ namespace gShell.Cmdlets.Utilities.gShellDomain
         {
             if (ShouldProcess("ClientSecrets", "Get-gShellClientSecrets"))
             {
-                WriteObject(OAuth2Base.infoConsumer.GetClientSecrets());
+                WriteObject(OAuth2Base.infoConsumer.GetDefaultClientSecrets());
             }
         }
     }
@@ -332,7 +333,7 @@ namespace gShell.Cmdlets.Utilities.gShellDomain
                     {
                         WriteDebug(string.Format("Attempting to remove custom Client Secrets from gShell"));
 
-                        OAuth2Base.infoConsumer.RemoveClientSecrets();
+                        OAuth2Base.infoConsumer.RemoveDefaultClientSecrets();
 
                         WriteVerbose(string.Format("Removal of custom Client Secrets completed without error."));
                     }

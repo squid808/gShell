@@ -169,7 +169,7 @@ namespace gShell.dotNet.Utilities.OAuth2
         /// </remarks>
         public ClientSecrets CheckForClientSecrets()
         {
-            ClientSecrets secrets = OAuth2Base.infoConsumer.GetClientSecrets();
+            ClientSecrets secrets = OAuth2Base.infoConsumer.GetDefaultClientSecrets();
 
             if (secrets != null && !string.IsNullOrWhiteSpace(secrets.ClientSecret) && 
                 !string.IsNullOrWhiteSpace(secrets.ClientId))
