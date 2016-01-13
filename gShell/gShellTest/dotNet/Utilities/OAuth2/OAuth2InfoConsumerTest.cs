@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-//using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
+
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Auth.OAuth2.Responses;
 
 using gShell.dotNet.Utilities;
 using gShell.dotNet.Utilities.OAuth2;
@@ -36,17 +38,51 @@ namespace gShellTest.dotNet.Utilities.OAuth2
 
         TestDataStore dataStore { get; set; }
         OAuth2InfoConsumer consumer { get; set; }
-        string domainName { get; set; }
-        string userName { get; set; }
         OAuth2Info info { get; set; }
 
+        string domainNameString = "myDomainName";
+        string userNameString = "myUserName";
+        string apiString = "myApi";
+        string tokenStringString = "{\"access_token\":\"ya29\",\"Issued\":\"2016-01-07T16:43:08.596-05:00\"}";
+        string clientIdString = "myClientId";
+        string clientSecretString = "myClientSecret";
+        string accessTokenString = "accessToken";
+        ClientSecrets clientSecretsObj { get; set; }
+        OAuth2DomainUser domainUserObj { get; set; }
+        OAuth2Domain domainObj { get; set; }
+        TokenResponse tokenResponseObj { get; set; }
+        OAuth2TokenInfo tokenInfoObj { get; set; }
+        
         [SetUp]
         public void Init()
         {
+            //manually set up the dataStore
             dataStore = new TestDataStore();
+
+            tokenInfoObj = new OAuth2TokenInfo(){
+                token = tokenResponseObj,
+                tokenString = tokenStringString
+            };
+
+            tokenResponseObj = new TokenResponse() { AccessToken = accessTokenString };
+
+            clientSecretsObj = new ClientSecrets() { ClientId = clientIdString, ClientSecret = clientSecretString };
+
+            domainUserObj = new OAuth2DomainUser() { clientSecrets = clientSecretsObj, domain = domainNameString, userName = userNameString };
+
+            domainUserObj.tokenAndScopesByApi.Add(apiString, tokenInfoObj);
+
+            domainObj = new OAuth2Domain() { defaultUser = userNameString };
+
+            domainObj.users.Add(userNameString, domainUserObj);
+
+            var internalInfo = new OAuth2Info() { defaultDomain = domainNameString, defaultClientSecrets = clientSecretsObj };
+
+            internalInfo.domains.Add(domainNameString, domainObj);
+
+            dataStore.internalInfo = internalInfo;
+
             consumer = new OAuth2InfoConsumer(dataStore);
-            domainName = "myDomain";
-            userName = "myUser";
         }
 
         #region Domains
@@ -54,84 +90,64 @@ namespace gShellTest.dotNet.Utilities.OAuth2
         [Test]
         public void GetDomainTest()
         {
-            var domain = new OAuth2Domain() { domain = domainName };
-
-            consumer.SetDomain(domain);
-
-            OAuth2Domain loadedDomain = consumer.GetDomain(domainName);
-
-            Assert.AreEqual(domain, loadedDomain);
+            Assert.AreEqual(consumer.GetDomain(domainNameString), domainObj);
         }
 
         [Test]
         public void GetAllDomainsTest()
         {
-            string dName1 = "1";
-            string dName2 = "2";
+            var newDomain = new OAuth2Domain() { domain = "newDomain" };
 
-            var domain1 = new OAuth2Domain() { domain = dName1 };
-            var domain2 = new OAuth2Domain() { domain = dName2 };
+            consumer.SetDomain(newDomain);
 
-            consumer.SetDomain(domain1);
-            consumer.SetDomain(domain2);
+            List<OAuth2Domain> domains = consumer.GetAllDomains().ToList();
 
-            IEnumerable<OAuth2Domain> domains = consumer.GetAllDomains();
-
-            info = dataStore.LoadInfo();
-
-            Assert.That(info.domains.ContainsKey(dName1));
-            Assert.That(info.domains.ContainsKey(dName2));
+            Assert.Contains(newDomain, domains);
+            Assert.Contains(domainObj, domains);
         }
 
         [Test]
         public void SetDomainTest()
         {
-            var domain = new OAuth2Domain() { domain = domainName };
+            string newDomainName = "newDomain";
 
-            consumer.SetDomain(domain);
+            var newDomain = new OAuth2Domain() { domain = newDomainName };
 
-            info = dataStore.LoadInfo();
+            consumer.SetDomain(newDomain);
 
-            Assert.That(info.domains[domainName] != null);
-            Assert.That(info.domains[domainName].domain == domainName);
-            Assert.That(info.domains[domainName].users != null);
+            Assert.IsTrue(consumer.DomainExists(newDomainName));
         }
 
         [Test]
         public void DomainExistsTest()
         {
-            var domain = new OAuth2Domain() { domain = domainName };
-
-            consumer.SetDomain(domain);
-
-            Assert.That(consumer.DomainExists(domainName) == true);
-            Assert.That(consumer.DomainExists("someOtherName") == false);
+            Assert.IsTrue(consumer.DomainExists(domainNameString));
+            Assert.IsFalse(consumer.DomainExists("someOtherDomain"));
         }
 
         [Test]
         public void RemoveDomainTest()
         {
-            var domain = new OAuth2Domain() { domain = domainName };
+            string newDomainName = "newDomain";
 
-            consumer.SetDomain(domain);
+            var newDomain = new OAuth2Domain() { domain = newDomainName };
 
-            consumer.RemoveDomain(domainName);
+            consumer.SetDomain(newDomain);
 
-            Assert.That(consumer.DomainExists(domainName) == false);
+            consumer.RemoveDomain(domainNameString);
+
+            Assert.IsFalse(consumer.DomainExists(domainNameString));
+            Assert.IsTrue(consumer.DomainExists(newDomainName));
         }
 
         [Test]
         public void RemoveAllDomainsTest()
         {
-            var domain = new OAuth2Domain() { domain = domainName };
-
-            consumer.SetDomain(domain);
-
             consumer.RemoveAllDomains();
 
-            info = dataStore.LoadInfo();
+            List<OAuth2Domain> domains = consumer.GetAllDomains().ToList();
 
-            Assert.That(info.domains.Count == 0);
+            Assert.IsEmpty(domains);
         }
 
         #endregion
@@ -141,45 +157,40 @@ namespace gShellTest.dotNet.Utilities.OAuth2
         [Test]
         public void GetDefaultDomainTest()
         {
-            info = dataStore.LoadInfo();
-            info.defaultDomain = "DefDomain";
-            dataStore.SaveInfo(info);
-
-            Assert.That(consumer.GetDefaultDomain() == "DefDomain");
+            Assert.AreEqual(consumer.GetDefaultDomain(), domainNameString);
         }
 
         [Test]
         public void SetDefaultDomainTest()
         {
-            consumer.SetDefaultDomain("DefDomain");
+            string newDomainName = "NewDefDomain";
 
-            info = dataStore.LoadInfo();
+            consumer.SetDefaultDomain(newDomainName);
 
-            Assert.That(info.defaultDomain == "DefDomain");
+            Assert.AreEqual(consumer.GetDefaultDomain(), newDomainName);
+            Assert.AreNotEqual(consumer.GetDefaultDomain(), domainNameString);
         }
 
         [Test]
         public void DefaultDomainExistsTest()
         {
-            Assert.That(consumer.DefaultDomainExists() == false);
+            Assert.IsTrue(consumer.DefaultDomainExists());
+        }
 
-            consumer.SetDefaultDomain("");
+        [Test]
+        public void DefaultDomainDoesntExistTest()
+        {
+            consumer.RemoveDefaultDomain();
 
-            Assert.That(consumer.DefaultDomainExists() == false);
-
-            consumer.SetDefaultDomain("someDomain");
-
-            Assert.That(consumer.DefaultDomainExists() == true);
+            Assert.IsFalse(consumer.DefaultDomainExists());
         }
 
         [Test]
         public void RemoveDefaultDomainTest()
         {
-            consumer.SetDefaultDomain("someDomain");
-
             consumer.RemoveDefaultDomain();
 
-            Assert.That(consumer.DefaultDomainExists() == false);
+            Assert.IsEmpty(consumer.GetDefaultDomain());
         }
 
         #endregion
@@ -189,118 +200,80 @@ namespace gShellTest.dotNet.Utilities.OAuth2
         [Test]
         public void GetUserTest()
         {
-            OAuth2DomainUser user = new OAuth2DomainUser(){ domain = domainName, userName = userName };
-
-            consumer.SetUser(domainName, user);
-
-            OAuth2DomainUser result = consumer.GetUser(domainName, userName);
-
-            Assert.AreEqual(user, result);
+            Assert.AreEqual(consumer.GetUser(domainNameString, userNameString), domainUserObj);
         }
 
         [Test]
         public void GetAllUsersFromOneDomainTest()
         {
-            OAuth2DomainUser user1 = new OAuth2DomainUser() { domain = "domain1", userName = "user1" };
-            OAuth2DomainUser user2 = new OAuth2DomainUser() { domain = "domain1", userName = "user2" };
-            OAuth2DomainUser userz = new OAuth2DomainUser() { domain = "domainz", userName = "userz" };
+            OAuth2DomainUser userA = new OAuth2DomainUser() { domain = domainNameString, userName = "userA" };
+            OAuth2DomainUser userB = new OAuth2DomainUser() { domain = "domainB", userName = "userB" };
 
-            consumer.SetUser("domain1", user1);
-            consumer.SetUser("domain1", user2);
-            consumer.SetUser("domainz", userz);
+            consumer.SetUser(domainNameString, userA);
+            var domainB = new OAuth2Domain() { domain = "domainB" };
+            consumer.SetDomain(domainB);
+            consumer.SetUser("domainB", userB);
 
-            List<OAuth2DomainUser> result = consumer.GetAllUsers("domain1").ToList();
+            List<OAuth2DomainUser> result = consumer.GetAllUsers(domainNameString).ToList();
 
             Assert.AreEqual(result.Count, 2);
-            Assert.IsTrue(result.Contains(user1));
-            Assert.IsTrue(result.Contains(user2));
-            Assert.IsFalse(result.Contains(userz));
+            Assert.Contains(domainUserObj, result);
+            Assert.Contains(userA, result);
+            Assert.IsFalse(result.Contains(userB));
         }
 
         [Test]
         public void GetAllUsersFromAllDomainsTest()
         {
-            OAuth2DomainUser user1 = new OAuth2DomainUser() { domain = "domain1", userName = "user1" };
-            OAuth2DomainUser user2 = new OAuth2DomainUser() { domain = "domain1", userName = "user2" };
-            OAuth2DomainUser userz = new OAuth2DomainUser() { domain = "domainz", userName = "userz" };
+            OAuth2DomainUser userA = new OAuth2DomainUser() { domain = domainNameString, userName = "userA" };
+            OAuth2DomainUser userB = new OAuth2DomainUser() { domain = "domainB", userName = "userB" };
 
-            consumer.SetUser("domain1", user1);
-            consumer.SetUser("domain1", user2);
-            consumer.SetUser("domainz", userz);
+            consumer.SetUser(domainNameString, userA);
+            var domainB = new OAuth2Domain() { domain = "domainB" };
+            consumer.SetDomain(domainB);
+            consumer.SetUser("domainB", userB);
 
             List<OAuth2DomainUser> result = consumer.GetAllUsers().ToList();
 
             Assert.AreEqual(result.Count, 3);
-            Assert.That(result.Contains(user1));
-            Assert.That(result.Contains(user2));
-            Assert.That(result.Contains(userz));
+            Assert.Contains(domainUserObj, result);
+            Assert.Contains(userA, result);
+            Assert.Contains(userB, result);
         }
         
         [Test]
         public void SetUserTest()
         {
-            OAuth2DomainUser user = new OAuth2DomainUser() { domain = domainName, userName = userName };
+            string newUserName = "newUser";
 
-            consumer.SetUser(domainName, user);
+            OAuth2DomainUser user = new OAuth2DomainUser() { domain = domainNameString, userName = newUserName };
 
-            info = dataStore.LoadInfo();
+            consumer.SetUser(domainNameString, user);
 
-            Assert.AreEqual(user, info.domains[domainName].users[userName]);
+            Assert.IsTrue(consumer.UserExists(domainNameString, newUserName));
         }
 
         [Test]
         public void UserExistsTest()
         {
-            OAuth2DomainUser user = new OAuth2DomainUser() { domain = domainName, userName = userName };
-
-            consumer.SetUser(domainName, user);
-
-            Assert.IsTrue(consumer.UserExists(domainName, userName));
-            Assert.IsFalse(consumer.UserExists("otherDomain", userName));
-            Assert.IsFalse(consumer.UserExists(domainName, "otherUser"));
+            Assert.IsTrue(consumer.UserExists(domainNameString, userNameString));
+            Assert.IsFalse(consumer.UserExists("otherDomain", userNameString));
+            Assert.IsFalse(consumer.UserExists(domainNameString, "otherUser"));
         }
 
         [Test]
         public void RemoveUserTest()
         {
-            OAuth2DomainUser user1 = new OAuth2DomainUser() { domain = domainName, userName = "user1" };
-            OAuth2DomainUser user2 = new OAuth2DomainUser() { domain = domainName, userName = "user2" };
+            string newUserName = "newUser";
 
-            consumer.SetUser(domainName, user1);
-            consumer.SetUser(domainName, user2);
+            OAuth2DomainUser user1 = new OAuth2DomainUser() { domain = domainNameString, userName = newUserName };
 
-            consumer.RemoveUser(domainName, "user1");
+            consumer.SetUser(domainNameString, user1);
 
-            Assert.IsFalse(consumer.UserExists(domainName, "user1"));
-            Assert.IsTrue(consumer.UserExists(domainName, "user2"));
-        }
+            consumer.RemoveUser(domainNameString, userNameString);
 
-        #endregion
-
-        #region Token and Scope
-
-        [Test]
-        public void GetTokenInfoTest()
-        {
-            throw new NotImplementedException();
-        }
-
-        [Test]
-        public void SetTokenAndScopesTest()
-        {
-            throw new NotImplementedException();
-        }
-
-        [Test]
-        public void TokenAndScopesExistTest()
-        {
-            throw new NotImplementedException();
-        }
-
-        [Test]
-        public void RemoveTokenAndScopesTest()
-        {
-            throw new NotImplementedException();
+            Assert.IsFalse(consumer.UserExists(domainNameString, userNameString));
+            Assert.IsTrue(consumer.UserExists(domainNameString, newUserName));
         }
 
         #endregion
@@ -310,25 +283,84 @@ namespace gShellTest.dotNet.Utilities.OAuth2
         [Test]
         public void GetDefaultUserTest()
         {
-            throw new NotImplementedException();
+            Assert.AreEqual(consumer.GetDefaultUser(domainNameString), userNameString);
+            Assert.AreNotEqual(consumer.GetDefaultUser(domainNameString), "someOtherUser");
         }
 
         [Test]
         public void SetDefaultUserTest()
         {
-            throw new NotImplementedException();
+            string newUserName = "someUser";
+
+            consumer.SetDefaultUser(domainNameString, newUserName);
+
+            Assert.AreEqual(consumer.GetDefaultUser(domainNameString), newUserName);
+            Assert.AreNotEqual(consumer.GetDefaultUser(domainNameString), userNameString);
         }
 
         [Test]
         public void DefaultUserExistsTest()
         {
-            throw new NotImplementedException();
+            Assert.IsTrue(consumer.DefaultUserExists(domainNameString));
+            Assert.IsFalse(consumer.DefaultUserExists("someOtherDomainString"));
         }
 
         [Test]
         public void RemoveDefaultUserTest()
         {
-            throw new NotImplementedException();
+            consumer.RemoveDefaultUser(domainNameString);
+
+            Assert.IsEmpty(consumer.GetDefaultUser(domainNameString));
+        }
+
+        #endregion
+
+        #region Token and Scope
+
+        [Test]
+        public void GetTokenInfoTest()
+        {
+            Assert.AreEqual(consumer.GetTokenInfo(domainNameString, userNameString, apiString), tokenInfoObj);
+        }
+
+        [Test]
+        public void SetTokenAndScopesTest()
+        {
+            string newTokenString = "new token string";
+            string newAccessTokenString = "newAccessToken";
+            TokenResponse newToken = new TokenResponse() { AccessToken = newAccessTokenString };
+
+            OAuth2TokenInfo newTokenInfoObj = new OAuth2TokenInfo()
+            {
+                token = new TokenResponse() { AccessToken = newAccessTokenString },
+                tokenString = newTokenString
+            };
+
+            consumer.SetTokenAndScopes(domainNameString, userNameString, apiString, 
+                newTokenString, newToken, new List<string>());
+
+            var result = consumer.GetTokenInfo(domainNameString, userNameString, apiString);
+
+            //objects won't be the same reference, so can't directly compare
+            Assert.AreEqual(result.tokenString, newTokenInfoObj.tokenString);
+            Assert.AreEqual(result.token.AccessToken, newTokenInfoObj.token.AccessToken);
+        }
+
+        [Test]
+        public void TokenAndScopesExistTest()
+        {
+            Assert.IsTrue(consumer.TokenAndScopesExist(domainNameString, userNameString, apiString));
+            Assert.IsFalse(consumer.TokenAndScopesExist("someOtherDomain", userNameString, apiString));
+            Assert.IsFalse(consumer.TokenAndScopesExist(domainNameString, "someOtherUser", apiString));
+            Assert.IsFalse(consumer.TokenAndScopesExist(domainNameString, userNameString, "someOtherApi"));
+        }
+
+        [Test]
+        public void RemoveTokenAndScopesTest()
+        {
+            consumer.RemoveTokenAndScopes(domainNameString, userNameString, apiString);
+
+            Assert.IsFalse(consumer.TokenAndScopesExist(domainNameString, userNameString, apiString));
         }
 
         #endregion
@@ -338,25 +370,35 @@ namespace gShellTest.dotNet.Utilities.OAuth2
         [Test]
         public void GetClientSecretsTest()
         {
-            throw new NotImplementedException();
+            Assert.AreEqual(consumer.GetClientSecrets(domainNameString, userNameString), clientSecretsObj);
         }
 
         [Test]
         public void SetClientSecretsTest()
         {
-            throw new NotImplementedException();
+            var newClientSecrets = new ClientSecrets() 
+            { ClientId = "newClientId", ClientSecret = "newClientSecret" };
+
+            consumer.SetClientSecrets(domainNameString, userNameString, newClientSecrets);
+
+            Assert.AreEqual(consumer.GetClientSecrets(domainNameString, userNameString), newClientSecrets);
+            Assert.AreNotEqual(consumer.GetClientSecrets(domainNameString, userNameString), clientSecretsObj);
         }
 
         [Test]
         public void ClientSecretsExistTest()
         {
-            throw new NotImplementedException();
+            Assert.IsTrue(consumer.ClientSecretsExist(domainNameString, userNameString));
+            Assert.IsFalse(consumer.ClientSecretsExist("someOtherDomain", userNameString));
+            Assert.IsFalse(consumer.ClientSecretsExist(domainNameString, "someOtherUser"));
         }
 
         [Test]
         public void RemoveClientSecretsTest()
         {
-            throw new NotImplementedException();
+            consumer.RemoveClientSecrets(domainNameString, userNameString);
+
+            Assert.IsFalse(consumer.ClientSecretsExist(domainNameString, userNameString));
         }
 
         #endregion
@@ -366,55 +408,70 @@ namespace gShellTest.dotNet.Utilities.OAuth2
         [Test]
         public void GetDefaultClientSecretsTest()
         {
-            throw new NotImplementedException();
+            Assert.AreEqual(consumer.GetDefaultClientSecrets(), clientSecretsObj);
         }
 
         [Test]
         public void SetDefaultClientSecretsTest()
         {
-            throw new NotImplementedException();
+            var newClientSecrets = new ClientSecrets() { ClientId = "newClientId", ClientSecret = "newClientSecret" };
+
+            consumer.SetDefaultClientSecrets(newClientSecrets);
+
+            Assert.AreEqual(consumer.GetDefaultClientSecrets(), newClientSecrets);
+            Assert.AreNotEqual(consumer.GetDefaultClientSecrets(), clientSecretsObj);
         }
 
         [Test]
         public void DefaultClientSecretsExistTest()
         {
-            throw new NotImplementedException();
+            Assert.IsTrue(consumer.DefaultClientSecretsExist());
+        }
+
+        [Test]
+        public void DefaultClientSecretsDontExistTest()
+        {
+            consumer.RemoveDefaultClientSecrets();
+
+            Assert.IsFalse(consumer.DefaultClientSecretsExist());
         }
 
         [Test]
         public void RemoveDefaultClientSecretsTest()
         {
-            throw new NotImplementedException();
+            consumer.RemoveDefaultClientSecrets();
+
+            Assert.IsNull(consumer.GetDefaultClientSecrets());
         }
 
         #endregion
 
-        #region ServiceAccount
+        //#region ServiceAccount
 
-        [Test]
-        public void GetServiceAccountTest()
-        {
-            throw new NotImplementedException();
-        }
+        //[Test]
+        //public void GetServiceAccountTest()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        [Test]
-        public void SetServiceAccountTest()
-        {
-            throw new NotImplementedException();
-        }
+        //[Test]
+        //public void SetServiceAccountTest()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        [Test]
-        public void CheckServiceAccountTest()
-        {
-            throw new NotImplementedException();
-        }
+        //[Test]
+        //public void CheckServiceAccountTest()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        [Test]
-        public void RemoveServiceAccountTest()
-        {
-            throw new NotImplementedException();
-        }
+        //[Test]
+        //public void RemoveServiceAccountTest()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        #endregion
+        //#endregion
     }
 }
