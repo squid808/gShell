@@ -13,6 +13,7 @@ namespace gShell.dotNet
     public class Reports : ServiceWrapper<reports_v1.ReportsService>
     {
         #region Inherited Members
+        
         /// <summary>
         /// Indicates if this set of services will work with Gmail (as opposed to Google Apps). 
         /// This will cause authentication to fail if false and the user attempts to authenticate with
@@ -27,19 +28,37 @@ namespace gShell.dotNet
         {
             return new reports_v1.ReportsService(OAuth2Base.GetInitializer(domain));
         }
+
+        public override string apiNameAndVersion { get { return "admin:reports_v1"; } }
+
         #endregion
 
         #region Properties
-        public Activities activities = new Activities();
-        public Channels channels = new Channels();
-        public CustomerUsageReports customerUsageReports = new CustomerUsageReports();
-        public UserUsageReports userUsageReports = new UserUsageReports();
+        
+        public Activities activities { get; set; }
+        public Channels channels { get; set; }
+        public CustomerUsageReports customerUsageReports { get; set; }
+        public UserUsageReports userUsageReports { get; set; }
+
+        #endregion
+
+        #region Constructors
+
+        public Reports()
+        {
+            activities = new Activities();
+            channels = new Channels();
+            customerUsageReports = new CustomerUsageReports();
+            userUsageReports = new UserUsageReports();
+        }
+
         #endregion
 
         #region Wrapped Methods
         //the following methods assume that the service has been authenticated first.
 
         #region Activity
+
         public class Activities
         {
             public class ActivitiesListProperties
@@ -73,7 +92,7 @@ namespace gShell.dotNet
                 List<Data.Activity> results = new List<Data.Activity>();
 
                 reports_v1.ActivitiesResource.ListRequest request =
-                    services[activeDomain].Activities.List(userKey, applicationName);
+                    GetService().Activities.List(userKey, applicationName);
 
                 if (properties != null)
                 {
@@ -136,22 +155,26 @@ namespace gShell.dotNet
             public Data.Channel Watch(
                 Data.Channel body, string userKey, string applicationName)
             {
-                return services[activeDomain].Activities.Watch(body, userKey, applicationName).Execute();
+                return GetService().Activities.Watch(body, userKey, applicationName).Execute();
             }
         }
+
         #endregion
 
         #region Channels
+        
         public class Channels
         {
             public string Stop(Data.Channel body)
             {
-                return services[activeDomain].Channels.Stop(body).Execute();
+                return GetService().Channels.Stop(body).Execute();
             }
         }
+        
         #endregion
 
         #region CustomerUsageReports
+        
         public class CustomerUsageReports
         {
             public class CustomerUsageReportsGetProperties
@@ -174,7 +197,7 @@ namespace gShell.dotNet
                 List<Data.UsageReports.WarningsData> warnings = new List<Data.UsageReports.WarningsData>();
 
                 reports_v1.CustomerUsageReportsResource.GetRequest request =
-                    services[activeDomain].CustomerUsageReports.Get(date);
+                    GetService().CustomerUsageReports.Get(date);
 
                 if (properties != null)
                 {
@@ -239,6 +262,7 @@ namespace gShell.dotNet
         #endregion
 
         #region UserUsageReports
+
         public class UserUsageReports
         {
             public class UserUsageReportsGetProperties
@@ -261,7 +285,7 @@ namespace gShell.dotNet
                 List<Data.UsageReports.WarningsData> warnings = new List<Data.UsageReports.WarningsData>();
 
                 reports_v1.UserUsageReportResource.GetRequest request =
-                    services[activeDomain].UserUsageReport.Get(userKey, date);
+                    GetService().UserUsageReport.Get(userKey, date);
 
                 if (properties != null)
                 {
@@ -325,7 +349,9 @@ namespace gShell.dotNet
                 return usageResults;
             }
         }
+
         #endregion
+
         #endregion
     }
 }

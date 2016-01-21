@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Reflection;
 
 using Google.Apis.Admin.Directory.directory_v1;
-using Google.Apis.Drive.v2;
+//using Google.Apis.Drive.v2;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Json;
 using Google.Apis.Util;
@@ -18,6 +18,8 @@ using Google.Apis.Oauth2.v2.Data;
 using Google.Apis.Services;
 using Google.Apis.Admin.Reports.reports_v1;
 using Google.Apis.Admin.Reports.reports_v1.Data;
+
+using gShell.Cmdlets.Utilities.ScopeHandler;
 
 //using gShell.Serialization;
 
@@ -30,27 +32,27 @@ namespace gShell.dotNet.Utilities.OAuth2
     public abstract class OAuth2CmdletBase : PSCmdlet, IModuleAssemblyInitializer
     {
         #region Properties
-        protected static ProgressRecord progressBar;
 
-        /// <summary>
-        /// A flag to determine if the assemblies have already been resolved.
-        /// </summary>
+        protected static ProgressRecord progressBar { get; set; }
+
+        /// <summary>Determine if the assemblies have already been resolved.</summary>
         public static bool assembliesResolved { get { return _assembliesResolved; } }
         private static bool _assembliesResolved;
 
-
-        /// <summary>
-        /// A delegate to allow the progress bar methods to be static. Assigned in Begin Processing.
-        /// </summary>
+        /// <summary>A delegate to allow the progress bar methods to be static. Assigned in Begin Processing.</summary>
         protected delegate void gWriteProgress(ProgressRecord progressBar);
 
-        /// <summary>
-        /// A static implementation of GWriteProgress
-        /// </summary>
-        protected static gWriteProgress GWriteProgress;
+        /// <summary>A static implementation of GWriteProgress.</summary>
+        protected static gWriteProgress GWriteProgress { get; set; }
+
+        protected abstract string apiNameAndVersion { get; }
+
+        //protected static AuthenticationInfo authInfo { get; set; }
+
         #endregion
 
         #region AssemblyResolution
+
         /// <summary>
         /// Required for the implementation of IModuleAssemblyInitializer - resolves the GAC and machine.config issues
         /// This gets fired for each cmdlet that inherits this base class when importing the module in PoSh
@@ -96,60 +98,86 @@ namespace gShell.dotNet.Utilities.OAuth2
                 return System.IO.Path.GetDirectoryName(path);
             }
         }
+
         #endregion
 
         #region Constructors
+
         public OAuth2CmdletBase() 
         {
             GWriteProgress += WriteProgress; //set up the delegate so that the progress bar will work via static calls
         }
+
         #endregion
 
         #region Authentication & Processing
-        ///// <summary>
-        ///// A method specific to each inherited object, called during authentication. Must be implemented.
-        ///// </summary>
-        //protected abstract string BuildService(string givenDomain);
 
-        /// <summary>
-        /// A powershell specific method, called before the cmdlet is run. Must be implemented. 
-        /// </summary>
+        /// <summary>A powershell specific method, called before the cmdlet is run. Must be implemented.</summary>
         protected override abstract void BeginProcessing();
 
-        /// <summary>
-        /// Called each time a new cmdlet is fired.
-        /// </summary>
-        protected abstract string Authenticate(string domain);
+        /// <summary>Load token and scope information for API call, and authenticate if necessary.</summary>
+        protected abstract AuthenticatedUserInfo Authenticate(IEnumerable<string> Scopes, ClientSecrets Secrets);
 
-        public void CheckForScopes(string domain)
+        /// <summary>Determines if the user needs to be prompted to select the scopes.</summary>
+        /// <remarks>
+        /// Api is derived from the class that inherits this. User is the domain's default user. Returns null if scopes
+        /// already exist since they'll be pulled up during authentication anyways.
+        /// </remarks>
+        public IEnumerable<string> EnsureScopesExist(string Domain)
         {
-            domain = OAuth2Base.DetermineDomain(domain); //this is likely going to be called again, can't avoid it for now.
+            //Since the domain could be null, see if we have a default ready or if the saved info contains this one
+            Domain = OAuth2Base.CheckDomain(Domain);
+
+            string defaultUser = null;
+
+            if (Domain != null)
+                 defaultUser = OAuth2Base.infoConsumer.GetDefaultUser(Domain);
 
             //if no domain is returned, none was provided or none was found as default.
-            if (string.IsNullOrWhiteSpace(domain) || !gShell.dotNet.Utilities.SavedFile.ContainsUserOrDomain(domain))
+            if (string.IsNullOrWhiteSpace(Domain) || string.IsNullOrWhiteSpace(defaultUser) || 
+                !OAuth2Base.infoConsumer.TokenAndScopesExist(Domain, defaultUser, apiNameAndVersion))
             {
-                if (string.IsNullOrWhiteSpace(domain)) { domain = "none provided"; }
+                if (string.IsNullOrWhiteSpace(Domain)) Domain = "no domain provided";
 
-                WriteWarning(string.Format("The Cmdlet you've just started is running against a domain ({0}) that doesn't seem to have any authenticated users saved. In order to continue you'll need to choose which permissions gShell can use.", domain));
+                WriteWarning(string.Format("The Cmdlet you've just started is for domain ({0}) doesn't"
+                    + " seem to have any saved authentication for this API ({1}). In order to continue you'll need to"
+                    + " choose which permissions gShell can use for this API.", Domain, apiNameAndVersion));
 
-                string script = "Read-Host '\nWould you like to choose or your API scopes now? y or n'";
-                Collection<PSObject> results = this.InvokeCommand.InvokeScript(script);
-                string result = results[0].ToString().Substring(0, 1).ToLower();
+                string chooseApiNowScript = "Read-Host '\nWould you like to choose your API scopes now? y or n'";
+                Collection<PSObject> chooseApiNowResults = this.InvokeCommand.InvokeScript(chooseApiNowScript);
+                string result = chooseApiNowResults[0].ToString().Substring(0, 1).ToLower();
                 if (result == "y")
                 {
-                    results = this.InvokeCommand.InvokeScript(string.Format("Invoke-ScopeManager -Domain {0}", domain));
+                    ScopeHandlerBase scopeBase = new ScopeHandlerBase(this);
+
+                    return scopeBase.ChooseScopes(
+                        apiNameAndVersion.Split(':')[0], apiNameAndVersion.Split(':')[1]);
                 }
                 else
                 {
-                    script = "Write-Host (\"No scopes will be chosen at this time. You can run this process manually with Invoke-ScopeManager later.\") -ForegroundColor \"Red\"";
-                    this.InvokeCommand.InvokeScript(script);
-
+                    WriteWarning("No scopes were chosen. You can run this process manually with Invoke-ScopeManager later.");
                 }
             }
-            else
+
+            return null;
+        }
+
+        /// <summary>Returns the default client secrets or null if they're missing or incomplete.</summary>
+        /// <remarks>
+        /// To be called before having run ShouldPromptForScopes to ensure the right secrets 
+        /// are available to authenticate with.
+        /// </remarks>
+        public ClientSecrets CheckForClientSecrets()
+        {
+            ClientSecrets secrets = OAuth2Base.infoConsumer.GetDefaultClientSecrets();
+
+            if (secrets != null && !string.IsNullOrWhiteSpace(secrets.ClientSecret) && 
+                !string.IsNullOrWhiteSpace(secrets.ClientId))
             {
-                OAuth2Base.LoadScopes(domain);
+                return secrets;
             }
+
+            return null;
         }
         #endregion
 

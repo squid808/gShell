@@ -2,7 +2,7 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
      xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
   <Product Id="*" Name="gShell PoSh Cmdlets"
-           Language="1033" Version="0.0.7.0" Manufacturer="Spencer Varney"
+           Language="1033" Version="0.0.8.0" Manufacturer="Spencer Varney"
            UpgradeCode="16053A29-5B09-4630-B7B2-ADA5366DA766">
     <Package Id="*" InstallerVersion="200" Compressed="yes" InstallScope="perMachine" InstallPrivileges="elevated" />
 
@@ -20,12 +20,12 @@
     <Upgrade Id="16025265-05DE-4BBD-89C6-AE89F0B7F88D">
       <UpgradeVersion OnlyDetect='no' Property='SELFFOUND'
         Minimum='0.0.1.0' IncludeMinimum='yes'
-        Maximum='0.0.7.0' IncludeMaximum='no' />
+        Maximum='0.0.8.0' IncludeMaximum='no' />
       <UpgradeVersion OnlyDetect='yes' Property='NEWERFOUND'
-        Minimum='0.0.7.0' IncludeMinimum='no' />
+        Minimum='0.0.8.0' IncludeMinimum='no' />
     </Upgrade>
 
-    <CustomAction Id='AlreadyUpdated' Error='[ProductName] has already been updated to 0.0.7.0 or newer.' />
+    <CustomAction Id='AlreadyUpdated' Error='[ProductName] has already been updated to 0.0.8.0 or newer.' />
     <CustomAction Id='NoDowngrade' Error='A later version of [ProductName] is already installed.' />
 
     <InstallExecuteSequence>
@@ -130,12 +130,6 @@
               Source="$(var.gShell.TargetDir)/Google.Apis.Core.dll" />
         <RemoveFile Name="Google.Apis.Core.dll" Id="Google.Apis.Core.dll" On="uninstall" />
 
-        <File Id="Google.Apis.Drive.v2.dll"
-              Name="Google.Apis.Drive.v2.dll"
-              DiskId="1"
-              Source="$(var.gShell.TargetDir)Google.Apis.Drive.v2.dll" />
-        <RemoveFile Name="Google.Apis.Drive.v2.dll" Id="Google.Apis.Drive.v2.dll" On="uninstall" />
-
         <File Id="Google.Apis.Oauth2.v2.dll"
               Name="Google.Apis.Oauth2.v2.dll"
               DiskId="1"
@@ -181,7 +175,7 @@
         <File Id="System.Net.Http.dll" 
               Name="System.Net.Http.dll" 
               DiskId="1"
-              Source="$(var.SolutionDir)packages\Microsoft.Net.Http.2.2.22\lib\net40\System.Net.Http.dll" />
+              Source="$(var.SolutionDir)packages\Microsoft.Net.Http.2.2.29\lib\net40\System.Net.Http.dll" />
         <RemoveFile Name="System.Net.Http.dll" Id="System.Net.Http.dll" On="uninstall" />
 
         <File Id="System.Net.Http.Extensions.dll"
@@ -193,7 +187,7 @@
         <File Id="System.Net.Http.Primitives.dll" 
               Name="System.Net.Http.Primitives.dll" 
               DiskId="1"
-              Source="$(var.SolutionDir)packages\Microsoft.Net.Http.2.2.22\lib\net40\System.Net.Http.Primitives.dll" />
+              Source="$(var.SolutionDir)packages\Microsoft.Net.Http.2.2.29\lib\net40\System.Net.Http.Primitives.dll" />
         <RemoveFile Name="System.Net.Http.Primitives.dll" Id="System.Net.Http.Primitives.dll" On="uninstall" />
 
         <File Id="System.Net.Http.WebRequest.dll"
@@ -202,17 +196,17 @@
               Source="$(var.gShell.TargetDir)/System.Net.Http.WebRequest.dll" />
         <RemoveFile Name="System.Net.Http.WebRequest.dll" Id="System.Net.Http.WebRequest.dll" On="uninstall" />
 
-        <File Id="System.Runtime.dll"
+        <!--<File Id="System.Runtime.dll"
               Name="System.Runtime.dll"
               DiskId="1"
               Source="$(var.gShell.TargetDir)/System.Runtime.dll" />
-        <RemoveFile Name="System.Runtime.dll" Id="System.Runtime.dll" On="uninstall" />
+        <RemoveFile Name="System.Runtime.dll" Id="System.Runtime.dll" On="uninstall" />-->
 
-        <File Id="System.Threading.Tasks.dll"
+        <!--<File Id="System.Threading.Tasks.dll"
               Name="System.Threading.Tasks.dll"
               DiskId="1"
               Source="$(var.gShell.TargetDir)/System.Threading.Tasks.dll" />
-        <RemoveFile Name="System.Threading.Tasks.dll" Id="System.Threading.Tasks.dll" On="uninstall" />
+        <RemoveFile Name="System.Threading.Tasks.dll" Id="System.Threading.Tasks.dll" On="uninstall" />-->
 
         <File Id="Zlib.Portable.dll"
               Name="Zlib.Portable.dll"

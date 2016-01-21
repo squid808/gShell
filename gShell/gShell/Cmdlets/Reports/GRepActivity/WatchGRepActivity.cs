@@ -83,8 +83,8 @@ namespace gShell.Cmdlets.Reports.GRepActivity
 
                 if (!string.IsNullOrWhiteSpace(Ttl))
                 {
-                    body.Params = new Dictionary<string, string>();
-                    body.Params["ttl"] = Ttl;
+                    body.Params__ = new Dictionary<string, string>();
+                    body.Params__["ttl"] = Ttl;
                 }
                 WriteObject(activities.Watch(body, GetFullEmailAddress(UserKey, Domain), ApplicationName));
             }
