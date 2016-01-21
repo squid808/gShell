@@ -2,6 +2,7 @@
 using System.Management.Automation;
 using System.Collections.Generic;
 
+using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using directory_v1 = Google.Apis.Admin.Directory.directory_v1;
 using Data = Google.Apis.Admin.Directory.directory_v1.Data;
@@ -18,19 +19,19 @@ namespace gShell.Cmdlets.Directory
     public class DirectoryBase : OAuth2CmdletBase
     {
         #region Properties
-        protected static gShell.dotNet.Directory gdirectory = new gDirectory();
-        protected ChromeosDevices chromeosDevices = new ChromeosDevices();
-        protected Groups groups = new Groups();
-        protected Members members = new Members();
-        protected MobileDevices mobileDevices = new MobileDevices();
-        protected Orgunits orgunits = new Orgunits();
-        protected Users users = new Users();
-        protected Asps asps = new Asps();
-        protected Tokens tokens = new Tokens();
-        protected VerificationCodes verificationCodes = new VerificationCodes();
-        protected Notifications notifications = new Notifications();
-        protected Channels channels = new Channels();
-        protected Schemas schemas = new Schemas();
+        protected static gDirectory gdirectory { get; set; }
+        protected ChromeosDevices chromeosDevices { get; set; }
+        protected Groups groups { get; set; }
+        protected Members members { get; set; }
+        protected MobileDevices mobileDevices { get; set; }
+        protected Orgunits orgunits { get; set; }
+        protected Users users { get; set; }
+        protected Asps asps { get; set; }
+        protected Tokens tokens { get; set; }
+        protected VerificationCodes verificationCodes { get; set; }
+        protected Notifications notifications { get; set; }
+        protected Channels channels { get; set; }
+        protected Schemas schemas { get; set; }
 
         [Parameter(Position = 1,
             Mandatory = false,
@@ -38,33 +39,70 @@ namespace gShell.Cmdlets.Directory
             HelpMessage = "The name of the Google Apps domain, ex contoso.com. If none is provided the gShell default domain will be used.")]
         [ValidateNotNullOrEmpty]
         public string Domain { get; set; }
+
+        protected override string apiNameAndVersion { get { return gdirectory.apiNameAndVersion; } }
+
+        #endregion
+
+        #region Constructors
+
+        public DirectoryBase()
+        {
+            gdirectory = new gDirectory();
+            chromeosDevices = new ChromeosDevices();
+            groups = new Groups();
+            members = new Members();
+            mobileDevices = new MobileDevices();
+            orgunits = new Orgunits();
+            users = new Users();
+            asps = new Asps();
+            tokens = new Tokens();
+            verificationCodes = new VerificationCodes();
+            notifications = new Notifications();
+            channels = new Channels();
+            schemas = new Schemas();
+        }
         #endregion
 
         #region PowerShell Methods
         protected override void BeginProcessing()
         {
-            if (null == gdirectory) { gdirectory = new gDirectory(); }
-            CheckForScopes(Domain);
-            Domain = Authenticate(Domain);
+            var secrets = CheckForClientSecrets();
+            if (secrets != null)
+            {
+                IEnumerable<string> scopes = EnsureScopesExist(Domain);
+                Domain = gdirectory.BuildService(Authenticate(scopes, secrets)).domain;
 
-            GWriteProgress = new gWriteProgress(WriteProgress);
+                GWriteProgress = new gWriteProgress(WriteProgress);
+            }
+            else
+            {
+                WriteError(new ErrorRecord(new Exception(
+                    "Client Secrets must be set before running cmdlets. Run 'Get-Help "
+                    + "Set-gShellClientSecrets -online' for more information."),"",ErrorCategory.ObjectNotFound,secrets
+                    ));
+            }
         }
         #endregion
 
         #region Authentication & Processing
+
         /// <summary>
         /// A method specific to each inherited object, called during authentication. Must be implemented.
         /// </summary>
-        protected override string Authenticate(string domain)
+        protected override AuthenticatedUserInfo Authenticate(IEnumerable<string> Scopes, ClientSecrets Secrets)
         {
-            return gdirectory.Authenticate(domain);
+            return gdirectory.Authenticate(apiNameAndVersion, Scopes, Secrets);
         }
+
         #endregion
 
         #region Wrapped Methods
+
         //the following methods assume that the service has been authenticated first.
 
         #region Chromeosdevices
+
         public class ChromeosDevices
         {
             public Data.ChromeOsDevice Get(string customerId, string deviceId,
@@ -94,9 +132,11 @@ namespace gShell.Cmdlets.Directory
                 return gdirectory.chromeosDevices.Update(body, Utils.CheckCustomerID(customerId), deviceId, projection);
             }
         }
+
         #endregion
 
         #region Groups
+
         public class Groups
         {
             public Aliases aliases = new Aliases();
@@ -142,6 +182,7 @@ namespace gShell.Cmdlets.Directory
             #region Groups.aliases
             public class Aliases
             {
+
                 public string Delete(string groupKey, string domain, string alias)
                 {
                     return gdirectory.groups.aliases.Delete(Utils.GetFullEmailAddress(groupKey, domain), alias);
@@ -157,12 +198,15 @@ namespace gShell.Cmdlets.Directory
                     return gdirectory.groups.aliases.List(Utils.GetFullEmailAddress(groupKey, domain));
                 }
             }
+
             #endregion
 
         }
+
         #endregion
 
         #region Members
+
         public class Members
         {
             public string Delete(string groupKey, string domain, string memberKey)
@@ -199,9 +243,11 @@ namespace gShell.Cmdlets.Directory
                 return gdirectory.members.Update(body, Utils.GetFullEmailAddress(groupKey, domain), Utils.GetFullEmailAddress(memberKey, domain));
             }
         }
+
         #endregion
 
         #region MobileDevices
+
         public class MobileDevices
         {
             public string Action(gDirectory.MobileDevices.MobileDeviceAction action, string customerId, string resourceId)
@@ -231,9 +277,11 @@ namespace gShell.Cmdlets.Directory
                 return gdirectory.mobileDevices.List(Utils.CheckCustomerID(customerId), properties);
             }
         }
+
         #endregion
 
         #region Orgunits
+
         public class Orgunits
         {
             public string Delete(string customerId, Google.Apis.Util.Repeatable<string> orgUnitPath)
@@ -266,9 +314,11 @@ namespace gShell.Cmdlets.Directory
                 return gdirectory.orgunits.Update(body, Utils.CheckCustomerID(customerId), orgUnitPath);
             }
         }
+
         #endregion
 
         #region Users
+
         public class Users
         {
             public Aliases aliases = new Aliases();
@@ -330,6 +380,7 @@ namespace gShell.Cmdlets.Directory
             }
 
             #region Users.aliases
+
             public class Aliases
             {
                 public string Delete(string userKey, string domain, string alias)
@@ -352,9 +403,11 @@ namespace gShell.Cmdlets.Directory
                     return gdirectory.users.aliases.Watch(body, (Utils.GetFullEmailAddress(userKey, domain)));
                 }
             }
+
             #endregion
 
             #region Users.photos
+
             public class Photos
             {
                 public string Delete(string userKey, string domain)
@@ -377,11 +430,14 @@ namespace gShell.Cmdlets.Directory
                     return gdirectory.users.photos.Update(body, (Utils.GetFullEmailAddress(userKey, domain)));
                 }
             }
+
             #endregion
+
         }
         #endregion
 
         #region Asps
+
         public class Asps
         {
             public string Delete(string userKey, string domain, int codeId)
@@ -399,9 +455,11 @@ namespace gShell.Cmdlets.Directory
                 return gdirectory.asps.List(Utils.GetFullEmailAddress(userKey, domain));
             }
         }
+
         #endregion
 
         #region Tokens
+
         public class Tokens
         {
             public string Delete(string userKey, string domain, string clientId)
@@ -419,9 +477,11 @@ namespace gShell.Cmdlets.Directory
                 return gdirectory.tokens.List(Utils.GetFullEmailAddress(userKey, domain));
             }
         }
+
         #endregion
 
         #region VerificationCodes
+
         public class VerificationCodes
         {
             public string Generate(string userKey, string domain)
@@ -439,9 +499,11 @@ namespace gShell.Cmdlets.Directory
                 return gdirectory.verificationCodes.List(Utils.GetFullEmailAddress(userKey, domain));
             }
         }
+
         #endregion
 
         #region Notifications
+
         public class Notifications
         {
             public string Delete(string customer, string notificationId)
@@ -473,9 +535,11 @@ namespace gShell.Cmdlets.Directory
                 return gdirectory.notifications.Update(body, customer, notificationId);
             }
         }
+
         #endregion
 
         #region Channels
+
         public class Channels
         {
             public string Stop(Data.Channel body)
@@ -483,9 +547,11 @@ namespace gShell.Cmdlets.Directory
                 return gdirectory.channels.Stop(body);
             }
         }
+
         #endregion
 
         #region Schemas
+
         public class Schemas
         {
             public string Delete(string customerId, string schemaKey)
@@ -518,10 +584,12 @@ namespace gShell.Cmdlets.Directory
                 return gdirectory.schemas.Update(body, customerId, schemaKey);
             }
         }
+
         #endregion
 
         //end of wrapped methods
         #endregion
+
     }
 
     /// <summary>

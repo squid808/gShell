@@ -1,415 +1,288 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
-using Google.Apis.Services;
-using Google.Apis.Admin.Directory.directory_v1;
-using Google.Apis.Admin.Reports.reports_v1;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Auth.OAuth2.Responses;
 using Google.Apis.Oauth2.v2;
 using Google.Apis.Oauth2.v2.Data;
-using Google.Apis.Auth.OAuth2;
-using Google.Apis.Drive.v2;
+using Google.Apis.Services;
 
 using gShell.dotNet.CustomSerializer;
 using gShell.dotNet.Utilities.OAuth2;
-using Utils = gShell.dotNet.Utilities;
-
 
 namespace gShell.dotNet.Utilities.OAuth2
 {
+    /// <summary>
+    /// Responsible for acting as a relay between the info consumer and the API calls; handles the authentication for
+    /// any Google API-based services.
+    /// </summary>
+    /// <remarks>
+    /// In this and other files, the flow assumes that before each API call the Authenticate() method is called, which
+    /// in turn sets the OAuth2Base.currentAuthInfo, which contains the currently authenticated domain and user (and 
+    /// possibly more). Here, the infoConsumer is the relay to the underlying datastore which contains all of the
+    /// stored token information.
+    /// </remarks>
     public class OAuth2Base
     {
         #region Properties
-        /// <summary>
-        /// The application name for this project.
-        /// </summary>
-        public static string appName { get { return _appName; } }
         private const string _appName = "gShellCmdlets";
-
-        /// <summary>
-        /// The client secrets for this Google Console project.
-        /// </summary>
-        //public static ClientSecrets clientSecrets { get { return _clientSecrets; } }
-        //private static ClientSecrets _clientSecrets = new ClientSecrets
-        //{
-        //    ClientId = "431325913325.apps.googleusercontent.com",
-        //    ClientSecret = "VtfqKqUJsY0yNh0hwreAB-S0"
-        //};
-
-        /// <summary>
-        /// A collection of scopes required for the authentication. All scopes used in the toolset are required here.
-        /// </summary>
-        public static string[] scopes
+        public static OAuth2InfoConsumer infoConsumer
         {
             get
             {
-                if (_scopes != null)
-                {
-                    string[] array = new string[_scopes.Count];
-                    _scopes.CopyTo(array);
-                    return array;
-                }
-                else
-                {
-                    return null;
-                }
+                if (_infoConsumer == null) _infoConsumer = new OAuth2InfoConsumer();
+                return _infoConsumer;
+            }
+        }
+        private static OAuth2InfoConsumer _infoConsumer;
+
+        public static MemoryObjectDataStore memoryObjectDataStore
+        {
+            get
+            {
+                if (_memoryObjectDataStore == null) _memoryObjectDataStore = new MemoryObjectDataStore();
+                return _memoryObjectDataStore;
+            }
+        }
+        private static MemoryObjectDataStore _memoryObjectDataStore;
+
+        public static UserCredential asyncUserCredential { get; set; }
+
+        public static AuthenticatedUserInfo currentAuthInfo { get { return _currentAuthInfo; } }
+        private static AuthenticatedUserInfo _currentAuthInfo { get; set; }
+
+        public static bool IsAuthenticating { get { return _IsAuthenticating; } }
+        private static bool _IsAuthenticating { get; set; }
+
+        /// <summary>A memory swap placeholder for the token when in the middle of authenticating only.</summary>
+        public static TokenResponse AuthTokenTempSwap { get; set; }
+
+        #endregion
+
+        #region Authentication and Authorization
+
+        //Example call: Authenticate("DirectoryV.3", "myDomain.com", "myUser);
+
+        public static AuthenticatedUserInfo Authenticate(string Api, IEnumerable<string> Scopes, ClientSecrets Secrets,
+            string Domain = null, string User = null)
+        {
+            _currentAuthInfo = GetAuthTokenFlow(Api, Scopes, Secrets, Domain, User);
+
+            return currentAuthInfo;
+        }
+
+        /// <summary>Retrieve an authentication token from memory or from user authentication.</summary>
+        /// <remarks>Also fills out the OAuth2Base currentAuthInfo and asyncUserCredential members.</remarks>
+        public static AuthenticatedUserInfo GetAuthTokenFlow(string Api, IEnumerable<string> Scopes, ClientSecrets Secrets,
+            string Domain = null, string UserName = null, bool force = false)
+        {
+            //reset the auth info
+            _currentAuthInfo = new AuthenticatedUserInfo() { scopes = Scopes, apiNameAndVersion = Api };
+
+            //First, if the domain or user are missing, see if we can fill it in using the defaults
+            Domain = CheckDomain(Domain);
+            if (Domain != null) UserName = CheckUser(Domain, UserName);
+
+            //First, if we are able to load a key based on the domain and user, we do that and add it to the data store.
+            // This will make sure that when we authenticate, the Google Flow has something to load.
+            if (UserName != null && Domain != null && infoConsumer.TokenAndScopesExist(Domain, UserName, Api) && !force)
+            {
+                OAuth2TokenInfo preTokenInfo = infoConsumer.GetTokenInfo(Domain, UserName, Api);
+                
+                _currentAuthInfo.tokenResponse = preTokenInfo.token;
+                _currentAuthInfo.tokenString = preTokenInfo.tokenString;
+                _currentAuthInfo.scopes = preTokenInfo.scopes; //overwrite any coming in with what is saved
+            }
+
+            //Set the domain and user now, and we'll check them again later while we authorize.
+            _currentAuthInfo.domain = Domain;
+            _currentAuthInfo.userName = UserName;
+
+            _IsAuthenticating = true;
+
+            //Populate asyncUserCredential, but we don't quite save the token yet...
+            AwaitUserCredential(Scopes, Secrets).Wait();
+
+            _IsAuthenticating = false;
+
+            if (AuthTokenTempSwap != null)
+            {
+                //Now that we have asyncUserCredential filled out, we can actually save the token if we need to.
+                memoryObjectDataStore.StoreAsync<TokenResponse>(string.Empty, AuthTokenTempSwap).Wait();
+                AuthTokenTempSwap = null;
+            }
+
+            //The scopes, domain, user and api have already been set above. the token is set while saving.
+            return currentAuthInfo;
+        }
+
+        /// <summary>
+        /// Pulls the authenticated user's information from Google and uses that to update OAuth2Base.currentAuthInfo.
+        /// </summary>
+        /// <remarks>Requires that Authentication has taken place and filled out asyncUserCredential first.</remarks>
+        public static void SetAuthenticatedUserInfo()
+        {
+            using (Oauth2Service oService = new Oauth2Service(new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = asyncUserCredential,
+                ApplicationName = _appName,
+            }))
+            {
+                Userinfoplus userInfoPlus = oService.Userinfo.Get().Execute();
+                _currentAuthInfo.userName = Utils.GetUserFromEmail(userInfoPlus.Email);
+                _currentAuthInfo.domain = userInfoPlus.Hd;
             }
         }
 
         /// <summary>
-        /// A hashset of scopes. To be loaded and set any time a user is loaded or changed.
+        /// Saves the token using information from OAuth2Base.currentAuthInfo.
         /// </summary>
-        private static HashSet<string> _scopes;
+        /// <remarks>Requires that authorization has occurred and currentAuthInfo has been filled out.</remarks>
+        public static void SaveToken(string TokenString, TokenResponse TokenResponse)
+        {
+            //Only save if we need to write or overwrite the token, so compare the token coming in with the one in memory.
+            if (!string.IsNullOrWhiteSpace(TokenString) && TokenString != currentAuthInfo.tokenString)
+            {
+                if (infoConsumer.GetDefaultDomain() == null)
+                {
+                    infoConsumer.SetDefaultDomain(currentAuthInfo.domain);
+                }
+
+                if (infoConsumer.GetDefaultUser(currentAuthInfo.domain) == null)
+                {
+                    infoConsumer.SetDefaultUser(currentAuthInfo.domain, currentAuthInfo.userName);
+                }
+
+                infoConsumer.SetTokenAndScopes(currentAuthInfo.domain, currentAuthInfo.userName, currentAuthInfo.apiNameAndVersion, TokenString, TokenResponse, currentAuthInfo.scopes.ToList());
+            }
+            
+
+            /* 1 - get the token from the caller (string and object)
+             * 
+             * 2 - test if the domain and user exist
+             *     - if not, get them with Oauth call
+             *     
+             * 3 - store it.
+             * 
+             * 
+             * things that need to be stored by Oauth2Base:
+             * Domain
+             * User
+             * Scopes
+             * APi
+             * 
+             * provided by caller MODS:
+             * token(s)
+             * 
+             * for authentication, scopes should always be provided (but only NEED to be provided when authenticating)
+             * 
+             * 1.a - check for pretoken. if exists, sideload it in to the MODS and make note to do OAuth call after
+             * 
+             * 1.b - if we have the token and the scopes, and pull the scopes out as normal for use
+             * 
+             * 2.a- call Await() - if the token exists, it pulls the information in to the awaitusercredentials. if not, it authenticates to do the same.
+             * 
+             * 2.b - if we didn't have a pretoken, call for the oAuth info to get the domain and user to save.
+             * 
+             * 2.c - if we authenticated, using domain, user, api, token(s) and scopes, save the token
+             * 
+             * 3.a - if we didn't authenticate, we have let Await...() build the credentials for us.
+             * 
+             * 4. cache the relevent scopes and other information in to OAuth2Base
+             * 
+             * 5. clear the token info from MODS (we now have it in memory on OA2B
+             * 
+             * end result: needs to have the information loaded in to OAuth2Base.asyncUserCredential (the result of AwaitUserCredential)
+             * 
+             * before service: 
+             * 
+             * the scope, api, token, user and domain should all be set
+             * 
+             * if the service needs to refresh the token it will call MODS.Store() with the token in string form
+             * 
+             * using this we can deserialize it to the object, and then with the info in OA2B we can store it.
+             * */
+        }
 
         /// <summary>
-        /// A collection of scopes required for the authentication. All scopes in the toolset are required here.
+        /// Combines the _appName with the api name and version, and replaces ':' with '.'
         /// </summary>
-        //public static string[] scopes { get { return _scopes; } }
-        //private static string[] _scopes = {
-        //    DirectoryService.Scope.AdminDirectoryUser,
-        //    DirectoryService.Scope.AdminDirectoryUserAlias,
-        //    DirectoryService.Scope.AdminDirectoryUserAlias,
-        //    DirectoryService.Scope.AdminDirectoryOrgunit,
-        //    DirectoryService.Scope.AdminDirectoryGroup,
-        //    DirectoryService.Scope.AdminDirectoryGroupMember,
-        //    DriveService.Scope.Drive,
-        //    DriveService.Scope.DriveFile,
-        //    DriveService.Scope.DriveAppdata,
-        //    DriveService.Scope.DriveScripts,
-        //    ReportsService.Scope.AdminReportsAuditReadonly,
-        //    ReportsService.Scope.AdminReportsUsageReadonly,
-        //    Oauth2Service.Scope.UserinfoEmail
-        //};
+        public static string GetAppName(string ApiNameAndVersion)
+        {
+            return _appName + "." + ApiNameAndVersion.Replace(':', '.');
+        }
 
-        /// <summary>
-        /// A collection of scopes for the service accounts.
-        /// </summary>
-        //public static string[] serviceAccountScope { get { return _serviceAccountScope; } }
-        //private static string[] _serviceAccountScope = {
-        //    DriveService.Scope.Drive
-        //};
+        public static async Task AwaitUserCredential(IEnumerable<string> scopes, ClientSecrets clientSecrets)
+        {
+            asyncUserCredential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
+                clientSecrets,
+                scopes,
+                "UseTempKeysSetterInstead",
+                System.Threading.CancellationToken.None,
+                memoryObjectDataStore
+            );
+        }
 
-        //Information relevent to most all services
-
-        /// <summary>
-        /// The default domain to be used in gShell when no domain is provided.
-        /// </summary>
-        public static string defaultDomain { get { return _defaultDomain; } }
-        private static string _defaultDomain;
-
-        /// <summary>
-        /// The current domain being used in gShell. May or may not be the same as the default domain.
-        /// </summary>
-        public static string currentDomain { get { return _currentDomain; } }
-        private static string _currentDomain;
-
-        /// <summary>
-        /// The info for the current authenticated user as retrieved from the server.
-        /// </summary>
-        public static Userinfoplus currentUserInfo { get { return _currentUserInfo; } }
-        private static Userinfoplus _currentUserInfo;
-
-        /// <summary>
-        /// The credentials for the current authenticated user.
-        /// </summary>
-        public static UserCredential currentUserCredentials { get { return _currentUserCredentials; } }
-        private static UserCredential _currentUserCredentials; //the most recent user returned by get user
-
-        /// <summary>
-        /// The initializer specifically for service account-based services. Use GetServiceAccountInitializer() to access.
-        /// </summary>
-        //private static ServiceAccountCredential.Initializer _serviceAcctInitializer;
-
-        /// <summary>
-        /// a collection of credentials by domain or email address
-        /// </summary>
-        public static Dictionary<string, Userinfoplus> userInfoDict { get { return _userInfoDict; } }
-        private static Dictionary<string, Userinfoplus> _userInfoDict =
-            new Dictionary<string, Userinfoplus>();
-
-        /// <summary>
-        /// A collection of credentials by domain or email address
-        /// </summary>
-        public static Dictionary<string, UserCredential> userCredentialsDict { get { return _userCredentialsDict; } }
-        private static Dictionary<string, UserCredential> _userCredentialsDict =
-            new Dictionary<string, UserCredential>();
-
-        //required for authentication
-        public static Clock clock { get { return _clock; } }
-        private static Clock _clock = new Clock();
         #endregion
+
+        #region Helpers
+
+        /// <summary>Checks the stored info to see if this domain matches any stored domains.</summary>
+        public static string CheckDomain(string Domain = null)
+        {
+            //If null, check for a default but only return it if it exists.
+            if (string.IsNullOrWhiteSpace(Domain))
+            {
+                string DefaultDomain = infoConsumer.GetDefaultDomain();
+
+                if (string.IsNullOrWhiteSpace(DefaultDomain))
+                { return null; }
+                else
+                { return DefaultDomain; }
+            }
+
+            if (infoConsumer.DomainExists(Domain)) return Domain;
+
+            return null;
+        }
+
+        /// <summary>Checks the stored info to see if this user matches anything stored or not.</summary>
+        public static string CheckUser(string Domain, string User = null)
+        {
+            //If null, check for a default but only return it if it exists.
+            if (string.IsNullOrWhiteSpace(User))
+            {
+                string DefaultUser = infoConsumer.GetDefaultUser(Domain);
+
+                if (string.IsNullOrWhiteSpace(DefaultUser))
+                { return null; }
+                else
+                { return DefaultUser; }
+            }
+
+            if (infoConsumer.UserExists(Domain, User)) return User;
+
+            return null;
+        }
+
+        #endregion
+
+        
 
         #region Accessors
+
         /// <summary>
-        /// Updates the current domain property.
+        /// Set the Client Id and Secret 
         /// </summary>
-        public static void SetCurrentDomain(string newDomain)
+        public static void SetClientSecrets(string ClientId, string ClientSecret, string Domain = null, string UserEmail = null)
         {
-            _currentDomain = newDomain;
-        }
-
-        /// <summary>
-        /// Updates the default domain property.
-        /// </summary>
-        public static void SetDefaultDomain(string newDomain)
-        {
-            _defaultDomain = newDomain;
-        }
-        #endregion
-
-        #region Authentication & Processing
-        /// <summary>
-        /// Attempts to resolve a given domain (if any) in to an actual domain, either from the saved file or from what is provided.
-        /// </summary>
-        public static string DetermineDomain(string domain)
-        {
-            //if no domain is provided, check for a current domain in memory
-            if (string.IsNullOrWhiteSpace(domain))
-            {
-                if (!string.IsNullOrWhiteSpace(_defaultDomain))
-                {
-                    //if the current domain exists in memory, set domain to this
-                    domain = _defaultDomain;
-                    _currentDomain = _defaultDomain;
-                }
-                else
-                {
-                    //if no current domain exists in memory, check the file for a current domain
-                    if (SavedFile.ContainsDefaultDomain())
-                    {
-                        //if the file contains a default domain, use this and set it to the current domain
-                        domain = SavedFile.GetDefaultDomain();
-                        _defaultDomain = domain;
-                        _currentDomain = domain;
-                    }
-                    else
-                    {
-                        //no default domains were provided. set all to blanks.
-                        _defaultDomain = string.Empty;
-                        _currentDomain = string.Empty;
-                    }
-                }
-            }
-
-            return domain;
-        }
-
-        /// <summary>
-        /// Determines the actual domain to be used and builds an appropriate service using that domain.
-        /// </summary>
-        /// <returns>the name of the authenticated domain</returns>
-        public static string Authenticate(string domain, Func<string, string> buildServiceMethod)
-        {
-            domain = DetermineDomain(domain);
-
-            //once you have the domain established, load the saved list of scopes
-            LoadScopes(domain);
-
-            _currentDomain = buildServiceMethod(domain);
-
-            return _currentDomain;
-        }
-
-
-        /// <summary>
-        /// Attempt to load the scopes from the given domain if none are already in memory.
-        /// </summary>
-        /// <param name="domain"></param>
-        public static void LoadScopes(string domain)
-        {
-            HashSet<string> tempScopes;
-
-            if (scopes == null)
-            {
-                try
-                {
-                    tempScopes = SavedFile.oAuth2Group.GetScope(SavedFile.GetDomainDefaultUser(domain));
-                }
-                catch (Exception ex)
-                {
-                    throw (new System.Exception("Scope could not be loaded for domain " + domain, ex));
-                }
-
-                SetScopes(tempScopes);
-            }
-        }
-
-        /// <summary>
-        /// Get the Current User's email address.
-        /// </summary>
-        public static string DetermineUserEmail(string userAccount, string domain)
-        {
-            if (string.IsNullOrWhiteSpace(userAccount))
-            {
-                if (null == _currentUserInfo || domain != _currentUserInfo.Hd)
-                {
-                    GetCurrentUserInfo(ReturnUserCredential(domain));
-                }
-
-                return _currentUserInfo.Email;
-            }
-            else
-            {
-                return Utils.GetFullEmailAddress(userAccount, domain);
-            }
-        }
-
-        /// <summary>
-        /// Process the user email and domain to store and return user credentials.
-        /// </summary>
-        private static UserCredential HandleUserCredentials(string domain, string userEmail = "", bool force= false)
-        {
-            if (force)
-            {
-                AwaitUserCredential(domain, true).Wait();
-            } else if (string.IsNullOrWhiteSpace(userEmail))
-            {
-                AwaitUserCredential(domain).Wait();
-            }
-            else
-            {
-                AwaitUserCredential(userEmail).Wait();
-            }
-
-            GetCurrentUserInfo(_currentUserCredentials);
-            string _domain = _currentUserInfo.Hd;
-
-            if (null == _currentUserInfo.Hd)
-            {
-                //a gmail address was returned
-                _domain = "gmail.com";
-
-                _userCredentialsDict[_currentUserInfo.Email] = _currentUserCredentials;
-                _userInfoDict[_currentUserInfo.Email] = _currentUserInfo;
-            }
-            else
-            {
-                //a gmail address was not returned, so save it as the domain instead.
-                _userCredentialsDict[_currentUserInfo.Hd] = _currentUserCredentials;
-                _userInfoDict[_currentUserInfo.Hd] = _currentUserInfo;
-            }
-
-            _currentDomain = _domain;
-
-            SavedFile.SaveToken(_currentUserInfo, MemoryObjectDataStore.tokenTemp, _scopes);
-
-            if (!SavedFile.ContainsDefaultDomain())
-            {
-                SavedFile.SetDefaultDomain(_currentDomain);
-            }
-
-            if (string.IsNullOrWhiteSpace(_defaultDomain))
-            {
-                _defaultDomain = SavedFile.GetDefaultDomain();
-            }
-
-            return _currentUserCredentials;
-        }
-
-        /// <summary>
-        /// Wrapper to call and store the authentication procedure.
-        /// </summary>
-        public static UserCredential ReturnUserCredential(string domain, string user = "", bool force= false)
-        {
-            if (force)
-            {
-                return HandleUserCredentials(domain, user, true);
-            }
-
-            if ("gmail.com" == domain)
-            {
-                if (!string.IsNullOrWhiteSpace(user))
-                {
-                    string userEmail = Utils.GetFullEmailAddress(user, domain);
-
-                    if (_userCredentialsDict.ContainsKey(userEmail))
-                    {
-                        _currentUserCredentials = _userCredentialsDict[userEmail];
-                        _currentUserInfo = _userInfoDict[userEmail];
-                        _currentDomain = domain;
-                        return _currentUserCredentials;
-                    }
-                    else
-                    {
-                        return HandleUserCredentials(domain, userEmail);
-                    }
-                }
-                else if (string.IsNullOrWhiteSpace(user))
-                {
-                    //check for a default
-                    if (SavedFile.ContainsDomainDefaultUser(domain))
-                    {
-                        //load the default user
-                        string userEmail = SavedFile.GetDomainDefaultUser(domain);
-                        return HandleUserCredentials(domain, userEmail);
-                    }
-                    else
-                    {
-                        //treat this as the first user for the gmail domain
-                        return HandleUserCredentials(domain);
-                    }
-                }
-            }
-
-            //the domain is not gmail, and is either null or something else
-            domain = (string.IsNullOrWhiteSpace(domain)) ? "temp" : domain;
-
-            if (_userCredentialsDict.ContainsKey(domain))
-            {
-                _currentUserCredentials = _userCredentialsDict[domain];
-                _currentUserInfo = _userInfoDict[domain];
-                _currentDomain = domain;
-                return _currentUserCredentials;
-            }
-            else
-            {
-                return HandleUserCredentials(domain);
-            }
-        }
-
-        /// <summary>
-        /// Set by the AwaitUserCredential method each time it runs, and available to read by the MemoryObjectDataStore
-        /// </summary>
-        public static bool ForceAuthentication;
-
-        /// <summary>
-        /// Authenticates against the web and stores the result in the credential dictionary.
-        /// </summary>
-        private static async Task AwaitUserCredential(string key, bool force=false)
-        {
-            //only run this if necessary (if currentUserCredentials are not set) - otherwise leave it be;
-            if (null == _currentUserCredentials ||
-                !_userCredentialsDict.ContainsKey(key) ||
-                _currentUserCredentials.Token.IsExpired(_clock) ||
-                force)
-            {
-                ForceAuthentication = force;
-
-                _currentUserCredentials = await GoogleWebAuthorizationBroker.AuthorizeAsync(
-                    //_clientSecrets,
-                    SavedFile.oAuth2Group.clientSecrets, //using the Get Method would give us the custom secrets only
-                    scopes,
-                    key,
-                    CancellationToken.None,
-                    new MemoryObjectDataStore()
-                    );
-            }
-        }
-
-        /// <summary>
-        /// Returns an initializer used to create a new service.
-        /// </summary>
-        public static BaseClientService.Initializer GetInitializer(string domain)
-        {
-            gInitializer initializer = new gInitializer()
-            {
-                HttpClientInitializer = ReturnUserCredential(domain),
-                ApplicationName = _appName,
+            ClientSecrets secrets = new ClientSecrets() {
+                ClientId = ClientId,
+                ClientSecret = ClientSecret
             };
 
-            return initializer;
+            infoConsumer.SetDefaultClientSecrets(secrets);
         }
 
         /// <summary>
@@ -420,71 +293,62 @@ namespace gShell.dotNet.Utilities.OAuth2
             return (new gInitializer());
         }
 
-        public static BaseClientService.Initializer GetInitializer(Google.Apis.Http.IConfigurableHttpClientInitializer credentials)
+        //public static BaseClientService.Initializer GetInitializer(Google.Apis.Http.IConfigurableHttpClientInitializer credentials)
+        //{
+        //    gInitializer initializer = new gInitializer()
+        //    {
+        //        HttpClientInitializer = credentials,
+        //        ApplicationName = _appName,
+        //    };
+
+        //    return initializer;
+        //}
+
+        /// <summary>
+        /// Returns an initializer used to create a new service.
+        /// </summary>
+        public static BaseClientService.Initializer GetInitializer(string AppName)
         {
             gInitializer initializer = new gInitializer()
             {
-                HttpClientInitializer = credentials,
-                ApplicationName = _appName,
+                HttpClientInitializer = asyncUserCredential,
+                ApplicationName = AppName,
             };
 
             return initializer;
         }
-        #endregion
 
-        #region HelperMethods
-        /// <summary>
-        /// Returns the domain of the user authenticated to the current domain.
-        /// Useful to double check the domain name after authenticating, in case they provided one domain but authenticated another.
-        /// </summary>
-        public static void GetCurrentUserInfo(UserCredential userCredentials)
+        #endregion
+    }
+
+    /// <summary>
+    /// Contains all information that results from authenticating a user and gathering a token, and everything
+    /// that might be required to store a token. Does not store the token itself for uses other than comparison.
+    /// </summary>
+    public class AuthenticatedUserInfo
+    {
+        public AuthenticatedUserInfo() { }
+
+        public AuthenticatedUserInfo(string User, string UserDomain, string Api, IEnumerable<string> Scopes)
         {
-            Oauth2Service oService = new Oauth2Service(new BaseClientService.Initializer()
+            userName = Utils.GetUserFromEmail(User);
+            domain = Utils.GetDomainFromEmail(UserDomain);
+            apiNameAndVersion = Api;
+            scopes = Scopes;
+        }
+
+        public string userName { get; set; }
+        public string domain { get; set; }
+        public string userEmail
+        {
+            get
             {
-                HttpClientInitializer = userCredentials,
-                ApplicationName = _appName,
-            });
-
-            _currentUserInfo = oService.Userinfo.Get().Execute();
+                return Utils.GetFullEmailAddress(userName, domain);
+            }
         }
-
-        /// <summary>
-        /// Update the internal scopes. Required to be in place before authenticating.
-        /// </summary>
-        public static void SetScopes(HashSet<string> scopes)
-        {
-            _scopes = scopes;
-        }
-
-        /// <summary>
-        /// Update the internal scopes. Required to be in place before authenticating.
-        /// </summary>
-        public static void SetScopes(IEnumerable<string> scopes)
-        {
-            _scopes = new HashSet<string>(scopes);
-        }
-        ///// <summary>
-        ///// Provides a custom Service Account Initializer for the given username and domain.
-        ///// </summary>
-        //public static ServiceAccountCredential.Initializer GetServiceAccountInitializer(string userEmail, string domain)
-        //{
-        //    if (null == _serviceAcctInitializer)
-        //    {
-        //        _serviceAcctInitializer =
-        //            new ServiceAccountCredential.Initializer(SavedFile.GetServiceAccountEmail())
-        //            {
-        //                Scopes = serviceAccountScope,
-        //                User = userEmail
-        //            }.FromCertificate(SavedFile.GetServiceAccountCert());
-        //        //X509Certificate2 cert = SavedFile.GetServiceAccountCert();
-        //    }
-        //    else
-        //    {
-        //        _serviceAcctInitializer.User = Utils.GetFullEmailAddress(userEmail, domain);
-        //    }
-
-        //    return _serviceAcctInitializer;
-        //}
-        #endregion
+        public string apiNameAndVersion { get; set; }
+        public IEnumerable<string> scopes { get; set; }
+        public string tokenString { get; set; }
+        public TokenResponse tokenResponse { get; set; }
     }
 }

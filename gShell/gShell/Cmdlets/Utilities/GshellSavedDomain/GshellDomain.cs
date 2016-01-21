@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Management.Automation;
 using gShell.dotNet.Utilities;
 using gShell.dotNet.Utilities.OAuth2;
+using gShell.dotNet.Utilities.Settings;
 
 namespace gShell.Cmdlets.Utilities.gShellDomain
 {
     #region Get-gShellDomain
     [Cmdlet(VerbsCommon.Get, "gShellDomain",
           SupportsShouldProcess = true,
-          DefaultParameterSetName="All",
+          DefaultParameterSetName = "All",
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-gShellDomain")]
     public class GetgShellDomainCommand : UtilityBase
     {
@@ -17,13 +18,13 @@ namespace gShell.Cmdlets.Utilities.gShellDomain
 
         [Parameter(Position = 0,
             Mandatory = false,
-            ParameterSetName="One")]
+            ParameterSetName = "One")]
         [ValidateNotNullOrEmpty]
         public string Domain { get; set; }
 
         [Parameter(Position = 0,
             Mandatory = false,
-            ParameterSetName="Default")]
+            ParameterSetName = "Default")]
         public SwitchParameter Default { get; set; }
 
         #endregion
@@ -34,20 +35,16 @@ namespace gShell.Cmdlets.Utilities.gShellDomain
             {
                 switch (ParameterSetName)
                 {
-                    case "All":
-                        List<OAuth2Domain> domains = new List<OAuth2Domain>();
-                        foreach (string dom in SavedFile.GetDomainList()) {
-                            domains.Add(SavedFile.GetDomain(dom));
-                        }
-                        WriteObject(domains);
-                        break;
-
                     case "One":
-                        WriteObject(SavedFile.GetDomain(Domain));
+                        WriteObject(OAuth2Base.infoConsumer.GetDomain(Domain));
                         break;
 
                     case "Default":
-                        WriteObject(SavedFile.GetDefaultDomain());
+                        WriteObject(OAuth2Base.infoConsumer.GetDomain(OAuth2Base.infoConsumer.GetDefaultDomain()));
+                        break;
+
+                    default:
+                        WriteObject(OAuth2Base.infoConsumer.GetAllDomains());
                         break;
                 }
             }
@@ -58,7 +55,7 @@ namespace gShell.Cmdlets.Utilities.gShellDomain
     #region Get-gShellUser
     [Cmdlet(VerbsCommon.Get, "gShellUser",
           SupportsShouldProcess = true,
-          DefaultParameterSetName="All",
+          DefaultParameterSetName = "All",
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-gShellUser")]
     public class GetgShellUserCommand : UtilityBase
     {
@@ -66,16 +63,13 @@ namespace gShell.Cmdlets.Utilities.gShellDomain
 
         [Parameter(Position = 0,
             Mandatory = false,
-            ParameterSetName="One")]
+            ParameterSetName = "One")]
         [ValidateNotNullOrEmpty]
         public string UserEmail { get; set; }
 
         [Parameter(Position = 0,
             Mandatory = false,
-            ParameterSetName = "Domain")]
-        [Parameter(Position = 0,
-            Mandatory = false,
-            ParameterSetName="Default")]
+            ParameterSetName = "Default")]
         public SwitchParameter Default { get; set; }
 
         [Parameter(Position = 1,
@@ -92,25 +86,22 @@ namespace gShell.Cmdlets.Utilities.gShellDomain
                 switch (ParameterSetName)
                 {
                     case "All":
-                        WriteObject(SavedFile.GetUsers());
+                        WriteObject(OAuth2Base.infoConsumer.GetAllUsers());
                         break;
 
                     case "One":
-                        WriteObject(SavedFile.GetUser(UserEmail));
+                        WriteObject(OAuth2Base.infoConsumer.GetUser(
+                            Utils.GetUserFromEmail(UserEmail), 
+                            Utils.GetDomainFromEmail(UserEmail)));
                         break;
 
                     case "Default":
-                        WriteObject(SavedFile.GetDomainDefaultUser(SavedFile.GetDefaultDomain()));
+                        string defaultDomain = OAuth2Base.infoConsumer.GetDefaultDomain();
+                        WriteObject(OAuth2Base.infoConsumer.GetUser(defaultDomain,
+                            OAuth2Base.infoConsumer.GetDefaultUser(Domain)));
                         break;
                     case "Domain":
-                        if (Default)
-                        {
-                            WriteObject(SavedFile.GetDomainDefaultUser(Domain));
-                        }
-                        else
-                        {
-                            WriteObject(SavedFile.GetUsers(Domain));
-                        }
+                        WriteObject(OAuth2Base.infoConsumer.GetAllUsers(Domain));
                         break;
                 }
             }
@@ -119,6 +110,7 @@ namespace gShell.Cmdlets.Utilities.gShellDomain
     #endregion
 
     #region Set-gShellDomain
+    
     [Cmdlet(VerbsCommon.Set, "gShellDomain",
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-gShellDomain")]
@@ -149,19 +141,19 @@ namespace gShell.Cmdlets.Utilities.gShellDomain
                 {
                     if (SetAsDefault)
                     {
-                        SavedFile.SetDefaultDomain(Domain);
-                        OAuth2Base.SetCurrentDomain(Domain);
-                        OAuth2Base.SetDefaultDomain(OAuth2Base.currentDomain);
+                        OAuth2Base.infoConsumer.SetDefaultDomain(Domain);
+                        //In theory, no need to do anything else since before our next API call we'll authenticate.
                     }
 
                     if (!string.IsNullOrWhiteSpace(DefaultUser))
                     {
-                        SavedFile.SetDefaultUser(Utils.GetFullEmailAddress(DefaultUser, Domain));
+                        OAuth2Base.infoConsumer.SetDefaultUser(Domain, DefaultUser);
                     }
                 }
             }
         }
     }
+
     #endregion
 
     #region Remove-gShellDomain
@@ -186,17 +178,27 @@ namespace gShell.Cmdlets.Utilities.gShellDomain
                 if (Force || ShouldContinue((String.Format("Stored authentication information for domain {0} will be deleted.\nContinue?",
                     Domain)), "Confirm removal of stored authentication information"))
                 {
-                    try
+                    if (OAuth2Base.infoConsumer.GetDefaultDomain() == Domain)
                     {
-                        WriteDebug(string.Format("Attempting to remove stored information for domain {0}...", Domain));
-
-                        SavedFile.RemoveDomain(Domain);
-
-                        WriteVerbose(string.Format("Removal of {0} completed without error.", Domain));
+                        WriteError(new ErrorRecord(new Exception("This domain is the default domain. Please change "+
+                            "the default domain before removing it."),
+                            "", ErrorCategory.InvalidData, Domain));
                     }
-                    catch (Exception e)
+                    else
                     {
-                        WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, Domain));
+
+                        try
+                        {
+                            WriteDebug(string.Format("Attempting to remove stored information for domain {0}...", Domain));
+
+                            OAuth2Base.infoConsumer.RemoveDomain(Domain);
+
+                            WriteVerbose(string.Format("Removal of {0} completed without error.", Domain));
+                        }
+                        catch (Exception e)
+                        {
+                            WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, Domain));
+                        }
                     }
                 }
                 else
@@ -225,16 +227,26 @@ namespace gShell.Cmdlets.Utilities.gShellDomain
 
         protected override void ProcessRecord()
         {
-            if (ShouldProcess(UserEmail, "Remove-gShellDomain"))
+            if (ShouldProcess(UserEmail, "Remove-gShellUser"))
             {
                 if (Force || ShouldContinue((String.Format("Stored authentication information for user {0} will be deleted.\nContinue?",
                     UserEmail)), "Confirm removal of stored authentication information"))
                 {
+                    string user = Utils.GetUserFromEmail(UserEmail);
+                    string domain = Utils.GetDomainFromEmail(UserEmail);
+
+                    if (OAuth2Base.infoConsumer.GetDefaultUser(domain) == user)
+                    {
+                        WriteError(new ErrorRecord(new Exception("This user is the default user for its domain. " +
+                            "Please change the default user before removing it."),
+                            "", ErrorCategory.InvalidData, domain));
+                    }
+
                     try
                     {
                         WriteDebug(string.Format("Attempting to remove stored information for domain {0}...", UserEmail));
 
-                        SavedFile.RemoveUser(UserEmail);
+                        OAuth2Base.infoConsumer.RemoveUser(domain, user);
 
                         WriteVerbose(string.Format("Removal of {0} completed without error.", UserEmail));
                     }
@@ -254,6 +266,7 @@ namespace gShell.Cmdlets.Utilities.gShellDomain
     #endregion
 
     #region gShellClientSecrets
+
     [Cmdlet(VerbsCommon.Get, "gShellClientSecrets",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-gShellClientSecrets")]
@@ -263,7 +276,7 @@ namespace gShell.Cmdlets.Utilities.gShellDomain
         {
             if (ShouldProcess("ClientSecrets", "Get-gShellClientSecrets"))
             {
-                WriteObject(SavedFile.GetClientSecrets());
+                WriteObject(OAuth2Base.infoConsumer.GetDefaultClientSecrets());
             }
         }
     }
@@ -290,7 +303,8 @@ namespace gShell.Cmdlets.Utilities.gShellDomain
         {
             if (ShouldProcess("ClientSecrets", "Set-gShellClientSecrets"))
             {
-                SavedFile.SetClientSecrets(new Google.Apis.Auth.OAuth2.ClientSecrets(){
+                OAuth2Base.infoConsumer.SetDefaultClientSecrets(new Google.Apis.Auth.OAuth2.ClientSecrets()
+                {
                     ClientId = this.ClientId,
                     ClientSecret = this.ClientSecret
                 });
@@ -319,7 +333,7 @@ namespace gShell.Cmdlets.Utilities.gShellDomain
                     {
                         WriteDebug(string.Format("Attempting to remove custom Client Secrets from gShell"));
 
-                        SavedFile.RemoveClientSecrets();
+                        OAuth2Base.infoConsumer.RemoveDefaultClientSecrets();
 
                         WriteVerbose(string.Format("Removal of custom Client Secrets completed without error."));
                     }
@@ -336,5 +350,39 @@ namespace gShell.Cmdlets.Utilities.gShellDomain
             }
         }
     }
+    #endregion
+
+    #region gShellSettings
+
+    [Cmdlet(VerbsCommon.Set, "gShellSettings",
+        SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Set-gShellSettings")]
+    public class SetgShellSettingsCommand : UtilityBase
+    {
+        #region Parameters
+
+        [Parameter(Position = 0)]
+        public gShellSettings.SerializeTypes? SerializedFileType { get; set; }
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess("Domain", "Set-gShellDomain"))
+            {
+                if (SerializedFileType.HasValue)
+                {
+                    gShellSettings settings = gShellSettingsLoader.Load();
+
+                    if (settings == null) settings = new gShellSettings();
+
+                    settings.SerializeType = SerializedFileType.Value;
+
+                    gShellSettingsLoader.Save(settings);
+                }
+            }
+        }
+    }
+
     #endregion
 }

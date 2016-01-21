@@ -7,26 +7,31 @@ using gShell.dotNet.Utilities.OAuth2;
 
 namespace gShell.dotNet
 {
-    public class Discovery // : ServiceWrapper<discovery_v1.DiscoveryService>
+    public class Discovery : ServiceWrapper<discovery_v1.DiscoveryService>
     {
         #region Inherited Members
+        
         /// <summary>
         /// Indicates if this set of services will work with Gmail (as opposed to Google Apps). 
         /// This will cause authentication to fail if false and the user attempts to authenticate with
         /// a gmail address.
         /// </summary>
-        protected bool worksWithGmail { get { return true; } }
+        protected override bool worksWithGmail { get { return true; } }
         
         /// <summary>
         /// Initialize and return a new DiscoveryService
         /// </summary>
-        protected discovery_v1.DiscoveryService CreateNewService()
+        protected override discovery_v1.DiscoveryService CreateNewService(string domain)
         {
             return new discovery_v1.DiscoveryService(OAuth2Base.GetInitializer());
         }
+
+        public override string apiNameAndVersion { get { return "discovery:v1"; } }
+
         #endregion
 
         #region Properties
+        
         public Apis apis = new Apis();
 
         public static discovery_v1.DiscoveryService service
@@ -43,6 +48,7 @@ namespace gShell.dotNet
         }
 
         private static discovery_v1.DiscoveryService _service;
+
         #endregion
 
         #region Wrapped Methods

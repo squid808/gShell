@@ -2,6 +2,7 @@
 using System.Management.Automation;
 using System.Collections.Generic;
 
+using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using discovery_v1 = Google.Apis.Discovery.v1;
 using Data = Google.Apis.Discovery.v1.Data;
@@ -18,8 +19,10 @@ namespace gShell.Cmdlets.Discovery
     public class DiscoveryBase : OAuth2CmdletBase
     {
         #region Properties
-        protected static gShell.dotNet.Discovery gdiscovery = new gDiscovery();
+        protected static gDiscovery gdiscovery = new gDiscovery();
         protected Apis apis = new Apis();
+
+        protected override string apiNameAndVersion { get { return gdiscovery.apiNameAndVersion; } }
         #endregion
 
         #region PowerShell Methods
@@ -30,10 +33,7 @@ namespace gShell.Cmdlets.Discovery
         /// <summary>
         /// A method specific to each inherited object, called during authentication. Must be implemented.
         /// </summary>
-        protected override string Authenticate(string domain)
-        {
-            return null;
-        }
+        protected override AuthenticatedUserInfo Authenticate(IEnumerable<string> Scopes, ClientSecrets Secrets) { return null; }
         #endregion
 
         #region Apis
