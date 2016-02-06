@@ -279,7 +279,11 @@ namespace gShell.dotNet.Utilities.OAuth2
         {
             if (!UserExists(Domain, UserName))
             {
-                SetUser(Domain, new OAuth2DomainUser());
+                SetUser(Domain, new OAuth2DomainUser()
+                {
+                    userName = UserName,
+                    domain = Domain
+                });
             }
 
             info.domains[Domain].users[UserName].tokenAndScopesByApi[Api] = new OAuth2TokenInfo(Scopes, TokenString, TokenResponse);
