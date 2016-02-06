@@ -144,6 +144,9 @@ namespace gShell.dotNet.Utilities.OAuth2
             //Only save if we need to write or overwrite the token, so compare the token coming in with the one in memory.
             if (!string.IsNullOrWhiteSpace(TokenString) && TokenString != currentAuthInfo.tokenString)
             {
+                //Sets the user and domain first, if they don't already exist
+                infoConsumer.SetTokenAndScopes(currentAuthInfo.domain, currentAuthInfo.userName, currentAuthInfo.apiNameAndVersion, TokenString, TokenResponse, currentAuthInfo.scopes.ToList());
+
                 if (infoConsumer.GetDefaultDomain() == null)
                 {
                     infoConsumer.SetDefaultDomain(currentAuthInfo.domain);
@@ -153,8 +156,6 @@ namespace gShell.dotNet.Utilities.OAuth2
                 {
                     infoConsumer.SetDefaultUser(currentAuthInfo.domain, currentAuthInfo.userName);
                 }
-
-                infoConsumer.SetTokenAndScopes(currentAuthInfo.domain, currentAuthInfo.userName, currentAuthInfo.apiNameAndVersion, TokenString, TokenResponse, currentAuthInfo.scopes.ToList());
             }
             
 
