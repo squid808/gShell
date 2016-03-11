@@ -7,7 +7,7 @@
 //using Google.Apis.Services;
 //using Google.Apis.Drive.v2;
 //using Google.Apis.Drive.v2.Data;
-//using Google.Apis.Admin.Directory.directory_v1;
+//using Google.Apis.admin.Directory.directory_v1;
 //using System.Security.Cryptography.X509Certificates;
 
 //namespace gShell.Cmdlets.Drive

@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Security.Cryptography.X509Certificates;
 
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Auth.OAuth2.Responses;
-using Google.Apis.Oauth2.v2.Data;
 
-using gShell.dotNet.Utilities;
 
 namespace gShell.dotNet.Utilities.OAuth2
 {

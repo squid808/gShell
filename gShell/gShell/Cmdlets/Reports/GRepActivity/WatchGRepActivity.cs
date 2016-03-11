@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Management.Automation;
-using Data = Google.Apis.Admin.Reports.reports_v1.Data;
+using Data = Google.Apis.admin.Reports.reports_v1.Data;
 
 namespace gShell.Cmdlets.Reports.GRepActivity
 {
@@ -15,7 +14,7 @@ namespace gShell.Cmdlets.Reports.GRepActivity
         [Parameter(Position = 0,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
-        public gShell.dotNet.Reports.Activities.ApplicationName ApplicationName { get; set; }
+        public ApplicationNameEnum ApplicationName { get; set; }
 
         [Parameter(Position = 1,
             Mandatory = true)]
@@ -86,7 +85,7 @@ namespace gShell.Cmdlets.Reports.GRepActivity
                     body.Params__ = new Dictionary<string, string>();
                     body.Params__["ttl"] = Ttl;
                 }
-                WriteObject(activities.Watch(body, GetFullEmailAddress(UserKey, Domain), ApplicationName));
+                WriteObject(activities.Watch(body, GetFullEmailAddress(UserKey, Domain), ApplicationName.ToString()));
             }
         }
     }

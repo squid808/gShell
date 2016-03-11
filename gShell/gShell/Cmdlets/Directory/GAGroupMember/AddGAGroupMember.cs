@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Management.Automation;
-using Google.Apis.Admin.Directory.directory_v1.Data;
+﻿using System.Management.Automation;
+using Google.Apis.admin.Directory.directory_v1.Data;
 
 namespace gShell.Cmdlets.Directory.GAGroupMember
 {
@@ -40,20 +38,18 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
 
         protected override void ProcessRecord()
         {
+            GroupName = GetFullEmailAddress(GroupName, Domain);
+
             if (ShouldProcess(GroupName, "Add-GAGroupMember"))
             {
-                AddGroupMember();
+                Member member = new Member
+                {
+                    Email = GetFullEmailAddress(UserName, Domain),
+                    Role = this.Role.ToString()
+                };
+
+                WriteObject(members.Insert(member, GroupName));
             }
-        }
-
-        private void AddGroupMember()
-        {
-            Member member = new Member {
-                Email = GetFullEmailAddress(UserName, Domain),
-                Role = this.Role.ToString()
-            };
-
-            members.Insert(member, GroupName, Domain);
         }
     }
 

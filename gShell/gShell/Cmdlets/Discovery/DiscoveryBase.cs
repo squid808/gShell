@@ -33,7 +33,7 @@ namespace gShell.Cmdlets.Discovery
         /// <summary>
         /// A method specific to each inherited object, called during authentication. Must be implemented.
         /// </summary>
-        protected override AuthenticatedUserInfo Authenticate(IEnumerable<string> Scopes, ClientSecrets Secrets) { return null; }
+        protected override AuthenticatedUserInfo Authenticate(IEnumerable<string> Scopes, ClientSecrets Secrets, string Domain=null) { return null; }
         #endregion
 
         #region Apis

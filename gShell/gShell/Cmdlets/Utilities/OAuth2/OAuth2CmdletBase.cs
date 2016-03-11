@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Reflection;
 
-using Google.Apis.Admin.Directory.directory_v1;
+using Google.Apis.admin.Directory.directory_v1;
 //using Google.Apis.Drive.v2;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Json;
@@ -16,8 +16,8 @@ using Google.Apis.Util;
 using Google.Apis.Oauth2.v2;
 using Google.Apis.Oauth2.v2.Data;
 using Google.Apis.Services;
-using Google.Apis.Admin.Reports.reports_v1;
-using Google.Apis.Admin.Reports.reports_v1.Data;
+//using Google.Apis.admin.Reports.reports_v1;
+//using Google.Apis.admin.Reports.reports_v1.Data;
 
 using gShell.Cmdlets.Utilities.ScopeHandler;
 
@@ -78,6 +78,12 @@ namespace gShell.dotNet.Utilities.OAuth2
 
                 return Assembly.LoadFrom(path);
             }
+            else if (args.Name.ToLower().StartsWith("newtonsoft.json"))
+            {
+                string path = System.IO.Path.Combine(AssemblyDirectory, "Newtonsoft.Json.dll");
+
+                return Assembly.LoadFrom(path);
+            }
             else
             {
                 return null;
@@ -116,7 +122,7 @@ namespace gShell.dotNet.Utilities.OAuth2
         protected override abstract void BeginProcessing();
 
         /// <summary>Load token and scope information for API call, and authenticate if necessary.</summary>
-        protected abstract AuthenticatedUserInfo Authenticate(IEnumerable<string> Scopes, ClientSecrets Secrets);
+        protected abstract AuthenticatedUserInfo Authenticate(IEnumerable<string> Scopes, ClientSecrets Secrets, string Domain=null);
 
         /// <summary>Determines if the user needs to be prompted to select the scopes.</summary>
         /// <remarks>

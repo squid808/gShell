@@ -94,11 +94,11 @@
         <RemoveFile Name="gShell.dll" Id="gShelldll" On="uninstall" />
         <RegistryValue Root="HKCU" Key="Software\gShell" Type="string" Value="4" KeyPath="yes" />
 
-        <File Id="Google.Apis.Admin.Directory.directory_v1.dll"
-              Name="Google.Apis.Admin.Directory.directory_v1.dll"
+        <File Id="Google.Apis.admin.Directory.directory_v1.dll"
+              Name="Google.Apis.admin.Directory.directory_v1.dll"
               DiskId="1"
-              Source="$(var.gShell.TargetDir)/Google.Apis.Admin.Directory.directory_v1.dll" />
-        <RemoveFile Name="Google.Apis.Admin.Directory.directory_v1.dll" Id="Google.Apis.Admin.Directory.directory_v1.dll" On="uninstall" />
+              Source="$(var.gShell.TargetDir)/Google.Apis.admin.Directory.directory_v1.dll" />
+        <RemoveFile Name="Google.Apis.admin.Directory.directory_v1.dll" Id="Google.Apis.admin.Directory.directory_v1.dll" On="uninstall" />
 
         <File Id="Google.Apis.Discovery.v1.dll"
               Name="Google.Apis.Discovery.v1.dll"

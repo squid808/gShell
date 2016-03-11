@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Management.Automation;
-using Data = Google.Apis.Admin.Reports.reports_v1.Data;
+using Data = Google.Apis.admin.Reports.reports_v1.Data;
 
 namespace gShell.Cmdlets.Reports.GRepCustomerUsageReport
 {

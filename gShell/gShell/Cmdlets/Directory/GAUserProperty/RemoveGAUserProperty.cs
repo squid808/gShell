@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Management.Automation;
-using Data = Google.Apis.Admin.Directory.directory_v1.Data;
+using Data = Google.Apis.admin.Directory.directory_v1.Data;
 
-using gShell.dotNet.Utilities;
 using gShell.dotNet.CustomSerializer;
 
 namespace gShell.Cmdlets.Directory.GAUserProperty
@@ -76,7 +75,8 @@ namespace gShell.Cmdlets.Directory.GAUserProperty
                     }
                     else if (!string.IsNullOrWhiteSpace(UserName))
                     {
-                        u = users.Get(UserName, Domain);
+                        UserName = GetFullEmailAddress(UserName, Domain);
+                        u = users.Get(UserName);
                     }
                     else
                     {
@@ -207,8 +207,8 @@ namespace gShell.Cmdlets.Directory.GAUserProperty
                     }
                     break;
             }
-
-            users.Update(userAcct, u.PrimaryEmail, Domain);
+            string UserKey = GetFullEmailAddress(u.PrimaryEmail, Domain);
+            users.Update(userAcct, UserKey);
         }
 
         /// <summary>
@@ -251,7 +251,8 @@ namespace gShell.Cmdlets.Directory.GAUserProperty
                     break;
             }
 
-            users.Patch(userAcct, u.PrimaryEmail, Domain);
+            string UserKey = GetFullEmailAddress(u.PrimaryEmail, Domain);
+            users.Patch(userAcct, UserKey);
 
         }
 
@@ -271,7 +272,8 @@ namespace gShell.Cmdlets.Directory.GAUserProperty
             userAcct.Phones = NullTokenProvider.NullToken;
             userAcct.Relations = NullTokenProvider.NullToken;
 
-            users.Patch(userAcct, u.PrimaryEmail, Domain);
+            string UserKey = GetFullEmailAddress(u.PrimaryEmail, Domain);
+            users.Patch(userAcct, UserKey);
         }
     }
 }

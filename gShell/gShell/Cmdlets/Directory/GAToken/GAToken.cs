@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Management.Automation;
-using Data = Google.Apis.Admin.Directory.directory_v1.Data;
 
 namespace gShell.Cmdlets.Directory.GAToken
 {
@@ -36,15 +34,17 @@ namespace gShell.Cmdlets.Directory.GAToken
 
         protected override void ProcessRecord()
         {
+            UserKey = GetFullEmailAddress(UserKey, Domain);
+
             if (ShouldProcess(UserKey, "Get-GAToken"))
             {
                 switch (ParameterSetName)
                 {
                     case "One":
-                        WriteObject(tokens.Get(UserKey, Domain, ClientId));
+                        WriteObject(tokens.Get(UserKey, ClientId));
                         break;
                     case "List":
-                        WriteObject(tokens.List(UserKey, Domain));
+                        WriteObject(tokens.List(UserKey));
                         break;
                 }
             }
@@ -79,6 +79,8 @@ namespace gShell.Cmdlets.Directory.GAToken
 
         protected override void ProcessRecord()
         {
+            UserKey = GetFullEmailAddress(UserKey, Domain);
+
             if (ShouldProcess(ClientId, "Remove-GAToken"))
             {
                 if (Force || ShouldContinue((String.Format("Token for application with Client ID of {0} will be removed for user {2} from the {1} Google Apps domain.\nContinue?",
@@ -88,7 +90,7 @@ namespace gShell.Cmdlets.Directory.GAToken
                     {
                         WriteDebug(string.Format("Attempting to remove Token for application {0}...",
                             ClientId));
-                        WriteObject(tokens.Delete(UserKey, Domain, ClientId));
+                        tokens.Delete(UserKey, ClientId);
                         WriteVerbose(string.Format("Removal of Token for application {0} completed without error.",
                             ClientId));
                     }

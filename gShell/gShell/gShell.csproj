@@ -12,7 +12,7 @@
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>31f4f55e</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>8bdb454f</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,14 +40,6 @@
     </Reference>
     <Reference Include="Google.Apis, Version=1.10.0.25332, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.Apis.1.10.0\lib\net40\Google.Apis.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Google.Apis.Admin.Directory.directory_v1, Version=1.10.0.63, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Apis.Admin.Directory.directory_v1.1.10.0.630\lib\portable-net40+sl50+win+wpa81+wp80\Google.Apis.Admin.Directory.directory_v1.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Google.Apis.Admin.Reports.reports_v1, Version=1.10.0.51, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Apis.Admin.Reports.reports_v1.1.10.0.510\lib\portable-net40+sl50+win+wpa81+wp80\Google.Apis.Admin.Reports.reports_v1.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Google.Apis.Auth, Version=1.10.0.25333, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
@@ -83,16 +75,16 @@
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\WindowsPowerShell\3.0\Microsoft.PowerShell.Commands.Utility.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Threading.Tasks.Extensions, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop, Version=1.0.168.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -124,8 +116,8 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Zlib.Portable, Version=1.11.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Zlib.Portable.1.11.0\lib\portable-net4+sl5+wp8+win8+wpa81+MonoTouch+MonoAndroid\Zlib.Portable.dll</HintPath>
+    <Reference Include="Zlib.Portable, Version=1.11.0.0, Culture=neutral, PublicKeyToken=431cba815f6a8b5b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Zlib.Portable.Signed.1.11.0\lib\portable-net4+sl5+wp8+win8+wpa81+MonoTouch+MonoAndroid\Zlib.Portable.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -140,7 +132,9 @@
     <Compile Include="Cmdlets\Directory\GAToken\GAToken.cs" />
     <Compile Include="Cmdlets\Directory\GAUserPhoto\GAUserPhoto.cs" />
     <Compile Include="Cmdlets\Directory\GAVerificationCode\GAVerificationCode.cs" />
+    <Compile Include="Cmdlets\Directory\gShellUserObject.cs" />
     <Compile Include="Cmdlets\Discovery\DiscoveryBase.cs" />
+    <Compile Include="Cmdlets\Reports\Enums.cs" />
     <Compile Include="Cmdlets\Reports\GRepActivity\Get-GRepActivity.cs" />
     <Compile Include="Cmdlets\Reports\GRepActivity\WatchGRepActivity.cs" />
     <Compile Include="Cmdlets\Reports\GRepChannel\StopGRepChannel.cs" />
@@ -148,8 +142,12 @@
     <Compile Include="Cmdlets\Reports\GRepUserUsageReport\GetGRepUserUsageReport.cs" />
     <Compile Include="Cmdlets\Reports\ReportsBase.cs" />
     <Compile Include="dotNet\Directory\Directory.cs" />
+    <Compile Include="dotNet\Directory\Google.Apis.admin.Directory.directory_v1.cs" />
+    <Compile Include="dotNet\Directory\Google.Apis.admin.Directory.directory_v1_gshell_dotnet.cs" />
     <Compile Include="dotNet\Discovery\Discovery.cs" />
     <Compile Include="dotNet\IServiceWrapper.cs" />
+    <Compile Include="dotNet\Reports\Google.Apis.admin.Reports.reports_v1.cs" />
+    <Compile Include="dotNet\Reports\Google.Apis.admin.Reports.reports_v1_gshell_dotnet.cs" />
     <Compile Include="dotNet\Utilities\CustomSerializer\CustomSerializer.cs" />
     <Compile Include="Cmdlets\Directory\GAGroupMember\AddGAGroupMember.cs" />
     <Compile Include="Cmdlets\Directory\GAGroupMember\GetGAGroupMember.cs" />
@@ -178,7 +176,6 @@
     <Compile Include="dotNet\Utilities\OAuth2\OAuth2Base.cs" />
     <Compile Include="dotNet\Utilities\OAuth2\OAuth2Base2.cs" />
     <Compile Include="dotNet\ServiceWrapper.cs" />
-    <Compile Include="dotNet\Reports\Reports.cs" />
     <Compile Include="dotNet\Utilities\MemoryObjectDataStore.cs" />
     <Compile Include="Cmdlets\Directory\GAUserProperty\RemoveGAUserProperty.cs" />
     <Compile Include="Cmdlets\Utilities\GshellSavedDomain\GshellDomain.cs" />

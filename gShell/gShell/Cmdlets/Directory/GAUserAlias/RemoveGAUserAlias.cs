@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Management.Automation;
-using Data = Google.Apis.Admin.Directory.directory_v1.Data;
 
 namespace gShell.Cmdlets.Directory.GAUserAlias
 {
@@ -37,6 +35,8 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
 
         protected override void ProcessRecord()
         {
+            UserAliasName = GetFullEmailAddress(UserAliasName, Domain);
+
             if (ShouldProcess(UserAliasName, "Remove-GAUserAlias"))
             {
                 if (Force || ShouldContinue((String.Format("User alias {0} will be removed from the {1} Google Apps domain.\nContinue?",
@@ -46,7 +46,14 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
                     {
                         WriteDebug(string.Format("Attempting to remove user alias {0}@{1}...",
                             UserAliasName, Domain));
-                        RemoveUserAlias();
+                        
+                        if (string.IsNullOrWhiteSpace(UserName))
+                        {
+                            UserName = users.Get(UserAliasName).PrimaryEmail;
+                        }
+
+                        users.aliases.Delete(UserName, UserAliasName);
+
                         WriteVerbose(string.Format("Removal of {0}@{1} completed without error.",
                             UserAliasName, Domain));
                     }
@@ -65,11 +72,7 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
 
         private void RemoveUserAlias()
         {
-            if (string.IsNullOrWhiteSpace(UserName)) {
-                UserName = users.Get(UserAliasName, Domain).PrimaryEmail;
-            }
-
-            users.aliases.Delete(UserName, Domain, UserAliasName);
+            
         }
     }
 }

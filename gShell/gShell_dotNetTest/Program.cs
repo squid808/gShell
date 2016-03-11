@@ -6,8 +6,8 @@ using gShell.dotNet.Utilities;
 using gShell.dotNet.Utilities.OAuth2;
 
 using Google.Apis.Auth.OAuth2;
-using Google.Apis.Admin.Directory.directory_v1;
-using Google.Apis.Admin.Directory.directory_v1.Data;
+using Google.Apis.admin.Directory.directory_v1;
+using Google.Apis.admin.Directory.directory_v1.Data;
 
 namespace gShell_dotNetExample
 {

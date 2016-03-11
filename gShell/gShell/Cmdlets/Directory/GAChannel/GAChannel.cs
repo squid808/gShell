@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Management.Automation;
-using Data = Google.Apis.Admin.Directory.directory_v1.Data;
+using Data = Google.Apis.admin.Directory.directory_v1.Data;
 
 namespace gShell.Cmdlets.Directory.GAChannel
 {
@@ -38,10 +37,10 @@ namespace gShell.Cmdlets.Directory.GAChannel
                     try
                     {
                         WriteDebug(string.Format("Attempting to stop Channel Resource..."));
-                        WriteObject(channels.Stop(new Data.Channel(){
+                        channels.Stop(new Data.Channel(){
                             Id = Id,
                             ResourceId = ResourceId
-                        }));
+                        });
                         WriteVerbose(string.Format("Channel Resource stopped without error."));
                     }
                     catch (Exception e)

@@ -9,7 +9,6 @@ using Google.Apis.Oauth2.v2.Data;
 using Google.Apis.Services;
 
 using gShell.dotNet.CustomSerializer;
-using gShell.dotNet.Utilities.OAuth2;
 
 namespace gShell.dotNet.Utilities.OAuth2
 {

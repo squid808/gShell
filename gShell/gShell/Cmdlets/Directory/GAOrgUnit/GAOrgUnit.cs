@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Management.Automation;
-using Data = Google.Apis.Admin.Directory.directory_v1.Data;
+using Data = Google.Apis.admin.Directory.directory_v1.Data;
 
 namespace gShell.Cmdlets.Directory.GAOrgUnit
 {
@@ -41,7 +40,7 @@ namespace gShell.Cmdlets.Directory.GAOrgUnit
             ParameterSetName = "List",
             ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
-        public Google.Apis.Admin.Directory.directory_v1.OrgunitsResource.ListRequest.TypeEnum Type { get; set; }
+        public Google.Apis.admin.Directory.directory_v1.OrgunitsResource.ListRequest.TypeEnum Type { get; set; }
 
         #endregion
 
@@ -100,7 +99,7 @@ namespace gShell.Cmdlets.Directory.GAOrgUnit
                     {
                         WriteDebug(string.Format("Attempting to remove OrgUnit {0}...",
                             CustomerId));
-                        WriteObject(orgunits.Delete(CustomerId, OrgUnitPath));
+                        orgunits.Delete(CustomerId, OrgUnitPath);
                         WriteVerbose(string.Format("Removal of OrgUnit {0} completed without error.",
                             CustomerId));
                     }

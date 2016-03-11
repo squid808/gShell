@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Management.Automation;
-using Data = Google.Apis.Admin.Directory.directory_v1.Data; 
-using gDirectory = gShell.dotNet.Directory;
+using Data = Google.Apis.admin.Directory.directory_v1.Data;
 
 namespace gShell.Cmdlets.Directory.GAMobileDevice
 {
@@ -47,10 +45,10 @@ namespace gShell.Cmdlets.Directory.GAMobileDevice
                 switch (ParameterSetName)
                 {
                     case "One":
-                        WriteObject(mobileDevices.Get(CustomerId, ResourceId));
+                        WriteObject(mobiledevices.Get(CustomerId, ResourceId));
                         break;
                     case "List":
-                        WriteObject(mobileDevices.List(CustomerId, new dotNet.Directory.MobileDevices.MobileDevicesPropertiesList()
+                        WriteObject(mobiledevices.List(CustomerId, new dotNet.Directory.Mobiledevices.MobiledevicesListProperties()
                         {
                             totalResults = MaxResults
                         }));
@@ -97,7 +95,7 @@ namespace gShell.Cmdlets.Directory.GAMobileDevice
                     {
                         WriteDebug(string.Format("Attempting to remove Mobile Device {0}...",
                             CustomerId));
-                        WriteObject(mobileDevices.Delete(CustomerId, ResourceId));
+                        mobiledevices.Delete(CustomerId, ResourceId);
                         WriteVerbose(string.Format("Removal of Mobile Device {0} completed without error.",
                             CustomerId));
                     }
@@ -139,14 +137,14 @@ namespace gShell.Cmdlets.Directory.GAMobileDevice
             Mandatory = true,
             ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
-        public gDirectory.MobileDevices.MobileDeviceAction Action { get; set; }
+        public Data.MobileDeviceAction Action { get; set; }
         #endregion
 
         protected override void ProcessRecord()
         {
             if (ShouldProcess(CustomerId, "Invoke-GAMobiledevice"))
             {
-                WriteObject(mobileDevices.Action(Action, CustomerId, ResourceId));
+                mobiledevices.Action(Action, CustomerId, ResourceId);
             }
         }
     }

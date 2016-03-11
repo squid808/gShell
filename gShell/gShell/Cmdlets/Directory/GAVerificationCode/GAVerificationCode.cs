@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Management.Automation;
-using Data = Google.Apis.Admin.Directory.directory_v1.Data;
 
 namespace gShell.Cmdlets.Directory.GAVerificationCode
 {
@@ -24,9 +22,11 @@ namespace gShell.Cmdlets.Directory.GAVerificationCode
 
         protected override void ProcessRecord()
         {
-            if (ShouldProcess( UserKey, "Get-GAVerificationCode"))
+            UserKey = GetFullEmailAddress(UserKey, Domain);
+
+            if (ShouldProcess(UserKey, "Get-GAVerificationCode"))
             {
-                WriteObject(verificationCodes.List(UserKey, Domain));
+                WriteObject(verificationCodes.List(UserKey));
             }
         }
     }
@@ -62,7 +62,7 @@ namespace gShell.Cmdlets.Directory.GAVerificationCode
                     {
                         WriteDebug(string.Format("Attempting to revoke Verification Codes {0}...",
                             UserKey));
-                        WriteObject(verificationCodes.Invalidate(UserKey, Domain));
+                        verificationCodes.Invalidate(UserKey);
                         WriteVerbose(string.Format("Invalidation of Verification Codes for user {0} completed without error.",
                             UserKey));
                     }
@@ -97,9 +97,11 @@ namespace gShell.Cmdlets.Directory.GAVerificationCode
 
         protected override void ProcessRecord()
         {
+            UserKey = GetFullEmailAddress(UserKey, Domain);
+
             if (ShouldProcess(UserKey, "New-GAVerificationCode"))
             {
-                WriteObject(verificationCodes.Generate(UserKey, Domain));
+                verificationCodes.Generate(UserKey);
             }
         }
     }

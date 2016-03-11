@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Management.Automation;
-using Data = Google.Apis.Admin.Directory.directory_v1.Data;
+﻿using System.Management.Automation;
+using Data = Google.Apis.admin.Directory.directory_v1.Data;
 
 namespace gShell.Cmdlets.Directory.GAUserAlias
 {
@@ -31,21 +29,17 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
 
         protected override void ProcessRecord()
         {
+            UserName = GetFullEmailAddress(UserName, Domain);
+
             if (ShouldProcess(UserName, "New-GAUserAlias"))
             {
-                CreateUserAlias();
+                Data.Alias aliasBody = new Data.Alias()
+                {
+                    AliasValue = GetFullEmailAddress(Alias, Domain)
+                };
+
+                WriteObject(users.aliases.Insert(aliasBody, UserName));
             }
         }
-
-        private void CreateUserAlias()
-        {
-            Data.Alias aliasBody = new Data.Alias()
-            {
-                AliasValue = GetFullEmailAddress(Alias, Domain)
-            };
-
-            users.aliases.Insert(aliasBody, UserName, Domain);
-        }
-
     }
 }

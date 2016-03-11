@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Management.Automation;
-using Data = Google.Apis.Admin.Directory.directory_v1.Data;
+﻿using System.Management.Automation;
+using Data = Google.Apis.admin.Directory.directory_v1.Data;
 
 namespace gShell.Cmdlets.Directory.GAChromeosdevice
 {
@@ -47,10 +45,10 @@ namespace gShell.Cmdlets.Directory.GAChromeosdevice
                 switch (ParameterSetName)
                 {
                     case "One":
-                        WriteObject(chromeosDevices.Get(CustomerId, DeviceId));
+                        WriteObject(chromeosdevices.Get(CustomerId, DeviceId));
                         break;
                     case "List":
-                        WriteObject(chromeosDevices.List(CustomerId, new dotNet.Directory.ChromeosDevices.ChromeosDevicesListProperties(){
+                        WriteObject(chromeosdevices.List(CustomerId, new dotNet.Directory.Chromeosdevices.ChromeosdevicesListProperties(){
                             totalResults = MaxResults
                         }));
                         break;
@@ -117,7 +115,7 @@ namespace gShell.Cmdlets.Directory.GAChromeosdevice
                 body.Notes = (!string.IsNullOrWhiteSpace(Notes)) ? Notes : null;
                 body.OrgUnitPath = (!string.IsNullOrWhiteSpace(OrgUnitPath)) ? OrgUnitPath : null;
 
-                chromeosDevices.Patch(body, CustomerId, DeviceId);
+                chromeosdevices.Patch(body, CustomerId, DeviceId);
             }
         }
     }

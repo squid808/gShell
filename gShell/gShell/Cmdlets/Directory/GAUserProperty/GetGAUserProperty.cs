@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Management.Automation;
-using Data = Google.Apis.Admin.Directory.directory_v1.Data;
-
-using gShell.dotNet.Utilities;
+using Data = Google.Apis.admin.Directory.directory_v1.Data;
 
 namespace gShell.Cmdlets.Directory.GAUserProperty
 {
@@ -40,6 +38,8 @@ namespace gShell.Cmdlets.Directory.GAUserProperty
 
         protected override void ProcessRecord()
         {
+            UserName = GetFullEmailAddress(UserName, Domain);
+
             if (ShouldProcess(UserName, "Get-GAUserProperty"))
             {
                 Data.User u = new Data.User();
@@ -50,7 +50,7 @@ namespace gShell.Cmdlets.Directory.GAUserProperty
                 }
                 else if (!string.IsNullOrWhiteSpace(UserName))
                 {
-                    u = users.Get(UserName, Domain);
+                    u = users.Get(UserName);
                 }
                 else
                 {

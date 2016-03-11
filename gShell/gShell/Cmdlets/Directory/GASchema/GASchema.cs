@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Management.Automation;
-using Data = Google.Apis.Admin.Directory.directory_v1.Data;
+using Data = Google.Apis.admin.Directory.directory_v1.Data;
 
 namespace gShell.Cmdlets.Directory.GASchema
 {
@@ -45,7 +44,7 @@ namespace gShell.Cmdlets.Directory.GASchema
                         WriteObject((SchemaFieldCollection)schemas.Get(CustomerId, SchemaKey));
                         break;
                     case "List":
-                        WriteObject((schemas.List(CustomerId)).Cast<SchemaFieldCollection>().ToList());
+                        WriteObject((SchemaFieldCollection)schemas.List(CustomerId).SchemasValue);
                         break;
                 }
             }
@@ -89,7 +88,7 @@ namespace gShell.Cmdlets.Directory.GASchema
                     {
                         WriteDebug(string.Format("Attempting to remove Schema {0}...",
                             CustomerId));
-                        WriteObject(schemas.Delete(CustomerId, SchemaKey));
+                        schemas.Delete(CustomerId, SchemaKey);
                         WriteVerbose(string.Format("Removal of Schema {0} completed without error.",
                             CustomerId));
                     }

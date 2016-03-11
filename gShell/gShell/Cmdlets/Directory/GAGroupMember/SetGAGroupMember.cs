@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Management.Automation;
-using Data = Google.Apis.Admin.Directory.directory_v1.Data;
+﻿using System.Management.Automation;
+using Data = Google.Apis.admin.Directory.directory_v1.Data;
 
 namespace gShell.Cmdlets.Directory.GAGroupMember
 {
@@ -43,18 +41,16 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
         {
             if (ShouldProcess(GroupName, "Set-GAGroupMember"))
             {
-                UpdateGroupMember();
+                Data.Member member = new Data.Member
+                {
+                    Role = this.Role.ToString()
+                };
+
+                GroupName = GetFullEmailAddress(GroupName, Domain);
+                UserName = GetFullEmailAddress(UserName, Domain);
+
+                WriteObject(members.Update(member, GroupName, UserName));
             }
-        }
-
-        private void UpdateGroupMember()
-        {            
-            Data.Member member = new Data.Member
-            {
-                Role = this.Role.ToString()
-            };
-
-            members.Update(member, GroupName, Domain, UserName);
         }
     }
 

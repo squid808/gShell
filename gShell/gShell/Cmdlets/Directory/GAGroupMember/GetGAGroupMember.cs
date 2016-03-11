@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Management.Automation;
-using Data = Google.Apis.Admin.Directory.directory_v1.Data;
+using System.Linq;
+using Data = Google.Apis.admin.Directory.directory_v1.Data;
 
 namespace gShell.Cmdlets.Directory.GAGroupMember
 {
@@ -55,7 +55,9 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
             {
                 if (ShouldProcess(GroupName, "Get-GAGroupMember"))
                 {
-                    WriteObject(members.Get(GroupName, Domain, UserName));
+                    GroupName = GetFullEmailAddress(GroupName, Domain);
+                    UserName = GetFullEmailAddress(UserName, Domain);
+                    WriteObject(members.Get(GroupName, UserName));
                 }
             }
             else
@@ -65,7 +67,8 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
                     case "OneGroup":
                         if (ShouldProcess(GroupName, "Get-GAGroupMember"))
                         {
-                            WriteObject(members.List(GroupName, Domain));
+                            GroupName = GetFullEmailAddress(GroupName, Domain);
+                            WriteObject(members.List(GroupName));
                         }
                         break;
 
@@ -129,13 +132,14 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
         /// </summary>
         private GAMultiGroupMembersList GetAllGroupsAndMembers()
         {
-            List<Data.Group> allGroups = groups.List();
+            List<Data.Group> allGroups = groups.List().SelectMany(x => x.GroupsValue).ToList();
 
             GAMultiGroupMembersList multiList = new GAMultiGroupMembersList();
 
             foreach (Data.Group group in allGroups)
             {
-                List<Data.Member> membersList = members.List(GroupName, Domain);
+                GroupName = GetFullEmailAddress(GroupName, Domain);
+                List<Data.Member> membersList = members.List(GroupName).SelectMany(x => x.MembersValue).ToList();
 
                 multiList.Add(group.Email, membersList);
 

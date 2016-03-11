@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Management.Automation;
-using Data = Google.Apis.Admin.Directory.directory_v1.Data;
+﻿using System.Management.Automation;
 
 namespace gShell.Cmdlets.Directory.GAGroup
 {
@@ -61,9 +59,11 @@ namespace gShell.Cmdlets.Directory.GAGroup
                     }
                     break;
                 case "OneGroup":
+                    GroupName = GetFullEmailAddress(GroupName, Domain);
+
                     if (ShouldProcess(GroupName, "Get-GAGroup"))
                     {
-                        WriteObject(groups.Get(GroupName, Domain));
+                        WriteObject(groups.Get(GroupName));
                     }
                     break;
 

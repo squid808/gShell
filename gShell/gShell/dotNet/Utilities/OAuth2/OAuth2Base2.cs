@@ -5,7 +5,7 @@
 //using System.Threading.Tasks;
 
 //using Google.Apis.Services;
-//using Google.Apis.Admin.Directory.directory_v1;
+//using Google.Apis.admin.Directory.directory_v1;
 //using Google.Apis.Admin.Reports.reports_v1;
 //using Google.Apis.Oauth2.v2;
 //using Google.Apis.Oauth2.v2.Data;

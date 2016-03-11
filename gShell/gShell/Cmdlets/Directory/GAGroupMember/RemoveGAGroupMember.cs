@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Management.Automation;
-using Data = Google.Apis.Admin.Directory.directory_v1.Data;
 
 namespace gShell.Cmdlets.Directory.GAGroupMember
 {
@@ -37,6 +35,8 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
 
         protected override void ProcessRecord()
         {
+            GroupName = GetFullEmailAddress(GroupName, Domain);
+
             if (ShouldProcess(GroupName, "Remove-GAGroupMember"))
             {
                 if (Force || ShouldContinue((String.Format("Group member {0} will be removed from the {1}@{2} group.\nContinue?",
@@ -44,11 +44,15 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
                 {
                     try
                     {
-                        WriteDebug(string.Format("Attempting to remove member {0} from group {1}@{2}...",
-                            UserName, GroupName, Domain));
-                        RemoveGroupMember();
-                        WriteVerbose(string.Format("Removal of {0} from {1}@{2} completed without error.",
-                            UserName, GroupName, Domain));
+                        UserName = GetFullEmailAddress(UserName, Domain);
+
+                        WriteDebug(string.Format("Attempting to remove member {0} from group {1}...",
+                            UserName, GroupName));
+
+                        members.Delete(GroupName, UserName);
+
+                        WriteVerbose(string.Format("Removal of {0} from {1} completed without error.",
+                            UserName, GroupName));
                     }
                     catch (Exception e)
                     {
@@ -61,11 +65,6 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
                         "", ErrorCategory.InvalidData, GroupName));
                 }
             }
-        }
-
-        private void RemoveGroupMember()
-        {
-            members.Delete(GroupName, Domain, UserName);
         }
     }
 

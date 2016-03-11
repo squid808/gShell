@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Management.Automation;
-using Data = Google.Apis.Admin.Directory.directory_v1.Data;
+using System.Linq;
+using Data = Google.Apis.admin.Directory.directory_v1.Data;
 
 namespace gShell.Cmdlets.Directory.GAUserAlias
 {
@@ -38,38 +39,27 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
             switch (ParameterSetName)
             {
                 case "OneUser":
+                    UserName = GetFullEmailAddress(UserName, Domain);
+
                     if (ShouldProcess(UserName, "Get-GAUserAlias"))
                     {
-                        WriteObject(GetOneUserAlias());
+                        WriteObject(users.aliases.List(UserName));
                     }
                     break;
 
                 case "AllUserAliases":
                     if (ShouldProcess("All User Aliases", "Get-GAUserAlias"))
                     {
-                        GetAllAliasesMain();
+                        if (ReturnGoogleAPIObjects)
+                        {
+                            WriteObject(GetAllAliases());
+                        }
+                        else
+                        {
+                            WriteObject(GetAllCustomAliases());
+                        };
                     }
                     break;
-            }
-
-        }
-
-        private List<Data.Alias> GetOneUserAlias()
-        {
-            List<Data.Alias> aliasList = users.aliases.List(UserName, Domain);
-
-            return (aliasList);
-        }
-
-        private void GetAllAliasesMain()
-        {
-            if (ReturnGoogleAPIObjects)
-            {
-                WriteObject(GetAllAliases());
-            }
-            else
-            {
-                WriteObject(GetAllCustomAliases());
             }
         }
 
@@ -92,16 +82,12 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
         /// </summary>
         private List<Data.Alias> GetAllAliases()
         {
-            HashSet<Data.User> usersList = new HashSet<Data.User>();
+            //HashSet<Data.User> usersList = new HashSet<Data.User>();
 
-            foreach (Data.User user in (users.List(new dotNet.Directory.Users.UsersListProperties()
-            {
-                fields = "nextPageToken,users(aliases,primaryEmail)"
-            }))){
-                if (user.Aliases != null) {
-                    usersList.Add(user);
-                }
-            }
+            var allUsers = users.List(new dotNet.Directory.Users.UsersListProperties());
+
+            List<Data.User> usersList = allUsers.SelectMany(x => x.UsersValue)
+                .Where(x => x.Aliases != null).Distinct().ToList();
 
             List<Data.Alias> aliasList = new List<Data.Alias>();
 
@@ -112,7 +98,7 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
                 UpdateProgressBar(i, usersList.Count, "Gathering aliases",
                     string.Format("-Collecting alias for user {0} of {1}",
                     i, usersList.Count));
-                aliasList.AddRange(users.aliases.List(user.PrimaryEmail, Domain));
+                aliasList.AddRange(users.aliases.List(user.PrimaryEmail).AliasesValue);
                 i++;
             }
 

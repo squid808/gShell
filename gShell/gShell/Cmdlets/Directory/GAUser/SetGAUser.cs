@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Management.Automation;
-using Data = Google.Apis.Admin.Directory.directory_v1.Data;
+
+using Data = Google.Apis.admin.Directory.directory_v1.Data;
 
 using gShell.Cmdlets.Directory.GAUserProperty;
 
@@ -72,6 +72,8 @@ namespace gShell.Cmdlets.Directory.GAUser
 
         protected override void ProcessRecord()
         {
+            UserName = GetFullEmailAddress(UserName, Domain);
+
             if (ShouldProcess(UserName, "Set-GAUser"))
             {
                 UpdateUser();
@@ -80,15 +82,7 @@ namespace gShell.Cmdlets.Directory.GAUser
 
         private void UpdateUser()
         {
-            //User userAcct = directoryServiceDict[Domain].Users.Get(fullEmail).Execute();
             Data.User userAcct = new Data.User();
-
-            if (null == userAcct)
-            {
-                WriteError(new ErrorRecord(new Exception(
-                    string.Format("No user {0} was found to update.", UserName)),
-                        "", ErrorCategory.InvalidData, UserName));
-            }
 
             if (String.IsNullOrWhiteSpace(NewGivenName) &&
                 String.IsNullOrWhiteSpace(NewFamilyName) &&
@@ -196,7 +190,8 @@ namespace gShell.Cmdlets.Directory.GAUser
                     userAcct.Relations = PropertyCollection.GetRelations();
                 }
             }
-            users.Patch(userAcct, UserName, Domain);
+
+            users.Patch(userAcct, UserName);
         }
     }
 }

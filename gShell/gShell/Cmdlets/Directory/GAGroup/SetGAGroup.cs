@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Management.Automation;
-using Data = Google.Apis.Admin.Directory.directory_v1.Data;
+using Data = Google.Apis.admin.Directory.directory_v1.Data;
 
 namespace gShell.Cmdlets.Directory.GAGroup
 {
@@ -80,7 +79,8 @@ namespace gShell.Cmdlets.Directory.GAGroup
                 groupAcct.Name = NewName;
             }
 
-            groups.Patch(groupAcct, GroupName, Domain);
+            GroupName = GetFullEmailAddress(GroupName, Domain);
+            WriteObject(groups.Patch(groupAcct, GroupName));
         }
     }
 }

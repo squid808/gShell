@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Management.Automation;
-using Data = Google.Apis.Admin.Directory.directory_v1.Data;
 
 namespace gShell.Cmdlets.Directory.GAAsp
 {
@@ -38,15 +36,17 @@ namespace gShell.Cmdlets.Directory.GAAsp
 
         protected override void ProcessRecord()
         {
+            UserKey = GetFullEmailAddress(UserKey, Domain);
+
             if (ShouldProcess(UserKey, "Get-GAAsp"))
             {
                 switch (ParameterSetName)
                 {
                     case "One":
-                        WriteObject(asps.Get(UserKey, Domain, CodeId));
+                        WriteObject(asps.Get(UserKey, CodeId));
                         break;
                     case "List":
-                        WriteObject(asps.List(UserKey, Domain));
+                        WriteObject(asps.List(UserKey));
                         break;
                 }
             }
@@ -82,6 +82,8 @@ namespace gShell.Cmdlets.Directory.GAAsp
 
         protected override void ProcessRecord()
         {
+            UserKey = GetFullEmailAddress(UserKey, Domain);
+
             if (ShouldProcess(UserKey, "Remove-GAAsp"))
             {
                 if (Force || ShouldContinue((String.Format("Asp {0} with CodeID {2} will be removed from the {1} Google Apps domain.\nContinue?",
@@ -91,7 +93,7 @@ namespace gShell.Cmdlets.Directory.GAAsp
                     {
                         WriteDebug(string.Format("Attempting to remove Asp {0}...",
                             UserKey));
-                        WriteObject(asps.Delete(UserKey, Domain, CodeId));
+                        asps.Delete(UserKey, CodeId);
                         WriteVerbose(string.Format("Removal of Asp {0} completed without error.",
                             UserKey));
                     }

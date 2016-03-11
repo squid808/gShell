@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Management.Automation;
-using Data = Google.Apis.Admin.Reports.reports_v1.Data;
+using Data = Google.Apis.admin.Reports.reports_v1.Data;
 
 namespace gShell.Cmdlets.Reports.GRepUserUsageReport
 {
@@ -63,7 +63,7 @@ namespace gShell.Cmdlets.Reports.GRepUserUsageReport
                 }
 
                 var properties = new
-                    dotNet.Reports.UserUsageReports.UserUsageReportsGetProperties()
+                    dotNet.Reports.UserUsageReport.UserUsageReportGetProperties()
                     {
                         customerId = CustomerId,
                         filters = Filters,
@@ -78,7 +78,7 @@ namespace gShell.Cmdlets.Reports.GRepUserUsageReport
                 //Allow for the use of 'all'
                 string _userKey = (UserKey == "all") ? "all" : GetFullEmailAddress(UserKey, Domain);
 
-                WriteObject(userUsageReports.Get(_userKey, _datestring, properties));
+                WriteObject(userUsageReport.Get(_userKey, _datestring, properties));
             }
         }
     }

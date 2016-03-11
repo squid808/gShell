@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Management.Automation;
-using Data = Google.Apis.Admin.Directory.directory_v1.Data;
-using Utils = gShell.dotNet.Utilities.Utils;
+using Data = Google.Apis.admin.Directory.directory_v1.Data;
+using gShell.dotNet.Utilities;
 
 namespace gShell.Cmdlets.Directory.GAUserPhoto
 {
@@ -36,10 +35,12 @@ namespace gShell.Cmdlets.Directory.GAUserPhoto
 
         protected override void ProcessRecord()
         {
+            UserKey = GetFullEmailAddress(UserKey, Domain);
+
             if (ShouldProcess(UserKey, "Get-GAUserPhoto"))
             {
                 try {
-                    Data.UserPhoto result = users.photos.Get(UserKey, Domain);
+                    Data.UserPhoto result = users.photos.Get(UserKey);
 
                     if (FilePath != null)
                     {
@@ -80,6 +81,8 @@ namespace gShell.Cmdlets.Directory.GAUserPhoto
 
         protected override void ProcessRecord()
         {
+            UserKey = GetFullEmailAddress(UserKey, Domain);
+
             if (ShouldProcess(UserKey, "Remove-GAUserPhoto"))
             {
                 if (Force || ShouldContinue((String.Format("Photo for User {0} will be removed from the {1} Google Apps domain.\nContinue?",
@@ -89,7 +92,7 @@ namespace gShell.Cmdlets.Directory.GAUserPhoto
                     {
                         WriteDebug(string.Format("Attempting to remove Photo for User {0}...",
                             UserKey));
-                        WriteObject(users.photos.Delete(UserKey, Domain));
+                        users.photos.Delete(UserKey);
                         WriteVerbose(string.Format("Removal of User {0}'s photo completed without error.",
                             UserKey));
                     }
@@ -148,6 +151,8 @@ namespace gShell.Cmdlets.Directory.GAUserPhoto
 
         protected override void ProcessRecord()
         {
+            UserKey = GetFullEmailAddress(UserKey, Domain);
+
             if (ShouldProcess(UserKey, "Set-GAUserPhoto"))
             {
                 Data.UserPhoto body = new Data.UserPhoto();
@@ -169,7 +174,7 @@ namespace gShell.Cmdlets.Directory.GAUserPhoto
 
                 body.PhotoData = Utils.LoadImageToBase64(Path);
 
-                WriteObject(users.photos.Update(body, UserKey, Domain));
+                WriteObject(users.photos.Update(body, UserKey));
             }
         }
     }
