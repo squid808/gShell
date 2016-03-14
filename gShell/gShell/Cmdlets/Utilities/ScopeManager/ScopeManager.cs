@@ -468,8 +468,16 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
                 return scopesResult;
         }
 
-        public IEnumerable<string> ChooseScopes(string api, string version) {
-            HashSet<string> scopes = ChooseApiScopesLoop(api, version);
+        public IEnumerable<string> ChooseScopes(string api, string version, HashSet<string> providedScopes = null) {
+            
+            HashSet<string> scopes;
+            
+            if (providedScopes == null) {
+                scopes = ChooseApiScopesLoop(api, version);
+            } else {
+                scopes = providedScopes;
+            }
+
             scopes = CheckForRequiredScope(scopes);
             PrintPretty("Scopes have been chosen, thank you.", "green");
             return scopes;

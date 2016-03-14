@@ -122,14 +122,15 @@ namespace gShell.dotNet.Utilities.OAuth2
         protected override abstract void BeginProcessing();
 
         /// <summary>Load token and scope information for API call, and authenticate if necessary.</summary>
-        protected abstract AuthenticatedUserInfo Authenticate(IEnumerable<string> Scopes, ClientSecrets Secrets, string Domain=null);
+        protected abstract AuthenticatedUserInfo Authenticate(IEnumerable<string> Scopes, ClientSecrets Secrets,
+            string Domain=null);
 
         /// <summary>Determines if the user needs to be prompted to select the scopes.</summary>
         /// <remarks>
         /// Api is derived from the class that inherits this. User is the domain's default user. Returns null if scopes
         /// already exist since they'll be pulled up during authentication anyways.
         /// </remarks>
-        public IEnumerable<string> EnsureScopesExist(string Domain)
+        public IEnumerable<string> EnsureScopesExist(string Domain, HashSet<string> forcedScopes = null)
         {
             //Since the domain could be null, see if we have a default ready or if the saved info contains this one
             Domain = OAuth2Base.CheckDomain(Domain);
@@ -157,7 +158,9 @@ namespace gShell.dotNet.Utilities.OAuth2
                     ScopeHandlerBase scopeBase = new ScopeHandlerBase(this);
 
                     return scopeBase.ChooseScopes(
-                        apiNameAndVersion.Split(':')[0], apiNameAndVersion.Split(':')[1]);
+                        apiNameAndVersion.Split(':')[0],
+                        apiNameAndVersion.Split(':')[1],
+                        forcedScopes);
                 }
                 else
                 {

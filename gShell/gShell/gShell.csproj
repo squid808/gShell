@@ -134,6 +134,7 @@
     <Compile Include="Cmdlets\Directory\GAVerificationCode\GAVerificationCode.cs" />
     <Compile Include="Cmdlets\Directory\gShellUserObject.cs" />
     <Compile Include="Cmdlets\Discovery\DiscoveryBase.cs" />
+    <Compile Include="Cmdlets\EmailSettings\Labels.cs" />
     <Compile Include="Cmdlets\Reports\Enums.cs" />
     <Compile Include="Cmdlets\Reports\GRepActivity\Get-GRepActivity.cs" />
     <Compile Include="Cmdlets\Reports\GRepActivity\WatchGRepActivity.cs" />
@@ -144,6 +145,8 @@
     <Compile Include="dotNet\Directory\Directory.cs" />
     <Compile Include="dotNet\Directory\Google.Apis.admin.Directory.directory_v1.cs" />
     <Compile Include="dotNet\Directory\Google.Apis.admin.Directory.directory_v1_gshell_dotnet.cs" />
+    <Compile Include="dotNet\EmailSettings\Google.Apis.admin.Emailsettings.emailsettings_v1.cs" />
+    <Compile Include="dotNet\EmailSettings\Google.Apis.admin.Emailsettings.emailsettings_v1_gshell_dotnet.cs" />
     <Compile Include="dotNet\Discovery\Discovery.cs" />
     <Compile Include="dotNet\IServiceWrapper.cs" />
     <Compile Include="dotNet\Reports\Google.Apis.admin.Reports.reports_v1.cs" />

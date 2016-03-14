@@ -1,13 +1,9 @@
-﻿using System;
-using System.Management.Automation;
+﻿using System.Management.Automation;
 using System.Collections.Generic;
 
 using Google.Apis.Auth.OAuth2;
-using Google.Apis.Services;
-using discovery_v1 = Google.Apis.Discovery.v1;
 using Data = Google.Apis.Discovery.v1.Data;
 
-using gShell.dotNet.Utilities;
 using gShell.dotNet.Utilities.OAuth2;
 using gDiscovery = gShell.dotNet.Discovery;
 
