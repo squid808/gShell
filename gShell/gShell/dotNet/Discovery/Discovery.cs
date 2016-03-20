@@ -40,7 +40,8 @@ namespace gShell.dotNet
             {
                 if (_service == null)
                 {
-                    _service = new discovery_v1.DiscoveryService(new gShell.dotNet.CustomSerializer.gInitializer());
+                    _service = new discovery_v1.DiscoveryService(
+                        new gShell.dotNet.CustomSerializer.Json.gJsonInitializer());
                 }
 
                 return _service;

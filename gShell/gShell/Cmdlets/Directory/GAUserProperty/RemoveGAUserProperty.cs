@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Management.Automation;
 using Data = Google.Apis.admin.Directory.directory_v1.Data;
 
-using gShell.dotNet.CustomSerializer;
+using gShell.dotNet.CustomSerializer.Json;
 
 namespace gShell.Cmdlets.Directory.GAUserProperty
 {

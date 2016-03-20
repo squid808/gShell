@@ -5,9 +5,12 @@ using gShell.dotNet;
 using gShell.dotNet.Utilities;
 using gShell.dotNet.Utilities.OAuth2;
 
-using Google.Apis.Auth.OAuth2;
-using Google.Apis.admin.Directory.directory_v1;
-using Google.Apis.admin.Directory.directory_v1.Data;
+//using Google.Apis.Auth.OAuth2;
+//using Google.Apis.admin.Directory.directory_v1;
+//using Google.Apis.admin.Directory.directory_v1.Data;
+
+using System.Management.Automation;
+using System.Collections.ObjectModel;
 
 namespace gShell_dotNetExample
 {
@@ -15,6 +18,37 @@ namespace gShell_dotNetExample
     {
         static void Main(string[] args)
         {
+
+            using (PowerShell p = PowerShell.Create())
+            {
+                p.AddScript(@"import-module C:\Users\svarney\Documents\gShell\gShell\gShell\bin\Debug\gShell.dll;New-GEmailSettingsLabel -UserName svarney -Domain test.sjcny.edu -Label NewLabel02");
+
+                //p.AddScript(@"Get-GEmailSettingsLabel -UserName svarney -Domain test.sjcny.edu");
+
+                Collection<PSObject> PSOutput = p.Invoke();
+
+                if (p.Streams.Error.Count == 0)
+                {
+                    foreach (PSObject outputItem in PSOutput)
+                    {
+                        if (outputItem != null)
+                        {
+                            Console.WriteLine(outputItem.ToString());
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (var error in p.Streams.Error)
+                    {
+                        Console.WriteLine(error.Exception.Message);
+                    }
+                }
+            }
+
+            Console.ReadLine();
+
+
             ////You need to pick the scopes you plan on giving gShell permission to. You can use the string from the website or from the services.
             //HashSet<string> scopes = new HashSet<string>();
             ////Add this one first, it's always required.

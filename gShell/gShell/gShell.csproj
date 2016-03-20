@@ -111,6 +111,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -151,7 +152,7 @@
     <Compile Include="dotNet\IServiceWrapper.cs" />
     <Compile Include="dotNet\Reports\Google.Apis.admin.Reports.reports_v1.cs" />
     <Compile Include="dotNet\Reports\Google.Apis.admin.Reports.reports_v1_gshell_dotnet.cs" />
-    <Compile Include="dotNet\Utilities\CustomSerializer\CustomSerializer.cs" />
+    <Compile Include="dotNet\Utilities\CustomSerializer\CustomJsonSerializer.cs" />
     <Compile Include="Cmdlets\Directory\GAGroupMember\AddGAGroupMember.cs" />
     <Compile Include="Cmdlets\Directory\GAGroupMember\GetGAGroupMember.cs" />
     <Compile Include="Cmdlets\Directory\GAGroupMember\RemoveGAGroupMember.cs" />
@@ -173,6 +174,7 @@
     <Compile Include="Cmdlets\Directory\GAUserProperty\GetGAUserProperty.cs" />
     <Compile Include="Cmdlets\Directory\GAUserProperty\NewGAUserProperty.cs" />
     <Compile Include="Cmdlets\Directory\GAUserProperty\NewGAUserPropertyCollection.cs" />
+    <Compile Include="dotNet\Utilities\CustomSerializer\CustomXmlSerializer.cs" />
     <Compile Include="dotNet\Utilities\OAuth2\DataStores\DataStoreBase.cs" />
     <Compile Include="dotNet\Utilities\OAuth2\DataStores\IOAuth2DataStore.cs" />
     <Compile Include="dotNet\Utilities\OAuth2\OAuth2Authenticator.cs" />

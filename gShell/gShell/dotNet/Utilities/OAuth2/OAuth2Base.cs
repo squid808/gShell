@@ -8,7 +8,8 @@ using Google.Apis.Oauth2.v2;
 using Google.Apis.Oauth2.v2.Data;
 using Google.Apis.Services;
 
-using gShell.dotNet.CustomSerializer;
+using gShell.dotNet.CustomSerializer.Json;
+using gShell.dotNet.CustomSerializer.Xml;
 
 namespace gShell.dotNet.Utilities.OAuth2
 {
@@ -290,7 +291,7 @@ namespace gShell.dotNet.Utilities.OAuth2
         /// </summary>
         public static BaseClientService.Initializer GetInitializer()
         {
-            return (new gInitializer());
+            return (new gJsonInitializer());
         }
 
         //public static BaseClientService.Initializer GetInitializer(Google.Apis.Http.IConfigurableHttpClientInitializer credentials)
@@ -309,10 +310,25 @@ namespace gShell.dotNet.Utilities.OAuth2
         /// </summary>
         public static BaseClientService.Initializer GetInitializer(string AppName)
         {
-            gInitializer initializer = new gInitializer()
+            gJsonInitializer initializer = new gJsonInitializer()
             {
                 HttpClientInitializer = asyncUserCredential,
                 ApplicationName = AppName,
+            };
+
+            return initializer;
+        }
+
+        /// <summary>
+        /// Returns an initializer used to create a new service for GData APIs.
+        /// </summary>
+        public static BaseClientService.Initializer GetGdataInitializer(string AppName)
+        {
+            gXmlInitializer initializer = new gXmlInitializer()
+            {
+                HttpClientInitializer = asyncUserCredential,
+                ApplicationName = AppName,
+                //GZipEnabled = false
             };
 
             return initializer;
