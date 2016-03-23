@@ -2,6 +2,7 @@
 using System.IO;
 using Google.Apis;
 using Google.Apis.Services;
+using Google.Apis.Util;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -144,7 +145,21 @@ namespace gShell.dotNet.CustomSerializer.Xml
         {
             Type targetType = CheckForSubtypes(typeof(T));
 
-            XElement xmlString = XElement.Parse(input);
+            //Check for errors being thrown
+            if (typeof(T).IsGenericType 
+                && typeof(T).GetGenericTypeDefinition() == typeof(StandardResponse<>))
+            {
+                T responseObj = (T)Activator.CreateInstance(typeof(T));
+
+                reflectedTypeProperties[typeof(T)].Where(x => x.Name == "Error").First()
+                    .SetValue(responseObj, new Google.Apis.Requests.RequestError() { Message = input });
+
+                return responseObj;
+            }
+
+            XElement xmlString;
+
+            xmlString = XElement.Parse(input);
 
             //Define the namespaces
             XNamespace appNS = "http://schemas.google.com/apps/2006";
