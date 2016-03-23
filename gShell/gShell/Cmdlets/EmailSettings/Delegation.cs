@@ -1,4 +1,5 @@
-﻿using System.Management.Automation;
+﻿using System;
+using System.Management.Automation;
 using System.Collections.Generic;
 
 using Google.Apis.Auth.OAuth2;
@@ -6,12 +7,12 @@ using Data = Google.Apis.admin.Emailsettings.emailsettings_v1.Data;
 
 using gEmailsettings = gShell.dotNet.Emailsettings;
 
-namespace gShell.Cmdlets.Emailsettings.Label
+namespace gShell.Cmdlets.Emailsettings.Delegation
 {
-    [Cmdlet(VerbsCommon.Get, "GEmailSettingsLabel",
+    [Cmdlet(VerbsCommon.Get, "GEmailSettingsDelegation",
           SupportsShouldProcess = true,
           HelpUri = @"")]
-    public class GetEmailSettingsLabel : EmailsettingsBase
+    public class GetGEmailSettingsDelegation : EmailsettingsBase
     {
         #region Properties
         [Parameter(Position = 0,
@@ -22,17 +23,17 @@ namespace gShell.Cmdlets.Emailsettings.Label
 
         protected override void ProcessRecord()
         {
-            if (ShouldProcess("Email Settings Label", "Get-GEmailSettingsLabel"))
+            if (ShouldProcess("Email Settings Delegation", "Get-GEmailSettingsDelegation"))
             {
-                WriteObject(mainBase.labels.Get(Domain, GetUserFromEmail(UserName)).LabelsValue);
+                WriteObject(mainBase.delegation.Get(Domain, GetUserFromEmail(UserName)).DelegatesValue);
             }
         }
     }
 
-    [Cmdlet(VerbsCommon.New, "GEmailSettingsLabel",
+    [Cmdlet(VerbsCommon.New, "GEmailSettingsDelegation",
           SupportsShouldProcess = true,
           HelpUri = @"")]
-    public class NewEmailSettingsLabel : EmailsettingsBase
+    public class NewGEmailSettingsDelegation : EmailsettingsBase
     {
         #region Properties
         [Parameter(Position = 0,
@@ -43,27 +44,26 @@ namespace gShell.Cmdlets.Emailsettings.Label
         [Parameter(Position = 2,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
-        public string Label { get; set; }
+        public string Address { get; set; }
         #endregion
 
         protected override void ProcessRecord()
         {
-            if (ShouldProcess("Email Settings Label", "New-GEmailSettingsLabel"))
-            {
-                var newLabel = new Data.Label()
-                {
-                    LabelValue = Label
-                };
+            var body = new Data.Delegate(){
+                Address = Address
+            };
 
-                WriteObject(mainBase.labels.Insert(newLabel, Domain, GetUserFromEmail(UserName)));
+            if (ShouldProcess("Email Settings Delegation", "New-GEmailSettingsDelegation"))
+            {
+                WriteObject(mainBase.delegation.Insert(body, Domain, GetUserFromEmail(UserName)));
             }
         }
     }
 
-    [Cmdlet(VerbsCommon.Remove, "GEmailSettingsLabel",
+    [Cmdlet(VerbsCommon.Remove, "GEmailSettingsDelegation",
           SupportsShouldProcess = true,
           HelpUri = @"")]
-    public class RemoveEmailSettingsLabel : EmailsettingsBase
+    public class RemoveGEmailSettingsDelegation : EmailsettingsBase
     {
         #region Properties
         [Parameter(Position = 0,
@@ -74,14 +74,14 @@ namespace gShell.Cmdlets.Emailsettings.Label
         [Parameter(Position = 0,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
-        public string LabelName { get; set; }
+        public string DelegateEmail { get; set; }
         #endregion
 
         protected override void ProcessRecord()
         {
-            if (ShouldProcess("Email Settings Label", "Remove-GEmailSettingsLabel"))
+            if (ShouldProcess("Email Settings Delegation", "Remove-GEmailSettingsDelegation"))
             {
-                mainBase.labels.Delete(Domain, GetUserFromEmail(UserName), LabelName);
+                mainBase.delegation.Delete(Domain, GetUserFromEmail(UserName), DelegateEmail);
             }
         }
     }

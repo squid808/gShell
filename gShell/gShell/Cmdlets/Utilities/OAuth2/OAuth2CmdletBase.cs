@@ -298,6 +298,11 @@ namespace gShell.dotNet.Utilities.OAuth2
         {
             return Utils.GetFullEmailAddress(account, domain);
         }
+
+        protected string GetUserFromEmail(string userName)
+        {
+            return Utils.GetUserFromEmail(userName);
+        }
         #endregion
     }
 

@@ -46,18 +46,133 @@
 namespace Google.Apis.admin.Emailsettings.emailsettings_v1.Data
 {    
 
-    /// <summary>IDGAF</summary>
+    public class Delegate : Google.Apis.Requests.IDirectResponseSchema
+    {
+        [Newtonsoft.Json.JsonPropertyAttribute("address")]
+        public virtual string Address { get; set; } 
+
+        [Newtonsoft.Json.JsonPropertyAttribute("delegate")]
+        public virtual string Delegate__ { get; set; } 
+
+        [Newtonsoft.Json.JsonPropertyAttribute("delegationId")]
+        public virtual string DelegationId { get; set; } 
+
+        [Newtonsoft.Json.JsonPropertyAttribute("status")]
+        public virtual string Status { get; set; } 
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }    
+
+    public class Delegates : Google.Apis.Requests.IDirectResponseSchema
+    {
+        [Newtonsoft.Json.JsonPropertyAttribute("delegates")]
+        public virtual System.Collections.Generic.IList<Delegate> DelegatesValue { get; set; } 
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }    
+
+    public class Filter : Google.Apis.Requests.IDirectResponseSchema
+    {
+        [Newtonsoft.Json.JsonPropertyAttribute("doesNotHaveTheWord")]
+        public virtual string DoesNotHaveTheWord { get; set; } 
+
+        [Newtonsoft.Json.JsonPropertyAttribute("forwardTo")]
+        public virtual string ForwardTo { get; set; } 
+
+        [Newtonsoft.Json.JsonPropertyAttribute("from")]
+        public virtual string From { get; set; } 
+
+        [Newtonsoft.Json.JsonPropertyAttribute("hasAttachment")]
+        public virtual System.Nullable<bool> HasAttachment { get; set; } 
+
+        [Newtonsoft.Json.JsonPropertyAttribute("hasTheWord")]
+        public virtual string HasTheWord { get; set; } 
+
+        [Newtonsoft.Json.JsonPropertyAttribute("label")]
+        public virtual string Label { get; set; } 
+
+        [Newtonsoft.Json.JsonPropertyAttribute("neverSpam")]
+        public virtual System.Nullable<bool> NeverSpam { get; set; } 
+
+        [Newtonsoft.Json.JsonPropertyAttribute("shouldArchive")]
+        public virtual System.Nullable<bool> ShouldArchive { get; set; } 
+
+        [Newtonsoft.Json.JsonPropertyAttribute("shouldMarkAsRead")]
+        public virtual System.Nullable<bool> ShouldMarkAsRead { get; set; } 
+
+        [Newtonsoft.Json.JsonPropertyAttribute("shouldStar")]
+        public virtual System.Nullable<bool> ShouldStar { get; set; } 
+
+        [Newtonsoft.Json.JsonPropertyAttribute("shouldTrash")]
+        public virtual System.Nullable<bool> ShouldTrash { get; set; } 
+
+        [Newtonsoft.Json.JsonPropertyAttribute("subject")]
+        public virtual string Subject { get; set; } 
+
+        [Newtonsoft.Json.JsonPropertyAttribute("to")]
+        public virtual string To { get; set; } 
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }    
+
+    public class Forwarding : Google.Apis.Requests.IDirectResponseSchema
+    {
+        [Newtonsoft.Json.JsonPropertyAttribute("action")]
+        public virtual string Action { get; set; } 
+
+        [Newtonsoft.Json.JsonPropertyAttribute("enable")]
+        public virtual System.Nullable<bool> Enable { get; set; } 
+
+        [Newtonsoft.Json.JsonPropertyAttribute("forwardTo")]
+        public virtual string ForwardTo { get; set; } 
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }    
+
+    public class General : Google.Apis.Requests.IDirectResponseSchema
+    {
+        [Newtonsoft.Json.JsonPropertyAttribute("arrows")]
+        public virtual System.Nullable<bool> Arrows { get; set; } 
+
+        [Newtonsoft.Json.JsonPropertyAttribute("pageSize")]
+        public virtual System.Nullable<int> PageSize { get; set; } 
+
+        [Newtonsoft.Json.JsonPropertyAttribute("shortcuts")]
+        public virtual System.Nullable<bool> Shortcuts { get; set; } 
+
+        [Newtonsoft.Json.JsonPropertyAttribute("snippets")]
+        public virtual System.Nullable<bool> Snippets { get; set; } 
+
+        [Newtonsoft.Json.JsonPropertyAttribute("unicode")]
+        public virtual System.Nullable<bool> Unicode { get; set; } 
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }    
+
+    public class Imap : Google.Apis.Requests.IDirectResponseSchema
+    {
+        [Newtonsoft.Json.JsonPropertyAttribute("enable")]
+        public virtual System.Nullable<bool> Enable { get; set; } 
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }    
+
     public class Label : Google.Apis.Requests.IDirectResponseSchema
     {
         [Newtonsoft.Json.JsonPropertyAttribute("label")]
-        [System.Xml.Serialization.XmlElement("label")]
         public virtual string LabelValue { get; set; } 
 
-        [Newtonsoft.Json.JsonPropertyAttribute("labelId")]
-        public virtual string LabelId { get; set; } 
+        [Newtonsoft.Json.JsonPropertyAttribute("labelid")]
+        public virtual string Labelid { get; set; } 
 
         [Newtonsoft.Json.JsonPropertyAttribute("unreadCount")]
-        public virtual System.Nullable<long> UnreadCount { get; set; } 
+        public virtual object UnreadCount { get; set; } 
 
         [Newtonsoft.Json.JsonPropertyAttribute("visibility")]
         public virtual string Visibility { get; set; } 
@@ -70,6 +185,102 @@ namespace Google.Apis.admin.Emailsettings.emailsettings_v1.Data
     {
         [Newtonsoft.Json.JsonPropertyAttribute("labels")]
         public virtual System.Collections.Generic.IList<Label> LabelsValue { get; set; } 
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }    
+
+    public class Language : Google.Apis.Requests.IDirectResponseSchema
+    {
+        [Newtonsoft.Json.JsonPropertyAttribute("language")]
+        public virtual string LanguageValue { get; set; } 
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }    
+
+    public class Pop : Google.Apis.Requests.IDirectResponseSchema
+    {
+        [Newtonsoft.Json.JsonPropertyAttribute("action")]
+        public virtual string Action { get; set; } 
+
+        [Newtonsoft.Json.JsonPropertyAttribute("enable")]
+        public virtual System.Nullable<bool> Enable { get; set; } 
+
+        [Newtonsoft.Json.JsonPropertyAttribute("enableFor")]
+        public virtual string EnableFor { get; set; } 
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }    
+
+    public class SendAsAliases : Google.Apis.Requests.IDirectResponseSchema
+    {
+        [Newtonsoft.Json.JsonPropertyAttribute("sendasAliases")]
+        public virtual System.Collections.Generic.IList<SendasAlias> SendasAliases { get; set; } 
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }    
+
+    public class SendasAlias : Google.Apis.Requests.IDirectResponseSchema
+    {
+        [Newtonsoft.Json.JsonPropertyAttribute("address")]
+        public virtual string Address { get; set; } 
+
+        [Newtonsoft.Json.JsonPropertyAttribute("makeDefault")]
+        public virtual System.Nullable<bool> MakeDefault { get; set; } 
+
+        [Newtonsoft.Json.JsonPropertyAttribute("name")]
+        public virtual string Name { get; set; } 
+
+        [Newtonsoft.Json.JsonPropertyAttribute("replyTo")]
+        public virtual string ReplyTo { get; set; } 
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }    
+
+    public class Signature : Google.Apis.Requests.IDirectResponseSchema
+    {
+        [Newtonsoft.Json.JsonPropertyAttribute("signature")]
+        public virtual string SignatureValue { get; set; } 
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }    
+
+    public class VacationResponder : Google.Apis.Requests.IDirectResponseSchema
+    {
+        [Newtonsoft.Json.JsonPropertyAttribute("contactsOnly")]
+        public virtual System.Nullable<bool> ContactsOnly { get; set; } 
+
+        [Newtonsoft.Json.JsonPropertyAttribute("domainOnly")]
+        public virtual System.Nullable<bool> DomainOnly { get; set; } 
+
+        [Newtonsoft.Json.JsonPropertyAttribute("enable")]
+        public virtual System.Nullable<bool> Enable { get; set; } 
+
+        [Newtonsoft.Json.JsonPropertyAttribute("endDate")]
+        public virtual string EndDate { get; set; } 
+
+        [Newtonsoft.Json.JsonPropertyAttribute("message")]
+        public virtual string Message { get; set; } 
+
+        [Newtonsoft.Json.JsonPropertyAttribute("startDate")]
+        public virtual string StartDate { get; set; } 
+
+        [Newtonsoft.Json.JsonPropertyAttribute("subject")]
+        public virtual string Subject { get; set; } 
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }    
+
+    public class WebClip : Google.Apis.Requests.IDirectResponseSchema
+    {
+        [Newtonsoft.Json.JsonPropertyAttribute("enable")]
+        public virtual System.Nullable<bool> Enable { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
@@ -97,7 +308,18 @@ namespace Google.Apis.admin.Emailsettings.emailsettings_v1
         public EmailsettingsService(Google.Apis.Services.BaseClientService.Initializer initializer)
             : base(initializer)
         {
+            delegation = new DelegationResource(this);
+            filters = new FiltersResource(this);
+            forwarding = new ForwardingResource(this);
+            general = new GeneralResource(this);
+            imap = new ImapResource(this);
             labels = new LabelsResource(this);
+            language = new LanguageResource(this);
+            pop = new PopResource(this);
+            sendasAliases = new SendasAliasesResource(this);
+            signature = new SignatureResource(this);
+            vacationResponder = new VacationResponderResource(this);
+            webClip = new WebClipResource(this);
         }
 
         /// <summary>Gets the service supported features.</summary>
@@ -115,13 +337,13 @@ namespace Google.Apis.admin.Emailsettings.emailsettings_v1
         /// <summary>Gets the service base URI.</summary>
         public override string BaseUri
         {
-            get { return "https://apps-apis.google.com//a/feeds/emailsettings/2.0/"; }
+            get { return "https://apps-apis.google.com/a/feeds/emailsettings/2.0/"; }
         }
 
         /// <summary>Gets the service base path.</summary>
         public override string BasePath
         {
-            get { return "/a/feeds/emailsettings/2.0/"; }
+            get { return "a/feeds/emailsettings/2.0/"; }
         }
 
         /// <summary>Available OAuth 2.0 scopes for use with the Admin Email Settings API.</summary>
@@ -134,12 +356,100 @@ namespace Google.Apis.admin.Emailsettings.emailsettings_v1
 
 
 
+        private readonly DelegationResource delegation;
+
+        /// <summary>Gets the Delegation resource.</summary>
+        public virtual DelegationResource Delegation
+        {
+            get { return delegation; }
+        }
+
+        private readonly FiltersResource filters;
+
+        /// <summary>Gets the Filters resource.</summary>
+        public virtual FiltersResource Filters
+        {
+            get { return filters; }
+        }
+
+        private readonly ForwardingResource forwarding;
+
+        /// <summary>Gets the Forwarding resource.</summary>
+        public virtual ForwardingResource Forwarding
+        {
+            get { return forwarding; }
+        }
+
+        private readonly GeneralResource general;
+
+        /// <summary>Gets the General resource.</summary>
+        public virtual GeneralResource General
+        {
+            get { return general; }
+        }
+
+        private readonly ImapResource imap;
+
+        /// <summary>Gets the Imap resource.</summary>
+        public virtual ImapResource Imap
+        {
+            get { return imap; }
+        }
+
         private readonly LabelsResource labels;
 
         /// <summary>Gets the Labels resource.</summary>
         public virtual LabelsResource Labels
         {
             get { return labels; }
+        }
+
+        private readonly LanguageResource language;
+
+        /// <summary>Gets the Language resource.</summary>
+        public virtual LanguageResource Language
+        {
+            get { return language; }
+        }
+
+        private readonly PopResource pop;
+
+        /// <summary>Gets the Pop resource.</summary>
+        public virtual PopResource Pop
+        {
+            get { return pop; }
+        }
+
+        private readonly SendasAliasesResource sendasAliases;
+
+        /// <summary>Gets the SendasAliases resource.</summary>
+        public virtual SendasAliasesResource SendasAliases
+        {
+            get { return sendasAliases; }
+        }
+
+        private readonly SignatureResource signature;
+
+        /// <summary>Gets the Signature resource.</summary>
+        public virtual SignatureResource Signature
+        {
+            get { return signature; }
+        }
+
+        private readonly VacationResponderResource vacationResponder;
+
+        /// <summary>Gets the VacationResponder resource.</summary>
+        public virtual VacationResponderResource VacationResponder
+        {
+            get { return vacationResponder; }
+        }
+
+        private readonly WebClipResource webClip;
+
+        /// <summary>Gets the WebClip resource.</summary>
+        public virtual WebClipResource WebClip
+        {
+            get { return webClip; }
         }
     }
 
@@ -153,7 +463,7 @@ namespace Google.Apis.admin.Emailsettings.emailsettings_v1
         }
 
         /// <summary>Data format for the response.</summary>
-        /// [default: xml]
+        /// [default: atom+xml]
         [Google.Apis.Util.RequestParameterAttribute("alt", Google.Apis.Util.RequestParameterType.Query)]
         public virtual System.Nullable<AltEnum> Alt { get; set; }
 
@@ -161,8 +471,8 @@ namespace Google.Apis.admin.Emailsettings.emailsettings_v1
         public enum AltEnum
         {
             /// <summary>Responses with Content-Type of application/xml</summary>
-            [Google.Apis.Util.StringValueAttribute("xml")]
-            Xml,
+            [Google.Apis.Util.StringValueAttribute("atom+xml")]
+            AtomXml,
         }
 
         /// <summary>Selector specifying which fields to include in a partial response.</summary>
@@ -174,7 +484,7 @@ namespace Google.Apis.admin.Emailsettings.emailsettings_v1
         [Google.Apis.Util.RequestParameterAttribute("key", Google.Apis.Util.RequestParameterType.Query)]
         public virtual string Key { get; set; }
 
-        /// <summary>OAuth 2.0 token for the current user.</summary>
+        /// <summary>Oauth 2.0 token for the current user.</summary>
         [Google.Apis.Util.RequestParameterAttribute("oauth_token", Google.Apis.Util.RequestParameterType.Query)]
         public virtual string OauthToken { get; set; }
 
@@ -204,7 +514,7 @@ namespace Google.Apis.admin.Emailsettings.emailsettings_v1
                     Name = "alt",
                     IsRequired = false,
                     ParameterType = "query",
-                    DefaultValue = "xml",
+                    DefaultValue = "atom+xml",
                     Pattern = null,
                 });
             RequestParameters.Add(
@@ -264,6 +574,822 @@ namespace Google.Apis.admin.Emailsettings.emailsettings_v1
         }
     }
 
+    /// <summary>The "delegation" collection of methods.</summary>
+    public class DelegationResource
+    {
+        private const string Resource = "delegation";
+
+        /// <summary>The service which this resource belongs to.</summary>
+        private readonly Google.Apis.Services.IClientService service;
+
+        /// <summary>Constructs a new resource.</summary>
+        public DelegationResource(Google.Apis.Services.IClientService service)
+        {
+            this.service = service;
+
+        }
+
+
+
+        /// <param name="domain"></param>
+        /// <param name="userKey"></param>
+        /// <param
+        /// name="delegateEmail"></param>
+        public virtual DeleteRequest Delete(string domain, string userKey, string delegateEmail)
+        {
+            return new DeleteRequest(service, domain, userKey, delegateEmail);
+        }
+
+
+        public class DeleteRequest : EmailsettingsBaseServiceRequest<string>
+        {
+            /// <summary>Constructs a new Delete request.</summary>
+            public DeleteRequest(Google.Apis.Services.IClientService service, string domain, string userKey, string delegateEmail)
+                : base(service)
+            {
+                Domain = domain;
+                UserKey = userKey;
+                DelegateEmail = delegateEmail;
+                InitParameters();
+            }
+
+
+
+            [Google.Apis.Util.RequestParameterAttribute("domain", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string Domain { get; private set; }
+
+
+            [Google.Apis.Util.RequestParameterAttribute("userKey", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string UserKey { get; private set; }
+
+
+            [Google.Apis.Util.RequestParameterAttribute("delegateEmail", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string DelegateEmail { get; private set; }
+
+
+            ///<summary>Gets the method name.</summary>
+            public override string MethodName
+            {
+                get { return "delete"; }
+            }
+
+            ///<summary>Gets the HTTP method.</summary>
+            public override string HttpMethod
+            {
+                get { return "DELETE"; }
+            }
+
+            ///<summary>Gets the REST path.</summary>
+            public override string RestPath
+            {
+                get { return "{domain}/{userKey}/delegation/{delegateEmail}"; }
+            }
+
+            /// <summary>Initializes Delete parameter list.</summary>
+            protected override void InitParameters()
+            {
+                base.InitParameters();
+
+                RequestParameters.Add(
+                    "domain", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "domain",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+                RequestParameters.Add(
+                    "userKey", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "userKey",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+                RequestParameters.Add(
+                    "delegateEmail", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "delegateEmail",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+            }
+
+        }
+
+
+        /// <param name="domain"></param>
+        /// <param name="userKey"></param>
+        public virtual GetRequest Get(string domain, string userKey)
+        {
+            return new GetRequest(service, domain, userKey);
+        }
+
+
+        public class GetRequest : EmailsettingsBaseServiceRequest<Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Delegates>
+        {
+            /// <summary>Constructs a new Get request.</summary>
+            public GetRequest(Google.Apis.Services.IClientService service, string domain, string userKey)
+                : base(service)
+            {
+                Domain = domain;
+                UserKey = userKey;
+                InitParameters();
+            }
+
+
+
+            [Google.Apis.Util.RequestParameterAttribute("domain", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string Domain { get; private set; }
+
+
+            [Google.Apis.Util.RequestParameterAttribute("userKey", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string UserKey { get; private set; }
+
+
+            ///<summary>Gets the method name.</summary>
+            public override string MethodName
+            {
+                get { return "get"; }
+            }
+
+            ///<summary>Gets the HTTP method.</summary>
+            public override string HttpMethod
+            {
+                get { return "GET"; }
+            }
+
+            ///<summary>Gets the REST path.</summary>
+            public override string RestPath
+            {
+                get { return "{domain}/{userKey}/delegation"; }
+            }
+
+            /// <summary>Initializes Get parameter list.</summary>
+            protected override void InitParameters()
+            {
+                base.InitParameters();
+
+                RequestParameters.Add(
+                    "domain", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "domain",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+                RequestParameters.Add(
+                    "userKey", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "userKey",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+            }
+
+        }
+
+
+        /// <param name="body">The body of the request.</param>
+        /// <param name="domain"></param>
+        /// <param name="userKey"></param>
+        public virtual InsertRequest Insert(Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Delegate body, string domain, string userKey)
+        {
+            return new InsertRequest(service, body, domain, userKey);
+        }
+
+
+        public class InsertRequest : EmailsettingsBaseServiceRequest<Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Delegate>
+        {
+            /// <summary>Constructs a new Insert request.</summary>
+            public InsertRequest(Google.Apis.Services.IClientService service, Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Delegate body, string domain, string userKey)
+                : base(service)
+            {
+                Domain = domain;
+                UserKey = userKey;
+                Body = body;
+                InitParameters();
+            }
+
+
+
+            [Google.Apis.Util.RequestParameterAttribute("domain", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string Domain { get; private set; }
+
+
+            [Google.Apis.Util.RequestParameterAttribute("userKey", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string UserKey { get; private set; }
+
+
+            /// <summary>Gets or sets the body of this request.</summary>
+            Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Delegate Body { get; set; }
+
+            ///<summary>Returns the body of the request.</summary>
+            protected override object GetBody() { return Body; }
+
+            ///<summary>Gets the method name.</summary>
+            public override string MethodName
+            {
+                get { return "insert"; }
+            }
+
+            ///<summary>Gets the HTTP method.</summary>
+            public override string HttpMethod
+            {
+                get { return "POST"; }
+            }
+
+            ///<summary>Gets the REST path.</summary>
+            public override string RestPath
+            {
+                get { return "{domain}/{userKey}/delegation"; }
+            }
+
+            /// <summary>Initializes Insert parameter list.</summary>
+            protected override void InitParameters()
+            {
+                base.InitParameters();
+
+                RequestParameters.Add(
+                    "domain", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "domain",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+                RequestParameters.Add(
+                    "userKey", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "userKey",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+            }
+
+        }
+    }
+
+    /// <summary>The "filters" collection of methods.</summary>
+    public class FiltersResource
+    {
+        private const string Resource = "filters";
+
+        /// <summary>The service which this resource belongs to.</summary>
+        private readonly Google.Apis.Services.IClientService service;
+
+        /// <summary>Constructs a new resource.</summary>
+        public FiltersResource(Google.Apis.Services.IClientService service)
+        {
+            this.service = service;
+
+        }
+
+
+
+        /// <param name="body">The body of the request.</param>
+        /// <param name="domain"></param>
+        /// <param name="userKey"></param>
+        public virtual InsertRequest Insert(Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Filter body, string domain, string userKey)
+        {
+            return new InsertRequest(service, body, domain, userKey);
+        }
+
+
+        public class InsertRequest : EmailsettingsBaseServiceRequest<Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Filter>
+        {
+            /// <summary>Constructs a new Insert request.</summary>
+            public InsertRequest(Google.Apis.Services.IClientService service, Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Filter body, string domain, string userKey)
+                : base(service)
+            {
+                Domain = domain;
+                UserKey = userKey;
+                Body = body;
+                InitParameters();
+            }
+
+
+
+            [Google.Apis.Util.RequestParameterAttribute("domain", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string Domain { get; private set; }
+
+
+            [Google.Apis.Util.RequestParameterAttribute("userKey", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string UserKey { get; private set; }
+
+
+            /// <summary>Gets or sets the body of this request.</summary>
+            Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Filter Body { get; set; }
+
+            ///<summary>Returns the body of the request.</summary>
+            protected override object GetBody() { return Body; }
+
+            ///<summary>Gets the method name.</summary>
+            public override string MethodName
+            {
+                get { return "insert"; }
+            }
+
+            ///<summary>Gets the HTTP method.</summary>
+            public override string HttpMethod
+            {
+                get { return "POST"; }
+            }
+
+            ///<summary>Gets the REST path.</summary>
+            public override string RestPath
+            {
+                get { return "{domain}/{userKey}/filter"; }
+            }
+
+            /// <summary>Initializes Insert parameter list.</summary>
+            protected override void InitParameters()
+            {
+                base.InitParameters();
+
+                RequestParameters.Add(
+                    "domain", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "domain",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+                RequestParameters.Add(
+                    "userKey", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "userKey",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+            }
+
+        }
+    }
+
+    /// <summary>The "forwarding" collection of methods.</summary>
+    public class ForwardingResource
+    {
+        private const string Resource = "forwarding";
+
+        /// <summary>The service which this resource belongs to.</summary>
+        private readonly Google.Apis.Services.IClientService service;
+
+        /// <summary>Constructs a new resource.</summary>
+        public ForwardingResource(Google.Apis.Services.IClientService service)
+        {
+            this.service = service;
+
+        }
+
+
+
+        /// <param name="domain"></param>
+        /// <param name="userKey"></param>
+        public virtual GetRequest Get(string domain, string userKey)
+        {
+            return new GetRequest(service, domain, userKey);
+        }
+
+
+        public class GetRequest : EmailsettingsBaseServiceRequest<Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Forwarding>
+        {
+            /// <summary>Constructs a new Get request.</summary>
+            public GetRequest(Google.Apis.Services.IClientService service, string domain, string userKey)
+                : base(service)
+            {
+                Domain = domain;
+                UserKey = userKey;
+                InitParameters();
+            }
+
+
+
+            [Google.Apis.Util.RequestParameterAttribute("domain", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string Domain { get; private set; }
+
+
+            [Google.Apis.Util.RequestParameterAttribute("userKey", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string UserKey { get; private set; }
+
+
+            ///<summary>Gets the method name.</summary>
+            public override string MethodName
+            {
+                get { return "get"; }
+            }
+
+            ///<summary>Gets the HTTP method.</summary>
+            public override string HttpMethod
+            {
+                get { return "GET"; }
+            }
+
+            ///<summary>Gets the REST path.</summary>
+            public override string RestPath
+            {
+                get { return "{domain}/{userKey}/forwarding"; }
+            }
+
+            /// <summary>Initializes Get parameter list.</summary>
+            protected override void InitParameters()
+            {
+                base.InitParameters();
+
+                RequestParameters.Add(
+                    "domain", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "domain",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+                RequestParameters.Add(
+                    "userKey", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "userKey",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+            }
+
+        }
+
+
+        /// <param name="body">The body of the request.</param>
+        /// <param name="domain"></param>
+        /// <param name="userKey"></param>
+        public virtual UpdateRequest Update(Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Forwarding body, string domain, string userKey)
+        {
+            return new UpdateRequest(service, body, domain, userKey);
+        }
+
+
+        public class UpdateRequest : EmailsettingsBaseServiceRequest<Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Forwarding>
+        {
+            /// <summary>Constructs a new Update request.</summary>
+            public UpdateRequest(Google.Apis.Services.IClientService service, Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Forwarding body, string domain, string userKey)
+                : base(service)
+            {
+                Domain = domain;
+                UserKey = userKey;
+                Body = body;
+                InitParameters();
+            }
+
+
+
+            [Google.Apis.Util.RequestParameterAttribute("domain", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string Domain { get; private set; }
+
+
+            [Google.Apis.Util.RequestParameterAttribute("userKey", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string UserKey { get; private set; }
+
+
+            /// <summary>Gets or sets the body of this request.</summary>
+            Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Forwarding Body { get; set; }
+
+            ///<summary>Returns the body of the request.</summary>
+            protected override object GetBody() { return Body; }
+
+            ///<summary>Gets the method name.</summary>
+            public override string MethodName
+            {
+                get { return "update"; }
+            }
+
+            ///<summary>Gets the HTTP method.</summary>
+            public override string HttpMethod
+            {
+                get { return "PUT"; }
+            }
+
+            ///<summary>Gets the REST path.</summary>
+            public override string RestPath
+            {
+                get { return "{domain}/{userKey}/forwarding"; }
+            }
+
+            /// <summary>Initializes Update parameter list.</summary>
+            protected override void InitParameters()
+            {
+                base.InitParameters();
+
+                RequestParameters.Add(
+                    "domain", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "domain",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+                RequestParameters.Add(
+                    "userKey", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "userKey",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+            }
+
+        }
+    }
+
+    /// <summary>The "general" collection of methods.</summary>
+    public class GeneralResource
+    {
+        private const string Resource = "general";
+
+        /// <summary>The service which this resource belongs to.</summary>
+        private readonly Google.Apis.Services.IClientService service;
+
+        /// <summary>Constructs a new resource.</summary>
+        public GeneralResource(Google.Apis.Services.IClientService service)
+        {
+            this.service = service;
+
+        }
+
+
+
+        /// <param name="body">The body of the request.</param>
+        /// <param name="domain"></param>
+        /// <param name="userKey"></param>
+        public virtual UpdateRequest Update(Google.Apis.admin.Emailsettings.emailsettings_v1.Data.General body, string domain, string userKey)
+        {
+            return new UpdateRequest(service, body, domain, userKey);
+        }
+
+
+        public class UpdateRequest : EmailsettingsBaseServiceRequest<Google.Apis.admin.Emailsettings.emailsettings_v1.Data.General>
+        {
+            /// <summary>Constructs a new Update request.</summary>
+            public UpdateRequest(Google.Apis.Services.IClientService service, Google.Apis.admin.Emailsettings.emailsettings_v1.Data.General body, string domain, string userKey)
+                : base(service)
+            {
+                Domain = domain;
+                UserKey = userKey;
+                Body = body;
+                InitParameters();
+            }
+
+
+
+            [Google.Apis.Util.RequestParameterAttribute("domain", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string Domain { get; private set; }
+
+
+            [Google.Apis.Util.RequestParameterAttribute("userKey", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string UserKey { get; private set; }
+
+
+            /// <summary>Gets or sets the body of this request.</summary>
+            Google.Apis.admin.Emailsettings.emailsettings_v1.Data.General Body { get; set; }
+
+            ///<summary>Returns the body of the request.</summary>
+            protected override object GetBody() { return Body; }
+
+            ///<summary>Gets the method name.</summary>
+            public override string MethodName
+            {
+                get { return "update"; }
+            }
+
+            ///<summary>Gets the HTTP method.</summary>
+            public override string HttpMethod
+            {
+                get { return "PUT"; }
+            }
+
+            ///<summary>Gets the REST path.</summary>
+            public override string RestPath
+            {
+                get { return "{domain}/{userKey}/general"; }
+            }
+
+            /// <summary>Initializes Update parameter list.</summary>
+            protected override void InitParameters()
+            {
+                base.InitParameters();
+
+                RequestParameters.Add(
+                    "domain", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "domain",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+                RequestParameters.Add(
+                    "userKey", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "userKey",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+            }
+
+        }
+    }
+
+    /// <summary>The "imap" collection of methods.</summary>
+    public class ImapResource
+    {
+        private const string Resource = "imap";
+
+        /// <summary>The service which this resource belongs to.</summary>
+        private readonly Google.Apis.Services.IClientService service;
+
+        /// <summary>Constructs a new resource.</summary>
+        public ImapResource(Google.Apis.Services.IClientService service)
+        {
+            this.service = service;
+
+        }
+
+
+
+        /// <param name="domain"></param>
+        /// <param name="userKey"></param>
+        public virtual GetRequest Get(string domain, string userKey)
+        {
+            return new GetRequest(service, domain, userKey);
+        }
+
+
+        public class GetRequest : EmailsettingsBaseServiceRequest<Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Imap>
+        {
+            /// <summary>Constructs a new Get request.</summary>
+            public GetRequest(Google.Apis.Services.IClientService service, string domain, string userKey)
+                : base(service)
+            {
+                Domain = domain;
+                UserKey = userKey;
+                InitParameters();
+            }
+
+
+
+            [Google.Apis.Util.RequestParameterAttribute("domain", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string Domain { get; private set; }
+
+
+            [Google.Apis.Util.RequestParameterAttribute("userKey", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string UserKey { get; private set; }
+
+
+            ///<summary>Gets the method name.</summary>
+            public override string MethodName
+            {
+                get { return "get"; }
+            }
+
+            ///<summary>Gets the HTTP method.</summary>
+            public override string HttpMethod
+            {
+                get { return "GET"; }
+            }
+
+            ///<summary>Gets the REST path.</summary>
+            public override string RestPath
+            {
+                get { return "{domain}/{userKey}/imap"; }
+            }
+
+            /// <summary>Initializes Get parameter list.</summary>
+            protected override void InitParameters()
+            {
+                base.InitParameters();
+
+                RequestParameters.Add(
+                    "domain", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "domain",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+                RequestParameters.Add(
+                    "userKey", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "userKey",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+            }
+
+        }
+
+
+        /// <param name="body">The body of the request.</param>
+        /// <param name="domain"></param>
+        /// <param name="userKey"></param>
+        public virtual UpdateRequest Update(Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Imap body, string domain, string userKey)
+        {
+            return new UpdateRequest(service, body, domain, userKey);
+        }
+
+
+        public class UpdateRequest : EmailsettingsBaseServiceRequest<Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Imap>
+        {
+            /// <summary>Constructs a new Update request.</summary>
+            public UpdateRequest(Google.Apis.Services.IClientService service, Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Imap body, string domain, string userKey)
+                : base(service)
+            {
+                Domain = domain;
+                UserKey = userKey;
+                Body = body;
+                InitParameters();
+            }
+
+
+
+            [Google.Apis.Util.RequestParameterAttribute("domain", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string Domain { get; private set; }
+
+
+            [Google.Apis.Util.RequestParameterAttribute("userKey", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string UserKey { get; private set; }
+
+
+            /// <summary>Gets or sets the body of this request.</summary>
+            Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Imap Body { get; set; }
+
+            ///<summary>Returns the body of the request.</summary>
+            protected override object GetBody() { return Body; }
+
+            ///<summary>Gets the method name.</summary>
+            public override string MethodName
+            {
+                get { return "update"; }
+            }
+
+            ///<summary>Gets the HTTP method.</summary>
+            public override string HttpMethod
+            {
+                get { return "PUT"; }
+            }
+
+            ///<summary>Gets the REST path.</summary>
+            public override string RestPath
+            {
+                get { return "{domain}/{userKey}/imap"; }
+            }
+
+            /// <summary>Initializes Update parameter list.</summary>
+            protected override void InitParameters()
+            {
+                base.InitParameters();
+
+                RequestParameters.Add(
+                    "domain", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "domain",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+                RequestParameters.Add(
+                    "userKey", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "userKey",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+            }
+
+        }
+    }
+
     /// <summary>The "labels" collection of methods.</summary>
     public class LabelsResource
     {
@@ -282,23 +1408,23 @@ namespace Google.Apis.admin.Emailsettings.emailsettings_v1
 
 
         /// <param name="domain"></param>
-        /// <param name="labelName"></param>
         /// <param name="userKey"></param>
-        public virtual DeleteRequest Delete(string domain, string labelName, string userKey)
+        /// <param name="labelName"></param>
+        public virtual DeleteRequest Delete(string domain, string userKey, string labelName)
         {
-            return new DeleteRequest(service, domain, labelName, userKey);
+            return new DeleteRequest(service, domain, userKey, labelName);
         }
 
 
         public class DeleteRequest : EmailsettingsBaseServiceRequest<string>
         {
             /// <summary>Constructs a new Delete request.</summary>
-            public DeleteRequest(Google.Apis.Services.IClientService service, string domain, string labelName, string userKey)
+            public DeleteRequest(Google.Apis.Services.IClientService service, string domain, string userKey, string labelName)
                 : base(service)
             {
                 Domain = domain;
-                LabelName = labelName;
                 UserKey = userKey;
+                LabelName = labelName;
                 InitParameters();
             }
 
@@ -308,12 +1434,12 @@ namespace Google.Apis.admin.Emailsettings.emailsettings_v1
             public virtual string Domain { get; private set; }
 
 
-            [Google.Apis.Util.RequestParameterAttribute("labelName", Google.Apis.Util.RequestParameterType.Path)]
-            public virtual string LabelName { get; private set; }
-
-
             [Google.Apis.Util.RequestParameterAttribute("userKey", Google.Apis.Util.RequestParameterType.Path)]
             public virtual string UserKey { get; private set; }
+
+
+            [Google.Apis.Util.RequestParameterAttribute("labelName", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string LabelName { get; private set; }
 
 
             ///<summary>Gets the method name.</summary>
@@ -349,18 +1475,18 @@ namespace Google.Apis.admin.Emailsettings.emailsettings_v1
                         Pattern = null,
                     });
                 RequestParameters.Add(
-                    "labelName", new Google.Apis.Discovery.Parameter
+                    "userKey", new Google.Apis.Discovery.Parameter
                     {
-                        Name = "labelName",
+                        Name = "userKey",
                         IsRequired = true,
                         ParameterType = "path",
                         DefaultValue = null,
                         Pattern = null,
                     });
                 RequestParameters.Add(
-                    "userKey", new Google.Apis.Discovery.Parameter
+                    "labelName", new Google.Apis.Discovery.Parameter
                     {
-                        Name = "userKey",
+                        Name = "labelName",
                         IsRequired = true,
                         ParameterType = "path",
                         DefaultValue = null,
@@ -446,22 +1572,24 @@ namespace Google.Apis.admin.Emailsettings.emailsettings_v1
         }
 
 
+        /// <param name="body">The body of the request.</param>
         /// <param name="domain"></param>
         /// <param name="userKey"></param>
-        public virtual InsertRequest Insert(string domain, string userKey)
+        public virtual InsertRequest Insert(Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Label body, string domain, string userKey)
         {
-            return new InsertRequest(service, domain, userKey);
+            return new InsertRequest(service, body, domain, userKey);
         }
 
 
-        public class InsertRequest : EmailsettingsBaseServiceRequest<string>
+        public class InsertRequest : EmailsettingsBaseServiceRequest<Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Label>
         {
             /// <summary>Constructs a new Insert request.</summary>
-            public InsertRequest(Google.Apis.Services.IClientService service, string domain, string userKey)
+            public InsertRequest(Google.Apis.Services.IClientService service, Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Label body, string domain, string userKey)
                 : base(service)
             {
                 Domain = domain;
                 UserKey = userKey;
+                Body = body;
                 InitParameters();
             }
 
@@ -474,6 +1602,12 @@ namespace Google.Apis.admin.Emailsettings.emailsettings_v1
             [Google.Apis.Util.RequestParameterAttribute("userKey", Google.Apis.Util.RequestParameterType.Path)]
             public virtual string UserKey { get; private set; }
 
+
+            /// <summary>Gets or sets the body of this request.</summary>
+            Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Label Body { get; set; }
+
+            ///<summary>Returns the body of the request.</summary>
+            protected override object GetBody() { return Body; }
 
             ///<summary>Gets the method name.</summary>
             public override string MethodName
@@ -494,6 +1628,906 @@ namespace Google.Apis.admin.Emailsettings.emailsettings_v1
             }
 
             /// <summary>Initializes Insert parameter list.</summary>
+            protected override void InitParameters()
+            {
+                base.InitParameters();
+
+                RequestParameters.Add(
+                    "domain", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "domain",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+                RequestParameters.Add(
+                    "userKey", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "userKey",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+            }
+
+        }
+    }
+
+    /// <summary>The "language" collection of methods.</summary>
+    public class LanguageResource
+    {
+        private const string Resource = "language";
+
+        /// <summary>The service which this resource belongs to.</summary>
+        private readonly Google.Apis.Services.IClientService service;
+
+        /// <summary>Constructs a new resource.</summary>
+        public LanguageResource(Google.Apis.Services.IClientService service)
+        {
+            this.service = service;
+
+        }
+
+
+
+        /// <param name="body">The body of the request.</param>
+        /// <param name="domain"></param>
+        /// <param name="userKey"></param>
+        public virtual UpdateRequest Update(Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Language body, string domain, string userKey)
+        {
+            return new UpdateRequest(service, body, domain, userKey);
+        }
+
+
+        public class UpdateRequest : EmailsettingsBaseServiceRequest<Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Language>
+        {
+            /// <summary>Constructs a new Update request.</summary>
+            public UpdateRequest(Google.Apis.Services.IClientService service, Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Language body, string domain, string userKey)
+                : base(service)
+            {
+                Domain = domain;
+                UserKey = userKey;
+                Body = body;
+                InitParameters();
+            }
+
+
+
+            [Google.Apis.Util.RequestParameterAttribute("domain", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string Domain { get; private set; }
+
+
+            [Google.Apis.Util.RequestParameterAttribute("userKey", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string UserKey { get; private set; }
+
+
+            /// <summary>Gets or sets the body of this request.</summary>
+            Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Language Body { get; set; }
+
+            ///<summary>Returns the body of the request.</summary>
+            protected override object GetBody() { return Body; }
+
+            ///<summary>Gets the method name.</summary>
+            public override string MethodName
+            {
+                get { return "update"; }
+            }
+
+            ///<summary>Gets the HTTP method.</summary>
+            public override string HttpMethod
+            {
+                get { return "PUT"; }
+            }
+
+            ///<summary>Gets the REST path.</summary>
+            public override string RestPath
+            {
+                get { return "{domain}/{userKey}/language"; }
+            }
+
+            /// <summary>Initializes Update parameter list.</summary>
+            protected override void InitParameters()
+            {
+                base.InitParameters();
+
+                RequestParameters.Add(
+                    "domain", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "domain",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+                RequestParameters.Add(
+                    "userKey", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "userKey",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+            }
+
+        }
+    }
+
+    /// <summary>The "pop" collection of methods.</summary>
+    public class PopResource
+    {
+        private const string Resource = "pop";
+
+        /// <summary>The service which this resource belongs to.</summary>
+        private readonly Google.Apis.Services.IClientService service;
+
+        /// <summary>Constructs a new resource.</summary>
+        public PopResource(Google.Apis.Services.IClientService service)
+        {
+            this.service = service;
+
+        }
+
+
+
+        /// <param name="domain"></param>
+        /// <param name="userKey"></param>
+        public virtual GetRequest Get(string domain, string userKey)
+        {
+            return new GetRequest(service, domain, userKey);
+        }
+
+
+        public class GetRequest : EmailsettingsBaseServiceRequest<Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Pop>
+        {
+            /// <summary>Constructs a new Get request.</summary>
+            public GetRequest(Google.Apis.Services.IClientService service, string domain, string userKey)
+                : base(service)
+            {
+                Domain = domain;
+                UserKey = userKey;
+                InitParameters();
+            }
+
+
+
+            [Google.Apis.Util.RequestParameterAttribute("domain", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string Domain { get; private set; }
+
+
+            [Google.Apis.Util.RequestParameterAttribute("userKey", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string UserKey { get; private set; }
+
+
+            ///<summary>Gets the method name.</summary>
+            public override string MethodName
+            {
+                get { return "get"; }
+            }
+
+            ///<summary>Gets the HTTP method.</summary>
+            public override string HttpMethod
+            {
+                get { return "GET"; }
+            }
+
+            ///<summary>Gets the REST path.</summary>
+            public override string RestPath
+            {
+                get { return "{domain}/{userKey}/pop"; }
+            }
+
+            /// <summary>Initializes Get parameter list.</summary>
+            protected override void InitParameters()
+            {
+                base.InitParameters();
+
+                RequestParameters.Add(
+                    "domain", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "domain",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+                RequestParameters.Add(
+                    "userKey", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "userKey",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+            }
+
+        }
+
+
+        /// <param name="body">The body of the request.</param>
+        /// <param name="domain"></param>
+        /// <param name="userKey"></param>
+        public virtual UpdateRequest Update(Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Pop body, string domain, string userKey)
+        {
+            return new UpdateRequest(service, body, domain, userKey);
+        }
+
+
+        public class UpdateRequest : EmailsettingsBaseServiceRequest<Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Pop>
+        {
+            /// <summary>Constructs a new Update request.</summary>
+            public UpdateRequest(Google.Apis.Services.IClientService service, Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Pop body, string domain, string userKey)
+                : base(service)
+            {
+                Domain = domain;
+                UserKey = userKey;
+                Body = body;
+                InitParameters();
+            }
+
+
+
+            [Google.Apis.Util.RequestParameterAttribute("domain", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string Domain { get; private set; }
+
+
+            [Google.Apis.Util.RequestParameterAttribute("userKey", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string UserKey { get; private set; }
+
+
+            /// <summary>Gets or sets the body of this request.</summary>
+            Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Pop Body { get; set; }
+
+            ///<summary>Returns the body of the request.</summary>
+            protected override object GetBody() { return Body; }
+
+            ///<summary>Gets the method name.</summary>
+            public override string MethodName
+            {
+                get { return "update"; }
+            }
+
+            ///<summary>Gets the HTTP method.</summary>
+            public override string HttpMethod
+            {
+                get { return "PUT"; }
+            }
+
+            ///<summary>Gets the REST path.</summary>
+            public override string RestPath
+            {
+                get { return "{domain}/{userKey}/pop"; }
+            }
+
+            /// <summary>Initializes Update parameter list.</summary>
+            protected override void InitParameters()
+            {
+                base.InitParameters();
+
+                RequestParameters.Add(
+                    "domain", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "domain",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+                RequestParameters.Add(
+                    "userKey", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "userKey",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+            }
+
+        }
+    }
+
+    /// <summary>The "sendasAliases" collection of methods.</summary>
+    public class SendasAliasesResource
+    {
+        private const string Resource = "sendasAliases";
+
+        /// <summary>The service which this resource belongs to.</summary>
+        private readonly Google.Apis.Services.IClientService service;
+
+        /// <summary>Constructs a new resource.</summary>
+        public SendasAliasesResource(Google.Apis.Services.IClientService service)
+        {
+            this.service = service;
+
+        }
+
+
+
+        /// <param name="domain"></param>
+        /// <param name="userKey"></param>
+        public virtual GetRequest Get(string domain, string userKey)
+        {
+            return new GetRequest(service, domain, userKey);
+        }
+
+
+        public class GetRequest : EmailsettingsBaseServiceRequest<Google.Apis.admin.Emailsettings.emailsettings_v1.Data.SendAsAliases>
+        {
+            /// <summary>Constructs a new Get request.</summary>
+            public GetRequest(Google.Apis.Services.IClientService service, string domain, string userKey)
+                : base(service)
+            {
+                Domain = domain;
+                UserKey = userKey;
+                InitParameters();
+            }
+
+
+
+            [Google.Apis.Util.RequestParameterAttribute("domain", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string Domain { get; private set; }
+
+
+            [Google.Apis.Util.RequestParameterAttribute("userKey", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string UserKey { get; private set; }
+
+
+            ///<summary>Gets the method name.</summary>
+            public override string MethodName
+            {
+                get { return "get"; }
+            }
+
+            ///<summary>Gets the HTTP method.</summary>
+            public override string HttpMethod
+            {
+                get { return "GET"; }
+            }
+
+            ///<summary>Gets the REST path.</summary>
+            public override string RestPath
+            {
+                get { return "{domain}/{userKey}/sendas"; }
+            }
+
+            /// <summary>Initializes Get parameter list.</summary>
+            protected override void InitParameters()
+            {
+                base.InitParameters();
+
+                RequestParameters.Add(
+                    "domain", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "domain",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+                RequestParameters.Add(
+                    "userKey", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "userKey",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+            }
+
+        }
+
+
+        /// <param name="body">The body of the request.</param>
+        /// <param name="domain"></param>
+        /// <param name="userKey"></param>
+        public virtual InsertRequest Insert(Google.Apis.admin.Emailsettings.emailsettings_v1.Data.SendasAlias body, string domain, string userKey)
+        {
+            return new InsertRequest(service, body, domain, userKey);
+        }
+
+
+        public class InsertRequest : EmailsettingsBaseServiceRequest<Google.Apis.admin.Emailsettings.emailsettings_v1.Data.SendasAlias>
+        {
+            /// <summary>Constructs a new Insert request.</summary>
+            public InsertRequest(Google.Apis.Services.IClientService service, Google.Apis.admin.Emailsettings.emailsettings_v1.Data.SendasAlias body, string domain, string userKey)
+                : base(service)
+            {
+                Domain = domain;
+                UserKey = userKey;
+                Body = body;
+                InitParameters();
+            }
+
+
+
+            [Google.Apis.Util.RequestParameterAttribute("domain", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string Domain { get; private set; }
+
+
+            [Google.Apis.Util.RequestParameterAttribute("userKey", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string UserKey { get; private set; }
+
+
+            /// <summary>Gets or sets the body of this request.</summary>
+            Google.Apis.admin.Emailsettings.emailsettings_v1.Data.SendasAlias Body { get; set; }
+
+            ///<summary>Returns the body of the request.</summary>
+            protected override object GetBody() { return Body; }
+
+            ///<summary>Gets the method name.</summary>
+            public override string MethodName
+            {
+                get { return "insert"; }
+            }
+
+            ///<summary>Gets the HTTP method.</summary>
+            public override string HttpMethod
+            {
+                get { return "POST"; }
+            }
+
+            ///<summary>Gets the REST path.</summary>
+            public override string RestPath
+            {
+                get { return "{domain}/{userKey}/sendas"; }
+            }
+
+            /// <summary>Initializes Insert parameter list.</summary>
+            protected override void InitParameters()
+            {
+                base.InitParameters();
+
+                RequestParameters.Add(
+                    "domain", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "domain",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+                RequestParameters.Add(
+                    "userKey", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "userKey",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+            }
+
+        }
+    }
+
+    /// <summary>The "signature" collection of methods.</summary>
+    public class SignatureResource
+    {
+        private const string Resource = "signature";
+
+        /// <summary>The service which this resource belongs to.</summary>
+        private readonly Google.Apis.Services.IClientService service;
+
+        /// <summary>Constructs a new resource.</summary>
+        public SignatureResource(Google.Apis.Services.IClientService service)
+        {
+            this.service = service;
+
+        }
+
+
+
+        /// <param name="domain"></param>
+        /// <param name="userKey"></param>
+        public virtual GetRequest Get(string domain, string userKey)
+        {
+            return new GetRequest(service, domain, userKey);
+        }
+
+
+        public class GetRequest : EmailsettingsBaseServiceRequest<Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Signature>
+        {
+            /// <summary>Constructs a new Get request.</summary>
+            public GetRequest(Google.Apis.Services.IClientService service, string domain, string userKey)
+                : base(service)
+            {
+                Domain = domain;
+                UserKey = userKey;
+                InitParameters();
+            }
+
+
+
+            [Google.Apis.Util.RequestParameterAttribute("domain", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string Domain { get; private set; }
+
+
+            [Google.Apis.Util.RequestParameterAttribute("userKey", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string UserKey { get; private set; }
+
+
+            ///<summary>Gets the method name.</summary>
+            public override string MethodName
+            {
+                get { return "get"; }
+            }
+
+            ///<summary>Gets the HTTP method.</summary>
+            public override string HttpMethod
+            {
+                get { return "GET"; }
+            }
+
+            ///<summary>Gets the REST path.</summary>
+            public override string RestPath
+            {
+                get { return "{domain}/{userKey}/signature"; }
+            }
+
+            /// <summary>Initializes Get parameter list.</summary>
+            protected override void InitParameters()
+            {
+                base.InitParameters();
+
+                RequestParameters.Add(
+                    "domain", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "domain",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+                RequestParameters.Add(
+                    "userKey", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "userKey",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+            }
+
+        }
+
+
+        /// <param name="body">The body of the request.</param>
+        /// <param name="domain"></param>
+        /// <param name="userKey"></param>
+        public virtual UpdateRequest Update(Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Signature body, string domain, string userKey)
+        {
+            return new UpdateRequest(service, body, domain, userKey);
+        }
+
+
+        public class UpdateRequest : EmailsettingsBaseServiceRequest<Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Signature>
+        {
+            /// <summary>Constructs a new Update request.</summary>
+            public UpdateRequest(Google.Apis.Services.IClientService service, Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Signature body, string domain, string userKey)
+                : base(service)
+            {
+                Domain = domain;
+                UserKey = userKey;
+                Body = body;
+                InitParameters();
+            }
+
+
+
+            [Google.Apis.Util.RequestParameterAttribute("domain", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string Domain { get; private set; }
+
+
+            [Google.Apis.Util.RequestParameterAttribute("userKey", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string UserKey { get; private set; }
+
+
+            /// <summary>Gets or sets the body of this request.</summary>
+            Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Signature Body { get; set; }
+
+            ///<summary>Returns the body of the request.</summary>
+            protected override object GetBody() { return Body; }
+
+            ///<summary>Gets the method name.</summary>
+            public override string MethodName
+            {
+                get { return "update"; }
+            }
+
+            ///<summary>Gets the HTTP method.</summary>
+            public override string HttpMethod
+            {
+                get { return "PUT"; }
+            }
+
+            ///<summary>Gets the REST path.</summary>
+            public override string RestPath
+            {
+                get { return "{domain}/{userKey}/signature"; }
+            }
+
+            /// <summary>Initializes Update parameter list.</summary>
+            protected override void InitParameters()
+            {
+                base.InitParameters();
+
+                RequestParameters.Add(
+                    "domain", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "domain",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+                RequestParameters.Add(
+                    "userKey", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "userKey",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+            }
+
+        }
+    }
+
+    /// <summary>The "vacationResponder" collection of methods.</summary>
+    public class VacationResponderResource
+    {
+        private const string Resource = "vacationResponder";
+
+        /// <summary>The service which this resource belongs to.</summary>
+        private readonly Google.Apis.Services.IClientService service;
+
+        /// <summary>Constructs a new resource.</summary>
+        public VacationResponderResource(Google.Apis.Services.IClientService service)
+        {
+            this.service = service;
+
+        }
+
+
+
+        /// <param name="domain"></param>
+        /// <param name="userKey"></param>
+        public virtual GetRequest Get(string domain, string userKey)
+        {
+            return new GetRequest(service, domain, userKey);
+        }
+
+
+        public class GetRequest : EmailsettingsBaseServiceRequest<Google.Apis.admin.Emailsettings.emailsettings_v1.Data.VacationResponder>
+        {
+            /// <summary>Constructs a new Get request.</summary>
+            public GetRequest(Google.Apis.Services.IClientService service, string domain, string userKey)
+                : base(service)
+            {
+                Domain = domain;
+                UserKey = userKey;
+                InitParameters();
+            }
+
+
+
+            [Google.Apis.Util.RequestParameterAttribute("domain", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string Domain { get; private set; }
+
+
+            [Google.Apis.Util.RequestParameterAttribute("userKey", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string UserKey { get; private set; }
+
+
+            ///<summary>Gets the method name.</summary>
+            public override string MethodName
+            {
+                get { return "get"; }
+            }
+
+            ///<summary>Gets the HTTP method.</summary>
+            public override string HttpMethod
+            {
+                get { return "GET"; }
+            }
+
+            ///<summary>Gets the REST path.</summary>
+            public override string RestPath
+            {
+                get { return "{domain}/{userKey}/vacation"; }
+            }
+
+            /// <summary>Initializes Get parameter list.</summary>
+            protected override void InitParameters()
+            {
+                base.InitParameters();
+
+                RequestParameters.Add(
+                    "domain", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "domain",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+                RequestParameters.Add(
+                    "userKey", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "userKey",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+            }
+
+        }
+
+
+        /// <param name="body">The body of the request.</param>
+        /// <param name="domain"></param>
+        /// <param name="userKey"></param>
+        public virtual UpdateRequest Update(Google.Apis.admin.Emailsettings.emailsettings_v1.Data.VacationResponder body, string domain, string userKey)
+        {
+            return new UpdateRequest(service, body, domain, userKey);
+        }
+
+
+        public class UpdateRequest : EmailsettingsBaseServiceRequest<Google.Apis.admin.Emailsettings.emailsettings_v1.Data.VacationResponder>
+        {
+            /// <summary>Constructs a new Update request.</summary>
+            public UpdateRequest(Google.Apis.Services.IClientService service, Google.Apis.admin.Emailsettings.emailsettings_v1.Data.VacationResponder body, string domain, string userKey)
+                : base(service)
+            {
+                Domain = domain;
+                UserKey = userKey;
+                Body = body;
+                InitParameters();
+            }
+
+
+
+            [Google.Apis.Util.RequestParameterAttribute("domain", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string Domain { get; private set; }
+
+
+            [Google.Apis.Util.RequestParameterAttribute("userKey", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string UserKey { get; private set; }
+
+
+            /// <summary>Gets or sets the body of this request.</summary>
+            Google.Apis.admin.Emailsettings.emailsettings_v1.Data.VacationResponder Body { get; set; }
+
+            ///<summary>Returns the body of the request.</summary>
+            protected override object GetBody() { return Body; }
+
+            ///<summary>Gets the method name.</summary>
+            public override string MethodName
+            {
+                get { return "update"; }
+            }
+
+            ///<summary>Gets the HTTP method.</summary>
+            public override string HttpMethod
+            {
+                get { return "PUT"; }
+            }
+
+            ///<summary>Gets the REST path.</summary>
+            public override string RestPath
+            {
+                get { return "{domain}/{userKey}/vacation"; }
+            }
+
+            /// <summary>Initializes Update parameter list.</summary>
+            protected override void InitParameters()
+            {
+                base.InitParameters();
+
+                RequestParameters.Add(
+                    "domain", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "domain",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+                RequestParameters.Add(
+                    "userKey", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "userKey",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+            }
+
+        }
+    }
+
+    /// <summary>The "webClip" collection of methods.</summary>
+    public class WebClipResource
+    {
+        private const string Resource = "webClip";
+
+        /// <summary>The service which this resource belongs to.</summary>
+        private readonly Google.Apis.Services.IClientService service;
+
+        /// <summary>Constructs a new resource.</summary>
+        public WebClipResource(Google.Apis.Services.IClientService service)
+        {
+            this.service = service;
+
+        }
+
+
+
+        /// <param name="body">The body of the request.</param>
+        /// <param name="domain"></param>
+        /// <param name="userKey"></param>
+        public virtual UpdateRequest Update(Google.Apis.admin.Emailsettings.emailsettings_v1.Data.WebClip body, string domain, string userKey)
+        {
+            return new UpdateRequest(service, body, domain, userKey);
+        }
+
+
+        public class UpdateRequest : EmailsettingsBaseServiceRequest<Google.Apis.admin.Emailsettings.emailsettings_v1.Data.WebClip>
+        {
+            /// <summary>Constructs a new Update request.</summary>
+            public UpdateRequest(Google.Apis.Services.IClientService service, Google.Apis.admin.Emailsettings.emailsettings_v1.Data.WebClip body, string domain, string userKey)
+                : base(service)
+            {
+                Domain = domain;
+                UserKey = userKey;
+                Body = body;
+                InitParameters();
+            }
+
+
+
+            [Google.Apis.Util.RequestParameterAttribute("domain", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string Domain { get; private set; }
+
+
+            [Google.Apis.Util.RequestParameterAttribute("userKey", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string UserKey { get; private set; }
+
+
+            /// <summary>Gets or sets the body of this request.</summary>
+            Google.Apis.admin.Emailsettings.emailsettings_v1.Data.WebClip Body { get; set; }
+
+            ///<summary>Returns the body of the request.</summary>
+            protected override object GetBody() { return Body; }
+
+            ///<summary>Gets the method name.</summary>
+            public override string MethodName
+            {
+                get { return "update"; }
+            }
+
+            ///<summary>Gets the HTTP method.</summary>
+            public override string HttpMethod
+            {
+                get { return "PUT"; }
+            }
+
+            ///<summary>Gets the REST path.</summary>
+            public override string RestPath
+            {
+                get { return "{domain}/{userKey}/webclip"; }
+            }
+
+            /// <summary>Initializes Update parameter list.</summary>
             protected override void InitParameters()
             {
                 base.InitParameters();
