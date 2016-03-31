@@ -208,7 +208,7 @@ namespace gShell.dotNet.CustomSerializer.Xml
                 return parentObj;
             }
 
-            //Return a default object
+            //Return an object of type T
             return (T)resultCollection[0];
         }
 
@@ -323,17 +323,6 @@ namespace gShell.dotNet.CustomSerializer.Xml
             //check for any properties that are collections
             var collectionProperties = reflectedTypeProperties[type].Where(p => p.PropertyType.GetInterfaces()
                 .Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(ICollection<>))).ToList();
-
-            //bool forTest = false;
-
-            //foreach (var prop in reflectedTypeProperties[type])
-            //{
-            //    //Check properties to see if there are any collections
-            //    var isCollection = prop.PropertyType.GetInterfaces()
-            //        .Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(ICollection<>));
-
-            //    forTest = isCollection;
-            //}
 
             //if there are, check the namespace of the target and this type to see if they match
             if (collectionProperties.Count > 0)
