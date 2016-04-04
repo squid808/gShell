@@ -35,6 +35,7 @@ namespace gShell.Cmdlets.Reports{
         public ReportsBase()
         {
             mainBase = new gReports();
+
             activities = new Activities();
             channels = new Channels();
             customerUsageReports = new CustomerUsageReports();
@@ -72,10 +73,13 @@ namespace gShell.Cmdlets.Reports{
         #region Wrapped Methods
 
 
+
         #region Activities
 
         public class Activities
         {
+
+
 
 
             public List<Google.Apis.admin.Reports.reports_v1.Data.Activities> List(
@@ -113,10 +117,13 @@ namespace gShell.Cmdlets.Reports{
         #endregion
 
 
+
         #region Channels
 
         public class Channels
         {
+
+
 
 
             public void Stop (
@@ -131,10 +138,13 @@ namespace gShell.Cmdlets.Reports{
         #endregion
 
 
+
         #region CustomerUsageReports
 
         public class CustomerUsageReports
         {
+
+
 
 
             public List<Google.Apis.admin.Reports.reports_v1.Data.UsageReports> Get(
@@ -154,10 +164,13 @@ namespace gShell.Cmdlets.Reports{
         #endregion
 
 
+
         #region UserUsageReport
 
         public class UserUsageReport
         {
+
+
 
 
             public List<Google.Apis.admin.Reports.reports_v1.Data.UsageReports> Get(
@@ -228,6 +241,8 @@ namespace gShell.dotNet
 
         public class Activities
         {
+
+
 
             public class ActivitiesListProperties
             {
@@ -330,6 +345,8 @@ namespace gShell.dotNet
 
 
 
+
+
             public void Stop
             (Google.Apis.admin.Reports.reports_v1.Data.Channel body)
             {
@@ -341,6 +358,8 @@ namespace gShell.dotNet
 
         public class CustomerUsageReports
         {
+
+
 
             public class CustomerUsageReportsGetProperties
             {
@@ -412,6 +431,8 @@ namespace gShell.dotNet
 
         public class UserUsageReport
         {
+
+
 
             public class UserUsageReportGetProperties
             {

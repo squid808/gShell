@@ -43,13 +43,14 @@ namespace gShell.Cmdlets.Directory{
         public Users users { get; set; }
         public VerificationCodes verificationCodes { get; set; }
 
-        protected override string apiNameAndVersion { get { return "admin:directory_v1"; } }
+        protected override string apiNameAndVersion { get { return mainBase.apiNameAndVersion; } }
         #endregion
 
         #region Constructors
         public DirectoryBase()
         {
             mainBase = new gDirectory();
+
             asps = new Asps();
             channels = new Channels();
             chromeosdevices = new Chromeosdevices();
