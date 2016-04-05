@@ -11,7 +11,7 @@ using gShell.Cmdlets.DataTransfer;
 
 namespace gShell.Cmdlets.DataTransfer.Applications
 {
-    [Cmdlet(VerbsCommon.Get, "DataTransferApplication",
+    [Cmdlet(VerbsCommon.Get, "GDataTransferApplication",
         SupportsShouldProcess = true,
           HelpUri = @"",
           DefaultParameterSetName = "one")]
@@ -48,7 +48,7 @@ namespace gShell.Cmdlets.DataTransfer.Applications
             if (ParameterSetName == "one") {
                 if (ShouldProcess("DataTransfer Applicaiton", "Get-GDataTransferApplication"))
                 {
-                    WriteObject(mainBase.applications.Get(ApplicationId));
+                    WriteObject(applications.Get(ApplicationId));
                 }
             } else {
                 var properties = new gDataTransfer.Applications.ApplicationsListProperties(){
@@ -60,7 +60,7 @@ namespace gShell.Cmdlets.DataTransfer.Applications
 
                 if (ShouldProcess("DataTransfer Applicaiton", "Get-GDataTransferApplication"))
                 {
-                    List<Data.Application> results = mainBase.applications.List(properties).SelectMany(x => x.Applications).ToList();
+                    List<Data.Application> results = applications.List(properties).SelectMany(x => x.Applications).ToList();
 
                     WriteObject(results);
                 }
@@ -77,7 +77,7 @@ namespace gShell.Cmdlets.DataTransfer
     }
 
     //User ID must be numeric - http://stackoverflow.com/questions/35589475/using-the-insert-method-of-the-google-data-transfer-api-to-start-a-transfer
-    [Cmdlet(VerbsCommon.Get, "DataTransfer",
+    [Cmdlet(VerbsCommon.Get, "GDataTransfer",
         SupportsShouldProcess = true,
           HelpUri = @"",
           DefaultParameterSetName = "one")]
@@ -133,7 +133,7 @@ namespace gShell.Cmdlets.DataTransfer
             {
                 if (ShouldProcess("DataTransfer", "Get-GDataTransfer"))
                 {
-                    WriteObject(mainBase.transfers.Get(DataTransferId));
+                    WriteObject(transfers.Get(DataTransferId));
                 }
             }
             else
@@ -151,7 +151,7 @@ namespace gShell.Cmdlets.DataTransfer
 
                 if (ShouldProcess("Email Settings Forwarding", "Set-GEmailSettingsForwarding"))
                 {
-                    List<Data.DataTransfer> results = mainBase.transfers.List(properties).SelectMany(x => x.DataTransfers).ToList();
+                    List<Data.DataTransfer> results = transfers.List(properties).SelectMany(x => x.DataTransfers).ToList();
 
                     WriteObject(results);
                 }
@@ -159,7 +159,7 @@ namespace gShell.Cmdlets.DataTransfer
         }
     }
 
-    [Cmdlet(VerbsCommon.New, "DataTransferParamsObject",
+    [Cmdlet(VerbsCommon.New, "GDataTransferParamsObject",
         SupportsShouldProcess = true,
           HelpUri = @"")]
     public class NewGDataTransferParamsObject : PSCmdlet
@@ -189,7 +189,7 @@ namespace gShell.Cmdlets.DataTransfer
         }
     }
 
-    [Cmdlet(VerbsCommon.New, "DataTransferApplicationObject",
+    [Cmdlet(VerbsCommon.New, "GDataTransferApplicationObject",
         SupportsShouldProcess = true,
           HelpUri = @"")]
     public class NewGDataTransferApplicationObject : PSCmdlet
@@ -227,7 +227,7 @@ namespace gShell.Cmdlets.DataTransfer
         }
     }
 
-    [Cmdlet(VerbsCommon.New, "DataTransfer",
+    [Cmdlet(VerbsCommon.New, "GDataTransfer",
         SupportsShouldProcess = true,
           HelpUri = @"")]
     public class NewGDataTransfer : DataTransferBase
@@ -268,7 +268,7 @@ namespace gShell.Cmdlets.DataTransfer
 
             if (ShouldProcess("DataTransfer", "New-GDataTransfer"))
             {
-                WriteObject(mainBase.transfers.Insert(body));
+                WriteObject(transfers.Insert(body));
             }
         }
     }

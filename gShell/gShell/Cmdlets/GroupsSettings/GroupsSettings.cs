@@ -89,7 +89,7 @@ namespace gShell.Cmdlets.Groupssettings
         {
             if (ShouldProcess("Groups Settings", "Get-GGroupssettings"))
             {
-                WriteObject(mainBase.groups.Get(GroupId));
+                WriteObject(groups.Get(GroupId));
             }
         }
     }
@@ -289,7 +289,7 @@ namespace gShell.Cmdlets.Groupssettings
 
             if (ShouldProcess("Groups Settings", "Set-GGroupssettings"))
             {
-                WriteObject(mainBase.groups.Patch(body, GroupId));
+                WriteObject(groups.Patch(body, GroupId));
             }
         }
     }

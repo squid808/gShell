@@ -124,6 +124,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cmdlets\AdminSettings\AdminSettings.cs" />
+    <Compile Include="Cmdlets\DataTransfer\DataTransfer.cs" />
     <Compile Include="Cmdlets\Directory\GAAsp\GAAsp.cs" />
     <Compile Include="Cmdlets\Directory\GAChannel\GAChannel.cs" />
     <Compile Include="Cmdlets\Directory\GAChromeosdevice\GAChromeosdevices.cs" />
@@ -137,6 +138,7 @@
     <Compile Include="Cmdlets\Directory\gShellUserObject.cs" />
     <Compile Include="Cmdlets\Discovery\DiscoveryBase.cs" />
     <Compile Include="Cmdlets\EmailSettings\EmailSettings.cs" />
+    <Compile Include="Cmdlets\GroupsMigration\GroupsMigration.cs" />
     <Compile Include="Cmdlets\GroupsSettings\GroupsSettings.cs" />
     <Compile Include="Cmdlets\Reports\Enums.cs" />
     <Compile Include="Cmdlets\Reports\GRepActivity\Get-GRepActivity.cs" />
@@ -147,12 +149,16 @@
     <Compile Include="Cmdlets\Reports\ReportsBase.cs" />
     <Compile Include="dotNet\Adminsettings\Google.Apis.admin.Adminsettings.adminsettings_v1.cs" />
     <Compile Include="dotNet\Adminsettings\Google.Apis.admin.Adminsettings.adminsettings_v1_gshell_dotnet.cs" />
+    <Compile Include="dotNet\DataTransfer\Google.Apis.admin.DataTransfer.datatransfer_v1.cs" />
+    <Compile Include="dotNet\DataTransfer\Google.Apis.admin.DataTransfer.datatransfer_v1_gshell_dotnet.cs" />
     <Compile Include="dotNet\Directory\Directory.cs" />
     <Compile Include="dotNet\Directory\Google.Apis.admin.Directory.directory_v1.cs" />
     <Compile Include="dotNet\Directory\Google.Apis.admin.Directory.directory_v1_gshell_dotnet.cs" />
     <Compile Include="dotNet\Emailsettings\Google.Apis.admin.Emailsettings.emailsettings_v1.cs" />
     <Compile Include="dotNet\Emailsettings\Google.Apis.admin.Emailsettings.emailsettings_v1_gshell_dotnet.cs" />
     <Compile Include="dotNet\Discovery\Discovery.cs" />
+    <Compile Include="dotNet\GroupsMigration\Google.Apis.GroupsMigration.v1.cs" />
+    <Compile Include="dotNet\GroupsMigration\Google.Apis.GroupsMigration.v1_gshell_dotnet.cs" />
     <Compile Include="dotNet\GroupsSettings\Google.Apis.Groupssettings.v1.cs" />
     <Compile Include="dotNet\GroupsSettings\Google.Apis.Groupssettings.v1_gshell_dotnet.cs" />
     <Compile Include="dotNet\IServiceWrapper.cs" />
@@ -173,9 +179,6 @@
     <Compile Include="Cmdlets\Directory\GAUser\NewGAUser.cs" />
     <Compile Include="Cmdlets\Directory\GAUser\RemoveGAUser.cs" />
     <Compile Include="Cmdlets\Directory\GAUser\RestoreGAUser.cs" />
-    <Compile Include="Cmdlets\Drive\DriveBase.cs" />
-    <Compile Include="Cmdlets\Drive\GADriveItem\GetGADriveItem.cs" />
-    <Compile Include="Cmdlets\Drive\GADriveItem\GetGADriveItemPermission.cs" />
     <Compile Include="Cmdlets\Directory\GAUserProperty\GAUserPropertyBase.cs" />
     <Compile Include="Cmdlets\Directory\GAUserProperty\GetGAUserProperty.cs" />
     <Compile Include="Cmdlets\Directory\GAUserProperty\NewGAUserProperty.cs" />
