@@ -46,7 +46,7 @@ namespace gShell.Cmdlets.DataTransfer.Applications
         protected override void ProcessRecord()
         {
             if (ParameterSetName == "one") {
-                if (ShouldProcess("DataTransfer Applicaiton", "Get-GDataTransferApplication"))
+                if (ShouldProcess("DataTransfer Application", "Get-GDataTransferApplication"))
                 {
                     WriteObject(applications.Get(ApplicationId));
                 }
