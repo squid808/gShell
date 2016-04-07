@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Management.Automation;
-using System.Collections.Generic;
 
-using Google.Apis.Auth.OAuth2;
 using Data = Google.Apis.Groupssettings.v1.Data;
 
-using gGroupssettings = gShell.dotNet.Groupssettings;
 using gShell.Cmdlets.Emailsettings;
 using gShell.Cmdlets.Emailsettings.Language;
 

@@ -3,11 +3,9 @@ using System.Management.Automation;
 using System.Collections.Generic;
 using System.Linq;
 
-using Google.Apis.Auth.OAuth2;
 using Data = Google.Apis.admin.DataTransfer.datatransfer_v1.Data;
 
 using gDataTransfer = gShell.dotNet.DataTransfer;
-using gShell.Cmdlets.DataTransfer;
 
 namespace gShell.Cmdlets.DataTransfer.Applications
 {

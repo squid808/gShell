@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Management.Automation;
-using System.Collections.Generic;
 
-using Google.Apis.Auth.OAuth2;
 using Data = Google.Apis.admin.Emailsettings.emailsettings_v1.Data;
 
-using gEmailsettings = gShell.dotNet.Emailsettings;
-using gShell.Cmdlets.Emailsettings;
 
 namespace gShell.Cmdlets.Emailsettings
 {
@@ -189,24 +185,24 @@ namespace gShell.Cmdlets.Emailsettings.Filters
 
         protected override void ProcessRecord()
         {
-            if (!string.IsNullOrWhiteSpace(From)
-                && !string.IsNullOrWhiteSpace(To)
-                && !string.IsNullOrWhiteSpace(Subject)
-                && !string.IsNullOrWhiteSpace(HasTheWords)
-                && !string.IsNullOrWhiteSpace(DoesntHave)
-                && HasAttachment.HasValue)
+            if (string.IsNullOrWhiteSpace(From)
+                && string.IsNullOrWhiteSpace(To)
+                && string.IsNullOrWhiteSpace(Subject)
+                && string.IsNullOrWhiteSpace(HasTheWords)
+                && string.IsNullOrWhiteSpace(DoesntHave)
+                && !HasAttachment.HasValue)
             {
                 WriteError(new ErrorRecord(null, (new Exception(
                     "Must use at least one of: From, To, Subject, HasTheWords, DoesntHave or HasAttachment"))));
             }
 
-            if (ArchiveIt.HasValue
-                && MarkAsRead.HasValue
-                && StarIt.HasValue
-                && !string.IsNullOrWhiteSpace(ApplyTheLabel)
-                && !string.IsNullOrWhiteSpace(ForwardIt)
-                && DeleteIt.HasValue
-                && NeverSendItToSpam.HasValue)
+            if (!ArchiveIt.HasValue
+                && !MarkAsRead.HasValue
+                && !StarIt.HasValue
+                && string.IsNullOrWhiteSpace(ApplyTheLabel)
+                && string.IsNullOrWhiteSpace(ForwardIt)
+                && !DeleteIt.HasValue
+                && !NeverSendItToSpam.HasValue)
             {
                 WriteError(new ErrorRecord(null, (new Exception(
                     "Must use at least one of: MarkAsRead, StarIt, ApplyTheLabel, ForwardIt, DeleteIt, or NeverSendItToSpam"))));

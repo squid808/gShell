@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Management.Automation;
-using System.Collections.Generic;
-using System.Linq;
 
-using Google.Apis.Auth.OAuth2;
 using Data = Google.Apis.Licensing.v1.Data;
 
-using GLicenseAssignment = gShell.dotNet.Licensing;
-using gShell.Cmdlets.Licensing;
+using gLicensing = gShell.dotNet.Licensing;
 
 namespace gShell.Cmdlets.Licensing
 {
@@ -86,7 +82,7 @@ namespace gShell.Cmdlets.Licensing
                 }
                 else if (ParameterSetName == "product")
                 {
-                    var properties = new GLicenseAssignment.LicenseAssignments.LicenseAssignmentsListForProductProperties()
+                    var properties = new gLicensing.LicenseAssignments.LicenseAssignmentsListForProductProperties()
                     {
                         maxResults = 1000
                     };
@@ -97,7 +93,7 @@ namespace gShell.Cmdlets.Licensing
                 }
                 else
                 {
-                    var properties = new GLicenseAssignment.LicenseAssignments.LicenseAssignmentsListForProductAndSkuProperties()
+                    var properties = new gLicensing.LicenseAssignments.LicenseAssignmentsListForProductAndSkuProperties()
                     {
                         maxResults = 1000
                     };
@@ -146,9 +142,9 @@ namespace gShell.Cmdlets.Licensing
 
         protected override void ProcessRecord()
         {
-            if (!string.IsNullOrWhiteSpace(NewProductId)
-                && !string.IsNullOrWhiteSpace(NewSkuId)
-                && !string.IsNullOrWhiteSpace(NewUserId))
+            if (string.IsNullOrWhiteSpace(NewProductId)
+                && string.IsNullOrWhiteSpace(NewSkuId)
+                && string.IsNullOrWhiteSpace(NewUserId))
             {
                 WriteError(new ErrorRecord(new Exception(
                     "Must supply at least one parameter for Set-GLicenseAssignment"),
