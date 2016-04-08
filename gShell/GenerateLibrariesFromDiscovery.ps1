@@ -44,6 +44,12 @@ Run-PythonGenerator -PythonScriptPath $ScriptPath -PythonSourcePath $PythonPath 
     -OutputDirPath $Output -Language $Language -LanguageVariant $Variant `
     -ApiName licensing -ApiVersion v1
 
+$Output = "$env:USERPROFILE\Documents\gShell\gShell\gShell\dotNet\Reseller"
+
+Run-PythonGenerator -PythonScriptPath $ScriptPath -PythonSourcePath $PythonPath `
+    -OutputDirPath $Output -Language $Language -LanguageVariant $Variant `
+    -ApiName reseller -ApiVersion v1
+
 $Output = "$env:USERPROFILE\Documents\gShell\gShell\gShell\dotNet\Drive"
 
 Run-PythonGenerator -PythonScriptPath $ScriptPath -PythonSourcePath $PythonPath `
