@@ -487,6 +487,7 @@ namespace gShell.dotNet.CustomSerializer.Xml
             {
                 var result = SerializeSharedContact(obj);
                 return result;
+                //return "<?xml version='1.0' encoding='utf-8'?><atom:entry xmlns:atom='http://www.w3.org/2005/Atom' xmlns:gd='http://schemas.google.com/g/2005'><atom:category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/contact/2008#contact' /><gd:name><gd:givenName>Elizabeth</gd:givenName><gd:familyName>Bennet</gd:familyName><gd:fullName>Elizabeth Bennet</gd:fullName></gd:name><atom:content type='text'>Notes</atom:content><gd:email rel='http://schemas.google.com/g/2005#work' primary='true' address='liz@gmail.com' displayName='E. Bennet' /><gd:email rel='http://schemas.google.com/g/2005#home' address='liz@example.org' /><gd:phoneNumber rel='http://schemas.google.com/g/2005#work' primary='true'>(206)555-1212</gd:phoneNumber><gd:phoneNumber rel='http://schemas.google.com/g/2005#home'>(206)555-1213</gd:phoneNumber><gd:im address='liz@gmail.com' protocol='http://schemas.google.com/g/2005#GOOGLE_TALK' primary='true' rel='http://schemas.google.com/g/2005#home' /><gd:structuredPostalAddress rel='http://schemas.google.com/g/2005#work' primary='true'><gd:city>Mountain View</gd:city><gd:street>1600 Amphitheatre Pkwy</gd:street><gd:region>CA</gd:region><gd:postcode>94043</gd:postcode><gd:country>United States</gd:country><gd:formattedAddress>1600 Amphitheatre Pkwy Mountain View</gd:formattedAddress></gd:structuredPostalAddress></atom:entry>";
             }
             else
             {
@@ -740,6 +741,11 @@ namespace gShell.dotNet.CustomSerializer.Xml
             //Get all entry elements
             var entryElements = xmlString.Elements(mainNS + "entry");
 
+            if (entryElements.Count() == 0 && xmlString.Name.LocalName == "entry")
+            {
+                entryElements = new XElement[] { xmlString };
+            }
+
             //Prepare and gather a collection of result objects
             var resultCollection = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(targetType));
 
@@ -748,7 +754,6 @@ namespace gShell.dotNet.CustomSerializer.Xml
             {
                 foreach (XElement item in entryElements)
                 {
-
                     MethodInfo method = this.GetType().GetMethod("DeserializeNamedElements"); //TODO: Find a way not based on string?
                     MethodInfo generic = method.MakeGenericMethod(targetType);
 
@@ -790,15 +795,57 @@ namespace gShell.dotNet.CustomSerializer.Xml
                 }
             }
 
-            var subElements = input.Elements();
+            var propsByName = new List<KeyValuePair<string, string>>();
+            var elementsByName = new Dictionary<string, XElement>();
+
+            //Use to track elements with just attributes that happen to be subobjects
+            var elementsWithAttributes = new Dictionary<string, XElement>();
+
+            foreach (var element in input.Elements())
+            {
+                propsByName.Add(new KeyValuePair<string, string>(element.Name.LocalName, element.Value));
+                elementsByName[element.Name.LocalName] = element;
+                if (element.Attributes().Count() > 0)
+                    if (element.Name.LocalName != "link")
+                    {
+                        elementsWithAttributes[element.Name.LocalName] = element;
+                    }
+                    else
+                    {
+                        var linkRel = element.Attribute("rel");
+
+                        if (linkRel != null)
+                        {
+                            string linkValue = element.Attribute("href").Value;
+
+                            if (linkRel.Value == "self")
+                                propsByName.Add(new KeyValuePair<string, string>("link_self", linkValue));
+                            else if (linkRel.Value == "edit")
+                                propsByName.Add(new KeyValuePair<string, string>("link_edit", linkValue));
+                            else if (linkRel.Value.Contains("edit-photo"))
+                                propsByName.Add(new KeyValuePair<string, string>("link_edit-photo", linkValue));
+                        }
+                    }
+            }
+
+            foreach (var att in input.Attributes())
+            {
+                propsByName.Add(new KeyValuePair<string, string>(att.Name.LocalName, att.Value));
+            }
+
+            if (input.Name.LocalName == "phoneNumber" && !string.IsNullOrWhiteSpace(input.Value))
+            {
+                propsByName.Add(new KeyValuePair<string, string>("text", input.Value));
+            }
+
+            //TODO: FIGURE OUT HOW TO GET THE EDIT LINK URL
 
             // Get all elements for the node
-            foreach (var element in subElements)
+            foreach (var pair in propsByName)
             {
-                if (!string.IsNullOrWhiteSpace(element.Value))
+                if (!string.IsNullOrWhiteSpace(pair.Value) || elementsWithAttributes.ContainsKey(pair.Key))
                 {
-                    //email
-                    var ename = element.Name.LocalName;
+                    string ename = pair.Key;
 
                     //pbN[Contact][email] = property(List<Email>)
                     if (propertiesByName[typeof(T)].ContainsKey(ename))
@@ -820,30 +867,30 @@ namespace gShell.dotNet.CustomSerializer.Xml
 
                         if (targetType == typeof(string))
                         {
-                            result = element.Value;
+                            result = pair.Value;
                         }
                         else if (targetType == typeof(int?))
                         {
-                            result = int.Parse(element.Value);
+                            result = int.Parse(pair.Value);
                         }
                         else if (targetType == typeof(bool?))
                         {
-                            result = bool.Parse(element.Value);
+                            result = bool.Parse(pair.Value);
                         }
                         else if (targetType == typeof(long?))
                         {
-                            result = long.Parse(element.Value);
+                            result = long.Parse(pair.Value);
                         }
                         else if (targetType == typeof(DateTime?))
                         {
-                            result = DateTime.Parse(element.Value);
+                            result = DateTime.Parse(pair.Value);
                         }
                         else if (targetType.Namespace == typeof(T).Namespace)
                         {
                             MethodInfo method = this.GetType().GetMethod("DeserializeNamedElements"); //TODO: Find a way not based on string?
                             MethodInfo generic = method.MakeGenericMethod(targetType);
 
-                            result = generic.Invoke(this, new object[] { element });
+                            result = generic.Invoke(this, new object[] { elementsByName[pair.Key] });
                         }
 
                         //now that we have the result, set it if it's the right type
@@ -856,6 +903,18 @@ namespace gShell.dotNet.CustomSerializer.Xml
                         {
                             prop.SetValue(target, result);
                         }
+                    }
+                    else if (ename.StartsWith("link_"))
+                    {
+                        var elink = new EntryLink()
+                        {
+                            Rel = pair.Key,
+                            Href = pair.Value
+                        };
+
+                        var prop = propertiesByName[typeof(T)]["links"];
+
+                        ((IList)prop.GetValue(target)).Add(elink);
                     }
                 }
             }
