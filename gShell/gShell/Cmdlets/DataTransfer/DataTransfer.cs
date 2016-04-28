@@ -69,7 +69,7 @@ namespace gShell.Cmdlets.DataTransfer.Applications
 
 namespace gShell.Cmdlets.DataTransfer
 {
-    enum ApplicationTransferStatusEnum
+    public enum ApplicationTransferStatusEnum
     {
         completed, failed, inProgress, pending
     }

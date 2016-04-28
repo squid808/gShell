@@ -140,6 +140,7 @@
     <Compile Include="Cmdlets\EmailSettings\EmailSettings.cs" />
     <Compile Include="Cmdlets\GroupsMigration\GroupsMigration.cs" />
     <Compile Include="Cmdlets\GroupsSettings\GroupsSettings.cs" />
+    <Compile Include="Cmdlets\Licensing\Licensing.cs" />
     <Compile Include="Cmdlets\Reports\Enums.cs" />
     <Compile Include="Cmdlets\Reports\GRepActivity\Get-GRepActivity.cs" />
     <Compile Include="Cmdlets\Reports\GRepActivity\WatchGRepActivity.cs" />
@@ -147,6 +148,8 @@
     <Compile Include="Cmdlets\Reports\GRepCustomerUsageReport\GetGRepCustomerUsageReport.cs" />
     <Compile Include="Cmdlets\Reports\GRepUserUsageReport\GetGRepUserUsageReport.cs" />
     <Compile Include="Cmdlets\Reports\ReportsBase.cs" />
+    <Compile Include="Cmdlets\Reseller\Reseller.cs" />
+    <Compile Include="Cmdlets\SharedContacts\SharedContacts.cs" />
     <Compile Include="dotNet\Adminsettings\Google.Apis.admin.Adminsettings.adminsettings_v1.cs" />
     <Compile Include="dotNet\Adminsettings\Google.Apis.admin.Adminsettings.adminsettings_v1_gshell_dotnet.cs" />
     <Compile Include="dotNet\DataTransfer\Google.Apis.admin.DataTransfer.datatransfer_v1.cs" />
@@ -162,8 +165,14 @@
     <Compile Include="dotNet\GroupsSettings\Google.Apis.Groupssettings.v1.cs" />
     <Compile Include="dotNet\GroupsSettings\Google.Apis.Groupssettings.v1_gshell_dotnet.cs" />
     <Compile Include="dotNet\IServiceWrapper.cs" />
+    <Compile Include="dotNet\Licensing\Google.Apis.Licensing.v1.cs" />
+    <Compile Include="dotNet\Licensing\Google.Apis.Licensing.v1_gshell_dotnet.cs" />
     <Compile Include="dotNet\Reports\Google.Apis.admin.Reports.reports_v1.cs" />
     <Compile Include="dotNet\Reports\Google.Apis.admin.Reports.reports_v1_gshell_dotnet.cs" />
+    <Compile Include="dotNet\Reseller\Google.Apis.Reseller.v1.cs" />
+    <Compile Include="dotNet\Reseller\Google.Apis.Reseller.v1_gshell_dotnet.cs" />
+    <Compile Include="dotNet\SharedContacts\Google.Apis.admin.Sharedcontacts.sharedcontacts_v3.cs" />
+    <Compile Include="dotNet\SharedContacts\Google.Apis.admin.Sharedcontacts.sharedcontacts_v3_gshell_dotnet.cs" />
     <Compile Include="dotNet\Utilities\CustomSerializer\CustomJsonSerializer.cs" />
     <Compile Include="Cmdlets\Directory\GAGroupMember\AddGAGroupMember.cs" />
     <Compile Include="Cmdlets\Directory\GAGroupMember\GetGAGroupMember.cs" />
@@ -218,9 +227,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="dotNet\Drive\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

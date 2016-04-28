@@ -75,12 +75,26 @@ namespace gShell.dotNet.CustomSerializer.Xml
         {
             if (obj != null)
             {
+                Contact c = (Contact)obj;
+
+                if (!string.IsNullOrWhiteSpace(c.Id))
+                    writer.WriteElementString("id", c.Id);
+
+                if (!string.IsNullOrWhiteSpace(c.Updated))
+                    writer.WriteElementString("updated", c.Updated);
+
                 writer.WriteStartElement("category");
                 writer.WriteAttributeString("scheme", "http://schemas.google.com/g/2005#kind");
                 writer.WriteAttributeString("term", "http://schemas.google.com/contact/2008#contact");
                 writer.WriteEndElement();
 
-                Contact c = (Contact)obj;
+                writer.WriteStartElement("title");
+                writer.WriteAttributeString("type", "text");
+                if (!string.IsNullOrWhiteSpace(c.Title))
+                    writer.WriteValue(c.Title);
+                writer.WriteEndElement();
+
+                writer.WriteLinks(c.Links);
 
                 if (!string.IsNullOrWhiteSpace(c.Content))
                     writer.WriteElementString("content", c.Content);
@@ -114,8 +128,49 @@ namespace gShell.dotNet.CustomSerializer.Xml
                     foreach (var s in c.StructuredPostalAddress)
                         writer.WriteStructuredPostalAddress(s);
 
+                if (!string.IsNullOrWhiteSpace(c.Title))
+                {
+                    writer.WriteStartElement("title");
+                    writer.WriteAttributeString("type", "text");
+                    writer.WriteValue(c.Title);
+                    writer.WriteEndElement();
+                }
+
                 writer.WriteWhere(c.Where);
 
+            }
+        }
+
+        public static void WriteLinks(this XmlWriter writer, IEnumerable<EntryLink> links)
+        {
+            if (links != null)
+            {
+                foreach (var link in links)
+                {
+                    writer.WriteStartElement("link");
+
+                    switch (link.Rel)
+                    {
+                        case "link_self":
+                            writer.WriteAttributeString("rel", "self");
+                            writer.WriteAttributeString("type", "application/atom+xml");
+                            break;
+
+                        case "link_edit":
+                            writer.WriteAttributeString("rel", "edit");
+                            writer.WriteAttributeString("type", "application/atom+xml");
+                            break;
+
+                        case "link_edit-photo":
+                            writer.WriteAttributeString("rel", "http://schemas.google.com/contacts/2008/rel#edit-photo");
+                            writer.WriteAttributeString("type","image/*");
+                            break;
+                    }
+
+                    writer.WriteAttributeString("href",link.Href);
+
+                    writer.WriteEndElement();
+                }
             }
         }
 

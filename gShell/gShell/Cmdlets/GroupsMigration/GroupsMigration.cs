@@ -11,7 +11,7 @@ using gGroupssettings = gShell.dotNet.GroupsMigration;
 
 namespace gShell.Cmdlets.GroupsMigration
 {
-    enum UploadTypeEnum
+    public enum UploadTypeEnum
     {
         media, resumable
     }

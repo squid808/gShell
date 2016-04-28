@@ -9,62 +9,62 @@ using gShell.Cmdlets.Emailsettings.Language;
 namespace gShell.Cmdlets.Groupssettings
 {
     #region Enums
-    enum WhoCanJoinEnum
+    public enum WhoCanJoinEnum
     {
         ALL_IN_DOMAIN_CAN_JOIN, ANYONE_CAN_JOIN, CAN_REQUEST_TO_JOIN, INVITED_CAN_JOIN
     }
 
-    enum WhoCanViewMembershipEnum
+    public enum WhoCanViewMembershipEnum
     {
         ALL_IN_DOMAIN_CAN_VIEW, ALL_MANAGERS_CAN_VIEW, ALL_MEMBERS_CAN_VIEW
     }
 
-    enum WhoCanViewGroupEnum
+    public enum WhoCanViewGroupEnum
     {
         ALL_IN_DOMAIN_CAN_VIEW, ALL_MANAGERS_CAN_VIEW, ALL_MEMBERS_CAN_VIEW, ANYON_CAN_VIEW
     }
 
-    enum WhoCanInviteEnum
+    public enum WhoCanInviteEnum
     {
         ALL_MANAGERS_CAN_INVITE, ALL_MEMBERS_CAN_INVITE, NONE_CAN_INVITE
     }
 
-    enum WhoCanAddEnum
+    public enum WhoCanAddEnum
     {
         ALL_MEMBERS_CAN_ADD, ALL_MANAGERS_CAN_ADD, NONE_CAN_ADD
     }
 
-    enum WhoCanPostMessageEnum
+    public enum WhoCanPostMessageEnum
     {
         ALL_IN_DOMAIN_CAN_POST, ALL_MANAGERS_CAN_POST, ALL_MEMBERS_CAN_POST, ANYONE_CAN_POST, NONE_CAN_POST
     }
 
-    enum MessageModerationLevelEnum
+    public enum MessageModerationLevelEnum
     {
         MODERATE_ALL_MESSAGES, MODERATE_NEW_MEMBERS, MODERATE_NONE, MODERATE_NON_MEMBERS
     }
 
-    enum SpamModerationLevelEnum
+    public enum SpamModerationLevelEnum
     {
         ALLOW, MODERATE, SILENTLY_MODERATE, REJECT
     }
 
-    enum ReplyToEnum
+    public enum ReplyToEnum
     {
         REPLY_TO_CUSTOM, REPLY_TO_IGNORE, REPLY_TO_LIST, REPLY_TO_MANAGERS, REPLY_TO_OWNER, REPLY_TO_SENDER
     }
 
-    enum MessageDisplayFontEnum
+    public enum MessageDisplayFontEnum
     {
         DEFAULT_FONT, FIXED_WIDTH_FONT
     }
 
-    enum WhoCanLeaveGroupEnum
+    public enum WhoCanLeaveGroupEnum
     {
         ALL_MANAGERS_CAN_LEAVE, ALL_MEMBERS_CAN_LEAVE, NONE_CAN_LEAVE
     }
 
-    enum WhoCanContactOwnerEnum
+    public enum WhoCanContactOwnerEnum
     {
         ALL_IN_DOMAIN_CAN_CONTACT, ALL_MANAGERS_CAN_CONTACT, ALL_MEMBERS_CAN_CONTACT, ANYONE_CAN_CONTACT
     }
