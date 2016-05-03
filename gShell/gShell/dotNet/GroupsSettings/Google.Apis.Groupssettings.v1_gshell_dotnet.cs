@@ -26,6 +26,8 @@ namespace gShell.Cmdlets.Groupssettings{
         public Groups groups { get; set; }
 
         protected override string apiNameAndVersion { get { return mainBase.apiNameAndVersion; } }
+
+        protected static string gShellServiceAccount { get; set; }
         #endregion
 
         #region Constructors
@@ -44,7 +46,7 @@ namespace gShell.Cmdlets.Groupssettings{
             if (secrets != null)
             {
                 IEnumerable<string> scopes = EnsureScopesExist(Domain);
-                Domain = mainBase.BuildService(Authenticate(scopes, secrets, Domain)).domain;
+                Domain = mainBase.BuildService(Authenticate(scopes, secrets, Domain), gShellServiceAccount).domain;
 
                 GWriteProgress = new gWriteProgress(WriteProgress);
             }
@@ -54,6 +56,16 @@ namespace gShell.Cmdlets.Groupssettings{
                     "Client Secrets must be set before running cmdlets. Run 'Get-Help "
                     + "Set-gShellClientSecrets -online' for more information."))));
             }
+        }
+
+        protected override void EndProcessing()
+        {
+            gShellServiceAccount = string.Empty;
+        }
+
+        protected override void StopProcessing()
+        {
+            gShellServiceAccount = string.Empty;
         }
         #endregion
 
@@ -76,36 +88,30 @@ namespace gShell.Cmdlets.Groupssettings{
 
 
 
-            public Google.Apis.Groupssettings.v1.Data.Groups Get (
-            string
+            public Google.Apis.Groupssettings.v1.Data.Groups Get (string
 
              groupUniqueId)
             {
 
-                return mainBase.groups.Get(
-                groupUniqueId);
+                return mainBase.groups.Get(groupUniqueId, gShellServiceAccount);
             }
 
 
-            public Google.Apis.Groupssettings.v1.Data.Groups Patch (
-            Google.Apis.Groupssettings.v1.Data.Groups body, string
+            public Google.Apis.Groupssettings.v1.Data.Groups Patch (Google.Apis.Groupssettings.v1.Data.Groups body, string
 
              groupUniqueId)
             {
 
-                return mainBase.groups.Patch(
-                body, groupUniqueId);
+                return mainBase.groups.Patch(body, groupUniqueId, gShellServiceAccount);
             }
 
 
-            public Google.Apis.Groupssettings.v1.Data.Groups Update (
-            Google.Apis.Groupssettings.v1.Data.Groups body, string
+            public Google.Apis.Groupssettings.v1.Data.Groups Update (Google.Apis.Groupssettings.v1.Data.Groups body, string
 
              groupUniqueId)
             {
 
-                return mainBase.groups.Update(
-                body, groupUniqueId);
+                return mainBase.groups.Update(body, groupUniqueId, gShellServiceAccount);
             }
         }
 
@@ -134,9 +140,9 @@ namespace gShell.dotNet
 
         protected override bool worksWithGmail { get { return true; } }
 
-        protected override v1.GroupssettingsService CreateNewService(string domain)
+        protected override v1.GroupssettingsService CreateNewService(string domain, AuthenticatedUserInfo authInfo, string gShellServiceAccount = null)
         {
-            return new v1.GroupssettingsService(OAuth2Base.GetInitializer(domain));
+            return new v1.GroupssettingsService(OAuth2Base.GetInitializer(domain, authInfo, gShellServiceAccount));
         }
 
         public override string apiNameAndVersion { get { return "groupssettings:v1"; } }
@@ -160,21 +166,21 @@ namespace gShell.dotNet
 
 
             public Google.Apis.Groupssettings.v1.Data.Groups Get
-            (string groupUniqueId)
+            (string groupUniqueId, string gShellServiceAccount = null)
             {
-                return GetService().Groups.Get(    groupUniqueId).Execute();
+                return GetService(gShellServiceAccount).Groups.Get(groupUniqueId).Execute();
             }
 
             public Google.Apis.Groupssettings.v1.Data.Groups Patch
-            (Google.Apis.Groupssettings.v1.Data.Groups body, string groupUniqueId)
+            (Google.Apis.Groupssettings.v1.Data.Groups body, string groupUniqueId, string gShellServiceAccount = null)
             {
-                return GetService().Groups.Patch(    body, groupUniqueId).Execute();
+                return GetService(gShellServiceAccount).Groups.Patch(body, groupUniqueId).Execute();
             }
 
             public Google.Apis.Groupssettings.v1.Data.Groups Update
-            (Google.Apis.Groupssettings.v1.Data.Groups body, string groupUniqueId)
+            (Google.Apis.Groupssettings.v1.Data.Groups body, string groupUniqueId, string gShellServiceAccount = null)
             {
-                return GetService().Groups.Update(    body, groupUniqueId).Execute();
+                return GetService(gShellServiceAccount).Groups.Update(body, groupUniqueId).Execute();
             }
 
         }

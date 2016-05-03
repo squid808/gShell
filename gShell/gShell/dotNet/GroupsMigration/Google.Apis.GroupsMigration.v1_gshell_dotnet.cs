@@ -26,6 +26,8 @@ namespace gShell.Cmdlets.GroupsMigration{
         public Archive archive { get; set; }
 
         protected override string apiNameAndVersion { get { return mainBase.apiNameAndVersion; } }
+
+        protected static string gShellServiceAccount { get; set; }
         #endregion
 
         #region Constructors
@@ -44,7 +46,7 @@ namespace gShell.Cmdlets.GroupsMigration{
             if (secrets != null)
             {
                 IEnumerable<string> scopes = EnsureScopesExist(Domain);
-                Domain = mainBase.BuildService(Authenticate(scopes, secrets, Domain)).domain;
+                Domain = mainBase.BuildService(Authenticate(scopes, secrets, Domain), gShellServiceAccount).domain;
 
                 GWriteProgress = new gWriteProgress(WriteProgress);
             }
@@ -54,6 +56,16 @@ namespace gShell.Cmdlets.GroupsMigration{
                     "Client Secrets must be set before running cmdlets. Run 'Get-Help "
                     + "Set-gShellClientSecrets -online' for more information."))));
             }
+        }
+
+        protected override void EndProcessing()
+        {
+            gShellServiceAccount = string.Empty;
+        }
+
+        protected override void StopProcessing()
+        {
+            gShellServiceAccount = string.Empty;
         }
         #endregion
 
@@ -80,7 +92,7 @@ namespace gShell.Cmdlets.GroupsMigration{
              groupId, System.IO.Stream stream, string contentType)
             {
 
-                mainBase.archive.Insert(groupId, stream, contentType);
+                mainBase.archive.Insert(groupId, stream, contentType, gShellServiceAccount);
             }
         }
 
@@ -109,9 +121,9 @@ namespace gShell.dotNet
 
         protected override bool worksWithGmail { get { return true; } }
 
-        protected override v1.GroupsMigrationService CreateNewService(string domain)
+        protected override v1.GroupsMigrationService CreateNewService(string domain, AuthenticatedUserInfo authInfo, string gShellServiceAccount = null)
         {
-            return new v1.GroupsMigrationService(OAuth2Base.GetInitializer(domain));
+            return new v1.GroupsMigrationService(OAuth2Base.GetInitializer(domain, authInfo, gShellServiceAccount));
         }
 
         public override string apiNameAndVersion { get { return "groupsmigration:v1"; } }
@@ -135,9 +147,9 @@ namespace gShell.dotNet
 
 
             public void Insert
-            (string groupId, System.IO.Stream stream, string contentType)
+            (string groupId, System.IO.Stream stream, string contentType, string gShellServiceAccount = null)
             {
-                GetService().Archive.Insert(groupId, stream, contentType).Upload();
+                GetService(gShellServiceAccount).Archive.Insert(groupId, stream, contentType).Upload();
             }
 
         }

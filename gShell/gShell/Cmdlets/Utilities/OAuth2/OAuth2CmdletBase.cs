@@ -167,6 +167,10 @@ namespace gShell.dotNet.Utilities.OAuth2
                     WriteWarning("No scopes were chosen. You can run this process manually with Invoke-ScopeManager later.");
                 }
             }
+            else
+            {
+                return OAuth2Base.infoConsumer.GetTokenInfo(Domain, defaultUser, apiNameAndVersion).scopes;
+            }
 
             return null;
         }

@@ -26,6 +26,8 @@ namespace gShell.Cmdlets.Licensing{
         public LicenseAssignments licenseAssignments { get; set; }
 
         protected override string apiNameAndVersion { get { return mainBase.apiNameAndVersion; } }
+
+        protected static string gShellServiceAccount { get; set; }
         #endregion
 
         #region Constructors
@@ -44,7 +46,7 @@ namespace gShell.Cmdlets.Licensing{
             if (secrets != null)
             {
                 IEnumerable<string> scopes = EnsureScopesExist(Domain);
-                Domain = mainBase.BuildService(Authenticate(scopes, secrets, Domain)).domain;
+                Domain = mainBase.BuildService(Authenticate(scopes, secrets, Domain), gShellServiceAccount).domain;
 
                 GWriteProgress = new gWriteProgress(WriteProgress);
             }
@@ -54,6 +56,16 @@ namespace gShell.Cmdlets.Licensing{
                     "Client Secrets must be set before running cmdlets. Run 'Get-Help "
                     + "Set-gShellClientSecrets -online' for more information."))));
             }
+        }
+
+        protected override void EndProcessing()
+        {
+            gShellServiceAccount = string.Empty;
+        }
+
+        protected override void StopProcessing()
+        {
+            gShellServiceAccount = string.Empty;
         }
         #endregion
 
@@ -85,7 +97,7 @@ namespace gShell.Cmdlets.Licensing{
              userId)
             {
 
-                mainBase.licenseAssignments.Delete(productId, skuId, userId);
+                mainBase.licenseAssignments.Delete(productId, skuId, userId, gShellServiceAccount);
             }
 
 
@@ -98,7 +110,7 @@ namespace gShell.Cmdlets.Licensing{
              userId)
             {
 
-                return mainBase.licenseAssignments.Get(productId, skuId, userId);
+                return mainBase.licenseAssignments.Get(productId, skuId, userId, gShellServiceAccount);
             }
 
 
@@ -109,7 +121,7 @@ namespace gShell.Cmdlets.Licensing{
              skuId)
             {
 
-                return mainBase.licenseAssignments.Insert(body, productId, skuId);
+                return mainBase.licenseAssignments.Insert(body, productId, skuId, gShellServiceAccount);
             }
 
 
@@ -154,7 +166,7 @@ namespace gShell.Cmdlets.Licensing{
              userId)
             {
 
-                return mainBase.licenseAssignments.Patch(body, productId, skuId, userId);
+                return mainBase.licenseAssignments.Patch(body, productId, skuId, userId, gShellServiceAccount);
             }
 
 
@@ -167,7 +179,7 @@ namespace gShell.Cmdlets.Licensing{
              userId)
             {
 
-                return mainBase.licenseAssignments.Update(body, productId, skuId, userId);
+                return mainBase.licenseAssignments.Update(body, productId, skuId, userId, gShellServiceAccount);
             }
         }
 
@@ -196,9 +208,9 @@ namespace gShell.dotNet
 
         protected override bool worksWithGmail { get { return true; } }
 
-        protected override v1.LicensingService CreateNewService(string domain)
+        protected override v1.LicensingService CreateNewService(string domain, AuthenticatedUserInfo authInfo, string gShellServiceAccount = null)
         {
-            return new v1.LicensingService(OAuth2Base.GetInitializer(domain));
+            return new v1.LicensingService(OAuth2Base.GetInitializer(domain, authInfo, gShellServiceAccount));
         }
 
         public override string apiNameAndVersion { get { return "licensing:v1"; } }
@@ -239,29 +251,29 @@ namespace gShell.dotNet
 
 
             public void Delete
-            (string productId, string skuId, string userId)
+            (string productId, string skuId, string userId, string gShellServiceAccount = null)
             {
-                GetService().LicenseAssignments.Delete(productId, skuId, userId).Execute();
+                GetService(gShellServiceAccount).LicenseAssignments.Delete(productId, skuId, userId).Execute();
             }
 
             public Google.Apis.Licensing.v1.Data.LicenseAssignment Get
-            (string productId, string skuId, string userId)
+            (string productId, string skuId, string userId, string gShellServiceAccount = null)
             {
-                return GetService().LicenseAssignments.Get(productId, skuId, userId).Execute();
+                return GetService(gShellServiceAccount).LicenseAssignments.Get(productId, skuId, userId).Execute();
             }
 
             public Google.Apis.Licensing.v1.Data.LicenseAssignment Insert
-            (Google.Apis.Licensing.v1.Data.LicenseAssignmentInsert body, string productId, string skuId)
+            (Google.Apis.Licensing.v1.Data.LicenseAssignmentInsert body, string productId, string skuId, string gShellServiceAccount = null)
             {
-                return GetService().LicenseAssignments.Insert(body, productId, skuId).Execute();
+                return GetService(gShellServiceAccount).LicenseAssignments.Insert(body, productId, skuId).Execute();
             }
 
             public List<Google.Apis.Licensing.v1.Data.LicenseAssignmentList> ListForProduct(
-                string     productId, string     customerId, LicenseAssignmentsListForProductProperties properties = null)
+                string     productId, string     customerId, LicenseAssignmentsListForProductProperties properties = null, string gShellServiceAccount = null)
             {
                 var results = new List<Google.Apis.Licensing.v1.Data.LicenseAssignmentList>();
 
-                v1.LicenseAssignmentsResource.ListForProductRequest request = GetService().LicenseAssignments.ListForProduct(
+                v1.LicenseAssignmentsResource.ListForProductRequest request = GetService(gShellServiceAccount).LicenseAssignments.ListForProduct(
             productId, customerId);
 
                 if (properties != null)
@@ -310,11 +322,11 @@ namespace gShell.dotNet
             }
 
             public List<Google.Apis.Licensing.v1.Data.LicenseAssignmentList> ListForProductAndSku(
-                string     productId, string     skuId, string     customerId, LicenseAssignmentsListForProductAndSkuProperties properties = null)
+                string     productId, string     skuId, string     customerId, LicenseAssignmentsListForProductAndSkuProperties properties = null, string gShellServiceAccount = null)
             {
                 var results = new List<Google.Apis.Licensing.v1.Data.LicenseAssignmentList>();
 
-                v1.LicenseAssignmentsResource.ListForProductAndSkuRequest request = GetService().LicenseAssignments.ListForProductAndSku(
+                v1.LicenseAssignmentsResource.ListForProductAndSkuRequest request = GetService(gShellServiceAccount).LicenseAssignments.ListForProductAndSku(
             productId, skuId, customerId);
 
                 if (properties != null)
@@ -363,15 +375,15 @@ namespace gShell.dotNet
             }
 
             public Google.Apis.Licensing.v1.Data.LicenseAssignment Patch
-            (Google.Apis.Licensing.v1.Data.LicenseAssignment body, string productId, string skuId, string userId)
+            (Google.Apis.Licensing.v1.Data.LicenseAssignment body, string productId, string skuId, string userId, string gShellServiceAccount = null)
             {
-                return GetService().LicenseAssignments.Patch(body, productId, skuId, userId).Execute();
+                return GetService(gShellServiceAccount).LicenseAssignments.Patch(body, productId, skuId, userId).Execute();
             }
 
             public Google.Apis.Licensing.v1.Data.LicenseAssignment Update
-            (Google.Apis.Licensing.v1.Data.LicenseAssignment body, string productId, string skuId, string userId)
+            (Google.Apis.Licensing.v1.Data.LicenseAssignment body, string productId, string skuId, string userId, string gShellServiceAccount = null)
             {
-                return GetService().LicenseAssignments.Update(body, productId, skuId, userId).Execute();
+                return GetService(gShellServiceAccount).LicenseAssignments.Update(body, productId, skuId, userId).Execute();
             }
 
         }

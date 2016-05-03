@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Security.Cryptography.X509Certificates;
 
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Auth.OAuth2.Responses;
@@ -269,13 +271,9 @@ namespace gShell.dotNet.Utilities.OAuth2
 
         #endregion
 
-        
-
         #region Accessors
 
-        /// <summary>
-        /// Set the Client Id and Secret 
-        /// </summary>
+        /// <summary>Set the Client Id and Secret.</summary>
         public static void SetClientSecrets(string ClientId, string ClientSecret, string Domain = null, string UserEmail = null)
         {
             ClientSecrets secrets = new ClientSecrets() {
@@ -284,6 +282,39 @@ namespace gShell.dotNet.Utilities.OAuth2
             };
 
             infoConsumer.SetDefaultClientSecrets(secrets);
+        }
+
+        /// <summary>Set the service account for a domain.</summary>
+        public static void SetServiceAccount(string domain, string email, string certificatePath, string keyPassword = "notasecret")
+        {
+            if (string.IsNullOrWhiteSpace(keyPassword))
+                keyPassword = "notasecret";
+
+            if (Path.GetExtension(certificatePath) == ".json")
+            {
+                using (StreamReader file = File.OpenText(certificatePath))
+                {
+                    string certContents = file.ReadToEnd();
+                    SetJsonServiceAccount(domain, email, certContents, keyPassword);
+                }
+            }
+            else
+            {
+                var certificate = new X509Certificate2(certificatePath, keyPassword, X509KeyStorageFlags.Exportable);
+                SetX509ServiceAccount(domain, email, certificate, keyPassword);
+            }
+        }
+
+        /// <summary>Set the service account for a domain with a p12 cert base.</summary>
+        public static void SetX509ServiceAccount(string domain, string email, X509Certificate2 certificate, string keyPassword)
+        {
+            infoConsumer.SetServiceAccount(domain, email, certificate, keyPassword);
+        }
+
+        /// <summary>Set the service account for a domain with a json cert base.</summary>
+        public static void SetJsonServiceAccount(string domain, string email, string certificate, string keyPassword)
+        {
+            infoConsumer.SetServiceAccount(domain, email, certificate, keyPassword);
         }
 
         /// <summary>
@@ -308,7 +339,23 @@ namespace gShell.dotNet.Utilities.OAuth2
         /// <summary>
         /// Returns an initializer used to create a new service.
         /// </summary>
-        public static BaseClientService.Initializer GetInitializer(string AppName)
+        public static BaseClientService.Initializer GetInitializer(string AppName, AuthenticatedUserInfo authInfo, string serviceAccountUser = null)
+        {
+            //for non admin APIs, we need a service account
+            //TODO: add in a default option to allow users to default to the DiscoveryInitializer anyways, if they want
+            //if (authInfo.apiNameAndVersion.Contains("gmail")
+            //    || authInfo.apiNameAndVersion.Contains("drive"))
+            if (string.IsNullOrWhiteSpace(serviceAccountUser))
+            {
+                return GetDiscoveryInitializer(AppName, authInfo);
+            }
+            else
+            {
+                return GetServiceInitializer(AppName, authInfo, serviceAccountUser);
+            }
+        }
+
+        public static BaseClientService.Initializer GetDiscoveryInitializer(string AppName, AuthenticatedUserInfo authInfo)
         {
             gJsonInitializer initializer = new gJsonInitializer()
             {
@@ -322,7 +369,7 @@ namespace gShell.dotNet.Utilities.OAuth2
         /// <summary>
         /// Returns an initializer used to create a new service for GData APIs.
         /// </summary>
-        public static BaseClientService.Initializer GetGdataInitializer(string AppName)
+        public static BaseClientService.Initializer GetGdataInitializer(string AppName, AuthenticatedUserInfo authInfo)
         {
             gXmlInitializer initializer = new gXmlInitializer()
             {
@@ -334,6 +381,38 @@ namespace gShell.dotNet.Utilities.OAuth2
             return initializer;
         }
 
+
+        public static BaseClientService.Initializer GetServiceInitializer(string appName, AuthenticatedUserInfo authInfo, string serviceAccountUser)
+        {
+            var serviceAccount = infoConsumer.GetServiceAccount(authInfo.domain);
+
+            var scopes = authInfo.scopes;
+
+            if (authInfo.apiNameAndVersion.Contains("gmail"))
+            {
+                scopes = new string[] { "https://mail.google.com/" };
+            }
+            else if (authInfo.apiNameAndVersion.Contains("drive"))
+            {
+                scopes = new string[] { "https://www.googleapis.com/auth/drive" };
+            }
+
+
+            ServiceAccountCredential credential = new ServiceAccountCredential(
+               new ServiceAccountCredential.Initializer(serviceAccount.email)
+               {
+                   User = serviceAccountUser,
+                   Scopes = scopes
+               }.FromCertificate(serviceAccount.certificate));
+
+            var init = new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = credential,
+                ApplicationName = appName,
+            };
+
+            return init;
+        }
         #endregion
     }
 

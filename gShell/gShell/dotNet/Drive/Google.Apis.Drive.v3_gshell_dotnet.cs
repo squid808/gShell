@@ -33,6 +33,8 @@ namespace gShell.Cmdlets.Drive{
         public Revisions revisions { get; set; }
 
         protected override string apiNameAndVersion { get { return mainBase.apiNameAndVersion; } }
+
+        protected static string gShellServiceAccount { get; set; }
         #endregion
 
         #region Constructors
@@ -58,7 +60,7 @@ namespace gShell.Cmdlets.Drive{
             if (secrets != null)
             {
                 IEnumerable<string> scopes = EnsureScopesExist(Domain);
-                Domain = mainBase.BuildService(Authenticate(scopes, secrets, Domain)).domain;
+                Domain = mainBase.BuildService(Authenticate(scopes, secrets, Domain), gShellServiceAccount).domain;
 
                 GWriteProgress = new gWriteProgress(WriteProgress);
             }
@@ -68,6 +70,16 @@ namespace gShell.Cmdlets.Drive{
                     "Client Secrets must be set before running cmdlets. Run 'Get-Help "
                     + "Set-gShellClientSecrets -online' for more information."))));
             }
+        }
+
+        protected override void EndProcessing()
+        {
+            gShellServiceAccount = string.Empty;
+        }
+
+        protected override void StopProcessing()
+        {
+            gShellServiceAccount = string.Empty;
         }
         #endregion
 
@@ -93,7 +105,7 @@ namespace gShell.Cmdlets.Drive{
             public Google.Apis.Drive.v3.Data.About Get ()
             {
 
-                return mainBase.about.Get();
+                return mainBase.about.Get(gShellServiceAccount);
             }
         }
 
@@ -112,33 +124,29 @@ namespace gShell.Cmdlets.Drive{
             public Google.Apis.Drive.v3.Data.StartPageToken GetStartPageToken ()
             {
 
-                return mainBase.changes.GetStartPageToken();
+                return mainBase.changes.GetStartPageToken(gShellServiceAccount);
             }
 
 
-            public Google.Apis.Drive.v3.Data.ChangeList List (
-            string
+            public Google.Apis.Drive.v3.Data.ChangeList List (string
 
              pageToken, gDrive.Changes.ChangesListProperties properties = null)
             {
 
                 properties = (properties != null) ? properties : new gDrive.Changes.ChangesListProperties();
 
-                return mainBase.changes.List(
-                pageToken, properties);
+                return mainBase.changes.List(pageToken, properties, gShellServiceAccount);
             }
 
 
-            public Google.Apis.Drive.v3.Data.Channel Watch (
-            Google.Apis.Drive.v3.Data.Channel body, string
+            public Google.Apis.Drive.v3.Data.Channel Watch (Google.Apis.Drive.v3.Data.Channel body, string
 
              pageToken, gDrive.Changes.ChangesWatchProperties properties = null)
             {
 
                 properties = (properties != null) ? properties : new gDrive.Changes.ChangesWatchProperties();
 
-                return mainBase.changes.Watch(
-                body, pageToken, properties);
+                return mainBase.changes.Watch(body, pageToken, properties, gShellServiceAccount);
             }
         }
 
@@ -154,12 +162,10 @@ namespace gShell.Cmdlets.Drive{
 
 
 
-            public void Stop (
-            Google.Apis.Drive.v3.Data.Channel body)
+            public void Stop (Google.Apis.Drive.v3.Data.Channel body)
             {
 
-                mainBase.channels.Stop(
-                body);
+                mainBase.channels.Stop(body, gShellServiceAccount);
             }
         }
 
@@ -175,32 +181,27 @@ namespace gShell.Cmdlets.Drive{
 
 
 
-            public Google.Apis.Drive.v3.Data.Comment Create (
-            Google.Apis.Drive.v3.Data.Comment body, string
+            public Google.Apis.Drive.v3.Data.Comment Create (Google.Apis.Drive.v3.Data.Comment body, string
 
              fileId)
             {
 
-                return mainBase.comments.Create(
-                body, fileId);
+                return mainBase.comments.Create(body, fileId, gShellServiceAccount);
             }
 
 
-            public void Delete (
-            string
+            public void Delete (string
 
              fileId, string
 
              commentId)
             {
 
-                mainBase.comments.Delete(
-                fileId, commentId);
+                mainBase.comments.Delete(fileId, commentId, gShellServiceAccount);
             }
 
 
-            public Google.Apis.Drive.v3.Data.Comment Get (
-            string
+            public Google.Apis.Drive.v3.Data.Comment Get (string
 
              fileId, string
 
@@ -209,13 +210,11 @@ namespace gShell.Cmdlets.Drive{
 
                 properties = (properties != null) ? properties : new gDrive.Comments.CommentsGetProperties();
 
-                return mainBase.comments.Get(
-                fileId, commentId, properties);
+                return mainBase.comments.Get(fileId, commentId, properties, gShellServiceAccount);
             }
 
 
-            public List<Google.Apis.Drive.v3.Data.CommentList> List(
-            string
+            public List<Google.Apis.Drive.v3.Data.CommentList> List(string
 
              fileId, gDrive.Comments.CommentsListProperties properties = null)
             {
@@ -223,21 +222,18 @@ namespace gShell.Cmdlets.Drive{
                 properties = (properties != null) ? properties : new gDrive.Comments.CommentsListProperties();
 
 
-                return mainBase.comments.List(
-                fileId, properties);
+                return mainBase.comments.List(fileId, properties);
             }
 
 
-            public Google.Apis.Drive.v3.Data.Comment Update (
-            Google.Apis.Drive.v3.Data.Comment body, string
+            public Google.Apis.Drive.v3.Data.Comment Update (Google.Apis.Drive.v3.Data.Comment body, string
 
              fileId, string
 
              commentId)
             {
 
-                return mainBase.comments.Update(
-                body, fileId, commentId);
+                return mainBase.comments.Update(body, fileId, commentId, gShellServiceAccount);
             }
         }
 
@@ -253,86 +249,74 @@ namespace gShell.Cmdlets.Drive{
 
 
 
-            public Google.Apis.Drive.v3.Data.File Copy (
-            Google.Apis.Drive.v3.Data.File body, string
+            public Google.Apis.Drive.v3.Data.File Copy (Google.Apis.Drive.v3.Data.File body, string
 
              fileId, gDrive.Files.FilesCopyProperties properties = null)
             {
 
                 properties = (properties != null) ? properties : new gDrive.Files.FilesCopyProperties();
 
-                return mainBase.files.Copy(
-                body, fileId, properties);
+                return mainBase.files.Copy(body, fileId, properties, gShellServiceAccount);
             }
 
 
-            public Google.Apis.Drive.v3.Data.File Create (
-            Google.Apis.Drive.v3.Data.File body, gDrive.Files.FilesCreateProperties properties = null)
+            public void Create (Google.Apis.Drive.v3.Data.File body, System.IO.Stream stream, string contentType, gDrive.Files.FilesCreateProperties properties = null)
             {
 
                 properties = (properties != null) ? properties : new gDrive.Files.FilesCreateProperties();
 
-                return mainBase.files.Create(
-                body, properties);
+                mainBase.files.Create(body, stream, contentType, properties, gShellServiceAccount);
             }
 
 
-            public void Delete (
-            string
+            public void Delete (string
 
              fileId)
             {
 
-                mainBase.files.Delete(
-                fileId);
+                mainBase.files.Delete(fileId, gShellServiceAccount);
             }
 
 
             public void EmptyTrash ()
             {
 
-                mainBase.files.EmptyTrash();
+                mainBase.files.EmptyTrash(gShellServiceAccount);
             }
 
 
-            public void Export (
-            string
+            public void Export (string
 
              fileId, string
 
              mimeType)
             {
 
-                mainBase.files.Export(
-                fileId, mimeType);
+                mainBase.files.Export(fileId, mimeType, gShellServiceAccount);
             }
 
 
-            public Google.Apis.Drive.v3.Data.GeneratedIds GenerateIds (
-            gDrive.Files.FilesGenerateIdsProperties properties = null)
+            public Google.Apis.Drive.v3.Data.GeneratedIds GenerateIds (gDrive.Files.FilesGenerateIdsProperties properties = null)
             {
 
                 properties = (properties != null) ? properties : new gDrive.Files.FilesGenerateIdsProperties();
 
-                return mainBase.files.GenerateIds(, properties);
+                return mainBase.files.GenerateIds(properties, gShellServiceAccount);
             }
 
 
-            public Google.Apis.Drive.v3.Data.File Get (
-            string
+            public Google.Apis.Drive.v3.Data.File Get (string
 
              fileId, gDrive.Files.FilesGetProperties properties = null)
             {
 
                 properties = (properties != null) ? properties : new gDrive.Files.FilesGetProperties();
 
-                return mainBase.files.Get(
-                fileId, properties);
+                return mainBase.files.Get(fileId, properties, gShellServiceAccount);
             }
 
 
-            public List<Google.Apis.Drive.v3.Data.FileList> List(
-            gDrive.Files.FilesListProperties properties = null)
+            public List<Google.Apis.Drive.v3.Data.FileList> List(gDrive.Files.FilesListProperties properties = null)
             {
 
                 properties = (properties != null) ? properties : new gDrive.Files.FilesListProperties();
@@ -342,29 +326,24 @@ namespace gShell.Cmdlets.Drive{
             }
 
 
-            public Google.Apis.Drive.v3.Data.File Update (
-            Google.Apis.Drive.v3.Data.File body, string
-
-             fileId, gDrive.Files.FilesUpdateProperties properties = null)
+            public void Update (Google.Apis.Drive.v3.Data.File body, string
+             fileId, System.IO.Stream stream, string contentType, gDrive.Files.FilesUpdateProperties properties = null)
             {
 
                 properties = (properties != null) ? properties : new gDrive.Files.FilesUpdateProperties();
 
-                return mainBase.files.Update(
-                body, fileId, properties);
+                mainBase.files.Update(body, fileId, stream, contentType, properties, gShellServiceAccount);
             }
 
 
-            public Google.Apis.Drive.v3.Data.Channel Watch (
-            Google.Apis.Drive.v3.Data.Channel body, string
+            public Google.Apis.Drive.v3.Data.Channel Watch (Google.Apis.Drive.v3.Data.Channel body, string
 
              fileId, gDrive.Files.FilesWatchProperties properties = null)
             {
 
                 properties = (properties != null) ? properties : new gDrive.Files.FilesWatchProperties();
 
-                return mainBase.files.Watch(
-                body, fileId, properties);
+                return mainBase.files.Watch(body, fileId, properties, gShellServiceAccount);
             }
         }
 
@@ -380,58 +359,49 @@ namespace gShell.Cmdlets.Drive{
 
 
 
-            public Google.Apis.Drive.v3.Data.Permission Create (
-            Google.Apis.Drive.v3.Data.Permission body, string
+            public Google.Apis.Drive.v3.Data.Permission Create (Google.Apis.Drive.v3.Data.Permission body, string
 
              fileId, gDrive.Permissions.PermissionsCreateProperties properties = null)
             {
 
                 properties = (properties != null) ? properties : new gDrive.Permissions.PermissionsCreateProperties();
 
-                return mainBase.permissions.Create(
-                body, fileId, properties);
+                return mainBase.permissions.Create(body, fileId, properties, gShellServiceAccount);
             }
 
 
-            public void Delete (
-            string
+            public void Delete (string
 
              fileId, string
 
              permissionId)
             {
 
-                mainBase.permissions.Delete(
-                fileId, permissionId);
+                mainBase.permissions.Delete(fileId, permissionId, gShellServiceAccount);
             }
 
 
-            public Google.Apis.Drive.v3.Data.Permission Get (
-            string
+            public Google.Apis.Drive.v3.Data.Permission Get (string
 
              fileId, string
 
              permissionId)
             {
 
-                return mainBase.permissions.Get(
-                fileId, permissionId);
+                return mainBase.permissions.Get(fileId, permissionId, gShellServiceAccount);
             }
 
 
-            public Google.Apis.Drive.v3.Data.PermissionList List (
-            string
+            public Google.Apis.Drive.v3.Data.PermissionList List (string
 
              fileId)
             {
 
-                return mainBase.permissions.List(
-                fileId);
+                return mainBase.permissions.List(fileId, gShellServiceAccount);
             }
 
 
-            public Google.Apis.Drive.v3.Data.Permission Update (
-            Google.Apis.Drive.v3.Data.Permission body, string
+            public Google.Apis.Drive.v3.Data.Permission Update (Google.Apis.Drive.v3.Data.Permission body, string
 
              fileId, string
 
@@ -440,8 +410,7 @@ namespace gShell.Cmdlets.Drive{
 
                 properties = (properties != null) ? properties : new gDrive.Permissions.PermissionsUpdateProperties();
 
-                return mainBase.permissions.Update(
-                body, fileId, permissionId, properties);
+                return mainBase.permissions.Update(body, fileId, permissionId, properties, gShellServiceAccount);
             }
         }
 
@@ -457,21 +426,18 @@ namespace gShell.Cmdlets.Drive{
 
 
 
-            public Google.Apis.Drive.v3.Data.Reply Create (
-            Google.Apis.Drive.v3.Data.Reply body, string
+            public Google.Apis.Drive.v3.Data.Reply Create (Google.Apis.Drive.v3.Data.Reply body, string
 
              fileId, string
 
              commentId)
             {
 
-                return mainBase.replies.Create(
-                body, fileId, commentId);
+                return mainBase.replies.Create(body, fileId, commentId, gShellServiceAccount);
             }
 
 
-            public void Delete (
-            string
+            public void Delete (string
 
              fileId, string
 
@@ -480,13 +446,11 @@ namespace gShell.Cmdlets.Drive{
              replyId)
             {
 
-                mainBase.replies.Delete(
-                fileId, commentId, replyId);
+                mainBase.replies.Delete(fileId, commentId, replyId, gShellServiceAccount);
             }
 
 
-            public Google.Apis.Drive.v3.Data.Reply Get (
-            string
+            public Google.Apis.Drive.v3.Data.Reply Get (string
 
              fileId, string
 
@@ -497,13 +461,11 @@ namespace gShell.Cmdlets.Drive{
 
                 properties = (properties != null) ? properties : new gDrive.Replies.RepliesGetProperties();
 
-                return mainBase.replies.Get(
-                fileId, commentId, replyId, properties);
+                return mainBase.replies.Get(fileId, commentId, replyId, properties, gShellServiceAccount);
             }
 
 
-            public List<Google.Apis.Drive.v3.Data.ReplyList> List(
-            string
+            public List<Google.Apis.Drive.v3.Data.ReplyList> List(string
 
              fileId, string
 
@@ -513,13 +475,11 @@ namespace gShell.Cmdlets.Drive{
                 properties = (properties != null) ? properties : new gDrive.Replies.RepliesListProperties();
 
 
-                return mainBase.replies.List(
-                fileId, commentId, properties);
+                return mainBase.replies.List(fileId, commentId, properties);
             }
 
 
-            public Google.Apis.Drive.v3.Data.Reply Update (
-            Google.Apis.Drive.v3.Data.Reply body, string
+            public Google.Apis.Drive.v3.Data.Reply Update (Google.Apis.Drive.v3.Data.Reply body, string
 
              fileId, string
 
@@ -528,8 +488,7 @@ namespace gShell.Cmdlets.Drive{
              replyId)
             {
 
-                return mainBase.replies.Update(
-                body, fileId, commentId, replyId);
+                return mainBase.replies.Update(body, fileId, commentId, replyId, gShellServiceAccount);
             }
         }
 
@@ -545,21 +504,18 @@ namespace gShell.Cmdlets.Drive{
 
 
 
-            public void Delete (
-            string
+            public void Delete (string
 
              fileId, string
 
              revisionId)
             {
 
-                mainBase.revisions.Delete(
-                fileId, revisionId);
+                mainBase.revisions.Delete(fileId, revisionId, gShellServiceAccount);
             }
 
 
-            public Google.Apis.Drive.v3.Data.Revision Get (
-            string
+            public Google.Apis.Drive.v3.Data.Revision Get (string
 
              fileId, string
 
@@ -568,32 +524,27 @@ namespace gShell.Cmdlets.Drive{
 
                 properties = (properties != null) ? properties : new gDrive.Revisions.RevisionsGetProperties();
 
-                return mainBase.revisions.Get(
-                fileId, revisionId, properties);
+                return mainBase.revisions.Get(fileId, revisionId, properties, gShellServiceAccount);
             }
 
 
-            public Google.Apis.Drive.v3.Data.RevisionList List (
-            string
+            public Google.Apis.Drive.v3.Data.RevisionList List (string
 
              fileId)
             {
 
-                return mainBase.revisions.List(
-                fileId);
+                return mainBase.revisions.List(fileId, gShellServiceAccount);
             }
 
 
-            public Google.Apis.Drive.v3.Data.Revision Update (
-            Google.Apis.Drive.v3.Data.Revision body, string
+            public Google.Apis.Drive.v3.Data.Revision Update (Google.Apis.Drive.v3.Data.Revision body, string
 
              fileId, string
 
              revisionId)
             {
 
-                return mainBase.revisions.Update(
-                body, fileId, revisionId);
+                return mainBase.revisions.Update(body, fileId, revisionId, gShellServiceAccount);
             }
         }
 
@@ -622,9 +573,9 @@ namespace gShell.dotNet
 
         protected override bool worksWithGmail { get { return true; } }
 
-        protected override v3.DriveService CreateNewService(string domain)
+        protected override v3.DriveService CreateNewService(string domain, AuthenticatedUserInfo authInfo, string gShellServiceAccount = null)
         {
-            return new v3.DriveService(OAuth2Base.GetInitializer(domain));
+            return new v3.DriveService(OAuth2Base.GetInitializer(domain, authInfo, gShellServiceAccount));
         }
 
         public override string apiNameAndVersion { get { return "drive:v3"; } }
@@ -662,9 +613,9 @@ namespace gShell.dotNet
 
 
             public Google.Apis.Drive.v3.Data.About Get
-            ()
+            (string gShellServiceAccount = null)
             {
-                return GetService().About.Get().Execute();
+                return GetService(gShellServiceAccount).About.Get().Execute();
             }
 
         }
@@ -693,21 +644,21 @@ namespace gShell.dotNet
 
 
             public Google.Apis.Drive.v3.Data.StartPageToken GetStartPageToken
-            ()
+            (string gShellServiceAccount = null)
             {
-                return GetService().Changes.GetStartPageToken().Execute();
+                return GetService(gShellServiceAccount).Changes.GetStartPageToken().Execute();
             }
 
             public Google.Apis.Drive.v3.Data.ChangeList List
-            (string pageToken, ChangesListProperties properties = null)
+            (string pageToken, ChangesListProperties properties = null, string gShellServiceAccount = null)
             {
-                return GetService().Changes.List(    pageToken).Execute();
+                return GetService(gShellServiceAccount).Changes.List(pageToken).Execute();
             }
 
             public Google.Apis.Drive.v3.Data.Channel Watch
-            (Google.Apis.Drive.v3.Data.Channel body, string pageToken, ChangesWatchProperties properties = null)
+            (Google.Apis.Drive.v3.Data.Channel body, string pageToken, ChangesWatchProperties properties = null, string gShellServiceAccount = null)
             {
-                return GetService().Changes.Watch(    body, pageToken).Execute();
+                return GetService(gShellServiceAccount).Changes.Watch(body, pageToken).Execute();
             }
 
         }
@@ -721,9 +672,9 @@ namespace gShell.dotNet
 
 
             public void Stop
-            (Google.Apis.Drive.v3.Data.Channel body)
+            (Google.Apis.Drive.v3.Data.Channel body, string gShellServiceAccount = null)
             {
-                GetService().Channels.Stop(    body).Execute();
+                GetService(gShellServiceAccount).Channels.Stop(body).Execute();
             }
 
         }
@@ -752,30 +703,30 @@ namespace gShell.dotNet
 
 
             public Google.Apis.Drive.v3.Data.Comment Create
-            (Google.Apis.Drive.v3.Data.Comment body, string fileId)
+            (Google.Apis.Drive.v3.Data.Comment body, string fileId, string gShellServiceAccount = null)
             {
-                return GetService().Comments.Create(    body, fileId).Execute();
+                return GetService(gShellServiceAccount).Comments.Create(body, fileId).Execute();
             }
 
             public void Delete
-            (string fileId, string commentId)
+            (string fileId, string commentId, string gShellServiceAccount = null)
             {
-                GetService().Comments.Delete(    fileId, commentId).Execute();
+                GetService(gShellServiceAccount).Comments.Delete(fileId, commentId).Execute();
             }
 
             public Google.Apis.Drive.v3.Data.Comment Get
-            (string fileId, string commentId, CommentsGetProperties properties = null)
+            (string fileId, string commentId, CommentsGetProperties properties = null, string gShellServiceAccount = null)
             {
-                return GetService().Comments.Get(    fileId, commentId).Execute();
+                return GetService(gShellServiceAccount).Comments.Get(fileId, commentId).Execute();
             }
 
             public List<Google.Apis.Drive.v3.Data.CommentList> List(
-                string     fileId, CommentsListProperties properties = null)
+                string     fileId, CommentsListProperties properties = null, string gShellServiceAccount = null)
             {
                 var results = new List<Google.Apis.Drive.v3.Data.CommentList>();
 
-                v3.CommentsResource.ListRequest request = GetService().Comments.List(
-                    fileId);
+                v3.CommentsResource.ListRequest request = GetService(gShellServiceAccount).Comments.List(
+            fileId);
 
                 if (properties != null)
                 {
@@ -825,9 +776,9 @@ namespace gShell.dotNet
             }
 
             public Google.Apis.Drive.v3.Data.Comment Update
-            (Google.Apis.Drive.v3.Data.Comment body, string fileId, string commentId)
+            (Google.Apis.Drive.v3.Data.Comment body, string fileId, string commentId, string gShellServiceAccount = null)
             {
-                return GetService().Comments.Update(    body, fileId, commentId).Execute();
+                return GetService(gShellServiceAccount).Comments.Update(body, fileId, commentId).Execute();
             }
 
         }
@@ -893,53 +844,53 @@ namespace gShell.dotNet
 
 
             public Google.Apis.Drive.v3.Data.File Copy
-            (Google.Apis.Drive.v3.Data.File body, string fileId, FilesCopyProperties properties = null)
+            (Google.Apis.Drive.v3.Data.File body, string fileId, FilesCopyProperties properties = null, string gShellServiceAccount = null)
             {
-                return GetService().Files.Copy(    body, fileId).Execute();
+                return GetService(gShellServiceAccount).Files.Copy(body, fileId).Execute();
             }
 
-            public Google.Apis.Drive.v3.Data.File Create
-            (Google.Apis.Drive.v3.Data.File body, FilesCreateProperties properties = null)
+            public void Create
+            (Google.Apis.Drive.v3.Data.File body, System.IO.Stream stream, string contentType, FilesCreateProperties properties = null, string gShellServiceAccount = null)
             {
-                return GetService().Files.Create(    body).Execute();
+                GetService(gShellServiceAccount).Files.Create(body, stream, contentType).Upload();
             }
 
             public void Delete
-            (string fileId)
+            (string fileId, string gShellServiceAccount = null)
             {
-                GetService().Files.Delete(    fileId).Execute();
+                GetService(gShellServiceAccount).Files.Delete(fileId).Execute();
             }
 
             public void EmptyTrash
-            ()
+            (string gShellServiceAccount = null)
             {
-                GetService().Files.EmptyTrash().Execute();
+                GetService(gShellServiceAccount).Files.EmptyTrash().Execute();
             }
 
             public void Export
-            (string fileId, string mimeType)
+            (string fileId, string mimeType, string gShellServiceAccount = null)
             {
-                GetService().Files.Export(    fileId, mimeType).Execute();
+                GetService(gShellServiceAccount).Files.Export(fileId, mimeType).Execute();
             }
 
             public Google.Apis.Drive.v3.Data.GeneratedIds GenerateIds
-            (FilesGenerateIdsProperties properties = null)
+            (FilesGenerateIdsProperties properties = null, string gShellServiceAccount = null)
             {
-                return GetService().Files.GenerateIds().Execute();
+                return GetService(gShellServiceAccount).Files.GenerateIds().Execute();
             }
 
             public Google.Apis.Drive.v3.Data.File Get
-            (string fileId, FilesGetProperties properties = null)
+            (string fileId, FilesGetProperties properties = null, string gShellServiceAccount = null)
             {
-                return GetService().Files.Get(    fileId).Execute();
+                return GetService(gShellServiceAccount).Files.Get(fileId).Execute();
             }
 
             public List<Google.Apis.Drive.v3.Data.FileList> List(
-                FilesListProperties properties = null)
+                FilesListProperties properties = null, string gShellServiceAccount = null)
             {
                 var results = new List<Google.Apis.Drive.v3.Data.FileList>();
 
-                v3.FilesResource.ListRequest request = GetService().Files.List(
+                v3.FilesResource.ListRequest request = GetService(gShellServiceAccount).Files.List(
             );
 
                 if (properties != null)
@@ -991,16 +942,16 @@ namespace gShell.dotNet
                 return results;
             }
 
-            public Google.Apis.Drive.v3.Data.File Update
-            (Google.Apis.Drive.v3.Data.File body, string fileId, FilesUpdateProperties properties = null)
+            public void Update
+            (Google.Apis.Drive.v3.Data.File body, string fileId, System.IO.Stream stream, string contentType, FilesUpdateProperties properties = null, string gShellServiceAccount = null)
             {
-                return GetService().Files.Update(    body, fileId).Execute();
+                GetService(gShellServiceAccount).Files.Update(body, fileId, stream, contentType).Upload();
             }
 
             public Google.Apis.Drive.v3.Data.Channel Watch
-            (Google.Apis.Drive.v3.Data.Channel body, string fileId, FilesWatchProperties properties = null)
+            (Google.Apis.Drive.v3.Data.Channel body, string fileId, FilesWatchProperties properties = null, string gShellServiceAccount = null)
             {
-                return GetService().Files.Watch(    body, fileId).Execute();
+                return GetService(gShellServiceAccount).Files.Watch(body, fileId).Execute();
             }
 
         }
@@ -1025,33 +976,33 @@ namespace gShell.dotNet
 
 
             public Google.Apis.Drive.v3.Data.Permission Create
-            (Google.Apis.Drive.v3.Data.Permission body, string fileId, PermissionsCreateProperties properties = null)
+            (Google.Apis.Drive.v3.Data.Permission body, string fileId, PermissionsCreateProperties properties = null, string gShellServiceAccount = null)
             {
-                return GetService().Permissions.Create(    body, fileId).Execute();
+                return GetService(gShellServiceAccount).Permissions.Create(body, fileId).Execute();
             }
 
             public void Delete
-            (string fileId, string permissionId)
+            (string fileId, string permissionId, string gShellServiceAccount = null)
             {
-                GetService().Permissions.Delete(    fileId, permissionId).Execute();
+                GetService(gShellServiceAccount).Permissions.Delete(fileId, permissionId).Execute();
             }
 
             public Google.Apis.Drive.v3.Data.Permission Get
-            (string fileId, string permissionId)
+            (string fileId, string permissionId, string gShellServiceAccount = null)
             {
-                return GetService().Permissions.Get(    fileId, permissionId).Execute();
+                return GetService(gShellServiceAccount).Permissions.Get(fileId, permissionId).Execute();
             }
 
             public Google.Apis.Drive.v3.Data.PermissionList List
-            (string fileId)
+            (string fileId, string gShellServiceAccount = null)
             {
-                return GetService().Permissions.List(    fileId).Execute();
+                return GetService(gShellServiceAccount).Permissions.List(fileId).Execute();
             }
 
             public Google.Apis.Drive.v3.Data.Permission Update
-            (Google.Apis.Drive.v3.Data.Permission body, string fileId, string permissionId, PermissionsUpdateProperties properties = null)
+            (Google.Apis.Drive.v3.Data.Permission body, string fileId, string permissionId, PermissionsUpdateProperties properties = null, string gShellServiceAccount = null)
             {
-                return GetService().Permissions.Update(    body, fileId, permissionId).Execute();
+                return GetService(gShellServiceAccount).Permissions.Update(body, fileId, permissionId).Execute();
             }
 
         }
@@ -1079,30 +1030,30 @@ namespace gShell.dotNet
 
 
             public Google.Apis.Drive.v3.Data.Reply Create
-            (Google.Apis.Drive.v3.Data.Reply body, string fileId, string commentId)
+            (Google.Apis.Drive.v3.Data.Reply body, string fileId, string commentId, string gShellServiceAccount = null)
             {
-                return GetService().Replies.Create(    body, fileId, commentId).Execute();
+                return GetService(gShellServiceAccount).Replies.Create(body, fileId, commentId).Execute();
             }
 
             public void Delete
-            (string fileId, string commentId, string replyId)
+            (string fileId, string commentId, string replyId, string gShellServiceAccount = null)
             {
-                GetService().Replies.Delete(    fileId, commentId, replyId).Execute();
+                GetService(gShellServiceAccount).Replies.Delete(fileId, commentId, replyId).Execute();
             }
 
             public Google.Apis.Drive.v3.Data.Reply Get
-            (string fileId, string commentId, string replyId, RepliesGetProperties properties = null)
+            (string fileId, string commentId, string replyId, RepliesGetProperties properties = null, string gShellServiceAccount = null)
             {
-                return GetService().Replies.Get(    fileId, commentId, replyId).Execute();
+                return GetService(gShellServiceAccount).Replies.Get(fileId, commentId, replyId).Execute();
             }
 
             public List<Google.Apis.Drive.v3.Data.ReplyList> List(
-                string     fileId, string     commentId, RepliesListProperties properties = null)
+                string     fileId, string     commentId, RepliesListProperties properties = null, string gShellServiceAccount = null)
             {
                 var results = new List<Google.Apis.Drive.v3.Data.ReplyList>();
 
-                v3.RepliesResource.ListRequest request = GetService().Replies.List(
-                    fileId, commentId);
+                v3.RepliesResource.ListRequest request = GetService(gShellServiceAccount).Replies.List(
+            fileId, commentId);
 
                 if (properties != null)
                 {
@@ -1151,9 +1102,9 @@ namespace gShell.dotNet
             }
 
             public Google.Apis.Drive.v3.Data.Reply Update
-            (Google.Apis.Drive.v3.Data.Reply body, string fileId, string commentId, string replyId)
+            (Google.Apis.Drive.v3.Data.Reply body, string fileId, string commentId, string replyId, string gShellServiceAccount = null)
             {
-                return GetService().Replies.Update(    body, fileId, commentId, replyId).Execute();
+                return GetService(gShellServiceAccount).Replies.Update(body, fileId, commentId, replyId).Execute();
             }
 
         }
@@ -1171,27 +1122,27 @@ namespace gShell.dotNet
 
 
             public void Delete
-            (string fileId, string revisionId)
+            (string fileId, string revisionId, string gShellServiceAccount = null)
             {
-                GetService().Revisions.Delete(    fileId, revisionId).Execute();
+                GetService(gShellServiceAccount).Revisions.Delete(fileId, revisionId).Execute();
             }
 
             public Google.Apis.Drive.v3.Data.Revision Get
-            (string fileId, string revisionId, RevisionsGetProperties properties = null)
+            (string fileId, string revisionId, RevisionsGetProperties properties = null, string gShellServiceAccount = null)
             {
-                return GetService().Revisions.Get(    fileId, revisionId).Execute();
+                return GetService(gShellServiceAccount).Revisions.Get(fileId, revisionId).Execute();
             }
 
             public Google.Apis.Drive.v3.Data.RevisionList List
-            (string fileId)
+            (string fileId, string gShellServiceAccount = null)
             {
-                return GetService().Revisions.List(    fileId).Execute();
+                return GetService(gShellServiceAccount).Revisions.List(fileId).Execute();
             }
 
             public Google.Apis.Drive.v3.Data.Revision Update
-            (Google.Apis.Drive.v3.Data.Revision body, string fileId, string revisionId)
+            (Google.Apis.Drive.v3.Data.Revision body, string fileId, string revisionId, string gShellServiceAccount = null)
             {
-                return GetService().Revisions.Update(    body, fileId, revisionId).Execute();
+                return GetService(gShellServiceAccount).Revisions.Update(body, fileId, revisionId).Execute();
             }
 
         }

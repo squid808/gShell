@@ -20,9 +20,14 @@ namespace gShell.dotNet
     {
         #region Properties
         /// <summary>
-        /// A collection of services keyed by the domain name. TODO: have an alternate set for gmail users
+        /// A collection of services keyed by the domain auth info. TODO: have an alternate set for gmail users
         /// </summary>
         public static Dictionary<AuthenticatedUserInfo, T> services { get; set; }
+
+        /// <summary>
+        /// A collection of service account services keyed by the domain auth info, then the service account user.
+        /// </summary>
+        public static Dictionary<AuthenticatedUserInfo, Dictionary<string, T>> serviceAccountServices { get; set; }
 
         /// <summary>
         /// Indicates if this set of services will work with Gmail (as opposed to Google Apps). 
@@ -43,13 +48,13 @@ namespace gShell.dotNet
         }
 
         public abstract string apiNameAndVersion { get; }
-
         #endregion
 
         #region Constructors
         public ServiceWrapper()
         {
             services = new Dictionary<AuthenticatedUserInfo, T>();
+            serviceAccountServices = new Dictionary<AuthenticatedUserInfo, Dictionary<string, T>>();
         }
         #endregion
 
@@ -57,46 +62,31 @@ namespace gShell.dotNet
         /// <summary>
         /// Returns the loaded and authenticated service for this domain. Returns null if it doesn't exist.
         /// </summary>
-        public static T GetService(AuthenticatedUserInfo AuthInfo)
+        public static T GetService(AuthenticatedUserInfo AuthInfo, string serviceAccountUser = null)
         {
-            if (ContainsService(AuthInfo))
+            if (string.IsNullOrWhiteSpace(serviceAccountUser))
             {
-                return services[AuthInfo];
+                if (services.ContainsKey(AuthInfo))
+                {
+                    return services[AuthInfo];
+                }
             }
             else
             {
-                return null;
+                if (serviceAccountServices.ContainsKey(AuthInfo)
+                    && serviceAccountServices[AuthInfo].ContainsKey(serviceAccountUser))
+                {
+                    return serviceAccountServices[AuthInfo][serviceAccountUser];
+                }
             }
+
+            return null;
         }
 
-        public static T GetService()
+        public static T GetService(string serviceAccountUser = null)
         {
-            return GetService(OAuth2Base.currentAuthInfo);
+            return GetService(OAuth2Base.currentAuthInfo, serviceAccountUser);
         }
-
-        /// <summary>
-        /// Do the loaded and authenticated domains contain a service for this domain?
-        /// </summary>
-        public static bool ContainsService(AuthenticatedUserInfo AuthInfo)
-        {
-            return services.ContainsKey(AuthInfo);
-        }
-
-        ///// <summary>
-        ///// Returns the default domain. This could be null if nothing has yet been authenticated.
-        ///// </summary>
-        //protected static string GetDefaultDomain()
-        //{
-        //    return OAuth2Base.defaultDomain;
-        //}
-
-        ///// <summary>
-        ///// Returns the currently authenticated domain. This could be null if nothing has yet been authenticated.
-        ///// </summary>
-        //protected static string GetCurrentDomain()
-        //{
-        //    return OAuth2Base.currentDomain;
-        //}
         #endregion
 
         #region Authenticate
@@ -114,40 +104,58 @@ namespace gShell.dotNet
         /// <summary>
         /// Initialize and return a new service with the given domain.
         /// </summary>
-        protected abstract T CreateNewService(string domain);
+        protected abstract T CreateNewService(string domain, AuthenticatedUserInfo authInfo, string serviceAccountUser = null);
 
         /// <summary>
         /// Build the service and return the domain the service is working on.
         /// </summary>
-        public AuthenticatedUserInfo BuildService(AuthenticatedUserInfo AuthInfo)
+        public AuthenticatedUserInfo BuildService(AuthenticatedUserInfo authInfo, string serviceAccountUser = null)
         {
-            if (AuthInfo == null) {return null;}
+            if (authInfo == null) {return null;}
 
-            if (!services.ContainsKey(AuthInfo))
+            if (string.IsNullOrWhiteSpace(serviceAccountUser))
             {
-                //this sets the OAuth2Base current domain and default domain, if necessary
-                T service = CreateNewService(OAuth2Base.GetAppName(apiNameAndVersion));
+                if (!services.ContainsKey(authInfo))
+                {
+                    //this sets the OAuth2Base current domain and default domain, if necessary
+                    T service = CreateNewService(OAuth2Base.GetAppName(apiNameAndVersion), authInfo);
 
-                //current domain should be set at this point 
-                if (AuthInfo.domain == "gmail.com" && !worksWithGmail)
-                {
-                    throw new Exception("This Google API is not available for a Gmail account.");
+                    //current domain should be set at this point 
+                    if (authInfo.domain == "gmail.com" && !worksWithGmail)
+                    {
+                        throw new Exception("This Google API is not available for a Gmail account.");
+                    }
+                    else
+                    {
+                        services.Add(authInfo, service);
+                    }
                 }
-                else
+            }
+            else
+            {
+                if (!serviceAccountServices.ContainsKey(authInfo))
                 {
-                    services.Add(AuthInfo, service);
+                    serviceAccountServices.Add(authInfo, new Dictionary<string,T>());
+                }
+
+                if (!serviceAccountServices[authInfo].ContainsKey(serviceAccountUser))
+                {
+                    T service = CreateNewService(OAuth2Base.GetAppName(apiNameAndVersion), authInfo, serviceAccountUser);
+
+                    if (authInfo.domain == "gmail.com" && !worksWithGmail)
+                    {
+                        throw new Exception("This Google API is not available for a Gmail account.");
+                    }
+                    else
+                    {
+                        serviceAccountServices[authInfo].Add(serviceAccountUser, service);
+                    }
                 }
             }
 
-            return AuthInfo;
+            return authInfo;
         }
 
         #endregion
-
-        //#region MultiPageResult Helpers
-
-
-
-        //#endregion
     }
 }

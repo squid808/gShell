@@ -28,6 +28,8 @@ namespace gShell.Cmdlets.Sharedcontacts{
 
         protected override string apiNameAndVersion { get { return mainBase.apiNameAndVersion; } }
 
+        protected static string gShellServiceAccount { get; set; }
+
         HashSet<string> Scopes = new HashSet<string> {
             "http://www.google.com/m8/feeds/contacts/",
         };
@@ -51,7 +53,7 @@ namespace gShell.Cmdlets.Sharedcontacts{
             if (secrets != null)
             {
                 IEnumerable<string> scopes = EnsureScopesExist(Domain, Scopes);
-                Domain = mainBase.BuildService(Authenticate(scopes, secrets, Domain)).domain;
+                Domain = mainBase.BuildService(Authenticate(scopes, secrets, Domain), gShellServiceAccount).domain;
 
                 GWriteProgress = new gWriteProgress(WriteProgress);
             }
@@ -61,6 +63,16 @@ namespace gShell.Cmdlets.Sharedcontacts{
                     "Client Secrets must be set before running cmdlets. Run 'Get-Help "
                     + "Set-gShellClientSecrets -online' for more information."))));
             }
+        }
+
+        protected override void EndProcessing()
+        {
+            gShellServiceAccount = string.Empty;
+        }
+
+        protected override void StopProcessing()
+        {
+            gShellServiceAccount = string.Empty;
         }
         #endregion
 
@@ -92,7 +104,7 @@ namespace gShell.Cmdlets.Sharedcontacts{
              version)
             {
 
-                mainBase.contact.Delete(domain, id, version);
+                mainBase.contact.Delete(domain, id, version, gShellServiceAccount);
             }
 
 
@@ -103,7 +115,7 @@ namespace gShell.Cmdlets.Sharedcontacts{
              id)
             {
 
-                return mainBase.contact.Get(domain, id);
+                return mainBase.contact.Get(domain, id, gShellServiceAccount);
             }
 
 
@@ -112,7 +124,7 @@ namespace gShell.Cmdlets.Sharedcontacts{
              domain)
             {
 
-                return mainBase.contact.Insert(body, domain);
+                return mainBase.contact.Insert(body, domain, gShellServiceAccount);
             }
 
 
@@ -123,7 +135,7 @@ namespace gShell.Cmdlets.Sharedcontacts{
 
                 properties = (properties != null) ? properties : new gSharedcontacts.Contact.ContactListProperties();
 
-                return mainBase.contact.List(domain, properties);
+                return mainBase.contact.List(domain, properties, gShellServiceAccount);
             }
 
 
@@ -136,7 +148,7 @@ namespace gShell.Cmdlets.Sharedcontacts{
              version)
             {
 
-                return mainBase.contact.Update(body, domain, id, version);
+                return mainBase.contact.Update(body, domain, id, version, gShellServiceAccount);
             }
         }
 
@@ -159,7 +171,7 @@ namespace gShell.Cmdlets.Sharedcontacts{
              id)
             {
 
-                return mainBase.photo.Get(domain, id);
+                return mainBase.photo.Get(domain, id, gShellServiceAccount);
             }
         }
 
@@ -188,9 +200,9 @@ namespace gShell.dotNet
 
         protected override bool worksWithGmail { get { return false; } }
 
-        protected override sharedcontacts_v3.SharedcontactsService CreateNewService(string domain)
+        protected override sharedcontacts_v3.SharedcontactsService CreateNewService(string domain, AuthenticatedUserInfo authInfo, string gShellServiceAccount = null)
         {
-            return new sharedcontacts_v3.SharedcontactsService(OAuth2Base.GetGdataInitializer(domain));
+            return new sharedcontacts_v3.SharedcontactsService(OAuth2Base.GetGdataInitializer(domain, authInfo));
         }
 
         public override string apiNameAndVersion { get { return "admin:sharedcontacts_v3"; } }
@@ -225,33 +237,33 @@ namespace gShell.dotNet
 
 
             public void Delete
-            (string domain, string id, string version)
+            (string domain, string id, string version, string gShellServiceAccount = null)
             {
-                GetService().Contact.Delete(domain, id, version).Execute();
+                GetService(gShellServiceAccount).Contact.Delete(domain, id, version).Execute();
             }
 
             public Google.Apis.admin.Sharedcontacts.sharedcontacts_v3.Data.Contact Get
-            (string domain, string id)
+            (string domain, string id, string gShellServiceAccount = null)
             {
-                return GetService().Contact.Get(domain, id).Execute();
+                return GetService(gShellServiceAccount).Contact.Get(domain, id).Execute();
             }
 
             public Google.Apis.admin.Sharedcontacts.sharedcontacts_v3.Data.Contact Insert
-            (Google.Apis.admin.Sharedcontacts.sharedcontacts_v3.Data.Contact body, string domain)
+            (Google.Apis.admin.Sharedcontacts.sharedcontacts_v3.Data.Contact body, string domain, string gShellServiceAccount = null)
             {
-                return GetService().Contact.Insert(body, domain).Execute();
+                return GetService(gShellServiceAccount).Contact.Insert(body, domain).Execute();
             }
 
             public Google.Apis.admin.Sharedcontacts.sharedcontacts_v3.Data.Contacts List
-            (string domain, ContactListProperties properties = null)
+            (string domain, ContactListProperties properties = null, string gShellServiceAccount = null)
             {
-                return GetService().Contact.List(domain).Execute();
+                return GetService(gShellServiceAccount).Contact.List(domain).Execute();
             }
 
             public Google.Apis.admin.Sharedcontacts.sharedcontacts_v3.Data.Contact Update
-            (Google.Apis.admin.Sharedcontacts.sharedcontacts_v3.Data.Contact body, string domain, string id, string version)
+            (Google.Apis.admin.Sharedcontacts.sharedcontacts_v3.Data.Contact body, string domain, string id, string version, string gShellServiceAccount = null)
             {
-                return GetService().Contact.Update(body, domain, id, version).Execute();
+                return GetService(gShellServiceAccount).Contact.Update(body, domain, id, version).Execute();
             }
 
         }
@@ -265,9 +277,9 @@ namespace gShell.dotNet
 
 
             public Google.Apis.admin.Sharedcontacts.sharedcontacts_v3.Data.Photo Get
-            (string domain, string id)
+            (string domain, string id, string gShellServiceAccount = null)
             {
-                return GetService().Photo.Get(domain, id).Execute();
+                return GetService(gShellServiceAccount).Photo.Get(domain, id).Execute();
             }
 
         }

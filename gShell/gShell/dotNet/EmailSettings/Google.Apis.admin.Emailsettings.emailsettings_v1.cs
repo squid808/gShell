@@ -24,19 +24,19 @@
  * \section ApiInfo API Version Information
  *    <table>
  *      <tr><th>API
- *          <td><a href='https://developers.google.com/admin-sdk/reports/'>Admin Email Settings API</a>
+ *          <td><a href='https://developers.google.com/admin-sdk/email-settings/'>Admin Email Settings API</a>
  *      <tr><th>API Version<td>emailsettings_v1
  *      <tr><th>API Rev<td>0
  *      <tr><th>API Docs
- *          <td><a href='https://developers.google.com/admin-sdk/reports/'>
- *              https://developers.google.com/admin-sdk/reports/</a>
+ *          <td><a href='https://developers.google.com/admin-sdk/email-settings/'>
+ *              https://developers.google.com/admin-sdk/email-settings/</a>
  *      <tr><th>Discovery Name<td>admin
  *    </table>
  *
  * \section ForMoreInfo For More Information
  *
  * The complete API documentation for using Admin Email Settings API can be found at
- * <a href='https://developers.google.com/admin-sdk/reports/'>https://developers.google.com/admin-sdk/reports/</a>.
+ * <a href='https://developers.google.com/admin-sdk/email-settings/'>https://developers.google.com/admin-sdk/email-settings/</a>.
  *
  * For more information about the Google APIs Client Library for .NET, see
  * <a href='https://developers.google.com/api-client-library/dotnet/get_started'>

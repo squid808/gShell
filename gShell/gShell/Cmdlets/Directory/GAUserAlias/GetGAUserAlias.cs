@@ -98,7 +98,7 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
                 UpdateProgressBar(i, usersList.Count, "Gathering aliases",
                     string.Format("-Collecting alias for user {0} of {1}",
                     i, usersList.Count));
-                aliasList.AddRange(users.aliases.List(user.PrimaryEmail).AliasesValue);
+                aliasList.AddRange(users.aliases.List(user.PrimaryEmail).AliasesValue.Cast<Data.Alias>());
                 i++;
             }
 

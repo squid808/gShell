@@ -430,6 +430,10 @@ namespace Google.Apis.Drive.v3.Data
         [Newtonsoft.Json.JsonPropertyAttribute("imageMediaMetadata")]
         public virtual File.ImageMediaMetadataData ImageMediaMetadata { get; set; } 
 
+        /// <summary>Whether the file was created or opened by the requesting app.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("isAppAuthorized")]
+        public virtual System.Nullable<bool> IsAppAuthorized { get; set; } 
+
         /// <summary>This is always drive#file.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("kind")]
         public virtual string Kind { get; set; } 

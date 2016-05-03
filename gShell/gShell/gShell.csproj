@@ -138,6 +138,7 @@
     <Compile Include="Cmdlets\Directory\gShellUserObject.cs" />
     <Compile Include="Cmdlets\Discovery\DiscoveryBase.cs" />
     <Compile Include="Cmdlets\EmailSettings\EmailSettings.cs" />
+    <Compile Include="Cmdlets\Gmail\Gmail.cs" />
     <Compile Include="Cmdlets\GroupsMigration\GroupsMigration.cs" />
     <Compile Include="Cmdlets\GroupsSettings\GroupsSettings.cs" />
     <Compile Include="Cmdlets\Licensing\Licensing.cs" />
@@ -157,9 +158,17 @@
     <Compile Include="dotNet\Directory\Directory.cs" />
     <Compile Include="dotNet\Directory\Google.Apis.admin.Directory.directory_v1.cs" />
     <Compile Include="dotNet\Directory\Google.Apis.admin.Directory.directory_v1_gshell_dotnet.cs" />
+    <Compile Include="dotNet\Drive\Google.Apis.Drive.v3.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="dotNet\Drive\Google.Apis.Drive.v3_gshell_dotnet.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="dotNet\Emailsettings\Google.Apis.admin.Emailsettings.emailsettings_v1.cs" />
     <Compile Include="dotNet\Emailsettings\Google.Apis.admin.Emailsettings.emailsettings_v1_gshell_dotnet.cs" />
     <Compile Include="dotNet\Discovery\Discovery.cs" />
+    <Compile Include="dotNet\Gmail\Google.Apis.Gmail.v1.cs" />
+    <Compile Include="dotNet\Gmail\Google.Apis.Gmail.v1_gshell_dotnet.cs" />
     <Compile Include="dotNet\GroupsMigration\Google.Apis.GroupsMigration.v1.cs" />
     <Compile Include="dotNet\GroupsMigration\Google.Apis.GroupsMigration.v1_gshell_dotnet.cs" />
     <Compile Include="dotNet\GroupsSettings\Google.Apis.Groupssettings.v1.cs" />
@@ -195,9 +204,7 @@
     <Compile Include="dotNet\Utilities\CustomSerializer\CustomXmlSerializer.cs" />
     <Compile Include="dotNet\Utilities\OAuth2\DataStores\DataStoreBase.cs" />
     <Compile Include="dotNet\Utilities\OAuth2\DataStores\IOAuth2DataStore.cs" />
-    <Compile Include="dotNet\Utilities\OAuth2\OAuth2Authenticator.cs" />
     <Compile Include="dotNet\Utilities\OAuth2\OAuth2Base.cs" />
-    <Compile Include="dotNet\Utilities\OAuth2\OAuth2Base2.cs" />
     <Compile Include="dotNet\ServiceWrapper.cs" />
     <Compile Include="dotNet\Utilities\MemoryObjectDataStore.cs" />
     <Compile Include="Cmdlets\Directory\GAUserProperty\RemoveGAUserProperty.cs" />
@@ -210,6 +217,7 @@
     <Compile Include="dotNet\Utilities\OAuth2\OAuth2InfoConsumer.cs" />
     <Compile Include="dotNet\Utilities\OAuth2\DataStores\OAuth2JsonDataStore.cs" />
     <Compile Include="dotNet\Utilities\OAuth2\DataStores\OAuth2BinDataStore.cs" />
+    <Compile Include="dotNet\Utilities\OAuth2\ServiceAccount.cs" />
     <Compile Include="dotNet\Utilities\SavedFile.cs" />
     <Compile Include="Cmdlets\Utilities\ScopeManager\ScopeManager.cs" />
     <Compile Include="dotNet\Utilities\Settings\gShellSettings.cs" />

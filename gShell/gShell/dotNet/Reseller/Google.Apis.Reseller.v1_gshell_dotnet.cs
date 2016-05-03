@@ -27,6 +27,8 @@ namespace gShell.Cmdlets.Reseller{
         public Subscriptions subscriptions { get; set; }
 
         protected override string apiNameAndVersion { get { return mainBase.apiNameAndVersion; } }
+
+        protected static string gShellServiceAccount { get; set; }
         #endregion
 
         #region Constructors
@@ -46,7 +48,7 @@ namespace gShell.Cmdlets.Reseller{
             if (secrets != null)
             {
                 IEnumerable<string> scopes = EnsureScopesExist(Domain);
-                Domain = mainBase.BuildService(Authenticate(scopes, secrets, Domain)).domain;
+                Domain = mainBase.BuildService(Authenticate(scopes, secrets, Domain), gShellServiceAccount).domain;
 
                 GWriteProgress = new gWriteProgress(WriteProgress);
             }
@@ -56,6 +58,16 @@ namespace gShell.Cmdlets.Reseller{
                     "Client Secrets must be set before running cmdlets. Run 'Get-Help "
                     + "Set-gShellClientSecrets -online' for more information."))));
             }
+        }
+
+        protected override void EndProcessing()
+        {
+            gShellServiceAccount = string.Empty;
+        }
+
+        protected override void StopProcessing()
+        {
+            gShellServiceAccount = string.Empty;
         }
         #endregion
 
@@ -83,7 +95,7 @@ namespace gShell.Cmdlets.Reseller{
              customerId)
             {
 
-                return mainBase.customers.Get(customerId);
+                return mainBase.customers.Get(customerId, gShellServiceAccount);
             }
 
 
@@ -92,7 +104,7 @@ namespace gShell.Cmdlets.Reseller{
 
                 properties = (properties != null) ? properties : new gReseller.Customers.CustomersInsertProperties();
 
-                return mainBase.customers.Insert(body, properties);
+                return mainBase.customers.Insert(body, properties, gShellServiceAccount);
             }
 
 
@@ -101,7 +113,7 @@ namespace gShell.Cmdlets.Reseller{
              customerId)
             {
 
-                return mainBase.customers.Patch(body, customerId);
+                return mainBase.customers.Patch(body, customerId, gShellServiceAccount);
             }
 
 
@@ -110,7 +122,7 @@ namespace gShell.Cmdlets.Reseller{
              customerId)
             {
 
-                return mainBase.customers.Update(body, customerId);
+                return mainBase.customers.Update(body, customerId, gShellServiceAccount);
             }
         }
 
@@ -133,7 +145,7 @@ namespace gShell.Cmdlets.Reseller{
              subscriptionId)
             {
 
-                return mainBase.subscriptions.Activate(customerId, subscriptionId);
+                return mainBase.subscriptions.Activate(customerId, subscriptionId, gShellServiceAccount);
             }
 
 
@@ -144,7 +156,7 @@ namespace gShell.Cmdlets.Reseller{
              subscriptionId)
             {
 
-                return mainBase.subscriptions.ChangePlan(body, customerId, subscriptionId);
+                return mainBase.subscriptions.ChangePlan(body, customerId, subscriptionId, gShellServiceAccount);
             }
 
 
@@ -155,7 +167,7 @@ namespace gShell.Cmdlets.Reseller{
              subscriptionId)
             {
 
-                return mainBase.subscriptions.ChangeRenewalSettings(body, customerId, subscriptionId);
+                return mainBase.subscriptions.ChangeRenewalSettings(body, customerId, subscriptionId, gShellServiceAccount);
             }
 
 
@@ -166,7 +178,7 @@ namespace gShell.Cmdlets.Reseller{
              subscriptionId)
             {
 
-                return mainBase.subscriptions.ChangeSeats(body, customerId, subscriptionId);
+                return mainBase.subscriptions.ChangeSeats(body, customerId, subscriptionId, gShellServiceAccount);
             }
 
 
@@ -179,7 +191,7 @@ namespace gShell.Cmdlets.Reseller{
              deletionType)
             {
 
-                mainBase.subscriptions.Delete(customerId, subscriptionId, deletionType);
+                mainBase.subscriptions.Delete(customerId, subscriptionId, deletionType, gShellServiceAccount);
             }
 
 
@@ -190,7 +202,7 @@ namespace gShell.Cmdlets.Reseller{
              subscriptionId)
             {
 
-                return mainBase.subscriptions.Get(customerId, subscriptionId);
+                return mainBase.subscriptions.Get(customerId, subscriptionId, gShellServiceAccount);
             }
 
 
@@ -201,7 +213,7 @@ namespace gShell.Cmdlets.Reseller{
 
                 properties = (properties != null) ? properties : new gReseller.Subscriptions.SubscriptionsInsertProperties();
 
-                return mainBase.subscriptions.Insert(body, customerId, properties);
+                return mainBase.subscriptions.Insert(body, customerId, properties, gShellServiceAccount);
             }
 
 
@@ -223,7 +235,7 @@ namespace gShell.Cmdlets.Reseller{
              subscriptionId)
             {
 
-                return mainBase.subscriptions.StartPaidService(customerId, subscriptionId);
+                return mainBase.subscriptions.StartPaidService(customerId, subscriptionId, gShellServiceAccount);
             }
 
 
@@ -234,7 +246,7 @@ namespace gShell.Cmdlets.Reseller{
              subscriptionId)
             {
 
-                return mainBase.subscriptions.Suspend(customerId, subscriptionId);
+                return mainBase.subscriptions.Suspend(customerId, subscriptionId, gShellServiceAccount);
             }
         }
 
@@ -263,9 +275,9 @@ namespace gShell.dotNet
 
         protected override bool worksWithGmail { get { return true; } }
 
-        protected override v1.ResellerService CreateNewService(string domain)
+        protected override v1.ResellerService CreateNewService(string domain, AuthenticatedUserInfo authInfo, string gShellServiceAccount = null)
         {
-            return new v1.ResellerService(OAuth2Base.GetInitializer(domain));
+            return new v1.ResellerService(OAuth2Base.GetInitializer(domain, authInfo, gShellServiceAccount));
         }
 
         public override string apiNameAndVersion { get { return "reseller:v1"; } }
@@ -295,27 +307,27 @@ namespace gShell.dotNet
 
 
             public Google.Apis.Reseller.v1.Data.Customer Get
-            (string customerId)
+            (string customerId, string gShellServiceAccount = null)
             {
-                return GetService().Customers.Get(customerId).Execute();
+                return GetService(gShellServiceAccount).Customers.Get(customerId).Execute();
             }
 
             public Google.Apis.Reseller.v1.Data.Customer Insert
-            (Google.Apis.Reseller.v1.Data.Customer body, CustomersInsertProperties properties = null)
+            (Google.Apis.Reseller.v1.Data.Customer body, CustomersInsertProperties properties = null, string gShellServiceAccount = null)
             {
-                return GetService().Customers.Insert(body).Execute();
+                return GetService(gShellServiceAccount).Customers.Insert(body).Execute();
             }
 
             public Google.Apis.Reseller.v1.Data.Customer Patch
-            (Google.Apis.Reseller.v1.Data.Customer body, string customerId)
+            (Google.Apis.Reseller.v1.Data.Customer body, string customerId, string gShellServiceAccount = null)
             {
-                return GetService().Customers.Patch(body, customerId).Execute();
+                return GetService(gShellServiceAccount).Customers.Patch(body, customerId).Execute();
             }
 
             public Google.Apis.Reseller.v1.Data.Customer Update
-            (Google.Apis.Reseller.v1.Data.Customer body, string customerId)
+            (Google.Apis.Reseller.v1.Data.Customer body, string customerId, string gShellServiceAccount = null)
             {
-                return GetService().Customers.Update(body, customerId).Execute();
+                return GetService(gShellServiceAccount).Customers.Update(body, customerId).Execute();
             }
 
         }
@@ -345,53 +357,53 @@ namespace gShell.dotNet
 
 
             public Google.Apis.Reseller.v1.Data.Subscription Activate
-            (string customerId, string subscriptionId)
+            (string customerId, string subscriptionId, string gShellServiceAccount = null)
             {
-                return GetService().Subscriptions.Activate(customerId, subscriptionId).Execute();
+                return GetService(gShellServiceAccount).Subscriptions.Activate(customerId, subscriptionId).Execute();
             }
 
             public Google.Apis.Reseller.v1.Data.Subscription ChangePlan
-            (Google.Apis.Reseller.v1.Data.ChangePlanRequest body, string customerId, string subscriptionId)
+            (Google.Apis.Reseller.v1.Data.ChangePlanRequest body, string customerId, string subscriptionId, string gShellServiceAccount = null)
             {
-                return GetService().Subscriptions.ChangePlan(body, customerId, subscriptionId).Execute();
+                return GetService(gShellServiceAccount).Subscriptions.ChangePlan(body, customerId, subscriptionId).Execute();
             }
 
             public Google.Apis.Reseller.v1.Data.Subscription ChangeRenewalSettings
-            (Google.Apis.Reseller.v1.Data.RenewalSettings body, string customerId, string subscriptionId)
+            (Google.Apis.Reseller.v1.Data.RenewalSettings body, string customerId, string subscriptionId, string gShellServiceAccount = null)
             {
-                return GetService().Subscriptions.ChangeRenewalSettings(body, customerId, subscriptionId).Execute();
+                return GetService(gShellServiceAccount).Subscriptions.ChangeRenewalSettings(body, customerId, subscriptionId).Execute();
             }
 
             public Google.Apis.Reseller.v1.Data.Subscription ChangeSeats
-            (Google.Apis.Reseller.v1.Data.Seats body, string customerId, string subscriptionId)
+            (Google.Apis.Reseller.v1.Data.Seats body, string customerId, string subscriptionId, string gShellServiceAccount = null)
             {
-                return GetService().Subscriptions.ChangeSeats(body, customerId, subscriptionId).Execute();
+                return GetService(gShellServiceAccount).Subscriptions.ChangeSeats(body, customerId, subscriptionId).Execute();
             }
 
             public void Delete
-            (string customerId, string subscriptionId, v1.SubscriptionsResource.DeleteRequest.DeletionTypeEnum deletionType)
+            (string customerId, string subscriptionId, v1.SubscriptionsResource.DeleteRequest.DeletionTypeEnum deletionType, string gShellServiceAccount = null)
             {
-                GetService().Subscriptions.Delete(customerId, subscriptionId, deletionType).Execute();
+                GetService(gShellServiceAccount).Subscriptions.Delete(customerId, subscriptionId, deletionType).Execute();
             }
 
             public Google.Apis.Reseller.v1.Data.Subscription Get
-            (string customerId, string subscriptionId)
+            (string customerId, string subscriptionId, string gShellServiceAccount = null)
             {
-                return GetService().Subscriptions.Get(customerId, subscriptionId).Execute();
+                return GetService(gShellServiceAccount).Subscriptions.Get(customerId, subscriptionId).Execute();
             }
 
             public Google.Apis.Reseller.v1.Data.Subscription Insert
-            (Google.Apis.Reseller.v1.Data.Subscription body, string customerId, SubscriptionsInsertProperties properties = null)
+            (Google.Apis.Reseller.v1.Data.Subscription body, string customerId, SubscriptionsInsertProperties properties = null, string gShellServiceAccount = null)
             {
-                return GetService().Subscriptions.Insert(body, customerId).Execute();
+                return GetService(gShellServiceAccount).Subscriptions.Insert(body, customerId).Execute();
             }
 
             public List<Google.Apis.Reseller.v1.Data.Subscriptions> List(
-                SubscriptionsListProperties properties = null)
+                SubscriptionsListProperties properties = null, string gShellServiceAccount = null)
             {
                 var results = new List<Google.Apis.Reseller.v1.Data.Subscriptions>();
 
-                v1.SubscriptionsResource.ListRequest request = GetService().Subscriptions.List(
+                v1.SubscriptionsResource.ListRequest request = GetService(gShellServiceAccount).Subscriptions.List(
             );
 
                 if (properties != null)
@@ -443,15 +455,15 @@ namespace gShell.dotNet
             }
 
             public Google.Apis.Reseller.v1.Data.Subscription StartPaidService
-            (string customerId, string subscriptionId)
+            (string customerId, string subscriptionId, string gShellServiceAccount = null)
             {
-                return GetService().Subscriptions.StartPaidService(customerId, subscriptionId).Execute();
+                return GetService(gShellServiceAccount).Subscriptions.StartPaidService(customerId, subscriptionId).Execute();
             }
 
             public Google.Apis.Reseller.v1.Data.Subscription Suspend
-            (string customerId, string subscriptionId)
+            (string customerId, string subscriptionId, string gShellServiceAccount = null)
             {
-                return GetService().Subscriptions.Suspend(customerId, subscriptionId).Execute();
+                return GetService(gShellServiceAccount).Subscriptions.Suspend(customerId, subscriptionId).Execute();
             }
 
         }

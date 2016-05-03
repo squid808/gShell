@@ -27,6 +27,8 @@ namespace gShell.Cmdlets.DataTransfer{
         public Transfers transfers { get; set; }
 
         protected override string apiNameAndVersion { get { return mainBase.apiNameAndVersion; } }
+
+        protected static string gShellServiceAccount { get; set; }
         #endregion
 
         #region Constructors
@@ -46,7 +48,7 @@ namespace gShell.Cmdlets.DataTransfer{
             if (secrets != null)
             {
                 IEnumerable<string> scopes = EnsureScopesExist(Domain);
-                Domain = mainBase.BuildService(Authenticate(scopes, secrets, Domain)).domain;
+                Domain = mainBase.BuildService(Authenticate(scopes, secrets, Domain), gShellServiceAccount).domain;
 
                 GWriteProgress = new gWriteProgress(WriteProgress);
             }
@@ -56,6 +58,16 @@ namespace gShell.Cmdlets.DataTransfer{
                     "Client Secrets must be set before running cmdlets. Run 'Get-Help "
                     + "Set-gShellClientSecrets -online' for more information."))));
             }
+        }
+
+        protected override void EndProcessing()
+        {
+            gShellServiceAccount = string.Empty;
+        }
+
+        protected override void StopProcessing()
+        {
+            gShellServiceAccount = string.Empty;
         }
         #endregion
 
@@ -78,19 +90,16 @@ namespace gShell.Cmdlets.DataTransfer{
 
 
 
-            public Google.Apis.admin.DataTransfer.datatransfer_v1.Data.Application Get (
-            long
+            public Google.Apis.admin.DataTransfer.datatransfer_v1.Data.Application Get (long
 
              applicationId)
             {
 
-                return mainBase.applications.Get(
-                applicationId);
+                return mainBase.applications.Get(applicationId, gShellServiceAccount);
             }
 
 
-            public List<Google.Apis.admin.DataTransfer.datatransfer_v1.Data.ApplicationsListResponse> List(
-            gDataTransfer.Applications.ApplicationsListProperties properties = null)
+            public List<Google.Apis.admin.DataTransfer.datatransfer_v1.Data.ApplicationsListResponse> List(gDataTransfer.Applications.ApplicationsListProperties properties = null)
             {
 
                 properties = (properties != null) ? properties : new gDataTransfer.Applications.ApplicationsListProperties();
@@ -113,28 +122,23 @@ namespace gShell.Cmdlets.DataTransfer{
 
 
 
-            public Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer Get (
-            string
+            public Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer Get (string
 
              dataTransferId)
             {
 
-                return mainBase.transfers.Get(
-                dataTransferId);
+                return mainBase.transfers.Get(dataTransferId, gShellServiceAccount);
             }
 
 
-            public Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer Insert (
-            Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer body)
+            public Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer Insert (Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer body)
             {
 
-                return mainBase.transfers.Insert(
-                body);
+                return mainBase.transfers.Insert(body, gShellServiceAccount);
             }
 
 
-            public List<Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfersListResponse> List(
-            gDataTransfer.Transfers.TransfersListProperties properties = null)
+            public List<Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfersListResponse> List(gDataTransfer.Transfers.TransfersListProperties properties = null)
             {
 
                 properties = (properties != null) ? properties : new gDataTransfer.Transfers.TransfersListProperties();
@@ -170,9 +174,9 @@ namespace gShell.dotNet
 
         protected override bool worksWithGmail { get { return false; } }
 
-        protected override datatransfer_v1.DataTransferService CreateNewService(string domain)
+        protected override datatransfer_v1.DataTransferService CreateNewService(string domain, AuthenticatedUserInfo authInfo, string gShellServiceAccount = null)
         {
-            return new datatransfer_v1.DataTransferService(OAuth2Base.GetInitializer(domain));
+            return new datatransfer_v1.DataTransferService(OAuth2Base.GetInitializer(domain, authInfo, gShellServiceAccount));
         }
 
         public override string apiNameAndVersion { get { return "admin:datatransfer_v1"; } }
@@ -207,17 +211,17 @@ namespace gShell.dotNet
 
 
             public Google.Apis.admin.DataTransfer.datatransfer_v1.Data.Application Get
-            (long applicationId)
+            (long applicationId, string gShellServiceAccount = null)
             {
-                return GetService().Applications.Get(    applicationId).Execute();
+                return GetService(gShellServiceAccount).Applications.Get(applicationId).Execute();
             }
 
             public List<Google.Apis.admin.DataTransfer.datatransfer_v1.Data.ApplicationsListResponse> List(
-                ApplicationsListProperties properties = null)
+                ApplicationsListProperties properties = null, string gShellServiceAccount = null)
             {
                 var results = new List<Google.Apis.admin.DataTransfer.datatransfer_v1.Data.ApplicationsListResponse>();
 
-                datatransfer_v1.ApplicationsResource.ListRequest request = GetService().Applications.List(
+                datatransfer_v1.ApplicationsResource.ListRequest request = GetService(gShellServiceAccount).Applications.List(
             );
 
                 if (properties != null)
@@ -289,23 +293,23 @@ namespace gShell.dotNet
 
 
             public Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer Get
-            (string dataTransferId)
+            (string dataTransferId, string gShellServiceAccount = null)
             {
-                return GetService().Transfers.Get(    dataTransferId).Execute();
+                return GetService(gShellServiceAccount).Transfers.Get(dataTransferId).Execute();
             }
 
             public Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer Insert
-            (Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer body)
+            (Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer body, string gShellServiceAccount = null)
             {
-                return GetService().Transfers.Insert(    body).Execute();
+                return GetService(gShellServiceAccount).Transfers.Insert(body).Execute();
             }
 
             public List<Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfersListResponse> List(
-                TransfersListProperties properties = null)
+                TransfersListProperties properties = null, string gShellServiceAccount = null)
             {
                 var results = new List<Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfersListResponse>();
 
-                datatransfer_v1.TransfersResource.ListRequest request = GetService().Transfers.List(
+                datatransfer_v1.TransfersResource.ListRequest request = GetService(gShellServiceAccount).Transfers.List(
             );
 
                 if (properties != null)

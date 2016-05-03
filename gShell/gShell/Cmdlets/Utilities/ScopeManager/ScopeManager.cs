@@ -71,10 +71,9 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
             }
             else
             {
-                WriteError(new ErrorRecord(new Exception(
+                throw new Exception(
                     "Client Secrets must be set before running cmdlets. Run 'Get-Help "
-                    + "Set-gShellClientSecrets -online' for more information."),
-                    "", ErrorCategory.ObjectNotFound, "Client Secrets"));
+                    + "Set-gShellClientSecrets -online' for more information.");
             }
         }
     }

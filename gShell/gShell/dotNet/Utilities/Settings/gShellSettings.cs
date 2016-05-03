@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 
 namespace gShell.dotNet.Utilities.Settings
 {
+    /// <summary>Determines what serialize type to use for the gShell info.</summary>
     public class gShellSettings
     {
         public enum SerializeTypes { Bin, Json }
