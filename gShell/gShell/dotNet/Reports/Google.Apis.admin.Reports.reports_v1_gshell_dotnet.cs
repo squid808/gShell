@@ -333,8 +333,11 @@ namespace gShell.dotNet
                 return results;
             }
 
-            public Google.Apis.admin.Reports.reports_v1.Data.Channel Watch
-            (Google.Apis.admin.Reports.reports_v1.Data.Channel body, string userKey, string applicationName, ActivitiesWatchProperties properties = null, string gShellServiceAccount = null)
+            public Google.Apis.admin.Reports.reports_v1.Data.Channel Watch (Google.Apis.admin.Reports.reports_v1.Data.Channel body, string
+
+             userKey, string
+
+             applicationName, ActivitiesWatchProperties properties = null, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Activities.Watch(body, userKey, applicationName).Execute();
             }
@@ -349,8 +352,7 @@ namespace gShell.dotNet
 
 
 
-            public void Stop
-            (Google.Apis.admin.Reports.reports_v1.Data.Channel body, string gShellServiceAccount = null)
+            public void Stop (Google.Apis.admin.Reports.reports_v1.Data.Channel body, string gShellServiceAccount = null)
             {
                 GetService(gShellServiceAccount).Channels.Stop(body).Execute();
             }

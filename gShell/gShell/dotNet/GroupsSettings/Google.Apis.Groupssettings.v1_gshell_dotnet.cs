@@ -165,20 +165,23 @@ namespace gShell.dotNet
 
 
 
-            public Google.Apis.Groupssettings.v1.Data.Groups Get
-            (string groupUniqueId, string gShellServiceAccount = null)
+            public Google.Apis.Groupssettings.v1.Data.Groups Get (string
+
+             groupUniqueId, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Groups.Get(groupUniqueId).Execute();
             }
 
-            public Google.Apis.Groupssettings.v1.Data.Groups Patch
-            (Google.Apis.Groupssettings.v1.Data.Groups body, string groupUniqueId, string gShellServiceAccount = null)
+            public Google.Apis.Groupssettings.v1.Data.Groups Patch (Google.Apis.Groupssettings.v1.Data.Groups body, string
+
+             groupUniqueId, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Groups.Patch(body, groupUniqueId).Execute();
             }
 
-            public Google.Apis.Groupssettings.v1.Data.Groups Update
-            (Google.Apis.Groupssettings.v1.Data.Groups body, string groupUniqueId, string gShellServiceAccount = null)
+            public Google.Apis.Groupssettings.v1.Data.Groups Update (Google.Apis.Groupssettings.v1.Data.Groups body, string
+
+             groupUniqueId, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Groups.Update(body, groupUniqueId).Execute();
             }

@@ -210,8 +210,9 @@ namespace gShell.dotNet
             }
 
 
-            public Google.Apis.admin.DataTransfer.datatransfer_v1.Data.Application Get
-            (long applicationId, string gShellServiceAccount = null)
+            public Google.Apis.admin.DataTransfer.datatransfer_v1.Data.Application Get (long
+
+             applicationId, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Applications.Get(applicationId).Execute();
             }
@@ -292,14 +293,14 @@ namespace gShell.dotNet
             }
 
 
-            public Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer Get
-            (string dataTransferId, string gShellServiceAccount = null)
+            public Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer Get (string
+
+             dataTransferId, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Transfers.Get(dataTransferId).Execute();
             }
 
-            public Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer Insert
-            (Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer body, string gShellServiceAccount = null)
+            public Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer Insert (Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer body, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Transfers.Insert(body).Execute();
             }

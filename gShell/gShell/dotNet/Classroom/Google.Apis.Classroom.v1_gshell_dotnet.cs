@@ -462,20 +462,21 @@ namespace gShell.dotNet
             }
 
 
-            public Google.Apis.Classroom.v1.Data.Course Create
-            (Google.Apis.Classroom.v1.Data.Course body, string gShellServiceAccount = null)
+            public Google.Apis.Classroom.v1.Data.Course Create (Google.Apis.Classroom.v1.Data.Course body, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Courses.Create(body).Execute();
             }
 
-            public Google.Apis.Classroom.v1.Data.Empty Delete
-            (string id, string gShellServiceAccount = null)
+            public Google.Apis.Classroom.v1.Data.Empty Delete (string
+
+             id, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Courses.Delete(id).Execute();
             }
 
-            public Google.Apis.Classroom.v1.Data.Course Get
-            (string id, string gShellServiceAccount = null)
+            public Google.Apis.Classroom.v1.Data.Course Get (string
+
+             id, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Courses.Get(id).Execute();
             }
@@ -535,14 +536,16 @@ namespace gShell.dotNet
                 return results;
             }
 
-            public Google.Apis.Classroom.v1.Data.Course Patch
-            (Google.Apis.Classroom.v1.Data.Course body, string id, CoursesPatchProperties properties = null, string gShellServiceAccount = null)
+            public Google.Apis.Classroom.v1.Data.Course Patch (Google.Apis.Classroom.v1.Data.Course body, string
+
+             id, CoursesPatchProperties properties = null, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Courses.Patch(body, id).Execute();
             }
 
-            public Google.Apis.Classroom.v1.Data.Course Update
-            (Google.Apis.Classroom.v1.Data.Course body, string id, string gShellServiceAccount = null)
+            public Google.Apis.Classroom.v1.Data.Course Update (Google.Apis.Classroom.v1.Data.Course body, string
+
+             id, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Courses.Update(body, id).Execute();
             }
@@ -563,14 +566,18 @@ namespace gShell.dotNet
                 }
 
 
-                public Google.Apis.Classroom.v1.Data.CourseAlias Create
-                (Google.Apis.Classroom.v1.Data.CourseAlias body, string courseId, string gShellServiceAccount = null)
+                public Google.Apis.Classroom.v1.Data.CourseAlias Create (Google.Apis.Classroom.v1.Data.CourseAlias body, string
+
+                 courseId, string gShellServiceAccount = null)
                 {
                     return GetService(gShellServiceAccount).Courses.Aliases.Create(body, courseId).Execute();
                 }
 
-                public Google.Apis.Classroom.v1.Data.Empty Delete
-                (string courseId, string alias, string gShellServiceAccount = null)
+                public Google.Apis.Classroom.v1.Data.Empty Delete (string
+
+                 courseId, string
+
+                 alias, string gShellServiceAccount = null)
                 {
                     return GetService(gShellServiceAccount).Courses.Aliases.Delete(courseId, alias).Execute();
                 }
@@ -651,20 +658,27 @@ namespace gShell.dotNet
                 }
 
 
-                public Google.Apis.Classroom.v1.Data.Student Create
-                (Google.Apis.Classroom.v1.Data.Student body, string courseId, StudentsCreateProperties properties = null, string gShellServiceAccount = null)
+                public Google.Apis.Classroom.v1.Data.Student Create (Google.Apis.Classroom.v1.Data.Student body, string
+
+                 courseId, StudentsCreateProperties properties = null, string gShellServiceAccount = null)
                 {
                     return GetService(gShellServiceAccount).Courses.Students.Create(body, courseId).Execute();
                 }
 
-                public Google.Apis.Classroom.v1.Data.Empty Delete
-                (string courseId, string userId, string gShellServiceAccount = null)
+                public Google.Apis.Classroom.v1.Data.Empty Delete (string
+
+                 courseId, string
+
+                 userId, string gShellServiceAccount = null)
                 {
                     return GetService(gShellServiceAccount).Courses.Students.Delete(courseId, userId).Execute();
                 }
 
-                public Google.Apis.Classroom.v1.Data.Student Get
-                (string courseId, string userId, string gShellServiceAccount = null)
+                public Google.Apis.Classroom.v1.Data.Student Get (string
+
+                 courseId, string
+
+                 userId, string gShellServiceAccount = null)
                 {
                     return GetService(gShellServiceAccount).Courses.Students.Get(courseId, userId).Execute();
                 }
@@ -740,20 +754,27 @@ namespace gShell.dotNet
                 }
 
 
-                public Google.Apis.Classroom.v1.Data.Teacher Create
-                (Google.Apis.Classroom.v1.Data.Teacher body, string courseId, string gShellServiceAccount = null)
+                public Google.Apis.Classroom.v1.Data.Teacher Create (Google.Apis.Classroom.v1.Data.Teacher body, string
+
+                 courseId, string gShellServiceAccount = null)
                 {
                     return GetService(gShellServiceAccount).Courses.Teachers.Create(body, courseId).Execute();
                 }
 
-                public Google.Apis.Classroom.v1.Data.Empty Delete
-                (string courseId, string userId, string gShellServiceAccount = null)
+                public Google.Apis.Classroom.v1.Data.Empty Delete (string
+
+                 courseId, string
+
+                 userId, string gShellServiceAccount = null)
                 {
                     return GetService(gShellServiceAccount).Courses.Teachers.Delete(courseId, userId).Execute();
                 }
 
-                public Google.Apis.Classroom.v1.Data.Teacher Get
-                (string courseId, string userId, string gShellServiceAccount = null)
+                public Google.Apis.Classroom.v1.Data.Teacher Get (string
+
+                 courseId, string
+
+                 userId, string gShellServiceAccount = null)
                 {
                     return GetService(gShellServiceAccount).Courses.Teachers.Get(courseId, userId).Execute();
                 }
@@ -833,26 +854,28 @@ namespace gShell.dotNet
             }
 
 
-            public Google.Apis.Classroom.v1.Data.Empty Accept
-            (string id, string gShellServiceAccount = null)
+            public Google.Apis.Classroom.v1.Data.Empty Accept (string
+
+             id, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Invitations.Accept(id).Execute();
             }
 
-            public Google.Apis.Classroom.v1.Data.Invitation Create
-            (Google.Apis.Classroom.v1.Data.Invitation body, string gShellServiceAccount = null)
+            public Google.Apis.Classroom.v1.Data.Invitation Create (Google.Apis.Classroom.v1.Data.Invitation body, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Invitations.Create(body).Execute();
             }
 
-            public Google.Apis.Classroom.v1.Data.Empty Delete
-            (string id, string gShellServiceAccount = null)
+            public Google.Apis.Classroom.v1.Data.Empty Delete (string
+
+             id, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Invitations.Delete(id).Execute();
             }
 
-            public Google.Apis.Classroom.v1.Data.Invitation Get
-            (string id, string gShellServiceAccount = null)
+            public Google.Apis.Classroom.v1.Data.Invitation Get (string
+
+             id, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Invitations.Get(id).Execute();
             }
@@ -922,8 +945,9 @@ namespace gShell.dotNet
 
 
 
-            public Google.Apis.Classroom.v1.Data.UserProfile Get
-            (string userId, string gShellServiceAccount = null)
+            public Google.Apis.Classroom.v1.Data.UserProfile Get (string
+
+             userId, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).UserProfiles.Get(userId).Execute();
             }

@@ -236,32 +236,47 @@ namespace gShell.dotNet
             }
 
 
-            public void Delete
-            (string domain, string id, string version, string gShellServiceAccount = null)
+            public void Delete (string
+
+             domain, string
+
+             id, string
+
+             version, string gShellServiceAccount = null)
             {
                 GetService(gShellServiceAccount).Contact.Delete(domain, id, version).Execute();
             }
 
-            public Google.Apis.admin.Sharedcontacts.sharedcontacts_v3.Data.Contact Get
-            (string domain, string id, string gShellServiceAccount = null)
+            public Google.Apis.admin.Sharedcontacts.sharedcontacts_v3.Data.Contact Get (string
+
+             domain, string
+
+             id, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Contact.Get(domain, id).Execute();
             }
 
-            public Google.Apis.admin.Sharedcontacts.sharedcontacts_v3.Data.Contact Insert
-            (Google.Apis.admin.Sharedcontacts.sharedcontacts_v3.Data.Contact body, string domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Sharedcontacts.sharedcontacts_v3.Data.Contact Insert (Google.Apis.admin.Sharedcontacts.sharedcontacts_v3.Data.Contact body, string
+
+             domain, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Contact.Insert(body, domain).Execute();
             }
 
-            public Google.Apis.admin.Sharedcontacts.sharedcontacts_v3.Data.Contacts List
-            (string domain, ContactListProperties properties = null, string gShellServiceAccount = null)
+            public Google.Apis.admin.Sharedcontacts.sharedcontacts_v3.Data.Contacts List (string
+
+             domain, ContactListProperties properties = null, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Contact.List(domain).Execute();
             }
 
-            public Google.Apis.admin.Sharedcontacts.sharedcontacts_v3.Data.Contact Update
-            (Google.Apis.admin.Sharedcontacts.sharedcontacts_v3.Data.Contact body, string domain, string id, string version, string gShellServiceAccount = null)
+            public Google.Apis.admin.Sharedcontacts.sharedcontacts_v3.Data.Contact Update (Google.Apis.admin.Sharedcontacts.sharedcontacts_v3.Data.Contact body, string
+
+             domain, string
+
+             id, string
+
+             version, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Contact.Update(body, domain, id, version).Execute();
             }
@@ -276,8 +291,11 @@ namespace gShell.dotNet
 
 
 
-            public Google.Apis.admin.Sharedcontacts.sharedcontacts_v3.Data.Photo Get
-            (string domain, string id, string gShellServiceAccount = null)
+            public Google.Apis.admin.Sharedcontacts.sharedcontacts_v3.Data.Photo Get (string
+
+             domain, string
+
+             id, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Photo.Get(domain, id).Execute();
             }

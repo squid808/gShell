@@ -657,20 +657,27 @@ namespace gShell.dotNet
             }
 
 
-            public void Delete
-            (string calendarId, string ruleId, string gShellServiceAccount = null)
+            public void Delete (string
+
+             calendarId, string
+
+             ruleId, string gShellServiceAccount = null)
             {
                 GetService(gShellServiceAccount).Acl.Delete(calendarId, ruleId).Execute();
             }
 
-            public Google.Apis.Calendar.v3.Data.AclRule Get
-            (string calendarId, string ruleId, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.AclRule Get (string
+
+             calendarId, string
+
+             ruleId, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Acl.Get(calendarId, ruleId).Execute();
             }
 
-            public Google.Apis.Calendar.v3.Data.AclRule Insert
-            (Google.Apis.Calendar.v3.Data.AclRule body, string calendarId, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.AclRule Insert (Google.Apis.Calendar.v3.Data.AclRule body, string
+
+             calendarId, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Acl.Insert(body, calendarId).Execute();
             }
@@ -730,20 +737,27 @@ namespace gShell.dotNet
                 return results;
             }
 
-            public Google.Apis.Calendar.v3.Data.AclRule Patch
-            (Google.Apis.Calendar.v3.Data.AclRule body, string calendarId, string ruleId, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.AclRule Patch (Google.Apis.Calendar.v3.Data.AclRule body, string
+
+             calendarId, string
+
+             ruleId, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Acl.Patch(body, calendarId, ruleId).Execute();
             }
 
-            public Google.Apis.Calendar.v3.Data.AclRule Update
-            (Google.Apis.Calendar.v3.Data.AclRule body, string calendarId, string ruleId, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.AclRule Update (Google.Apis.Calendar.v3.Data.AclRule body, string
+
+             calendarId, string
+
+             ruleId, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Acl.Update(body, calendarId, ruleId).Execute();
             }
 
-            public Google.Apis.Calendar.v3.Data.Channel Watch
-            (Google.Apis.Calendar.v3.Data.Channel body, string calendarId, AclWatchProperties properties = null, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.Channel Watch (Google.Apis.Calendar.v3.Data.Channel body, string
+
+             calendarId, AclWatchProperties properties = null, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Acl.Watch(body, calendarId).Execute();
             }
@@ -795,20 +809,21 @@ namespace gShell.dotNet
             }
 
 
-            public void Delete
-            (string calendarId, string gShellServiceAccount = null)
+            public void Delete (string
+
+             calendarId, string gShellServiceAccount = null)
             {
                 GetService(gShellServiceAccount).CalendarList.Delete(calendarId).Execute();
             }
 
-            public Google.Apis.Calendar.v3.Data.CalendarListEntry Get
-            (string calendarId, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.CalendarListEntry Get (string
+
+             calendarId, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).CalendarList.Get(calendarId).Execute();
             }
 
-            public Google.Apis.Calendar.v3.Data.CalendarListEntry Insert
-            (Google.Apis.Calendar.v3.Data.CalendarListEntry body, CalendarListInsertProperties properties = null, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.CalendarListEntry Insert (Google.Apis.Calendar.v3.Data.CalendarListEntry body, CalendarListInsertProperties properties = null, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).CalendarList.Insert(body).Execute();
             }
@@ -870,20 +885,21 @@ namespace gShell.dotNet
                 return results;
             }
 
-            public Google.Apis.Calendar.v3.Data.CalendarListEntry Patch
-            (Google.Apis.Calendar.v3.Data.CalendarListEntry body, string calendarId, CalendarListPatchProperties properties = null, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.CalendarListEntry Patch (Google.Apis.Calendar.v3.Data.CalendarListEntry body, string
+
+             calendarId, CalendarListPatchProperties properties = null, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).CalendarList.Patch(body, calendarId).Execute();
             }
 
-            public Google.Apis.Calendar.v3.Data.CalendarListEntry Update
-            (Google.Apis.Calendar.v3.Data.CalendarListEntry body, string calendarId, CalendarListUpdateProperties properties = null, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.CalendarListEntry Update (Google.Apis.Calendar.v3.Data.CalendarListEntry body, string
+
+             calendarId, CalendarListUpdateProperties properties = null, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).CalendarList.Update(body, calendarId).Execute();
             }
 
-            public Google.Apis.Calendar.v3.Data.Channel Watch
-            (Google.Apis.Calendar.v3.Data.Channel body, CalendarListWatchProperties properties = null, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.Channel Watch (Google.Apis.Calendar.v3.Data.Channel body, CalendarListWatchProperties properties = null, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).CalendarList.Watch(body).Execute();
             }
@@ -898,38 +914,42 @@ namespace gShell.dotNet
 
 
 
-            public void Clear
-            (string calendarId, string gShellServiceAccount = null)
+            public void Clear (string
+
+             calendarId, string gShellServiceAccount = null)
             {
                 GetService(gShellServiceAccount).Calendars.Clear(calendarId).Execute();
             }
 
-            public void Delete
-            (string calendarId, string gShellServiceAccount = null)
+            public void Delete (string
+
+             calendarId, string gShellServiceAccount = null)
             {
                 GetService(gShellServiceAccount).Calendars.Delete(calendarId).Execute();
             }
 
-            public Google.Apis.Calendar.v3.Data.Calendar Get
-            (string calendarId, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.Calendar Get (string
+
+             calendarId, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Calendars.Get(calendarId).Execute();
             }
 
-            public Google.Apis.Calendar.v3.Data.Calendar Insert
-            (Google.Apis.Calendar.v3.Data.Calendar body, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.Calendar Insert (Google.Apis.Calendar.v3.Data.Calendar body, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Calendars.Insert(body).Execute();
             }
 
-            public Google.Apis.Calendar.v3.Data.Calendar Patch
-            (Google.Apis.Calendar.v3.Data.Calendar body, string calendarId, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.Calendar Patch (Google.Apis.Calendar.v3.Data.Calendar body, string
+
+             calendarId, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Calendars.Patch(body, calendarId).Execute();
             }
 
-            public Google.Apis.Calendar.v3.Data.Calendar Update
-            (Google.Apis.Calendar.v3.Data.Calendar body, string calendarId, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.Calendar Update (Google.Apis.Calendar.v3.Data.Calendar body, string
+
+             calendarId, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Calendars.Update(body, calendarId).Execute();
             }
@@ -944,8 +964,7 @@ namespace gShell.dotNet
 
 
 
-            public void Stop
-            (Google.Apis.Calendar.v3.Data.Channel body, string gShellServiceAccount = null)
+            public void Stop (Google.Apis.Calendar.v3.Data.Channel body, string gShellServiceAccount = null)
             {
                 GetService(gShellServiceAccount).Channels.Stop(body).Execute();
             }
@@ -960,8 +979,7 @@ namespace gShell.dotNet
 
 
 
-            public Google.Apis.Calendar.v3.Data.Colors Get
-            (string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.Colors Get (string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Colors.Get().Execute();
             }
@@ -1086,26 +1104,34 @@ namespace gShell.dotNet
             }
 
 
-            public void Delete
-            (string calendarId, string eventId, EventsDeleteProperties properties = null, string gShellServiceAccount = null)
+            public void Delete (string
+
+             calendarId, string
+
+             eventId, EventsDeleteProperties properties = null, string gShellServiceAccount = null)
             {
                 GetService(gShellServiceAccount).Events.Delete(calendarId, eventId).Execute();
             }
 
-            public Google.Apis.Calendar.v3.Data.Event Get
-            (string calendarId, string eventId, EventsGetProperties properties = null, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.Event Get (string
+
+             calendarId, string
+
+             eventId, EventsGetProperties properties = null, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Events.Get(calendarId, eventId).Execute();
             }
 
-            public Google.Apis.Calendar.v3.Data.Event Import
-            (Google.Apis.Calendar.v3.Data.Event body, string calendarId, EventsImportProperties properties = null, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.Event Import (Google.Apis.Calendar.v3.Data.Event body, string
+
+             calendarId, EventsImportProperties properties = null, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Events.Import(body, calendarId).Execute();
             }
 
-            public Google.Apis.Calendar.v3.Data.Event Insert
-            (Google.Apis.Calendar.v3.Data.Event body, string calendarId, EventsInsertProperties properties = null, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.Event Insert (Google.Apis.Calendar.v3.Data.Event body, string
+
+             calendarId, EventsInsertProperties properties = null, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Events.Insert(body, calendarId).Execute();
             }
@@ -1238,32 +1264,47 @@ namespace gShell.dotNet
                 return results;
             }
 
-            public Google.Apis.Calendar.v3.Data.Event Move
-            (string calendarId, string eventId, string destination, EventsMoveProperties properties = null, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.Event Move (string
+
+             calendarId, string
+
+             eventId, string
+
+             destination, EventsMoveProperties properties = null, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Events.Move(calendarId, eventId, destination).Execute();
             }
 
-            public Google.Apis.Calendar.v3.Data.Event Patch
-            (Google.Apis.Calendar.v3.Data.Event body, string calendarId, string eventId, EventsPatchProperties properties = null, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.Event Patch (Google.Apis.Calendar.v3.Data.Event body, string
+
+             calendarId, string
+
+             eventId, EventsPatchProperties properties = null, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Events.Patch(body, calendarId, eventId).Execute();
             }
 
-            public Google.Apis.Calendar.v3.Data.Event QuickAdd
-            (string calendarId, string text, EventsQuickAddProperties properties = null, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.Event QuickAdd (string
+
+             calendarId, string
+
+             text, EventsQuickAddProperties properties = null, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Events.QuickAdd(calendarId, text).Execute();
             }
 
-            public Google.Apis.Calendar.v3.Data.Event Update
-            (Google.Apis.Calendar.v3.Data.Event body, string calendarId, string eventId, EventsUpdateProperties properties = null, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.Event Update (Google.Apis.Calendar.v3.Data.Event body, string
+
+             calendarId, string
+
+             eventId, EventsUpdateProperties properties = null, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Events.Update(body, calendarId, eventId).Execute();
             }
 
-            public Google.Apis.Calendar.v3.Data.Channel Watch
-            (Google.Apis.Calendar.v3.Data.Channel body, string calendarId, EventsWatchProperties properties = null, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.Channel Watch (Google.Apis.Calendar.v3.Data.Channel body, string
+
+             calendarId, EventsWatchProperties properties = null, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Events.Watch(body, calendarId).Execute();
             }
@@ -1278,8 +1319,7 @@ namespace gShell.dotNet
 
 
 
-            public Google.Apis.Calendar.v3.Data.FreeBusyResponse Query
-            (Google.Apis.Calendar.v3.Data.FreeBusyRequest body, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.FreeBusyResponse Query (Google.Apis.Calendar.v3.Data.FreeBusyRequest body, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Freebusy.Query(body).Execute();
             }
@@ -1310,8 +1350,9 @@ namespace gShell.dotNet
             }
 
 
-            public Google.Apis.Calendar.v3.Data.Setting Get
-            (string setting, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.Setting Get (string
+
+             setting, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Settings.Get(setting).Execute();
             }
@@ -1370,8 +1411,7 @@ namespace gShell.dotNet
                 return results;
             }
 
-            public Google.Apis.Calendar.v3.Data.Channel Watch
-            (Google.Apis.Calendar.v3.Data.Channel body, SettingsWatchProperties properties = null, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.Channel Watch (Google.Apis.Calendar.v3.Data.Channel body, SettingsWatchProperties properties = null, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Settings.Watch(body).Execute();
             }

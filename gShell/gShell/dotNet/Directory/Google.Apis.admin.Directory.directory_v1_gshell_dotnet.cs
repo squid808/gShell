@@ -1468,20 +1468,27 @@ namespace gShell.dotNet
 
 
 
-            public void Delete
-            (string userKey, int codeId, string gShellServiceAccount = null)
+            public void Delete (string
+
+             userKey, int
+
+             codeId, string gShellServiceAccount = null)
             {
                 GetService(gShellServiceAccount).Asps.Delete(userKey, codeId).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.Asp Get
-            (string userKey, int codeId, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Asp Get (string
+
+             userKey, int
+
+             codeId, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Asps.Get(userKey, codeId).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.Asps List
-            (string userKey, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Asps List (string
+
+             userKey, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Asps.List(userKey).Execute();
             }
@@ -1496,8 +1503,7 @@ namespace gShell.dotNet
 
 
 
-            public void Stop
-            (Google.Apis.admin.Directory.directory_v1.Data.Channel body, string gShellServiceAccount = null)
+            public void Stop (Google.Apis.admin.Directory.directory_v1.Data.Channel body, string gShellServiceAccount = null)
             {
                 GetService(gShellServiceAccount).Channels.Stop(body).Execute();
             }
@@ -1539,8 +1545,11 @@ namespace gShell.dotNet
             }
 
 
-            public Google.Apis.admin.Directory.directory_v1.Data.ChromeOsDevice Get
-            (string customerId, string deviceId, ChromeosdevicesGetProperties properties = null, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.ChromeOsDevice Get (string
+
+             customerId, string
+
+             deviceId, ChromeosdevicesGetProperties properties = null, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Chromeosdevices.Get(customerId, deviceId).Execute();
             }
@@ -1602,14 +1611,20 @@ namespace gShell.dotNet
                 return results;
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.ChromeOsDevice Patch
-            (Google.Apis.admin.Directory.directory_v1.Data.ChromeOsDevice body, string customerId, string deviceId, ChromeosdevicesPatchProperties properties = null, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.ChromeOsDevice Patch (Google.Apis.admin.Directory.directory_v1.Data.ChromeOsDevice body, string
+
+             customerId, string
+
+             deviceId, ChromeosdevicesPatchProperties properties = null, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Chromeosdevices.Patch(body, customerId, deviceId).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.ChromeOsDevice Update
-            (Google.Apis.admin.Directory.directory_v1.Data.ChromeOsDevice body, string customerId, string deviceId, ChromeosdevicesUpdateProperties properties = null, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.ChromeOsDevice Update (Google.Apis.admin.Directory.directory_v1.Data.ChromeOsDevice body, string
+
+             customerId, string
+
+             deviceId, ChromeosdevicesUpdateProperties properties = null, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Chromeosdevices.Update(body, customerId, deviceId).Execute();
             }
@@ -1624,20 +1639,23 @@ namespace gShell.dotNet
 
 
 
-            public Google.Apis.admin.Directory.directory_v1.Data.Customer Get
-            (string customerKey, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Customer Get (string
+
+             customerKey, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Customers.Get(customerKey).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.Customer Patch
-            (Google.Apis.admin.Directory.directory_v1.Data.Customer body, string customerKey, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Customer Patch (Google.Apis.admin.Directory.directory_v1.Data.Customer body, string
+
+             customerKey, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Customers.Patch(body, customerKey).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.Customer Update
-            (Google.Apis.admin.Directory.directory_v1.Data.Customer body, string customerKey, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Customer Update (Google.Apis.admin.Directory.directory_v1.Data.Customer body, string
+
+             customerKey, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Customers.Update(body, customerKey).Execute();
             }
@@ -1656,26 +1674,34 @@ namespace gShell.dotNet
             }
 
 
-            public void Delete
-            (string customer, string domainAliasName, string gShellServiceAccount = null)
+            public void Delete (string
+
+             customer, string
+
+             domainAliasName, string gShellServiceAccount = null)
             {
                 GetService(gShellServiceAccount).DomainAliases.Delete(customer, domainAliasName).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.DomainAlias Get
-            (string customer, string domainAliasName, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.DomainAlias Get (string
+
+             customer, string
+
+             domainAliasName, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).DomainAliases.Get(customer, domainAliasName).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.DomainAlias Insert
-            (Google.Apis.admin.Directory.directory_v1.Data.DomainAlias body, string customer, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.DomainAlias Insert (Google.Apis.admin.Directory.directory_v1.Data.DomainAlias body, string
+
+             customer, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).DomainAliases.Insert(body, customer).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.DomainAliases List
-            (string customer, DomainAliasesListProperties properties = null, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.DomainAliases List (string
+
+             customer, DomainAliasesListProperties properties = null, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).DomainAliases.List(customer).Execute();
             }
@@ -1690,26 +1716,34 @@ namespace gShell.dotNet
 
 
 
-            public void Delete
-            (string customer, string domainName, string gShellServiceAccount = null)
+            public void Delete (string
+
+             customer, string
+
+             domainName, string gShellServiceAccount = null)
             {
                 GetService(gShellServiceAccount).Domains.Delete(customer, domainName).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.Domains Get
-            (string customer, string domainName, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Domains Get (string
+
+             customer, string
+
+             domainName, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Domains.Get(customer, domainName).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.Domains Insert
-            (Google.Apis.admin.Directory.directory_v1.Data.Domains body, string customer, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Domains Insert (Google.Apis.admin.Directory.directory_v1.Data.Domains body, string
+
+             customer, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Domains.Insert(body, customer).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.Domains2 List
-            (string customer, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Domains2 List (string
+
+             customer, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Domains.List(customer).Execute();
             }
@@ -1742,20 +1776,21 @@ namespace gShell.dotNet
             }
 
 
-            public void Delete
-            (string groupKey, string gShellServiceAccount = null)
+            public void Delete (string
+
+             groupKey, string gShellServiceAccount = null)
             {
                 GetService(gShellServiceAccount).Groups.Delete(groupKey).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.Group Get
-            (string groupKey, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Group Get (string
+
+             groupKey, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Groups.Get(groupKey).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.Group Insert
-            (Google.Apis.admin.Directory.directory_v1.Data.Group body, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Group Insert (Google.Apis.admin.Directory.directory_v1.Data.Group body, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Groups.Insert(body).Execute();
             }
@@ -1816,14 +1851,16 @@ namespace gShell.dotNet
                 return results;
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.Group Patch
-            (Google.Apis.admin.Directory.directory_v1.Data.Group body, string groupKey, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Group Patch (Google.Apis.admin.Directory.directory_v1.Data.Group body, string
+
+             groupKey, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Groups.Patch(body, groupKey).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.Group Update
-            (Google.Apis.admin.Directory.directory_v1.Data.Group body, string groupKey, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Group Update (Google.Apis.admin.Directory.directory_v1.Data.Group body, string
+
+             groupKey, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Groups.Update(body, groupKey).Execute();
             }
@@ -1836,20 +1873,25 @@ namespace gShell.dotNet
 
 
 
-                public void Delete
-                (string groupKey, string alias, string gShellServiceAccount = null)
+                public void Delete (string
+
+                 groupKey, string
+
+                 alias, string gShellServiceAccount = null)
                 {
                     GetService(gShellServiceAccount).Groups.Aliases.Delete(groupKey, alias).Execute();
                 }
 
-                public Google.Apis.admin.Directory.directory_v1.Data.Alias Insert
-                (Google.Apis.admin.Directory.directory_v1.Data.Alias body, string groupKey, string gShellServiceAccount = null)
+                public Google.Apis.admin.Directory.directory_v1.Data.Alias Insert (Google.Apis.admin.Directory.directory_v1.Data.Alias body, string
+
+                 groupKey, string gShellServiceAccount = null)
                 {
                     return GetService(gShellServiceAccount).Groups.Aliases.Insert(body, groupKey).Execute();
                 }
 
-                public Google.Apis.admin.Directory.directory_v1.Data.Aliases List
-                (string groupKey, string gShellServiceAccount = null)
+                public Google.Apis.admin.Directory.directory_v1.Data.Aliases List (string
+
+                 groupKey, string gShellServiceAccount = null)
                 {
                     return GetService(gShellServiceAccount).Groups.Aliases.List(groupKey).Execute();
                 }
@@ -1875,20 +1917,27 @@ namespace gShell.dotNet
             }
 
 
-            public void Delete
-            (string groupKey, string memberKey, string gShellServiceAccount = null)
+            public void Delete (string
+
+             groupKey, string
+
+             memberKey, string gShellServiceAccount = null)
             {
                 GetService(gShellServiceAccount).Members.Delete(groupKey, memberKey).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.Member Get
-            (string groupKey, string memberKey, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Member Get (string
+
+             groupKey, string
+
+             memberKey, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Members.Get(groupKey, memberKey).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.Member Insert
-            (Google.Apis.admin.Directory.directory_v1.Data.Member body, string groupKey, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Member Insert (Google.Apis.admin.Directory.directory_v1.Data.Member body, string
+
+             groupKey, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Members.Insert(body, groupKey).Execute();
             }
@@ -1947,14 +1996,20 @@ namespace gShell.dotNet
                 return results;
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.Member Patch
-            (Google.Apis.admin.Directory.directory_v1.Data.Member body, string groupKey, string memberKey, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Member Patch (Google.Apis.admin.Directory.directory_v1.Data.Member body, string
+
+             groupKey, string
+
+             memberKey, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Members.Patch(body, groupKey, memberKey).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.Member Update
-            (Google.Apis.admin.Directory.directory_v1.Data.Member body, string groupKey, string memberKey, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Member Update (Google.Apis.admin.Directory.directory_v1.Data.Member body, string
+
+             groupKey, string
+
+             memberKey, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Members.Update(body, groupKey, memberKey).Execute();
             }
@@ -1986,20 +2041,29 @@ namespace gShell.dotNet
             }
 
 
-            public void Action
-            (Google.Apis.admin.Directory.directory_v1.Data.MobileDeviceAction body, string customerId, string resourceId, string gShellServiceAccount = null)
+            public void Action (Google.Apis.admin.Directory.directory_v1.Data.MobileDeviceAction body, string
+
+             customerId, string
+
+             resourceId, string gShellServiceAccount = null)
             {
                 GetService(gShellServiceAccount).Mobiledevices.Action(body, customerId, resourceId).Execute();
             }
 
-            public void Delete
-            (string customerId, string resourceId, string gShellServiceAccount = null)
+            public void Delete (string
+
+             customerId, string
+
+             resourceId, string gShellServiceAccount = null)
             {
                 GetService(gShellServiceAccount).Mobiledevices.Delete(customerId, resourceId).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.MobileDevice Get
-            (string customerId, string resourceId, MobiledevicesGetProperties properties = null, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.MobileDevice Get (string
+
+             customerId, string
+
+             resourceId, MobiledevicesGetProperties properties = null, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Mobiledevices.Get(customerId, resourceId).Execute();
             }
@@ -2080,14 +2144,20 @@ namespace gShell.dotNet
             }
 
 
-            public void Delete
-            (string customer, string notificationId, string gShellServiceAccount = null)
+            public void Delete (string
+
+             customer, string
+
+             notificationId, string gShellServiceAccount = null)
             {
                 GetService(gShellServiceAccount).Notifications.Delete(customer, notificationId).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.Notification Get
-            (string customer, string notificationId, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Notification Get (string
+
+             customer, string
+
+             notificationId, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Notifications.Get(customer, notificationId).Execute();
             }
@@ -2146,14 +2216,20 @@ namespace gShell.dotNet
                 return results;
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.Notification Patch
-            (Google.Apis.admin.Directory.directory_v1.Data.Notification body, string customer, string notificationId, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Notification Patch (Google.Apis.admin.Directory.directory_v1.Data.Notification body, string
+
+             customer, string
+
+             notificationId, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Notifications.Patch(body, customer, notificationId).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.Notification Update
-            (Google.Apis.admin.Directory.directory_v1.Data.Notification body, string customer, string notificationId, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Notification Update (Google.Apis.admin.Directory.directory_v1.Data.Notification body, string
+
+             customer, string
+
+             notificationId, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Notifications.Update(body, customer, notificationId).Execute();
             }
@@ -2173,38 +2249,52 @@ namespace gShell.dotNet
             }
 
 
-            public void Delete
-            (string customerId, Google.Apis.Util.Repeatable<string> orgUnitPath, string gShellServiceAccount = null)
+            public void Delete (string
+
+             customerId, Google.Apis.Util.Repeatable<string>
+
+             orgUnitPath, string gShellServiceAccount = null)
             {
                 GetService(gShellServiceAccount).Orgunits.Delete(customerId, orgUnitPath).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.OrgUnit Get
-            (string customerId, Google.Apis.Util.Repeatable<string> orgUnitPath, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.OrgUnit Get (string
+
+             customerId, Google.Apis.Util.Repeatable<string>
+
+             orgUnitPath, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Orgunits.Get(customerId, orgUnitPath).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.OrgUnit Insert
-            (Google.Apis.admin.Directory.directory_v1.Data.OrgUnit body, string customerId, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.OrgUnit Insert (Google.Apis.admin.Directory.directory_v1.Data.OrgUnit body, string
+
+             customerId, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Orgunits.Insert(body, customerId).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.OrgUnits List
-            (string customerId, OrgunitsListProperties properties = null, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.OrgUnits List (string
+
+             customerId, OrgunitsListProperties properties = null, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Orgunits.List(customerId).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.OrgUnit Patch
-            (Google.Apis.admin.Directory.directory_v1.Data.OrgUnit body, string customerId, Google.Apis.Util.Repeatable<string> orgUnitPath, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.OrgUnit Patch (Google.Apis.admin.Directory.directory_v1.Data.OrgUnit body, string
+
+             customerId, Google.Apis.Util.Repeatable<string>
+
+             orgUnitPath, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Orgunits.Patch(body, customerId, orgUnitPath).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.OrgUnit Update
-            (Google.Apis.admin.Directory.directory_v1.Data.OrgUnit body, string customerId, Google.Apis.Util.Repeatable<string> orgUnitPath, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.OrgUnit Update (Google.Apis.admin.Directory.directory_v1.Data.OrgUnit body, string
+
+             customerId, Google.Apis.Util.Repeatable<string>
+
+             orgUnitPath, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Orgunits.Update(body, customerId, orgUnitPath).Execute();
             }
@@ -2219,8 +2309,9 @@ namespace gShell.dotNet
 
 
 
-            public Google.Apis.admin.Directory.directory_v1.Data.Privileges List
-            (string customer, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Privileges List (string
+
+             customer, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Privileges.List(customer).Execute();
             }
@@ -2258,20 +2349,27 @@ namespace gShell.dotNet
                 }
 
 
-                public void Delete
-                (string customer, string calendarResourceId, string gShellServiceAccount = null)
+                public void Delete (string
+
+                 customer, string
+
+                 calendarResourceId, string gShellServiceAccount = null)
                 {
                     GetService(gShellServiceAccount).Resources.Calendars.Delete(customer, calendarResourceId).Execute();
                 }
 
-                public Google.Apis.admin.Directory.directory_v1.Data.CalendarResource Get
-                (string customer, string calendarResourceId, string gShellServiceAccount = null)
+                public Google.Apis.admin.Directory.directory_v1.Data.CalendarResource Get (string
+
+                 customer, string
+
+                 calendarResourceId, string gShellServiceAccount = null)
                 {
                     return GetService(gShellServiceAccount).Resources.Calendars.Get(customer, calendarResourceId).Execute();
                 }
 
-                public Google.Apis.admin.Directory.directory_v1.Data.CalendarResource Insert
-                (Google.Apis.admin.Directory.directory_v1.Data.CalendarResource body, string customer, string gShellServiceAccount = null)
+                public Google.Apis.admin.Directory.directory_v1.Data.CalendarResource Insert (Google.Apis.admin.Directory.directory_v1.Data.CalendarResource body, string
+
+                 customer, string gShellServiceAccount = null)
                 {
                     return GetService(gShellServiceAccount).Resources.Calendars.Insert(body, customer).Execute();
                 }
@@ -2329,14 +2427,20 @@ namespace gShell.dotNet
                     return results;
                 }
 
-                public Google.Apis.admin.Directory.directory_v1.Data.CalendarResource Patch
-                (Google.Apis.admin.Directory.directory_v1.Data.CalendarResource body, string customer, string calendarResourceId, string gShellServiceAccount = null)
+                public Google.Apis.admin.Directory.directory_v1.Data.CalendarResource Patch (Google.Apis.admin.Directory.directory_v1.Data.CalendarResource body, string
+
+                 customer, string
+
+                 calendarResourceId, string gShellServiceAccount = null)
                 {
                     return GetService(gShellServiceAccount).Resources.Calendars.Patch(body, customer, calendarResourceId).Execute();
                 }
 
-                public Google.Apis.admin.Directory.directory_v1.Data.CalendarResource Update
-                (Google.Apis.admin.Directory.directory_v1.Data.CalendarResource body, string customer, string calendarResourceId, string gShellServiceAccount = null)
+                public Google.Apis.admin.Directory.directory_v1.Data.CalendarResource Update (Google.Apis.admin.Directory.directory_v1.Data.CalendarResource body, string
+
+                 customer, string
+
+                 calendarResourceId, string gShellServiceAccount = null)
                 {
                     return GetService(gShellServiceAccount).Resources.Calendars.Update(body, customer, calendarResourceId).Execute();
                 }
@@ -2363,20 +2467,27 @@ namespace gShell.dotNet
             }
 
 
-            public void Delete
-            (string customer, string roleAssignmentId, string gShellServiceAccount = null)
+            public void Delete (string
+
+             customer, string
+
+             roleAssignmentId, string gShellServiceAccount = null)
             {
                 GetService(gShellServiceAccount).RoleAssignments.Delete(customer, roleAssignmentId).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.RoleAssignment Get
-            (string customer, string roleAssignmentId, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.RoleAssignment Get (string
+
+             customer, string
+
+             roleAssignmentId, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).RoleAssignments.Get(customer, roleAssignmentId).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.RoleAssignment Insert
-            (Google.Apis.admin.Directory.directory_v1.Data.RoleAssignment body, string customer, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.RoleAssignment Insert (Google.Apis.admin.Directory.directory_v1.Data.RoleAssignment body, string
+
+             customer, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).RoleAssignments.Insert(body, customer).Execute();
             }
@@ -2454,20 +2565,27 @@ namespace gShell.dotNet
             }
 
 
-            public void Delete
-            (string customer, string roleId, string gShellServiceAccount = null)
+            public void Delete (string
+
+             customer, string
+
+             roleId, string gShellServiceAccount = null)
             {
                 GetService(gShellServiceAccount).Roles.Delete(customer, roleId).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.Role Get
-            (string customer, string roleId, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Role Get (string
+
+             customer, string
+
+             roleId, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Roles.Get(customer, roleId).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.Role Insert
-            (Google.Apis.admin.Directory.directory_v1.Data.Role body, string customer, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Role Insert (Google.Apis.admin.Directory.directory_v1.Data.Role body, string
+
+             customer, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Roles.Insert(body, customer).Execute();
             }
@@ -2525,14 +2643,20 @@ namespace gShell.dotNet
                 return results;
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.Role Patch
-            (Google.Apis.admin.Directory.directory_v1.Data.Role body, string customer, string roleId, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Role Patch (Google.Apis.admin.Directory.directory_v1.Data.Role body, string
+
+             customer, string
+
+             roleId, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Roles.Patch(body, customer, roleId).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.Role Update
-            (Google.Apis.admin.Directory.directory_v1.Data.Role body, string customer, string roleId, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Role Update (Google.Apis.admin.Directory.directory_v1.Data.Role body, string
+
+             customer, string
+
+             roleId, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Roles.Update(body, customer, roleId).Execute();
             }
@@ -2547,38 +2671,52 @@ namespace gShell.dotNet
 
 
 
-            public void Delete
-            (string customerId, string schemaKey, string gShellServiceAccount = null)
+            public void Delete (string
+
+             customerId, string
+
+             schemaKey, string gShellServiceAccount = null)
             {
                 GetService(gShellServiceAccount).Schemas.Delete(customerId, schemaKey).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.Schema Get
-            (string customerId, string schemaKey, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Schema Get (string
+
+             customerId, string
+
+             schemaKey, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Schemas.Get(customerId, schemaKey).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.Schema Insert
-            (Google.Apis.admin.Directory.directory_v1.Data.Schema body, string customerId, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Schema Insert (Google.Apis.admin.Directory.directory_v1.Data.Schema body, string
+
+             customerId, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Schemas.Insert(body, customerId).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.Schemas List
-            (string customerId, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Schemas List (string
+
+             customerId, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Schemas.List(customerId).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.Schema Patch
-            (Google.Apis.admin.Directory.directory_v1.Data.Schema body, string customerId, string schemaKey, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Schema Patch (Google.Apis.admin.Directory.directory_v1.Data.Schema body, string
+
+             customerId, string
+
+             schemaKey, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Schemas.Patch(body, customerId, schemaKey).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.Schema Update
-            (Google.Apis.admin.Directory.directory_v1.Data.Schema body, string customerId, string schemaKey, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Schema Update (Google.Apis.admin.Directory.directory_v1.Data.Schema body, string
+
+             customerId, string
+
+             schemaKey, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Schemas.Update(body, customerId, schemaKey).Execute();
             }
@@ -2593,20 +2731,27 @@ namespace gShell.dotNet
 
 
 
-            public void Delete
-            (string userKey, string clientId, string gShellServiceAccount = null)
+            public void Delete (string
+
+             userKey, string
+
+             clientId, string gShellServiceAccount = null)
             {
                 GetService(gShellServiceAccount).Tokens.Delete(userKey, clientId).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.Token Get
-            (string userKey, string clientId, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Token Get (string
+
+             userKey, string
+
+             clientId, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Tokens.Get(userKey, clientId).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.Tokens List
-            (string userKey, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Tokens List (string
+
+             userKey, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Tokens.List(userKey).Execute();
             }
@@ -2671,20 +2816,21 @@ namespace gShell.dotNet
             }
 
 
-            public void Delete
-            (string userKey, string gShellServiceAccount = null)
+            public void Delete (string
+
+             userKey, string gShellServiceAccount = null)
             {
                 GetService(gShellServiceAccount).Users.Delete(userKey).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.User Get
-            (string userKey, UsersGetProperties properties = null, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.User Get (string
+
+             userKey, UsersGetProperties properties = null, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Users.Get(userKey).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.User Insert
-            (Google.Apis.admin.Directory.directory_v1.Data.User body, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.User Insert (Google.Apis.admin.Directory.directory_v1.Data.User body, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Users.Insert(body).Execute();
             }
@@ -2752,32 +2898,35 @@ namespace gShell.dotNet
                 return results;
             }
 
-            public void MakeAdmin
-            (Google.Apis.admin.Directory.directory_v1.Data.UserMakeAdmin body, string userKey, string gShellServiceAccount = null)
+            public void MakeAdmin (Google.Apis.admin.Directory.directory_v1.Data.UserMakeAdmin body, string
+
+             userKey, string gShellServiceAccount = null)
             {
                 GetService(gShellServiceAccount).Users.MakeAdmin(body, userKey).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.User Patch
-            (Google.Apis.admin.Directory.directory_v1.Data.User body, string userKey, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.User Patch (Google.Apis.admin.Directory.directory_v1.Data.User body, string
+
+             userKey, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Users.Patch(body, userKey).Execute();
             }
 
-            public void Undelete
-            (Google.Apis.admin.Directory.directory_v1.Data.UserUndelete body, string userKey, string gShellServiceAccount = null)
+            public void Undelete (Google.Apis.admin.Directory.directory_v1.Data.UserUndelete body, string
+
+             userKey, string gShellServiceAccount = null)
             {
                 GetService(gShellServiceAccount).Users.Undelete(body, userKey).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.User Update
-            (Google.Apis.admin.Directory.directory_v1.Data.User body, string userKey, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.User Update (Google.Apis.admin.Directory.directory_v1.Data.User body, string
+
+             userKey, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Users.Update(body, userKey).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.Channel Watch
-            (Google.Apis.admin.Directory.directory_v1.Data.Channel body, UsersWatchProperties properties = null, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Channel Watch (Google.Apis.admin.Directory.directory_v1.Data.Channel body, UsersWatchProperties properties = null, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Users.Watch(body).Execute();
             }
@@ -2799,26 +2948,32 @@ namespace gShell.dotNet
                 }
 
 
-                public void Delete
-                (string userKey, string alias, string gShellServiceAccount = null)
+                public void Delete (string
+
+                 userKey, string
+
+                 alias, string gShellServiceAccount = null)
                 {
                     GetService(gShellServiceAccount).Users.Aliases.Delete(userKey, alias).Execute();
                 }
 
-                public Google.Apis.admin.Directory.directory_v1.Data.Alias Insert
-                (Google.Apis.admin.Directory.directory_v1.Data.Alias body, string userKey, string gShellServiceAccount = null)
+                public Google.Apis.admin.Directory.directory_v1.Data.Alias Insert (Google.Apis.admin.Directory.directory_v1.Data.Alias body, string
+
+                 userKey, string gShellServiceAccount = null)
                 {
                     return GetService(gShellServiceAccount).Users.Aliases.Insert(body, userKey).Execute();
                 }
 
-                public Google.Apis.admin.Directory.directory_v1.Data.Aliases List
-                (string userKey, AliasesListProperties properties = null, string gShellServiceAccount = null)
+                public Google.Apis.admin.Directory.directory_v1.Data.Aliases List (string
+
+                 userKey, AliasesListProperties properties = null, string gShellServiceAccount = null)
                 {
                     return GetService(gShellServiceAccount).Users.Aliases.List(userKey).Execute();
                 }
 
-                public Google.Apis.admin.Directory.directory_v1.Data.Channel Watch
-                (Google.Apis.admin.Directory.directory_v1.Data.Channel body, string userKey, AliasesWatchProperties properties = null, string gShellServiceAccount = null)
+                public Google.Apis.admin.Directory.directory_v1.Data.Channel Watch (Google.Apis.admin.Directory.directory_v1.Data.Channel body, string
+
+                 userKey, AliasesWatchProperties properties = null, string gShellServiceAccount = null)
                 {
                     return GetService(gShellServiceAccount).Users.Aliases.Watch(body, userKey).Execute();
                 }
@@ -2833,26 +2988,30 @@ namespace gShell.dotNet
 
 
 
-                public void Delete
-                (string userKey, string gShellServiceAccount = null)
+                public void Delete (string
+
+                 userKey, string gShellServiceAccount = null)
                 {
                     GetService(gShellServiceAccount).Users.Photos.Delete(userKey).Execute();
                 }
 
-                public Google.Apis.admin.Directory.directory_v1.Data.UserPhoto Get
-                (string userKey, string gShellServiceAccount = null)
+                public Google.Apis.admin.Directory.directory_v1.Data.UserPhoto Get (string
+
+                 userKey, string gShellServiceAccount = null)
                 {
                     return GetService(gShellServiceAccount).Users.Photos.Get(userKey).Execute();
                 }
 
-                public Google.Apis.admin.Directory.directory_v1.Data.UserPhoto Patch
-                (Google.Apis.admin.Directory.directory_v1.Data.UserPhoto body, string userKey, string gShellServiceAccount = null)
+                public Google.Apis.admin.Directory.directory_v1.Data.UserPhoto Patch (Google.Apis.admin.Directory.directory_v1.Data.UserPhoto body, string
+
+                 userKey, string gShellServiceAccount = null)
                 {
                     return GetService(gShellServiceAccount).Users.Photos.Patch(body, userKey).Execute();
                 }
 
-                public Google.Apis.admin.Directory.directory_v1.Data.UserPhoto Update
-                (Google.Apis.admin.Directory.directory_v1.Data.UserPhoto body, string userKey, string gShellServiceAccount = null)
+                public Google.Apis.admin.Directory.directory_v1.Data.UserPhoto Update (Google.Apis.admin.Directory.directory_v1.Data.UserPhoto body, string
+
+                 userKey, string gShellServiceAccount = null)
                 {
                     return GetService(gShellServiceAccount).Users.Photos.Update(body, userKey).Execute();
                 }
@@ -2869,20 +3028,23 @@ namespace gShell.dotNet
 
 
 
-            public void Generate
-            (string userKey, string gShellServiceAccount = null)
+            public void Generate (string
+
+             userKey, string gShellServiceAccount = null)
             {
                 GetService(gShellServiceAccount).VerificationCodes.Generate(userKey).Execute();
             }
 
-            public void Invalidate
-            (string userKey, string gShellServiceAccount = null)
+            public void Invalidate (string
+
+             userKey, string gShellServiceAccount = null)
             {
                 GetService(gShellServiceAccount).VerificationCodes.Invalidate(userKey).Execute();
             }
 
-            public Google.Apis.admin.Directory.directory_v1.Data.VerificationCodes List
-            (string userKey, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.VerificationCodes List (string
+
+             userKey, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).VerificationCodes.List(userKey).Execute();
             }

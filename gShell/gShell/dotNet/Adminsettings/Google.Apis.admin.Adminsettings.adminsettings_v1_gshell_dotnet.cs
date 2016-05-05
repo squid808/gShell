@@ -565,14 +565,16 @@ namespace gShell.dotNet
 
 
 
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.AdminSecondaryEmail Get
-            (string domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.AdminSecondaryEmail Get (string
+
+             domain, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).AdminSecondaryEmail.Get(domain).Execute();
             }
 
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.AdminSecondaryEmail Update
-            (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.AdminSecondaryEmail body, string domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.AdminSecondaryEmail Update (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.AdminSecondaryEmail body, string
+
+             domain, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).AdminSecondaryEmail.Update(body, domain).Execute();
             }
@@ -587,8 +589,9 @@ namespace gShell.dotNet
 
 
 
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.CountryCode Get
-            (string domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.CountryCode Get (string
+
+             domain, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).CountryCode.Get(domain).Execute();
             }
@@ -603,8 +606,9 @@ namespace gShell.dotNet
 
 
 
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.CreationTime Get
-            (string domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.CreationTime Get (string
+
+             domain, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).CreationTime.Get(domain).Execute();
             }
@@ -619,8 +623,9 @@ namespace gShell.dotNet
 
 
 
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.CurrentNumberOfUsers Get
-            (string domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.CurrentNumberOfUsers Get (string
+
+             domain, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).CurrentUsers.Get(domain).Execute();
             }
@@ -635,8 +640,9 @@ namespace gShell.dotNet
 
 
 
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.CustomLogo Update
-            (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.CustomLogo body, string domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.CustomLogo Update (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.CustomLogo body, string
+
+             domain, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).CustomLogo.Update(body, domain).Execute();
             }
@@ -651,8 +657,9 @@ namespace gShell.dotNet
 
 
 
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.CustomerPin Get
-            (string domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.CustomerPin Get (string
+
+             domain, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).CustomerPin.Get(domain).Execute();
             }
@@ -667,14 +674,16 @@ namespace gShell.dotNet
 
 
 
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.DefaultLanguage Get
-            (string domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.DefaultLanguage Get (string
+
+             domain, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).DefaultLanguage.Get(domain).Execute();
             }
 
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.DefaultLanguage Update
-            (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.DefaultLanguage body, string domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.DefaultLanguage Update (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.DefaultLanguage body, string
+
+             domain, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).DefaultLanguage.Update(body, domain).Execute();
             }
@@ -689,14 +698,16 @@ namespace gShell.dotNet
 
 
 
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.Gateway Get
-            (string domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.Gateway Get (string
+
+             domain, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).EmailGateway.Get(domain).Execute();
             }
 
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.Gateway Update
-            (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.Gateway body, string domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.Gateway Update (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.Gateway body, string
+
+             domain, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).EmailGateway.Update(body, domain).Execute();
             }
@@ -711,8 +722,9 @@ namespace gShell.dotNet
 
 
 
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.Routing Update
-            (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.Routing body, string domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.Routing Update (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.Routing body, string
+
+             domain, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).EmailRouting.Update(body, domain).Execute();
             }
@@ -727,8 +739,9 @@ namespace gShell.dotNet
 
 
 
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.MaximumNumberOfUsers Get
-            (string domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.MaximumNumberOfUsers Get (string
+
+             domain, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).MaximumUsers.Get(domain).Execute();
             }
@@ -743,14 +756,16 @@ namespace gShell.dotNet
 
 
 
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.MXVerificationStatus Get
-            (string domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.MXVerificationStatus Get (string
+
+             domain, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).MxVerificationStatus.Get(domain).Execute();
             }
 
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.MXVerificationStatus Update
-            (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.MXVerificationStatus body, string domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.MXVerificationStatus Update (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.MXVerificationStatus body, string
+
+             domain, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).MxVerificationStatus.Update(body, domain).Execute();
             }
@@ -765,14 +780,16 @@ namespace gShell.dotNet
 
 
 
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.OrganizationName Get
-            (string domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.OrganizationName Get (string
+
+             domain, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).OrganizationName.Get(domain).Execute();
             }
 
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.OrganizationName Update
-            (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.OrganizationName body, string domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.OrganizationName Update (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.OrganizationName body, string
+
+             domain, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).OrganizationName.Update(body, domain).Execute();
             }
@@ -787,8 +804,9 @@ namespace gShell.dotNet
 
 
 
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.Edition Get
-            (string domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.Edition Get (string
+
+             domain, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).ProductVersion.Get(domain).Execute();
             }
@@ -803,14 +821,16 @@ namespace gShell.dotNet
 
 
 
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.SsoSettings Get
-            (string domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.SsoSettings Get (string
+
+             domain, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).SsoSettings.Get(domain).Execute();
             }
 
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.SsoSettings Update
-            (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.SsoSettings body, string domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.SsoSettings Update (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.SsoSettings body, string
+
+             domain, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).SsoSettings.Update(body, domain).Execute();
             }
@@ -825,14 +845,16 @@ namespace gShell.dotNet
 
 
 
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.SsoSigningKey Get
-            (string domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.SsoSigningKey Get (string
+
+             domain, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).SsoSigningKey.Get(domain).Execute();
             }
 
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.SsoSigningKey Update
-            (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.SsoSigningKey body, string domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.SsoSigningKey Update (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.SsoSigningKey body, string
+
+             domain, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).SsoSigningKey.Update(body, domain).Execute();
             }

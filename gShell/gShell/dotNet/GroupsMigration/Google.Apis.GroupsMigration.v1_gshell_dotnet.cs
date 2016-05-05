@@ -89,10 +89,11 @@ namespace gShell.Cmdlets.GroupsMigration{
 
 
             public void Insert (string
-             groupId, System.IO.Stream stream, string contentType)
+
+             groupId)
             {
 
-                mainBase.archive.Insert(groupId, stream, contentType, gShellServiceAccount);
+                mainBase.archive.Insert(groupId, gShellServiceAccount);
             }
         }
 
@@ -146,8 +147,15 @@ namespace gShell.dotNet
 
 
 
-            public void Insert
-            (string groupId, System.IO.Stream stream, string contentType, string gShellServiceAccount = null)
+            public Google.Apis.GroupsMigration.v1.Data.Groups Insert (string
+
+             groupId, string gShellServiceAccount = null)
+            {
+                return GetService(gShellServiceAccount).Archive.Insert(groupId).Execute();
+            }
+
+            public void Insert (string
+             groupId, System.IO.Stream stream, string contentType, string gShellServiceAccount = null)
             {
                 GetService(gShellServiceAccount).Archive.Insert(groupId, stream, contentType).Upload();
             }

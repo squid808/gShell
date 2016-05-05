@@ -250,20 +250,33 @@ namespace gShell.dotNet
             }
 
 
-            public void Delete
-            (string productId, string skuId, string userId, string gShellServiceAccount = null)
+            public void Delete (string
+
+             productId, string
+
+             skuId, string
+
+             userId, string gShellServiceAccount = null)
             {
                 GetService(gShellServiceAccount).LicenseAssignments.Delete(productId, skuId, userId).Execute();
             }
 
-            public Google.Apis.Licensing.v1.Data.LicenseAssignment Get
-            (string productId, string skuId, string userId, string gShellServiceAccount = null)
+            public Google.Apis.Licensing.v1.Data.LicenseAssignment Get (string
+
+             productId, string
+
+             skuId, string
+
+             userId, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).LicenseAssignments.Get(productId, skuId, userId).Execute();
             }
 
-            public Google.Apis.Licensing.v1.Data.LicenseAssignment Insert
-            (Google.Apis.Licensing.v1.Data.LicenseAssignmentInsert body, string productId, string skuId, string gShellServiceAccount = null)
+            public Google.Apis.Licensing.v1.Data.LicenseAssignment Insert (Google.Apis.Licensing.v1.Data.LicenseAssignmentInsert body, string
+
+             productId, string
+
+             skuId, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).LicenseAssignments.Insert(body, productId, skuId).Execute();
             }
@@ -374,14 +387,24 @@ namespace gShell.dotNet
                 return results;
             }
 
-            public Google.Apis.Licensing.v1.Data.LicenseAssignment Patch
-            (Google.Apis.Licensing.v1.Data.LicenseAssignment body, string productId, string skuId, string userId, string gShellServiceAccount = null)
+            public Google.Apis.Licensing.v1.Data.LicenseAssignment Patch (Google.Apis.Licensing.v1.Data.LicenseAssignment body, string
+
+             productId, string
+
+             skuId, string
+
+             userId, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).LicenseAssignments.Patch(body, productId, skuId, userId).Execute();
             }
 
-            public Google.Apis.Licensing.v1.Data.LicenseAssignment Update
-            (Google.Apis.Licensing.v1.Data.LicenseAssignment body, string productId, string skuId, string userId, string gShellServiceAccount = null)
+            public Google.Apis.Licensing.v1.Data.LicenseAssignment Update (Google.Apis.Licensing.v1.Data.LicenseAssignment body, string
+
+             productId, string
+
+             skuId, string
+
+             userId, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).LicenseAssignments.Update(body, productId, skuId, userId).Execute();
             }

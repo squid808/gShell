@@ -110,10 +110,11 @@ namespace gShell.Cmdlets.Gmail{
 
 
                 public void Create (Google.Apis.Gmail.v1.Data.Draft body, string
-                 userId, System.IO.Stream stream, string contentType)
+
+                 userId)
                 {
 
-                    mainBase.users.drafts.Create(body, userId, stream, contentType, gShellServiceAccount);
+                    mainBase.users.drafts.Create(body, userId, gShellServiceAccount);
                 }
 
 
@@ -155,19 +156,22 @@ namespace gShell.Cmdlets.Gmail{
 
 
                 public void Send (Google.Apis.Gmail.v1.Data.Draft body, string
-                 userId, System.IO.Stream stream, string contentType)
+
+                 userId)
                 {
 
-                    mainBase.users.drafts.Send(body, userId, stream, contentType, gShellServiceAccount);
+                    mainBase.users.drafts.Send(body, userId, gShellServiceAccount);
                 }
 
 
                 public void Update (Google.Apis.Gmail.v1.Data.Draft body, string
+
                  userId, string
-                 id, System.IO.Stream stream, string contentType)
+
+                 id)
                 {
 
-                    mainBase.users.drafts.Update(body, userId, id, stream, contentType, gShellServiceAccount);
+                    mainBase.users.drafts.Update(body, userId, id, gShellServiceAccount);
                 }
             }
 
@@ -336,22 +340,24 @@ namespace gShell.Cmdlets.Gmail{
 
 
                 public void Import (Google.Apis.Gmail.v1.Data.Message body, string
-                 userId, System.IO.Stream stream, string contentType, gGmail.Users.Messages.MessagesImportProperties properties = null)
+
+                 userId, gGmail.Users.Messages.MessagesImportProperties properties = null)
                 {
 
                     properties = (properties != null) ? properties : new gGmail.Users.Messages.MessagesImportProperties();
 
-                    mainBase.users.messages.Import(body, userId, stream, contentType, properties, gShellServiceAccount);
+                    mainBase.users.messages.Import(body, userId, properties, gShellServiceAccount);
                 }
 
 
                 public void Insert (Google.Apis.Gmail.v1.Data.Message body, string
-                 userId, System.IO.Stream stream, string contentType, gGmail.Users.Messages.MessagesInsertProperties properties = null)
+
+                 userId, gGmail.Users.Messages.MessagesInsertProperties properties = null)
                 {
 
                     properties = (properties != null) ? properties : new gGmail.Users.Messages.MessagesInsertProperties();
 
-                    mainBase.users.messages.Insert(body, userId, stream, contentType, properties, gShellServiceAccount);
+                    mainBase.users.messages.Insert(body, userId, properties, gShellServiceAccount);
                 }
 
 
@@ -380,10 +386,11 @@ namespace gShell.Cmdlets.Gmail{
 
 
                 public void Send (Google.Apis.Gmail.v1.Data.Message body, string
-                 userId, System.IO.Stream stream, string contentType)
+
+                 userId)
                 {
 
-                    mainBase.users.messages.Send(body, userId, stream, contentType, gShellServiceAccount);
+                    mainBase.users.messages.Send(body, userId, gShellServiceAccount);
                 }
 
 
@@ -583,20 +590,23 @@ namespace gShell.dotNet
 
 
 
-            public Google.Apis.Gmail.v1.Data.Profile GetProfile
-            (string userId, string gShellServiceAccount = null)
+            public Google.Apis.Gmail.v1.Data.Profile GetProfile (string
+
+             userId, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Users.GetProfile(userId).Execute();
             }
 
-            public void Stop
-            (string userId, string gShellServiceAccount = null)
+            public void Stop (string
+
+             userId, string gShellServiceAccount = null)
             {
                 GetService(gShellServiceAccount).Users.Stop(userId).Execute();
             }
 
-            public Google.Apis.Gmail.v1.Data.WatchResponse Watch
-            (Google.Apis.Gmail.v1.Data.WatchRequest body, string userId, string gShellServiceAccount = null)
+            public Google.Apis.Gmail.v1.Data.WatchResponse Watch (Google.Apis.Gmail.v1.Data.WatchRequest body, string
+
+             userId, string gShellServiceAccount = null)
             {
                 return GetService(gShellServiceAccount).Users.Watch(body, userId).Execute();
             }
@@ -623,20 +633,33 @@ namespace gShell.dotNet
                 }
 
 
-                public void Create
-                (Google.Apis.Gmail.v1.Data.Draft body, string userId, System.IO.Stream stream, string contentType, string gShellServiceAccount = null)
+                public Google.Apis.Gmail.v1.Data.Draft Create (Google.Apis.Gmail.v1.Data.Draft body, string
+
+                 userId, string gShellServiceAccount = null)
+                {
+                    return GetService(gShellServiceAccount).Users.Drafts.Create(body, userId).Execute();
+                }
+
+                public void Create (Google.Apis.Gmail.v1.Data.Draft body, string
+                 userId, System.IO.Stream stream, string contentType, string gShellServiceAccount = null)
                 {
                     GetService(gShellServiceAccount).Users.Drafts.Create(body, userId, stream, contentType).Upload();
                 }
 
-                public void Delete
-                (string userId, string id, string gShellServiceAccount = null)
+                public void Delete (string
+
+                 userId, string
+
+                 id, string gShellServiceAccount = null)
                 {
                     GetService(gShellServiceAccount).Users.Drafts.Delete(userId, id).Execute();
                 }
 
-                public Google.Apis.Gmail.v1.Data.Draft Get
-                (string userId, string id, DraftsGetProperties properties = null, string gShellServiceAccount = null)
+                public Google.Apis.Gmail.v1.Data.Draft Get (string
+
+                 userId, string
+
+                 id, DraftsGetProperties properties = null, string gShellServiceAccount = null)
                 {
                     return GetService(gShellServiceAccount).Users.Drafts.Get(userId, id).Execute();
                 }
@@ -695,14 +718,31 @@ namespace gShell.dotNet
                     return results;
                 }
 
-                public void Send
-                (Google.Apis.Gmail.v1.Data.Draft body, string userId, System.IO.Stream stream, string contentType, string gShellServiceAccount = null)
+                public Google.Apis.Gmail.v1.Data.Message Send (Google.Apis.Gmail.v1.Data.Draft body, string
+
+                 userId, string gShellServiceAccount = null)
+                {
+                    return GetService(gShellServiceAccount).Users.Drafts.Send(body, userId).Execute();
+                }
+
+                public void Send (Google.Apis.Gmail.v1.Data.Draft body, string
+                 userId, System.IO.Stream stream, string contentType, string gShellServiceAccount = null)
                 {
                     GetService(gShellServiceAccount).Users.Drafts.Send(body, userId, stream, contentType).Upload();
                 }
 
-                public void Update
-                (Google.Apis.Gmail.v1.Data.Draft body, string userId, string id, System.IO.Stream stream, string contentType, string gShellServiceAccount = null)
+                public Google.Apis.Gmail.v1.Data.Draft Update (Google.Apis.Gmail.v1.Data.Draft body, string
+
+                 userId, string
+
+                 id, string gShellServiceAccount = null)
+                {
+                    return GetService(gShellServiceAccount).Users.Drafts.Update(body, userId, id).Execute();
+                }
+
+                public void Update (Google.Apis.Gmail.v1.Data.Draft body, string
+                 userId, string
+                 id, System.IO.Stream stream, string contentType, string gShellServiceAccount = null)
                 {
                     GetService(gShellServiceAccount).Users.Drafts.Update(body, userId, id, stream, contentType).Upload();
                 }
@@ -792,38 +832,52 @@ namespace gShell.dotNet
 
 
 
-                public Google.Apis.Gmail.v1.Data.Label Create
-                (Google.Apis.Gmail.v1.Data.Label body, string userId, string gShellServiceAccount = null)
+                public Google.Apis.Gmail.v1.Data.Label Create (Google.Apis.Gmail.v1.Data.Label body, string
+
+                 userId, string gShellServiceAccount = null)
                 {
                     return GetService(gShellServiceAccount).Users.Labels.Create(body, userId).Execute();
                 }
 
-                public void Delete
-                (string userId, string id, string gShellServiceAccount = null)
+                public void Delete (string
+
+                 userId, string
+
+                 id, string gShellServiceAccount = null)
                 {
                     GetService(gShellServiceAccount).Users.Labels.Delete(userId, id).Execute();
                 }
 
-                public Google.Apis.Gmail.v1.Data.Label Get
-                (string userId, string id, string gShellServiceAccount = null)
+                public Google.Apis.Gmail.v1.Data.Label Get (string
+
+                 userId, string
+
+                 id, string gShellServiceAccount = null)
                 {
                     return GetService(gShellServiceAccount).Users.Labels.Get(userId, id).Execute();
                 }
 
-                public Google.Apis.Gmail.v1.Data.ListLabelsResponse List
-                (string userId, string gShellServiceAccount = null)
+                public Google.Apis.Gmail.v1.Data.ListLabelsResponse List (string
+
+                 userId, string gShellServiceAccount = null)
                 {
                     return GetService(gShellServiceAccount).Users.Labels.List(userId).Execute();
                 }
 
-                public Google.Apis.Gmail.v1.Data.Label Patch
-                (Google.Apis.Gmail.v1.Data.Label body, string userId, string id, string gShellServiceAccount = null)
+                public Google.Apis.Gmail.v1.Data.Label Patch (Google.Apis.Gmail.v1.Data.Label body, string
+
+                 userId, string
+
+                 id, string gShellServiceAccount = null)
                 {
                     return GetService(gShellServiceAccount).Users.Labels.Patch(body, userId, id).Execute();
                 }
 
-                public Google.Apis.Gmail.v1.Data.Label Update
-                (Google.Apis.Gmail.v1.Data.Label body, string userId, string id, string gShellServiceAccount = null)
+                public Google.Apis.Gmail.v1.Data.Label Update (Google.Apis.Gmail.v1.Data.Label body, string
+
+                 userId, string
+
+                 id, string gShellServiceAccount = null)
                 {
                     return GetService(gShellServiceAccount).Users.Labels.Update(body, userId, id).Execute();
                 }
@@ -876,32 +930,53 @@ namespace gShell.dotNet
                 }
 
 
-                public void BatchDelete
-                (Google.Apis.Gmail.v1.Data.BatchDeleteMessagesRequest body, string userId, string gShellServiceAccount = null)
+                public void BatchDelete (Google.Apis.Gmail.v1.Data.BatchDeleteMessagesRequest body, string
+
+                 userId, string gShellServiceAccount = null)
                 {
                     GetService(gShellServiceAccount).Users.Messages.BatchDelete(body, userId).Execute();
                 }
 
-                public void Delete
-                (string userId, string id, string gShellServiceAccount = null)
+                public void Delete (string
+
+                 userId, string
+
+                 id, string gShellServiceAccount = null)
                 {
                     GetService(gShellServiceAccount).Users.Messages.Delete(userId, id).Execute();
                 }
 
-                public Google.Apis.Gmail.v1.Data.Message Get
-                (string userId, string id, MessagesGetProperties properties = null, string gShellServiceAccount = null)
+                public Google.Apis.Gmail.v1.Data.Message Get (string
+
+                 userId, string
+
+                 id, MessagesGetProperties properties = null, string gShellServiceAccount = null)
                 {
                     return GetService(gShellServiceAccount).Users.Messages.Get(userId, id).Execute();
                 }
 
-                public void Import
-                (Google.Apis.Gmail.v1.Data.Message body, string userId, System.IO.Stream stream, string contentType, MessagesImportProperties properties = null, string gShellServiceAccount = null)
+                public Google.Apis.Gmail.v1.Data.Message Import (Google.Apis.Gmail.v1.Data.Message body, string
+
+                 userId, MessagesImportProperties properties = null, string gShellServiceAccount = null)
+                {
+                    return GetService(gShellServiceAccount).Users.Messages.Import(body, userId).Execute();
+                }
+
+                public void Import (Google.Apis.Gmail.v1.Data.Message body, string
+                 userId, System.IO.Stream stream, string contentType, MessagesImportProperties properties = null, string gShellServiceAccount = null)
                 {
                     GetService(gShellServiceAccount).Users.Messages.Import(body, userId, stream, contentType).Upload();
                 }
 
-                public void Insert
-                (Google.Apis.Gmail.v1.Data.Message body, string userId, System.IO.Stream stream, string contentType, MessagesInsertProperties properties = null, string gShellServiceAccount = null)
+                public Google.Apis.Gmail.v1.Data.Message Insert (Google.Apis.Gmail.v1.Data.Message body, string
+
+                 userId, MessagesInsertProperties properties = null, string gShellServiceAccount = null)
+                {
+                    return GetService(gShellServiceAccount).Users.Messages.Insert(body, userId).Execute();
+                }
+
+                public void Insert (Google.Apis.Gmail.v1.Data.Message body, string
+                 userId, System.IO.Stream stream, string contentType, MessagesInsertProperties properties = null, string gShellServiceAccount = null)
                 {
                     GetService(gShellServiceAccount).Users.Messages.Insert(body, userId, stream, contentType).Upload();
                 }
@@ -962,26 +1037,42 @@ namespace gShell.dotNet
                     return results;
                 }
 
-                public Google.Apis.Gmail.v1.Data.Message Modify
-                (Google.Apis.Gmail.v1.Data.ModifyMessageRequest body, string userId, string id, string gShellServiceAccount = null)
+                public Google.Apis.Gmail.v1.Data.Message Modify (Google.Apis.Gmail.v1.Data.ModifyMessageRequest body, string
+
+                 userId, string
+
+                 id, string gShellServiceAccount = null)
                 {
                     return GetService(gShellServiceAccount).Users.Messages.Modify(body, userId, id).Execute();
                 }
 
-                public void Send
-                (Google.Apis.Gmail.v1.Data.Message body, string userId, System.IO.Stream stream, string contentType, string gShellServiceAccount = null)
+                public Google.Apis.Gmail.v1.Data.Message Send (Google.Apis.Gmail.v1.Data.Message body, string
+
+                 userId, string gShellServiceAccount = null)
+                {
+                    return GetService(gShellServiceAccount).Users.Messages.Send(body, userId).Execute();
+                }
+
+                public void Send (Google.Apis.Gmail.v1.Data.Message body, string
+                 userId, System.IO.Stream stream, string contentType, string gShellServiceAccount = null)
                 {
                     GetService(gShellServiceAccount).Users.Messages.Send(body, userId, stream, contentType).Upload();
                 }
 
-                public Google.Apis.Gmail.v1.Data.Message Trash
-                (string userId, string id, string gShellServiceAccount = null)
+                public Google.Apis.Gmail.v1.Data.Message Trash (string
+
+                 userId, string
+
+                 id, string gShellServiceAccount = null)
                 {
                     return GetService(gShellServiceAccount).Users.Messages.Trash(userId, id).Execute();
                 }
 
-                public Google.Apis.Gmail.v1.Data.Message Untrash
-                (string userId, string id, string gShellServiceAccount = null)
+                public Google.Apis.Gmail.v1.Data.Message Untrash (string
+
+                 userId, string
+
+                 id, string gShellServiceAccount = null)
                 {
                     return GetService(gShellServiceAccount).Users.Messages.Untrash(userId, id).Execute();
                 }
@@ -994,8 +1085,13 @@ namespace gShell.dotNet
 
 
 
-                    public Google.Apis.Gmail.v1.Data.MessagePartBody Get
-                    (string userId, string messageId, string id, string gShellServiceAccount = null)
+                    public Google.Apis.Gmail.v1.Data.MessagePartBody Get (string
+
+                     userId, string
+
+                     messageId, string
+
+                     id, string gShellServiceAccount = null)
                     {
                         return GetService(gShellServiceAccount).Users.Messages.Attachments.Get(userId, messageId, id).Execute();
                     }
@@ -1029,14 +1125,20 @@ namespace gShell.dotNet
                 }
 
 
-                public void Delete
-                (string userId, string id, string gShellServiceAccount = null)
+                public void Delete (string
+
+                 userId, string
+
+                 id, string gShellServiceAccount = null)
                 {
                     GetService(gShellServiceAccount).Users.Threads.Delete(userId, id).Execute();
                 }
 
-                public Google.Apis.Gmail.v1.Data.Thread Get
-                (string userId, string id, ThreadsGetProperties properties = null, string gShellServiceAccount = null)
+                public Google.Apis.Gmail.v1.Data.Thread Get (string
+
+                 userId, string
+
+                 id, ThreadsGetProperties properties = null, string gShellServiceAccount = null)
                 {
                     return GetService(gShellServiceAccount).Users.Threads.Get(userId, id).Execute();
                 }
@@ -1097,20 +1199,29 @@ namespace gShell.dotNet
                     return results;
                 }
 
-                public Google.Apis.Gmail.v1.Data.Thread Modify
-                (Google.Apis.Gmail.v1.Data.ModifyThreadRequest body, string userId, string id, string gShellServiceAccount = null)
+                public Google.Apis.Gmail.v1.Data.Thread Modify (Google.Apis.Gmail.v1.Data.ModifyThreadRequest body, string
+
+                 userId, string
+
+                 id, string gShellServiceAccount = null)
                 {
                     return GetService(gShellServiceAccount).Users.Threads.Modify(body, userId, id).Execute();
                 }
 
-                public Google.Apis.Gmail.v1.Data.Thread Trash
-                (string userId, string id, string gShellServiceAccount = null)
+                public Google.Apis.Gmail.v1.Data.Thread Trash (string
+
+                 userId, string
+
+                 id, string gShellServiceAccount = null)
                 {
                     return GetService(gShellServiceAccount).Users.Threads.Trash(userId, id).Execute();
                 }
 
-                public Google.Apis.Gmail.v1.Data.Thread Untrash
-                (string userId, string id, string gShellServiceAccount = null)
+                public Google.Apis.Gmail.v1.Data.Thread Untrash (string
+
+                 userId, string
+
+                 id, string gShellServiceAccount = null)
                 {
                     return GetService(gShellServiceAccount).Users.Threads.Untrash(userId, id).Execute();
                 }
