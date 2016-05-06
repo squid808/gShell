@@ -139,6 +139,7 @@
     <Compile Include="Cmdlets\Discovery\DiscoveryBase.cs" />
     <Compile Include="Cmdlets\EmailSettings\EmailSettings.cs" />
     <Compile Include="Cmdlets\Gmail\Gmail.cs" />
+    <Compile Include="Cmdlets\Gmail\GmailServiceAccountBase.cs" />
     <Compile Include="Cmdlets\GroupsMigration\GroupsMigration.cs" />
     <Compile Include="Cmdlets\GroupsSettings\GroupsSettings.cs" />
     <Compile Include="Cmdlets\Licensing\Licensing.cs" />
