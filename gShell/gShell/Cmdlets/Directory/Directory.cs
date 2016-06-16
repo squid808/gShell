@@ -505,9 +505,32 @@ namespace gShell.Cmdlets.Directory.GAChromeosdevice
     }
 }
 
-
 namespace gShell.Cmdlets.Directory.GAGroup
 {
+    /// <summary>
+    /// <para type="synopsis">Retrieve Group</para>
+    /// <para type="description">Retrieve Group</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Get-GAGroup -Email $SomeGroupNameString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <example>
+    ///   <code>PS C:\>Get-GAGroup -All</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <example>
+    ///   <code>PS C:\>Get-GAGroup -UserName $SomeUserNameString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/GetGAGroup">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Get, "GAGroup",
           DefaultParameterSetName = "OneUser",
           SupportsShouldProcess = true,
@@ -516,37 +539,49 @@ namespace gShell.Cmdlets.Directory.GAGroup
     {
         #region Properties
 
+        /// <summary>
+        /// <para type="description">Email or immutable Id of the group</para>
+        /// </summary>
         [Parameter(Position = 0,
-            ParameterSetName = "OneGroup",
-            Mandatory = true,
-            ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "The email name of the group you want to retrieve. For a group AllThings@domain.com named 'All The Things', use AllThings.")]
+        ParameterSetName = "OneGroup",
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Email or immutable Id of the group")]
         [ValidateNotNullOrEmpty]
         public string GroupName { get; set; }
 
-        //Domain position = 1
-
-        [Parameter(Position = 2,
-            ParameterSetName = "AllGroups",
-            Mandatory = true,
-            HelpMessage = "Indicates if you would like to retrieve the information for all groups in the domain.")]
+        /// <summary>
+        /// <para type="description">A switch to list all results.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = true,
+        ParameterSetName = "AllGroups",
+        HelpMessage = "A switch to list all results.")]
         public SwitchParameter All { get; set; }
 
-        [Parameter(
-            Mandatory = false,
-            ParameterSetName = "AllGroups")]
-        [Parameter(
-            Mandatory = false,
-            ParameterSetName = "OneUser")]
-        public int MaxResults { get; set; }
-
-        [Parameter(Position = 3,
+        /// <summary>
+        /// <para type="description">Email or immutable Id of the user if only those groups are to be listed, the given user is a member of. If Id, it should match with id of user object</para>
+        /// </summary>
+        [Parameter(Position = 2,
             ParameterSetName = "OneUser",
-            Mandatory = true,
-            ValueFromPipeline = true)]
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Email or immutable Id of the user if only those groups are to be listed, the given user is a member of. If Id, it should match with id of user object")]
         [ValidateNotNullOrEmpty]
         public string UserName { get; set; }
+
+        /// <summary>
+        /// <para type="description">Maximum number of results to return. Default is 200</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ParameterSetName = "AllGroups",
+        HelpMessage = "Maximum number of results to return. Default is 200")]
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ParameterSetName = "OneUser",
+        HelpMessage = "Maximum number of results to return. Default is 200")]
+        public int? MaxResults { get; set; }
 
         #endregion
 
@@ -557,12 +592,15 @@ namespace gShell.Cmdlets.Directory.GAGroup
                 case "OneUser":
                     if (ShouldProcess(GroupName, "Get-GAGroup"))
                     {
-                        WriteObject(groups.List(new dotNet.Directory.Groups.GroupsListProperties()
+                        var properties = new dotNet.Directory.Groups.GroupsListProperties()
                         {
-                            TotalResults = MaxResults,
                             Domain = Domain,
                             UserKey = UserName
-                        }));
+                        };
+
+                        if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value; 
+
+                        WriteObject(groups.List());
                     }
                     break;
                 case "OneGroup":
@@ -587,11 +625,21 @@ namespace gShell.Cmdlets.Directory.GAGroup
             }
         }
     }
-}
 
-
-namespace gShell.Cmdlets.Directory.GAGroup
-{
+    /// <summary>
+    /// <para type="synopsis">Create Group</para>
+    /// <para type="description">Create Group</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GAGroup -GroupBody $SomeGroupObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGAGroup">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.New, "GAGroup",
           DefaultParameterSetName = "PasswordGenerated",
           SupportsShouldProcess = true,
@@ -600,31 +648,38 @@ namespace gShell.Cmdlets.Directory.GAGroup
     {
         #region Properties
 
+        /// <summary>
+        /// <para type="description">Email of Group</para>
+        /// </summary>
         [Parameter(Position = 0,
-            Mandatory = true,
-            ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "The email name of the group to be created.")]
+        Mandatory = true,
+        ValueFromPipeline = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The email name of the group to be created.")]
         [ValidateNotNullOrEmpty]
-        public string GroupName { get; set; }
+        public string Email { get; set; }
 
-        //Domain position = 1
-
+        /// <summary>
+        /// <para type="description">Group name</para>
+        /// </summary>
         [Parameter(Position = 2,
-            Mandatory = false,
-            HelpMessage = "The formatted name of the group to be created.")]
-        public string FormattedName { get; set; }
+        Mandatory = false,
+        HelpMessage = "The formatted name of the group to be created.")]
+        public string Name { get; set; }
 
+        /// <summary>
+        /// <para type="description">Description of the group</para>
+        /// </summary>
         [Parameter(Position = 3,
-            Mandatory = false,
-            HelpMessage = "The description of the group to be created.")]
+        Mandatory = false,
+        HelpMessage = "The description of the group to be created.")]
         public string Description { get; set; }
 
         #endregion
 
         protected override void ProcessRecord()
         {
-            if (ShouldProcess(FormattedName, "New-GAGroup"))
+            if (ShouldProcess(Name, "New-GAGroup"))
             {
                 CreateGroup();
             }
@@ -634,11 +689,11 @@ namespace gShell.Cmdlets.Directory.GAGroup
         {
             Data.Group groupAcct = new Data.Group();
 
-            groupAcct.Email = GetFullEmailAddress(GroupName, Domain);
+            groupAcct.Email = GetFullEmailAddress(Email, Domain);
 
-            if (!string.IsNullOrWhiteSpace(FormattedName))
+            if (!string.IsNullOrWhiteSpace(Name))
             {
-                groupAcct.Name = FormattedName;
+                groupAcct.Name = Name;
             }
 
             if (!string.IsNullOrWhiteSpace(Description))
@@ -650,21 +705,34 @@ namespace gShell.Cmdlets.Directory.GAGroup
         }
 
     }
-}
 
-
-namespace gShell.Cmdlets.Directory.GAGroup
-{
+    /// <summary>
+    /// <para type="synopsis">Delete Group</para>
+    /// <para type="description">Delete Group</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Remove-GAGroup -GroupKey $SomeGroupKeyString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/RemoveGAGroup">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Remove, "GAGroup",
-          DefaultParameterSetName = "GroupName",
+          DefaultParameterSetName = "Email",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAGroup")]
     public class RemoveGAGroup : DirectoryBase
     {
         #region Properties
 
+        /// <summary>
+        /// <para type="description">Email or immutable Id of the group</para>
+        /// </summary>
         [Parameter(Position = 0,
-            ParameterSetName = "GroupName",
+            ParameterSetName = "Email",
             Mandatory = true,
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "The email name of the group to remove. For a group AllThings@domain.com named 'All The Things', use AllThings.")]
@@ -673,7 +741,10 @@ namespace gShell.Cmdlets.Directory.GAGroup
 
         //Domain position = 1
 
-        [Parameter(Position = 1,
+        /// <summary>
+        /// <para type="description">An object representing a group to remove</para>
+        /// </summary>
+        [Parameter(Position = 0,
             ParameterSetName = "GAGroupObject",
             Mandatory = true,
             ValueFromPipeline = true,
@@ -682,8 +753,12 @@ namespace gShell.Cmdlets.Directory.GAGroup
         [ValidateNotNullOrEmpty]
         public Data.Group GAGroupObject { get; set; }
 
-        [Parameter(Position = 2,
-            HelpMessage = "Force the action to complete without a prompt to continue.")]
+        /// <summary>
+        /// <para type="description">A switch to run the cmdlet without prompting.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        HelpMessage = "A switch to run the cmdlet without prompting.")]
         public SwitchParameter Force { get; set; }
 
         #endregion
@@ -718,10 +793,10 @@ namespace gShell.Cmdlets.Directory.GAGroup
 
         private void RemoveGroup()
         {
-            string fullEmail = "";
+            string fullEmail = null;
             switch (ParameterSetName)
             {
-                case "GroupName":
+                case "Email":
                     fullEmail = GroupName;
                     fullEmail = GetFullEmailAddress(fullEmail, Domain);
                     break;
@@ -734,11 +809,21 @@ namespace gShell.Cmdlets.Directory.GAGroup
             groups.Delete(fullEmail);
         }
     }
-}
 
-
-namespace gShell.Cmdlets.Directory.GAGroup
-{
+    /// <summary>
+    /// <para type="synopsis">Update Group. This method supports patch semantics.</para>
+    /// <para type="description">Update Group. This method supports patch semantics.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Set-GAGroup -GroupKey $SomeGroupKeyString -GroupBody $SomeGroupObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/SetGAGroup">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Set, "GAGroup",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAGroup")]
@@ -746,24 +831,34 @@ namespace gShell.Cmdlets.Directory.GAGroup
     {
         #region Properties
 
+        /// <summary>
+        /// <para type="description">Email or immutable Id of the group. If Id, it should match with id of group object</para>
+        /// </summary>
         [Parameter(Position = 0,
-            Mandatory = true,
-            ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "The email name of the group you want to update. For a group AllThings@domain.com named 'All The Things', use AllThings.")]
+        Mandatory = true,
+        ValueFromPipeline = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Email or immutable Id of the group. If Id, it should match with id of group object")]
         [ValidateNotNullOrEmpty]
         public string GroupName { get; set; }
 
-        //Domain position = 1
-
+        /// <summary>
+        /// <para type="description">Description of the group</para>
+        /// </summary>
         [Parameter(Position = 2,
             HelpMessage = "The new description of the group.")]
         public string NewDescription { get; set; }
 
+        /// <summary>
+        /// <para type="description">Group name</para>
+        /// </summary>
         [Parameter(Position = 3,
             HelpMessage = "The new formatted name of the group.")]
         public string NewName { get; set; }
 
+        /// <summary>
+        /// <para type="description">Email of Group</para>
+        /// </summary>
         [Parameter(Position = 4,
             HelpMessage = "The new email address for the group. Does not include the @domain.com")]
         public string NewEmailAddress { get; set; }
@@ -820,9 +915,22 @@ namespace gShell.Cmdlets.Directory.GAGroup
     }
 }
 
-
 namespace gShell.Cmdlets.Directory.GAGroupMember
 {
+    /// <summary>
+    /// <para type="synopsis">Add user to the specified group.</para>
+    /// <para type="description">Add user to the specified group.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Add-GAMembers -GroupKey $SomeGroupKeyString -MemberBody $SomeMemberObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/AddGAMembers">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Add, "GAGroupMember",
           DefaultParameterSetName = "OneGroup",
           SupportsShouldProcess = true,
@@ -833,8 +941,10 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
 
         public enum GroupMembershipRoles { MEMBER, MANAGER, OWNER };
 
+        /// <summary>
+        /// <para type="description">Email or immutable Id of the group</para>
+        /// </summary>
         [Parameter(Position = 0,
-            ParameterSetName = "OneGroup",
             Mandatory = true,
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true,
@@ -842,16 +952,18 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
         [ValidateNotNullOrEmpty]
         public string GroupName { get; set; }
 
-        //Domain position = 1
-
+        /// <summary>
+        /// <para type="description">Email of member (Read-only)</para>
+        /// </summary>
         [Parameter(Position = 2,
             Mandatory = true,
-            ParameterSetName = "OneGroup",
             HelpMessage = "The username of the group member you want to add.")]
         public string UserName { get; set; }
 
+        /// <summary>
+        /// <para type="description">Role of member</para>
+        /// </summary>
         [Parameter(Position = 3,
-            ParameterSetName = "OneGroup",
             HelpMessage = "The role of the new group member. Values can be MEMBER, MANAGER, or OWNER.")]
         public GroupMembershipRoles Role { get; set; }
         #endregion
@@ -873,10 +985,30 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
         }
     }
 
-}
-
-namespace gShell.Cmdlets.Directory.GAGroupMember
-{
+    /// <summary>
+    /// <para type="synopsis">Retrieve Group Member</para>
+    /// <para type="description">Retrieve Group Member</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Get-GAGroupMember -GroupName $SomeGroupNameString </code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <example>
+    ///   <code>PS C:\>Get-GAGroupMember -GroupName $SomeGroupNameString -UserName $SomeUserNameString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <example>
+    ///   <code>PS C:\>Get-GAGroupMember -All</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/GetGAGroupMember">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Get, "GAGroupMember",
           DefaultParameterSetName = "OneGroup",
           SupportsShouldProcess = true,
@@ -885,6 +1017,9 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
     {
         #region Properties
 
+        /// <summary>
+        /// <para type="description">Email or immutable Id of the group</para>
+        /// </summary>
         [Parameter(Position = 0,
             ParameterSetName = "OneGroup",
             Mandatory = true,
@@ -894,27 +1029,40 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
         [ValidateNotNullOrEmpty]
         public string GroupName { get; set; }
 
-        //Domain position = 1
-
+        /// <summary>
+        /// <para type="description">Email or immutable Id of the member</para>
+        /// </summary>
         [Parameter(Position = 2,
             ParameterSetName = "OneGroup",
             HelpMessage = "The username of the user whose membership information you'd like to retrieve.")]
         public string UserName { get; set; }
 
+        /// <summary>
+        /// <para type="description">A switch to list all results.</para>
+        /// </summary>
         [Parameter(Position = 3,
             ParameterSetName = "AllGroups",
             Mandatory = true,
             HelpMessage = "Indicates if you would like to get all members of all groups in the domain.")]
         public SwitchParameter All { get; set; }
 
+        /// <summary>
+        /// <para type="description">Include members in the results.</para>
+        /// </summary>
         [Parameter(Position = 4,
             HelpMessage = "Include members in the results.")]
-        public new SwitchParameter Members { get; set; }
+        public SwitchParameter Members { get; set; }
 
+        /// <summary>
+        /// <para type="description">Include managers in the results.</para>
+        /// </summary>
         [Parameter(Position = 5,
             HelpMessage = "Include managers in the results.")]
         public SwitchParameter Managers { get; set; }
 
+        /// <summary>
+        /// <para type="description">Include owners in the results.</para>
+        /// </summary>
         [Parameter(Position = 6,
             HelpMessage = "Include owners in the results.")]
         public SwitchParameter Owners { get; set; }
@@ -1125,10 +1273,21 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
             Group = groupEmail;
         }
     }
-}
 
-namespace gShell.Cmdlets.Directory.GAGroupMember
-{
+    /// <summary>
+    /// <para type="synopsis">Remove membership.</para>
+    /// <para type="description">Remove membership.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Remove-GAMembes -GroupName $SomeGroupNameString -MemberKey $SomeMemberKeyString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/RemoveGAMember">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Remove, "GAGroupMember",
           DefaultParameterSetName = "OneGroup",
           SupportsShouldProcess = true,
@@ -1137,6 +1296,9 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
     {
         #region Properties
 
+        /// <summary>
+        /// <para type="description">Email or immutable Id of the group</para>
+        /// </summary>
         [Parameter(Position = 0,
             ParameterSetName = "OneGroup",
             Mandatory = true,
@@ -1146,14 +1308,18 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
         [ValidateNotNullOrEmpty]
         public string GroupName { get; set; }
 
-        //Domain position = 1
-
+        /// <summary>
+        /// <para type="description">Email or immutable Id of the member</para>
+        /// </summary>
         [Parameter(Position = 2,
             Mandatory = true,
             ParameterSetName = "OneGroup",
             HelpMessage = "The username of the group member you want to remove.")]
         public string UserName { get; set; }
 
+        /// <summary>
+        /// <para type="description">A switch to run the cmdlet without prompting.</para>
+        /// </summary>
         [Parameter(Position = 3,
             HelpMessage = "Force the action to complete without a prompt to continue.")]
         public SwitchParameter Force { get; set; }
@@ -1194,11 +1360,20 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
         }
     }
 
-}
-
-
-namespace gShell.Cmdlets.Directory.GAGroupMember
-{
+    /// <summary>
+    /// <para type="synopsis">Update membership of a user in the specified group. This method supports patch semantics.</para>
+    /// <para type="description">Update membership of a user in the specified group. This method supports patch semantics.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Patch-GAMembers -GroupKey $SomeGroupKeyString -MemberKey $SomeMemberKeyString -MemberBody $SomeMemberObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/PatchGAMembers">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Set, "GAGroupMember",
           DefaultParameterSetName = "OneGroup",
           SupportsShouldProcess = true,
@@ -1209,6 +1384,9 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
 
         public enum GroupMembershipRoles { MEMBER, MANAGER, OWNER };
 
+        /// <summary>
+        /// <para type="description">Email or immutable Id of the group. If Id, it should match with id of group object</para>
+        /// </summary>
         [Parameter(Position = 0,
             ParameterSetName = "OneGroup",
             Mandatory = true,
@@ -1218,14 +1396,18 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
         [ValidateNotNullOrEmpty]
         public string GroupName { get; set; }
 
-        //Domain position = 1
-
+        /// <summary>
+        /// <para type="description">Email or immutable Id of the user. If Id, it should match with id of member object</para>
+        /// </summary>
         [Parameter(Position = 2,
             Mandatory = true,
             ParameterSetName = "OneGroup",
             HelpMessage = "The username of the group member you want to update.")]
         public string UserName { get; set; }
 
+        /// <summary>
+        /// <para type="description">Role of member</para>
+        /// </summary>
         [Parameter(Position = 3,
             Mandatory = true,
             ParameterSetName = "OneGroup",
@@ -1251,6 +1433,7 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
     }
 
 }
+
 
 namespace gShell.Cmdlets.Directory.GAMobileDevice
 {
@@ -1398,11 +1581,7 @@ namespace gShell.Cmdlets.Directory.GAMobileDevice
             }
         }
     }
-}
 
-
-namespace gShell.Cmdlets.Directory.GAMobileDevice
-{
     [Cmdlet(VerbsCommon.Get, "GANotification",
           DefaultParameterSetName = "One",
           SupportsShouldProcess = true,
@@ -1552,7 +1731,6 @@ namespace gShell.Cmdlets.Directory.GAMobileDevice
         }
     }
 }
-
 
 
 namespace gShell.Cmdlets.Directory.GAOrgUnit
@@ -2509,11 +2687,7 @@ namespace gShell.Cmdlets.Directory.GAUser
             }
         }
     }
-}
 
-
-namespace gShell.Cmdlets.Directory.GAUser
-{
     [Cmdlet(VerbsCommon.New, "GAUser",
           DefaultParameterSetName = "PasswordGenerated",
           SupportsShouldProcess = true,
@@ -2631,11 +2805,7 @@ namespace gShell.Cmdlets.Directory.GAUser
             users.Insert(userAcct);
         }
     }
-}
 
-
-namespace gShell.Cmdlets.Directory.GAUser
-{
     [Cmdlet(VerbsCommon.Remove, "GAUser",
         DefaultParameterSetName = "UserName",
         SupportsShouldProcess = true,
@@ -2714,11 +2884,7 @@ namespace gShell.Cmdlets.Directory.GAUser
             users.Delete(GetFullEmailAddress(fullEmail, Domain));
         }
     }
-}
 
-
-namespace gShell.Cmdlets.Directory.GAUser
-{
     [Cmdlet("Restore", "GAUser",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Restore-GAUser")]
@@ -2765,11 +2931,7 @@ namespace gShell.Cmdlets.Directory.GAUser
             users.Undelete(undelete, UserID);
         }
     }
-}
 
-
-namespace gShell.Cmdlets.Directory.GAUser
-{
     [Cmdlet(VerbsCommon.Set, "GAUser",
           DefaultParameterSetName = "NoPasswordProvided",
           SupportsShouldProcess = true,
@@ -3076,11 +3238,7 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
             BaseObject = baseAlias;
         }
     }
-}
 
-
-namespace gShell.Cmdlets.Directory.GAUserAlias
-{
     [Cmdlet(VerbsCommon.New, "GAUserAlias",
           DefaultParameterSetName = "PasswordGenerated",
           SupportsShouldProcess = true,
@@ -3120,10 +3278,7 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
             }
         }
     }
-}
 
-namespace gShell.Cmdlets.Directory.GAUserAlias
-{
     [Cmdlet(VerbsCommon.Remove, "GAUserAlias",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAUserAlias")]
@@ -4168,10 +4323,7 @@ namespace gShell.Cmdlets.Directory.GAUserProperty
         }
         #endregion
     }
-}
 
-namespace gShell.Cmdlets.Directory.GAUserProperty
-{
     [Cmdlet(VerbsCommon.Get, "GAUserProperty",
          SupportsShouldProcess = true,
          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAUserProperty")]
@@ -4264,10 +4416,7 @@ namespace gShell.Cmdlets.Directory.GAUserProperty
             }
         }
     }
-}
 
-namespace gShell.Cmdlets.Directory.GAUserProperty
-{
     [Cmdlet(VerbsCommon.New, "GAUserProperty",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GAUserProperty")]
@@ -4910,10 +5059,7 @@ namespace gShell.Cmdlets.Directory.GAUserProperty
 
     //}
     #endregion
-}
 
-namespace gShell.Cmdlets.Directory.GAUserProperty
-{
     [Cmdlet(VerbsCommon.New, "GAUserPropertyCollection",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GAUserPropertyCollection")]
@@ -4926,10 +5072,7 @@ namespace gShell.Cmdlets.Directory.GAUserProperty
         }
 
     }
-}
 
-namespace gShell.Cmdlets.Directory.GAUserProperty
-{
     [Cmdlet(VerbsCommon.Remove, "GAUserProperty",
          SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAUserProperty")]
@@ -5201,6 +5344,7 @@ namespace gShell.Cmdlets.Directory.GAUserProperty
         }
     }
 }
+
 
 namespace gShell.Cmdlets.Directory.GAVerificationCode
 {
