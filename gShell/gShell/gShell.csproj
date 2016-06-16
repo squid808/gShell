@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\XmlDoc2CmdletDoc.0.2.3\build\XmlDoc2CmdletDoc.props" Condition="Exists('..\packages\XmlDoc2CmdletDoc.0.2.3\build\XmlDoc2CmdletDoc.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -12,7 +13,7 @@
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>8bdb454f</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>11a39463</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -23,6 +24,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <DocumentationFile>bin\Debug\gShell.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -124,7 +126,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cmdlets\AdminSettings\AdminSettings.cs" />
+    <Compile Include="Cmdlets\Calendar\Google.Apis.Calendar.v3.cs" />
+    <Compile Include="Cmdlets\Classroom\Google.Apis.Classroom.v1.cs" />
     <Compile Include="Cmdlets\DataTransfer\DataTransfer.cs" />
+    <Compile Include="Cmdlets\Directory\Directory.cs" />
     <Compile Include="Cmdlets\Directory\GAAsp\GAAsp.cs" />
     <Compile Include="Cmdlets\Directory\GAChannel\GAChannel.cs" />
     <Compile Include="Cmdlets\Directory\GAChromeosdevice\GAChromeosdevices.cs" />
@@ -135,11 +140,12 @@
     <Compile Include="Cmdlets\Directory\GAToken\GAToken.cs" />
     <Compile Include="Cmdlets\Directory\GAUserPhoto\GAUserPhoto.cs" />
     <Compile Include="Cmdlets\Directory\GAVerificationCode\GAVerificationCode.cs" />
+    <Compile Include="Cmdlets\Directory\Google.Apis.admin.Directory.directory_v1.cs" />
     <Compile Include="Cmdlets\Directory\gShellUserObject.cs" />
     <Compile Include="Cmdlets\Discovery\DiscoveryBase.cs" />
+    <Compile Include="Cmdlets\Drive\Google.Apis.Drive.v3.cs" />
     <Compile Include="Cmdlets\EmailSettings\EmailSettings.cs" />
     <Compile Include="Cmdlets\Gmail\Gmail.cs" />
-    <Compile Include="Cmdlets\Gmail\GmailServiceAccountBase.cs" />
     <Compile Include="Cmdlets\GroupsMigration\GroupsMigration.cs" />
     <Compile Include="Cmdlets\GroupsSettings\GroupsSettings.cs" />
     <Compile Include="Cmdlets\Licensing\Licensing.cs" />
@@ -154,6 +160,10 @@
     <Compile Include="Cmdlets\SharedContacts\SharedContacts.cs" />
     <Compile Include="dotNet\Adminsettings\Google.Apis.admin.Adminsettings.adminsettings_v1.cs" />
     <Compile Include="dotNet\Adminsettings\Google.Apis.admin.Adminsettings.adminsettings_v1_gshell_dotnet.cs" />
+    <Compile Include="dotNet\Calendar\Google.Apis.Calendar.v3.cs" />
+    <Compile Include="dotNet\Calendar\Google.Apis.Calendar.v3_gshell_dotnet.cs" />
+    <Compile Include="dotNet\Classroom\Google.Apis.Classroom.v1.cs" />
+    <Compile Include="dotNet\Classroom\Google.Apis.Classroom.v1_gshell_dotnet.cs" />
     <Compile Include="dotNet\DataTransfer\Google.Apis.admin.DataTransfer.datatransfer_v1.cs" />
     <Compile Include="dotNet\DataTransfer\Google.Apis.admin.DataTransfer.datatransfer_v1_gshell_dotnet.cs" />
     <Compile Include="dotNet\Directory\Directory.cs" />
@@ -244,7 +254,10 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
+    <Error Condition="!Exists('..\packages\XmlDoc2CmdletDoc.0.2.3\build\XmlDoc2CmdletDoc.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\XmlDoc2CmdletDoc.0.2.3\build\XmlDoc2CmdletDoc.props'))" />
+    <Error Condition="!Exists('..\packages\XmlDoc2CmdletDoc.0.2.3\build\XmlDoc2CmdletDoc.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\XmlDoc2CmdletDoc.0.2.3\build\XmlDoc2CmdletDoc.targets'))" />
   </Target>
+  <Import Project="..\packages\XmlDoc2CmdletDoc.0.2.3\build\XmlDoc2CmdletDoc.targets" Condition="Exists('..\packages\XmlDoc2CmdletDoc.0.2.3\build\XmlDoc2CmdletDoc.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

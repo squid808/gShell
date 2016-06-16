@@ -1,0 +1,5147 @@
+﻿using System;
+using System.Management.Automation;
+using gShell.dotNet.CustomSerializer.Json;
+using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
+using System.IO;
+using gShell.dotNet.Utilities;
+using System.Linq;
+using gShell.Cmdlets.Directory.GAUserProperty;
+using Data = Google.Apis.admin.Directory.directory_v1.Data;
+
+namespace gShell.Cmdlets.Directory.GAAsp
+{
+    /// <summary>
+    /// <para type="synopsis">Get information about an ASP(s) issued by a user.</para>
+    /// <para type="description">Get information about an ASP(s) issued by a user.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Get-GAAsps -UserKey $SomeUserKeyString -CodeId $SomeCodeIdSystemNullable<int></code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <example>
+    ///   <code>PS C:\>Get-GAAsps -UserKey $SomeUserKeyString -All</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/GetGAAsps">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.Get, "GAAsp",
+          DefaultParameterSetName = "One",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAAsp")]
+    public class GetGAAsp : DirectoryBase
+    {
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">Identifies the user in the API request. The value can be the user's primary email address, alias email address, or unique user ID.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Identifies the user in the API request. The value can be the user's primary email address, alias email address, or unique user ID.")]
+        public string UserKey { get; set; }
+
+        /// <summary>
+        /// <para type="description">The unique ID of the ASP.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = true,
+        ParameterSetName = "One",
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The unique ID of the ASP.")]
+        public int CodeId { get; set; }
+
+        /// <summary>
+        /// <para type="description">A switch to list all results.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = true,
+        ParameterSetName = "List",
+        HelpMessage = "A switch to list all results.")]
+        public SwitchParameter All { get; set; }
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            UserKey = GetFullEmailAddress(UserKey, Domain);
+
+            if (ShouldProcess("Directory Asps", "Get-GAAsp"))
+            {
+                switch (ParameterSetName)
+                {
+                    case "One":
+                        WriteObject(asps.Get(UserKey, CodeId));
+                        break;
+                    case "List":
+                        WriteObject(asps.List(UserKey));
+                        break;
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Delete an ASP issued by a user.</para>
+    /// <para type="description">Delete an ASP issued by a user.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Remove-GAAsps -UserKey $SomeUserKeyString -CodeId $SomeCodeIdSystemNullable<int></code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Remove-GAAsp">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.Remove, "GAAsp",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAAsp")]
+    public class RemoveGAAsp : DirectoryBase
+    {
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">Identifies the user in the API request. The value can be the user's primary email address, alias email address, or unique user ID.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Identifies the user in the API request. The value can be the user's primary email address, alias email address, or unique user ID.")]
+        public string UserKey { get; set; }
+
+        /// <summary>
+        /// <para type="description">The unique ID of the ASP to be deleted.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The unique ID of the ASP to be deleted.")]
+        public int CodeId { get; set; }
+
+        [Parameter(Position = 2)]
+        public SwitchParameter Force { get; set; }
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            UserKey = GetFullEmailAddress(UserKey, Domain);
+
+            if (ShouldProcess("Directory Asps", "Remove-GAAsp"))
+            {
+                if (Force || ShouldContinue((string.Format("Asp {0} with CodeID {2} will be removed from the {1} Google Apps domain.\nContinue?",
+                    UserKey, Domain, CodeId)), "Confirm Google Apps Asp Removal"))
+                {
+                    try
+                    {
+                        WriteDebug(string.Format("Attempting to remove Asp {0}...",
+                            UserKey));
+                        asps.Delete(UserKey, CodeId);
+                        WriteVerbose(string.Format("Removal of Asp {0} completed without error.",
+                            UserKey));
+                    }
+                    catch (Exception e)
+                    {
+                        WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, UserKey));
+                    }
+                }
+                else
+                {
+                    WriteError(new ErrorRecord(new Exception("Asp deletion not confirmed"),
+                        "", ErrorCategory.InvalidData, UserKey));
+                }
+            }
+        }
+    }
+}
+
+
+namespace gShell.Cmdlets.Directory.GAChannel
+{
+    [Cmdlet(VerbsLifecycle.Stop, "GAChannel",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Stop-GAChannel")]
+    public class StopGAChannel : DirectoryBase
+    {
+        #region Properties
+
+        [Parameter(
+            Mandatory = true)]
+        [ValidateNotNullOrEmpty]
+        public string Id { get; set; }
+
+        [Parameter(
+            Mandatory = true)]
+        [ValidateNotNullOrEmpty]
+        public string ResourceId { get; set; }
+
+        [Parameter()]
+        public SwitchParameter Force { get; set; }
+
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess("Report Channel", "Stop-GAChannel"))
+            {
+                if (Force || ShouldContinue((String.Format("Resource with Id {0} will be stopped on channel with Id {1}\nContinue?",
+                    ResourceId, Id)), "Confirm Channel Stop"))
+                {
+                    try
+                    {
+                        WriteDebug(string.Format("Attempting to stop Channel Resource..."));
+                        channels.Stop(new Data.Channel()
+                        {
+                            Id = Id,
+                            ResourceId = ResourceId
+                        });
+                        WriteVerbose(string.Format("Channel Resource stopped without error."));
+                    }
+                    catch (Exception e)
+                    {
+                        WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, "Stop-GAChannel"));
+                    }
+                }
+                else
+                {
+                    WriteError(new ErrorRecord(new Exception("Stopping of Channel Resource failed"),
+                        "", ErrorCategory.InvalidData, "Stop-GAChannel"));
+                }
+            }
+        }
+    }
+}
+
+
+namespace gShell.Cmdlets.Directory.GAChromeosdevice
+{
+    [Cmdlet(VerbsCommon.Get, "GAChromeosdevice",
+          DefaultParameterSetName = "One",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAChromeosdevice")]
+    public class GetGAChromeosdevice : DirectoryBase
+    {
+        #region Properties
+
+        [Parameter(Position = 0,
+            Mandatory = false, //can use 'my_customer'
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string CustomerId { get; set; }
+
+        //Domain position = 1
+
+        [Parameter(Position = 2,
+            Mandatory = true,
+            ParameterSetName = "One",
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string DeviceId { get; set; }
+
+        [Parameter(Position = 3,
+            ParameterSetName = "List")]
+        public SwitchParameter All { get; set; }
+
+        [Parameter(Position = 4,
+            ParameterSetName = "List")]
+        public int MaxResults { get; set; }
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            CustomerId = string.IsNullOrWhiteSpace(CustomerId) ? "my_customer" : CustomerId;
+
+            if (ShouldProcess(CustomerId, "Get-GAChromeosdevice"))
+            {
+                switch (ParameterSetName)
+                {
+                    case "One":
+                        WriteObject(chromeosdevices.Get(CustomerId, DeviceId));
+                        break;
+                    case "List":
+                        WriteObject(chromeosdevices.List(CustomerId, new dotNet.Directory.Chromeosdevices.ChromeosdevicesListProperties()
+                        {
+                            TotalResults = MaxResults
+                        }));
+                        break;
+                }
+            }
+        }
+    }
+
+    [Cmdlet(VerbsCommon.Set, "GAChromeosdevice",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAChromeosdevice")]
+    public class SetGAChromeosdevice : DirectoryBase
+    {
+        #region Properties
+        [Parameter(Position = 0,
+            Mandatory = false, //can use 'my_customer'
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string CustomerId { get; set; }
+
+        //Domain position = 1
+
+        [Parameter(Position = 2,
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string DeviceId { get; set; }
+
+        [Parameter(Position = 3,
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string AnnotatedLocation { get; set; }
+
+        [Parameter(Position = 4,
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string AnnotatedUser { get; set; }
+
+        [Parameter(Position = 5,
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string Notes { get; set; }
+
+        [Parameter(Position = 6,
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string OrgUnitPath { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            CustomerId = string.IsNullOrWhiteSpace(CustomerId) ? "my_customer" : CustomerId;
+
+            if (ShouldProcess(CustomerId, "Set-GAChromeosdevice"))
+            {
+                Data.ChromeOsDevice body = new Data.ChromeOsDevice();
+
+                body.AnnotatedLocation = (!string.IsNullOrWhiteSpace(AnnotatedLocation)) ? AnnotatedLocation : null;
+                body.AnnotatedUser = (!string.IsNullOrWhiteSpace(AnnotatedUser)) ? AnnotatedUser : null;
+                body.Notes = (!string.IsNullOrWhiteSpace(Notes)) ? Notes : null;
+                body.OrgUnitPath = (!string.IsNullOrWhiteSpace(OrgUnitPath)) ? OrgUnitPath : null;
+
+                chromeosdevices.Patch(body, CustomerId, DeviceId);
+            }
+        }
+    }
+}
+
+
+namespace gShell.Cmdlets.Directory.GAGroup
+{
+    [Cmdlet(VerbsCommon.Get, "GAGroup",
+          DefaultParameterSetName = "OneUser",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAGroup")]
+    public class GetGAGroup : DirectoryBase
+    {
+        #region Properties
+
+        [Parameter(Position = 0,
+            ParameterSetName = "OneGroup",
+            Mandatory = true,
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "The email name of the group you want to retrieve. For a group AllThings@domain.com named 'All The Things', use AllThings.")]
+        [ValidateNotNullOrEmpty]
+        public string GroupName { get; set; }
+
+        //Domain position = 1
+
+        [Parameter(Position = 2,
+            ParameterSetName = "AllGroups",
+            Mandatory = true,
+            HelpMessage = "Indicates if you would like to retrieve the information for all groups in the domain.")]
+        public SwitchParameter All { get; set; }
+
+        [Parameter(
+            Mandatory = false,
+            ParameterSetName = "AllGroups")]
+        [Parameter(
+            Mandatory = false,
+            ParameterSetName = "OneUser")]
+        public int MaxResults { get; set; }
+
+        [Parameter(Position = 3,
+            ParameterSetName = "OneUser",
+            Mandatory = true,
+            ValueFromPipeline = true)]
+        [ValidateNotNullOrEmpty]
+        public string UserName { get; set; }
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            switch (ParameterSetName)
+            {
+                case "OneUser":
+                    if (ShouldProcess(GroupName, "Get-GAGroup"))
+                    {
+                        WriteObject(groups.List(new dotNet.Directory.Groups.GroupsListProperties()
+                        {
+                            TotalResults = MaxResults,
+                            Domain = Domain,
+                            UserKey = UserName
+                        }));
+                    }
+                    break;
+                case "OneGroup":
+                    GroupName = GetFullEmailAddress(GroupName, Domain);
+
+                    if (ShouldProcess(GroupName, "Get-GAGroup"))
+                    {
+                        WriteObject(groups.Get(GroupName));
+                    }
+                    break;
+
+                case "AllGroups":
+                    if (ShouldProcess("All Groups", "Get-GAGroup"))
+                    {
+                        WriteObject(groups.List(new dotNet.Directory.Groups.GroupsListProperties()
+                        {
+                            TotalResults = MaxResults,
+                            Domain = Domain
+                        }));
+                    }
+                    break;
+            }
+        }
+    }
+}
+
+
+namespace gShell.Cmdlets.Directory.GAGroup
+{
+    [Cmdlet(VerbsCommon.New, "GAGroup",
+          DefaultParameterSetName = "PasswordGenerated",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/New-GAGroup")]
+    public class NewGAGroup : DirectoryBase
+    {
+        #region Properties
+
+        [Parameter(Position = 0,
+            Mandatory = true,
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "The email name of the group to be created.")]
+        [ValidateNotNullOrEmpty]
+        public string GroupName { get; set; }
+
+        //Domain position = 1
+
+        [Parameter(Position = 2,
+            Mandatory = false,
+            HelpMessage = "The formatted name of the group to be created.")]
+        public string FormattedName { get; set; }
+
+        [Parameter(Position = 3,
+            Mandatory = false,
+            HelpMessage = "The description of the group to be created.")]
+        public string Description { get; set; }
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess(FormattedName, "New-GAGroup"))
+            {
+                CreateGroup();
+            }
+        }
+
+        private void CreateGroup()
+        {
+            Data.Group groupAcct = new Data.Group();
+
+            groupAcct.Email = GetFullEmailAddress(GroupName, Domain);
+
+            if (!string.IsNullOrWhiteSpace(FormattedName))
+            {
+                groupAcct.Name = FormattedName;
+            }
+
+            if (!string.IsNullOrWhiteSpace(Description))
+            {
+                groupAcct.Description = Description;
+            }
+
+            groups.Insert(groupAcct);
+        }
+
+    }
+}
+
+
+namespace gShell.Cmdlets.Directory.GAGroup
+{
+    [Cmdlet(VerbsCommon.Remove, "GAGroup",
+          DefaultParameterSetName = "GroupName",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAGroup")]
+    public class RemoveGAGroup : DirectoryBase
+    {
+        #region Properties
+
+        [Parameter(Position = 0,
+            ParameterSetName = "GroupName",
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "The email name of the group to remove. For a group AllThings@domain.com named 'All The Things', use AllThings.")]
+        [ValidateNotNullOrEmpty]
+        public string GroupName { get; set; }
+
+        //Domain position = 1
+
+        [Parameter(Position = 1,
+            ParameterSetName = "GAGroupObject",
+            Mandatory = true,
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "A Google Apps Group object representing the group. Retrieved from Get-GAGroup.")]
+        [ValidateNotNullOrEmpty]
+        public Data.Group GAGroupObject { get; set; }
+
+        [Parameter(Position = 2,
+            HelpMessage = "Force the action to complete without a prompt to continue.")]
+        public SwitchParameter Force { get; set; }
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess(GroupName, "Remove-GAGroup"))
+            {
+                if (Force || ShouldContinue((String.Format("Group {0} will be removed from the {1} Google Apps domain.\nContinue?",
+                    GroupName, Domain)), "Confirm Google Apps Group Removal"))
+                {
+                    try
+                    {
+                        WriteDebug(string.Format("Attempting to remove group {0}@{1}...",
+                            GroupName, Domain));
+                        RemoveGroup();
+                        WriteVerbose(string.Format("Removal of {0}@{1} completed without error.",
+                            GroupName, Domain));
+                    }
+                    catch (Exception e)
+                    {
+                        WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, GroupName));
+                    }
+                }
+                else
+                {
+                    WriteError(new ErrorRecord(new Exception("Group deletion not confirmed"),
+                        "", ErrorCategory.InvalidData, GroupName));
+                }
+            }
+        }
+
+        private void RemoveGroup()
+        {
+            string fullEmail = "";
+            switch (ParameterSetName)
+            {
+                case "GroupName":
+                    fullEmail = GroupName;
+                    fullEmail = GetFullEmailAddress(fullEmail, Domain);
+                    break;
+
+                case "GAGroupObject":
+                    fullEmail = GAGroupObject.Email;
+                    break;
+            }
+
+            groups.Delete(fullEmail);
+        }
+    }
+}
+
+
+namespace gShell.Cmdlets.Directory.GAGroup
+{
+    [Cmdlet(VerbsCommon.Set, "GAGroup",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAGroup")]
+    public class SetGAGroup : DirectoryBase
+    {
+        #region Properties
+
+        [Parameter(Position = 0,
+            Mandatory = true,
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "The email name of the group you want to update. For a group AllThings@domain.com named 'All The Things', use AllThings.")]
+        [ValidateNotNullOrEmpty]
+        public string GroupName { get; set; }
+
+        //Domain position = 1
+
+        [Parameter(Position = 2,
+            HelpMessage = "The new description of the group.")]
+        public string NewDescription { get; set; }
+
+        [Parameter(Position = 3,
+            HelpMessage = "The new formatted name of the group.")]
+        public string NewName { get; set; }
+
+        [Parameter(Position = 4,
+            HelpMessage = "The new email address for the group. Does not include the @domain.com")]
+        public string NewEmailAddress { get; set; }
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess(GroupName, "Set-GAGroup"))
+            {
+                UpdateGroup();
+            }
+        }
+
+        private void UpdateGroup()
+        {
+            Data.Group groupAcct = new Data.Group();
+
+            if (null == groupAcct)
+            {
+                WriteError(new ErrorRecord(new Exception(
+                    string.Format("No group {0} was found to update.", GroupName)),
+                        "", ErrorCategory.InvalidData, GroupName));
+            }
+
+            if (String.IsNullOrWhiteSpace(NewDescription) &&
+                String.IsNullOrWhiteSpace(NewEmailAddress) &&
+                String.IsNullOrWhiteSpace(NewName))
+            {
+                WriteError(new ErrorRecord(new Exception(
+                    string.Format("No data was enetered to update {0}.", GroupName)),
+                        "", ErrorCategory.InvalidData, GroupName));
+            }
+
+            if (!String.IsNullOrWhiteSpace(NewDescription))
+            {
+                groupAcct.Description = NewDescription;
+            }
+
+            if (!String.IsNullOrWhiteSpace(NewEmailAddress))
+            {
+                string _newEmail = GetFullEmailAddress(NewEmailAddress, Domain);
+                groupAcct.Email = _newEmail;
+            }
+
+            if (!String.IsNullOrWhiteSpace(NewName))
+            {
+                groupAcct.Name = NewName;
+            }
+
+            GroupName = GetFullEmailAddress(GroupName, Domain);
+            WriteObject(groups.Patch(groupAcct, GroupName));
+        }
+    }
+}
+
+
+namespace gShell.Cmdlets.Directory.GAGroupMember
+{
+    [Cmdlet(VerbsCommon.Add, "GAGroupMember",
+          DefaultParameterSetName = "OneGroup",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Add-GAGroupMember")]
+    public class AddGAGroupMember : DirectoryBase
+    {
+        #region Properties
+
+        public enum GroupMembershipRoles { MEMBER, MANAGER, OWNER };
+
+        [Parameter(Position = 0,
+            ParameterSetName = "OneGroup",
+            Mandatory = true,
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "The email name of the group to which you'd like to add one or more members. For a group AllThings@domain.com named 'All The Things', use AllThings")]
+        [ValidateNotNullOrEmpty]
+        public string GroupName { get; set; }
+
+        //Domain position = 1
+
+        [Parameter(Position = 2,
+            Mandatory = true,
+            ParameterSetName = "OneGroup",
+            HelpMessage = "The username of the group member you want to add.")]
+        public string UserName { get; set; }
+
+        [Parameter(Position = 3,
+            ParameterSetName = "OneGroup",
+            HelpMessage = "The role of the new group member. Values can be MEMBER, MANAGER, or OWNER.")]
+        public GroupMembershipRoles Role { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            GroupName = GetFullEmailAddress(GroupName, Domain);
+
+            if (ShouldProcess(GroupName, "Add-GAGroupMember"))
+            {
+                Data.Member member = new Data.Member
+                {
+                    Email = GetFullEmailAddress(UserName, Domain),
+                    Role = this.Role.ToString()
+                };
+
+                WriteObject(members.Insert(member, GroupName));
+            }
+        }
+    }
+
+}
+
+namespace gShell.Cmdlets.Directory.GAGroupMember
+{
+    [Cmdlet(VerbsCommon.Get, "GAGroupMember",
+          DefaultParameterSetName = "OneGroup",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAGroupMember")]
+    public class GetGAGroupMember : DirectoryBase
+    {
+        #region Properties
+
+        [Parameter(Position = 0,
+            ParameterSetName = "OneGroup",
+            Mandatory = true,
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "The email name of the group whose member(s) you want to retrieve. For a group AllThings@domain.com named 'All The Things', use AllThings")]
+        [ValidateNotNullOrEmpty]
+        public string GroupName { get; set; }
+
+        //Domain position = 1
+
+        [Parameter(Position = 2,
+            ParameterSetName = "OneGroup",
+            HelpMessage = "The username of the user whose membership information you'd like to retrieve.")]
+        public string UserName { get; set; }
+
+        [Parameter(Position = 3,
+            ParameterSetName = "AllGroups",
+            Mandatory = true,
+            HelpMessage = "Indicates if you would like to get all members of all groups in the domain.")]
+        public SwitchParameter All { get; set; }
+
+        [Parameter(Position = 4,
+            HelpMessage = "Include members in the results.")]
+        public new SwitchParameter Members { get; set; }
+
+        [Parameter(Position = 5,
+            HelpMessage = "Include managers in the results.")]
+        public SwitchParameter Managers { get; set; }
+
+        [Parameter(Position = 6,
+            HelpMessage = "Include owners in the results.")]
+        public SwitchParameter Owners { get; set; }
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (!string.IsNullOrWhiteSpace(UserName))
+            {
+                if (ShouldProcess(GroupName, "Get-GAGroupMember"))
+                {
+                    GroupName = GetFullEmailAddress(GroupName, Domain);
+                    UserName = GetFullEmailAddress(UserName, Domain);
+                    WriteObject(members.Get(GroupName, UserName));
+                }
+            }
+            else
+            {
+                switch (ParameterSetName)
+                {
+                    case "OneGroup":
+                        if (ShouldProcess(GroupName, "Get-GAGroupMember"))
+                        {
+                            GroupName = GetFullEmailAddress(GroupName, Domain);
+                            WriteObject(members.List(GroupName));
+                        }
+                        break;
+
+                    case "AllGroups":
+                        if (ShouldProcess("All Groups and Members", "Get-GAGroupMember"))
+                        {
+                            WriteObject(GetAllGroupsAndMembers());
+                        }
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Construct a roles string based on the parameters passed. Defaults to all.
+        /// </summary>
+        /// <returns></returns>
+        private string DetermineRoles()
+        {
+            if (!Members && !Managers && !Owners)
+            {
+                return "MEMBER,MANAGER,OWNER";
+            }
+
+            string roles = "";
+
+            int count = 0;
+
+            if (Members)
+            {
+                roles += "MEMBER";
+                count += 1;
+            }
+
+            if (Managers)
+            {
+                if (count > 0)
+                {
+                    roles += ",";
+                }
+
+                roles += "MANAGER";
+                count += 1;
+            }
+
+            if (Owners)
+            {
+                if (count > 0)
+                {
+                    roles += ",";
+                }
+
+                roles += "OWNER";
+            }
+
+            return roles;
+        }
+
+        /// <summary>
+        /// Gets a list of all members from all groups. Calls for cached list of all groups.
+        /// </summary>
+        private GAMultiGroupMembersList GetAllGroupsAndMembers()
+        {
+            List<Data.Group> allGroups = groups.List().SelectMany(x => x.GroupsValue).ToList();
+
+            GAMultiGroupMembersList multiList = new GAMultiGroupMembersList();
+
+            foreach (Data.Group group in allGroups)
+            {
+                GroupName = GetFullEmailAddress(GroupName, Domain);
+                List<Data.Member> membersList = members.List(GroupName).SelectMany(x => x.MembersValue).ToList();
+
+                multiList.Add(group.Email, membersList);
+
+                //if (MaxResults != 0 &&
+                //    multiList.GetMemberCount() >= MaxResults) { break; }
+            }
+
+            return (multiList);
+        }
+    }
+
+    /// <summary>
+    /// A collection of members sorted by group.
+    /// </summary>
+    public class GAMultiGroupMembersList
+    {
+        public List<GACustomMembersList> membersByGroup;
+        private Dictionary<string, int> groupIndex;
+
+        public GAMultiGroupMembersList()
+        {
+            membersByGroup = new List<GACustomMembersList>();
+            groupIndex = new Dictionary<string, int>();
+        }
+
+        public void Add(string groupName, List<Data.Member> membersList)
+        {
+            GACustomMembersList temp = new GACustomMembersList(groupName, membersList);
+            membersByGroup.Add(temp);
+            groupIndex[groupName] = membersByGroup.Count - 1;
+        }
+
+        public List<Data.Member> GetGroupMembers(string groupName)
+        {
+            if (groupIndex.ContainsKey(groupName))
+            {
+                return membersByGroup[groupIndex[groupName]].MembersList;
+            }
+            else
+            {
+                throw new System.InvalidOperationException(
+                    string.Format("Object does not contain group information for {0}.", groupName));
+            }
+        }
+
+        public List<GACustomMembersListEntry> ToSingleList()
+        {
+            List<GACustomMembersListEntry> singleList = new List<GACustomMembersListEntry>();
+
+            foreach (GACustomMembersList group in membersByGroup)
+            {
+                singleList.AddRange(group.ToCustomList());
+            }
+
+            return singleList;
+        }
+
+        public int GetMemberCount()
+        {
+            int count = 0;
+
+            foreach (GACustomMembersList list in membersByGroup)
+            {
+                count += list.MembersList.Count;
+            }
+
+            return count;
+        }
+    }
+
+    public class GACustomMembersList
+    {
+        public string GroupName;
+        public List<Data.Member> MembersList;
+
+        public GACustomMembersList(string groupName, List<Data.Member> members)
+        {
+            GroupName = groupName;
+            MembersList = members;
+        }
+
+        public List<GACustomMembersListEntry> ToCustomList()
+        {
+            List<GACustomMembersListEntry> customList = new List<GACustomMembersListEntry>();
+
+            foreach (Data.Member member in MembersList)
+            {
+                customList.Add(new GACustomMembersListEntry(
+                    GroupName, member));
+            }
+
+            return (customList);
+        }
+    }
+
+    /// <summary>
+    /// Extends the base Member class to include the group it came from.
+    /// </summary>
+    public class GACustomMembersListEntry : Data.Member
+    {
+        public string Group;
+
+        public GACustomMembersListEntry(string groupEmail, Data.Member baseMember)
+        {
+            Email = baseMember.Email;
+            ETag = baseMember.ETag;
+            Id = baseMember.Id;
+            Kind = baseMember.Kind;
+            Role = baseMember.Role;
+            Type = baseMember.Type;
+            Group = groupEmail;
+        }
+    }
+}
+
+namespace gShell.Cmdlets.Directory.GAGroupMember
+{
+    [Cmdlet(VerbsCommon.Remove, "GAGroupMember",
+          DefaultParameterSetName = "OneGroup",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAGroupMember")]
+    public class RemoveGAGroupMember : DirectoryBase
+    {
+        #region Properties
+
+        [Parameter(Position = 0,
+            ParameterSetName = "OneGroup",
+            Mandatory = true,
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "The email name of the group whose member you want to remove. For a group AllThings@domain.com named 'All The Things', use AllThings")]
+        [ValidateNotNullOrEmpty]
+        public string GroupName { get; set; }
+
+        //Domain position = 1
+
+        [Parameter(Position = 2,
+            Mandatory = true,
+            ParameterSetName = "OneGroup",
+            HelpMessage = "The username of the group member you want to remove.")]
+        public string UserName { get; set; }
+
+        [Parameter(Position = 3,
+            HelpMessage = "Force the action to complete without a prompt to continue.")]
+        public SwitchParameter Force { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            GroupName = GetFullEmailAddress(GroupName, Domain);
+
+            if (ShouldProcess(GroupName, "Remove-GAGroupMember"))
+            {
+                if (Force || ShouldContinue((String.Format("Group member {0} will be removed from the {1}@{2} group.\nContinue?",
+                    UserName, GroupName, Domain)), "Confirm Google Apps Group Member Removal"))
+                {
+                    try
+                    {
+                        UserName = GetFullEmailAddress(UserName, Domain);
+
+                        WriteDebug(string.Format("Attempting to remove member {0} from group {1}...",
+                            UserName, GroupName));
+
+                        members.Delete(GroupName, UserName);
+
+                        WriteVerbose(string.Format("Removal of {0} from {1} completed without error.",
+                            UserName, GroupName));
+                    }
+                    catch (Exception e)
+                    {
+                        WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, GroupName));
+                    }
+                }
+                else
+                {
+                    WriteError(new ErrorRecord(new Exception("Group member removal not confirmed"),
+                        "", ErrorCategory.InvalidData, GroupName));
+                }
+            }
+        }
+    }
+
+}
+
+
+namespace gShell.Cmdlets.Directory.GAGroupMember
+{
+    [Cmdlet(VerbsCommon.Set, "GAGroupMember",
+          DefaultParameterSetName = "OneGroup",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAGroupMember")]
+    public class SetGAGroupMember : DirectoryBase
+    {
+        #region Properties
+
+        public enum GroupMembershipRoles { MEMBER, MANAGER, OWNER };
+
+        [Parameter(Position = 0,
+            ParameterSetName = "OneGroup",
+            Mandatory = true,
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "The email name of the group whose member you want to update. For a group AllThings@domain.com named 'All The Things', use AllThings")]
+        [ValidateNotNullOrEmpty]
+        public string GroupName { get; set; }
+
+        //Domain position = 1
+
+        [Parameter(Position = 2,
+            Mandatory = true,
+            ParameterSetName = "OneGroup",
+            HelpMessage = "The username of the group member you want to update.")]
+        public string UserName { get; set; }
+
+        [Parameter(Position = 3,
+            Mandatory = true,
+            ParameterSetName = "OneGroup",
+            HelpMessage = "The new role of the group member. Values can be MEMBER, MANAGER, or OWNER.")]
+        public GroupMembershipRoles Role { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess(GroupName, "Set-GAGroupMember"))
+            {
+                Data.Member member = new Data.Member
+                {
+                    Role = this.Role.ToString()
+                };
+
+                GroupName = GetFullEmailAddress(GroupName, Domain);
+                UserName = GetFullEmailAddress(UserName, Domain);
+
+                WriteObject(members.Update(member, GroupName, UserName));
+            }
+        }
+    }
+
+}
+
+namespace gShell.Cmdlets.Directory.GAMobileDevice
+{
+    [Cmdlet(VerbsCommon.Get, "GAMobiledevice",
+          DefaultParameterSetName = "One",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAMobiledevice")]
+    public class GetGAMobiledevice : DirectoryBase
+    {
+        #region Properties
+
+        [Parameter(Position = 0,
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string CustomerId { get; set; }
+
+        //Domain position = 1
+
+        [Parameter(Position = 2,
+            Mandatory = true,
+            ParameterSetName = "One",
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string ResourceId { get; set; }
+
+        [Parameter(Position = 3,
+            ParameterSetName = "List")]
+        public SwitchParameter All { get; set; }
+
+        [Parameter(Position = 4,
+            Mandatory = false,
+            ParameterSetName = "List")]
+        public int MaxResults { get; set; }
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess(CustomerId, "Get-GAMobiledevice"))
+            {
+                switch (ParameterSetName)
+                {
+                    case "One":
+                        WriteObject(mobiledevices.Get(CustomerId, ResourceId));
+                        break;
+                    case "List":
+                        WriteObject(mobiledevices.List(CustomerId, new dotNet.Directory.Mobiledevices.MobiledevicesListProperties()
+                        {
+                            TotalResults = MaxResults
+                        }));
+                        break;
+                }
+            }
+        }
+    }
+
+    [Cmdlet(VerbsCommon.Remove, "GAMobiledevice",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAMobiledevice")]
+    public class RemoveGAMobiledevice : DirectoryBase
+    {
+        #region Properties
+
+        [Parameter(Position = 0,
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string CustomerId { get; set; }
+
+        //Domain position = 1
+
+        [Parameter(Position = 2,
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string ResourceId { get; set; }
+
+        [Parameter(Position = 3)]
+        public SwitchParameter Force { get; set; }
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess(CustomerId, "Remove-GAMobiledevice"))
+            {
+                if (Force || ShouldContinue((String.Format("Mobile Device {0} with ResourceId {2} will be removed from the {1} Google Apps domain.\nContinue?",
+                    CustomerId, Domain, ResourceId)), "Confirm Google Apps Mobile Device Removal"))
+                {
+                    try
+                    {
+                        WriteDebug(string.Format("Attempting to remove Mobile Device {0}...",
+                            CustomerId));
+                        mobiledevices.Delete(CustomerId, ResourceId);
+                        WriteVerbose(string.Format("Removal of Mobile Device {0} completed without error.",
+                            CustomerId));
+                    }
+                    catch (Exception e)
+                    {
+                        WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, CustomerId));
+                    }
+                }
+                else
+                {
+                    WriteError(new ErrorRecord(new Exception("Mobile Device deletion not confirmed"),
+                        "", ErrorCategory.InvalidData, CustomerId));
+                }
+            }
+        }
+    }
+
+    [Cmdlet(VerbsLifecycle.Invoke, "GAMobiledevice",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Invoke-GAMobiledevice")]
+    public class SetGAMobiledevice : DirectoryBase
+    {
+        #region Properties
+        [Parameter(Position = 0,
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string CustomerId { get; set; }
+
+        //Domain position = 1
+
+        [Parameter(Position = 2,
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string ResourceId { get; set; }
+
+        [Parameter(Position = 3,
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public Data.MobileDeviceAction Action { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess(CustomerId, "Invoke-GAMobiledevice"))
+            {
+                mobiledevices.Action(Action, CustomerId, ResourceId);
+            }
+        }
+    }
+}
+
+
+namespace gShell.Cmdlets.Directory.GAMobileDevice
+{
+    [Cmdlet(VerbsCommon.Get, "GANotification",
+          DefaultParameterSetName = "One",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GANotification")]
+    public class GetGANotification : DirectoryBase
+    {
+        #region Properties
+
+        [Parameter(Position = 0,
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string Customer { get; set; }
+
+        //Domain position = 1
+
+        [Parameter(Position = 2,
+            Mandatory = true,
+            ParameterSetName = "One",
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string NotificationId { get; set; }
+
+        [Parameter(Position = 3,
+            ParameterSetName = "List")]
+        public SwitchParameter All { get; set; }
+
+        [Parameter(Position = 4,
+            Mandatory = false,
+            ParameterSetName = "List")]
+        public int MaxResults { get; set; }
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess(Customer, "Get-GANotification"))
+            {
+                switch (ParameterSetName)
+                {
+                    case "One":
+                        WriteObject(notifications.Get(Customer, NotificationId));
+                        break;
+                    case "List":
+                        WriteObject(notifications.List(Customer, new dotNet.Directory.Notifications.NotificationsListProperties()
+                        {
+                            TotalResults = MaxResults
+                        }));
+                        break;
+                }
+            }
+        }
+    }
+
+    [Cmdlet(VerbsCommon.Remove, "GANotification",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GANotification")]
+    public class RemoveGANotification : DirectoryBase
+    {
+        #region Properties
+
+        [Parameter(Position = 0,
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string Customer { get; set; }
+
+        //Domain position = 1
+
+        [Parameter(Position = 2,
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string NotificationId { get; set; }
+
+        [Parameter(Position = 3)]
+        public SwitchParameter Force { get; set; }
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess(Customer, "Remove-GANotification"))
+            {
+                if (Force || ShouldContinue((String.Format("Notification {0} with NotificationId {2} will be removed from the {1} Google Apps domain.\nContinue?",
+                    Customer, Domain, NotificationId)), "Confirm Google Apps Notification Removal"))
+                {
+                    try
+                    {
+                        WriteDebug(string.Format("Attempting to remove Notification {0}...",
+                            Customer));
+                        notifications.Delete(Customer, NotificationId);
+                        WriteVerbose(string.Format("Removal of Notification {0} completed without error.",
+                            Customer));
+                    }
+                    catch (Exception e)
+                    {
+                        WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, Customer));
+                    }
+                }
+                else
+                {
+                    WriteError(new ErrorRecord(new Exception("Notification deletion not confirmed"),
+                        "", ErrorCategory.InvalidData, Customer));
+                }
+            }
+        }
+    }
+
+    [Cmdlet(VerbsCommon.Set, "GANotification",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GANotification")]
+    public class SetGANotification : DirectoryBase
+    {
+        #region Properties
+        [Parameter(Position = 0,
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string Customer { get; set; }
+
+        //Domain position = 1
+
+        [Parameter(Position = 2,
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string NotificationId { get; set; }
+
+        [Parameter(Position = 3,
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public bool IsUnread { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess(Customer, "Set-GANotification"))
+            {
+                Data.Notification body = new Data.Notification();
+
+                body.IsUnread = IsUnread;
+
+                WriteObject(notifications.Patch(body, Customer, NotificationId));
+            }
+        }
+    }
+}
+
+
+
+namespace gShell.Cmdlets.Directory.GAOrgUnit
+{
+    [Cmdlet(VerbsCommon.Get, "GAOrgUnit",
+          DefaultParameterSetName = "One",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAOrgUnit")]
+    public class GetGAOrgUnit : DirectoryBase
+    {
+        #region Properties
+
+        [Parameter(Position = 0,
+            ParameterSetName = "One",
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string CustomerId { get; set; }
+
+        //Domain position = 1
+
+        [Parameter(Position = 2,
+            ParameterSetName = "One",
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true)]
+        [Parameter(Position = 2,
+            ParameterSetName = "List",
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true)]
+        public string OrgUnitPath { get; set; }
+
+        [Parameter(Position = 3,
+            ParameterSetName = "List")]
+        public SwitchParameter All { get; set; }
+
+        [Parameter(Position = 4,
+            Mandatory = false,
+            ParameterSetName = "List",
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public Google.Apis.admin.Directory.directory_v1.OrgunitsResource.ListRequest.TypeEnum Type { get; set; }
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess(CustomerId, "Get-GAOrgUnit"))
+            {
+                if (ParameterSetName == "List")
+                {
+                    WriteObject(orgunits.List(CustomerId, new dotNet.Directory.Orgunits.OrgunitsListProperties()
+                    {
+                        OrgUnitPath = OrgUnitPath,
+                        Type = Type
+                    }));
+                }
+                else
+                {
+                    WriteObject(orgunits.Get(CustomerId, OrgUnitPath));
+                }
+            }
+        }
+    }
+
+    [Cmdlet(VerbsCommon.Remove, "GAOrgUnit",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAOrgUnit")]
+    public class RemoveGAOrgUnit : DirectoryBase
+    {
+        #region Properties
+
+        [Parameter(Position = 0,
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string CustomerId { get; set; }
+
+        //Domain position = 1
+
+        [Parameter(Position = 2,
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string OrgUnitPath { get; set; }
+
+        [Parameter(Position = 3)]
+        public SwitchParameter Force { get; set; }
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess(CustomerId, "Remove-GAOrgUnit"))
+            {
+                if (Force || ShouldContinue((String.Format("OrgUnit {0} for CustomerId {2} will be removed from the {1} Google Apps domain.\nContinue?",
+                    OrgUnitPath, Domain, CustomerId)), "Confirm Google Apps OrgUnit Removal"))
+                {
+                    try
+                    {
+                        WriteDebug(string.Format("Attempting to remove OrgUnit {0}...",
+                            CustomerId));
+                        orgunits.Delete(CustomerId, OrgUnitPath);
+                        WriteVerbose(string.Format("Removal of OrgUnit {0} completed without error.",
+                            CustomerId));
+                    }
+                    catch (Exception e)
+                    {
+                        WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, CustomerId));
+                    }
+                }
+                else
+                {
+                    WriteError(new ErrorRecord(new Exception("OrgUnit deletion not confirmed"),
+                        "", ErrorCategory.InvalidData, CustomerId));
+                }
+            }
+        }
+    }
+
+    [Cmdlet(VerbsCommon.Set, "GAOrgUnit",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAOrgUnit")]
+    public class SetGAOrgUnit : DirectoryBase
+    {
+        #region Properties
+        [Parameter(Position = 0,
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string CustomerId { get; set; }
+
+        //Domain position = 1
+
+        [Parameter(Position = 2,
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string OrgUnitPath { get; set; }
+
+        [Parameter(Position = 3,
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string Name { get; set; }
+
+        [Parameter(Position = 4,
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string ParentOrgUnitPath { get; set; }
+
+        [Parameter(Position = 5,
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public bool? BlockInheritance { get; set; }
+
+        [Parameter(Position = 6,
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string Description { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess(CustomerId, "Set-GAOrgUnit"))
+            {
+                Data.OrgUnit body = new Data.OrgUnit();
+
+                if (!string.IsNullOrWhiteSpace(Name))
+                {
+                    body.Name = Name;
+                }
+
+                if (!string.IsNullOrWhiteSpace(ParentOrgUnitPath))
+                {
+                    body.ParentOrgUnitPath = ParentOrgUnitPath;
+                }
+
+                if (BlockInheritance.HasValue)
+                {
+                    body.BlockInheritance = BlockInheritance.Value;
+                }
+
+                if (!string.IsNullOrWhiteSpace(Description))
+                {
+                    body.Description = Description;
+                }
+
+                WriteObject(orgunits.Patch(body, CustomerId, OrgUnitPath));
+            }
+        }
+    }
+
+    [Cmdlet(VerbsCommon.New, "GAOrgUnit",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/New-GAOrgUnit")]
+    public class NewGAOrgUnit : DirectoryBase
+    {
+        #region Properties
+        [Parameter(Position = 0,
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string CustomerId { get; set; }
+
+        //Domain position = 1
+
+        [Parameter(Position = 2,
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string Name { get; set; }
+
+        [Parameter(Position = 3,
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string ParentOrgUnitPath { get; set; }
+
+        [Parameter(Position = 4,
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public bool BlockInheritance { get; set; }
+
+        [Parameter(Position = 5,
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string Description { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess(CustomerId, "Add-GAOrgUnit"))
+            {
+                Data.OrgUnit body = new Data.OrgUnit()
+                {
+                    Name = this.Name,
+                    ParentOrgUnitPath = this.ParentOrgUnitPath,
+                    BlockInheritance = this.BlockInheritance,
+                    Description = this.Description
+                };
+
+                WriteObject(orgunits.Insert(body, CustomerId));
+            }
+        }
+    }
+}
+
+
+namespace gShell.Cmdlets.Directory.GASchema
+{
+    [Cmdlet(VerbsCommon.Get, "GASchema",
+          DefaultParameterSetName = "One",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GASchema")]
+    public class GetGASchema : DirectoryBase
+    {
+        #region Properties
+
+        [Parameter(Position = 0,
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string CustomerId { get; set; }
+
+        //Domain position = 1
+
+        [Parameter(Position = 2,
+            Mandatory = true,
+            ParameterSetName = "One",
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string SchemaKey { get; set; }
+
+        [Parameter(Position = 3,
+            ParameterSetName = "List")]
+        public SwitchParameter All { get; set; }
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess(CustomerId, "Get-GASchema"))
+            {
+                switch (ParameterSetName)
+                {
+                    case "One":
+                        WriteObject((SchemaFieldCollection)schemas.Get(CustomerId, SchemaKey));
+                        break;
+                    case "List":
+                        WriteObject((SchemaFieldCollection)schemas.List(CustomerId).SchemasValue);
+                        break;
+                }
+            }
+        }
+    }
+
+    [Cmdlet(VerbsCommon.Remove, "GASchema",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GASchema")]
+    public class RemoveGASchema : DirectoryBase
+    {
+        #region Properties
+
+        [Parameter(Position = 0,
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string CustomerId { get; set; }
+
+        //Domain position = 1
+
+        [Parameter(Position = 2,
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string SchemaKey { get; set; }
+
+        [Parameter(Position = 2)]
+        public SwitchParameter Force { get; set; }
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess(CustomerId, "Remove-GASchema"))
+            {
+                if (Force || ShouldContinue((String.Format("Schema Key {0} for CustomerId {2} will be removed from the {1} Google Apps domain.\nContinue?",
+                    SchemaKey, Domain, CustomerId)), "Confirm Google Apps Schema Removal"))
+                {
+                    try
+                    {
+                        WriteDebug(string.Format("Attempting to remove Schema {0}...",
+                            CustomerId));
+                        schemas.Delete(CustomerId, SchemaKey);
+                        WriteVerbose(string.Format("Removal of Schema {0} completed without error.",
+                            CustomerId));
+                    }
+                    catch (Exception e)
+                    {
+                        WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, CustomerId));
+                    }
+                }
+                else
+                {
+                    WriteError(new ErrorRecord(new Exception("Schema deletion not confirmed"),
+                        "", ErrorCategory.InvalidData, CustomerId));
+                }
+            }
+        }
+    }
+
+    [Cmdlet(VerbsCommon.Set, "GASchema",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GASchema")]
+    public class SetGASchema : DirectoryBase
+    {
+        #region Properties
+        [Parameter(Position = 0,
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string CustomerId { get; set; }
+
+        //Domain position = 1
+
+        [Parameter(Position = 2,
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string SchemaKey { get; set; }
+
+        [Parameter(Position = 3,
+            Mandatory = true,
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public SchemaFieldCollection FieldCollection { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess(CustomerId, "Set-GASchema"))
+            {
+                WriteObject(schemas.Patch((Data.Schema)FieldCollection, CustomerId, SchemaKey));
+            }
+        }
+    }
+
+    [Cmdlet(VerbsCommon.Add, "GASchema",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Add-GASchema")]
+    public class NewGASchema : DirectoryBase
+    {
+        #region Properties
+        [Parameter(Position = 0,
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string CustomerId { get; set; }
+
+        //Domain position = 1
+
+        [Parameter(Position = 2,
+            Mandatory = true,
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public SchemaFieldCollection FieldCollection { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess(CustomerId, "Add-GASchema"))
+            {
+                WriteObject(schemas.Insert((Data.Schema)FieldCollection, CustomerId));
+            }
+        }
+    }
+
+    [Cmdlet(VerbsCommon.New, "GASchemaField",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/New-GASchemaField",
+          DefaultParameterSetName = "New")]
+    public class NewGASchemaField : PSCmdlet
+    {
+        #region Properties
+        [Parameter(Position = 0,
+            ParameterSetName = "New",
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string FieldName { get; set; }
+
+        [Parameter(Position = 1,
+            ParameterSetName = "New",
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public SchemaField.SchemaFieldType FieldType { get; set; }
+
+        [Parameter(Position = 2,
+            ParameterSetName = "New",
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public bool? Indexed { get; set; }
+
+        [Parameter(Position = 3,
+            ParameterSetName = "New",
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public bool? MultiValued { get; set; }
+
+        [Parameter(Position = 4,
+            ParameterSetName = "New",
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public double? MinValue { get; set; }
+
+        [Parameter(Position = 5,
+            ParameterSetName = "New",
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public double? MaxValue { get; set; }
+
+        [Parameter(Position = 6,
+            ParameterSetName = "New",
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public SchemaField.SchemaFieldReadAccessType? ReadAccessType { get; set; }
+
+        [Parameter(Position = 0,
+            ParameterSetName = "Google",
+            Mandatory = true,
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public Data.SchemaFieldSpec SchemaFieldSpec { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            switch (ParameterSetName)
+            {
+                case "New":
+
+                    SchemaField field = new SchemaField(FieldName, FieldType)
+                    {
+                        minValue = MinValue,
+                        maxValue = MaxValue,
+                        indexed = Indexed,
+                        multiValued = MultiValued,
+                        readAccessType = ReadAccessType
+                    };
+
+                    WriteObject(field);
+                    break;
+
+                case "Google":
+                    WriteObject((SchemaField)SchemaFieldSpec);
+                    break;
+            }
+
+        }
+    }
+
+    [Cmdlet(VerbsCommon.New, "GASchemaFieldCollection",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/New-GASchemaFieldCollection",
+          DefaultParameterSetName = "New")]
+    public class NewGASchemaFieldCollection : PSCmdlet
+    {
+        #region Properties
+        [Parameter(Position = 0,
+            ParameterSetName = "New",
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string SchemaName { get; set; }
+
+        [Parameter(Position = 1,
+            ParameterSetName = "New",
+            Mandatory = false,
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public SchemaField Field { get; set; }
+
+        [Parameter(Position = 0,
+            ParameterSetName = "Google",
+            Mandatory = false,
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public Data.Schema Schema { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (Field != null)
+            {
+                WriteObject(new SchemaFieldCollection(SchemaName, Field));
+            }
+            else if (Schema != null)
+            {
+                WriteObject((SchemaFieldCollection)Schema);
+            }
+            else
+            {
+                WriteObject(new SchemaFieldCollection(SchemaName));
+            }
+        }
+    }
+
+    /// <summary>
+    /// A custom wrapper for a List<SchemaField> type.
+    /// </summary>
+    public class SchemaFieldCollection
+    {
+        #region Properties
+        public string schemaName;
+
+        public List<SchemaField> fields { get { return _fields; } }
+
+        private List<SchemaField> _fields = new List<SchemaField>();
+        #endregion
+
+        #region Getters
+        public List<SchemaField> GetFields()
+        {
+            return _fields;
+        }
+        #endregion
+
+        #region Constructors
+        public SchemaFieldCollection() { }
+
+        public SchemaFieldCollection(string SchemaName)
+        {
+            schemaName = SchemaName;
+        }
+
+        public SchemaFieldCollection(string SchemaName, SchemaField field)
+        {
+            schemaName = SchemaName;
+            Add(field);
+        }
+        #endregion
+
+        #region Add
+        public void Add(SchemaField field)
+        {
+            _fields.Add(field);
+        }
+        #endregion
+
+        #region AddRange
+        public void AddRange(IEnumerable<SchemaField> fList)
+        {
+            foreach (SchemaField field in fList)
+            {
+                _fields.Add(field);
+            }
+        }
+        #endregion
+
+        #region OperatorPlusOverload
+        public static SchemaFieldCollection operator +(SchemaFieldCollection coll1, SchemaFieldCollection coll2)
+        {
+            coll1.AddRange(coll2.fields);
+
+            return coll1;
+        }
+
+        public static SchemaFieldCollection operator +(SchemaFieldCollection coll1, SchemaField f2)
+        {
+            coll1.Add(f2);
+
+            return coll1;
+        }
+        #endregion
+
+        #region RemoveAt
+        public void RemoveAt(int index)
+        {
+            if (index >= 0)
+            {
+                if (_fields.Count > index)
+                {
+                    _fields.RemoveAt(index);
+                }
+            }
+        }
+        #endregion
+
+        #region Clear
+        public void Clear()
+        {
+            _fields.Clear();
+        }
+        #endregion
+
+        #region Explicit Conversion
+
+        public static explicit operator SchemaFieldCollection(Data.Schema schema)
+        {
+            SchemaFieldCollection coll = new SchemaFieldCollection();
+
+            coll.schemaName = schema.SchemaName;
+
+            foreach (Data.SchemaFieldSpec spec in schema.Fields)
+            {
+                coll.Add((SchemaField)spec);
+            }
+
+            return coll;
+        }
+
+        public static explicit operator Data.Schema(SchemaFieldCollection coll)
+        {
+            Data.Schema schema = new Data.Schema()
+            {
+                Fields = new List<Data.SchemaFieldSpec>()
+            };
+
+            schema.SchemaName = coll.schemaName;
+
+            foreach (SchemaField field in coll.fields)
+            {
+                schema.Fields.Add((Data.SchemaFieldSpec)field);
+            }
+
+            return schema;
+        }
+        #endregion
+    }
+
+    /// <summary>
+    /// A friendly version of Data.Schema, allowing for use of enums to restrict options.
+    /// </summary>
+    public class SchemaField
+    {
+        public enum SchemaFieldType
+        {
+            STRING, INT64, BOOL, DOUBLE, EMAIL, PHONE, DATE
+        }
+
+        public enum SchemaFieldReadAccessType
+        {
+            ALL_DOMAIN_USERS, ADMINS_AND_SELF
+        }
+
+        #region Properties
+        public string fieldName;
+        public SchemaFieldType fieldType;
+        public bool? indexed;
+        public bool? multiValued;
+        public double? minValue;
+        public double? maxValue;
+        public SchemaFieldReadAccessType? readAccessType;
+        #endregion
+
+        public SchemaField(string FieldName, SchemaFieldType FieldType)
+        {
+            fieldName = FieldName;
+            fieldType = FieldType;
+        }
+
+        #region Explicit Conversion
+        public static explicit operator SchemaField(Data.SchemaFieldSpec spec)
+        {
+            SchemaFieldType type = (SchemaFieldType)Enum.Parse(typeof(SchemaFieldType), (string)spec.FieldType, false);
+
+            SchemaField field = new SchemaField(spec.FieldName, type);
+
+            if (spec.Indexed.HasValue)
+            {
+                field.indexed = spec.Indexed.Value;
+            }
+
+            if (spec.MultiValued.HasValue)
+            {
+                field.multiValued = spec.MultiValued.Value;
+            }
+
+            if (spec.NumericIndexingSpec != null &&
+                spec.NumericIndexingSpec.MinValue.HasValue &&
+                spec.NumericIndexingSpec.MaxValue.HasValue)
+            {
+                if (spec.NumericIndexingSpec.MinValue.HasValue)
+                {
+                    field.minValue = spec.NumericIndexingSpec.MinValue.Value;
+                }
+
+                if (spec.NumericIndexingSpec.MaxValue.HasValue)
+                {
+                    field.maxValue = spec.NumericIndexingSpec.MaxValue.Value;
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(spec.ReadAccessType))
+            {
+                field.readAccessType = (SchemaFieldReadAccessType)Enum.Parse(typeof(SchemaFieldReadAccessType),
+                        spec.ReadAccessType, false);
+            }
+
+            return field;
+        }
+
+        public static explicit operator Data.SchemaFieldSpec(SchemaField field)
+        {
+            Data.SchemaFieldSpec spec = new Data.SchemaFieldSpec()
+            {
+                FieldName = field.fieldName,
+                FieldType = field.fieldType.ToString(),
+                Indexed = field.indexed,
+                MultiValued = field.multiValued,
+                ReadAccessType = field.readAccessType.ToString()
+            };
+
+            spec.NumericIndexingSpec = new Data.SchemaFieldSpec.NumericIndexingSpecData()
+            {
+                MinValue = field.minValue,
+                MaxValue = field.maxValue
+            };
+
+            return spec;
+        }
+        #endregion
+    }
+
+
+}
+
+
+namespace gShell.Cmdlets.Directory.GAToken
+{
+    [Cmdlet(VerbsCommon.Get, "GAToken",
+          DefaultParameterSetName = "One",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAToken")]
+    public class GetGAToken : DirectoryBase
+    {
+        #region Properties
+
+        [Parameter(Position = 0,
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string UserKey { get; set; }
+
+        //Domain position = 1
+
+        [Parameter(Position = 2,
+            Mandatory = true,
+            ParameterSetName = "One",
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string ClientId { get; set; }
+
+        [Parameter(Position = 3,
+            ParameterSetName = "List")]
+        public SwitchParameter All { get; set; }
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            UserKey = GetFullEmailAddress(UserKey, Domain);
+
+            if (ShouldProcess(UserKey, "Get-GAToken"))
+            {
+                switch (ParameterSetName)
+                {
+                    case "One":
+                        WriteObject(tokens.Get(UserKey, ClientId));
+                        break;
+                    case "List":
+                        WriteObject(tokens.List(UserKey));
+                        break;
+                }
+            }
+        }
+    }
+
+    [Cmdlet(VerbsCommon.Remove, "GAToken",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAToken")]
+    public class RemoveGAToken : DirectoryBase
+    {
+        #region Properties
+
+        [Parameter(Position = 0,
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string ClientId { get; set; }
+
+        //Domain position = 1
+
+        [Parameter(Position = 2,
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string UserKey { get; set; }
+
+        [Parameter(Position = 3)]
+        public SwitchParameter Force { get; set; }
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            UserKey = GetFullEmailAddress(UserKey, Domain);
+
+            if (ShouldProcess(ClientId, "Remove-GAToken"))
+            {
+                if (Force || ShouldContinue((String.Format("Token for application with Client ID of {0} will be removed for user {2} from the {1} Google Apps domain.\nContinue?",
+                    ClientId, Domain, UserKey)), "Confirm Google Apps Token Removal"))
+                {
+                    try
+                    {
+                        WriteDebug(string.Format("Attempting to remove Token for application {0}...",
+                            ClientId));
+                        tokens.Delete(UserKey, ClientId);
+                        WriteVerbose(string.Format("Removal of Token for application {0} completed without error.",
+                            ClientId));
+                    }
+                    catch (Exception e)
+                    {
+                        WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, ClientId));
+                    }
+                }
+                else
+                {
+                    WriteError(new ErrorRecord(new Exception("Token deletion not confirmed"),
+                        "", ErrorCategory.InvalidData, ClientId));
+                }
+            }
+        }
+    }
+}
+
+
+namespace gShell.Cmdlets.Directory.GAUser
+{
+    [Cmdlet(VerbsCommon.Get, "GAUser",
+          DefaultParameterSetName = "OneUser",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAUser")]
+    public class GetGAUser : DirectoryBase
+    {
+        #region Properties
+
+        [Parameter(Position = 0,
+            ParameterSetName = "OneUser",
+            Mandatory = true,
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "The username of the user you would like to retrieve.")]
+        [ValidateNotNullOrEmpty]
+        public string UserName { get; set; }
+
+        //Domain position = 1
+
+        [Parameter(Position = 2,
+            ParameterSetName = "AllUsers",
+            HelpMessage = "Retrieve all users in the domain.")]
+        public SwitchParameter All { get; set; }
+
+        [Parameter(Position = 3,
+            Mandatory = false,
+            ParameterSetName = "AllUsers")]
+        public int MaxResults { get; set; }
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            switch (ParameterSetName)
+            {
+                case "OneUser":
+
+                    UserName = GetFullEmailAddress(UserName, Domain);
+
+                    if (ShouldProcess(UserName, "Get-GAUser"))
+                    {
+                        WriteObject(new GShellUserObject(users.Get(UserName)));
+                    }
+                    break;
+
+                case "AllUsers":
+                    if (ShouldProcess("All Users", "Get-GAUser"))
+                    {
+                        //Make sure to include the domain here because List could use things other than domain (customer, etc)
+                        List<Data.User> result = users.List(new dotNet.Directory.Users.UsersListProperties()
+                        {
+                            TotalResults = MaxResults,
+                            Domain = Domain
+                        }).SelectMany(x => x.UsersValue).ToList();
+
+                        WriteObject(GShellUserObject.ConvertList(result));
+                    }
+                    break;
+            }
+        }
+    }
+}
+
+
+namespace gShell.Cmdlets.Directory.GAUser
+{
+    [Cmdlet(VerbsCommon.New, "GAUser",
+          DefaultParameterSetName = "PasswordGenerated",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/New-GAUser")]
+    public class NewGAUser : DirectoryBase
+    {
+        #region Properties
+
+        [Parameter(Position = 0,
+            Mandatory = true,
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Help Text")]
+        [ValidateNotNullOrEmpty]
+        public string UserName { get; set; }
+
+        //Domain position = 1
+
+        [Parameter(Position = 2,
+            Mandatory = true)]
+        public string GivenName { get; set; }
+
+        [Parameter(Position = 3,
+            Mandatory = true)]
+        public string FamilyName { get; set; }
+
+        [Parameter(Position = 4,
+            ParameterSetName = "PasswordProvided")]
+        public string Password { get; set; }
+
+        [Parameter(Position = 5,
+            ParameterSetName = "PasswordGenerated")]
+        public int? PasswordLength { get; set; }
+
+        [Parameter(Position = 6,
+            ParameterSetName = "PasswordGenerated")]
+        public SwitchParameter ShowNewPassword { get; set; }
+
+        [Parameter(Position = 7)]
+        public bool? IncludeInDirectory { get; set; }
+
+        [Parameter(Position = 8)]
+        public bool? Suspended { get; set; }
+
+        [Parameter(Position = 9)]
+        public bool? IpWhiteListed { get; set; }
+
+        [Parameter(Position = 10)]
+        public bool? ChangePasswordAtNextLogin { get; set; }
+
+        [Parameter(
+            HelpMessage = "The full path of the parent organization associated with the user. If the parent organization is the top-level, it is represented as a forward slash (/).")]
+        public string OrgUnitPath { get; set; }
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess(UserName, "New-GAUser"))
+            {
+                CreateUser();
+            }
+        }
+
+        private void CreateUser()
+        {
+            Data.User userAcct = new Data.User();
+
+            userAcct.Name = new Data.UserName();
+
+            userAcct.Name.GivenName = GivenName;
+
+            userAcct.Name.FamilyName = FamilyName;
+
+            userAcct.PrimaryEmail = GetFullEmailAddress(UserName, Domain);
+
+            switch (ParameterSetName)
+            {
+                case "PasswordProvided":
+                    userAcct.HashFunction = "MD5";
+                    userAcct.Password = GetMd5Hash(Password);
+                    break;
+
+                case "PasswordGenerated":
+                    userAcct.HashFunction = "MD5";
+                    userAcct.Password = GeneratePassword(PasswordLength, ShowNewPassword);
+                    break;
+            }
+
+            if (IncludeInDirectory.HasValue)
+            {
+                userAcct.IncludeInGlobalAddressList = IncludeInDirectory;
+            }
+
+            if (Suspended.HasValue)
+            {
+                userAcct.Suspended = Suspended;
+            }
+
+            if (IpWhiteListed.HasValue)
+            {
+                userAcct.IpWhitelisted = IpWhiteListed;
+            }
+
+            if (ChangePasswordAtNextLogin.HasValue)
+            {
+                userAcct.ChangePasswordAtNextLogin = ChangePasswordAtNextLogin.Value;
+            }
+
+            if (!string.IsNullOrWhiteSpace(OrgUnitPath))
+            {
+                userAcct.OrgUnitPath = OrgUnitPath;
+            }
+
+            users.Insert(userAcct);
+        }
+    }
+}
+
+
+namespace gShell.Cmdlets.Directory.GAUser
+{
+    [Cmdlet(VerbsCommon.Remove, "GAUser",
+        DefaultParameterSetName = "UserName",
+        SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAUser")]
+    public class RemoveGAUser : DirectoryBase
+    {
+        #region Properties
+
+        [Parameter(Position = 0,
+            ParameterSetName = "UserName",
+            Mandatory = true,
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Help Text")]
+        [ValidateNotNullOrEmpty]
+        public string UserName { get; set; }
+
+        //Domain position = 1
+
+        [Parameter(Position = 0,
+            ParameterSetName = "GAUserObject",
+            Mandatory = true,
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "A Google Apps User object")]
+        [ValidateNotNullOrEmpty]
+        public Data.User GAUserObject { get; set; }
+
+        [Parameter(Position = 2)]
+        public SwitchParameter Force { get; set; }
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess(UserName, "Remove-GAUser"))
+            {
+                if (Force || ShouldContinue((String.Format("User {0} will be removed from the {1} Google Apps domain.\nContinue?",
+                    UserName, Domain)), "Confirm Google Apps User Removal"))
+                {
+                    try
+                    {
+                        WriteDebug(string.Format("Attempting to remove user {0}@{1}...",
+                            UserName, Domain));
+                        RemoveUser();
+                        WriteVerbose(string.Format("Removal of {0}@{1} completed without error.",
+                            UserName, Domain));
+                    }
+                    catch (Exception e)
+                    {
+                        WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, UserName));
+                    }
+                }
+                else
+                {
+                    WriteError(new ErrorRecord(new Exception("Account deletion not confirmed"),
+                        "", ErrorCategory.InvalidData, UserName));
+                }
+            }
+        }
+
+        private void RemoveUser()
+        {
+            string fullEmail = "";
+            switch (ParameterSetName)
+            {
+                case "UserName":
+                    fullEmail = UserName;
+                    break;
+
+                case "GAUserObject":
+                    fullEmail = GAUserObject.PrimaryEmail;
+                    break;
+            }
+
+            users.Delete(GetFullEmailAddress(fullEmail, Domain));
+        }
+    }
+}
+
+
+namespace gShell.Cmdlets.Directory.GAUser
+{
+    [Cmdlet("Restore", "GAUser",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Restore-GAUser")]
+    public class RestoreGAUser : DirectoryBase
+    {
+        #region Properties
+
+        [Parameter(Position = 0,
+            Mandatory = true,
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "The unique UserID")]
+        [ValidateNotNullOrEmpty]
+        public string UserID { get; set; }
+
+        [Parameter(Position = 3,
+            Mandatory = false,
+            HelpMessage = "The OrgUnitPath")]
+        public string OrgUnitPath { get; set; }
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess(UserID, "Restore-GAUser"))
+            {
+                RestoreUser();
+            }
+        }
+
+        private void RestoreUser()
+        {
+            Google.Apis.admin.Directory.directory_v1.Data.UserUndelete undelete = new Google.Apis.admin.Directory.directory_v1.Data.UserUndelete();
+
+            if (string.IsNullOrWhiteSpace(OrgUnitPath))
+            {
+                undelete.OrgUnitPath = @"/";
+            }
+            else
+            {
+                undelete.OrgUnitPath = OrgUnitPath;
+            }
+
+            users.Undelete(undelete, UserID);
+        }
+    }
+}
+
+
+namespace gShell.Cmdlets.Directory.GAUser
+{
+    [Cmdlet(VerbsCommon.Set, "GAUser",
+          DefaultParameterSetName = "NoPasswordProvided",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAUser")]
+    public class SetGAUser : DirectoryBase
+    {
+        #region Properties
+
+        [Parameter(Position = 0,
+            Mandatory = true,
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "The username of the user to update.")]
+        [ValidateNotNullOrEmpty]
+        public string UserName { get; set; }
+
+        //Domain position = 1
+
+        [Parameter(Position = 2,
+            HelpMessage = "The user's first name. Required when creating a user account.")]
+        public string NewGivenName { get; set; }
+
+        [Parameter(Position = 3,
+            HelpMessage = "The user's last name. Required when creating a user account.")]
+        public string NewFamilyName { get; set; }
+
+        [Parameter(Position = 4,
+            HelpMessage = "The user's username, post-update.")]
+        public string NewUserName { get; set; }
+
+        [Parameter(Position = 5,
+            HelpMessage = "Indicates if the user is suspended.")]
+        public bool? Suspended { get; set; }
+
+        [Parameter(Position = 6,
+            HelpMessage = "Stores the password for the user account. A password can contain any combination of ASCII characters. A minimum of 8 characters is required. The maximum length is 100 characters.",
+            ParameterSetName = "PasswordProvided")]
+        public string NewPassword { get; set; }
+
+        [Parameter(Position = 7,
+            HelpMessage = "Indicates the length of the password desired if it is to be automatically generated.",
+            ParameterSetName = "PasswordGenerated")]
+        public int? PasswordLength { get; set; }
+
+        [Parameter(Position = 8,
+            HelpMessage = "Indicates if the new password should be shown after it is to be automatically generated.",
+            ParameterSetName = "PasswordGenerated")]
+        public SwitchParameter ShowNewPassword { get; set; }
+
+        [Parameter(Position = 9,
+            HelpMessage = "Indicates if the user is forced to change their password at next login.")]
+        public bool? ChangePasswordAtNextLogin { get; set; }
+
+        [Parameter(
+            HelpMessage = "The full path of the parent organization associated with the user. If the parent organization is the top-level, it is represented as a forward slash (/).")]
+        public string OrgUnitPath { get; set; }
+
+        [Parameter(
+            HelpMessage = "A supplied property collection to update the user with. Create with New/Get-GAUserPropertyCollection and update with New/Remove-GauserProperty")]
+        public GAUserPropertyCollection PropertyCollection { get; set; }
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            UserName = GetFullEmailAddress(UserName, Domain);
+
+            if (ShouldProcess(UserName, "Set-GAUser"))
+            {
+                UpdateUser();
+            }
+        }
+
+        private void UpdateUser()
+        {
+            Google.Apis.admin.Directory.directory_v1.Data.User userAcct = new Google.Apis.admin.Directory.directory_v1.Data.User();
+
+            if (String.IsNullOrWhiteSpace(NewGivenName) &&
+                String.IsNullOrWhiteSpace(NewFamilyName) &&
+                String.IsNullOrWhiteSpace(NewUserName) &&
+                String.IsNullOrWhiteSpace(NewPassword) &&
+                !PasswordLength.HasValue &&
+                ShowNewPassword == false &&
+                !Suspended.HasValue &&
+                !ChangePasswordAtNextLogin.HasValue &&
+                null == PropertyCollection)
+            {
+                WriteError(new ErrorRecord(new Exception(
+                    string.Format("No data was entered to update {0}.", UserName)),
+                        "", ErrorCategory.InvalidData, UserName));
+            }
+
+            if (Suspended.HasValue)
+            {
+                userAcct.Suspended = Suspended.Value;
+            }
+
+            if (!String.IsNullOrWhiteSpace(NewGivenName))
+            {
+                if (userAcct.Name == null)
+                {
+                    userAcct.Name = new Google.Apis.admin.Directory.directory_v1.Data.UserName();
+                }
+                userAcct.Name.GivenName = NewGivenName;
+            }
+
+            if (!String.IsNullOrWhiteSpace(NewFamilyName))
+            {
+                if (userAcct.Name == null)
+                {
+                    userAcct.Name = new Google.Apis.admin.Directory.directory_v1.Data.UserName();
+                }
+                userAcct.Name.FamilyName = NewFamilyName;
+            }
+
+            if (!String.IsNullOrWhiteSpace(NewUserName))
+            {
+                NewUserName = GetFullEmailAddress(NewUserName, Domain);
+
+                userAcct.PrimaryEmail = NewUserName;
+            }
+
+            switch (ParameterSetName)
+            {
+                case "PasswordProvided":
+                    userAcct.HashFunction = "MD5";
+                    userAcct.Password = GetMd5Hash(NewPassword);
+                    break;
+
+                case "PasswordGenerated":
+                    userAcct.HashFunction = "MD5";
+                    userAcct.Password = GeneratePassword(PasswordLength, ShowNewPassword);
+                    break;
+            }
+
+            if (ChangePasswordAtNextLogin.HasValue)
+            {
+                userAcct.ChangePasswordAtNextLogin = ChangePasswordAtNextLogin.Value;
+            }
+
+            if (!string.IsNullOrWhiteSpace(OrgUnitPath))
+            {
+                userAcct.OrgUnitPath = OrgUnitPath;
+            }
+
+            if (null != PropertyCollection)
+            {
+                //here we don't check if it's an empty list since that may be on purpose - we check it that list had been updated.
+                if (PropertyCollection.IsUpdated(GAUserPropertyType.address))
+                {
+                    userAcct.Addresses = PropertyCollection.GetAddresses();
+                }
+
+                if (PropertyCollection.IsUpdated(GAUserPropertyType.email))
+                {
+                    userAcct.Emails = PropertyCollection.GetEmails();
+                }
+
+                if (PropertyCollection.IsUpdated(GAUserPropertyType.externalid))
+                {
+                    userAcct.ExternalIds = PropertyCollection.GetExternalIds();
+                }
+
+                if (PropertyCollection.IsUpdated(GAUserPropertyType.im))
+                {
+                    userAcct.Ims = PropertyCollection.GetIms();
+                }
+
+                if (PropertyCollection.IsUpdated(GAUserPropertyType.organization))
+                {
+                    userAcct.Organizations = PropertyCollection.GetOrganizations();
+                }
+
+                if (PropertyCollection.IsUpdated(GAUserPropertyType.phone))
+                {
+                    userAcct.Phones = PropertyCollection.GetPhones();
+                }
+
+                if (PropertyCollection.IsUpdated(GAUserPropertyType.relation))
+                {
+                    userAcct.Relations = PropertyCollection.GetRelations();
+                }
+            }
+
+            users.Patch(userAcct, UserName);
+        }
+    }
+}
+
+
+namespace gShell.Cmdlets.Directory.GAUserAlias
+{
+    [Cmdlet(VerbsCommon.Get, "GAUserAlias",
+          DefaultParameterSetName = "OneUser",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAUserAlias")]
+    public class GetGAUserAlias : DirectoryBase
+    {
+        #region Properties
+
+        [Parameter(Position = 0,
+            ParameterSetName = "OneUser",
+            Mandatory = true,
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Help Text")]
+        [ValidateNotNullOrEmpty]
+        public string UserName { get; set; }
+
+        //Domain position = 1
+
+        [Parameter(Position = 2,
+            ParameterSetName = "AllUserAliases")]
+        public SwitchParameter All { get; set; }
+
+        [Parameter(
+            ParameterSetName = "AllUserAliases")]
+        public SwitchParameter ReturnGoogleAPIObjects { get; set; }
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            switch (ParameterSetName)
+            {
+                case "OneUser":
+                    UserName = GetFullEmailAddress(UserName, Domain);
+
+                    if (ShouldProcess(UserName, "Get-GAUserAlias"))
+                    {
+                        WriteObject(users.aliases.List(UserName));
+                    }
+                    break;
+
+                case "AllUserAliases":
+                    if (ShouldProcess("All User Aliases", "Get-GAUserAlias"))
+                    {
+                        if (ReturnGoogleAPIObjects)
+                        {
+                            WriteObject(GetAllAliases());
+                        }
+                        else
+                        {
+                            WriteObject(GetAllCustomAliases());
+                        };
+                    }
+                    break;
+            }
+        }
+
+        private List<GAUserAliasObject> GetAllCustomAliases()
+        {
+            List<GAUserAliasObject> customAliasList = new List<GAUserAliasObject>();
+
+            List<Data.Alias> aliasList = GetAllAliases();
+
+            foreach (Data.Alias alias in aliasList)
+            {
+                customAliasList.Add(new GAUserAliasObject(alias.PrimaryEmail, alias.AliasValue, alias));
+            }
+
+            return customAliasList;
+        }
+
+        /// <summary>
+        /// Take a list of users who have an Data.Alias, and for each user get a list of their aliases. Makes potentially many API calls.
+        /// </summary>
+        private List<Data.Alias> GetAllAliases()
+        {
+            //HashSet<Data.User> usersList = new HashSet<Data.User>();
+
+            var allUsers = users.List(new dotNet.Directory.Users.UsersListProperties());
+
+            List<Data.User> usersList = allUsers.SelectMany(x => x.UsersValue)
+                .Where(x => x.Aliases != null).Distinct().ToList();
+
+            List<Data.Alias> aliasList = new List<Data.Alias>();
+
+            int i = 1;
+
+            foreach (Data.User user in usersList)
+            {
+                UpdateProgressBar(i, usersList.Count, "Gathering aliases",
+                    string.Format("-Collecting alias for user {0} of {1}",
+                    i, usersList.Count));
+                aliasList.AddRange(users.aliases.List(user.PrimaryEmail).AliasesValue.Cast<Data.Alias>());
+                i++;
+            }
+
+            return aliasList;
+        }
+    }
+
+    public class GAUserAliasObject
+    {
+        public string UserName;
+        public string Alias;
+        public Data.Alias BaseObject;
+
+        public GAUserAliasObject(string _userName, string _alias, Data.Alias baseAlias)
+        {
+            UserName = _userName;
+            Alias = _alias;
+            BaseObject = baseAlias;
+        }
+    }
+}
+
+
+namespace gShell.Cmdlets.Directory.GAUserAlias
+{
+    [Cmdlet(VerbsCommon.New, "GAUserAlias",
+          DefaultParameterSetName = "PasswordGenerated",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/New-GAUserAlias")]
+    public class NewGAUserAlias : DirectoryBase
+    {
+        #region Properties
+
+        [Parameter(Position = 0,
+            Mandatory = true,
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "The user's main username")]
+        [ValidateNotNullOrEmpty]
+        public string UserName { get; set; }
+
+        //Domain position = 1
+
+        [Parameter(Position = 2,
+            Mandatory = true)]
+        public string Alias { get; set; }
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            UserName = GetFullEmailAddress(UserName, Domain);
+
+            if (ShouldProcess(UserName, "New-GAUserAlias"))
+            {
+                Data.Alias aliasBody = new Data.Alias()
+                {
+                    AliasValue = GetFullEmailAddress(Alias, Domain)
+                };
+
+                WriteObject(users.aliases.Insert(aliasBody, UserName));
+            }
+        }
+    }
+}
+
+namespace gShell.Cmdlets.Directory.GAUserAlias
+{
+    [Cmdlet(VerbsCommon.Remove, "GAUserAlias",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAUserAlias")]
+    public class RemoveGAUserAlias : DirectoryBase
+    {
+        #region Properties
+
+        [Parameter(Position = 0,
+            ParameterSetName = "UserAliasName",
+            Mandatory = true,
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "The user alias account to remove")]
+        [ValidateNotNullOrEmpty]
+        public string UserAliasName { get; set; }
+
+        //Domain position = 1
+
+        [Parameter(Position = 2,
+            ParameterSetName = "UserAliasName",
+            Mandatory = false,
+            HelpMessage = "The user account to which the alias belongs")]
+        [ValidateNotNullOrEmpty]
+        public string UserName { get; set; }
+
+        [Parameter(Position = 3)]
+        public SwitchParameter Force { get; set; }
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            UserAliasName = GetFullEmailAddress(UserAliasName, Domain);
+
+            if (ShouldProcess(UserAliasName, "Remove-GAUserAlias"))
+            {
+                if (Force || ShouldContinue((String.Format("User alias {0} will be removed from the {1} Google Apps domain.\nContinue?",
+                    UserAliasName, Domain)), "Confirm Google Apps user alias Removal"))
+                {
+                    try
+                    {
+                        WriteDebug(string.Format("Attempting to remove user alias {0}@{1}...",
+                            UserAliasName, Domain));
+
+                        if (string.IsNullOrWhiteSpace(UserName))
+                        {
+                            UserName = users.Get(UserAliasName).PrimaryEmail;
+                        }
+
+                        users.aliases.Delete(UserName, UserAliasName);
+
+                        WriteVerbose(string.Format("Removal of {0}@{1} completed without error.",
+                            UserAliasName, Domain));
+                    }
+                    catch (Exception e)
+                    {
+                        WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, UserAliasName));
+                    }
+                }
+                else
+                {
+                    WriteError(new ErrorRecord(new Exception("Alias deletion not confirmed"),
+                        "", ErrorCategory.InvalidData, UserAliasName));
+                }
+            }
+        }
+
+        private void RemoveUserAlias()
+        {
+
+        }
+    }
+}
+
+
+namespace gShell.Cmdlets.Directory.GAUserPhoto
+{
+    [Cmdlet(VerbsCommon.Get, "GAUserPhoto",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAUserPhoto")]
+    public class GetGAUserPhoto : DirectoryBase
+    {
+        #region Properties
+
+        [Parameter(Position = 0,
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string UserKey { get; set; }
+
+        //Domain position = 1
+
+        [Parameter(Position = 2,
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string FilePath { get; set; }
+
+        [Parameter(Position = 3,
+            Mandatory = false)]
+        public SwitchParameter NoClobber { get; set; }
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            UserKey = GetFullEmailAddress(UserKey, Domain);
+
+            if (ShouldProcess(UserKey, "Get-GAUserPhoto"))
+            {
+                try
+                {
+                    Data.UserPhoto result = users.photos.Get(UserKey);
+
+                    if (FilePath != null)
+                    {
+                        FilePath = Path.Combine(Path.GetDirectoryName(FilePath), string.Format("{0}.{1}", Path.GetFileNameWithoutExtension(FilePath), result.MimeType.Split('/')[1]));
+
+                        Utils.SaveImageFromBase64(result.PhotoData, FilePath, NoClobber.IsPresent);
+                    }
+                    else
+                    {
+                        WriteObject(result);
+                    }
+                }
+                catch (Exception e)
+                {
+                    WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, UserKey));
+                }
+            }
+        }
+    }
+
+    [Cmdlet(VerbsCommon.Remove, "GAUserPhoto",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAUserPhoto")]
+    public class RemoveGAUserPhoto : DirectoryBase
+    {
+        #region Properties
+
+        [Parameter(Position = 0,
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string UserKey { get; set; }
+
+        //Domain position = 1
+
+        [Parameter(Position = 2)]
+        public SwitchParameter Force { get; set; }
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            UserKey = GetFullEmailAddress(UserKey, Domain);
+
+            if (ShouldProcess(UserKey, "Remove-GAUserPhoto"))
+            {
+                if (Force || ShouldContinue((String.Format("Photo for User {0} will be removed from the {1} Google Apps domain.\nContinue?",
+                    UserKey, Domain)), "Confirm Google Apps User Photo Removal"))
+                {
+                    try
+                    {
+                        WriteDebug(string.Format("Attempting to remove Photo for User {0}...",
+                            UserKey));
+                        users.photos.Delete(UserKey);
+                        WriteVerbose(string.Format("Removal of User {0}'s photo completed without error.",
+                            UserKey));
+                    }
+                    catch (Exception e)
+                    {
+                        WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, UserKey));
+                    }
+                }
+                else
+                {
+                    WriteError(new ErrorRecord(new Exception("User Photo deletion not confirmed"),
+                        "", ErrorCategory.InvalidData, UserKey));
+                }
+            }
+        }
+    }
+
+    [Cmdlet(VerbsCommon.Set, "GAUserPhoto",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAUserPhoto")]
+    public class SetGAUserPhoto : DirectoryBase
+    {
+        #region Properties
+        [Parameter(Position = 0,
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string UserKey { get; set; }
+
+        //Domain position = 1
+
+        [Parameter(Position = 2,
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string Path { get; set; }
+
+        [Parameter(Position = 3,
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public int? Height { get; set; }
+
+        [Parameter(Position = 4,
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public MimeTypeEnum? MimeType { get; set; }
+
+        [Parameter(Position = 5,
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public int? Width { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            UserKey = GetFullEmailAddress(UserKey, Domain);
+
+            if (ShouldProcess(UserKey, "Set-GAUserPhoto"))
+            {
+                Data.UserPhoto body = new Data.UserPhoto();
+
+                if (MimeType.HasValue)
+                {
+                    body.MimeType = MimeType.Value.ToString();
+                }
+
+                if (Height.HasValue)
+                {
+                    body.Height = Height.Value;
+                }
+
+                if (Width.HasValue)
+                {
+                    body.Width = Width.Value;
+                }
+
+                body.PhotoData = Utils.LoadImageToBase64(Path);
+
+                WriteObject(users.photos.Update(body, UserKey));
+            }
+        }
+    }
+
+    public enum MimeTypeEnum
+    {
+        JPEG, PNG, GIF, BMP, TIFF
+    }
+}
+
+
+namespace gShell.Cmdlets.Directory.GAUserProperty
+{
+    public class GAUserPropertyBase : DirectoryBase
+    {
+        #region Properties
+
+        [Parameter(Position = 0,
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Help Text")]
+        [ValidateNotNullOrEmpty]
+        public string UserName { get; set; }
+
+        //Domain position = 1
+
+        #endregion
+
+        #region JsonConversions
+        /// <summary>
+        /// Given one JObject, convert it to a Data.UserAddress
+        /// </summary>
+        /// <param name="jsonObj"></param>
+        /// <returns></returns>
+        protected static Data.UserAddress JsonToAddress(JObject o)
+        {
+            return new Data.UserAddress()
+            {
+                Country = (string)o["country"],
+                CountryCode = (string)o["countryCode"],
+                CustomType = (string)o["customType"],
+                ETag = (string)o["etag"],
+                ExtendedAddress = (string)o["extendedAddress"],
+                Formatted = (string)o["formatted"],
+                Locality = (string)o["locality"],
+                PoBox = (string)o["poBox"],
+                PostalCode = (string)o["postalCode"],
+                Primary = (bool?)o["primary"],
+                Region = (string)o["region"],
+                SourceIsStructured = (bool?)o["sourceIsStructured"],
+                StreetAddress = (string)o["streetAddress"],
+                Type = (string)o["type"]
+
+            };
+        }
+
+        /// <summary>
+        /// Given one JObject, convert it to a Data.UserEmail
+        /// </summary>
+        /// <param name="o"></param>
+        /// <returns></returns>
+        protected static Data.UserEmail JsonToEmail(JObject o)
+        {
+            return new Data.UserEmail()
+            {
+                Address = (string)o["address"],
+                CustomType = (string)o["customType"],
+                ETag = (string)o["etag"],
+                Primary = (bool?)o["primary"],
+                Type = (string)o["type"]
+            };
+        }
+
+        /// <summary>
+        /// Given one JObject, convert it to a Data.UserExternalId
+        /// </summary>
+        /// <param name="o"></param>
+        /// <returns></returns>
+        protected static Data.UserExternalId JsonToExternalId(JObject o)
+        {
+            return new Data.UserExternalId()
+            {
+                CustomType = (string)o["customType"],
+                ETag = (string)o["etag"],
+                Type = (string)o["type"],
+                Value = (string)o["value"]
+            };
+        }
+
+        /// <summary>
+        /// Given one JObject, convert it to a Data.UserIm
+        /// </summary>
+        /// <param name="o"></param>
+        /// <returns></returns>
+        protected static Data.UserIm JsonToIm(JObject o)
+        {
+            return new Data.UserIm()
+            {
+                CustomProtocol = (string)o["customProtocol"],
+                CustomType = (string)o["customType"],
+                ETag = (string)o["etag"],
+                Im = (string)o["im"],
+                Primary = (bool?)o["primary"],
+                Protocol = (string)o["protocol"],
+                Type = (string)o["type"]
+            };
+        }
+
+        /// <summary>
+        /// Given one JObject, convert it to a Data.UserOrganization
+        /// </summary>
+        /// <param name="o"></param>
+        /// <returns></returns>
+        protected static Data.UserOrganization JsonToOrganization(JObject o)
+        {
+            return new Data.UserOrganization()
+            {
+                CostCenter = (string)o["costCenter"],
+                CustomType = (string)o["customType"],
+                Department = (string)o["department"],
+                Description = (string)o["description"],
+                Domain = (string)o["domain"],
+                ETag = (string)o["etag"],
+                Location = (string)o["location"],
+                Name = (string)o["name"],
+                Primary = (bool?)o["primary"],
+                Symbol = (string)o["symbol"],
+                Title = (string)o["title"],
+                Type = (string)o["type"]
+            };
+        }
+
+        /// <summary>
+        /// Given one JObject, convert it to a Data.UserPhone
+        /// </summary>
+        /// <param name="o"></param>
+        /// <returns></returns>
+        protected static Data.UserPhone JsonToPhone(JObject o)
+        {
+            return new Data.UserPhone()
+            {
+                CustomType = (string)o["customType"],
+                ETag = (string)o["etag"],
+                Primary = (bool?)o["primary"],
+                Type = (string)o["type"],
+                Value = (string)o["value"]
+            };
+        }
+
+        /// <summary>
+        /// Given one JObject, convert it to a Data.UserRelation
+        /// </summary>
+        /// <param name="o"></param>
+        /// <returns></returns>
+        protected static Data.UserRelation JsonToRelation(JObject o)
+        {
+            return new Data.UserRelation()
+            {
+                CustomType = (string)o["customType"],
+                ETag = (string)o["etag"],
+                Type = (string)o["type"],
+                Value = (string)o["value"]
+            };
+        }
+
+        //protected UserCustomSchema JsonToAddress(JObject o)
+        //{
+
+        //}
+
+        #endregion
+
+        #region GetProperties
+
+        public static List<Data.UserAddress> GetAddressFromUser(Data.User u)
+        {
+            List<Data.UserAddress> results = new List<Data.UserAddress>();
+
+            foreach (JObject j in GetJObjectsFromUser(u, GAUserPropertyType.address))
+            {
+                results.Add(JsonToAddress(j));
+            }
+
+            return results;
+        }
+
+        public static List<Data.UserEmail> GetEmailFromUser(Data.User u)
+        {
+            List<Data.UserEmail> results = new List<Data.UserEmail>();
+
+            foreach (JObject j in GetJObjectsFromUser(u, GAUserPropertyType.email))
+            {
+                results.Add(JsonToEmail(j));
+            }
+
+            return results;
+        }
+
+        public static List<Data.UserExternalId> GetExIdFromUser(Data.User u)
+        {
+            List<Data.UserExternalId> results = new List<Data.UserExternalId>();
+
+            foreach (JObject j in GetJObjectsFromUser(u, GAUserPropertyType.externalid))
+            {
+                results.Add(JsonToExternalId(j));
+            }
+
+            return results;
+        }
+
+        public static List<Data.UserIm> GetImFromUser(Data.User u)
+        {
+            List<Data.UserIm> results = new List<Data.UserIm>();
+
+            foreach (JObject j in GetJObjectsFromUser(u, GAUserPropertyType.im))
+            {
+                results.Add(JsonToIm(j));
+            }
+
+            return results;
+        }
+
+        public static List<Data.UserOrganization> GetOrgFromUser(Data.User u)
+        {
+            List<Data.UserOrganization> results = new List<Data.UserOrganization>();
+
+            foreach (JObject j in GetJObjectsFromUser(u, GAUserPropertyType.organization))
+            {
+                results.Add(JsonToOrganization(j));
+            }
+
+            return results;
+        }
+
+        public static List<Data.UserPhone> GetPhoneFromUser(Data.User u)
+        {
+            List<Data.UserPhone> results = new List<Data.UserPhone>();
+
+            foreach (JObject j in GetJObjectsFromUser(u, GAUserPropertyType.phone))
+            {
+                results.Add(JsonToPhone(j));
+            }
+
+            return results;
+        }
+
+        public static List<Data.UserRelation> GetRelationFromUser(Data.User u)
+        {
+            List<Data.UserRelation> results = new List<Data.UserRelation>();
+
+            foreach (JObject j in GetJObjectsFromUser(u, GAUserPropertyType.relation))
+            {
+                results.Add(JsonToRelation(j));
+            }
+
+            return results;
+        }
+
+        /// <summary>
+        /// Returns a List of JObjects from a given Data.User object.
+        /// </summary>
+        /// <param name="u"></param>
+        /// <param name="pType"></param>
+        /// <returns></returns>
+        protected static List<JObject> GetJObjectsFromUser(Data.User u, GAUserPropertyType pType)
+        {
+
+            List<JObject> jobjects = new List<JObject>();
+            JArray a = new JArray();
+
+            switch (pType)
+            {
+                case GAUserPropertyType.address:
+                    if (null != u.Addresses)
+                    {
+                        a = JArray.Parse(u.Addresses.ToString());
+                    }
+                    break;
+
+                case GAUserPropertyType.email:
+                    if (null != u.Emails)
+                    {
+                        a = JArray.Parse(u.Emails.ToString());
+                    }
+                    break;
+
+                case GAUserPropertyType.externalid:
+                    if (null != u.ExternalIds)
+                    {
+                        a = JArray.Parse(u.ExternalIds.ToString());
+                    }
+                    break;
+
+                case GAUserPropertyType.im:
+                    if (null != u.Ims)
+                    {
+                        a = JArray.Parse(u.Ims.ToString());
+                    }
+                    break;
+
+                case GAUserPropertyType.organization:
+                    if (null != u.Organizations)
+                    {
+                        a = JArray.Parse(u.Organizations.ToString());
+                    }
+                    break;
+
+                case GAUserPropertyType.phone:
+                    if (null != u.Phones)
+                    {
+                        a = JArray.Parse(u.Phones.ToString());
+                    }
+                    break;
+
+                case GAUserPropertyType.relation:
+                    if (null != u.Relations)
+                    {
+                        a = JArray.Parse(u.Relations.ToString());
+                    }
+                    break;
+            }
+
+            foreach (object s in a)
+            {
+                JObject j = JObject.Parse(s.ToString());
+                jobjects.Add(j);
+            }
+
+            return jobjects;
+
+        }
+
+        #endregion
+    }
+
+    #region PropertyEnumTypes
+
+    public enum GAUserPropertyType
+    {
+        address, email, externalid, im, organization, phone, relation//, customschema
+    }
+
+    public enum GAUserAddressType
+    {
+        custom, home, work, other
+    }
+
+    public enum GAUserEmailType
+    {
+        custom, home, other, work
+    }
+
+    public enum GAUserExternalIdType
+    {
+        account, custom, customer, network, organization
+    }
+
+    public enum GAUserIMType
+    {
+        custom, home, other, work
+    }
+
+    public enum GAUserImProtocol
+    {
+        custom_protocol, aim, gtalk, icq, jabber, msn, net_meeting, qq, skype, yahoo
+    }
+
+    public enum GAUserOrganizationType
+    {
+        unknown, school, work, domain_only, custom
+    }
+
+    public enum GAUserPhoneType
+    {
+        custom, home, work, other, home_fax, work_fax, mobile, pager, other_fax, compain_main,
+        assistant, car, radio, isdn, callback, telex, tty_tdd, work_mobile, work_pager, main, grand_central
+    }
+
+    public enum GAUserRelationType
+    {
+        custom, spouse, child, mother, father, parent, brother, sister, friend, relative,
+        domestic_partner, manager, assistant, referred_by, partner
+    }
+
+    #endregion
+
+    /// <summary>
+    /// An object to contain all UserProperties that are not the 'normal' types. Supports += syntax and add/addrange.
+    /// </summary>
+    public class GAUserPropertyCollection
+    {
+        #region Properties
+
+        private bool _addressesUpdated;
+        private bool _emailsUpdated;
+        private bool _exIdsUpdated;
+        private bool _imsUpdated;
+        private bool _orgsUpdated;
+        private bool _phonesUpdated;
+        private bool _relationsUpdated;
+
+        public List<Data.UserAddress> addresses { get { return _addresses; } }
+        public List<Data.UserEmail> emails { get { return _emails; } }
+        public List<Data.UserExternalId> externalIds { get { return _externalIds; } }
+        public List<Data.UserIm> ims { get { return _ims; } }
+        public List<Data.UserOrganization> organizations { get { return _organizations; } }
+        public List<Data.UserPhone> phones { get { return _phones; } }
+        public List<Data.UserRelation> relations { get { return _relations; } }
+
+        private List<Data.UserAddress> _addresses = new List<Data.UserAddress>();
+        private List<Data.UserEmail> _emails = new List<Data.UserEmail>();
+        private List<Data.UserExternalId> _externalIds = new List<Data.UserExternalId>();
+        private List<Data.UserIm> _ims = new List<Data.UserIm>();
+        private List<Data.UserOrganization> _organizations = new List<Data.UserOrganization>();
+        private List<Data.UserPhone> _phones = new List<Data.UserPhone>();
+        private List<Data.UserRelation> _relations = new List<Data.UserRelation>();
+        #endregion
+
+        #region IsUpdated
+        public bool IsUpdated(GAUserPropertyType pType)
+        {
+            switch (pType)
+            {
+                case GAUserPropertyType.address:
+                    return _addressesUpdated;
+                case GAUserPropertyType.email:
+                    return _emailsUpdated;
+                case GAUserPropertyType.externalid:
+                    return _exIdsUpdated;
+                case GAUserPropertyType.im:
+                    return _imsUpdated;
+                case GAUserPropertyType.organization:
+                    return _orgsUpdated;
+                case GAUserPropertyType.phone:
+                    return _phonesUpdated;
+                case GAUserPropertyType.relation:
+                    return _relationsUpdated;
+            }
+
+            return false;
+        }
+        #endregion
+
+        #region Getters
+        public List<Data.UserAddress> GetAddresses()
+        {
+            return _addresses;
+        }
+
+        public List<Data.UserEmail> GetEmails()
+        {
+            return _emails;
+        }
+
+        public List<Data.UserExternalId> GetExternalIds()
+        {
+            return _externalIds;
+        }
+
+        public List<Data.UserIm> GetIms()
+        {
+            return _ims;
+        }
+
+        public List<Data.UserOrganization> GetOrganizations()
+        {
+            return _organizations;
+        }
+
+        public List<Data.UserPhone> GetPhones()
+        {
+            return _phones;
+        }
+
+        public List<Data.UserRelation> GetRelations()
+        {
+            return _relations;
+        }
+        #endregion
+
+        #region Constructors
+        public GAUserPropertyCollection() { }
+
+        public GAUserPropertyCollection(Data.User u)
+        {
+            AddRange(GAUserPropertyBase.GetAddressFromUser(u));
+            AddRange(GAUserPropertyBase.GetEmailFromUser(u));
+            AddRange(GAUserPropertyBase.GetExIdFromUser(u));
+            AddRange(GAUserPropertyBase.GetImFromUser(u));
+            AddRange(GAUserPropertyBase.GetOrgFromUser(u));
+            AddRange(GAUserPropertyBase.GetPhoneFromUser(u));
+            AddRange(GAUserPropertyBase.GetRelationFromUser(u));
+        }
+        #endregion
+
+        #region Add
+        public void Add(Data.UserAddress uAdd)
+        {
+            _addresses.Add(uAdd);
+            _addressesUpdated = true;
+        }
+
+        public void Add(Data.UserEmail uEmail)
+        {
+            _emails.Add(uEmail);
+            _emailsUpdated = true;
+        }
+
+        public void Add(Data.UserExternalId uExId)
+        {
+            _externalIds.Add(uExId);
+            _exIdsUpdated = true;
+        }
+
+        public void Add(Data.UserIm uIm)
+        {
+            _ims.Add(uIm);
+            _imsUpdated = true;
+        }
+
+        public void Add(Data.UserOrganization uOrg)
+        {
+            _organizations.Add(uOrg);
+            _orgsUpdated = true;
+        }
+
+        public void Add(Data.UserPhone uPhone)
+        {
+            _phones.Add(uPhone);
+            _phonesUpdated = true;
+        }
+
+        public void Add(Data.UserRelation uRelation)
+        {
+            _relations.Add(uRelation);
+            _relationsUpdated = true;
+        }
+        #endregion
+
+        #region AddRange
+        public void AddRange(IEnumerable<Data.UserAddress> pList)
+        {
+            foreach (Data.UserAddress uP in pList)
+            {
+                _addresses.Add(uP);
+            }
+        }
+
+        public void AddRange(IEnumerable<Data.UserEmail> pList)
+        {
+            foreach (Data.UserEmail uP in pList)
+            {
+                _emails.Add(uP);
+            }
+        }
+
+        public void AddRange(IEnumerable<Data.UserExternalId> pList)
+        {
+            foreach (Data.UserExternalId uP in pList)
+            {
+                _externalIds.Add(uP);
+            }
+        }
+
+        public void AddRange(IEnumerable<Data.UserIm> pList)
+        {
+            foreach (Data.UserIm uP in pList)
+            {
+                _ims.Add(uP);
+            }
+        }
+
+        public void AddRange(IEnumerable<Data.UserOrganization> pList)
+        {
+            foreach (Data.UserOrganization uP in pList)
+            {
+                _organizations.Add(uP);
+            }
+        }
+
+        public void AddRange(IEnumerable<Data.UserPhone> pList)
+        {
+            foreach (Data.UserPhone uP in pList)
+            {
+                _phones.Add(uP);
+            }
+        }
+
+        public void AddRange(IEnumerable<Data.UserRelation> pList)
+        {
+            foreach (Data.UserRelation uP in pList)
+            {
+                _relations.Add(uP);
+            }
+        }
+        #endregion
+
+        #region OperatorPlusOverload
+        public static GAUserPropertyCollection operator +(GAUserPropertyCollection coll1, GAUserPropertyCollection coll2)
+        {
+            coll1.AddRange(coll2._addresses);
+            coll1.AddRange(coll2._emails);
+            coll1.AddRange(coll2._externalIds);
+            coll1.AddRange(coll2._ims);
+            coll1.AddRange(coll2._organizations);
+            coll1.AddRange(coll2._phones);
+            coll1.AddRange(coll2._relations);
+
+            return coll1;
+        }
+
+        public static GAUserPropertyCollection operator +(GAUserPropertyCollection coll1, Data.UserAddress p2)
+        {
+            coll1.Add(p2);
+            return coll1;
+        }
+
+        public static GAUserPropertyCollection operator +(GAUserPropertyCollection coll1, List<Data.UserAddress> coll2)
+        {
+            coll1.AddRange(coll2);
+            return coll1;
+        }
+
+        public static GAUserPropertyCollection operator +(GAUserPropertyCollection coll1, Data.UserEmail p2)
+        {
+            coll1.Add(p2);
+            return coll1;
+        }
+
+        public static GAUserPropertyCollection operator +(GAUserPropertyCollection coll1, List<Data.UserEmail> coll2)
+        {
+            coll1.AddRange(coll2);
+            return coll1;
+        }
+
+        public static GAUserPropertyCollection operator +(GAUserPropertyCollection coll1, Data.UserExternalId p2)
+        {
+            coll1.Add(p2);
+            return coll1;
+        }
+
+        public static GAUserPropertyCollection operator +(GAUserPropertyCollection coll1, List<Data.UserExternalId> coll2)
+        {
+            coll1.AddRange(coll2);
+            return coll1;
+        }
+
+        public static GAUserPropertyCollection operator +(GAUserPropertyCollection coll1, Data.UserIm p2)
+        {
+            coll1.Add(p2);
+            return coll1;
+        }
+
+        public static GAUserPropertyCollection operator +(GAUserPropertyCollection coll1, List<Data.UserIm> coll2)
+        {
+            coll1.AddRange(coll2);
+            return coll1;
+        }
+
+        public static GAUserPropertyCollection operator +(GAUserPropertyCollection coll1, Data.UserOrganization p2)
+        {
+            coll1.Add(p2);
+            return coll1;
+        }
+
+        public static GAUserPropertyCollection operator +(GAUserPropertyCollection coll1, List<Data.UserOrganization> coll2)
+        {
+            coll1.AddRange(coll2);
+            return coll1;
+        }
+
+        public static GAUserPropertyCollection operator +(GAUserPropertyCollection coll1, Data.UserPhone p2)
+        {
+            coll1.Add(p2);
+            return coll1;
+        }
+
+        public static GAUserPropertyCollection operator +(GAUserPropertyCollection coll1, List<Data.UserPhone> coll2)
+        {
+            coll1.AddRange(coll2);
+            return coll1;
+        }
+
+        public static GAUserPropertyCollection operator +(GAUserPropertyCollection coll1, Data.UserRelation p2)
+        {
+            coll1.Add(p2);
+            return coll1;
+        }
+
+        public static GAUserPropertyCollection operator +(GAUserPropertyCollection coll1, List<Data.UserRelation> coll2)
+        {
+            coll1.AddRange(coll2);
+            return coll1;
+        }
+        #endregion
+
+        #region RemoveAt
+        public void RemoveAt(GAUserPropertyType pType, int index)
+        {
+            if (index >= 0)
+            {
+
+                switch (pType)
+                {
+                    case GAUserPropertyType.address:
+                        if (_addresses.Count > index)
+                        {
+                            _addresses.RemoveAt(index);
+                            _addressesUpdated = true;
+                        }
+                        break;
+                    case GAUserPropertyType.email:
+                        if (_emails.Count > index)
+                        {
+                            _emails.RemoveAt(index);
+                            _emailsUpdated = true;
+                        }
+                        break;
+                    case GAUserPropertyType.externalid:
+                        if (_externalIds.Count > index)
+                        {
+                            _externalIds.RemoveAt(index);
+                            _exIdsUpdated = true;
+                        }
+                        break;
+                    case GAUserPropertyType.im:
+                        if (_ims.Count > index)
+                        {
+                            _ims.RemoveAt(index);
+                            _imsUpdated = true;
+                        }
+                        break;
+                    case GAUserPropertyType.organization:
+                        if (_organizations.Count > index)
+                        {
+                            _organizations.RemoveAt(index);
+                            _orgsUpdated = true;
+                        }
+                        break;
+                    case GAUserPropertyType.phone:
+                        if (_phones.Count > index)
+                        {
+                            _phones.RemoveAt(index);
+                            _phonesUpdated = true;
+                        }
+                        break;
+                    case GAUserPropertyType.relation:
+                        if (_relations.Count > index)
+                        {
+                            _relations.RemoveAt(index);
+                            _relationsUpdated = true;
+                        }
+                        break;
+                }
+            }
+        }
+        #endregion
+
+        #region Clear
+        public void Clear(GAUserPropertyType pType)
+        {
+            switch (pType)
+            {
+                case GAUserPropertyType.address:
+                    _addresses.Clear();
+                    _addressesUpdated = true;
+                    break;
+                case GAUserPropertyType.email:
+                    _emails.Clear();
+                    _emailsUpdated = true;
+                    break;
+                case GAUserPropertyType.externalid:
+                    _externalIds.Clear();
+                    _exIdsUpdated = true;
+                    break;
+                case GAUserPropertyType.im:
+                    _ims.Clear();
+                    _imsUpdated = true;
+                    break;
+                case GAUserPropertyType.organization:
+                    _organizations.Clear();
+                    _orgsUpdated = true;
+                    break;
+                case GAUserPropertyType.phone:
+                    _phones.Clear();
+                    _phonesUpdated = true;
+                    break;
+                case GAUserPropertyType.relation:
+                    _relations.Clear();
+                    _relationsUpdated = true;
+                    break;
+            }
+        }
+        #endregion
+    }
+}
+
+namespace gShell.Cmdlets.Directory.GAUserProperty
+{
+    [Cmdlet(VerbsCommon.Get, "GAUserProperty",
+         SupportsShouldProcess = true,
+         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAUserProperty")]
+    public class GetGAUserProperty : GAUserPropertyBase
+    {
+        #region Properties
+
+        //UserName = 0
+
+        //Domain position = 1
+
+        [Parameter(Position = 2,
+           Mandatory = false,
+           HelpMessage = "The GShellUserObject to act upon. For example, the result of Get-GAUser",
+           ValueFromPipeline = true)]
+        public GShellUserObject GShellObject { get; set; }
+
+        [Parameter(Position = 3,
+           Mandatory = true,
+           HelpMessage = "The property type to retrieve for the user. Allowed values are: address, email, externalid, im, organization, phone, relation.",
+           ParameterSetName = "OneType")]
+        [Alias("Type")]
+        public GAUserPropertyType PropertyType { get; set; }
+
+        [Parameter(Position = 3,
+           Mandatory = true,
+           HelpMessage = "Get all property types for the given user as a Property Collection.",
+           ParameterSetName = "AllTypes")]
+        public SwitchParameter AllTypes { get; set; }
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            UserName = GetFullEmailAddress(UserName, Domain);
+
+            if (ShouldProcess(UserName, "Get-GAUserProperty"))
+            {
+                Data.User u = new Data.User();
+
+                if (null != GShellObject)
+                {
+                    u = GShellObject.userObject;
+                }
+                else if (!string.IsNullOrWhiteSpace(UserName))
+                {
+                    u = users.Get(UserName);
+                }
+                else
+                {
+                    WriteError(new ErrorRecord(new Exception(
+                    string.Format("No username or user object was provided.")),
+                        "", ErrorCategory.InvalidOperation, UserName));
+                }
+
+                switch (ParameterSetName)
+                {
+                    case "OneType":
+                        switch (PropertyType)
+                        {
+                            case GAUserPropertyType.address:
+                                WriteObject(GetAddressFromUser(u));
+                                break;
+                            case GAUserPropertyType.email:
+                                WriteObject(GetEmailFromUser(u));
+                                break;
+                            case GAUserPropertyType.externalid:
+                                WriteObject(GetExIdFromUser(u));
+                                break;
+                            case GAUserPropertyType.im:
+                                WriteObject(GetImFromUser(u));
+                                break;
+                            case GAUserPropertyType.organization:
+                                WriteObject(GetOrgFromUser(u));
+                                break;
+                            case GAUserPropertyType.phone:
+                                WriteObject(GetPhoneFromUser(u));
+                                break;
+                            case GAUserPropertyType.relation:
+                                WriteObject(GetRelationFromUser(u));
+                                break;
+                        }
+
+                        break;
+
+                    case "AllTypes":
+                        WriteObject(new GAUserPropertyCollection(u));
+                        break;
+                }
+            }
+        }
+    }
+}
+
+namespace gShell.Cmdlets.Directory.GAUserProperty
+{
+    [Cmdlet(VerbsCommon.New, "GAUserProperty",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/New-GAUserProperty")]
+    public class NewGAUserProperty : PSCmdlet, IDynamicParameters
+    {
+        #region Properties
+
+        [Parameter(Position = 0,
+            Mandatory = false,
+            HelpMessage = "The property type to create. Once you choose one type more properties will show up, PoSh 3+. Allowed values are: address, email, externalid, im, organization, phone, relation")]
+        public GAUserPropertyType PropertyType { get; set; }
+
+        private IUserContextProperties context;
+
+        #endregion
+
+        // Implement GetDynamicParameters to
+        // retrieve the dynamic parameter.
+        public object GetDynamicParameters()
+        {
+            switch (PropertyType)
+            {
+                case GAUserPropertyType.address:
+                    context = new UserAddressProperties();
+                    return context;
+
+                case GAUserPropertyType.email:
+                    context = new UserEmailProperties();
+                    return context;
+
+                case GAUserPropertyType.externalid:
+                    context = new UserExternalIdProperties();
+                    return context;
+
+                case GAUserPropertyType.im:
+                    context = new UserImProperties();
+                    return context;
+
+                case GAUserPropertyType.organization:
+                    context = new UserOrganizationProperties();
+                    return context;
+
+                case GAUserPropertyType.phone:
+                    context = new UserPhoneProperties();
+                    return context;
+
+                case GAUserPropertyType.relation:
+                    context = new UserRelationProperties();
+                    return context;
+
+                default:
+                    context = null;
+                    return context;
+            }
+        }
+
+        protected override void ProcessRecord()
+        {
+            switch (PropertyType)
+            {
+                case GAUserPropertyType.address:
+                    UserAddressProperties ap = context as UserAddressProperties;
+                    WriteObject(GetUserAddress(ap));
+                    break;
+
+                case GAUserPropertyType.email:
+                    UserEmailProperties emp = context as UserEmailProperties;
+                    WriteObject(GetUserEmail(emp));
+                    break;
+
+                case GAUserPropertyType.externalid:
+                    UserExternalIdProperties eip = context as UserExternalIdProperties;
+                    WriteObject(GetUserExternalId(eip));
+                    break;
+
+                case GAUserPropertyType.im:
+                    UserImProperties im = context as UserImProperties;
+                    WriteObject(GetUserIm(im));
+                    break;
+
+                case GAUserPropertyType.organization:
+                    UserOrganizationProperties op = context as UserOrganizationProperties;
+                    WriteObject(GetUserOrganization(op));
+                    break;
+
+                case GAUserPropertyType.phone:
+                    UserPhoneProperties pp = context as UserPhoneProperties;
+                    WriteObject(GetUserPhone(pp));
+                    break;
+
+                case GAUserPropertyType.relation:
+                    UserRelationProperties rp = context as UserRelationProperties;
+                    WriteObject(GetUserRelation(rp));
+                    break;
+            }
+        }
+
+
+        #region ConversionMethods
+
+        /// <summary>
+        /// Turn a set of UserAddressProperties in to a UserAddress.
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
+        private Google.Apis.admin.Directory.directory_v1.Data.UserAddress GetUserAddress(UserAddressProperties p)
+        {
+            //GAUserPropertyAddress address = new GAUserPropertyAddress();
+            Google.Apis.admin.Directory.directory_v1.Data.UserAddress address = new Google.Apis.admin.Directory.directory_v1.Data.UserAddress();
+
+            address.Type = p.Type.ToString();
+
+            if (p.Type == GAUserAddressType.custom &&
+                !String.IsNullOrWhiteSpace(p.CustomType))
+            {
+                address.CustomType = p.CustomType;
+            }
+            else if (p.Type == GAUserAddressType.custom &&
+                String.IsNullOrWhiteSpace(p.CustomType))
+            {
+                WriteError(new ErrorRecord(new Exception(
+                "No CustomType; it cannot be empty if the Type is Custom."),
+                    "", ErrorCategory.InvalidData, p.CustomType));
+            }
+
+            if (p.SourceIsStructured.HasValue)
+            {
+                address.SourceIsStructured = p.SourceIsStructured.Value;
+            }
+
+            if (!String.IsNullOrWhiteSpace(p.Formatted))
+            {
+                address.Formatted = p.Formatted;
+            }
+
+            if (!String.IsNullOrWhiteSpace(p.PoBox))
+            {
+                address.PoBox = p.PoBox;
+            }
+
+            if (!String.IsNullOrWhiteSpace(p.ExtendedAddress))
+            {
+                address.ExtendedAddress = p.ExtendedAddress;
+            }
+
+            if (!String.IsNullOrWhiteSpace(p.StreetAddress))
+            {
+                address.StreetAddress = p.StreetAddress;
+            }
+
+            if (!String.IsNullOrWhiteSpace(p.Locality))
+            {
+                address.Locality = p.Locality;
+            }
+
+            if (!String.IsNullOrWhiteSpace(p.Region))
+            {
+                address.Region = p.Region;
+            }
+
+            if (!String.IsNullOrWhiteSpace(p.PostalCode))
+            {
+                address.PostalCode = p.PostalCode;
+            }
+
+            if (!String.IsNullOrWhiteSpace(p.Country))
+            {
+                address.Country = p.Country;
+            }
+
+            if (p.Primary.HasValue)
+            {
+                address.Primary = p.Primary.Value;
+            }
+
+            if (!String.IsNullOrWhiteSpace(p.CountryCode))
+            {
+                address.CountryCode = p.CountryCode;
+            }
+
+            return (address);
+        }
+
+        private Google.Apis.admin.Directory.directory_v1.Data.UserEmail GetUserEmail(UserEmailProperties p)
+        {
+            Google.Apis.admin.Directory.directory_v1.Data.UserEmail email = new Google.Apis.admin.Directory.directory_v1.Data.UserEmail();
+
+            email.Type = p.Type.ToString();
+
+            if (p.Type == GAUserEmailType.custom &&
+                !String.IsNullOrWhiteSpace(p.CustomType))
+            {
+                email.CustomType = p.CustomType;
+            }
+            else if (p.Type == GAUserEmailType.custom &&
+                String.IsNullOrWhiteSpace(p.CustomType))
+            {
+                WriteError(new ErrorRecord(new Exception(
+                "No CustomType; it cannot be empty if the Type is Custom."),
+                    "", ErrorCategory.InvalidData, p.CustomType));
+            }
+
+
+            if (!String.IsNullOrWhiteSpace(p.Address))
+            {
+                email.Address = p.Address;
+            }
+
+            if (p.Primary.HasValue)
+            {
+                email.Primary = p.Primary.Value;
+            }
+
+            return email;
+        }
+
+        private Google.Apis.admin.Directory.directory_v1.Data.UserExternalId GetUserExternalId(UserExternalIdProperties p)
+        {
+            Google.Apis.admin.Directory.directory_v1.Data.UserExternalId externalId = new Google.Apis.admin.Directory.directory_v1.Data.UserExternalId();
+
+            externalId.Type = p.Type.ToString();
+
+            if (p.Type == GAUserExternalIdType.custom &&
+                !String.IsNullOrWhiteSpace(p.CustomType))
+            {
+                externalId.CustomType = p.CustomType;
+            }
+            else if (p.Type == GAUserExternalIdType.custom &&
+                String.IsNullOrWhiteSpace(p.CustomType))
+            {
+                WriteError(new ErrorRecord(new Exception(
+                "No CustomType; it cannot be empty if the Type is Custom."),
+                    "", ErrorCategory.InvalidData, p.CustomType));
+            }
+
+            if (!String.IsNullOrWhiteSpace(p.Value))
+            {
+                externalId.Value = p.Value;
+            }
+
+            return externalId;
+        }
+
+        private Google.Apis.admin.Directory.directory_v1.Data.UserIm GetUserIm(UserImProperties p)
+        {
+            Google.Apis.admin.Directory.directory_v1.Data.UserIm im = new Google.Apis.admin.Directory.directory_v1.Data.UserIm();
+
+            im.Type = p.Type.ToString();
+
+            if (p.Type == GAUserIMType.custom &&
+                !String.IsNullOrWhiteSpace(p.CustomType))
+            {
+                im.CustomType = p.CustomType;
+            }
+            else if (p.Type == GAUserIMType.custom &&
+                String.IsNullOrWhiteSpace(p.CustomType))
+            {
+                WriteError(new ErrorRecord(new Exception(
+                "No CustomType; it cannot be empty if the Type is Custom."),
+                    "", ErrorCategory.InvalidData, p.CustomType));
+            }
+
+            im.Protocol = p.Protocol.ToString();
+
+            if (p.Protocol == GAUserImProtocol.custom_protocol &&
+                !String.IsNullOrWhiteSpace(p.CustomProtocol))
+            {
+                im.CustomProtocol = p.CustomProtocol;
+            }
+            else if (p.Protocol == GAUserImProtocol.custom_protocol &&
+                String.IsNullOrWhiteSpace(p.CustomProtocol))
+            {
+                WriteError(new ErrorRecord(new Exception(
+                "No CustomType; it cannot be empty if the Type is Custom."),
+                    "", ErrorCategory.InvalidData, p.CustomType));
+            }
+
+            if (p.Primary.HasValue)
+            {
+                im.Primary = p.Primary.Value;
+            }
+
+            if (!String.IsNullOrWhiteSpace(p.Im))
+            {
+                im.Im = p.Im;
+            }
+
+            return im;
+        }
+
+        private Google.Apis.admin.Directory.directory_v1.Data.UserOrganization GetUserOrganization(UserOrganizationProperties p)
+        {
+            Google.Apis.admin.Directory.directory_v1.Data.UserOrganization org = new Google.Apis.admin.Directory.directory_v1.Data.UserOrganization();
+
+            org.Type = p.Type.ToString();
+
+            if (p.Type == GAUserOrganizationType.custom &&
+                !String.IsNullOrWhiteSpace(p.CustomType))
+            {
+                org.CustomType = p.CustomType;
+            }
+            else if (p.Type == GAUserOrganizationType.custom &&
+                String.IsNullOrWhiteSpace(p.CustomType))
+            {
+                WriteError(new ErrorRecord(new Exception(
+                "No CustomType; it cannot be empty if the Type is Custom."),
+                    "", ErrorCategory.InvalidData, p.CustomType));
+            }
+
+            if (!String.IsNullOrWhiteSpace(p.CostCenter))
+            {
+                org.CostCenter = p.CostCenter;
+            }
+
+            if (!String.IsNullOrWhiteSpace(p.Department))
+            {
+                org.Department = p.Department;
+            }
+
+            if (!String.IsNullOrWhiteSpace(p.Description))
+            {
+                org.Description = p.Description;
+            }
+
+            if (!String.IsNullOrWhiteSpace(p.Domain))
+            {
+                org.Domain = p.Domain;
+            }
+
+            if (!String.IsNullOrWhiteSpace(p.Location))
+            {
+                org.Location = p.Location;
+            }
+
+            if (!String.IsNullOrWhiteSpace(p.Name))
+            {
+                org.Name = p.Name;
+            }
+
+            if (p.Primary.HasValue)
+            {
+                org.Primary = p.Primary.Value;
+            }
+
+            if (!String.IsNullOrWhiteSpace(p.Symbol))
+            {
+                org.Symbol = p.Symbol;
+            }
+
+            if (!String.IsNullOrWhiteSpace(p.Title))
+            {
+                org.Title = p.Title;
+            }
+
+            return org;
+        }
+
+        private Google.Apis.admin.Directory.directory_v1.Data.UserPhone GetUserPhone(UserPhoneProperties p)
+        {
+            Google.Apis.admin.Directory.directory_v1.Data.UserPhone phone = new Google.Apis.admin.Directory.directory_v1.Data.UserPhone();
+
+            phone.Type = p.Type.ToString();
+
+            if (p.Type == GAUserPhoneType.custom &&
+                !String.IsNullOrWhiteSpace(p.CustomType))
+            {
+                phone.CustomType = p.CustomType;
+            }
+            else if (p.Type == GAUserPhoneType.custom &&
+                String.IsNullOrWhiteSpace(p.CustomType))
+            {
+                WriteError(new ErrorRecord(new Exception(
+                "No CustomType; it cannot be empty if the Type is Custom."),
+                    "", ErrorCategory.InvalidData, p.CustomType));
+            }
+
+            if (!String.IsNullOrWhiteSpace(p.Value))
+            {
+                phone.Value = p.Value;
+            }
+
+            if (p.Primary.HasValue)
+            {
+                phone.Primary = p.Primary.Value;
+            }
+
+            return phone;
+        }
+
+        private Google.Apis.admin.Directory.directory_v1.Data.UserRelation GetUserRelation(UserRelationProperties p)
+        {
+            Google.Apis.admin.Directory.directory_v1.Data.UserRelation e = new Google.Apis.admin.Directory.directory_v1.Data.UserRelation();
+
+            e.Type = p.Type.ToString();
+
+            if (p.Type == GAUserRelationType.custom &&
+                !String.IsNullOrWhiteSpace(p.CustomType))
+            {
+                e.CustomType = p.CustomType;
+            }
+            else if (p.Type == GAUserRelationType.custom &&
+                String.IsNullOrWhiteSpace(p.CustomType))
+            {
+                WriteError(new ErrorRecord(new Exception(
+                "No CustomType; it cannot be empty if the Type is Custom."),
+                    "", ErrorCategory.InvalidData, p.CustomType));
+            }
+
+            if (!String.IsNullOrWhiteSpace(p.Value))
+            {
+                e.Value = p.Value;
+            }
+
+            return e;
+        }
+
+        //private UserCustomSchemaProperties GetUserCustomSchema(UserCustomSchemaProperties p)
+        //{
+        //    UserCustomSchemaProperties e = new UserCustomSchemaProperties();
+
+        //    //I have no idea what to do here right now. I'm open to ideas.
+
+        //    return e;
+        //}
+
+        #endregion
+    }
+
+
+    #region UserPropertyContextClasses
+    public interface IUserContextProperties { }
+
+    public class UserAddressProperties : IUserContextProperties
+    {
+        [Parameter(Position = 1,
+            Mandatory = true,
+            HelpMessage = "The address type. Allowed values are: custom, home, other, work")]
+        public GAUserAddressType Type { get; set; }
+
+        [Parameter(Position = 2,
+            HelpMessage = "If the address type is custom, this property contains the custom value.")]
+        public string CustomType { get; set; }
+
+        [Parameter(Position = 3,
+            HelpMessage = "Indicates if the user-supplied address was formatted. Formatted addresses are not currently supported.")]
+        public bool? SourceIsStructured { get; set; }
+
+        [Parameter(Position = 4,
+            HelpMessage = "A full and unstructured postal address.")]
+        public string Formatted { get; set; }
+
+        [Parameter(Position = 5,
+            HelpMessage = "The post office box, if present.")]
+        public string PoBox { get; set; }
+
+        [Parameter(Position = 6,
+            HelpMessage = "For extended addresses, such as an address that includes a sub-region.")]
+        public string ExtendedAddress { get; set; }
+
+        [Parameter(Position = 7,
+            HelpMessage = "The street address, such as 1600 Amphitheatre Parkway. Whitespace within the string is ignored; however, newlines are significant.")]
+        public string StreetAddress { get; set; }
+
+        [Parameter(Position = 8,
+            HelpMessage = "The town or city of the address.")]
+        public string Locality { get; set; }
+
+        [Parameter(Position = 9,
+            HelpMessage = "The abbreviated province or state.")]
+        public string Region { get; set; }
+
+        [Parameter(Position = 10,
+            HelpMessage = "The ZIP or postal code, if applicable.")]
+        public string PostalCode { get; set; }
+
+        [Parameter(Position = 11,
+            HelpMessage = "Country.")]
+        public string Country { get; set; }
+
+        [Parameter(Position = 12,
+            HelpMessage = "If this is the user's primary address. The addresses list may contain only one primary address.")]
+        public bool? Primary { get; set; }
+
+        [Parameter(Position = 13,
+            HelpMessage = "The country code. Uses the ISO 3166-1 standard.")]
+        public string CountryCode { get; set; }
+    }
+
+    public class UserEmailProperties : IUserContextProperties
+    {
+        [Parameter(Position = 1,
+            HelpMessage = "The user's email address. Also serves as the email ID. This value can be the user's primary email address or an alias.")]
+        public string Address { get; set; }
+
+        [Parameter(Position = 2,
+            HelpMessage = "If the value of type is custom, this property contains the custom type string.")]
+        public string CustomType { get; set; }
+
+        [Parameter(Position = 3,
+            HelpMessage = "Idicates if this is the user's primary email. Only one entry can be marked as primary.")]
+        public bool? Primary { get; set; }
+
+        [Parameter(Position = 4,
+            Mandatory = true,
+            HelpMessage = "The type of the email account. Valid values are: custom, home, other, work")]
+        public GAUserEmailType Type { get; set; }
+    }
+
+    public class UserExternalIdProperties : IUserContextProperties
+    {
+        [Parameter(Position = 1,
+            HelpMessage = "If the external ID type is custom, this property holds the custom type.")]
+        public string CustomType { get; set; }
+
+        [Parameter(Position = 2,
+            Mandatory = true,
+            HelpMessage = "The type of the ID. Allowed values are: account, custom, customer, network, organization")]
+        public GAUserExternalIdType Type { get; set; }
+
+        [Parameter(Position = 3,
+            HelpMessage = "The value of the ID.")]
+        public string Value { get; set; }
+    }
+
+    public class UserImProperties : IUserContextProperties
+    {
+        [Parameter(Position = 1,
+            HelpMessage = "If the protocol value is custom_protocol, this property holds the custom protocol's string.")]
+        public string CustomProtocol { get; set; }
+
+        [Parameter(Position = 2,
+            HelpMessage = "If the IM type is custom, this property holds the custom type string.")]
+        public string CustomType { get; set; }
+
+        [Parameter(Position = 3,
+            HelpMessage = "The user's IM network ID.")]
+        public string Im { get; set; }
+
+        [Parameter(Position = 4,
+            HelpMessage = "If this is the user's primary IM. Only one entry in the IM list can have a value of true.")]
+        public bool? Primary { get; set; }
+
+        [Parameter(Position = 5,
+            Mandatory = true,
+            HelpMessage = "An IM protocol identifies the IM network. The value can be a custom network or the standard network. The values are: custom_protocol: A custom IM network protocol, aim: AOL Instant Messenger protocol, gtalk: Google Talk protocol, icq: ICQ protocol, jabber: Jabber protocol, msn: MSN Messenger protocol, net_meeting: Net Meeting protocol, qq: QQ protocol, skype: Skype protocol, yahoo: Yahoo Messenger protocol")]
+        public GAUserImProtocol Protocol { get; set; }
+
+        [Parameter(Position = 6,
+            Mandatory = true,
+            HelpMessage = "The type must be one of these values: custom, home, other, work")]
+        public GAUserIMType Type { get; set; }
+    }
+
+    public class UserOrganizationProperties : IUserContextProperties
+    {
+        [Parameter(Position = 1,
+            HelpMessage = "The cost center of the user's organization.")]
+        public string CostCenter { get; set; }
+
+        [Parameter(Position = 2,
+            HelpMessage = "If the value of type is custom, this property contains the custom type.")]
+        public string CustomType { get; set; }
+
+        [Parameter(Position = 3,
+            HelpMessage = "Specifies the department within the organization, such as 'sales' or 'engineering'.")]
+        public string Department { get; set; }
+
+        [Parameter(Position = 4,
+            HelpMessage = "The description of the organization.")]
+        public string Description { get; set; }
+
+        [Parameter(Position = 5,
+            HelpMessage = "The domain the organization belongs to.")]
+        public string Domain { get; set; }
+
+        [Parameter(Position = 6,
+            HelpMessage = "The physical location of the organization. This does not need to be a fully qualified address.")]
+        public string Location { get; set; }
+
+        [Parameter(Position = 7,
+            HelpMessage = "The name of the organization.")]
+        public string Name { get; set; }
+
+        [Parameter(Position = 8,
+            HelpMessage = "Indicates if this is the user's primary organization. A user may only have one primary organization.")]
+        public bool? Primary { get; set; }
+
+        [Parameter(Position = 9,
+            HelpMessage = "Text string symbol of the organization. For example, the text symbol for Google is GOOG.")]
+        public string Symbol { get; set; }
+
+        [Parameter(Position = 10,
+            HelpMessage = "The user's title within the organization, for example 'member' or 'engineer'.")]
+        public string Title { get; set; }
+
+        [Parameter(Position = 11,
+            Mandatory = true,
+            HelpMessage = "The type of organization. Possible values are: unknown, school, work, domain_only, custom")]
+        public GAUserOrganizationType Type { get; set; }
+    }
+
+    public class UserPhoneProperties : IUserContextProperties
+    {
+        [Parameter(Position = 1,
+            HelpMessage = "A human-readable phone number. It may be in any telephone number format.")]
+        public string Value { get; set; }
+
+        [Parameter(Position = 2,
+            HelpMessage = "Indicates if this is the user's primary phone number. A user may only have one primary phone number.")]
+        public bool? Primary { get; set; }
+
+        [Parameter(Position = 3,
+            Mandatory = true,
+            HelpMessage = "The type of phone number. Allowed values are: custom, home, work, other, home_fax, work_fax, mobile, pager, other_fax, compain_main, assistant, car, radio, isdn, callback, telex, tty_tdd, work_mobile, work_pager, main, grand_central")]
+        public GAUserPhoneType Type { get; set; }
+
+        [Parameter(Position = 4,
+            HelpMessage = "If the value of type is custom, this property contains the custom type.")]
+        public string CustomType { get; set; }
+    }
+
+    public class UserRelationProperties : IUserContextProperties
+    {
+        [Parameter(Position = 1,
+            HelpMessage = "If the value of type is custom, this property contains the custom type.")]
+        public string CustomType { get; set; }
+
+        [Parameter(Position = 2,
+            Mandatory = true,
+            HelpMessage = "The type of relation. Possible values are: custom, spouse, child, mother, father, parent, brother, sister, friend, relative, domestic_partner, manager, assistant, referred_by, partner")]
+        public GAUserRelationType Type { get; set; }
+
+        [Parameter(Position = 3,
+            HelpMessage = "The name of the person the user is related to.")]
+        public string Value { get; set; }
+    }
+
+    //public class UserCustomSchemaProperties : IUserContextProperties
+    //{
+
+    //}
+    #endregion
+}
+
+namespace gShell.Cmdlets.Directory.GAUserProperty
+{
+    [Cmdlet(VerbsCommon.New, "GAUserPropertyCollection",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/New-GAUserPropertyCollection")]
+    public class NewGAUserPropertyCollection : PSCmdlet
+    {
+
+        protected override void ProcessRecord()
+        {
+            WriteObject(new GAUserPropertyCollection());
+        }
+
+    }
+}
+
+namespace gShell.Cmdlets.Directory.GAUserProperty
+{
+    [Cmdlet(VerbsCommon.Remove, "GAUserProperty",
+         SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAUserProperty")]
+    public class RemoveGAUserProperty : GAUserPropertyBase
+    {
+        #region Properties
+
+        //UserName = 0
+
+        //Domain position = 1
+
+        [Parameter(
+           Mandatory = false,
+           HelpMessage = "The GShellUserObject to act upon. For example, the result of Get-GAUser",
+           ValueFromPipeline = true)]
+        public GShellUserObject GShellObject { get; set; }
+
+        [Parameter(Position = 3,
+           Mandatory = false,
+           HelpMessage = "The property type to retrieve for the user. Allowed values are: address, email, externalid, im, organization, phone, relation.",
+           ParameterSetName = "ClearOneProperty")]
+        [Parameter(Position = 3,
+           Mandatory = false,
+           HelpMessage = "The property type to retrieve for the user. Allowed values are: address, email, externalid, im, organization, phone, relation.",
+           ParameterSetName = "ClearOneType")]
+        [Alias("Type")]
+        public GAUserPropertyType PropertyType { get; set; }
+
+        [Parameter(Position = 4,
+           Mandatory = false,
+           HelpMessage = "The 0-based index number of the item you want to remove for the given Property Type. (The first item in the list is an index of 0.)",
+           ParameterSetName = "ClearOneProperty")]
+        public int Index { get; set; }
+
+        [Parameter(Position = 5,
+            Mandatory = false,
+            HelpMessage = "Clear the entire selected property type for the given user.",
+            ParameterSetName = "ClearOneType")]
+        public SwitchParameter ClearType { get; set; }
+
+        [Parameter(Position = 6,
+            Mandatory = false,
+            HelpMessage = "Clear all property types for the given user.",
+            ParameterSetName = "ClearAll")]
+        public SwitchParameter ClearAll { get; set; }
+
+        [Parameter(Position = 7,
+            HelpMessage = "Force the action to complete without a prompt to continue.")]
+        public SwitchParameter Force { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            WriteWarning("At the time of release of this version there is a bug in the Google API preventing the deletion of User Properties. For more information, see https://code.google.com/a/google.com/p/apps-api-issues/issues/detail?id=3701 - if you would like this fixed please star the issue to bring it more to their attention. There is no guarantee your information will be deleted.");
+
+            if (ShouldProcess(UserName, "Get-GAUserProperty"))
+            {
+                if (Force || ShouldContinue((String.Format("One or more user property types of type {0} will be removed from {1}@{2}.\nContinue?",
+                    PropertyType.ToString(), UserName, Domain)), "Confirm Google Apps User Property Removal"))
+                {
+                    Data.User u = new Data.User();
+
+                    if (null != GShellObject)
+                    {
+                        u = GShellObject.userObject;
+                    }
+                    else if (!string.IsNullOrWhiteSpace(UserName))
+                    {
+                        UserName = GetFullEmailAddress(UserName, Domain);
+                        u = users.Get(UserName);
+                    }
+                    else
+                    {
+                        WriteError(new ErrorRecord(new Exception(
+                        string.Format("No username or user object was provided.")),
+                            "", ErrorCategory.InvalidOperation, UserName));
+                    }
+
+                    switch (ParameterSetName)
+                    {
+                        case "ClearOneProperty":
+                            RemoveOneProperty(u);
+                            break;
+
+                        case "ClearOneType":
+                            ClearOneProperty(u);
+                            break;
+
+                        case "ClearAll":
+                            ClearAllProperties(u);
+                            break;
+
+                    }
+                }
+                else
+                {
+                    WriteError(new ErrorRecord(new Exception("Removal of user property not confirmed"),
+                        "", ErrorCategory.InvalidData, UserName));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Remove one property item from a property list of a User.
+        /// </summary>
+        /// <param name="u"></param>
+        public void RemoveOneProperty(Data.User u)
+        {
+
+            Data.User userAcct = new Data.User();
+
+            //pull it in to a collection in order to access the methods
+            GAUserPropertyCollection upc = new GAUserPropertyCollection(u);
+
+            //we don't need to worry about empty lists removing other information here since we're directly adding it to the user object
+            switch (PropertyType)
+            {
+                case GAUserPropertyType.address:
+                    if (upc.addresses.Count > 1)
+                    {
+                        upc.RemoveAt(PropertyType, Index);
+                        userAcct.Addresses = upc.GetAddresses();
+                    }
+                    else
+                    {
+                        userAcct.Addresses = NullTokenProvider.NullToken;
+                    }
+                    break;
+
+                case GAUserPropertyType.email:
+                    if (upc.emails.Count > 1)
+                    {
+                        upc.RemoveAt(PropertyType, Index);
+                        userAcct.Emails = upc.GetEmails();
+                    }
+                    else
+                    {
+                        userAcct.Emails = NullTokenProvider.NullToken;
+                    }
+                    break;
+
+                case GAUserPropertyType.externalid:
+                    if (upc.externalIds.Count > 1)
+                    {
+                        upc.RemoveAt(PropertyType, Index);
+                        userAcct.ExternalIds = upc.GetExternalIds();
+                    }
+                    else
+                    {
+                        userAcct.ExternalIds = NullTokenProvider.NullToken;
+                    }
+                    break;
+
+                case GAUserPropertyType.im:
+                    if (upc.ims.Count > 1)
+                    {
+                        upc.RemoveAt(PropertyType, Index);
+                        userAcct.Ims = upc.GetIms();
+                    }
+                    else
+                    {
+                        userAcct.Ims = NullTokenProvider.NullToken;
+                    }
+                    break;
+
+                case GAUserPropertyType.organization:
+                    if (upc.organizations.Count > 1)
+                    {
+                        upc.RemoveAt(PropertyType, Index);
+                        userAcct.Organizations = upc.GetOrganizations();
+                    }
+                    else
+                    {
+                        userAcct.Organizations = NullTokenProvider.NullToken;
+                    }
+                    break;
+
+                case GAUserPropertyType.phone:
+                    if (upc.phones.Count > 1)
+                    {
+                        upc.RemoveAt(PropertyType, Index);
+                        userAcct.Phones = upc.GetPhones();
+                    }
+                    else
+                    {
+                        userAcct.Phones = NullTokenProvider.NullToken;
+                    }
+                    break;
+
+                case GAUserPropertyType.relation:
+                    if (upc.relations.Count > 1)
+                    {
+                        upc.RemoveAt(PropertyType, Index);
+                        userAcct.Relations = upc.GetRelations();
+                    }
+                    else
+                    {
+                        userAcct.Relations = NullTokenProvider.NullToken;
+                    }
+                    break;
+            }
+            string UserKey = GetFullEmailAddress(u.PrimaryEmail, Domain);
+            users.Update(userAcct, UserKey);
+        }
+
+        /// <summary>
+        /// Clear one property fully from a User account.
+        /// </summary>
+        /// <param name="u"></param>
+        public void ClearOneProperty(Data.User u)
+        {
+            Data.User userAcct = new Data.User();
+
+            //again, we're only directly setting one attribute and don't have to worry about the other collection information
+            switch (PropertyType)
+            {
+                case GAUserPropertyType.address:
+                    userAcct.Addresses = NullTokenProvider.NullToken;
+                    break;
+
+                case GAUserPropertyType.email:
+                    userAcct.Emails = NullTokenProvider.NullToken;
+                    break;
+
+                case GAUserPropertyType.externalid:
+                    userAcct.ExternalIds = NullTokenProvider.NullToken;
+                    break;
+
+                case GAUserPropertyType.im:
+                    userAcct.Ims = NullTokenProvider.NullToken;
+                    break;
+
+                case GAUserPropertyType.organization:
+                    userAcct.Organizations = NullTokenProvider.NullToken;
+                    break;
+
+                case GAUserPropertyType.phone:
+                    userAcct.Phones = NullTokenProvider.NullToken;
+                    break;
+
+                case GAUserPropertyType.relation:
+                    userAcct.Relations = NullTokenProvider.NullToken;
+                    break;
+            }
+
+            string UserKey = GetFullEmailAddress(u.PrimaryEmail, Domain);
+            users.Patch(userAcct, UserKey);
+
+        }
+
+        /// <summary>
+        /// Clear all the properties from a user account.
+        /// </summary>
+        /// <param name="u"></param>
+        public void ClearAllProperties(Data.User u)
+        {
+            Data.User userAcct = new Data.User();
+
+            userAcct.Addresses = NullTokenProvider.NullToken;
+            userAcct.Emails = NullTokenProvider.NullToken;
+            userAcct.ExternalIds = NullTokenProvider.NullToken;
+            userAcct.Ims = NullTokenProvider.NullToken;
+            userAcct.Organizations = NullTokenProvider.NullToken;
+            userAcct.Phones = NullTokenProvider.NullToken;
+            userAcct.Relations = NullTokenProvider.NullToken;
+
+            string UserKey = GetFullEmailAddress(u.PrimaryEmail, Domain);
+            users.Patch(userAcct, UserKey);
+        }
+    }
+}
+
+namespace gShell.Cmdlets.Directory.GAVerificationCode
+{
+    [Cmdlet(VerbsCommon.Get, "GAVerificationCode",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAVerificationCode")]
+    public class GetGAVerificationCode : DirectoryBase
+    {
+        #region Properties
+
+        [Parameter(Position = 0,
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string UserKey { get; set; }
+
+        //Domain position = 1
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            UserKey = GetFullEmailAddress(UserKey, Domain);
+
+            if (ShouldProcess(UserKey, "Get-GAVerificationCode"))
+            {
+                WriteObject(verificationCodes.List(UserKey));
+            }
+        }
+    }
+
+    [Cmdlet(VerbsSecurity.Revoke, "GAVerificationCode",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Revoke-GAVerificationCode")]
+    public class RemoveGAVerificationCode : DirectoryBase
+    {
+        #region Properties
+
+        [Parameter(Position = 0,
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string UserKey { get; set; }
+
+        //Domain position = 1
+
+        [Parameter(Position = 2)]
+        public SwitchParameter Force { get; set; }
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess(UserKey, "Revoke-GAVerificationCode"))
+            {
+                if (Force || ShouldContinue((String.Format("Verification Codes for user {0} will be invalidated on the {1} Google Apps domain.\nContinue?",
+                    UserKey, Domain)), "Confirm Google Apps Verification Code Invalidation"))
+                {
+                    try
+                    {
+                        WriteDebug(string.Format("Attempting to revoke Verification Codes {0}...",
+                            UserKey));
+                        verificationCodes.Invalidate(UserKey);
+                        WriteVerbose(string.Format("Invalidation of Verification Codes for user {0} completed without error.",
+                            UserKey));
+                    }
+                    catch (Exception e)
+                    {
+                        WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, UserKey));
+                    }
+                }
+                else
+                {
+                    WriteError(new ErrorRecord(new Exception("Verification Codes invalidation not confirmed"),
+                        "", ErrorCategory.InvalidData, UserKey));
+                }
+            }
+        }
+    }
+
+    [Cmdlet(VerbsCommon.New, "GAVerificationCode",
+          SupportsShouldProcess = true,
+          HelpUri = @"https://github.com/squid808/gShell/wiki/New-GAVerificationCode")]
+    public class NewGAVerificationCode : DirectoryBase
+    {
+        #region Properties
+        [Parameter(Position = 0,
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true)]
+        [ValidateNotNullOrEmpty]
+        public string UserKey { get; set; }
+
+        //Domain position = 1
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            UserKey = GetFullEmailAddress(UserKey, Domain);
+
+            if (ShouldProcess(UserKey, "New-GAVerificationCode"))
+            {
+                verificationCodes.Generate(UserKey);
+            }
+        }
+    }
+}

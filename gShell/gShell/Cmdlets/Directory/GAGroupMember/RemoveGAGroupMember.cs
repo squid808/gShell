@@ -1,71 +1,71 @@
-﻿using System;
-using System.Management.Automation;
+﻿//using System;
+//using System.Management.Automation;
 
-namespace gShell.Cmdlets.Directory.GAGroupMember
-{
-    [Cmdlet(VerbsCommon.Remove, "GAGroupMember",
-          DefaultParameterSetName = "OneGroup",
-          SupportsShouldProcess = true,
-          HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAGroupMember")]
-    public class RemoveGAGroupMember : DirectoryBase
-    {
-        #region Properties
+//namespace gShell.Cmdlets.Directory.GAGroupMember
+//{
+//    [Cmdlet(VerbsCommon.Remove, "GAGroupMember",
+//          DefaultParameterSetName = "OneGroup",
+//          SupportsShouldProcess = true,
+//          HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAGroupMember")]
+//    public class RemoveGAGroupMember : DirectoryBase
+//    {
+//        #region Properties
 
-        [Parameter(Position = 0,
-            ParameterSetName = "OneGroup",
-            Mandatory = true,
-            ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "The email name of the group whose member you want to remove. For a group AllThings@domain.com named 'All The Things', use AllThings")]
-        [ValidateNotNullOrEmpty]
-        public string GroupName { get; set; }
+//        [Parameter(Position = 0,
+//            ParameterSetName = "OneGroup",
+//            Mandatory = true,
+//            ValueFromPipeline = true,
+//            ValueFromPipelineByPropertyName = true,
+//            HelpMessage = "The email name of the group whose member you want to remove. For a group AllThings@domain.com named 'All The Things', use AllThings")]
+//        [ValidateNotNullOrEmpty]
+//        public string GroupName { get; set; }
 
-        //Domain position = 1
+//        //Domain position = 1
 
-        [Parameter(Position = 2,
-            Mandatory = true,
-            ParameterSetName = "OneGroup",
-            HelpMessage = "The username of the group member you want to remove.")]
-        public string UserName { get; set; }
+//        [Parameter(Position = 2,
+//            Mandatory = true,
+//            ParameterSetName = "OneGroup",
+//            HelpMessage = "The username of the group member you want to remove.")]
+//        public string UserName { get; set; }
 
-        [Parameter(Position = 3,
-            HelpMessage = "Force the action to complete without a prompt to continue.")]
-        public SwitchParameter Force { get; set; }
-        #endregion
+//        [Parameter(Position = 3,
+//            HelpMessage = "Force the action to complete without a prompt to continue.")]
+//        public SwitchParameter Force { get; set; }
+//        #endregion
 
-        protected override void ProcessRecord()
-        {
-            GroupName = GetFullEmailAddress(GroupName, Domain);
+//        protected override void ProcessRecord()
+//        {
+//            GroupName = GetFullEmailAddress(GroupName, Domain);
 
-            if (ShouldProcess(GroupName, "Remove-GAGroupMember"))
-            {
-                if (Force || ShouldContinue((String.Format("Group member {0} will be removed from the {1}@{2} group.\nContinue?",
-                    UserName, GroupName, Domain)), "Confirm Google Apps Group Member Removal"))
-                {
-                    try
-                    {
-                        UserName = GetFullEmailAddress(UserName, Domain);
+//            if (ShouldProcess(GroupName, "Remove-GAGroupMember"))
+//            {
+//                if (Force || ShouldContinue((String.Format("Group member {0} will be removed from the {1}@{2} group.\nContinue?",
+//                    UserName, GroupName, Domain)), "Confirm Google Apps Group Member Removal"))
+//                {
+//                    try
+//                    {
+//                        UserName = GetFullEmailAddress(UserName, Domain);
 
-                        WriteDebug(string.Format("Attempting to remove member {0} from group {1}...",
-                            UserName, GroupName));
+//                        WriteDebug(string.Format("Attempting to remove member {0} from group {1}...",
+//                            UserName, GroupName));
 
-                        members.Delete(GroupName, UserName);
+//                        members.Delete(GroupName, UserName);
 
-                        WriteVerbose(string.Format("Removal of {0} from {1} completed without error.",
-                            UserName, GroupName));
-                    }
-                    catch (Exception e)
-                    {
-                        WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, GroupName));
-                    }
-                }
-                else
-                {
-                    WriteError(new ErrorRecord(new Exception("Group member removal not confirmed"),
-                        "", ErrorCategory.InvalidData, GroupName));
-                }
-            }
-        }
-    }
+//                        WriteVerbose(string.Format("Removal of {0} from {1} completed without error.",
+//                            UserName, GroupName));
+//                    }
+//                    catch (Exception e)
+//                    {
+//                        WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, GroupName));
+//                    }
+//                }
+//                else
+//                {
+//                    WriteError(new ErrorRecord(new Exception("Group member removal not confirmed"),
+//                        "", ErrorCategory.InvalidData, GroupName));
+//                }
+//            }
+//        }
+//    }
 
-}
+//}

@@ -1,155 +1,155 @@
-﻿using System;
-using System.Management.Automation;
-using Data = Google.Apis.admin.Directory.directory_v1.Data;
+﻿//using System;
+//using System.Management.Automation;
+//using Data = Google.Apis.admin.Directory.directory_v1.Data;
 
-namespace gShell.Cmdlets.Directory.GAMobileDevice
-{
-    [Cmdlet(VerbsCommon.Get, "GANotification",
-          DefaultParameterSetName = "One",
-          SupportsShouldProcess = true,
-          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GANotification")]
-    public class GetGANotification : DirectoryBase
-    {
-        #region Properties
+//namespace gShell.Cmdlets.Directory.GAMobileDevice
+//{
+//    [Cmdlet(VerbsCommon.Get, "GANotification",
+//          DefaultParameterSetName = "One",
+//          SupportsShouldProcess = true,
+//          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GANotification")]
+//    public class GetGANotification : DirectoryBase
+//    {
+//        #region Properties
 
-        [Parameter(Position = 0,
-            Mandatory = true,
-            ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNullOrEmpty]
-        public string Customer { get; set; }
+//        [Parameter(Position = 0,
+//            Mandatory = true,
+//            ValueFromPipelineByPropertyName = true)]
+//        [ValidateNotNullOrEmpty]
+//        public string Customer { get; set; }
 
-        //Domain position = 1
+//        //Domain position = 1
 
-        [Parameter(Position = 2,
-            Mandatory = true,
-            ParameterSetName = "One",
-            ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNullOrEmpty]
-        public string NotificationId { get; set; }
+//        [Parameter(Position = 2,
+//            Mandatory = true,
+//            ParameterSetName = "One",
+//            ValueFromPipelineByPropertyName = true)]
+//        [ValidateNotNullOrEmpty]
+//        public string NotificationId { get; set; }
 
-        [Parameter(Position = 3,
-            ParameterSetName = "List")]
-        public SwitchParameter All { get; set; }
+//        [Parameter(Position = 3,
+//            ParameterSetName = "List")]
+//        public SwitchParameter All { get; set; }
 
-        [Parameter(Position = 4,
-            Mandatory = false,
-            ParameterSetName = "List")]
-        public int MaxResults { get; set; }
+//        [Parameter(Position = 4,
+//            Mandatory = false,
+//            ParameterSetName = "List")]
+//        public int MaxResults { get; set; }
 
-        #endregion
+//        #endregion
 
-        protected override void ProcessRecord()
-        {
-            if (ShouldProcess(Customer, "Get-GANotification"))
-            {
-                switch (ParameterSetName)
-                {
-                    case "One":
-                        WriteObject(notifications.Get(Customer, NotificationId));
-                        break;
-                    case "List":
-                        WriteObject(notifications.List(Customer, new dotNet.Directory.Notifications.NotificationsListProperties()
-                        {
-                            totalResults = MaxResults
-                        }));
-                        break;
-                }
-            }
-        }
-    }
+//        protected override void ProcessRecord()
+//        {
+//            if (ShouldProcess(Customer, "Get-GANotification"))
+//            {
+//                switch (ParameterSetName)
+//                {
+//                    case "One":
+//                        WriteObject(notifications.Get(Customer, NotificationId));
+//                        break;
+//                    case "List":
+//                        WriteObject(notifications.List(Customer, new dotNet.Directory.Notifications.NotificationsListProperties()
+//                        {
+//                            TotalResults = MaxResults
+//                        }));
+//                        break;
+//                }
+//            }
+//        }
+//    }
 
-    [Cmdlet(VerbsCommon.Remove, "GANotification",
-          SupportsShouldProcess = true,
-          HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GANotification")]
-    public class RemoveGANotification : DirectoryBase
-    {
-        #region Properties
+//    [Cmdlet(VerbsCommon.Remove, "GANotification",
+//          SupportsShouldProcess = true,
+//          HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GANotification")]
+//    public class RemoveGANotification : DirectoryBase
+//    {
+//        #region Properties
 
-        [Parameter(Position = 0,
-            Mandatory = true,
-            ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNullOrEmpty]
-        public string Customer { get; set; }
+//        [Parameter(Position = 0,
+//            Mandatory = true,
+//            ValueFromPipelineByPropertyName = true)]
+//        [ValidateNotNullOrEmpty]
+//        public string Customer { get; set; }
 
-        //Domain position = 1
+//        //Domain position = 1
 
-        [Parameter(Position = 2,
-            Mandatory = true,
-            ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNullOrEmpty]
-        public string NotificationId { get; set; }
+//        [Parameter(Position = 2,
+//            Mandatory = true,
+//            ValueFromPipelineByPropertyName = true)]
+//        [ValidateNotNullOrEmpty]
+//        public string NotificationId { get; set; }
 
-        [Parameter(Position = 3)]
-        public SwitchParameter Force { get; set; }
+//        [Parameter(Position = 3)]
+//        public SwitchParameter Force { get; set; }
 
-        #endregion
+//        #endregion
 
-        protected override void ProcessRecord()
-        {
-            if (ShouldProcess(Customer, "Remove-GANotification"))
-            {
-                if (Force || ShouldContinue((String.Format("Notification {0} with NotificationId {2} will be removed from the {1} Google Apps domain.\nContinue?",
-                    Customer, Domain, NotificationId)), "Confirm Google Apps Notification Removal"))
-                {
-                    try
-                    {
-                        WriteDebug(string.Format("Attempting to remove Notification {0}...",
-                            Customer));
-                        notifications.Delete(Customer, NotificationId);
-                        WriteVerbose(string.Format("Removal of Notification {0} completed without error.",
-                            Customer));
-                    }
-                    catch (Exception e)
-                    {
-                        WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, Customer));
-                    }
-                }
-                else
-                {
-                    WriteError(new ErrorRecord(new Exception("Notification deletion not confirmed"),
-                        "", ErrorCategory.InvalidData, Customer));
-                }
-            }
-        }
-    }
+//        protected override void ProcessRecord()
+//        {
+//            if (ShouldProcess(Customer, "Remove-GANotification"))
+//            {
+//                if (Force || ShouldContinue((String.Format("Notification {0} with NotificationId {2} will be removed from the {1} Google Apps domain.\nContinue?",
+//                    Customer, Domain, NotificationId)), "Confirm Google Apps Notification Removal"))
+//                {
+//                    try
+//                    {
+//                        WriteDebug(string.Format("Attempting to remove Notification {0}...",
+//                            Customer));
+//                        notifications.Delete(Customer, NotificationId);
+//                        WriteVerbose(string.Format("Removal of Notification {0} completed without error.",
+//                            Customer));
+//                    }
+//                    catch (Exception e)
+//                    {
+//                        WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, Customer));
+//                    }
+//                }
+//                else
+//                {
+//                    WriteError(new ErrorRecord(new Exception("Notification deletion not confirmed"),
+//                        "", ErrorCategory.InvalidData, Customer));
+//                }
+//            }
+//        }
+//    }
 
-    [Cmdlet(VerbsCommon.Set, "GANotification",
-          SupportsShouldProcess = true,
-          HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GANotification")]
-    public class SetGANotification : DirectoryBase
-    {
-        #region Properties
-        [Parameter(Position = 0,
-            Mandatory = true,
-            ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNullOrEmpty]
-        public string Customer { get; set; }
+//    [Cmdlet(VerbsCommon.Set, "GANotification",
+//          SupportsShouldProcess = true,
+//          HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GANotification")]
+//    public class SetGANotification : DirectoryBase
+//    {
+//        #region Properties
+//        [Parameter(Position = 0,
+//            Mandatory = true,
+//            ValueFromPipelineByPropertyName = true)]
+//        [ValidateNotNullOrEmpty]
+//        public string Customer { get; set; }
 
-        //Domain position = 1
+//        //Domain position = 1
 
-        [Parameter(Position = 2,
-            Mandatory = true,
-            ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNullOrEmpty]
-        public string NotificationId { get; set; }
+//        [Parameter(Position = 2,
+//            Mandatory = true,
+//            ValueFromPipelineByPropertyName = true)]
+//        [ValidateNotNullOrEmpty]
+//        public string NotificationId { get; set; }
 
-        [Parameter(Position = 3,
-            Mandatory = true,
-            ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNullOrEmpty]
-        public bool IsUnread { get; set; }
-        #endregion
+//        [Parameter(Position = 3,
+//            Mandatory = true,
+//            ValueFromPipelineByPropertyName = true)]
+//        [ValidateNotNullOrEmpty]
+//        public bool IsUnread { get; set; }
+//        #endregion
 
-        protected override void ProcessRecord()
-        {
-            if (ShouldProcess(Customer, "Set-GANotification"))
-            {
-                Data.Notification body = new Data.Notification();
+//        protected override void ProcessRecord()
+//        {
+//            if (ShouldProcess(Customer, "Set-GANotification"))
+//            {
+//                Data.Notification body = new Data.Notification();
 
-                body.IsUnread = IsUnread;
+//                body.IsUnread = IsUnread;
 
-                WriteObject(notifications.Patch(body, Customer, NotificationId));
-            }
-        }
-    }
-}
+//                WriteObject(notifications.Patch(body, Customer, NotificationId));
+//            }
+//        }
+//    }
+//}
