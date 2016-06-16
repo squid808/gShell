@@ -1,12 +1,14 @@
-﻿using System;
-using System.Management.Automation;
-using gShell.dotNet.CustomSerializer.Json;
-using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
-using System.IO;
-using gShell.dotNet.Utilities;
-using System.Linq;
+﻿using Google.Apis.admin.Directory.directory_v1;
 using gShell.Cmdlets.Directory.GAUserProperty;
+using gShell.dotNet.CustomSerializer.Json;
+using gShell.dotNet.Utilities;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Management.Automation;
+using Org.BouncyCastle.Security;
 using Data = Google.Apis.admin.Directory.directory_v1.Data;
 
 namespace gShell.Cmdlets.Directory.GAAsp
@@ -126,7 +128,12 @@ namespace gShell.Cmdlets.Directory.GAAsp
         HelpMessage = "The unique ID of the ASP to be deleted.")]
         public int CodeId { get; set; }
 
-        [Parameter(Position = 2)]
+        /// <summary>
+        /// <para type="description">A switch to run the cmdlet without prompting.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        HelpMessage = "A switch to run the cmdlet without prompting.")]
         public SwitchParameter Force { get; set; }
 
         #endregion
@@ -163,27 +170,53 @@ namespace gShell.Cmdlets.Directory.GAAsp
     }
 }
 
-
 namespace gShell.Cmdlets.Directory.GAChannel
 {
+    /// <summary>
+    /// <para type="synopsis">Stop watching resources through this channel</para>
+    /// <para type="description">Stop watching resources through this channel</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Stop-GAChannel -Id $SomeIdString -ResourceId $SomeResourceIdString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/StopGDirectoryChannels">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsLifecycle.Stop, "GAChannel",
-          SupportsShouldProcess = true,
-          HelpUri = @"https://github.com/squid808/gShell/wiki/Stop-GAChannel")]
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Stop-GAChannel")]
     public class StopGAChannel : DirectoryBase
     {
         #region Properties
 
-        [Parameter(
-            Mandatory = true)]
-        [ValidateNotNullOrEmpty]
+        /// <summary>
+        /// <para type="description">A UUID or similar unique string that identifies this channel.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "A UUID or similar unique string that identifies this channel.")]
         public string Id { get; set; }
 
-        [Parameter(
-            Mandatory = true)]
-        [ValidateNotNullOrEmpty]
+        /// <summary>
+        /// <para type="description">An opaque ID that identifies the resource being watched on this channel. Stable across different API versions.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "An opaque ID that identifies the resource being watched on this channel. Stable across different API versions.")]
         public string ResourceId { get; set; }
 
-        [Parameter()]
+        /// <summary>
+        /// <para type="description">A switch to run the cmdlet without prompting.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        HelpMessage = "A switch to run the cmdlet without prompting.")]
         public SwitchParameter Force { get; set; }
 
 
@@ -191,7 +224,7 @@ namespace gShell.Cmdlets.Directory.GAChannel
 
         protected override void ProcessRecord()
         {
-            if (ShouldProcess("Report Channel", "Stop-GAChannel"))
+            if (ShouldProcess("Directory Channels", "Stop-GAChannel"))
             {
                 if (Force || ShouldContinue((String.Format("Resource with Id {0} will be stopped on channel with Id {1}\nContinue?",
                     ResourceId, Id)), "Confirm Channel Stop"))
@@ -221,9 +254,27 @@ namespace gShell.Cmdlets.Directory.GAChannel
     }
 }
 
-
 namespace gShell.Cmdlets.Directory.GAChromeosdevice
 {
+    /// <summary>
+    /// <para type="synopsis">Retrieve Chrome OS Device(s)</para>
+    /// <para type="description">Retrieve Chrome OS Device(s)</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Get-GAChromeosdevice -DeviceId $SomeDeviceIdString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <example>
+    ///   <code>PS C:\>List-GAChromeosdevice -All</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/GetGAChromeosdevice">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Get, "GAChromeosdevice",
           DefaultParameterSetName = "One",
           SupportsShouldProcess = true,
@@ -232,28 +283,80 @@ namespace gShell.Cmdlets.Directory.GAChromeosdevice
     {
         #region Properties
 
+        /// <summary>
+        /// <para type="description">Immutable id of the Google Apps account</para>
+        /// </summary>
         [Parameter(Position = 0,
-            Mandatory = false, //can use 'my_customer'
-            ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNullOrEmpty]
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Immutable id of the Google Apps account")]
         public string CustomerId { get; set; }
 
-        //Domain position = 1
-
+        /// <summary>
+        /// <para type="description">Immutable id of Chrome OS Device</para>
+        /// </summary>
         [Parameter(Position = 2,
-            Mandatory = true,
-            ParameterSetName = "One",
-            ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNullOrEmpty]
+        Mandatory = true,
+        ParameterSetName = "One",
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Immutable id of Chrome OS Device")]
         public string DeviceId { get; set; }
 
+        /// <summary>
+        /// <para type="description">A switch to list all results.</para>
+        /// </summary>
         [Parameter(Position = 3,
-            ParameterSetName = "List")]
+        Mandatory = true,
+        ParameterSetName = "List",
+        HelpMessage = "A switch to list all results.")]
         public SwitchParameter All { get; set; }
 
+        /// <summary>
+        /// <para type="description">Maximum number of results to return. Default is 100</para>
+        /// </summary>
         [Parameter(Position = 4,
-            ParameterSetName = "List")]
-        public int MaxResults { get; set; }
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        ParameterSetName = "List",
+        HelpMessage = "Maximum number of results to return. Default is 100")]
+        public int? MaxResults { get; set; }
+
+        /// <summary>
+        /// <para type="description">Column to use for sorting results</para>
+        /// </summary>
+        [Parameter(Position = 5,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Column to use for sorting results")]
+        public ChromeosdevicesResource.ListRequest.OrderByEnum? OrderBy { get; set; }
+
+        /// <summary>
+        /// <para type="description">Restrict information returned to a set of selected fields.</para>
+        /// </summary>
+        [Parameter(Position = 6,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Restrict information returned to a set of selected fields.")]
+        public ChromeosdevicesResource.ListRequest.ProjectionEnum? Projection { get; set; }
+
+        /// <summary>
+        /// <para type="description">Search string in the format given at http://support.google.com/chromeos/a/bin/answer.py?hl=en=1698333</para>
+        /// </summary>
+        [Parameter(Position = 7,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Search string in the format given at http://support.google.com/chromeos/a/bin/answer.py?hl=en=1698333")]
+        public string Query { get; set; }
+
+        /// <summary>
+        /// <para type="description">Whether to return results in ascending or descending order. Only of use when orderBy is also used</para>
+        /// </summary>
+        [Parameter(Position = 8,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Whether to return results in ascending or descending order. Only of use when orderBy is also used")]
+        public ChromeosdevicesResource.ListRequest.SortOrderEnum? SortOrder { get; set; }
+        
 
         #endregion
 
@@ -269,16 +372,37 @@ namespace gShell.Cmdlets.Directory.GAChromeosdevice
                         WriteObject(chromeosdevices.Get(CustomerId, DeviceId));
                         break;
                     case "List":
-                        WriteObject(chromeosdevices.List(CustomerId, new dotNet.Directory.Chromeosdevices.ChromeosdevicesListProperties()
+                        var properties = new dotNet.Directory.Chromeosdevices.ChromeosdevicesListProperties()
                         {
-                            TotalResults = MaxResults
-                        }));
+                            OrderBy = this.OrderBy,
+                            Projection = this.Projection,
+                            Query = this.Query,
+                            SortOrder = this.SortOrder
+                        };
+
+                        if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
+
+                        WriteObject(chromeosdevices.List(CustomerId, properties));
                         break;
                 }
             }
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis">Update Chrome OS Device. This method supports patch semantics.</para>
+    /// <para type="description">Update Chrome OS Device. This method supports patch semantics.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Set-GAChromeosdevice -CustomerId $SomeCustomerIdString -DeviceId $SomeDeviceIdString -ChromeOsDeviceBody $SomeChromeOsDeviceObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/SetGAChromeosdevice">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Set, "GAChromeosdevice",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAChromeosdevice")]
@@ -291,37 +415,68 @@ namespace gShell.Cmdlets.Directory.GAChromeosdevice
         [ValidateNotNullOrEmpty]
         public string CustomerId { get; set; }
 
-        //Domain position = 1
-
-        [Parameter(Position = 2,
-            Mandatory = true,
-            ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNullOrEmpty]
+        /// <summary>
+        /// <para type="description">Immutable id of Chrome OS Device</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Immutable id of Chrome OS Device")]
         public string DeviceId { get; set; }
 
+        /// <summary>
+        /// <para type="description">AssetId specified during enrollment or through later annotation</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "AssetId specified during enrollment or through later annotation")]
+        public string AnnotatedAssetId { get; set; }
+
+        /// <summary>
+        /// <para type="description">Address or location of the device as noted by the administrator</para>
+        /// </summary>
         [Parameter(Position = 3,
-            Mandatory = false,
-            ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNullOrEmpty]
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Address or location of the device as noted by the administrator")]
         public string AnnotatedLocation { get; set; }
 
+        /// <summary>
+        /// <para type="description">User of the device</para>
+        /// </summary>
         [Parameter(Position = 4,
-            Mandatory = false,
-            ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNullOrEmpty]
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "User of the device")]
         public string AnnotatedUser { get; set; }
 
+        /// <summary>
+        /// <para type="description">Notes added by the administrator</para>
+        /// </summary>
         [Parameter(Position = 5,
-            Mandatory = false,
-            ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNullOrEmpty]
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Notes added by the administrator")]
         public string Notes { get; set; }
 
+        /// <summary>
+        /// <para type="description">OrgUnit of the device</para>
+        /// </summary>
         [Parameter(Position = 6,
-            Mandatory = false,
-            ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNullOrEmpty]
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "OrgUnit of the device")]
         public string OrgUnitPath { get; set; }
+
+        /// <summary>
+        /// <para type="description">Restrict information returned to a set of selected fields.</para>
+        /// </summary>
+        [Parameter(Position = 7,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Restrict information returned to a set of selected fields.")]
+        public ChromeosdevicesResource.PatchRequest.ProjectionEnum? Projection { get; set; }
         #endregion
 
         protected override void ProcessRecord()
@@ -330,14 +485,21 @@ namespace gShell.Cmdlets.Directory.GAChromeosdevice
 
             if (ShouldProcess(CustomerId, "Set-GAChromeosdevice"))
             {
-                Data.ChromeOsDevice body = new Data.ChromeOsDevice();
+                Data.ChromeOsDevice body = new Data.ChromeOsDevice()
+                {
+                    AnnotatedAssetId = this.AnnotatedAssetId,
+                    AnnotatedLocation = this.AnnotatedLocation,
+                    AnnotatedUser = this.AnnotatedUser,
+                    Notes = this.Notes,
+                    OrgUnitPath = this.OrgUnitPath
+                };
 
-                body.AnnotatedLocation = (!string.IsNullOrWhiteSpace(AnnotatedLocation)) ? AnnotatedLocation : null;
-                body.AnnotatedUser = (!string.IsNullOrWhiteSpace(AnnotatedUser)) ? AnnotatedUser : null;
-                body.Notes = (!string.IsNullOrWhiteSpace(Notes)) ? Notes : null;
-                body.OrgUnitPath = (!string.IsNullOrWhiteSpace(OrgUnitPath)) ? OrgUnitPath : null;
+                var properties = new dotNet.Directory.Chromeosdevices.ChromeosdevicesPatchProperties()
+                {
+                    Projection = this.Projection
+                };
 
-                chromeosdevices.Patch(body, CustomerId, DeviceId);
+                chromeosdevices.Patch(body, CustomerId, DeviceId, properties);
             }
         }
     }
