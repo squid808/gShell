@@ -1434,40 +1434,112 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
 
 }
 
-
 namespace gShell.Cmdlets.Directory.GAMobileDevice
 {
+    /// <summary>
+    /// <para type="synopsis">Retrieve Mobile Device</para>
+    /// <para type="description">Retrieve Mobile Device</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Get-GAMobiledevice -CustomerId $SomeCustomerIdString -ResourceId $SomeResourceIdString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <example>
+    ///   <code>PS C:\>Get-GAMobiledevice -All</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/GetGAMobiledevice">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Get, "GAMobiledevice",
-          DefaultParameterSetName = "One",
-          SupportsShouldProcess = true,
-          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAMobiledevice")]
+        DefaultParameterSetName = "One",
+        SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAMobiledevice")]
     public class GetGAMobiledevice : DirectoryBase
     {
         #region Properties
 
+        /// <summary>
+        /// <para type="description">Immutable id of the Google Apps account</para>
+        /// </summary>
         [Parameter(Position = 0,
             Mandatory = false,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Immutable id of the Google Apps account")]
         [ValidateNotNullOrEmpty]
         public string CustomerId { get; set; }
 
-        //Domain position = 1
-
+        /// <summary>
+        /// <para type="description">Immutable id of Mobile Device</para>
+        /// </summary>
         [Parameter(Position = 2,
             Mandatory = true,
             ParameterSetName = "One",
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Immutable id of Mobile Device")]
         [ValidateNotNullOrEmpty]
         public string ResourceId { get; set; }
 
+        /// <summary>
+        /// <para type="description">A switch to list all results.</para>
+        /// </summary>
         [Parameter(Position = 3,
-            ParameterSetName = "List")]
+            ParameterSetName = "List",
+            HelpMessage = "A switch to list all results.")]
         public SwitchParameter All { get; set; }
 
+        /// <summary>
+        /// <para type="description">Maximum number of results to return. Default is 100</para>
+        /// </summary>
         [Parameter(Position = 4,
             Mandatory = false,
-            ParameterSetName = "List")]
-        public int MaxResults { get; set; }
+            ParameterSetName = "List",
+            HelpMessage = "Maximum number of results to return. Default is 100")]
+        public int? MaxResults { get; set; }
+
+        /// <summary>
+        /// <para type="description">Column to use for sorting results</para>
+        /// </summary>
+        [Parameter(Position = 5,
+            Mandatory = false,
+            ParameterSetName = "List",
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Column to use for sorting results")]
+        public MobiledevicesResource.ListRequest.OrderByEnum? OrderBy { get; set; }
+
+        /// <summary>
+        /// <para type="description">Restrict information returned to a set of selected fields.</para>
+        /// </summary>
+        [Parameter(Position = 6,
+            Mandatory = false,
+            ParameterSetName = "List",
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Restrict information returned to a set of selected fields.")]
+        public MobiledevicesResource.ListRequest.ProjectionEnum? Projection { get; set; }
+
+        /// <summary>
+        /// <para type="description">Search string in the format given at http://support.google.com/a/bin/answer.py?hl=en=1408863#search</para>
+        /// </summary>
+        [Parameter(Position = 7,
+            Mandatory = false,
+            ParameterSetName = "List",
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Search string in the format given at http://support.google.com/a/bin/answer.py?hl=en=1408863#search")]
+        public string Query { get; set; }
+
+        /// <summary>
+        /// <para type="description">Whether to return results in ascending or descending order. Only of use when orderBy is also used</para>
+        /// </summary>
+        [Parameter(Position = 8,
+            Mandatory = false,
+            ParameterSetName = "List",
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Whether to return results in ascending or descending order. Only of use when orderBy is also used")]
+        public MobiledevicesResource.ListRequest.SortOrderEnum? SortOrder { get; set; }
 
         #endregion
 
@@ -1481,38 +1553,70 @@ namespace gShell.Cmdlets.Directory.GAMobileDevice
                         WriteObject(mobiledevices.Get(CustomerId, ResourceId));
                         break;
                     case "List":
-                        WriteObject(mobiledevices.List(CustomerId, new dotNet.Directory.Mobiledevices.MobiledevicesListProperties()
+
+                        var properties = new dotNet.Directory.Mobiledevices.MobiledevicesListProperties()
                         {
-                            TotalResults = MaxResults
-                        }));
+                            OrderBy = this.OrderBy,
+                            Projection = this.Projection,
+                            Query = this.Query,
+                            SortOrder = this.SortOrder
+                        };
+
+                        if (MaxResults.HasValue) properties.MaxResults = MaxResults.Value;
+
+                        WriteObject(mobiledevices.List(CustomerId, properties));
                         break;
                 }
             }
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis">Delete Mobile Device</para>
+    /// <para type="description">Delete Mobile Device</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Remove-GAMobiledevice -CustomerId $SomeCustomerIdString -ResourceId $SomeResourceIdString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/RemoveGAMobiledevice">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Remove, "GAMobiledevice",
-          SupportsShouldProcess = true,
-          HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAMobiledevice")]
+        SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAMobiledevice")]
     public class RemoveGAMobiledevice : DirectoryBase
     {
         #region Properties
 
+        /// <summary>
+        /// <para type="description">Immutable id of the Google Apps account</para>
+        /// </summary>
         [Parameter(Position = 0,
             Mandatory = false,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Immutable id of the Google Apps account")]
         [ValidateNotNullOrEmpty]
         public string CustomerId { get; set; }
 
-        //Domain position = 1
-
+        /// <summary>
+        /// <para type="description">Immutable id of Mobile Device</para>
+        /// </summary>
         [Parameter(Position = 2,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Immutable id of Mobile Device")]
         [ValidateNotNullOrEmpty]
         public string ResourceId { get; set; }
 
-        [Parameter(Position = 3)]
+        /// <summary>
+        /// <para type="description">A switch to run the cmdlet without prompting.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+            HelpMessage = "A switch to run the cmdlet without prompting.")]
         public SwitchParameter Force { get; set; }
 
         #endregion
@@ -1521,8 +1625,11 @@ namespace gShell.Cmdlets.Directory.GAMobileDevice
         {
             if (ShouldProcess(CustomerId, "Remove-GAMobiledevice"))
             {
-                if (Force || ShouldContinue((String.Format("Mobile Device {0} with ResourceId {2} will be removed from the {1} Google Apps domain.\nContinue?",
-                    CustomerId, Domain, ResourceId)), "Confirm Google Apps Mobile Device Removal"))
+                if (Force ||
+                    ShouldContinue(
+                        (String.Format(
+                            "Mobile Device {0} with ResourceId {2} will be removed from the {1} Google Apps domain.\nContinue?",
+                            CustomerId, Domain, ResourceId)), "Confirm Google Apps Mobile Device Removal"))
                 {
                     try
                     {
@@ -1534,7 +1641,8 @@ namespace gShell.Cmdlets.Directory.GAMobileDevice
                     }
                     catch (Exception e)
                     {
-                        WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, CustomerId));
+                        WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData,
+                            CustomerId));
                     }
                 }
                 else
@@ -1546,42 +1654,98 @@ namespace gShell.Cmdlets.Directory.GAMobileDevice
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis">Take action on Mobile Device</para>
+    /// <para type="description">Take action on Mobile Device</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Invoke-GAMobiledevice -CustomerId $SomeCustomerIdString -ResourceId $SomeResourceIdString -MobileDeviceActionBody $SomeMobileDeviceActionObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/InvokeGAMobiledevice">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsLifecycle.Invoke, "GAMobiledevice",
-          SupportsShouldProcess = true,
-          HelpUri = @"https://github.com/squid808/gShell/wiki/Invoke-GAMobiledevice")]
+        SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/Invoke-GAMobiledevice")]
     public class SetGAMobiledevice : DirectoryBase
     {
         #region Properties
+
+        /// <summary>
+        /// <para type="description">Immutable id of the Google Apps account</para>
+        /// </summary>
         [Parameter(Position = 0,
             Mandatory = false,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Immutable id of the Google Apps account")]
         [ValidateNotNullOrEmpty]
         public string CustomerId { get; set; }
 
-        //Domain position = 1
-
+        /// <summary>
+        /// <para type="description">Immutable id of Mobile Device</para>
+        /// </summary>
         [Parameter(Position = 2,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Immutable id of Mobile Device")]
         [ValidateNotNullOrEmpty]
         public string ResourceId { get; set; }
 
+        /// <summary>
+        /// <para type="description">Action to be taken on the Mobile Device</para>
+        /// </summary>
         [Parameter(Position = 3,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Action to be taken on the Mobile Device")]
         [ValidateNotNullOrEmpty]
-        public Data.MobileDeviceAction Action { get; set; }
+        public string Action { get; set; }
+
         #endregion
+
 
         protected override void ProcessRecord()
         {
             if (ShouldProcess(CustomerId, "Invoke-GAMobiledevice"))
             {
-                mobiledevices.Action(Action, CustomerId, ResourceId);
+                var body = new Data.MobileDeviceAction()
+                {
+                    Action = this.Action
+                };
+
+                mobiledevices.Action(body, CustomerId, ResourceId);
             }
         }
     }
 
+}
+
+
+namespace gShell.Cmdlets.Directory.GANotification
+{
+    /// <summary>
+    /// <para type="synopsis">Retrieves a notification.</para>
+    /// <para type="description">Retrieves a notification.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Get-GANotification -Customer $SomeCustomerString -NotificationId $SomeNotificationIdString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <example>
+    ///   <code>PS C:\>Get-GANotifications -Customer $SomeCustomerString -All</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/GetGANotification">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Get, "GANotification",
           DefaultParameterSetName = "One",
           SupportsShouldProcess = true,
@@ -1590,29 +1754,52 @@ namespace gShell.Cmdlets.Directory.GAMobileDevice
     {
         #region Properties
 
+        /// <summary>
+        /// <para type="description">The unique ID for the customer's Google account. The customerId is also returned as part of the Users resource.</para>
+        /// </summary>
         [Parameter(Position = 0,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "The unique ID for the customer's Google account. The customerId is also returned as part of the Users resource.")]
         [ValidateNotNullOrEmpty]
         public string Customer { get; set; }
 
-        //Domain position = 1
-
+        /// <summary>
+        /// <para type="description">The unique ID of the notification.</para>
+        /// </summary>
         [Parameter(Position = 2,
             Mandatory = true,
             ParameterSetName = "One",
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "The unique ID of the notification.")]
         [ValidateNotNullOrEmpty]
         public string NotificationId { get; set; }
 
-        [Parameter(Position = 3,
-            ParameterSetName = "List")]
+        /// <summary>
+        /// <para type="description">A switch to list all results.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+            ParameterSetName = "List",
+            HelpMessage = "A switch to list all results.")]
         public SwitchParameter All { get; set; }
 
+        /// <summary>
+        /// <para type="description">The ISO 639-1 code of the language notifications are returned in. The default is English (en).</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The ISO 639-1 code of the language notifications are returned in. The default is English (en).")]
+        public string Language { get; set; }
+
+        /// <summary>
+        /// <para type="description">Maximum number of notifications to return per page. The default is 100.</para>
+        /// </summary>
         [Parameter(Position = 4,
             Mandatory = false,
-            ParameterSetName = "List")]
-        public int MaxResults { get; set; }
+            ParameterSetName = "List",
+            HelpMessage = "Maximum number of notifications to return per page. The default is 100.")]
+        public int? MaxResults { get; set; }
 
         #endregion
 
@@ -1626,16 +1813,34 @@ namespace gShell.Cmdlets.Directory.GAMobileDevice
                         WriteObject(notifications.Get(Customer, NotificationId));
                         break;
                     case "List":
-                        WriteObject(notifications.List(Customer, new dotNet.Directory.Notifications.NotificationsListProperties()
+                        var properties = new dotNet.Directory.Notifications.NotificationsListProperties()
                         {
-                            TotalResults = MaxResults
-                        }));
+                            Language = this.Language
+                        };
+
+                        if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
+
+                        WriteObject(notifications.List(Customer, properties));
                         break;
                 }
             }
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis">Deletes a notification</para>
+    /// <para type="description">Deletes a notification</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Remove-GANotification -Customer $SomeCustomerString -NotificationId $SomeNotificationIdString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/RemoveGANotification">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Remove, "GANotification",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GANotification")]
