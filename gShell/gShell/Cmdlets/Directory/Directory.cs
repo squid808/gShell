@@ -1724,7 +1724,6 @@ namespace gShell.Cmdlets.Directory.GAMobileDevice
 
 }
 
-
 namespace gShell.Cmdlets.Directory.GANotification
 {
     /// <summary>
@@ -1848,21 +1847,31 @@ namespace gShell.Cmdlets.Directory.GANotification
     {
         #region Properties
 
+        /// <summary>
+        /// <para type="description">The unique ID for the customer's Google account. The customerId is also returned as part of the Users resource.</para>
+        /// </summary>
         [Parameter(Position = 0,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "The unique ID for the customer's Google account. The customerId is also returned as part of the Users resource.")]
         [ValidateNotNullOrEmpty]
         public string Customer { get; set; }
 
-        //Domain position = 1
-
+        /// <summary>
+        /// <para type="description">The unique ID of the notification.</para>
+        /// </summary>
         [Parameter(Position = 2,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "The unique ID of the notification.")]
         [ValidateNotNullOrEmpty]
         public string NotificationId { get; set; }
 
-        [Parameter(Position = 3)]
+        /// <summary>
+        /// <para type="description">A switch to run the cmdlet without prompting.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+            HelpMessage = "A switch to run the cmdlet without prompting.")]
         public SwitchParameter Force { get; set; }
 
         #endregion
@@ -1896,29 +1905,54 @@ namespace gShell.Cmdlets.Directory.GANotification
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis">Updates a notification. This method supports patch semantics.</para>
+    /// <para type="description">Updates a notification. This method supports patch semantics.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Set-GANotification -Customer $SomeCustomerString -NotificationId $SomeNotificationIdString -NotificationBody $SomeNotificationObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/SetGANotification">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Set, "GANotification",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GANotification")]
     public class SetGANotification : DirectoryBase
     {
         #region Properties
+
+        /// <summary>
+        /// <para type="description">The unique ID for the customer's Google account.</para>
+        /// </summary>
         [Parameter(Position = 0,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "The unique ID for the customer's Google account.")]
         [ValidateNotNullOrEmpty]
         public string Customer { get; set; }
 
-        //Domain position = 1
-
+        /// <summary>
+        /// <para type="description">The unique ID of the notification.</para>
+        /// </summary>
         [Parameter(Position = 2,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "The unique ID of the notification.")]
         [ValidateNotNullOrEmpty]
         public string NotificationId { get; set; }
 
+        /// <summary>
+        /// <para type="description">Boolean indicating whether the notification is unread or not.</para>
+        /// </summary>
         [Parameter(Position = 3,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Boolean indicating whether the notification is unread or not.")]
         [ValidateNotNullOrEmpty]
         public bool IsUnread { get; set; }
         #endregion
@@ -1937,9 +1971,27 @@ namespace gShell.Cmdlets.Directory.GANotification
     }
 }
 
-
 namespace gShell.Cmdlets.Directory.GAOrgUnit
 {
+    /// <summary>
+    /// <para type="synopsis">Retrieve Organization Unit</para>
+    /// <para type="description">Retrieve Organization Unit</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Get-GAOrgUnit -CustomerId $SomeCustomerIdString -OrgUnitPath @("some","strings")</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <example>
+    ///   <code>PS C:\>Get-GAOrgUnit -CustomerId $SomeCustomerIdString -All</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/GetGAOrgUnit">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Get, "GAOrgUnit",
           DefaultParameterSetName = "One",
           SupportsShouldProcess = true,
@@ -1948,35 +2000,50 @@ namespace gShell.Cmdlets.Directory.GAOrgUnit
     {
         #region Properties
 
+        /// <summary>
+        /// <para type="description">Immutable id of the Google Apps account</para>
+        /// </summary>
         [Parameter(Position = 0,
             ParameterSetName = "One",
             Mandatory = false,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Immutable id of the Google Apps account")]
         [ValidateNotNullOrEmpty]
         public string CustomerId { get; set; }
 
-        //Domain position = 1
-
+        /// <summary>
+        /// <para type="description">Full path of the organization unit or its Id</para>
+        /// </summary>
         [Parameter(Position = 2,
             ParameterSetName = "One",
             Mandatory = false,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Full path of the organization unit or its Id")]
         [Parameter(Position = 2,
             ParameterSetName = "List",
             Mandatory = false,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Full path of the organization unit or its Id")]
         public string OrgUnitPath { get; set; }
 
+        /// <summary>
+        /// <para type="description">A switch to list all results.</para>
+        /// </summary>
         [Parameter(Position = 3,
-            ParameterSetName = "List")]
+            ParameterSetName = "List",
+            HelpMessage = "A switch to list all results.")]
         public SwitchParameter All { get; set; }
 
+        /// <summary>
+        /// <para type="description">Whether to return all sub-organizations or just immediate children</para>
+        /// </summary>
         [Parameter(Position = 4,
             Mandatory = false,
             ParameterSetName = "List",
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Whether to return all sub-organizations or just immediate children")]
         [ValidateNotNullOrEmpty]
-        public Google.Apis.admin.Directory.directory_v1.OrgunitsResource.ListRequest.TypeEnum Type { get; set; }
+        public OrgunitsResource.ListRequest.TypeEnum? Type { get; set; }
 
         #endregion
 
@@ -2000,6 +2067,20 @@ namespace gShell.Cmdlets.Directory.GAOrgUnit
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis">Remove Organization Unit</para>
+    /// <para type="description">Remove Organization Unit</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Remove-GAOrgUnit -CustomerId $SomeCustomerIdString -OrgUnitPath @("some","strings")</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/RemoveGAOrgUnit">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Remove, "GAOrgUnit",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAOrgUnit")]
@@ -2007,21 +2088,31 @@ namespace gShell.Cmdlets.Directory.GAOrgUnit
     {
         #region Properties
 
+        /// <summary>
+        /// <para type="description">Immutable id of the Google Apps account</para>
+        /// </summary>
         [Parameter(Position = 0,
             Mandatory = false,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Immutable id of the Google Apps account")]
         [ValidateNotNullOrEmpty]
         public string CustomerId { get; set; }
 
-        //Domain position = 1
-
+        /// <summary>
+        /// <para type="description">Full path of the organization unit or its Id</para>
+        /// </summary>
         [Parameter(Position = 2,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Full path of the organization unit or its Id")]
         [ValidateNotNullOrEmpty]
         public string OrgUnitPath { get; set; }
 
-        [Parameter(Position = 3)]
+        /// <summary>
+        /// <para type="description">A switch to run the cmdlet without prompting.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+            HelpMessage = "A switch to run the cmdlet without prompting.")]
         public SwitchParameter Force { get; set; }
 
         #endregion
@@ -2055,47 +2146,84 @@ namespace gShell.Cmdlets.Directory.GAOrgUnit
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis">Update Organization Unit. This method supports patch semantics.</para>
+    /// <para type="description">Update Organization Unit. This method supports patch semantics.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Set-GAOrgUnit -CustomerId $SomeCustomerIdString -OrgUnitPath $SomeOrgUnitPathString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/SetGAOrgUnit">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Set, "GAOrgUnit",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAOrgUnit")]
     public class SetGAOrgUnit : DirectoryBase
     {
         #region Properties
+
+        /// <summary>
+        /// <para type="description">Immutable id of the Google Apps account</para>
+        /// </summary>
         [Parameter(Position = 0,
             Mandatory = false,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Immutable id of the Google Apps account")]
         [ValidateNotNullOrEmpty]
         public string CustomerId { get; set; }
 
-        //Domain position = 1
-
+        /// <summary>
+        /// <para type="description">Full path of the organization unit or its Id</para>
+        /// </summary>
         [Parameter(Position = 2,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Full path of the organization unit or its Id")]
         [ValidateNotNullOrEmpty]
         public string OrgUnitPath { get; set; }
 
+        /// <summary>
+        /// <para type="description">Name of OrgUnit</para>
+        /// </summary>
         [Parameter(Position = 3,
             Mandatory = false,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Name of OrgUnit")]
         [ValidateNotNullOrEmpty]
         public string Name { get; set; }
 
+        /// <summary>
+        /// <para type="description">Id of parent OrgUnit</para>
+        /// </summary>
         [Parameter(Position = 4,
             Mandatory = false,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Id of parent OrgUnit")]
         [ValidateNotNullOrEmpty]
         public string ParentOrgUnitPath { get; set; }
 
+        /// <summary>
+        /// <para type="description">Should block inheritance</para>
+        /// </summary>
         [Parameter(Position = 5,
             Mandatory = false,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Should block inheritance")]
         [ValidateNotNullOrEmpty]
         public bool? BlockInheritance { get; set; }
 
+        /// <summary>
+        /// <para type="description">Description of OrgUnit</para>
+        /// </summary>
         [Parameter(Position = 6,
             Mandatory = false,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Description of OrgUnit")]
         [ValidateNotNullOrEmpty]
         public string Description { get; set; }
         #endregion
@@ -2131,41 +2259,73 @@ namespace gShell.Cmdlets.Directory.GAOrgUnit
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis">Add Organization Unit</para>
+    /// <para type="description">Add Organization Unit</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GAOrgUnit -CustomerId $SomeCustomerIdString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGAOrgUnit">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.New, "GAOrgUnit",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GAOrgUnit")]
     public class NewGAOrgUnit : DirectoryBase
     {
         #region Properties
+        /// <summary>
+        /// <para type="description">Immutable id of the Google Apps account</para>
+        /// </summary>
         [Parameter(Position = 0,
             Mandatory = false,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Immutable id of the Google Apps account")]
         [ValidateNotNullOrEmpty]
         public string CustomerId { get; set; }
 
-        //Domain position = 1
-
-        [Parameter(Position = 2,
-            Mandatory = true,
-            ValueFromPipelineByPropertyName = true)]
+        /// <summary>
+        /// <para type="description">Name of OrgUnit</para>
+        /// </summary>
+        [Parameter(Position = 1,
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Name of OrgUnit")]
         [ValidateNotNullOrEmpty]
         public string Name { get; set; }
 
-        [Parameter(Position = 3,
+        /// <summary>
+        /// <para type="description">Id of parent OrgUnit</para>
+        /// </summary>
+        [Parameter(Position = 2,
             Mandatory = false,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Id of parent OrgUnit")]
         [ValidateNotNullOrEmpty]
         public string ParentOrgUnitPath { get; set; }
 
+        /// <summary>
+        /// <para type="description">Should block inheritance</para>
+        /// </summary>
+        [Parameter(Position = 3,
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Should block inheritance")]
+        [ValidateNotNullOrEmpty]
+        public bool? BlockInheritance { get; set; }
+
+        /// <summary>
+        /// <para type="description">Description of OrgUnit</para>
+        /// </summary>
         [Parameter(Position = 4,
             Mandatory = false,
-            ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNullOrEmpty]
-        public bool BlockInheritance { get; set; }
-
-        [Parameter(Position = 5,
-            Mandatory = false,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Description of OrgUnit")]
         [ValidateNotNullOrEmpty]
         public string Description { get; set; }
         #endregion
@@ -2188,9 +2348,28 @@ namespace gShell.Cmdlets.Directory.GAOrgUnit
     }
 }
 
-
+//TODO: REFACTOR SET, NEW
 namespace gShell.Cmdlets.Directory.GASchema
 {
+    /// <summary>
+    /// <para type="synopsis">Retrieve schema</para>
+    /// <para type="description">Retrieve schema</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Get-GASchema -CustomerId $SomeCustomerIdString -SchemaKey $SomeSchemaKeyString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <example>
+    ///   <code>PS C:\>Get-GASchema -CustomerId $SomeCustomerIdString -All</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/GetGASchema">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Get, "GASchema",
           DefaultParameterSetName = "One",
           SupportsShouldProcess = true,
@@ -2199,23 +2378,33 @@ namespace gShell.Cmdlets.Directory.GASchema
     {
         #region Properties
 
+        /// <summary>
+        /// <para type="description">Immutable id of the Google Apps account</para>
+        /// </summary>
         [Parameter(Position = 0,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Immutable id of the Google Apps account")]
         [ValidateNotNullOrEmpty]
         public string CustomerId { get; set; }
 
-        //Domain position = 1
-
+        /// <summary>
+        /// <para type="description">Name or immutable Id of the schema</para>
+        /// </summary>
         [Parameter(Position = 2,
             Mandatory = true,
             ParameterSetName = "One",
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Name or immutable Id of the schema")]
         [ValidateNotNullOrEmpty]
         public string SchemaKey { get; set; }
 
+        /// <summary>
+        /// <para type="description">A switch to list all results.</para>
+        /// </summary>
         [Parameter(Position = 3,
-            ParameterSetName = "List")]
+            ParameterSetName = "List",
+            HelpMessage = "A switch to list all results.")]
         public SwitchParameter All { get; set; }
 
         #endregion
@@ -2237,6 +2426,20 @@ namespace gShell.Cmdlets.Directory.GASchema
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis">Delete schema</para>
+    /// <para type="description">Delete schema</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Remove-GASchema -CustomerId $SomeCustomerIdString -SchemaKey $SomeSchemaKeyString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/RemoveGASchema">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Remove, "GASchema",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GASchema")]
@@ -2244,21 +2447,32 @@ namespace gShell.Cmdlets.Directory.GASchema
     {
         #region Properties
 
+        /// <summary>
+        /// <para type="description">Immutable id of the Google Apps account</para>
+        /// </summary>
         [Parameter(Position = 0,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Immutable id of the Google Apps account")]
         [ValidateNotNullOrEmpty]
         public string CustomerId { get; set; }
 
-        //Domain position = 1
-
+        /// <summary>
+        /// <para type="description">Name or immutable Id of the schema</para>
+        /// </summary>
         [Parameter(Position = 2,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Name or immutable Id of the schema")]
         [ValidateNotNullOrEmpty]
         public string SchemaKey { get; set; }
 
-        [Parameter(Position = 2)]
+        /// <summary>
+        /// <para type="description">A switch to run the cmdlet without prompting.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+            Mandatory = false,
+            HelpMessage = "A switch to run the cmdlet without prompting.")]
         public SwitchParameter Force { get; set; }
 
         #endregion
@@ -2292,23 +2506,44 @@ namespace gShell.Cmdlets.Directory.GASchema
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis">Update schema. This method supports patch semantics.</para>
+    /// <para type="description">Update schema. This method supports patch semantics.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Set-GASchema -CustomerId $SomeCustomerIdString -SchemaKey $SomeSchemaKeyString -SchemaBody $SomeSchemaObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/SetGASchema">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Set, "GASchema",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GASchema")]
     public class SetGASchema : DirectoryBase
     {
         #region Properties
+
+        /// <summary>
+        /// <para type="description">Immutable id of the Google Apps account</para>
+        /// </summary>
         [Parameter(Position = 0,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Immutable id of the Google Apps account")]
         [ValidateNotNullOrEmpty]
         public string CustomerId { get; set; }
 
-        //Domain position = 1
-
+        /// <summary>
+        /// <para type="description">Name or immutable Id of the schema.</para>
+        /// </summary>
         [Parameter(Position = 2,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Name or immutable Id of the schema.")]
         [ValidateNotNullOrEmpty]
         public string SchemaKey { get; set; }
 
@@ -2318,6 +2553,16 @@ namespace gShell.Cmdlets.Directory.GASchema
             ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public SchemaFieldCollection FieldCollection { get; set; }
+
+        ///// <summary>
+        ///// <para type="description">JSON template for Schema resource in Directory API.</para>
+        ///// </summary>
+        //[Parameter(Position = 2,
+        //Mandatory = false,
+        //ValueFromPipeline = true,
+        //ValueFromPipelineByPropertyName = true,
+        //HelpMessage = "JSON template for Schema resource in Directory API.")]
+        //public Google.Apis.admin.Directory.directory_v1.Data.Schema SchemaBody { get; set; }
         #endregion
 
         protected override void ProcessRecord()
@@ -2329,15 +2574,34 @@ namespace gShell.Cmdlets.Directory.GASchema
         }
     }
 
-    [Cmdlet(VerbsCommon.Add, "GASchema",
+    /// <summary>
+    /// <para type="synopsis">Create schema.</para>
+    /// <para type="description">Create schema.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GASchema -CustomerId $SomeCustomerIdString -SchemaBody $SomeSchemaObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGASchema">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GASchema",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Add-GASchema")]
     public class NewGASchema : DirectoryBase
     {
         #region Properties
+
+        /// <summary>
+        /// <para type="description">Immutable id of the Google Apps account</para>
+        /// </summary>
         [Parameter(Position = 0,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Immutable id of the Google Apps account")]
         [ValidateNotNullOrEmpty]
         public string CustomerId { get; set; }
 
@@ -2349,6 +2613,16 @@ namespace gShell.Cmdlets.Directory.GASchema
             ValueFromPipelineByPropertyName = true)]
         [ValidateNotNullOrEmpty]
         public SchemaFieldCollection FieldCollection { get; set; }
+
+        ///// <summary>
+        ///// <para type="description">JSON template for Schema resource in Directory API.</para>
+        ///// </summary>
+        //[Parameter(Position = 2,
+        //Mandatory = false,
+        //ValueFromPipeline = true,
+        //ValueFromPipelineByPropertyName = true,
+        //HelpMessage = "JSON template for Schema resource in Directory API.")]
+        //public Google.Apis.admin.Directory.directory_v1.Data.Schema SchemaBody { get; set; }
         #endregion
 
         protected override void ProcessRecord()
@@ -2360,6 +2634,7 @@ namespace gShell.Cmdlets.Directory.GASchema
         }
     }
 
+    //TODO: Phase out
     [Cmdlet(VerbsCommon.New, "GASchemaField",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GASchemaField",
@@ -2451,6 +2726,7 @@ namespace gShell.Cmdlets.Directory.GASchema
         }
     }
 
+    //TODO: Phase out
     [Cmdlet(VerbsCommon.New, "GASchemaFieldCollection",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GASchemaFieldCollection",
@@ -2499,6 +2775,7 @@ namespace gShell.Cmdlets.Directory.GASchema
         }
     }
 
+    //TODO: Phase out
     /// <summary>
     /// A custom wrapper for a List<SchemaField> type.
     /// </summary>
@@ -2622,6 +2899,7 @@ namespace gShell.Cmdlets.Directory.GASchema
         #endregion
     }
 
+    //TODO: Phase out
     /// <summary>
     /// A friendly version of Data.Schema, allowing for use of enums to restrict options.
     /// </summary>
@@ -2719,9 +2997,27 @@ namespace gShell.Cmdlets.Directory.GASchema
 
 }
 
-
 namespace gShell.Cmdlets.Directory.GAToken
 {
+    /// <summary>
+    /// <para type="synopsis">Get information about an access token issued by a user.</para>
+    /// <para type="description">Get information about an access token issued by a user.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Get-GAToken -UserKey $SomeUserKeyString -ClientId $SomeClientIdString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <example>
+    ///   <code>PS C:\>Get-GAToken -UserKey $SomeUserKeyString -All</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/GetGAToken">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Get, "GAToken",
           DefaultParameterSetName = "One",
           SupportsShouldProcess = true,
@@ -2730,23 +3026,33 @@ namespace gShell.Cmdlets.Directory.GAToken
     {
         #region Properties
 
+        /// <summary>
+        /// <para type="description">Identifies the user in the API request. The value can be the user's primary email address, alias email address, or unique user ID.</para>
+        /// </summary>
         [Parameter(Position = 0,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Identifies the user in the API request. The value can be the user's primary email address, alias email address, or unique user ID.")]
         [ValidateNotNullOrEmpty]
         public string UserKey { get; set; }
 
-        //Domain position = 1
-
+        /// <summary>
+        /// <para type="description">The Client ID of the application the token is issued to.</para>
+        /// </summary>
         [Parameter(Position = 2,
             Mandatory = true,
             ParameterSetName = "One",
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "The Client ID of the application the token is issued to.")]
         [ValidateNotNullOrEmpty]
         public string ClientId { get; set; }
 
+        /// <summary>
+        /// <para type="description">A switch to list all results.</para>
+        /// </summary>
         [Parameter(Position = 3,
-            ParameterSetName = "List")]
+            ParameterSetName = "List",
+            HelpMessage = "A switch to list all results.")]
         public SwitchParameter All { get; set; }
 
         #endregion
@@ -2770,6 +3076,20 @@ namespace gShell.Cmdlets.Directory.GAToken
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis">Delete all access tokens issued by a user for an application.</para>
+    /// <para type="description">Delete all access tokens issued by a user for an application.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Remove-GAToken -UserKey $SomeUserKeyString -ClientId $SomeClientIdString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/RemoveGAToken">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Remove, "GAToken",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAToken")]
@@ -2777,21 +3097,32 @@ namespace gShell.Cmdlets.Directory.GAToken
     {
         #region Properties
 
+        /// <summary>
+        /// <para type="description">Identifies the user in the API request. The value can be the user's primary email address, alias email address, or unique user ID.</para>
+        /// </summary>
         [Parameter(Position = 0,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNullOrEmpty]
-        public string ClientId { get; set; }
-
-        //Domain position = 1
-
-        [Parameter(Position = 2,
-            Mandatory = true,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Identifies the user in the API request. The value can be the user's primary email address, alias email address, or unique user ID.")]
         [ValidateNotNullOrEmpty]
         public string UserKey { get; set; }
 
-        [Parameter(Position = 3)]
+        /// <summary>
+        /// <para type="description">The Client ID of the application the token is issued to.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "The Client ID of the application the token is issued to.")]
+        [ValidateNotNullOrEmpty]
+        public string ClientId { get; set; }
+
+        /// <summary>
+        /// <para type="description">A switch to run the cmdlet without prompting.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        HelpMessage = "A switch to run the cmdlet without prompting.")]
         public SwitchParameter Force { get; set; }
 
         #endregion
@@ -2828,9 +3159,31 @@ namespace gShell.Cmdlets.Directory.GAToken
     }
 }
 
-
+//TODO: Refactor username -> userkey
+//TODO: Add Make Admin User
+//TODO: Refactor SET, NEW - allow param set to use object (or pipeline?)
+//TODO: Fix Remove
 namespace gShell.Cmdlets.Directory.GAUser
 {
+    /// <summary>
+    /// <para type="synopsis">retrieve user</para>
+    /// <para type="description">retrieve user</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Get-GAUser -UserKey $SomeUserKeyString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <example>
+    ///   <code>PS C:\>Get-GAUser -All</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/GetGAUser">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Get, "GAUser",
           DefaultParameterSetName = "OneUser",
           SupportsShouldProcess = true,
@@ -2839,26 +3192,154 @@ namespace gShell.Cmdlets.Directory.GAUser
     {
         #region Properties
 
+        /// <summary>
+        /// <para type="description">Email or immutable Id of the user</para>
+        /// </summary>
         [Parameter(Position = 0,
             ParameterSetName = "OneUser",
             Mandatory = true,
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true,
-            HelpMessage = "The username of the user you would like to retrieve.")]
+            HelpMessage = "Email or immutable Id of the user")]
         [ValidateNotNullOrEmpty]
-        public string UserName { get; set; }
+        public string UserKey { get; set; }
 
-        //Domain position = 1
-
-        [Parameter(Position = 2,
+        /// <summary>
+        /// <para type="description">A switch to list all results.</para>
+        /// </summary>
+        [Parameter(Position = 1,
             ParameterSetName = "AllUsers",
-            HelpMessage = "Retrieve all users in the domain.")]
+            HelpMessage = "A switch to list all results.")]
         public SwitchParameter All { get; set; }
 
-        [Parameter(Position = 3,
+        /// <summary>
+        /// <para type="description">Comma-separated list of schema names. All fields from these schemas are fetched. This should only be set when projection=custom.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+            ParameterSetName = "OneUser",
             Mandatory = false,
-            ParameterSetName = "AllUsers")]
-        public int MaxResults { get; set; }
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Comma-separated list of schema names. All fields from these schemas are fetched. This should only be set when projection=custom.")]
+        [Parameter(Position = 2,
+            ParameterSetName = "AllUsers",
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Comma-separated list of schema names. All fields from these schemas are fetched. This should only be set when projection=custom.")]
+        public string CustomFieldMask { get; set; }
+
+        /// <summary>
+        /// <para type="description">What subset of fields to fetch for this user.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+            ParameterSetName = "OneUser",
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "What subset of fields to fetch for this user.")]
+        public UsersResource.GetRequest.ProjectionEnum? Projection { get; set; }
+
+        [Parameter(Position = 3,
+            ParameterSetName = "AllUsers",
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "What subset of fields to fetch for this user.")]
+        public UsersResource.ListRequest.ProjectionEnum? ProjectionType { get; set; }
+
+        /// <summary>
+        /// <para type="description">Whether to fetch the ADMIN_VIEW or DOMAIN_PUBLIC view of the user.</para>
+        /// </summary>
+        [Parameter(Position = 4,
+            ParameterSetName = "OneUser",
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Whether to fetch the ADMIN_VIEW or DOMAIN_PUBLIC view of the user.")]
+        public UsersResource.GetRequest.ViewTypeEnum? View { get; set; }
+
+        [Parameter(Position = 4,
+            ParameterSetName = "AllUsers",
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Whether to fetch the ADMIN_VIEW or DOMAIN_PUBLIC view of the user.")]
+        public UsersResource.ListRequest.ViewTypeEnum? ViewType { get; set; }
+
+        /// <summary>
+        /// <para type="description">Immutable id of the Google Apps account. In case of multi-domain, to fetch all users for a customer, fill this field instead of domain.</para>
+        /// </summary>
+        [Parameter(Position = 5,
+            ParameterSetName = "AllUsers",
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Immutable id of the Google Apps account. In case of multi-domain, to fetch all users for a customer, fill this field instead of domain.")]
+        public string Customer { get; set; }
+
+        /// <summary>
+        /// <para type="description">Name of the domain. Fill this field to get users from only this domain. To return all users in a multi-domain fill customer field instead.</para>
+        /// </summary>
+        [Parameter(Position = 6,
+        ParameterSetName = "AllUsers",
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Name of the domain. Fill this field to get users from only this domain. To return all users in a multi-domain fill customer field instead.")]
+        public string Domain { get; set; }
+
+        /// <summary>
+        /// <para type="description">Event on which subscription is intended (if subscribing)</para>
+        /// </summary>
+        [Parameter(Position = 7,
+        ParameterSetName = "AllUsers",
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Event on which subscription is intended (if subscribing)")]
+        public UsersResource.ListRequest.EventEnum? Event { get; set; }
+
+        /// <summary>
+        /// <para type="description">Maximum number of results to return. Default is 100. Max allowed is 500</para>
+        /// </summary>
+        [Parameter(Position = 8,
+        ParameterSetName = "AllUsers",
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Maximum number of results to return. Default is 100. Max allowed is 500")]
+        public int? MaxResults { get; set; }
+
+        /// <summary>
+        /// <para type="description">Column to use for sorting results</para>
+        /// </summary>
+        [Parameter(Position = 9,
+        ParameterSetName = "AllUsers",
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Column to use for sorting results")]
+        public UsersResource.ListRequest.OrderByEnum? OrderBy { get; set; }
+
+        /// <summary>
+        /// <para type="description">Query string search. Should be of the form "". Complete documentation is at https://developers.google.com/admin-sdk/directory/v1/guides/search-users</para>
+        /// </summary>
+        [Parameter(Position = 10,
+        ParameterSetName = "AllUsers",
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Query string search. Should be of the form \"\". Complete documentation is at https://developers.google.com/admin-sdk/directory/v1/guides/search-users")]
+        public string Query { get; set; }
+
+        /// <summary>
+        /// <para type="description">If set to true retrieves the list of deleted users. Default is false</para>
+        /// </summary>
+        [Parameter(Position = 11,
+        ParameterSetName = "AllUsers",
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "If set to true retrieves the list of deleted users. Default is false")]
+        public string ShowDeleted { get; set; }
+
+        /// <summary>
+        /// <para type="description">Whether to return results in ascending or descending order.</para>
+        /// </summary>
+        [Parameter(Position = 12,
+        ParameterSetName = "AllUsers",
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Whether to return results in ascending or descending order.")]
+        public UsersResource.ListRequest.SortOrderEnum? SortOrder { get; set; }
 
         #endregion
 
@@ -2868,23 +3349,40 @@ namespace gShell.Cmdlets.Directory.GAUser
             {
                 case "OneUser":
 
-                    UserName = GetFullEmailAddress(UserName, Domain);
+                    UserKey = GetFullEmailAddress(UserKey, Domain);
 
-                    if (ShouldProcess(UserName, "Get-GAUser"))
+                    var properties = new dotNet.Directory.Users.UsersGetProperties()
                     {
-                        WriteObject(new GShellUserObject(users.Get(UserName)));
+                        CustomFieldMask = this.CustomFieldMask,
+                        Projection = this.Projection,
+                        ViewType = this.View
+                    };
+
+                    if (ShouldProcess(UserKey, "Get-GAUser"))
+                    {
+                        WriteObject(new GShellUserObject(users.Get(UserKey, properties)));
                     }
                     break;
 
                 case "AllUsers":
                     if (ShouldProcess("All Users", "Get-GAUser"))
                     {
-                        //Make sure to include the domain here because List could use things other than domain (customer, etc)
-                        List<Data.User> result = users.List(new dotNet.Directory.Users.UsersListProperties()
+                        var listproperties = new dotNet.Directory.Users.UsersListProperties()
                         {
-                            TotalResults = MaxResults,
-                            Domain = Domain
-                        }).SelectMany(x => x.UsersValue).ToList();
+                            CustomFieldMask = this.CustomFieldMask,
+                            Customer = this.Customer,
+                            Domain = this.Domain,
+                            Event = this.Event,
+                            OrderBy = this.OrderBy,
+                            Projection = this.ProjectionType,
+                            Query = this.Query,
+                            ShowDeleted = this.ShowDeleted,
+                            SortOrder = this.SortOrder,
+                            ViewType = this.ViewType
+                        };
+
+                        //Make sure to include the domain here because List could use things other than domain (customer, etc)
+                        List<Data.User> result = users.List(listproperties).SelectMany(x => x.UsersValue).ToList();
 
                         WriteObject(GShellUserObject.ConvertList(result));
                     }
@@ -2893,6 +3391,20 @@ namespace gShell.Cmdlets.Directory.GAUser
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis">create user.</para>
+    /// <para type="description">create user.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GAUser -UserBody $SomeUserObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGAUser">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.New, "GAUser",
           DefaultParameterSetName = "PasswordGenerated",
           SupportsShouldProcess = true,
@@ -2901,50 +3413,91 @@ namespace gShell.Cmdlets.Directory.GAUser
     {
         #region Properties
 
+        /// <summary>
+        /// <para type="description">User's name</para>
+        /// </summary>
         [Parameter(Position = 0,
             Mandatory = true,
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true,
-            HelpMessage = "Help Text")]
+            HelpMessage = "User's name")]
         [ValidateNotNullOrEmpty]
         public string UserName { get; set; }
 
-        //Domain position = 1
-
+        /// <summary>
+        /// <para type="description">First Name</para>
+        /// </summary>
         [Parameter(Position = 2,
-            Mandatory = true)]
+            Mandatory = true,
+        HelpMessage = "First Name")]
         public string GivenName { get; set; }
 
+        /// <summary>
+        /// <para type="description">Last Name</para>
+        /// </summary>
         [Parameter(Position = 3,
-            Mandatory = true)]
+            Mandatory = true,
+            HelpMessage = "Full Name")]
         public string FamilyName { get; set; }
 
+        /// <summary>
+        /// <para type="description">User's password</para>
+        /// </summary>
         [Parameter(Position = 4,
-            ParameterSetName = "PasswordProvided")]
+            ParameterSetName = "PasswordProvided",
+            HelpMessage = "User's password")]
         public string Password { get; set; }
 
+        /// <summary>
+        /// <para type="description">The desired length of the generated password</para>
+        /// </summary>
         [Parameter(Position = 5,
-            ParameterSetName = "PasswordGenerated")]
+            ParameterSetName = "PasswordGenerated",
+            HelpMessage = "The desired length of the generated password")]
         public int? PasswordLength { get; set; }
 
+        /// <summary>
+        /// <para type="description">Indicates if the generated password should be shown</para>
+        /// </summary>
         [Parameter(Position = 6,
-            ParameterSetName = "PasswordGenerated")]
+            ParameterSetName = "PasswordGenerated",
+            HelpMessage = "Indicates if the generated password should be shown")]
         public SwitchParameter ShowNewPassword { get; set; }
 
-        [Parameter(Position = 7)]
+        /// <summary>
+        /// <para type="description">Boolean indicating if user is included in Global Address List</para>
+        /// </summary>
+        [Parameter(Position = 7,
+            HelpMessage = "Boolean indicating if user is included in Global Address List")]
         public bool? IncludeInDirectory { get; set; }
 
-        [Parameter(Position = 8)]
+        /// <summary>
+        /// <para type="description">Indicates if user is suspended</para>
+        /// </summary>
+        [Parameter(Position = 8,
+            HelpMessage = "Indicates if user is suspended")]
         public bool? Suspended { get; set; }
 
-        [Parameter(Position = 9)]
+        /// <summary>
+        /// <para type="description">Boolean indicating if ip is whitelisted</para>
+        /// </summary>
+        [Parameter(Position = 9,
+        HelpMessage = "Boolean indicating if ip is whitelisted")]
         public bool? IpWhiteListed { get; set; }
 
-        [Parameter(Position = 10)]
+        /// <summary>
+        /// <para type="description">Boolean indicating if the user should change password in next login</para>
+        /// </summary>
+        [Parameter(Position = 10,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Boolean indicating if the user should change password in next login")]
         public bool? ChangePasswordAtNextLogin { get; set; }
 
-        [Parameter(
-            HelpMessage = "The full path of the parent organization associated with the user. If the parent organization is the top-level, it is represented as a forward slash (/).")]
+        /// <summary>
+        /// <para type="description">OrgUnit of User</para>
+        /// </summary>
+        [Parameter(Position = 11,
+            HelpMessage = "OrgUnit of User")]
         public string OrgUnitPath { get; set; }
 
         #endregion
@@ -3011,6 +3564,20 @@ namespace gShell.Cmdlets.Directory.GAUser
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis">Delete user</para>
+    /// <para type="description">Delete user</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Remove-GAUser -UserKey $SomeUserKeyString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/RemoveGAUser">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Remove, "GAUser",
         DefaultParameterSetName = "UserName",
         SupportsShouldProcess = true,
@@ -3019,6 +3586,9 @@ namespace gShell.Cmdlets.Directory.GAUser
     {
         #region Properties
 
+        /// <summary>
+        /// <para type="description">Email or immutable Id of the user</para>
+        /// </summary>
         [Parameter(Position = 0,
             ParameterSetName = "UserName",
             Mandatory = true,
@@ -3026,10 +3596,11 @@ namespace gShell.Cmdlets.Directory.GAUser
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "Help Text")]
         [ValidateNotNullOrEmpty]
-        public string UserName { get; set; }
+        public string UserKey { get; set; }
 
-        //Domain position = 1
-
+        /// <summary>
+        /// <para type="description">A Google Apps User object</para>
+        /// </summary>
         [Parameter(Position = 0,
             ParameterSetName = "GAUserObject",
             Mandatory = true,
@@ -3039,25 +3610,29 @@ namespace gShell.Cmdlets.Directory.GAUser
         [ValidateNotNullOrEmpty]
         public Data.User GAUserObject { get; set; }
 
-        [Parameter(Position = 2)]
+        /// <summary>
+        /// <para type="description">A switch to run the cmdlet without prompting</para>
+        /// </summary>
+        [Parameter(Position = 2,
+            HelpMessage = "A switch to run the cmdlet without prompting")]
         public SwitchParameter Force { get; set; }
 
         #endregion
 
         protected override void ProcessRecord()
         {
-            if (ShouldProcess(UserName, "Remove-GAUser"))
+            if (ShouldProcess(UserKey, "Remove-GAUser"))
             {
                 if (Force || ShouldContinue((String.Format("User {0} will be removed from the {1} Google Apps domain.\nContinue?",
-                    UserName, Domain)), "Confirm Google Apps User Removal"))
+                    UserKey, Domain)), "Confirm Google Apps User Removal"))
                 {
                     try
                     {
                         WriteDebug(string.Format("Attempting to remove user {0}@{1}...",
-                            UserName, Domain));
+                            UserKey, Domain));
                         RemoveUser();
                         WriteVerbose(string.Format("Removal of {0}@{1} completed without error.",
-                            UserName, Domain));
+                            UserKey, Domain));
                     }
                     catch (Exception e)
                     {
@@ -3067,7 +3642,7 @@ namespace gShell.Cmdlets.Directory.GAUser
                 else
                 {
                     WriteError(new ErrorRecord(new Exception("Account deletion not confirmed"),
-                        "", ErrorCategory.InvalidData, UserName));
+                        "", ErrorCategory.InvalidData, UserKey));
                 }
             }
         }
@@ -3090,13 +3665,30 @@ namespace gShell.Cmdlets.Directory.GAUser
         }
     }
 
-    [Cmdlet("Restore", "GAUser",
+    /// <summary>
+    /// <para type="synopsis">Undelete a deleted user</para>
+    /// <para type="description">Undelete a deleted user</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Restore-GAUser -UserKey $SomeUserKeyString -UserUndeleteBody $SomeUserUndeleteObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/RestoreGAUser">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsData.Restore, "GAUser",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Restore-GAUser")]
     public class RestoreGAUser : DirectoryBase
     {
         #region Properties
 
+        /// <summary>
+        /// <para type="description">Email or immutable Id of the user. If Id, it should match with id of user object</para>
+        /// </summary>
         [Parameter(Position = 0,
             Mandatory = true,
             ValueFromPipeline = true,
@@ -3105,9 +3697,12 @@ namespace gShell.Cmdlets.Directory.GAUser
         [ValidateNotNullOrEmpty]
         public string UserID { get; set; }
 
-        [Parameter(Position = 3,
+        /// <summary>
+        /// <para type="description">OrgUnit of User</para>
+        /// </summary
+        [Parameter(Position = 1,
             Mandatory = false,
-            HelpMessage = "The OrgUnitPath")]
+            HelpMessage = "OrgUnit of User")]
         public string OrgUnitPath { get; set; }
 
         #endregion
@@ -3122,7 +3717,7 @@ namespace gShell.Cmdlets.Directory.GAUser
 
         private void RestoreUser()
         {
-            Google.Apis.admin.Directory.directory_v1.Data.UserUndelete undelete = new Google.Apis.admin.Directory.directory_v1.Data.UserUndelete();
+            var undelete = new Data.UserUndelete();
 
             if (string.IsNullOrWhiteSpace(OrgUnitPath))
             {
@@ -3137,6 +3732,20 @@ namespace gShell.Cmdlets.Directory.GAUser
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis">update user. This method supports patch semantics.</para>
+    /// <para type="description">update user. This method supports patch semantics.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Set-GAUser -UserKey $SomeUserKeyString -UserBody $SomeUserObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/SetGAUser">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Set, "GAUser",
           DefaultParameterSetName = "NoPasswordProvided",
           SupportsShouldProcess = true,
@@ -3145,6 +3754,9 @@ namespace gShell.Cmdlets.Directory.GAUser
     {
         #region Properties
 
+        /// <summary>
+        /// <para type="description">User's name</para>
+        /// </summary>
         [Parameter(Position = 0,
             Mandatory = true,
             ValueFromPipeline = true,
@@ -3152,48 +3764,76 @@ namespace gShell.Cmdlets.Directory.GAUser
             HelpMessage = "The username of the user to update.")]
         [ValidateNotNullOrEmpty]
         public string UserName { get; set; }
-
-        //Domain position = 1
-
+        
+        /// <summary>
+        /// <para type="description">First Name</para>
+        /// </summary>
         [Parameter(Position = 2,
             HelpMessage = "The user's first name. Required when creating a user account.")]
         public string NewGivenName { get; set; }
 
+        /// <summary>
+        /// <para type="description">Last Name</para>
+        /// </summary>
         [Parameter(Position = 3,
             HelpMessage = "The user's last name. Required when creating a user account.")]
         public string NewFamilyName { get; set; }
 
+        /// <summary>
+        /// <para type="description">Updated user's name</para>
+        /// </summary>
         [Parameter(Position = 4,
             HelpMessage = "The user's username, post-update.")]
         public string NewUserName { get; set; }
 
+        /// <summary>
+        /// <para type="description">Indicates if user is suspended</para>
+        /// </summary>
         [Parameter(Position = 5,
             HelpMessage = "Indicates if the user is suspended.")]
         public bool? Suspended { get; set; }
 
+        /// <summary>
+        /// <para type="description">User's password</para>
+        /// </summary>
         [Parameter(Position = 6,
             HelpMessage = "Stores the password for the user account. A password can contain any combination of ASCII characters. A minimum of 8 characters is required. The maximum length is 100 characters.",
             ParameterSetName = "PasswordProvided")]
         public string NewPassword { get; set; }
 
+        /// <summary>
+        /// <para type="description">The desired length of the generated password</para>
+        /// </summary
         [Parameter(Position = 7,
             HelpMessage = "Indicates the length of the password desired if it is to be automatically generated.",
             ParameterSetName = "PasswordGenerated")]
         public int? PasswordLength { get; set; }
 
+        /// <summary>
+        /// <para type="description">Indicates if the generated password should be shown</para>
+        /// </summary>
         [Parameter(Position = 8,
             HelpMessage = "Indicates if the new password should be shown after it is to be automatically generated.",
             ParameterSetName = "PasswordGenerated")]
         public SwitchParameter ShowNewPassword { get; set; }
 
+        /// <summary>
+        /// <para type="description">Boolean indicating if the user should change password in next login</para>
+        /// </summary>
         [Parameter(Position = 9,
             HelpMessage = "Indicates if the user is forced to change their password at next login.")]
         public bool? ChangePasswordAtNextLogin { get; set; }
 
+        /// <summary>
+        /// <para type="description">OrgUnit of User</para>
+        /// </summary>
         [Parameter(
             HelpMessage = "The full path of the parent organization associated with the user. If the parent organization is the top-level, it is represented as a forward slash (/).")]
         public string OrgUnitPath { get; set; }
 
+        /// <summary>
+        /// <para type="description">A supplied property collection to update the user with. Create with New/Get-GAUserPropertyCollection and update with New/Remove-GauserProperty</para>
+        /// </summary>
         [Parameter(
             HelpMessage = "A supplied property collection to update the user with. Create with New/Get-GAUserPropertyCollection and update with New/Remove-GauserProperty")]
         public GAUserPropertyCollection PropertyCollection { get; set; }
@@ -3326,9 +3966,23 @@ namespace gShell.Cmdlets.Directory.GAUser
     }
 }
 
-
+//TODO: Refactor List to evaluate ReturnGoogleAPIObjects
 namespace gShell.Cmdlets.Directory.GAUserAlias
 {
+    /// <summary>
+    /// <para type="synopsis">List all aliases for a user</para>
+    /// <para type="description">List all aliases for a user</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Get-GAUserAlias -UserKey $SomeUserKeyString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/GetGAUserAlias">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Get, "GAUserAlias",
           DefaultParameterSetName = "OneUser",
           SupportsShouldProcess = true,
@@ -3337,19 +3991,35 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
     {
         #region Properties
 
+        /// <summary>
+        /// <para type="description">Email or immutable Id of the user</para>
+        /// </summary>
         [Parameter(Position = 0,
             ParameterSetName = "OneUser",
             Mandatory = true,
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true,
-            HelpMessage = "Help Text")]
+            HelpMessage = "Email or immutable Id of the user")]
         [ValidateNotNullOrEmpty]
-        public string UserName { get; set; }
+        public string UserKey { get; set; }
 
-        //Domain position = 1
+        /// <summary>
+        /// <para type="description">Event on which subscription is intended (if subscribing)</para>
+        /// </summary>
+        [Parameter(Position = 0,
+            ParameterSetName = "OneUser",
+            Mandatory = true,
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Event on which subscription is intended (if subscribing)")]
+        public UsersResource.AliasesResource.ListRequest.EventEnum? Event { get; set; }
 
+        /// <summary>
+        /// <para type="description">A switch to list all results</para>
+        /// </summary>
         [Parameter(Position = 2,
-            ParameterSetName = "AllUserAliases")]
+            ParameterSetName = "AllUserAliases",
+            HelpMessage = "A switch to list all results")]
         public SwitchParameter All { get; set; }
 
         [Parameter(
@@ -3363,11 +4033,16 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
             switch (ParameterSetName)
             {
                 case "OneUser":
-                    UserName = GetFullEmailAddress(UserName, Domain);
+                    UserKey = GetFullEmailAddress(UserKey, Domain);
 
-                    if (ShouldProcess(UserName, "Get-GAUserAlias"))
+                    if (ShouldProcess(UserKey, "Get-GAUserAlias"))
                     {
-                        WriteObject(users.aliases.List(UserName));
+                        var properties = new dotNet.Directory.Users.Aliases.AliasesListProperties()
+                        {
+                            Event = this.Event
+                        };
+
+                        WriteObject(users.aliases.List(UserKey, properties));
                     }
                     break;
 
@@ -3430,6 +4105,7 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
         }
     }
 
+
     public class GAUserAliasObject
     {
         public string UserName;
@@ -3444,6 +4120,20 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis">Add a alias for the user</para>
+    /// <para type="description">Add a alias for the user</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GAUserAlias -UserKey $SomeUserKeyString -AliasBody $SomeAliasObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGAUserAlias">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.New, "GAUserAlias",
           DefaultParameterSetName = "PasswordGenerated",
           SupportsShouldProcess = true,
@@ -3452,6 +4142,9 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
     {
         #region Properties
 
+        /// <summary>
+        /// <para type="description">Email or immutable Id of the user</para>
+        /// </summary>
         [Parameter(Position = 0,
             Mandatory = true,
             ValueFromPipeline = true,
@@ -3460,10 +4153,12 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
         [ValidateNotNullOrEmpty]
         public string UserName { get; set; }
 
-        //Domain position = 1
-
+        /// <summary>
+        /// <para type="description">A alias email</para>
+        /// </summary>
         [Parameter(Position = 2,
-            Mandatory = true)]
+            Mandatory = true,
+            HelpMessage = "A alias email")]
         public string Alias { get; set; }
 
         #endregion
@@ -3484,6 +4179,20 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis">Remove a alias for the user</para>
+    /// <para type="description">Remove a alias for the user</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Delete-GAUserAlias -UserKey $SomeUserKeyString -Alias $SomeAliasString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/DeleteGAUserAlias">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Remove, "GAUserAlias",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAUserAlias")]
@@ -3491,6 +4200,9 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
     {
         #region Properties
 
+        /// <summary>
+        /// <para type="description">The alias to be removed</para>
+        /// </summary>
         [Parameter(Position = 0,
             ParameterSetName = "UserAliasName",
             Mandatory = true,
@@ -3500,16 +4212,21 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
         [ValidateNotNullOrEmpty]
         public string UserAliasName { get; set; }
 
-        //Domain position = 1
-
+        /// <summary>
+        /// <para type="description">Email or immutable Id of the user</para>
+        /// </summary>
         [Parameter(Position = 2,
             ParameterSetName = "UserAliasName",
             Mandatory = false,
             HelpMessage = "The user account to which the alias belongs")]
         [ValidateNotNullOrEmpty]
-        public string UserName { get; set; }
+        public string UserKey { get; set; }
 
-        [Parameter(Position = 3)]
+        /// <summary>
+        /// <para type="description">A switch to run the cmdlet without prompting</para>
+        /// </summary>
+        [Parameter(Position = 3,
+            HelpMessage = "A switch to run the cmdlet without prompting")]
         public SwitchParameter Force { get; set; }
 
         #endregion
@@ -3528,12 +4245,12 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
                         WriteDebug(string.Format("Attempting to remove user alias {0}@{1}...",
                             UserAliasName, Domain));
 
-                        if (string.IsNullOrWhiteSpace(UserName))
+                        if (string.IsNullOrWhiteSpace(UserKey))
                         {
-                            UserName = users.Get(UserAliasName).PrimaryEmail;
+                            UserKey = users.Get(UserAliasName).PrimaryEmail;
                         }
 
-                        users.aliases.Delete(UserName, UserAliasName);
+                        users.aliases.Delete(UserKey, UserAliasName);
 
                         WriteVerbose(string.Format("Removal of {0}@{1} completed without error.",
                             UserAliasName, Domain));
@@ -3550,17 +4267,26 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
                 }
             }
         }
-
-        private void RemoveUserAlias()
-        {
-
-        }
     }
 }
 
 
 namespace gShell.Cmdlets.Directory.GAUserPhoto
 {
+    /// <summary>
+    /// <para type="synopsis">Retrieve photo of a user</para>
+    /// <para type="description">Retrieve photo of a user</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Get-GAUserPhoto -UserKey $SomeUserKeyString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/GetGAUserPhoto">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Get, "GAUserPhoto",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAUserPhoto")]
@@ -3568,22 +4294,32 @@ namespace gShell.Cmdlets.Directory.GAUserPhoto
     {
         #region Properties
 
+        /// <summary>
+        /// <para type="description">Email or immutable Id of the user</para>
+        /// </summary>
         [Parameter(Position = 0,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Email or immutable Id of the user")]
         [ValidateNotNullOrEmpty]
         public string UserKey { get; set; }
 
-        //Domain position = 1
-
+        /// <summary>
+        /// <para type="description">Desired path for resulting file</para>
+        /// </summary>
         [Parameter(Position = 2,
             Mandatory = false,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Desired path for resulting file")]
         [ValidateNotNullOrEmpty]
         public string FilePath { get; set; }
 
+        /// <summary>
+        /// <para type="description">Will not overwrite (replace the contents) of an existing file. By default, if a file exists in the specified path, Out-File overwrites the file without warning. If both Append and NoClobber are used, the output is appended to the existing file.</para>
+        /// </summary>
         [Parameter(Position = 3,
-            Mandatory = false)]
+            Mandatory = false,
+            HelpMessage = "Will not overwrite (replace the contents) of an existing file. By default, if a file exists in the specified path, Out-File overwrites the file without warning. If both Append and NoClobber are used, the output is appended to the existing file.")]
         public SwitchParameter NoClobber { get; set; }
 
         #endregion
@@ -3617,6 +4353,20 @@ namespace gShell.Cmdlets.Directory.GAUserPhoto
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis">Remove photos for the user</para>
+    /// <para type="description">Remove photos for the user</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Remove-GAUserPhoto -UserKey $SomeUserKeyString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/RemoveGAUserPhoto">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Remove, "GAUserPhoto",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAUserPhoto")]
@@ -3624,15 +4374,22 @@ namespace gShell.Cmdlets.Directory.GAUserPhoto
     {
         #region Properties
 
+        /// <summary>
+        /// <para type="description">Email or immutable Id of the user</para>
+        /// </summary>
         [Parameter(Position = 0,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Email or immutable Id of the user")]
         [ValidateNotNullOrEmpty]
         public string UserKey { get; set; }
 
-        //Domain position = 1
-
-        [Parameter(Position = 2)]
+        /// <summary>
+        /// <para type="description">A switch to run the cmdlet without prompting</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        HelpMessage = "A switch to run the cmdlet without prompting")]
         public SwitchParameter Force { get; set; }
 
         #endregion
@@ -3668,41 +4425,74 @@ namespace gShell.Cmdlets.Directory.GAUserPhoto
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis">Add a photo for the user. This method supports patch semantics.</para>
+    /// <para type="description">Add a photo for the user. This method supports patch semantics.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Set-GAUserPhoto -UserKey $SomeUserKeyString -UserPhotoBody $SomeUserPhotoObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/SetGAUserPhoto">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Set, "GAUserPhoto",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAUserPhoto")]
     public class SetGAUserPhoto : DirectoryBase
     {
         #region Properties
+
+        /// <summary>
+        /// <para type="description">Email or immutable Id of the user</para>
+        /// </summary>
         [Parameter(Position = 0,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Email or immutable Id of the user")]
         [ValidateNotNullOrEmpty]
         public string UserKey { get; set; }
 
-        //Domain position = 1
-
+        /// <summary>
+        /// <para type="description">Path to the source file</para>
+        /// </summary>
         [Parameter(Position = 2,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Path to the source file")]
         [ValidateNotNullOrEmpty]
         public string Path { get; set; }
 
+        /// <summary>
+        /// <para type="description">Height in pixels of the photo</para>
+        /// </summary>
         [Parameter(Position = 3,
-            Mandatory = false,
-            ValueFromPipelineByPropertyName = true)]
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Height in pixels of the photo")]
         [ValidateNotNullOrEmpty]
         public int? Height { get; set; }
 
+        /// <summary>
+        /// <para type="description">Mime Type of the photo</para>
+        /// </summary>
         [Parameter(Position = 4,
-            Mandatory = false,
-            ValueFromPipelineByPropertyName = true)]
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Mime Type of the photo")]
         [ValidateNotNullOrEmpty]
         public MimeTypeEnum? MimeType { get; set; }
 
+        /// <summary>
+        /// <para type="description">Width in pixels of the photo</para>
+        /// </summary>
         [Parameter(Position = 5,
-            Mandatory = false,
-            ValueFromPipelineByPropertyName = true)]
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Width in pixels of the photo")]
         [ValidateNotNullOrEmpty]
         public int? Width { get; set; }
         #endregion
@@ -3743,7 +4533,7 @@ namespace gShell.Cmdlets.Directory.GAUserPhoto
     }
 }
 
-
+//todo: refactor?
 namespace gShell.Cmdlets.Directory.GAUserProperty
 {
     public class GAUserPropertyBase : DirectoryBase
@@ -5553,6 +6343,20 @@ namespace gShell.Cmdlets.Directory.GAUserProperty
 
 namespace gShell.Cmdlets.Directory.GAVerificationCode
 {
+    /// <summary>
+    /// <para type="synopsis">Returns the current set of valid backup verification codes for the specified user.</para>
+    /// <para type="description">Returns the current set of valid backup verification codes for the specified user.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Get-GAVerificationCode -UserKey $SomeUserKeyString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/GetGAVerificationCode">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Get, "GAVerificationCode",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAVerificationCode")]
@@ -5560,13 +6364,15 @@ namespace gShell.Cmdlets.Directory.GAVerificationCode
     {
         #region Properties
 
+        /// <summary>
+        /// <para type="description">Identifies the user in the API request. The value can be the user's primary email address, alias email address, or unique user ID.</para>
+        /// </summary>
         [Parameter(Position = 0,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Identifies the user in the API request. The value can be the user's primary email address, alias email address, or unique user ID.")]
         [ValidateNotNullOrEmpty]
         public string UserKey { get; set; }
-
-        //Domain position = 1
 
         #endregion
 
@@ -5581,6 +6387,20 @@ namespace gShell.Cmdlets.Directory.GAVerificationCode
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis">Invalidate the current backup verification codes for the user.</para>
+    /// <para type="description">Invalidate the current backup verification codes for the user.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Revoke-GAVerificationCode -UserKey $SomeUserKeyString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Revoke-GAVerificationCode">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsSecurity.Revoke, "GAVerificationCode",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Revoke-GAVerificationCode")]
@@ -5588,15 +6408,22 @@ namespace gShell.Cmdlets.Directory.GAVerificationCode
     {
         #region Properties
 
+        /// <summary>
+        /// <para type="description">Email or immutable Id of the user</para>
+        /// </summary>
         [Parameter(Position = 0,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Email or immutable Id of the user")]
         [ValidateNotNullOrEmpty]
         public string UserKey { get; set; }
 
-        //Domain position = 1
-
-        [Parameter(Position = 2)]
+        /// <summary>
+        /// <para type="description">A switch to run the cmdlet without prompting</para>
+        /// </summary>
+        [Parameter(Position = 1,
+            Mandatory = false,
+            HelpMessage = "A switch to run the cmdlet without prompting")]
         public SwitchParameter Force { get; set; }
 
         #endregion
@@ -5630,19 +6457,37 @@ namespace gShell.Cmdlets.Directory.GAVerificationCode
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis">Generate new backup verification codes for the user.</para>
+    /// <para type="description">Generate new backup verification codes for the user.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GAVerificationCode -UserKey $SomeUserKeyString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGAVerificationCode">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.New, "GAVerificationCode",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GAVerificationCode")]
     public class NewGAVerificationCode : DirectoryBase
     {
         #region Properties
+
+        /// <summary>
+        /// <para type="description">Email or immutable Id of the user</para>
+        /// </summary>
         [Parameter(Position = 0,
             Mandatory = true,
-            ValueFromPipelineByPropertyName = true)]
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Email or immutable Id of the user")]
         [ValidateNotNullOrEmpty]
         public string UserKey { get; set; }
 
-        //Domain position = 1
         #endregion
 
         protected override void ProcessRecord()
