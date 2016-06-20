@@ -8,8 +8,244 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
+using gShell.Cmdlets.Directory;
 using Org.BouncyCastle.Security;
 using Data = Google.Apis.admin.Directory.directory_v1.Data;
+
+namespace gShell.Cmdlets.Directory
+{
+    /// <summary>
+    /// <para type="synopsis">Creates a new Directory API Customer object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a Customer object which may be required as a parameter for some other Cmdlets in the Directory API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.admin.Directory.directory_v1.Data.Customer</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GDirectoryCustomerObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryCustomerObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GDirectoryCustomerObj",
+    SupportsShouldProcess = true)]
+    [OutputType(typeof(Google.Apis.admin.Directory.directory_v1.Data.Customer))]
+    public class NewGDirectoryCustomerObj : PSCmdlet
+    {
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">The customer's secondary contact email address. This email address cannot be on the same domain as the customerDomain</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The customer's secondary contact email address. This email address cannot be on the same domain as the customerDomain")]
+        public string AlternateEmail { get; set; }
+
+        /// <summary>
+        /// <para type="description">The customer's creation time (Readonly)</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The customer's creation time (Readonly)")]
+        public DateTime? CustomerCreationTime { get; set; }
+
+        /// <summary>
+        /// <para type="description">The customer's primary domain name string. Do not include the www prefix when creating a new customer.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The customer's primary domain name string. Do not include the www prefix when creating a new customer.")]
+        public string CustomerDomain { get; set; }
+
+        /// <summary>
+        /// <para type="description">The unique ID for the customer's Google account. (Readonly)</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The unique ID for the customer's Google account. (Readonly)")]
+        public string Id { get; set; }
+
+        /// <summary>
+        /// <para type="description">The customer's ISO 639-2 language code. The default value is en-US</para>
+        /// </summary>
+        [Parameter(Position = 4,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The customer's ISO 639-2 language code. The default value is en-US")]
+        public string Language { get; set; }
+
+        /// <summary>
+        /// <para type="description">The customer's contact phone number in E.164 format.</para>
+        /// </summary>
+        [Parameter(Position = 5,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The customer's contact phone number in E.164 format.")]
+        public string PhoneNumber { get; set; }
+
+        /// <summary>
+        /// <para type="description">The customer's postal address information.</para>
+        /// </summary>
+        [Parameter(Position = 6,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The customer's postal address information.")]
+        public Data.CustomerPostalAddress PostalAddress { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.admin.Directory.directory_v1.Data.Customer()
+            {
+                AlternateEmail = this.AlternateEmail,
+                CustomerCreationTime = this.CustomerCreationTime,
+                CustomerDomain = this.CustomerDomain,
+                Id = this.Id,
+                Language = this.Language,
+                PhoneNumber = this.PhoneNumber,
+                PostalAddress = this.PostalAddress,
+            };
+
+            if (ShouldProcess("Customer"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Directory API CustomerPostalAddress object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a CustomerPostalAddress object which may be required as a parameter for some other Cmdlets in the Directory API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.admin.Directory.directory_v1.Data.CustomerPostalAddress</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GDirectoryCustomerPostalAddressObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryCustomerPostalAddressObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GDirectoryCustomerPostalAddressObj",
+    SupportsShouldProcess = true)]
+    [OutputType(typeof(Google.Apis.admin.Directory.directory_v1.Data.CustomerPostalAddress))]
+    public class NewGDirectoryCustomerPostalAddressObj : PSCmdlet
+    {
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">A customer's physical address. The address can be composed of one to three lines.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "A customer's physical address. The address can be composed of one to three lines.")]
+        public string AddressLine1 { get; set; }
+
+        /// <summary>
+        /// <para type="description">Address line 2 of the address.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Address line 2 of the address.")]
+        public string AddressLine2 { get; set; }
+
+        /// <summary>
+        /// <para type="description">Address line 3 of the address.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Address line 3 of the address.")]
+        public string AddressLine3 { get; set; }
+
+        /// <summary>
+        /// <para type="description">The customer contact's name.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The customer contact's name.")]
+        public string ContactName { get; set; }
+
+        /// <summary>
+        /// <para type="description">This is a required property. For countryCode information see the ISO 3166 country code elements.</para>
+        /// </summary>
+        [Parameter(Position = 4,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "This is a required property. For countryCode information see the ISO 3166 country code elements.")]
+        public string CountryCode { get; set; }
+
+        /// <summary>
+        /// <para type="description">Name of the locality. An example of a locality value is the city of San Francisco.</para>
+        /// </summary>
+        [Parameter(Position = 5,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Name of the locality. An example of a locality value is the city of San Francisco.")]
+        public string Locality { get; set; }
+
+        /// <summary>
+        /// <para type="description">The company or company division name.</para>
+        /// </summary>
+        [Parameter(Position = 6,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The company or company division name.")]
+        public string OrganizationName { get; set; }
+
+        /// <summary>
+        /// <para type="description">The postal code. A postalCode example is a postal zip code such as 10009. This is in accordance with - http://portablecontacts.net/draft-spec.html#address_element.</para>
+        /// </summary>
+        [Parameter(Position = 7,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The postal code. A postalCode example is a postal zip code such as 10009. This is in accordance with - http://portablecontacts.net/draft-spec.html#address_element.")]
+        public string PostalCode { get; set; }
+
+        /// <summary>
+        /// <para type="description">Name of the region. An example of a region value is NY for the state of New York.</para>
+        /// </summary>
+        [Parameter(Position = 8,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Name of the region. An example of a region value is NY for the state of New York.")]
+        public string Region { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.admin.Directory.directory_v1.Data.CustomerPostalAddress()
+            {
+                AddressLine1 = this.AddressLine1,
+                AddressLine2 = this.AddressLine2,
+                AddressLine3 = this.AddressLine3,
+                ContactName = this.ContactName,
+                CountryCode = this.CountryCode,
+                Locality = this.Locality,
+                OrganizationName = this.OrganizationName,
+                PostalCode = this.PostalCode,
+                Region = this.Region,
+            };
+
+            if (ShouldProcess("CustomerPostalAddress"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+}
 
 namespace gShell.Cmdlets.Directory.GAAsp
 {
@@ -500,6 +736,101 @@ namespace gShell.Cmdlets.Directory.GAChromeosdevice
                 };
 
                 chromeosdevices.Patch(body, CustomerId, DeviceId, properties);
+            }
+        }
+    }
+}
+
+//
+namespace gSHell.Cmdlets.Directory.GACustomer
+{
+    /// <summary>
+    /// <para type="synopsis">Retrives a customer.</para>
+    /// <para type="description">Retrives a customer.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Get-GACustomer -CustomerKey $SomeCustomerKeyString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GACustomer">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.Get, "GACustomers",
+        SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GACustomer")]
+    public class GetGACustomersCommand : DirectoryBase
+    {
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">Id of the customer to be retrieved</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Id of the customer to be retrieved")]
+        public string CustomerKey { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess("Directory Customers", "Get-GACustomers"))
+            {
+                WriteObject(customers.Get(CustomerKey));
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Updates a customer. This method supports patch semantics.</para>
+    /// <para type="description">Updates a customer. This method supports patch semantics.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Set-GACustomers -CustomerKey $SomeCustomerKeyString -CustomerBody $SomeCustomerObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Set-GACustomers">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.Set, "GACustomers",
+    SupportsShouldProcess = true,
+
+      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/customers/patch")]
+    public class PatchGACustomersCommand : DirectoryServiceAccountBase
+    {
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">Id of the customer to be updated</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Id of the customer to be updated")]
+        public string CustomerKey { get; set; }
+
+        /// <summary>
+        /// <para type="description">JSON template for Customer Resource object in Directory API.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipeline = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "JSON template for Customer Resource object in Directory API.")]
+        Data.Customer CustomerBody { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess("Directory Customers", "Patch-GACustomers"))
+            {
+                WriteObject(customers.Patch(CustomerBody, CustomerKey));
             }
         }
     }
