@@ -6,10 +6,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Management.Automation;
-using gShell.Cmdlets.Directory;
-using Org.BouncyCastle.Security;
 using Data = Google.Apis.admin.Directory.directory_v1.Data;
 
 namespace gShell.Cmdlets.Directory
@@ -26,7 +23,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryCustomerObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryCustomerObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryCustomerObj",
@@ -132,7 +129,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryCustomerPostalAddressObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryCustomerPostalAddressObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryCustomerPostalAddressObj",
@@ -240,6 +237,82 @@ namespace gShell.Cmdlets.Directory
             };
 
             if (ShouldProcess("CustomerPostalAddress"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Directory API DomainAlias object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a DomainAlias object which may be required as a parameter for some other Cmdlets in the Directory API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.admin.Directory.directory_v1.Data.DomainAlias</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GDirectoryDomainAliasObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryDomainAliasObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GDirectoryDomainAliasObj",
+    SupportsShouldProcess = true)]
+    [OutputType(typeof(Google.Apis.admin.Directory.directory_v1.Data.DomainAlias))]
+    public class NewGDirectoryDomainAliasObj : PSCmdlet
+    {
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">The creation time of the domain alias. (Read-only).</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The creation time of the domain alias. (Read-only).")]
+        public long? CreationTime { get; set; }
+
+        /// <summary>
+        /// <para type="description">The domain alias name.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The domain alias name.")]
+        public string DomainAliasName { get; set; }
+
+        /// <summary>
+        /// <para type="description">The parent domain name that the domain alias is associated with. This can either be a primary or secondary domain name within a customer.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The parent domain name that the domain alias is associated with. This can either be a primary or secondary domain name within a customer.")]
+        public string ParentDomainName { get; set; }
+
+        /// <summary>
+        /// <para type="description">Indicates the verification state of a domain alias. (Read-only)</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Indicates the verification state of a domain alias. (Read-only)")]
+        public bool? Verified { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.admin.Directory.directory_v1.Data.DomainAlias()
+            {
+                CreationTime = this.CreationTime,
+                DomainAliasName = this.DomainAliasName,
+                ParentDomainName = this.ParentDomainName,
+                Verified = this.Verified,
+            };
+
+            if (ShouldProcess("DomainAlias"))
             {
                 WriteObject(body);
             }
@@ -741,8 +814,7 @@ namespace gShell.Cmdlets.Directory.GAChromeosdevice
     }
 }
 
-//
-namespace gSHell.Cmdlets.Directory.GACustomer
+namespace gShell.Cmdlets.Directory.GACustomer
 {
     /// <summary>
     /// <para type="synopsis">Retrives a customer.</para>
@@ -761,7 +833,7 @@ namespace gSHell.Cmdlets.Directory.GACustomer
     [Cmdlet(VerbsCommon.Get, "GACustomers",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GACustomer")]
-    public class GetGACustomersCommand : DirectoryBase
+    public class GetGACustomerCommand : DirectoryBase
     {
         #region Properties
 
@@ -801,8 +873,8 @@ namespace gSHell.Cmdlets.Directory.GACustomer
     [Cmdlet(VerbsCommon.Set, "GACustomers",
     SupportsShouldProcess = true,
 
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/customers/patch")]
-    public class PatchGACustomersCommand : DirectoryServiceAccountBase
+      HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GACustomers")]
+    public class SetGACustomerCommand : DirectoryBase
     {
         #region Properties
 
@@ -831,6 +903,224 @@ namespace gSHell.Cmdlets.Directory.GACustomer
             if (ShouldProcess("Directory Customers", "Patch-GACustomers"))
             {
                 WriteObject(customers.Patch(CustomerBody, CustomerKey));
+            }
+        }
+    }
+}
+
+namespace gShell.Cmdlets.Directory.GADomainAlias
+{
+    /// <summary>
+    /// <para type="synopsis">Deletes a Domain Alias of the customer.</para>
+    /// <para type="description">Deletes a Domain Alias of the customer.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Remove-GADomainAlias -Customer $SomeCustomerString -DomainAliasName $SomeDomainAliasNameString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Remove-GADomainAlias">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.Remove, "GADomainAlias",
+        SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GADomainAlias")]
+    public class RemoveGADomainAliasCommand : DirectoryBase
+    {
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">Immutable id of the Google Apps account.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Immutable id of the Google Apps account.")]
+        public string Customer { get; set; }
+
+        /// <summary>
+        /// <para type="description">Name of domain alias to be retrieved.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Name of domain alias to be retrieved.")]
+        public string DomainAliasName { get; set; }
+
+        /// <summary>
+        /// <para type="description">A switch to run the cmdlet without prompting</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        HelpMessage = "A switch to run the cmdlet without prompting")]
+        public SwitchParameter Force { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            string toRemoveTarget = "domain alias";
+
+            if (ShouldProcess(toRemoveTarget))
+            {	
+	            if (Force|| ShouldContinue(toRemoveTarget + "will be removed.\nContinue?", "Confirm Removal"))
+	            {
+		            try
+		            {
+			            WriteDebug("Attempting to remove " + toRemoveTarget + "...");
+				
+			            domainAliases.Delete(Customer, DomainAliasName);
+				
+			            WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
+		            }
+		            catch (Exception e)
+		            {
+			            WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, toRemoveTarget));
+		            }
+	            }
+	            else
+	            {
+		            WriteError(new ErrorRecord(new Exception("Deletion not confirmed"),
+			            "", ErrorCategory.InvalidData, toRemoveTarget));
+	            }
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Retrieves a domain alias of the customer.</para>
+    /// <para type="description">Retrieves a domain alias of the customer.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Get-GADomainAlias -Customer $SomeCustomerString -DomainAliasName $SomeDomainAliasNameString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <example>
+    ///   <code>PS C:\>Get-GADomainAlias -Customer $SomeCustomerString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GADomainAlias">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.Get, "GADomainAlias",
+        SupportsShouldProcess = true,
+        DefaultParameterSetName = "One",
+        HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GADomainAlias")]
+    public class GetGADomainAliasCommand : DirectoryBase
+    {
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">Immutable id of the Google Apps account.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Immutable id of the Google Apps account.")]
+        public string Customer { get; set; }
+
+        /// <summary>
+        /// <para type="description">Name of domain alias to be retrieved.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        ParameterSetName = "One",
+        HelpMessage = "Name of domain alias to be retrieved.")]
+        public string DomainAliasName { get; set; }
+
+        /// <summary>
+        /// <para type="description">A switch to list all results</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = true,
+        ParameterSetName = "List",
+        HelpMessage = "A switch to list all results.")]
+        public SwitchParameter All { get; set; }
+
+        /// <summary>
+        /// <para type="description">Name of the parent domain for which domain aliases are to be fetched.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        ParameterSetName = "List",
+        HelpMessage = "Name of the parent domain for which domain aliases are to be fetched.")]
+        public string ParentDomainName { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess("Directory DomainAliases", "Get-GADomainAlias"))
+            {
+                if (ParameterSetName == "One")
+                {
+                    WriteObject(domainAliases.Get(Customer, DomainAliasName));
+                }
+                else
+                {
+                    var properties = new dotNet.Directory.DomainAliases.DomainAliasesListProperties()
+                    {
+                        ParentDomainName = this.ParentDomainName
+                    };
+
+                    WriteObject(domainAliases.List(Customer, properties));
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Inserts a Domain alias of the customer.</para>
+    /// <para type="description">Inserts a Domain alias of the customer.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GADomainAlias -Customer $SomeCustomerString -DomainAliasBody $SomeDomainAliasObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GADomainAlias">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GADomainAlias",
+        SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/New-GADomainAlias")]
+    public class NewGADomainAliasCommand : DirectoryBase
+    {
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">Immutable id of the Google Apps account.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Immutable id of the Google Apps account.")]
+        public string Customer { get; set; }
+
+        /// <summary>
+        /// <para type="description">JSON template for Domain Alias object in Directory API.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipeline = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "JSON template for Domain Alias object in Directory API.")]
+        public Data.DomainAlias DomainAliasBody { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess("Directory DomainAliases", "Insert-GADomainAlias"))
+            {
+                WriteObject(domainAliases.Insert(DomainAliasBody, Customer));
             }
         }
     }
