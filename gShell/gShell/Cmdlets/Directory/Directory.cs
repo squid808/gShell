@@ -78,6 +78,102 @@ namespace gShell.Cmdlets.Directory
     }
 
     /// <summary>
+    /// <para type="synopsis">Creates a new Directory API CalendarResource object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a CalendarResource object which may be required as a parameter for some other Cmdlets in the Directory API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.admin.Directory.directory_v1.Data.CalendarResource</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GDirectoryCalendarResourceObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryCalendarResourceObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GDirectoryCalendarResourceObj",
+    SupportsShouldProcess = true)]
+    [OutputType(typeof(Data.CalendarResource))]
+    public class NewGDirectoryCalendarResourceObj : PSCmdlet
+    {
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">ETag of the resource.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "ETag of the resource.")]
+        public string Etags { get; set; }
+
+        /// <summary>
+        /// <para type="description">The brief description of the calendar resource.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The brief description of the calendar resource.")]
+        public string ResourceDescription { get; set; }
+
+        /// <summary>
+        /// <para type="description">The read-only email ID for the calendar resource. Generated as part of creating a new calendar resource.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The read-only email ID for the calendar resource. Generated as part of creating a new calendar resource.")]
+        public string ResourceEmail { get; set; }
+
+        /// <summary>
+        /// <para type="description">The unique ID for the calendar resource.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The unique ID for the calendar resource.")]
+        public string ResourceId { get; set; }
+
+        /// <summary>
+        /// <para type="description">The name of the calendar resource. For example, Training Room 1A</para>
+        /// </summary>
+        [Parameter(Position = 4,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The name of the calendar resource. For example, Training Room 1A")]
+        public string ResourceName { get; set; }
+
+        /// <summary>
+        /// <para type="description">The type of the calendar resource. Used for grouping resources in the calendar user interface.</para>
+        /// </summary>
+        [Parameter(Position = 5,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The type of the calendar resource. Used for grouping resources in the calendar user interface.")]
+        public string ResourceType { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            var body = new Data.CalendarResource()
+            {
+                Etags = this.Etags,
+                ResourceDescription = this.ResourceDescription,
+                ResourceEmail = this.ResourceEmail,
+                ResourceId = this.ResourceId,
+                ResourceName = this.ResourceName,
+                ResourceType = this.ResourceType,
+            };
+
+            if (ShouldProcess("CalendarResource"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
     /// <para type="synopsis">Creates a new Directory API Customer object.</para>
     /// <para type="description">This provides a Cmdlet-Based approach to creating a Customer object which may be required as a parameter for some other Cmdlets in the Directory API category.</para>
     /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.admin.Directory.directory_v1.Data.Customer</para>
@@ -465,6 +561,92 @@ namespace gShell.Cmdlets.Directory
             };
 
             if (ShouldProcess("Domains"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Directory API RoleAssignment object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a RoleAssignment object which may be required as a parameter for some other Cmdlets in the Directory API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.admin.Directory.directory_v1.Data.RoleAssignment</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GDirectoryRoleAssignmentObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryRoleAssignmentObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GDirectoryRoleAssignmentObj",
+    SupportsShouldProcess = true)]
+    [OutputType(typeof(Data.RoleAssignment))]
+    public class NewGDirectoryRoleAssignmentObj : PSCmdlet
+    {
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">The unique ID of the user this role is assigned to.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The unique ID of the user this role is assigned to.")]
+        public string AssignedTo { get; set; }
+
+        /// <summary>
+        /// <para type="description">If the role is restricted to an organization unit, this contains the ID for the organization unit the exercise of this role is restricted to.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "If the role is restricted to an organization unit, this contains the ID for the organization unit the exercise of this role is restricted to.")]
+        public string OrgUnitId { get; set; }
+
+        /// <summary>
+        /// <para type="description">ID of this roleAssignment.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "ID of this roleAssignment.")]
+        public long? RoleAssignmentId { get; set; }
+
+        /// <summary>
+        /// <para type="description">The ID of the role that is assigned.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The ID of the role that is assigned.")]
+        public long? RoleId { get; set; }
+
+        /// <summary>
+        /// <para type="description">The scope in which this role is assigned. Possible values are:- CUSTOMER- ORG_UNIT</para>
+        /// </summary>
+        [Parameter(Position = 4,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The scope in which this role is assigned. Possible values are: \n- CUSTOMER\n- ORG_UNIT")]
+        public string ScopeType { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            var body = new Data.RoleAssignment()
+            {
+                AssignedTo = this.AssignedTo,
+                OrgUnitId = this.OrgUnitId,
+                RoleAssignmentId = this.RoleAssignmentId,
+                RoleId = this.RoleId,
+                ScopeType = this.ScopeType,
+            };
+
+            if (ShouldProcess("RoleAssignment"))
             {
                 WriteObject(body);
             }
@@ -3498,6 +3680,549 @@ namespace gShell.Cmdlets.Directory.GAOrgUnit
                 };
 
                 WriteObject(orgunits.Insert(body, CustomerId));
+            }
+        }
+    }
+}
+
+namespace gShell.Cmdlets.Directory.GAPrivilege
+{
+    /// <summary>
+    /// <para type="synopsis">Retrieves a paginated list of all Privilege for a customer.</para>
+    /// <para type="description">Retrieves a paginated list of all Privilege for a customer.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Get-GAPrivilege -Customer $SomeCustomerString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GAPrivilege">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet("Get", "GAPrivilege",
+        SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAPrivilege")]
+    public class GetGAPrivilegeCommand : DirectoryBase
+    {
+        #region Properties
+        
+        /// <summary>
+        /// <para type="description">Immutable ID of the Google Apps account.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Immutable ID of the Google Apps account.")]
+        public string Customer { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+
+            if (ShouldProcess("Directory Privilege", "Get-GAPrivilege"))
+            {
+
+                WriteObject(Privileges.List(Customer));
+            }
+
+        }
+    }
+}
+
+namespace gShell.Cmdlets.Directory.GACalendar
+{
+    /// <summary>
+    /// <para type="synopsis">Deletes a calendar resource.</para>
+    /// <para type="description">Deletes a calendar resource.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Remove-GACalendar -Customer $SomeCustomerString -CalendarResourceId $SomeCalendarResourceIdString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Remove-GACalendar">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.Remove, "GACalendar",
+        SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GACalendar")]
+    public class RemoveGACalendarCommand : DirectoryBase
+    {
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">The unique ID for the customer's Google account. As an account administrator, you can also use the my_customer alias to represent your account's customer ID.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The unique ID for the customer's Google account. As an account administrator, you can also use the my_customer alias to represent your account's customer ID.")]
+        public string Customer { get; set; }
+
+        /// <summary>
+        /// <para type="description">The unique ID of the calendar resource to delete.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The unique ID of the calendar resource to delete.")]
+        public string CalendarResourceId { get; set; }
+
+        /// <summary>
+        /// <para type="description">A switch to run the cmdlet without prompting</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        HelpMessage = "A switch to run the cmdlet without prompting")]
+        public SwitchParameter Force { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            string toRemoveTarget = "Calendar";
+
+			if (ShouldProcess(toRemoveTarget))
+			{	
+				if (Force || ShouldContinue(toRemoveTarget + "will be removed.\nContinue?", "Confirm Removal"))
+				{
+					try
+					{
+						WriteDebug("Attempting to remove " + toRemoveTarget + "...");
+
+                        resources.calendars.Delete(Customer, CalendarResourceId);
+							
+						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
+					}
+					catch (Exception e)
+					{
+						WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, toRemoveTarget));
+					}
+				}
+				else
+				{
+					WriteError(new ErrorRecord(new Exception("Deletion not confirmed"),
+						"", ErrorCategory.InvalidData, toRemoveTarget));
+				}
+			}
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Retrieves a calendar resource.</para>
+    /// <para type="description">Retrieves a calendar resource.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Get-GACalendar -Customer $SomeCustomerString -CalendarResourceId $SomeCalendarResourceIdString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <example>
+    ///   <code>PS C:\>List-GACalendar -Customer $SomeCustomerString -All</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GACalendar">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.Get, "GACalendar",
+        SupportsShouldProcess = true,
+        DefaultParameterSetName = "One",
+        HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GACalendar")]
+    public class GetGACalendarCommand : DirectoryBase
+    {
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">The unique ID for the customer's Google account. As an account administrator, you can also use the my_customer alias to represent your account's customer ID.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The unique ID for the customer's Google account. As an account administrator, you can also use the my_customer alias to represent your account's customer ID.")]
+        public string Customer { get; set; }
+
+        /// <summary>
+        /// <para type="description">The unique ID of the calendar resource to retrieve.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        ParameterSetName = "One",
+        HelpMessage = "The unique ID of the calendar resource to retrieve.")]
+        public string CalendarResourceId { get; set; }
+
+        /// <summary>
+        /// <para type="description">A switch to list all results</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = true,
+        ParameterSetName = "List",
+        HelpMessage = "A switch to list all results.")]
+        public SwitchParameter All { get; set; }
+
+        /// <summary>
+        /// <para type="description">Maximum number of results to return.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        ParameterSetName = "List",
+        HelpMessage = "Maximum number of results to return.")]
+        public int? MaxResults { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+
+            if (ShouldProcess("Directory Calendar", "Get-GACalendar"))
+            {
+                if (ParameterSetName == "One")
+                {
+                    WriteObject(resources.calendars.Get(Customer, CalendarResourceId));
+                }
+                else
+                {
+                    var properties = new dotNet.Directory.Resources.Calendars.CalendarsListProperties();
+
+                    if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
+
+                    WriteObject(resources.calendars.List(Customer, properties));
+                }
+            }
+
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Inserts a calendar resource.</para>
+    /// <para type="description">Inserts a calendar resource.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GACalendar -Customer $SomeCustomerString -CalendarResourceBody $SomeCalendarResourceObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GACalendar">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet("New", "GACalendar",
+    SupportsShouldProcess = true,
+
+      HelpUri = @"https://github.com/squid808/gShell/wiki/New-GACalendar")]
+    public class NewGACalendarCommand : DirectoryBase
+    {
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">The unique ID for the customer's Google account. As an account administrator, you can also use the my_customer alias to represent your account's customer ID.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The unique ID for the customer's Google account. As an account administrator, you can also use the my_customer alias to represent your account's customer ID.")]
+        public string Customer { get; set; }
+
+        /// <summary>
+        /// <para type="description">JSON template for Calendar Resource object in Directory API.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipeline = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "JSON template for Calendar Resource object in Directory API.")]
+        public Data.CalendarResource CalendarResourceBody { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess("Directory Calendar", "New-GACalendar"))
+            {
+
+                WriteObject(resources.calendars.Insert(CalendarResourceBody, Customer));
+            }
+
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Updates a calendar resource. This method supports patch semantics.</para>
+    /// <para type="description">Updates a calendar resource. This method supports patch semantics.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Set-GACalendar -Customer $SomeCustomerString -CalendarResourceId $SomeCalendarResourceIdString -CalendarResourceBody $SomeCalendarResourceObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Set-GACalendar">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet("Set", "GACalendar",
+        SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GACalendar")]
+    public class SetGACalendarCommand : DirectoryBase
+    {
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">The unique ID for the customer's Google account. As an account administrator, you can also use the my_customer alias to represent your account's customer ID.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The unique ID for the customer's Google account. As an account administrator, you can also use the my_customer alias to represent your account's customer ID.")]
+        public string Customer { get; set; }
+
+        /// <summary>
+        /// <para type="description">The unique ID of the calendar resource to update.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The unique ID of the calendar resource to update.")]
+        public string CalendarResourceId { get; set; }
+
+        /// <summary>
+        /// <para type="description">JSON template for Calendar Resource object in Directory API.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipeline = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "JSON template for Calendar Resource object in Directory API.")]
+        public Data.CalendarResource CalendarResourceBody { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess("Directory Calendar", "Set-GACalendar"))
+            {
+                WriteObject(resources.calendars.Patch(CalendarResourceBody, Customer, CalendarResourceId));
+            }
+
+        }
+    }
+}
+
+namespace gShell.Cmdlets.Directory.GARoleAssignment
+{
+    /// <summary>
+    /// <para type="synopsis">Deletes a role assignment.</para>
+    /// <para type="description">Deletes a role assignment.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Remove-GARoleAssignment -Customer $SomeCustomerString -RoleAssignmentId $SomeRoleAssignmentIdString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Remove-GARoleAssignment">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet("Remove", "GARoleAssignment",
+        SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GARoleAssignment")]
+    public class RemoveGARoleAssignmentCommand : DirectoryBase
+    {
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">Immutable ID of the Google Apps account.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Immutable ID of the Google Apps account.")]
+        public string Customer { get; set; }
+
+        /// <summary>
+        /// <para type="description">Immutable ID of the role assignment.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Immutable ID of the role assignment.")]
+        public string RoleAssignmentId { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess("Directory RoleAssignment", "Remove-GARoleAssignment"))
+            {
+                roleAssignments.Delete(Customer, RoleAssignmentId);
+            }
+
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Retrieve a role assignment.</para>
+    /// <para type="description">Retrieve a role assignment.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Get-GARoleAssignment -Customer $SomeCustomerString -RoleAssignmentId $SomeRoleAssignmentIdString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <example>
+    ///   <code>PS C:\>Get-GARoleAssignment -Customer $SomeCustomerString -All</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GARoleAssignment">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.Get, "GARoleAssignment",
+        SupportsShouldProcess = true,
+        DefaultParameterSetName = "One",
+        HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GARoleAssignment")]
+    public class GetGARoleAssignmentCommand : DirectoryBase
+    {
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">Immutable ID of the Google Apps account.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Immutable ID of the Google Apps account.")]
+        public string Customer { get; set; }
+
+        /// <summary>
+        /// <para type="description">Immutable ID of the role assignment.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = true,
+        ParameterSetName = "One",
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Immutable ID of the role assignment.")]
+        public string RoleAssignmentId { get; set; }
+
+        /// <summary>
+        /// <para type="description">A switch to list all results</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = true,
+        ParameterSetName = "List",
+        HelpMessage = "A switch to list all results.")]
+        public SwitchParameter All { get; set; }
+
+        /// <summary>
+        /// <para type="description">Maximum number of results to return.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ParameterSetName = "List",
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Maximum number of results to return.")]
+        public int? MaxResults { get; set; }
+
+        /// <summary>
+        /// <para type="description">Immutable ID of a role. If included in the request, returns only role assignments containing this role ID.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ParameterSetName = "List",
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Immutable ID of a role. If included in the request, returns only role assignments containing this role ID.")]
+        public string RoleId { get; set; }
+
+        /// <summary>
+        /// <para type="description">The user's primary email address, alias email address, or unique user ID. If included in the request, returns role assignments only for this user.</para>
+        /// </summary>
+        [Parameter(Position = 4,
+        Mandatory = false,
+        ParameterSetName = "List",
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The user's primary email address, alias email address, or unique user ID. If included in the request, returns role assignments only for this user.")]
+        public string UserKey { get; set; }
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess("Directory RoleAssignment", "Get-GARoleAssignment"))
+            {
+                if (ParameterSetName == "One")
+                {
+                    WriteObject(roleAssignments.Get(Customer, RoleAssignmentId));
+                }
+                else
+                {
+                    var properties = new dotNet.Directory.RoleAssignments.RoleAssignmentsListProperties()
+                    {
+                        RoleId = this.RoleId,
+                        UserKey = this.UserKey
+                    };
+
+                    if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
+
+                    WriteObject(roleAssignments.List(Customer, properties));
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a role assignment.</para>
+    /// <para type="description">Creates a role assignment.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GARoleAssignment -Customer $SomeCustomerString -RoleAssignmentBody $SomeRoleAssignmentObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GARoleAssignment">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet("New", "GARoleAssignment",
+    SupportsShouldProcess = true,
+
+      HelpUri = @"https://github.com/squid808/gShell/wiki/New-GARoleAssignment")]
+    public class NewGARoleAssignmentCommand : DirectoryBase
+    {
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">Immutable ID of the Google Apps account.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Immutable ID of the Google Apps account.")]
+        public string Customer { get; set; }
+
+        /// <summary>
+        /// <para type="description">JSON template for roleAssignment resource in Directory API.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipeline = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "JSON template for roleAssignment resource in Directory API.")]
+        Data.RoleAssignment RoleAssignmentBody { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess("Directory RoleAssignment", "New-GARoleAssignment"))
+            {
+                WriteObject(roleAssignments.Insert(RoleAssignmentBody, Customer));
             }
         }
     }
