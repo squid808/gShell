@@ -12,6 +12,72 @@ using Data = Google.Apis.admin.Directory.directory_v1.Data;
 namespace gShell.Cmdlets.Directory
 {
     /// <summary>
+    /// <para type="synopsis">Creates a new Directory API Alias object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a Alias object which may be required as a parameter for some other Cmdlets in the Directory API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.admin.Directory.directory_v1.Data.Alias</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GDirectoryAliasObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryAliasObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GDirectoryAliasObj",
+    SupportsShouldProcess = true)]
+    [OutputType(typeof(Data.Alias))]
+    public class NewGDirectoryAliasObj : PSCmdlet
+    {
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">A alias email</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "A alias email")]
+        public string AliasValue { get; set; }
+
+        /// <summary>
+        /// <para type="description">Unique id of the group (Read-only) Unique id of the user (Read-only)</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Unique id of the group (Read-only) Unique id of the user (Read-only)")]
+        public string Id { get; set; }
+
+        /// <summary>
+        /// <para type="description">Group's primary email (Read-only) User's primary email (Read-only)</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Group's primary email (Read-only) User's primary email (Read-only)")]
+        public string PrimaryEmail { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.admin.Directory.directory_v1.Data.Alias()
+            {
+                AliasValue = this.AliasValue,
+                Id = this.Id,
+                PrimaryEmail = this.PrimaryEmail,
+            };
+
+            if (ShouldProcess("Alias"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
     /// <para type="synopsis">Creates a new Directory API Customer object.</para>
     /// <para type="description">This provides a Cmdlet-Based approach to creating a Customer object which may be required as a parameter for some other Cmdlets in the Directory API category.</para>
     /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.admin.Directory.directory_v1.Data.Customer</para>
@@ -1827,6 +1893,181 @@ namespace gShell.Cmdlets.Directory.GAGroup
             WriteObject(groups.Patch(groupAcct, GroupName));
         }
     }
+}
+
+namespace gShell.Cmdlets.Directory.GAGroupAlias
+{
+    /// <summary>
+    /// <para type="synopsis">Remove a alias for the group</para>
+    /// <para type="description">Remove a alias for the group</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Remove-GAUserAlias -GroupKey $SomeGroupKeyString -Alias $SomeAliasString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Remove-GAUserAlias">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.Remove, "GAGroupAlias",
+        SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAGroupAlias")]
+    public class RemoveGAGroupAliasCommand : DirectoryBase
+    {
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">Email or immutable Id of the group</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Email or immutable Id of the group")]
+        public string GroupKey { get; set; }
+
+        /// <summary>
+        /// <para type="description">The alias to be removed</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The alias to be removed")]
+        public string Alias { get; set; }
+
+        /// <summary>
+        /// <para type="description">A switch to run the cmdlet without prompting</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        HelpMessage = "A switch to run the cmdlet without prompting")]
+        public SwitchParameter Force { get; set; }
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            string toRemoveTarget = "Group Alias";
+
+			if (ShouldProcess(toRemoveTarget))
+			{	
+				if (Force || ShouldContinue(toRemoveTarget + "will be removed.\nContinue?", "Confirm Removal"))
+				{
+					try
+					{
+						WriteDebug("Attempting to remove " + toRemoveTarget + "...");
+							
+						groups.aliases.Delete(GroupKey, Alias);
+							
+						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
+					}
+					catch (Exception e)
+					{
+						WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, toRemoveTarget));
+					}
+				}
+				else
+				{
+					WriteError(new ErrorRecord(new Exception("Deletion not confirmed"),
+						"", ErrorCategory.InvalidData, toRemoveTarget));
+				}
+			}
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Add a alias for the group</para>
+    /// <para type="description">Add a alias for the group</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GAGroupAlias -GroupKey $SomeGroupKeyString -AliasBody $SomeAliasObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GAGroupAlias">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet("New", "GAGroupAlias",
+    SupportsShouldProcess = true,
+
+      HelpUri = @"https://github.com/squid808/gShell/wiki/New-GAGroupAlias")]
+    public class NewGAGroupAliasCommand : DirectoryBase
+    {
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">Email or immutable Id of the group</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Email or immutable Id of the group")]
+        public string GroupKey { get; set; }
+
+        /// <summary>
+        /// <para type="description">JSON template for Alias object in Directory API.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipeline = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "JSON template for Alias object in Directory API.")]
+        public Data.Alias AliasBody { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess("Directory Aliases", "New-GAGroupAlias"))
+            {
+                WriteObject(groups.aliases.Insert(AliasBody, GroupKey));
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">List all aliases for a group</para>
+    /// <para type="description">List all aliases for a group</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Get-GAGroupAlias -GroupKey $SomeGroupKeyString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GAGroupAlias">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.Get, "GAGroupAlias",
+        SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAGroupAlias")]
+    public class GetGAGroupAliasCommand : DirectoryBase
+    {
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">Email or immutable Id of the group</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Email or immutable Id of the group")]
+        public string GroupKey { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess("Directory Aliases", "Get-GAGroupAlias"))
+            {
+                WriteObject(groups.aliases.List(GroupKey));
+            }
+
+        }
+    }
+
 }
 
 namespace gShell.Cmdlets.Directory.GAGroupMember
