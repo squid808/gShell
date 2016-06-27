@@ -568,6 +568,103 @@ namespace gShell.Cmdlets.Directory
     }
 
     /// <summary>
+    /// <para type="synopsis">Creates a new Directory API Role object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a Role object which may be required as a parameter for some other Cmdlets in the Directory API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.admin.Directory.directory_v1.Data.Role</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GDirectoryRoleObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryRoleObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GDirectoryRoleObj",
+    SupportsShouldProcess = true)]
+    [OutputType(typeof(Google.Apis.admin.Directory.directory_v1.Data.Role))]
+    public class NewGDirectoryRoleObj : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">Returns true if the role is a super admin role.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Returns true if the role is a super admin role.")]
+        public System.Nullable<bool> IsSuperAdminRole { get; set; }
+
+        /// <summary>
+        /// <para type="description">Returns true if this is a pre-defined system role.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Returns true if this is a pre-defined system role.")]
+        public System.Nullable<bool> IsSystemRole { get; set; }
+
+        /// <summary>
+        /// <para type="description">A short description of the role.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "A short description of the role.")]
+        public string RoleDescription { get; set; }
+
+        /// <summary>
+        /// <para type="description">ID of the role.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "ID of the role.")]
+        public System.Nullable<long> RoleId { get; set; }
+
+        /// <summary>
+        /// <para type="description">Name of the role.</para>
+        /// </summary>
+        [Parameter(Position = 4,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Name of the role.")]
+        public string RoleName { get; set; }
+
+        /// <summary>
+        /// <para type="description">The set of privileges that are granted to this role.</para>
+        /// </summary>
+        [Parameter(Position = 5,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The set of privileges that are granted to this role.")]
+        public IList<Data.Role.RolePrivilegesData> RolePrivileges { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            var body = new Data.Role()
+            {
+                IsSuperAdminRole = this.IsSuperAdminRole,
+                IsSystemRole = this.IsSystemRole,
+                RoleDescription = this.RoleDescription,
+                RoleId = this.RoleId,
+                RoleName = this.RoleName,
+                RolePrivileges = this.RolePrivileges,
+            };
+
+            if (ShouldProcess("Role"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
     /// <para type="synopsis">Creates a new Directory API RoleAssignment object.</para>
     /// <para type="description">This provides a Cmdlet-Based approach to creating a RoleAssignment object which may be required as a parameter for some other Cmdlets in the Directory API category.</para>
     /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.admin.Directory.directory_v1.Data.RoleAssignment</para>
@@ -4007,6 +4104,289 @@ namespace gShell.Cmdlets.Directory.GACalendar
             if (ShouldProcess("Directory Calendar", "Set-GACalendar"))
             {
                 WriteObject(resources.calendars.Patch(CalendarResourceBody, Customer, CalendarResourceId));
+            }
+
+        }
+    }
+}
+
+namespace gShell.Cmdlets.Directory.GARole
+{
+    /// <summary>
+    /// <para type="synopsis">Deletes a role.</para>
+    /// <para type="description">Deletes a role.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Remove-GARole -Customer $SomeCustomerString -RoleId $SomeRoleIdString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Remove-GARole">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.Remove, "GARole",
+        SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GARole")]
+    public class RemoveGARoleCommand : DirectoryBase
+    {
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">Immutable ID of the Google Apps account.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Immutable ID of the Google Apps account.")]
+        public string Customer { get; set; }
+
+        /// <summary>
+        /// <para type="description">Immutable ID of the role.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Immutable ID of the role.")]
+        public string RoleId { get; set; }
+
+        /// <summary>
+        /// <para type="description">A switch to run the cmdlet without prompting</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        HelpMessage = "A switch to run the cmdlet without prompting")]
+        public SwitchParameter Force { get; set; }
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            string toRemoveTarget = "Role";
+
+			if (ShouldProcess(toRemoveTarget))
+			{	
+				if (Force || ShouldContinue(toRemoveTarget + "will be removed.\nContinue?", "Confirm Removal"))
+				{
+					try
+					{
+						WriteDebug("Attempting to remove " + toRemoveTarget + "...");
+
+                        roles.Delete(Customer, RoleId);
+							
+						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
+					}
+					catch (Exception e)
+					{
+						WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, toRemoveTarget));
+					}
+				}
+				else
+				{
+					WriteError(new ErrorRecord(new Exception("Deletion not confirmed"),
+						"", ErrorCategory.InvalidData, toRemoveTarget));
+				}
+			}
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Retrieves a role.</para>
+    /// <para type="description">Retrieves a role.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Get-GARole -Customer $SomeCustomerString -RoleId $SomeRoleIdString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <example>
+    ///   <code>PS C:\>List-GARole -Customer $SomeCustomerString -All</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GARole">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.Get, "GARole",
+        SupportsShouldProcess = true,
+        DefaultParameterSetName = "One",
+        HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GARole")]
+    public class GetGARoleCommand : DirectoryBase
+    {
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">Immutable ID of the Google Apps account.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Immutable ID of the Google Apps account.")]
+        public string Customer { get; set; }
+
+        /// <summary>
+        /// <para type="description">Immutable ID of the role.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+            Mandatory = true,
+            ParameterSetName = "One",
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Immutable ID of the role.")]
+        public string RoleId { get; set; }
+
+        /// <summary>
+        /// <para type="description">A switch to list all results</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = true,
+        ParameterSetName = "List",
+        HelpMessage = "A switch to list all results.")]
+        public SwitchParameter All { get; set; }
+
+        /// <summary>
+        /// <para type="description">Maximum number of results to return.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+            Mandatory = false,
+            ParameterSetName = "List",
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Maximum number of results to return.")]
+        public int? MaxResults { get; set; }
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess("Directory Role", "Get-GARole"))
+            {
+                if (ParameterSetName == "One")
+                {
+                    WriteObject(roles.Get(Customer, RoleId));
+                }
+                else
+                {
+                    var properties = new dotNet.Directory.Roles.RolesListProperties();
+
+                    if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
+
+                    WriteObject(roles.List(Customer, properties));
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a role.</para>
+    /// <para type="description">Creates a role.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GARole -Customer $SomeCustomerString -RoleBody $SomeRoleObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GARole">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GARole",
+        SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/New-GARole")]
+    public class NewGARoleCommand : DirectoryBase
+    {
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">Immutable ID of the Google Apps account.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Immutable ID of the Google Apps account.")]
+        public string Customer { get; set; }
+
+        /// <summary>
+        /// <para type="description">JSON template for role resource in Directory API.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+            Mandatory = false,
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "JSON template for role resource in Directory API.")]
+        public Data.Role RoleBody { get; set; }
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess("Directory Role", "New-GARole"))
+            {
+                WriteObject(roles.Insert(RoleBody, Customer));
+            }
+
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Updates a role. This method supports patch semantics.</para>
+    /// <para type="description">Updates a role. This method supports patch semantics.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Set-GARole -Customer $SomeCustomerString -RoleId $SomeRoleIdString -RoleBody $SomeRoleObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Set-GARole">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.Set, "GARole",
+        SupportsShouldProcess = true,
+
+        HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GARole")]
+    public class SetGARoleCommand : DirectoryBase
+    {
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">Immutable ID of the Google Apps account.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Immutable ID of the Google Apps account.")]
+        public string Customer { get; set; }
+
+        /// <summary>
+        /// <para type="description">Immutable ID of the role.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Immutable ID of the role.")]
+        public string RoleId { get; set; }
+
+        /// <summary>
+        /// <para type="description">JSON template for role resource in Directory API.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+            Mandatory = false,
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "JSON template for role resource in Directory API.")]
+        public Data.Role RoleBody { get; set; }
+
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess("Directory Role", "Set-GARole"))
+            {
+                WriteObject(roles.Patch(RoleBody, Customer, RoleId));
             }
 
         }
