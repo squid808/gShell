@@ -6,6 +6,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Management.Automation;
 using Data = Google.Apis.admin.Directory.directory_v1.Data;
 
@@ -19,17 +20,17 @@ namespace gShell.Cmdlets.Directory
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GDirectoryAliasObj</code>
+    ///   <code>PS C:\>New-GAAliasObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryAliasObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GAAliasObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
-    [Cmdlet(VerbsCommon.New, "GDirectoryAliasObj",
+    [Cmdlet(VerbsCommon.New, "GAAliasObj",
     SupportsShouldProcess = true)]
     [OutputType(typeof(Data.Alias))]
-    public class NewGDirectoryAliasObj : PSCmdlet
+    public class NewGAAliasObj : PSCmdlet
     {
         #region Properties
 
@@ -85,17 +86,17 @@ namespace gShell.Cmdlets.Directory
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GDirectoryCalendarResourceObj</code>
+    ///   <code>PS C:\>New-GACalendarResourceObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryCalendarResourceObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GACalendarResourceObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
-    [Cmdlet(VerbsCommon.New, "GDirectoryCalendarResourceObj",
+    [Cmdlet(VerbsCommon.New, "GACalendarResourceObj",
     SupportsShouldProcess = true)]
     [OutputType(typeof(Data.CalendarResource))]
-    public class NewGDirectoryCalendarResourceObj : PSCmdlet
+    public class NewGACalendarResourceObj : PSCmdlet
     {
         #region Properties
 
@@ -181,17 +182,17 @@ namespace gShell.Cmdlets.Directory
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GDirectoryCustomerObj</code>
+    ///   <code>PS C:\>New-GACustomerObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryCustomerObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GACustomerObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
-    [Cmdlet(VerbsCommon.New, "GDirectoryCustomerObj",
+    [Cmdlet(VerbsCommon.New, "GACustomerObj",
     SupportsShouldProcess = true)]
     [OutputType(typeof(Google.Apis.admin.Directory.directory_v1.Data.Customer))]
-    public class NewGDirectoryCustomerObj : PSCmdlet
+    public class NewGACustomerObj : PSCmdlet
     {
         #region Properties
 
@@ -280,6 +281,168 @@ namespace gShell.Cmdlets.Directory
     }
 
     /// <summary>
+    /// <para type="synopsis">Creates a new Directory API DomainAlias object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a DomainAlias object which may be required as a parameter for some other Cmdlets in the Directory API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.admin.Directory.directory_v1.Data.DomainAlias</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GADomainAliasObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GADomainAliasObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GADomainAliasObj",
+    SupportsShouldProcess = true)]
+    [OutputType(typeof(Google.Apis.admin.Directory.directory_v1.Data.DomainAlias))]
+    public class NewGADomainAliasObj : PSCmdlet
+    {
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">The creation time of the domain alias. (Read-only).</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The creation time of the domain alias. (Read-only).")]
+        public long? CreationTime { get; set; }
+
+        /// <summary>
+        /// <para type="description">The domain alias name.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The domain alias name.")]
+        public string DomainAliasName { get; set; }
+
+        /// <summary>
+        /// <para type="description">The parent domain name that the domain alias is associated with. This can either be a primary or secondary domain name within a customer.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The parent domain name that the domain alias is associated with. This can either be a primary or secondary domain name within a customer.")]
+        public string ParentDomainName { get; set; }
+
+        /// <summary>
+        /// <para type="description">Indicates the verification state of a domain alias. (Read-only)</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Indicates the verification state of a domain alias. (Read-only)")]
+        public bool? Verified { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            var body = new Data.DomainAlias()
+            {
+                CreationTime = this.CreationTime,
+                DomainAliasName = this.DomainAliasName,
+                ParentDomainName = this.ParentDomainName,
+                Verified = this.Verified,
+            };
+
+            if (ShouldProcess("DomainAlias"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Directory API Domains object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a Domains object which may be required as a parameter for some other Cmdlets in the Directory API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.admin.Directory.directory_v1.Data.Domains</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GADomainsObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GADomainsObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GADomainsObj",
+    SupportsShouldProcess = true)]
+    [OutputType(typeof(Data.Domains))]
+    public class NewGADomainsObj : PSCmdlet
+    {
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">Creation time of the domain. (Read-only).</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Creation time of the domain. (Read-only).")]
+        public long CreationTime { get; set; }
+
+        /// <summary>
+        /// <para type="description">List of domain alias objects. (Read-only)</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "List of domain alias objects. (Read-only)")]
+        public IList<Data.DomainAlias> DomainAliases { get; set; }
+
+        /// <summary>
+        /// <para type="description">The domain name of the customer.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The domain name of the customer.")]
+        public string DomainName { get; set; }
+
+        /// <summary>
+        /// <para type="description">Indicates if the domain is a primary domain (Read-only).</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Indicates if the domain is a primary domain (Read-only).")]
+        public bool? IsPrimary { get; set; }
+
+        /// <summary>
+        /// <para type="description">Indicates the verification state of a domain. (Read-only).</para>
+        /// </summary>
+        [Parameter(Position = 4,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Indicates the verification state of a domain. (Read-only).")]
+        public bool? Verified { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            var body = new Data.Domains()
+            {
+                CreationTime = this.CreationTime,
+                DomainAliases = this.DomainAliases,
+                DomainName = this.DomainName,
+                IsPrimary = this.IsPrimary,
+                Verified = this.Verified,
+            };
+
+            if (ShouldProcess("Domains"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
     /// <para type="synopsis">Creates a new Directory API CustomerPostalAddress object.</para>
     /// <para type="description">This provides a Cmdlet-Based approach to creating a CustomerPostalAddress object which may be required as a parameter for some other Cmdlets in the Directory API category.</para>
     /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.admin.Directory.directory_v1.Data.CustomerPostalAddress</para>
@@ -287,17 +450,17 @@ namespace gShell.Cmdlets.Directory
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GDirectoryCustomerPostalAddressObj</code>
+    ///   <code>PS C:\>New-GACustomerPostalAddressObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryCustomerPostalAddressObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GACustomerPostalAddressObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
-    [Cmdlet(VerbsCommon.New, "GDirectoryCustomerPostalAddressObj",
+    [Cmdlet(VerbsCommon.New, "GACustomerPostalAddressObj",
     SupportsShouldProcess = true)]
     [OutputType(typeof(Google.Apis.admin.Directory.directory_v1.Data.CustomerPostalAddress))]
-    public class NewGDirectoryCustomerPostalAddressObj : PSCmdlet
+    public class NewGACustomerPostalAddressObj : PSCmdlet
     {
         #region Properties
 
@@ -406,168 +569,6 @@ namespace gShell.Cmdlets.Directory
     }
 
     /// <summary>
-    /// <para type="synopsis">Creates a new Directory API DomainAlias object.</para>
-    /// <para type="description">This provides a Cmdlet-Based approach to creating a DomainAlias object which may be required as a parameter for some other Cmdlets in the Directory API category.</para>
-    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.admin.Directory.directory_v1.Data.DomainAlias</para>
-    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
-    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
-    /// </description></item></list>
-    /// <example>
-    ///   <code>PS C:\>New-GDirectoryDomainAliasObj</code>
-    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
-    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
-    /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryDomainAliasObj">[Wiki page for this Cmdlet]</para>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
-    /// </summary>
-    [Cmdlet(VerbsCommon.New, "GDirectoryDomainAliasObj",
-    SupportsShouldProcess = true)]
-    [OutputType(typeof(Google.Apis.admin.Directory.directory_v1.Data.DomainAlias))]
-    public class NewGDirectoryDomainAliasObj : PSCmdlet
-    {
-        #region Properties
-
-        /// <summary>
-        /// <para type="description">The creation time of the domain alias. (Read-only).</para>
-        /// </summary>
-        [Parameter(Position = 0,
-        Mandatory = false,
-        ValueFromPipelineByPropertyName = true,
-        HelpMessage = "The creation time of the domain alias. (Read-only).")]
-        public long? CreationTime { get; set; }
-
-        /// <summary>
-        /// <para type="description">The domain alias name.</para>
-        /// </summary>
-        [Parameter(Position = 1,
-        Mandatory = false,
-        ValueFromPipelineByPropertyName = true,
-        HelpMessage = "The domain alias name.")]
-        public string DomainAliasName { get; set; }
-
-        /// <summary>
-        /// <para type="description">The parent domain name that the domain alias is associated with. This can either be a primary or secondary domain name within a customer.</para>
-        /// </summary>
-        [Parameter(Position = 2,
-        Mandatory = false,
-        ValueFromPipelineByPropertyName = true,
-        HelpMessage = "The parent domain name that the domain alias is associated with. This can either be a primary or secondary domain name within a customer.")]
-        public string ParentDomainName { get; set; }
-
-        /// <summary>
-        /// <para type="description">Indicates the verification state of a domain alias. (Read-only)</para>
-        /// </summary>
-        [Parameter(Position = 3,
-        Mandatory = false,
-        ValueFromPipelineByPropertyName = true,
-        HelpMessage = "Indicates the verification state of a domain alias. (Read-only)")]
-        public bool? Verified { get; set; }
-        #endregion
-
-        protected override void ProcessRecord()
-        {
-            var body = new Data.DomainAlias()
-            {
-                CreationTime = this.CreationTime,
-                DomainAliasName = this.DomainAliasName,
-                ParentDomainName = this.ParentDomainName,
-                Verified = this.Verified,
-            };
-
-            if (ShouldProcess("DomainAlias"))
-            {
-                WriteObject(body);
-            }
-        }
-    }
-
-    /// <summary>
-    /// <para type="synopsis">Creates a new Directory API Domains object.</para>
-    /// <para type="description">This provides a Cmdlet-Based approach to creating a Domains object which may be required as a parameter for some other Cmdlets in the Directory API category.</para>
-    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.admin.Directory.directory_v1.Data.Domains</para>
-    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
-    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
-    /// </description></item></list>
-    /// <example>
-    ///   <code>PS C:\>New-GDirectoryDomainsObj</code>
-    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
-    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
-    /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryDomainsObj">[Wiki page for this Cmdlet]</para>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
-    /// </summary>
-    [Cmdlet(VerbsCommon.New, "GDirectoryDomainsObj",
-    SupportsShouldProcess = true)]
-    [OutputType(typeof(Data.Domains))]
-    public class NewGDirectoryDomainsObj : PSCmdlet
-    {
-        #region Properties
-
-        /// <summary>
-        /// <para type="description">Creation time of the domain. (Read-only).</para>
-        /// </summary>
-        [Parameter(Position = 0,
-        Mandatory = false,
-        ValueFromPipelineByPropertyName = true,
-        HelpMessage = "Creation time of the domain. (Read-only).")]
-        public long CreationTime { get; set; }
-
-        /// <summary>
-        /// <para type="description">List of domain alias objects. (Read-only)</para>
-        /// </summary>
-        [Parameter(Position = 1,
-        Mandatory = false,
-        ValueFromPipelineByPropertyName = true,
-        HelpMessage = "List of domain alias objects. (Read-only)")]
-        public IList<Data.DomainAlias> DomainAliases { get; set; }
-
-        /// <summary>
-        /// <para type="description">The domain name of the customer.</para>
-        /// </summary>
-        [Parameter(Position = 2,
-        Mandatory = false,
-        ValueFromPipelineByPropertyName = true,
-        HelpMessage = "The domain name of the customer.")]
-        public string DomainName { get; set; }
-
-        /// <summary>
-        /// <para type="description">Indicates if the domain is a primary domain (Read-only).</para>
-        /// </summary>
-        [Parameter(Position = 3,
-        Mandatory = false,
-        ValueFromPipelineByPropertyName = true,
-        HelpMessage = "Indicates if the domain is a primary domain (Read-only).")]
-        public bool? IsPrimary { get; set; }
-
-        /// <summary>
-        /// <para type="description">Indicates the verification state of a domain. (Read-only).</para>
-        /// </summary>
-        [Parameter(Position = 4,
-        Mandatory = false,
-        ValueFromPipelineByPropertyName = true,
-        HelpMessage = "Indicates the verification state of a domain. (Read-only).")]
-        public bool? Verified { get; set; }
-        #endregion
-
-        protected override void ProcessRecord()
-        {
-            var body = new Data.Domains()
-            {
-                CreationTime = this.CreationTime,
-                DomainAliases = this.DomainAliases,
-                DomainName = this.DomainName,
-                IsPrimary = this.IsPrimary,
-                Verified = this.Verified,
-            };
-
-            if (ShouldProcess("Domains"))
-            {
-                WriteObject(body);
-            }
-        }
-    }
-
-    /// <summary>
     /// <para type="synopsis">Creates a new Directory API Role object.</para>
     /// <para type="description">This provides a Cmdlet-Based approach to creating a Role object which may be required as a parameter for some other Cmdlets in the Directory API category.</para>
     /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.admin.Directory.directory_v1.Data.Role</para>
@@ -575,17 +576,17 @@ namespace gShell.Cmdlets.Directory
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GDirectoryRoleObj</code>
+    ///   <code>PS C:\>New-GARoleObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryRoleObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GARoleObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
-    [Cmdlet(VerbsCommon.New, "GDirectoryRoleObj",
+    [Cmdlet(VerbsCommon.New, "GARoleObj",
     SupportsShouldProcess = true)]
     [OutputType(typeof(Google.Apis.admin.Directory.directory_v1.Data.Role))]
-    public class NewGDirectoryRoleObj : PSCmdlet
+    public class NewGARoleObj : PSCmdlet
     {
         #region Properties
 
@@ -672,17 +673,17 @@ namespace gShell.Cmdlets.Directory
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GDirectoryRoleAssignmentObj</code>
+    ///   <code>PS C:\>New-GARoleAssignmentObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryRoleAssignmentObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GARoleAssignmentObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
-    [Cmdlet(VerbsCommon.New, "GDirectoryRoleAssignmentObj",
+    [Cmdlet(VerbsCommon.New, "GARoleAssignmentObj",
     SupportsShouldProcess = true)]
     [OutputType(typeof(Data.RoleAssignment))]
-    public class NewGDirectoryRoleAssignmentObj : PSCmdlet
+    public class NewGARoleAssignmentObj : PSCmdlet
     {
         #region Properties
 
@@ -744,6 +745,1360 @@ namespace gShell.Cmdlets.Directory
             };
 
             if (ShouldProcess("RoleAssignment"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Directory API Schema object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a Schema object which may be required as a parameter for some other Cmdlets in the Directory API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.admin.Directory.directory_v1.Data.Schema</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GASchemaObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GASchemaObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GASchemaObj",
+    SupportsShouldProcess = true)]
+    [OutputType(typeof(Google.Apis.admin.Directory.directory_v1.Data.Schema))]
+    public class NewGASchemaObj : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">Fields of Schema</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Fields of Schema")]
+        public IList<Data.SchemaFieldSpec> Fields { get; set; }
+
+        /// <summary>
+        /// <para type="description">Unique identifier of Schema (Read-only)</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Unique identifier of Schema (Read-only)")]
+        public string SchemaId { get; set; }
+
+        /// <summary>
+        /// <para type="description">Schema name</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Schema name")]
+        public string SchemaName { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.admin.Directory.directory_v1.Data.Schema()
+            {
+                Fields = this.Fields,
+                SchemaId = this.SchemaId,
+                SchemaName = this.SchemaName,
+            };
+
+            if (ShouldProcess("Schema"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Directory API SchemaFieldSpec object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a SchemaFieldSpec object which may be required as a parameter for some other Cmdlets in the Directory API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.admin.Directory.directory_v1.Data.SchemaFieldSpec</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GASchemaFieldSpecObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GASchemaFieldSpecObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GASchemaFieldSpecObj",
+    SupportsShouldProcess = true)]
+    [OutputType(typeof(Google.Apis.admin.Directory.directory_v1.Data.SchemaFieldSpec))]
+    public class NewGASchemaFieldSpecObj : PSCmdlet
+    {
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">Unique identifier of Field (Read-only)</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Unique identifier of Field (Read-only)")]
+        public string FieldId { get; set; }
+
+        /// <summary>
+        /// <para type="description">Name of the field.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Name of the field.")]
+        public string FieldName { get; set; }
+
+        /// <summary>
+        /// <para type="description">Type of the field.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Type of the field.")]
+        public string FieldType { get; set; }
+
+        /// <summary>
+        /// <para type="description">Boolean specifying whether the field is indexed or not.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Boolean specifying whether the field is indexed or not.")]
+        public System.Nullable<bool> Indexed { get; set; }
+
+        /// <summary>
+        /// <para type="description">Boolean specifying whether this is a multi-valued field or not.</para>
+        /// </summary>
+        [Parameter(Position = 4,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Boolean specifying whether this is a multi-valued field or not.")]
+        public System.Nullable<bool> MultiValued { get; set; }
+
+        /// <summary>
+        /// <para type="description">Indexing spec for a numeric field. By default, only exact match queries will be supported for numeric fields. Setting the numericIndexingSpec allows range queries to be supported.</para>
+        /// </summary>
+        [Parameter(Position = 5,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Indexing spec for a numeric field. By default, only exact match queries will be supported for numeric fields. Setting the numericIndexingSpec allows range queries to be supported.")]
+        public Data.SchemaFieldSpec.NumericIndexingSpecData NumericIndexingSpec { get; set; }
+
+        /// <summary>
+        /// <para type="description">Read ACLs on the field specifying who can view values of this field. Valid values are "ALL_DOMAIN_USERS" and "ADMINS_AND_SELF".</para>
+        /// </summary>
+        [Parameter(Position = 6,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Read ACLs on the field specifying who can view values of this field. Valid values are \"ALL_DOMAIN_USERS\" and \"ADMINS_AND_SELF\".")]
+        public string ReadAccessType { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.admin.Directory.directory_v1.Data.SchemaFieldSpec()
+            {
+                FieldId = this.FieldId,
+                FieldName = this.FieldName,
+                FieldType = this.FieldType,
+                Indexed = this.Indexed,
+                MultiValued = this.MultiValued,
+                NumericIndexingSpec = this.NumericIndexingSpec,
+                ReadAccessType = this.ReadAccessType,
+            };
+
+            if (ShouldProcess("SchemaFieldSpec"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Directory API User object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a User object which may be required as a parameter for some other Cmdlets in the Directory API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.admin.Directory.directory_v1.Data.User</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GAUserObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GAUserObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GAUserObj",
+    SupportsShouldProcess = true)]
+    [OutputType(typeof(Google.Apis.admin.Directory.directory_v1.Data.User))]
+    public class NewGAUserObj : PSCmdlet
+    {
+        #region Properties
+
+
+
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true)]
+        public object Addresses { get; set; }
+
+        /// <summary>
+        /// <para type="description">Indicates if user has agreed to terms (Read-only)</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Indicates if user has agreed to terms (Read-only)")]
+        public System.Nullable<bool> AgreedToTerms { get; set; }
+
+        /// <summary>
+        /// <para type="description">List of aliases (Read-only)</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "List of aliases (Read-only)")]
+        public System.Collections.Generic.IList<string> Aliases { get; set; }
+
+        /// <summary>
+        /// <para type="description">Boolean indicating if the user should change password in next login</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Boolean indicating if the user should change password in next login")]
+        public System.Nullable<bool> ChangePasswordAtNextLogin { get; set; }
+
+        /// <summary>
+        /// <para type="description">User's Google account creation time. (Read-only)</para>
+        /// </summary>
+        [Parameter(Position = 4,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "User's Google account creation time. (Read-only)")]
+        public System.Nullable<System.DateTime> CreationTime { get; set; }
+
+        /// <summary>
+        /// <para type="description">Custom fields of the user.</para>
+        /// </summary>
+        [Parameter(Position = 5,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Custom fields of the user.")]
+        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, object>> CustomSchemas { get; set; }
+
+        /// <summary>
+        /// <para type="description">CustomerId of User (Read-only)</para>
+        /// </summary>
+        [Parameter(Position = 6,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "CustomerId of User (Read-only)")]
+        public string CustomerId { get; set; }
+
+
+        [Parameter(Position = 7,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true)]
+        public System.Nullable<System.DateTime> DeletionTime { get; set; }
+
+
+        [Parameter(Position = 8,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true)]
+        public object Emails { get; set; }
+
+
+        [Parameter(Position = 9,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true)]
+        public object ExternalIds { get; set; }
+
+        /// <summary>
+        /// <para type="description">Hash function name for password. Supported are MD5, SHA-1 and crypt</para>
+        /// </summary>
+        [Parameter(Position = 10,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Hash function name for password. Supported are MD5, SHA-1 and crypt")]
+        public string HashFunction { get; set; }
+
+        /// <summary>
+        /// <para type="description">Unique identifier of User (Read-only)</para>
+        /// </summary>
+        [Parameter(Position = 11,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Unique identifier of User (Read-only)")]
+        public string Id { get; set; }
+
+
+        [Parameter(Position = 12,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true)]
+        public object Ims { get; set; }
+
+        /// <summary>
+        /// <para type="description">Boolean indicating if user is included in Global Address List</para>
+        /// </summary>
+        [Parameter(Position = 13,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Boolean indicating if user is included in Global Address List")]
+        public System.Nullable<bool> IncludeInGlobalAddressList { get; set; }
+
+        /// <summary>
+        /// <para type="description">Boolean indicating if ip is whitelisted</para>
+        /// </summary>
+        [Parameter(Position = 14,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Boolean indicating if ip is whitelisted")]
+        public System.Nullable<bool> IpWhitelisted { get; set; }
+
+        /// <summary>
+        /// <para type="description">Boolean indicating if the user is admin (Read-only)</para>
+        /// </summary>
+        [Parameter(Position = 15,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Boolean indicating if the user is admin (Read-only)")]
+        public System.Nullable<bool> IsAdmin { get; set; }
+
+        /// <summary>
+        /// <para type="description">Boolean indicating if the user is delegated admin (Read-only)</para>
+        /// </summary>
+        [Parameter(Position = 16,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Boolean indicating if the user is delegated admin (Read-only)")]
+        public System.Nullable<bool> IsDelegatedAdmin { get; set; }
+
+        /// <summary>
+        /// <para type="description">Is mailbox setup (Read-only)</para>
+        /// </summary>
+        [Parameter(Position = 17,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Is mailbox setup (Read-only)")]
+        public System.Nullable<bool> IsMailboxSetup { get; set; }
+
+        /// <summary>
+        /// <para type="description">User's last login time. (Read-only)</para>
+        /// </summary>
+        [Parameter(Position = 18,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "User's last login time. (Read-only)")]
+        public System.Nullable<System.DateTime> LastLoginTime { get; set; }
+
+        /// <summary>
+        /// <para type="description">User's name</para>
+        /// </summary>
+        [Parameter(Position = 19,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "User's name")]
+        public Data.UserName Name { get; set; }
+
+        /// <summary>
+        /// <para type="description">List of non editable aliases (Read-only)</para>
+        /// </summary>
+        [Parameter(Position = 20,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "List of non editable aliases (Read-only)")]
+        public System.Collections.Generic.IList<string> NonEditableAliases { get; set; }
+
+
+        [Parameter(Position = 21,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true)]
+        public object Notes { get; set; }
+
+        /// <summary>
+        /// <para type="description">OrgUnit of User</para>
+        /// </summary>
+        [Parameter(Position = 22,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "OrgUnit of User")]
+        public string OrgUnitPath { get; set; }
+
+
+        [Parameter(Position = 23,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true)]
+        public object Organizations { get; set; }
+
+        /// <summary>
+        /// <para type="description">User's password</para>
+        /// </summary>
+        [Parameter(Position = 24,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "User's password")]
+        public string Password { get; set; }
+
+
+        [Parameter(Position = 25,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true)]
+        public object Phones { get; set; }
+
+        /// <summary>
+        /// <para type="description">username of User</para>
+        /// </summary>
+        [Parameter(Position = 26,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "username of User")]
+        public string PrimaryEmail { get; set; }
+
+
+        [Parameter(Position = 27,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true)]
+        public object Relations { get; set; }
+
+        /// <summary>
+        /// <para type="description">Indicates if user is suspended</para>
+        /// </summary>
+        [Parameter(Position = 28,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Indicates if user is suspended")]
+        public System.Nullable<bool> Suspended { get; set; }
+
+        /// <summary>
+        /// <para type="description">Suspension reason if user is suspended (Read-only)</para>
+        /// </summary>
+        [Parameter(Position = 29,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Suspension reason if user is suspended (Read-only)")]
+        public string SuspensionReason { get; set; }
+
+        /// <summary>
+        /// <para type="description">ETag of the user's photo (Read-only)</para>
+        /// </summary>
+        [Parameter(Position = 30,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "ETag of the user's photo (Read-only)")]
+        public string ThumbnailPhotoEtag { get; set; }
+
+        /// <summary>
+        /// <para type="description">Photo Url of the user (Read-only)</para>
+        /// </summary>
+        [Parameter(Position = 31,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Photo Url of the user (Read-only)")]
+        public string ThumbnailPhotoUrl { get; set; }
+
+
+        [Parameter(Position = 32,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true)]
+        #endregion
+        public object Websites { get; set; }
+
+        protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.admin.Directory.directory_v1.Data.User()
+            {
+                Addresses = this.Addresses,
+                AgreedToTerms = this.AgreedToTerms,
+                Aliases = this.Aliases,
+                ChangePasswordAtNextLogin = this.ChangePasswordAtNextLogin,
+                CreationTime = this.CreationTime,
+                CustomSchemas = this.CustomSchemas,
+                CustomerId = this.CustomerId,
+                DeletionTime = this.DeletionTime,
+                Emails = this.Emails,
+                ExternalIds = this.ExternalIds,
+                HashFunction = this.HashFunction,
+                Id = this.Id,
+                Ims = this.Ims,
+                IncludeInGlobalAddressList = this.IncludeInGlobalAddressList,
+                IpWhitelisted = this.IpWhitelisted,
+                IsAdmin = this.IsAdmin,
+                IsDelegatedAdmin = this.IsDelegatedAdmin,
+                IsMailboxSetup = this.IsMailboxSetup,
+                LastLoginTime = this.LastLoginTime,
+                Name = this.Name,
+                NonEditableAliases = this.NonEditableAliases,
+                Notes = this.Notes,
+                OrgUnitPath = this.OrgUnitPath,
+                Organizations = this.Organizations,
+                Password = this.Password,
+                Phones = this.Phones,
+                PrimaryEmail = this.PrimaryEmail,
+                Relations = this.Relations,
+                Suspended = this.Suspended,
+                SuspensionReason = this.SuspensionReason,
+                ThumbnailPhotoEtag = this.ThumbnailPhotoEtag,
+                ThumbnailPhotoUrl = this.ThumbnailPhotoUrl,
+                Websites = this.Websites,
+            };
+
+            if (ShouldProcess("User"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Directory API UserAddress object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a UserAddress object which may be required as a parameter for some other Cmdlets in the Directory API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.admin.Directory.directory_v1.Data.UserAddress</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GAUserAddressObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GAUserAddressObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GAUserAddressObj",
+    SupportsShouldProcess = true)]
+    [OutputType(typeof(Google.Apis.admin.Directory.directory_v1.Data.UserAddress))]
+    public class NewGAUserAddressObj : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">Country.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Country.")]
+        public string Country { get; set; }
+
+        /// <summary>
+        /// <para type="description">Country code.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Country code.")]
+        public string CountryCode { get; set; }
+
+        /// <summary>
+        /// <para type="description">Custom type.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Custom type.")]
+        public string CustomType { get; set; }
+
+        /// <summary>
+        /// <para type="description">Extended Address.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Extended Address.")]
+        public string ExtendedAddress { get; set; }
+
+        /// <summary>
+        /// <para type="description">Formatted address.</para>
+        /// </summary>
+        [Parameter(Position = 4,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Formatted address.")]
+        public string Formatted { get; set; }
+
+        /// <summary>
+        /// <para type="description">Locality.</para>
+        /// </summary>
+        [Parameter(Position = 5,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Locality.")]
+        public string Locality { get; set; }
+
+        /// <summary>
+        /// <para type="description">Other parts of address.</para>
+        /// </summary>
+        [Parameter(Position = 6,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Other parts of address.")]
+        public string PoBox { get; set; }
+
+        /// <summary>
+        /// <para type="description">Postal code.</para>
+        /// </summary>
+        [Parameter(Position = 7,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Postal code.")]
+        public string PostalCode { get; set; }
+
+        /// <summary>
+        /// <para type="description">If this is user's primary address. Only one entry could be marked as primary.</para>
+        /// </summary>
+        [Parameter(Position = 8,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "If this is user's primary address. Only one entry could be marked as primary.")]
+        public System.Nullable<bool> Primary { get; set; }
+
+        /// <summary>
+        /// <para type="description">Region.</para>
+        /// </summary>
+        [Parameter(Position = 9,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Region.")]
+        public string Region { get; set; }
+
+        /// <summary>
+        /// <para type="description">User supplied address was structured. Structured addresses are NOT supported at this time. You might be able to write structured addresses, but any values will eventually be clobbered.</para>
+        /// </summary>
+        [Parameter(Position = 10,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "User supplied address was structured. Structured addresses are NOT supported at this time. You might be able to write structured addresses, but any values will eventually be clobbered.")]
+        public System.Nullable<bool> SourceIsStructured { get; set; }
+
+        /// <summary>
+        /// <para type="description">Street.</para>
+        /// </summary>
+        [Parameter(Position = 11,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Street.")]
+        public string StreetAddress { get; set; }
+
+        /// <summary>
+        /// <para type="description">Each entry can have a type which indicates standard values of that entry. For example address could be of home, work etc. In addition to the standard type, an entry can have a custom type and can take any value. Such type should have the CUSTOM value as type and also have a customType value.</para>
+        /// </summary>
+        [Parameter(Position = 12,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Each entry can have a type which indicates standard values of that entry. For example address could be of home, work etc. In addition to the standard type, an entry can have a custom type and can take any value. Such type should have the CUSTOM value as type and also have a customType value.")]
+        public string Type { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.admin.Directory.directory_v1.Data.UserAddress()
+            {
+                Country = this.Country,
+                CountryCode = this.CountryCode,
+                CustomType = this.CustomType,
+                ExtendedAddress = this.ExtendedAddress,
+                Formatted = this.Formatted,
+                Locality = this.Locality,
+                PoBox = this.PoBox,
+                PostalCode = this.PostalCode,
+                Primary = this.Primary,
+                Region = this.Region,
+                SourceIsStructured = this.SourceIsStructured,
+                StreetAddress = this.StreetAddress,
+                Type = this.Type,
+            };
+
+            if (ShouldProcess("UserAddress"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Directory API UserEmail object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a UserEmail object which may be required as a parameter for some other Cmdlets in the Directory API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.admin.Directory.directory_v1.Data.UserEmail</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GAUserEmailObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GAUserEmailObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GAUserEmailObj",
+    SupportsShouldProcess = true)]
+    [OutputType(typeof(Google.Apis.admin.Directory.directory_v1.Data.UserEmail))]
+    public class NewGAUserEmailObj : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">Email id of the user.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Email id of the user.")]
+        public string Address { get; set; }
+
+        /// <summary>
+        /// <para type="description">Custom Type.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Custom Type.")]
+        public string CustomType { get; set; }
+
+        /// <summary>
+        /// <para type="description">If this is user's primary email. Only one entry could be marked as primary.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "If this is user's primary email. Only one entry could be marked as primary.")]
+        public System.Nullable<bool> Primary { get; set; }
+
+        /// <summary>
+        /// <para type="description">Each entry can have a type which indicates standard types of that entry. For example email could be of home, work etc. In addition to the standard type, an entry can have a custom type and can take any value Such types should have the CUSTOM value as type and also have a customType value.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Each entry can have a type which indicates standard types of that entry. For example email could be of home, work etc. In addition to the standard type, an entry can have a custom type and can take any value Such types should have the CUSTOM value as type and also have a customType value.")]
+        public string Type { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.admin.Directory.directory_v1.Data.UserEmail()
+            {
+                Address = this.Address,
+                CustomType = this.CustomType,
+                Primary = this.Primary,
+                Type = this.Type,
+            };
+
+            if (ShouldProcess("UserEmail"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Directory API UserExternalId object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a UserExternalId object which may be required as a parameter for some other Cmdlets in the Directory API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.admin.Directory.directory_v1.Data.UserExternalId</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GAUserExternalIdObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GAUserExternalIdObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GAUserExternalIdObj",
+    SupportsShouldProcess = true)]
+    [OutputType(typeof(Google.Apis.admin.Directory.directory_v1.Data.UserExternalId))]
+    public class NewGAUserExternalIdObj : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">Custom type.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Custom type.")]
+        public string CustomType { get; set; }
+
+        /// <summary>
+        /// <para type="description">The type of the Id.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The type of the Id.")]
+        public string Type { get; set; }
+
+        /// <summary>
+        /// <para type="description">The value of the id.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The value of the id.")]
+        public string Value { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.admin.Directory.directory_v1.Data.UserExternalId()
+            {
+                CustomType = this.CustomType,
+                Type = this.Type,
+                Value = this.Value,
+            };
+
+            if (ShouldProcess("UserExternalId"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Directory API UserIm object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a UserIm object which may be required as a parameter for some other Cmdlets in the Directory API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.admin.Directory.directory_v1.Data.UserIm</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GAUserImObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GAUserImObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GAUserImObj",
+    SupportsShouldProcess = true)]
+    [OutputType(typeof(Google.Apis.admin.Directory.directory_v1.Data.UserIm))]
+    public class NewGAUserImObj : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">Custom protocol.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Custom protocol.")]
+        public string CustomProtocol { get; set; }
+
+        /// <summary>
+        /// <para type="description">Custom type.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Custom type.")]
+        public string CustomType { get; set; }
+
+        /// <summary>
+        /// <para type="description">Instant messenger id.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Instant messenger id.")]
+        public string Im { get; set; }
+
+        /// <summary>
+        /// <para type="description">If this is user's primary im. Only one entry could be marked as primary.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "If this is user's primary im. Only one entry could be marked as primary.")]
+        public System.Nullable<bool> Primary { get; set; }
+
+        /// <summary>
+        /// <para type="description">Protocol used in the instant messenger. It should be one of the values from ImProtocolTypes map. Similar to type, it can take a CUSTOM value and specify the custom name in customProtocol field.</para>
+        /// </summary>
+        [Parameter(Position = 4,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Protocol used in the instant messenger. It should be one of the values from ImProtocolTypes map. Similar to type, it can take a CUSTOM value and specify the custom name in customProtocol field.")]
+        public string Protocol { get; set; }
+
+        /// <summary>
+        /// <para type="description">Each entry can have a type which indicates standard types of that entry. For example instant messengers could be of home, work etc. In addition to the standard type, an entry can have a custom type and can take any value. Such types should have the CUSTOM value as type and also have a customType value.</para>
+        /// </summary>
+        [Parameter(Position = 5,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Each entry can have a type which indicates standard types of that entry. For example instant messengers could be of home, work etc. In addition to the standard type, an entry can have a custom type and can take any value. Such types should have the CUSTOM value as type and also have a customType value.")]
+        public string Type { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.admin.Directory.directory_v1.Data.UserIm()
+            {
+                CustomProtocol = this.CustomProtocol,
+                CustomType = this.CustomType,
+                Im = this.Im,
+                Primary = this.Primary,
+                Protocol = this.Protocol,
+                Type = this.Type,
+            };
+
+            if (ShouldProcess("UserIm"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Directory API UserName object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a UserName object which may be required as a parameter for some other Cmdlets in the Directory API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.admin.Directory.directory_v1.Data.UserName</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GAUserNameObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GAUserNameObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GAUserNameObj",
+    SupportsShouldProcess = true)]
+    [OutputType(typeof(Google.Apis.admin.Directory.directory_v1.Data.UserName))]
+    public class NewGAUserNameObj : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">Last Name</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Last Name")]
+        public string FamilyName { get; set; }
+
+        /// <summary>
+        /// <para type="description">Full Name</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Full Name")]
+        public string FullName { get; set; }
+
+        /// <summary>
+        /// <para type="description">First Name</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "First Name")]
+        public string GivenName { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.admin.Directory.directory_v1.Data.UserName()
+            {
+                FamilyName = this.FamilyName,
+                FullName = this.FullName,
+                GivenName = this.GivenName,
+            };
+
+            if (ShouldProcess("UserName"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Directory API UserOrganization object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a UserOrganization object which may be required as a parameter for some other Cmdlets in the Directory API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.admin.Directory.directory_v1.Data.UserOrganization</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GAUserOrganizationObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GAUserOrganizationObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GAUserOrganizationObj",
+    SupportsShouldProcess = true)]
+    [OutputType(typeof(Google.Apis.admin.Directory.directory_v1.Data.UserOrganization))]
+    public class NewGAUserOrganizationObj : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">The cost center of the users department.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The cost center of the users department.")]
+        public string CostCenter { get; set; }
+
+        /// <summary>
+        /// <para type="description">Custom type.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Custom type.")]
+        public string CustomType { get; set; }
+
+        /// <summary>
+        /// <para type="description">Department within the organization.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Department within the organization.")]
+        public string Department { get; set; }
+
+        /// <summary>
+        /// <para type="description">Description of the organization.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Description of the organization.")]
+        public string Description { get; set; }
+
+        /// <summary>
+        /// <para type="description">The domain to which the organization belongs to.</para>
+        /// </summary>
+        [Parameter(Position = 4,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The domain to which the organization belongs to.")]
+        public string Domain { get; set; }
+
+        /// <summary>
+        /// <para type="description">Location of the organization. This need not be fully qualified address.</para>
+        /// </summary>
+        [Parameter(Position = 5,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Location of the organization. This need not be fully qualified address.")]
+        public string Location { get; set; }
+
+        /// <summary>
+        /// <para type="description">Name of the organization</para>
+        /// </summary>
+        [Parameter(Position = 6,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Name of the organization")]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// <para type="description">If it user's primary organization.</para>
+        /// </summary>
+        [Parameter(Position = 7,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "If it user's primary organization.")]
+        public System.Nullable<bool> Primary { get; set; }
+
+        /// <summary>
+        /// <para type="description">Symbol of the organization.</para>
+        /// </summary>
+        [Parameter(Position = 8,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Symbol of the organization.")]
+        public string Symbol { get; set; }
+
+        /// <summary>
+        /// <para type="description">Title (designation) of the user in the organization.</para>
+        /// </summary>
+        [Parameter(Position = 9,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Title (designation) of the user in the organization.")]
+        public string Title { get; set; }
+
+        /// <summary>
+        /// <para type="description">Each entry can have a type which indicates standard types of that entry. For example organization could be of school, work etc. In addition to the standard type, an entry can have a custom type and can give it any name. Such types should have the CUSTOM value as type and also have a CustomType value.</para>
+        /// </summary>
+        [Parameter(Position = 10,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Each entry can have a type which indicates standard types of that entry. For example organization could be of school, work etc. In addition to the standard type, an entry can have a custom type and can give it any name. Such types should have the CUSTOM value as type and also have a CustomType value.")]
+        public string Type { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.admin.Directory.directory_v1.Data.UserOrganization()
+            {
+                CostCenter = this.CostCenter,
+                CustomType = this.CustomType,
+                Department = this.Department,
+                Description = this.Description,
+                Domain = this.Domain,
+                Location = this.Location,
+                Name = this.Name,
+                Primary = this.Primary,
+                Symbol = this.Symbol,
+                Title = this.Title,
+                Type = this.Type,
+            };
+
+            if (ShouldProcess("UserOrganization"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Directory API UserPhone object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a UserPhone object which may be required as a parameter for some other Cmdlets in the Directory API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.admin.Directory.directory_v1.Data.UserPhone</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GAUserPhoneObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GAUserPhoneObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GAUserPhoneObj",
+    SupportsShouldProcess = true)]
+    [OutputType(typeof(Google.Apis.admin.Directory.directory_v1.Data.UserPhone))]
+    public class NewGAUserPhoneObj : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">Custom Type.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Custom Type.")]
+        public string CustomType { get; set; }
+
+        /// <summary>
+        /// <para type="description">If this is user's primary phone or not.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "If this is user's primary phone or not.")]
+        public System.Nullable<bool> Primary { get; set; }
+
+        /// <summary>
+        /// <para type="description">Each entry can have a type which indicates standard types of that entry. For example phone could be of home_fax, work, mobile etc. In addition to the standard type, an entry can have a custom type and can give it any name. Such types should have the CUSTOM value as type and also have a customType value.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Each entry can have a type which indicates standard types of that entry. For example phone could be of home_fax, work, mobile etc. In addition to the standard type, an entry can have a custom type and can give it any name. Such types should have the CUSTOM value as type and also have a customType value.")]
+        public string Type { get; set; }
+
+        /// <summary>
+        /// <para type="description">Phone number.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Phone number.")]
+        public string Value { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.admin.Directory.directory_v1.Data.UserPhone()
+            {
+                CustomType = this.CustomType,
+                Primary = this.Primary,
+                Type = this.Type,
+                Value = this.Value,
+            };
+
+            if (ShouldProcess("UserPhone"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Directory API UserRelation object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a UserRelation object which may be required as a parameter for some other Cmdlets in the Directory API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.admin.Directory.directory_v1.Data.UserRelation</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GAUserRelationObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GAUserRelationObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GAUserRelationObj",
+    SupportsShouldProcess = true)]
+    [OutputType(typeof(Google.Apis.admin.Directory.directory_v1.Data.UserRelation))]
+    public class NewGAUserRelationObj : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">Custom Type.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Custom Type.")]
+        public string CustomType { get; set; }
+
+        /// <summary>
+        /// <para type="description">The relation of the user. Some of the possible values are mother, father, sister, brother, manager, assistant, partner.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The relation of the user. Some of the possible values are mother, father, sister, brother, manager, assistant, partner.")]
+        public string Type { get; set; }
+
+        /// <summary>
+        /// <para type="description">The name of the relation.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The name of the relation.")]
+        public string Value { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.admin.Directory.directory_v1.Data.UserRelation()
+            {
+                CustomType = this.CustomType,
+                Type = this.Type,
+                Value = this.Value,
+            };
+
+            if (ShouldProcess("UserRelation"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Directory API UserWebsite object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a UserWebsite object which may be required as a parameter for some other Cmdlets in the Directory API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.admin.Directory.directory_v1.Data.UserWebsite</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GAUserWebsiteObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GAUserWebsiteObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GAUserWebsiteObj",
+    SupportsShouldProcess = true)]
+    [OutputType(typeof(Google.Apis.admin.Directory.directory_v1.Data.UserWebsite))]
+    public class NewGAUserWebsiteObj : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">Custom Type.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Custom Type.")]
+        public string CustomType { get; set; }
+
+        /// <summary>
+        /// <para type="description">If this is user's primary website or not.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "If this is user's primary website or not.")]
+        public System.Nullable<bool> Primary { get; set; }
+
+        /// <summary>
+        /// <para type="description">Each entry can have a type which indicates standard types of that entry. For example website could be of home, work, blog etc. In addition to the standard type, an entry can have a custom type and can give it any name. Such types should have the CUSTOM value as type and also have a customType value.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Each entry can have a type which indicates standard types of that entry. For example website could be of home, work, blog etc. In addition to the standard type, an entry can have a custom type and can give it any name. Such types should have the CUSTOM value as type and also have a customType value.")]
+        public string Type { get; set; }
+
+        /// <summary>
+        /// <para type="description">Website.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Website.")]
+        public string Value { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.admin.Directory.directory_v1.Data.UserWebsite()
+            {
+                CustomType = this.CustomType,
+                Primary = this.Primary,
+                Type = this.Type,
+                Value = this.Value,
+            };
+
+            if (ShouldProcess("UserWebsite"))
             {
                 WriteObject(body);
             }
@@ -923,7 +2278,7 @@ namespace gShell.Cmdlets.Directory.GAChannel
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Stop-GDirectoryChannels">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Stop-GAChannels">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsLifecycle.Stop, "GAChannel",
@@ -1874,11 +3229,14 @@ namespace gShell.Cmdlets.Directory.GAGroup
                 case "AllGroups":
                     if (ShouldProcess("All Groups", "Get-GAGroup"))
                     {
-                        WriteObject(groups.List(new dotNet.Directory.Groups.GroupsListProperties()
+                        var properties = new dotNet.Directory.Groups.GroupsListProperties()
                         {
-                            TotalResults = MaxResults,
                             Domain = Domain
-                        }));
+                        };
+
+                        if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
+
+                        WriteObject(groups.List(properties));
                     }
                     break;
             }
@@ -2596,9 +3954,6 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
                 List<Data.Member> membersList = members.List(GroupName).SelectMany(x => x.MembersValue).ToList();
 
                 multiList.Add(group.Email, membersList);
-
-                //if (MaxResults != 0 &&
-                //    multiList.GetMemberCount() >= MaxResults) { break; }
             }
 
             return (multiList);
@@ -3821,7 +5176,7 @@ namespace gShell.Cmdlets.Directory.GAPrivilege
             if (ShouldProcess("Directory Privilege", "Get-GAPrivilege"))
             {
 
-                WriteObject(Privileges.List(Customer));
+                WriteObject(privileges.List(Customer));
             }
 
         }
@@ -5677,6 +7032,13 @@ namespace gShell.Cmdlets.Directory.GAUser
         /// <para type="description">User's name</para>
         /// </summary>
         [Parameter(Position = 0,
+            ParameterSetName = "PasswordProvided",
+            Mandatory = true,
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "User's name")]
+        [Parameter(Position = 0,
+            ParameterSetName = "PasswordGenerated",
             Mandatory = true,
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true,
@@ -5688,6 +7050,11 @@ namespace gShell.Cmdlets.Directory.GAUser
         /// <para type="description">First Name</para>
         /// </summary>
         [Parameter(Position = 2,
+            ParameterSetName = "PasswordProvided",
+            Mandatory = true,
+        HelpMessage = "First Name")]
+        [Parameter(Position = 2,
+            ParameterSetName = "PasswordGenerated",
             Mandatory = true,
         HelpMessage = "First Name")]
         public string GivenName { get; set; }
@@ -5696,6 +7063,11 @@ namespace gShell.Cmdlets.Directory.GAUser
         /// <para type="description">Last Name</para>
         /// </summary>
         [Parameter(Position = 3,
+            ParameterSetName = "PasswordProvided",
+            Mandatory = true,
+            HelpMessage = "Full Name")]
+        [Parameter(Position = 3,
+            ParameterSetName = "PasswordGenerated",
             Mandatory = true,
             HelpMessage = "Full Name")]
         public string FamilyName { get; set; }
@@ -5728,6 +7100,10 @@ namespace gShell.Cmdlets.Directory.GAUser
         /// <para type="description">Boolean indicating if user is included in Global Address List</para>
         /// </summary>
         [Parameter(Position = 7,
+            ParameterSetName = "PasswordProvided",
+            HelpMessage = "Boolean indicating if user is included in Global Address List")]
+        [Parameter(Position = 7,
+            ParameterSetName = "PasswordGenerated",
             HelpMessage = "Boolean indicating if user is included in Global Address List")]
         public bool? IncludeInDirectory { get; set; }
 
@@ -5735,6 +7111,10 @@ namespace gShell.Cmdlets.Directory.GAUser
         /// <para type="description">Indicates if user is suspended</para>
         /// </summary>
         [Parameter(Position = 8,
+            ParameterSetName = "PasswordProvided",
+            HelpMessage = "Indicates if user is suspended")]
+        [Parameter(Position = 8,
+            ParameterSetName = "PasswordGenerated",
             HelpMessage = "Indicates if user is suspended")]
         public bool? Suspended { get; set; }
 
@@ -5742,23 +7122,47 @@ namespace gShell.Cmdlets.Directory.GAUser
         /// <para type="description">Boolean indicating if ip is whitelisted</para>
         /// </summary>
         [Parameter(Position = 9,
-        HelpMessage = "Boolean indicating if ip is whitelisted")]
+            ParameterSetName = "PasswordProvided",
+            HelpMessage = "Boolean indicating if ip is whitelisted")]
+        [Parameter(Position = 9,
+            ParameterSetName = "PasswordGenerated",
+            HelpMessage = "Boolean indicating if ip is whitelisted")]
         public bool? IpWhiteListed { get; set; }
 
         /// <summary>
         /// <para type="description">Boolean indicating if the user should change password in next login</para>
         /// </summary>
         [Parameter(Position = 10,
-        ValueFromPipelineByPropertyName = true,
-        HelpMessage = "Boolean indicating if the user should change password in next login")]
+            ParameterSetName = "PasswordProvided",
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Boolean indicating if the user should change password in next login")]
+        [Parameter(Position = 10,
+            ParameterSetName = "PasswordGenerated",
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Boolean indicating if the user should change password in next login")]
         public bool? ChangePasswordAtNextLogin { get; set; }
 
         /// <summary>
         /// <para type="description">OrgUnit of User</para>
         /// </summary>
         [Parameter(Position = 11,
+            ParameterSetName = "PasswordProvided",
+            HelpMessage = "OrgUnit of User")]
+        [Parameter(Position = 11,
+            ParameterSetName = "PasswordGenerated",
             HelpMessage = "OrgUnit of User")]
         public string OrgUnitPath { get; set; }
+
+        /// <summary>
+        /// <para type="description">JSON template for User object in Directory API.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipeline = true,
+        ValueFromPipelineByPropertyName = true,
+        ParameterSetName = "Body",
+        HelpMessage = "JSON template for User object in Directory API.")]
+        public Data.User UserBody { get; set; }
 
         #endregion
 
@@ -5766,7 +7170,14 @@ namespace gShell.Cmdlets.Directory.GAUser
         {
             if (ShouldProcess(UserName, "New-GAUser"))
             {
-                CreateUser();
+                if (ParameterSetName == "Body")
+                {
+                    users.Insert(UserBody);
+                }
+                else
+                {
+                    CreateUser();
+                }
             }
         }
 
@@ -5795,30 +7206,15 @@ namespace gShell.Cmdlets.Directory.GAUser
                     break;
             }
 
-            if (IncludeInDirectory.HasValue)
-            {
-                userAcct.IncludeInGlobalAddressList = IncludeInDirectory;
-            }
+            if (IncludeInDirectory.HasValue) userAcct.IncludeInGlobalAddressList = IncludeInDirectory;
 
-            if (Suspended.HasValue)
-            {
-                userAcct.Suspended = Suspended;
-            }
+            if (Suspended.HasValue) userAcct.Suspended = Suspended;
 
-            if (IpWhiteListed.HasValue)
-            {
-                userAcct.IpWhitelisted = IpWhiteListed;
-            }
+            if (IpWhiteListed.HasValue) userAcct.IpWhitelisted = IpWhiteListed;
 
-            if (ChangePasswordAtNextLogin.HasValue)
-            {
-                userAcct.ChangePasswordAtNextLogin = ChangePasswordAtNextLogin.Value;
-            }
+            if (ChangePasswordAtNextLogin.HasValue) userAcct.ChangePasswordAtNextLogin = ChangePasswordAtNextLogin.Value;
 
-            if (!string.IsNullOrWhiteSpace(OrgUnitPath))
-            {
-                userAcct.OrgUnitPath = OrgUnitPath;
-            }
+            if (!string.IsNullOrWhiteSpace(OrgUnitPath)) userAcct.OrgUnitPath = OrgUnitPath;
 
             users.Insert(userAcct);
         }
@@ -5839,7 +7235,7 @@ namespace gShell.Cmdlets.Directory.GAUser
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.Remove, "GAUser",
-        DefaultParameterSetName = "UserName",
+        DefaultParameterSetName = "UserKey",
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAUser")]
     public class RemoveGAUser : DirectoryBase
@@ -5850,7 +7246,7 @@ namespace gShell.Cmdlets.Directory.GAUser
         /// <para type="description">Email or immutable Id of the user</para>
         /// </summary>
         [Parameter(Position = 0,
-            ParameterSetName = "UserName",
+            ParameterSetName = "UserKey",
             Mandatory = true,
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true,
@@ -5896,7 +7292,8 @@ namespace gShell.Cmdlets.Directory.GAUser
                     }
                     catch (Exception e)
                     {
-                        WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, UserName));
+                        WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), 
+                            ErrorCategory.InvalidData, UserKey));
                     }
                 }
                 else
@@ -5912,8 +7309,8 @@ namespace gShell.Cmdlets.Directory.GAUser
             string fullEmail = "";
             switch (ParameterSetName)
             {
-                case "UserName":
-                    fullEmail = UserName;
+                case "UserKey":
+                    fullEmail = UserKey;
                     break;
 
                 case "GAUserObject":
@@ -6018,17 +7415,34 @@ namespace gShell.Cmdlets.Directory.GAUser
         /// <para type="description">User's name</para>
         /// </summary>
         [Parameter(Position = 0,
+            ParameterSetName = "PasswordProvided",
+            Mandatory = true,
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "The username of the user to update.")]
+        [Parameter(Position = 0,
+            ParameterSetName = "PasswordGenerated",
+            Mandatory = true,
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "The username of the user to update.")]
+        [Parameter(Position = 0,
+            ParameterSetName = "Body",
             Mandatory = true,
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "The username of the user to update.")]
         [ValidateNotNullOrEmpty]
-        public string UserName { get; set; }
+        public string UserKey { get; set; }
         
         /// <summary>
         /// <para type="description">First Name</para>
         /// </summary>
         [Parameter(Position = 2,
+            ParameterSetName = "PasswordProvided",
+            HelpMessage = "The user's first name. Required when creating a user account.")]
+        [Parameter(Position = 2,
+            ParameterSetName = "PasswordGenerated",
             HelpMessage = "The user's first name. Required when creating a user account.")]
         public string NewGivenName { get; set; }
 
@@ -6036,6 +7450,10 @@ namespace gShell.Cmdlets.Directory.GAUser
         /// <para type="description">Last Name</para>
         /// </summary>
         [Parameter(Position = 3,
+            ParameterSetName = "PasswordProvided",
+            HelpMessage = "The user's last name. Required when creating a user account.")]
+        [Parameter(Position = 3,
+            ParameterSetName = "PasswordGenerated",
             HelpMessage = "The user's last name. Required when creating a user account.")]
         public string NewFamilyName { get; set; }
 
@@ -6043,6 +7461,10 @@ namespace gShell.Cmdlets.Directory.GAUser
         /// <para type="description">Updated user's name</para>
         /// </summary>
         [Parameter(Position = 4,
+            ParameterSetName = "PasswordProvided",
+            HelpMessage = "The user's username, post-update.")]
+        [Parameter(Position = 4,
+            ParameterSetName = "PasswordGenerated",
             HelpMessage = "The user's username, post-update.")]
         public string NewUserName { get; set; }
 
@@ -6050,6 +7472,10 @@ namespace gShell.Cmdlets.Directory.GAUser
         /// <para type="description">Indicates if user is suspended</para>
         /// </summary>
         [Parameter(Position = 5,
+            ParameterSetName = "PasswordProvided",
+            HelpMessage = "Indicates if the user is suspended.")]
+        [Parameter(Position = 5,
+            ParameterSetName = "PasswordGenerated",
             HelpMessage = "Indicates if the user is suspended.")]
         public bool? Suspended { get; set; }
 
@@ -6081,38 +7507,68 @@ namespace gShell.Cmdlets.Directory.GAUser
         /// <para type="description">Boolean indicating if the user should change password in next login</para>
         /// </summary>
         [Parameter(Position = 9,
+            ParameterSetName = "PasswordProvided",
+            HelpMessage = "Indicates if the user is forced to change their password at next login.")]
+        [Parameter(Position = 9,
+            ParameterSetName = "PasswordGenerated",
             HelpMessage = "Indicates if the user is forced to change their password at next login.")]
         public bool? ChangePasswordAtNextLogin { get; set; }
 
         /// <summary>
         /// <para type="description">OrgUnit of User</para>
         /// </summary>
-        [Parameter(
+        [Parameter(Position = 10,
+            ParameterSetName = "PasswordProvided",
+            HelpMessage = "The full path of the parent organization associated with the user. If the parent organization is the top-level, it is represented as a forward slash (/).")]
+        [Parameter(Position = 10,
+            ParameterSetName = "PasswordGenerated",
             HelpMessage = "The full path of the parent organization associated with the user. If the parent organization is the top-level, it is represented as a forward slash (/).")]
         public string OrgUnitPath { get; set; }
 
         /// <summary>
         /// <para type="description">A supplied property collection to update the user with. Create with New/Get-GAUserPropertyCollection and update with New/Remove-GauserProperty</para>
         /// </summary>
-        [Parameter(
+        [Parameter(Position = 11,
+            ParameterSetName = "PasswordProvided",
+            HelpMessage = "A supplied property collection to update the user with. Create with New/Get-GAUserPropertyCollection and update with New/Remove-GauserProperty")]
+        [Parameter(Position = 11,
+            ParameterSetName = "PasswordGenerated",
             HelpMessage = "A supplied property collection to update the user with. Create with New/Get-GAUserPropertyCollection and update with New/Remove-GauserProperty")]
         public GAUserPropertyCollection PropertyCollection { get; set; }
+
+        /// <summary>
+        /// <para type="description">JSON template for User object in Directory API.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipeline = true,
+        ValueFromPipelineByPropertyName = true,
+        ParameterSetName = "Body",
+        HelpMessage = "JSON template for User object in Directory API.")]
+        public Data.User UserBody { get; set; }
 
         #endregion
 
         protected override void ProcessRecord()
         {
-            UserName = GetFullEmailAddress(UserName, Domain);
+            UserKey = GetFullEmailAddress(UserKey, Domain);
 
-            if (ShouldProcess(UserName, "Set-GAUser"))
+            if (ShouldProcess(UserKey, "Set-GAUser"))
             {
-                UpdateUser();
+                if (ParameterSetName == "Body")
+                {
+                    users.Patch(UserBody, UserKey);
+                }
+                else
+                {
+                    UpdateUser();
+                }
             }
         }
 
         private void UpdateUser()
         {
-            Google.Apis.admin.Directory.directory_v1.Data.User userAcct = new Google.Apis.admin.Directory.directory_v1.Data.User();
+            Data.User userAcct = new Data.User();
 
             if (String.IsNullOrWhiteSpace(NewGivenName) &&
                 String.IsNullOrWhiteSpace(NewFamilyName) &&
@@ -6125,39 +7581,24 @@ namespace gShell.Cmdlets.Directory.GAUser
                 null == PropertyCollection)
             {
                 WriteError(new ErrorRecord(new Exception(
-                    string.Format("No data was entered to update {0}.", UserName)),
-                        "", ErrorCategory.InvalidData, UserName));
+                    string.Format("No data was entered to update {0}.", UserKey)),
+                        "", ErrorCategory.InvalidData, UserKey));
             }
 
             if (Suspended.HasValue)
-            {
                 userAcct.Suspended = Suspended.Value;
-            }
 
             if (!String.IsNullOrWhiteSpace(NewGivenName))
-            {
-                if (userAcct.Name == null)
-                {
-                    userAcct.Name = new Google.Apis.admin.Directory.directory_v1.Data.UserName();
-                }
+                if (userAcct.Name == null) userAcct.Name = new Data.UserName();
                 userAcct.Name.GivenName = NewGivenName;
-            }
 
             if (!String.IsNullOrWhiteSpace(NewFamilyName))
-            {
-                if (userAcct.Name == null)
-                {
-                    userAcct.Name = new Google.Apis.admin.Directory.directory_v1.Data.UserName();
-                }
+                if (userAcct.Name == null) userAcct.Name = new Data.UserName();
                 userAcct.Name.FamilyName = NewFamilyName;
-            }
 
             if (!String.IsNullOrWhiteSpace(NewUserName))
-            {
                 NewUserName = GetFullEmailAddress(NewUserName, Domain);
-
                 userAcct.PrimaryEmail = NewUserName;
-            }
 
             switch (ParameterSetName)
             {
@@ -6173,55 +7614,37 @@ namespace gShell.Cmdlets.Directory.GAUser
             }
 
             if (ChangePasswordAtNextLogin.HasValue)
-            {
                 userAcct.ChangePasswordAtNextLogin = ChangePasswordAtNextLogin.Value;
-            }
 
             if (!string.IsNullOrWhiteSpace(OrgUnitPath))
-            {
                 userAcct.OrgUnitPath = OrgUnitPath;
-            }
 
             if (null != PropertyCollection)
             {
                 //here we don't check if it's an empty list since that may be on purpose - we check it that list had been updated.
                 if (PropertyCollection.IsUpdated(GAUserPropertyType.address))
-                {
                     userAcct.Addresses = PropertyCollection.GetAddresses();
-                }
 
                 if (PropertyCollection.IsUpdated(GAUserPropertyType.email))
-                {
                     userAcct.Emails = PropertyCollection.GetEmails();
-                }
 
                 if (PropertyCollection.IsUpdated(GAUserPropertyType.externalid))
-                {
                     userAcct.ExternalIds = PropertyCollection.GetExternalIds();
-                }
 
                 if (PropertyCollection.IsUpdated(GAUserPropertyType.im))
-                {
                     userAcct.Ims = PropertyCollection.GetIms();
-                }
 
                 if (PropertyCollection.IsUpdated(GAUserPropertyType.organization))
-                {
                     userAcct.Organizations = PropertyCollection.GetOrganizations();
-                }
 
                 if (PropertyCollection.IsUpdated(GAUserPropertyType.phone))
-                {
                     userAcct.Phones = PropertyCollection.GetPhones();
-                }
 
                 if (PropertyCollection.IsUpdated(GAUserPropertyType.relation))
-                {
                     userAcct.Relations = PropertyCollection.GetRelations();
-                }
             }
 
-            users.Patch(userAcct, UserName);
+            users.Patch(userAcct, UserKey);
         }
     }
 }
@@ -6529,7 +7952,6 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
         }
     }
 }
-
 
 namespace gShell.Cmdlets.Directory.GAUserPhoto
 {
@@ -8599,7 +10021,6 @@ namespace gShell.Cmdlets.Directory.GAUserProperty
         }
     }
 }
-
 
 namespace gShell.Cmdlets.Directory.GAVerificationCode
 {
