@@ -71,7 +71,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryUserNameObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryUserNameObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryUserNameObj",
@@ -138,7 +138,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryUserExternalIdObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryUserExternalIdObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryUserExternalIdObj",
@@ -205,7 +205,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryGroupObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryGroupObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryGroupObj",
@@ -322,7 +322,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryNotificationObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryNotificationObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryNotificationObj",
@@ -416,7 +416,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryUserWebsiteObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryUserWebsiteObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryUserWebsiteObj",
@@ -493,7 +493,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryRole.RolePrivilegesDataObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryRole.RolePrivilegesDataObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryRoleRolePrivilegesDataObj",
@@ -550,7 +550,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectorySchemaFieldSpecObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectorySchemaFieldSpecObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectorySchemaFieldSpecObj",
@@ -657,7 +657,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryMemberObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryMemberObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryMemberObj",
@@ -734,7 +734,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryMobileDeviceActionObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryMobileDeviceActionObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryMobileDeviceActionObj",
@@ -781,7 +781,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryAliasObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryAliasObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryAliasObj",
@@ -848,7 +848,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryRoleObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryRoleObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryRoleObj",
@@ -945,7 +945,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryPrivilegeObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryPrivilegeObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryPrivilegeObj",
@@ -1032,7 +1032,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryCalendarResourceObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryCalendarResourceObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryCalendarResourceObj",
@@ -1129,7 +1129,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryChromeOsDevice.ActiveTimeRangesDataObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryChromeOsDevice.ActiveTimeRangesDataObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryChromeOsDeviceActiveTimeRangesDataObj",
@@ -1186,7 +1186,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryCustomerPostalAddressObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryCustomerPostalAddressObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryCustomerPostalAddressObj",
@@ -1313,7 +1313,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryChannelObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryChannelObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryChannelObj",
@@ -1440,7 +1440,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryUserAddressObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryUserAddressObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryUserAddressObj",
@@ -1607,7 +1607,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryAspObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryAspObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryAspObj",
@@ -1694,7 +1694,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryUserImObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryUserImObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryUserImObj",
@@ -1791,7 +1791,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryUserOrganizationObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryUserOrganizationObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryUserOrganizationObj",
@@ -1938,7 +1938,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryUserMakeAdminObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryUserMakeAdminObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryUserMakeAdminObj",
@@ -1985,7 +1985,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryDomainAliasObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryDomainAliasObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryDomainAliasObj",
@@ -2062,7 +2062,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryChromeOsDeviceObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryChromeOsDeviceObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryChromeOsDeviceObj",
@@ -2329,7 +2329,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryUserObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryUserObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryUserObj",
@@ -2666,7 +2666,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryMobileDevice.ApplicationsDataObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryMobileDevice.ApplicationsDataObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryMobileDeviceApplicationsDataObj",
@@ -2753,7 +2753,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectorySchemaObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectorySchemaObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectorySchemaObj",
@@ -2820,7 +2820,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryCustomerObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryCustomerObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryCustomerObj",
@@ -2927,7 +2927,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryUserUndeleteObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryUserUndeleteObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryUserUndeleteObj",
@@ -2974,7 +2974,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryUserAboutObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryUserAboutObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryUserAboutObj",
@@ -3031,7 +3031,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryChromeOsDevice.RecentUsersDataObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryChromeOsDevice.RecentUsersDataObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryChromeOsDeviceRecentUsersDataObj",
@@ -3088,7 +3088,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryUserPhotoObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryUserPhotoObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryUserPhotoObj",
@@ -3185,7 +3185,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryDomainsObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryDomainsObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryDomainsObj",
@@ -3272,7 +3272,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryTokenObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryTokenObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryTokenObj",
@@ -3369,7 +3369,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryRoleAssignmentObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryRoleAssignmentObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryRoleAssignmentObj",
@@ -3456,7 +3456,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryUserEmailObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryUserEmailObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryUserEmailObj",
@@ -3533,7 +3533,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryMobileDeviceObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryMobileDeviceObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryMobileDeviceObj",
@@ -3860,7 +3860,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryOrgUnitObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryOrgUnitObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryOrgUnitObj",
@@ -3967,7 +3967,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryUserPhoneObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryUserPhoneObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryUserPhoneObj",
@@ -4044,7 +4044,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryUserRelationObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryUserRelationObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryUserRelationObj",
@@ -4111,7 +4111,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryVerificationCodeObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryVerificationCodeObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryVerificationCodeObj",
@@ -4168,7 +4168,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectorySchemaFieldSpec.NumericIndexingSpecDataObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectorySchemaFieldSpec.NumericIndexingSpecDataObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectorySchemaFieldSpecNumericIndexingSpecDataObj",
@@ -4225,7 +4225,7 @@ namespace gShell.Cmdlets.Directory
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/NewGDirectoryAliasesObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GDirectoryAliasesObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDirectoryAliasesObj",
@@ -4278,13 +4278,12 @@ namespace gShell.Cmdlets.Directory.Asps
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/DeleteGDirectoryAsps">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Delete-GDirectoryAsps">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Delete", "GDirectoryAsps",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/asps/delete")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Delete-GDirectoryAsps")]
     public class DeleteGDirectoryAspsCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -4331,13 +4330,12 @@ namespace gShell.Cmdlets.Directory.Asps
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/GetGDirectoryAsps">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GDirectoryAsps">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.Get, "GDirectoryAsps",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/asps/get")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GDirectoryAsps")]
     public class GetGDirectoryAspsCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -4384,13 +4382,12 @@ namespace gShell.Cmdlets.Directory.Asps
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/ListGDirectoryAsps">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/List-GDirectoryAsps">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("List", "GDirectoryAsps",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/asps/list")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/List-GDirectoryAsps")]
     public class ListGDirectoryAspsCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -4435,13 +4432,12 @@ namespace gShell.Cmdlets.Directory.Channels
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/StopGDirectoryChannels">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Stop-GDirectoryChannels">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsLifecycle.Stop, "GDirectoryChannels",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/channels/stop")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Stop-GDirectoryChannels")]
     public class StopGDirectoryChannelsCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -4487,13 +4483,12 @@ namespace gShell.Cmdlets.Directory.Chromeosdevices
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/GetGDirectoryChromeosdevices">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GDirectoryChromeosdevices">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.Get, "GDirectoryChromeosdevices",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/chromeosdevices/get")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GDirectoryChromeosdevices")]
     public class GetGDirectoryChromeosdevicesCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -4555,13 +4550,12 @@ namespace gShell.Cmdlets.Directory.Chromeosdevices
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/ListGDirectoryChromeosdevices">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/List-GDirectoryChromeosdevices">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("List", "GDirectoryChromeosdevices",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/chromeosdevices/list")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/List-GDirectoryChromeosdevices")]
     public class ListGDirectoryChromeosdevicesCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -4653,13 +4647,12 @@ namespace gShell.Cmdlets.Directory.Chromeosdevices
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/PatchGDirectoryChromeosdevices">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Patch-GDirectoryChromeosdevices">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Patch", "GDirectoryChromeosdevices",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/chromeosdevices/patch")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Patch-GDirectoryChromeosdevices")]
     public class PatchGDirectoryChromeosdevicesCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -4731,13 +4724,12 @@ namespace gShell.Cmdlets.Directory.Chromeosdevices
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/UpdateGDirectoryChromeosdevices">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Update-GDirectoryChromeosdevices">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsData.Update, "GDirectoryChromeosdevices",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/chromeosdevices/update")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Update-GDirectoryChromeosdevices")]
     public class UpdateGDirectoryChromeosdevicesCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -4816,13 +4808,12 @@ namespace gShell.Cmdlets.Directory.Customers
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/GetGDirectoryCustomers">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GDirectoryCustomers">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.Get, "GDirectoryCustomers",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/customers/get")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GDirectoryCustomers")]
     public class GetGDirectoryCustomersCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -4860,13 +4851,12 @@ namespace gShell.Cmdlets.Directory.Customers
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/PatchGDirectoryCustomers">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Patch-GDirectoryCustomers">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Patch", "GDirectoryCustomers",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/customers/patch")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Patch-GDirectoryCustomers")]
     public class PatchGDirectoryCustomersCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -4914,13 +4904,12 @@ namespace gShell.Cmdlets.Directory.Customers
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/UpdateGDirectoryCustomers">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Update-GDirectoryCustomers">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsData.Update, "GDirectoryCustomers",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/customers/update")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Update-GDirectoryCustomers")]
     public class UpdateGDirectoryCustomersCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -4975,13 +4964,12 @@ namespace gShell.Cmdlets.Directory.DomainAliases
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/DeleteGDirectoryDomainAliases">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Delete-GDirectoryDomainAliases">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Delete", "GDirectoryDomainAliases",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/domainAliases/delete")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Delete-GDirectoryDomainAliases")]
     public class DeleteGDirectoryDomainAliasesCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -5028,13 +5016,12 @@ namespace gShell.Cmdlets.Directory.DomainAliases
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/GetGDirectoryDomainAliases">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GDirectoryDomainAliases">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.Get, "GDirectoryDomainAliases",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/domainAliases/get")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GDirectoryDomainAliases")]
     public class GetGDirectoryDomainAliasesCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -5081,13 +5068,12 @@ namespace gShell.Cmdlets.Directory.DomainAliases
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/InsertGDirectoryDomainAliases">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Insert-GDirectoryDomainAliases">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Insert", "GDirectoryDomainAliases",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/domainAliases/insert")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Insert-GDirectoryDomainAliases")]
     public class InsertGDirectoryDomainAliasesCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -5135,13 +5121,12 @@ namespace gShell.Cmdlets.Directory.DomainAliases
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/ListGDirectoryDomainAliases">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/List-GDirectoryDomainAliases">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("List", "GDirectoryDomainAliases",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/domainAliases/list")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/List-GDirectoryDomainAliases")]
     public class ListGDirectoryDomainAliasesCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -5201,13 +5186,12 @@ namespace gShell.Cmdlets.Directory.Domains
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/DeleteGDirectoryDomains">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Delete-GDirectoryDomains">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Delete", "GDirectoryDomains",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/domains/delete")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Delete-GDirectoryDomains")]
     public class DeleteGDirectoryDomainsCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -5254,13 +5238,12 @@ namespace gShell.Cmdlets.Directory.Domains
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/GetGDirectoryDomains">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GDirectoryDomains">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.Get, "GDirectoryDomains",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/domains/get")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GDirectoryDomains")]
     public class GetGDirectoryDomainsCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -5307,13 +5290,12 @@ namespace gShell.Cmdlets.Directory.Domains
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/InsertGDirectoryDomains">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Insert-GDirectoryDomains">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Insert", "GDirectoryDomains",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/domains/insert")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Insert-GDirectoryDomains")]
     public class InsertGDirectoryDomainsCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -5361,13 +5343,12 @@ namespace gShell.Cmdlets.Directory.Domains
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/ListGDirectoryDomains">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/List-GDirectoryDomains">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("List", "GDirectoryDomains",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/domains/list")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/List-GDirectoryDomains")]
     public class ListGDirectoryDomainsCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -5412,13 +5393,12 @@ namespace gShell.Cmdlets.Directory.Groups
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/DeleteGDirectoryGroups">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Delete-GDirectoryGroups">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Delete", "GDirectoryGroups",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/groups/delete")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Delete-GDirectoryGroups")]
     public class DeleteGDirectoryGroupsCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -5456,13 +5436,12 @@ namespace gShell.Cmdlets.Directory.Groups
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/GetGDirectoryGroups">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GDirectoryGroups">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.Get, "GDirectoryGroups",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/groups/get")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GDirectoryGroups")]
     public class GetGDirectoryGroupsCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -5500,13 +5479,12 @@ namespace gShell.Cmdlets.Directory.Groups
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/InsertGDirectoryGroups">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Insert-GDirectoryGroups">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Insert", "GDirectoryGroups",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/groups/insert")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Insert-GDirectoryGroups")]
     public class InsertGDirectoryGroupsCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -5545,13 +5523,12 @@ namespace gShell.Cmdlets.Directory.Groups
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/ListGDirectoryGroups">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/List-GDirectoryGroups">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("List", "GDirectoryGroups",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/groups/list")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/List-GDirectoryGroups")]
     public class ListGDirectoryGroupsCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -5624,13 +5601,12 @@ namespace gShell.Cmdlets.Directory.Groups
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/PatchGDirectoryGroups">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Patch-GDirectoryGroups">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Patch", "GDirectoryGroups",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/groups/patch")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Patch-GDirectoryGroups")]
     public class PatchGDirectoryGroupsCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -5678,13 +5654,12 @@ namespace gShell.Cmdlets.Directory.Groups
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/UpdateGDirectoryGroups">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Update-GDirectoryGroups">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsData.Update, "GDirectoryGroups",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/groups/update")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Update-GDirectoryGroups")]
     public class UpdateGDirectoryGroupsCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -5740,13 +5715,12 @@ namespace gShell.Cmdlets.Directory.Groups.Aliases
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/DeleteGDirectoryAliases">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Delete-GDirectoryAliases">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Delete", "GDirectoryAliases",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/groups/aliases/delete")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Delete-GDirectoryAliases")]
     public class DeleteGDirectoryAliasesCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -5793,13 +5767,12 @@ namespace gShell.Cmdlets.Directory.Groups.Aliases
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/InsertGDirectoryAliases">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Insert-GDirectoryAliases">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Insert", "GDirectoryAliases",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/groups/aliases/insert")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Insert-GDirectoryAliases")]
     public class InsertGDirectoryAliasesCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -5847,13 +5820,12 @@ namespace gShell.Cmdlets.Directory.Groups.Aliases
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/ListGDirectoryAliases">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/List-GDirectoryAliases">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("List", "GDirectoryAliases",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/groups/aliases/list")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/List-GDirectoryAliases")]
     public class ListGDirectoryAliasesCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -5898,13 +5870,12 @@ namespace gShell.Cmdlets.Directory.Members
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/DeleteGDirectoryMembers">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Delete-GDirectoryMembers">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Delete", "GDirectoryMembers",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/members/delete")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Delete-GDirectoryMembers")]
     public class DeleteGDirectoryMembersCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -5951,13 +5922,12 @@ namespace gShell.Cmdlets.Directory.Members
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/GetGDirectoryMembers">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GDirectoryMembers">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.Get, "GDirectoryMembers",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/members/get")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GDirectoryMembers")]
     public class GetGDirectoryMembersCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -6004,13 +5974,12 @@ namespace gShell.Cmdlets.Directory.Members
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/InsertGDirectoryMembers">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Insert-GDirectoryMembers">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Insert", "GDirectoryMembers",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/members/insert")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Insert-GDirectoryMembers")]
     public class InsertGDirectoryMembersCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -6058,13 +6027,12 @@ namespace gShell.Cmdlets.Directory.Members
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/ListGDirectoryMembers">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/List-GDirectoryMembers">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("List", "GDirectoryMembers",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/members/list")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/List-GDirectoryMembers")]
     public class ListGDirectoryMembersCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -6126,13 +6094,12 @@ namespace gShell.Cmdlets.Directory.Members
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/PatchGDirectoryMembers">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Patch-GDirectoryMembers">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Patch", "GDirectoryMembers",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/members/patch")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Patch-GDirectoryMembers")]
     public class PatchGDirectoryMembersCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -6189,13 +6156,12 @@ namespace gShell.Cmdlets.Directory.Members
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/UpdateGDirectoryMembers">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Update-GDirectoryMembers">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsData.Update, "GDirectoryMembers",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/members/update")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Update-GDirectoryMembers")]
     public class UpdateGDirectoryMembersCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -6259,13 +6225,12 @@ namespace gShell.Cmdlets.Directory.Mobiledevices
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/ActionGDirectoryMobiledevices">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Action-GDirectoryMobiledevices">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Action", "GDirectoryMobiledevices",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/mobiledevices/action")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Action-GDirectoryMobiledevices")]
     public class ActionGDirectoryMobiledevicesCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -6322,13 +6287,12 @@ namespace gShell.Cmdlets.Directory.Mobiledevices
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/DeleteGDirectoryMobiledevices">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Delete-GDirectoryMobiledevices">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Delete", "GDirectoryMobiledevices",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/mobiledevices/delete")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Delete-GDirectoryMobiledevices")]
     public class DeleteGDirectoryMobiledevicesCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -6375,13 +6339,12 @@ namespace gShell.Cmdlets.Directory.Mobiledevices
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/GetGDirectoryMobiledevices">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GDirectoryMobiledevices">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.Get, "GDirectoryMobiledevices",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/mobiledevices/get")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GDirectoryMobiledevices")]
     public class GetGDirectoryMobiledevicesCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -6443,13 +6406,12 @@ namespace gShell.Cmdlets.Directory.Mobiledevices
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/ListGDirectoryMobiledevices">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/List-GDirectoryMobiledevices">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("List", "GDirectoryMobiledevices",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/mobiledevices/list")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/List-GDirectoryMobiledevices")]
     public class ListGDirectoryMobiledevicesCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -6548,13 +6510,12 @@ namespace gShell.Cmdlets.Directory.Notifications
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/DeleteGDirectoryNotifications">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Delete-GDirectoryNotifications">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Delete", "GDirectoryNotifications",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/notifications/delete")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Delete-GDirectoryNotifications")]
     public class DeleteGDirectoryNotificationsCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -6601,13 +6562,12 @@ namespace gShell.Cmdlets.Directory.Notifications
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/GetGDirectoryNotifications">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GDirectoryNotifications">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.Get, "GDirectoryNotifications",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/notifications/get")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GDirectoryNotifications")]
     public class GetGDirectoryNotificationsCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -6654,13 +6614,12 @@ namespace gShell.Cmdlets.Directory.Notifications
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/ListGDirectoryNotifications">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/List-GDirectoryNotifications">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("List", "GDirectoryNotifications",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/notifications/list")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/List-GDirectoryNotifications")]
     public class ListGDirectoryNotificationsCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -6722,13 +6681,12 @@ namespace gShell.Cmdlets.Directory.Notifications
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/PatchGDirectoryNotifications">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Patch-GDirectoryNotifications">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Patch", "GDirectoryNotifications",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/notifications/patch")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Patch-GDirectoryNotifications")]
     public class PatchGDirectoryNotificationsCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -6785,13 +6743,12 @@ namespace gShell.Cmdlets.Directory.Notifications
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/UpdateGDirectoryNotifications">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Update-GDirectoryNotifications">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsData.Update, "GDirectoryNotifications",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/notifications/update")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Update-GDirectoryNotifications")]
     public class UpdateGDirectoryNotificationsCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -6855,13 +6812,12 @@ namespace gShell.Cmdlets.Directory.Orgunits
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/DeleteGDirectoryOrgunits">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Delete-GDirectoryOrgunits">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Delete", "GDirectoryOrgunits",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/orgunits/delete")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Delete-GDirectoryOrgunits")]
     public class DeleteGDirectoryOrgunitsCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -6908,13 +6864,12 @@ namespace gShell.Cmdlets.Directory.Orgunits
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/GetGDirectoryOrgunits">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GDirectoryOrgunits">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.Get, "GDirectoryOrgunits",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/orgunits/get")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GDirectoryOrgunits")]
     public class GetGDirectoryOrgunitsCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -6961,13 +6916,12 @@ namespace gShell.Cmdlets.Directory.Orgunits
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/InsertGDirectoryOrgunits">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Insert-GDirectoryOrgunits">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Insert", "GDirectoryOrgunits",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/orgunits/insert")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Insert-GDirectoryOrgunits")]
     public class InsertGDirectoryOrgunitsCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -7015,13 +6969,12 @@ namespace gShell.Cmdlets.Directory.Orgunits
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/ListGDirectoryOrgunits">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/List-GDirectoryOrgunits">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("List", "GDirectoryOrgunits",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/orgunits/list")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/List-GDirectoryOrgunits")]
     public class ListGDirectoryOrgunitsCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -7084,13 +7037,12 @@ namespace gShell.Cmdlets.Directory.Orgunits
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/PatchGDirectoryOrgunits">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Patch-GDirectoryOrgunits">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Patch", "GDirectoryOrgunits",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/orgunits/patch")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Patch-GDirectoryOrgunits")]
     public class PatchGDirectoryOrgunitsCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -7147,13 +7099,12 @@ namespace gShell.Cmdlets.Directory.Orgunits
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/UpdateGDirectoryOrgunits">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Update-GDirectoryOrgunits">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsData.Update, "GDirectoryOrgunits",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/orgunits/update")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Update-GDirectoryOrgunits")]
     public class UpdateGDirectoryOrgunitsCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -7217,13 +7168,12 @@ namespace gShell.Cmdlets.Directory.Privileges
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/ListGDirectoryPrivileges">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/List-GDirectoryPrivileges">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("List", "GDirectoryPrivileges",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/privileges/list")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/List-GDirectoryPrivileges")]
     public class ListGDirectoryPrivilegesCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -7276,13 +7226,12 @@ namespace gShell.Cmdlets.Directory.Resources.Calendars
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/DeleteGDirectoryCalendars">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Delete-GDirectoryCalendars">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Delete", "GDirectoryCalendars",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/resources/calendars/delete")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Delete-GDirectoryCalendars")]
     public class DeleteGDirectoryCalendarsCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -7329,13 +7278,12 @@ namespace gShell.Cmdlets.Directory.Resources.Calendars
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/GetGDirectoryCalendars">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GDirectoryCalendars">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.Get, "GDirectoryCalendars",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/resources/calendars/get")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GDirectoryCalendars")]
     public class GetGDirectoryCalendarsCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -7382,13 +7330,12 @@ namespace gShell.Cmdlets.Directory.Resources.Calendars
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/InsertGDirectoryCalendars">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Insert-GDirectoryCalendars">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Insert", "GDirectoryCalendars",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/resources/calendars/insert")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Insert-GDirectoryCalendars")]
     public class InsertGDirectoryCalendarsCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -7436,13 +7383,12 @@ namespace gShell.Cmdlets.Directory.Resources.Calendars
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/ListGDirectoryCalendars">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/List-GDirectoryCalendars">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("List", "GDirectoryCalendars",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/resources/calendars/list")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/List-GDirectoryCalendars")]
     public class ListGDirectoryCalendarsCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -7494,13 +7440,12 @@ namespace gShell.Cmdlets.Directory.Resources.Calendars
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/PatchGDirectoryCalendars">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Patch-GDirectoryCalendars">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Patch", "GDirectoryCalendars",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/resources/calendars/patch")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Patch-GDirectoryCalendars")]
     public class PatchGDirectoryCalendarsCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -7557,13 +7502,12 @@ namespace gShell.Cmdlets.Directory.Resources.Calendars
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/UpdateGDirectoryCalendars">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Update-GDirectoryCalendars">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsData.Update, "GDirectoryCalendars",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/resources/calendars/update")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Update-GDirectoryCalendars")]
     public class UpdateGDirectoryCalendarsCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -7627,13 +7571,12 @@ namespace gShell.Cmdlets.Directory.RoleAssignments
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/DeleteGDirectoryRoleAssignments">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Delete-GDirectoryRoleAssignments">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Delete", "GDirectoryRoleAssignments",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/roleAssignments/delete")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Delete-GDirectoryRoleAssignments")]
     public class DeleteGDirectoryRoleAssignmentsCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -7680,13 +7623,12 @@ namespace gShell.Cmdlets.Directory.RoleAssignments
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/GetGDirectoryRoleAssignments">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GDirectoryRoleAssignments">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.Get, "GDirectoryRoleAssignments",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/roleAssignments/get")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GDirectoryRoleAssignments")]
     public class GetGDirectoryRoleAssignmentsCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -7733,13 +7675,12 @@ namespace gShell.Cmdlets.Directory.RoleAssignments
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/InsertGDirectoryRoleAssignments">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Insert-GDirectoryRoleAssignments">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Insert", "GDirectoryRoleAssignments",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/roleAssignments/insert")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Insert-GDirectoryRoleAssignments")]
     public class InsertGDirectoryRoleAssignmentsCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -7787,13 +7728,12 @@ namespace gShell.Cmdlets.Directory.RoleAssignments
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/ListGDirectoryRoleAssignments">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/List-GDirectoryRoleAssignments">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("List", "GDirectoryRoleAssignments",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/roleAssignments/list")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/List-GDirectoryRoleAssignments")]
     public class ListGDirectoryRoleAssignmentsCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -7872,13 +7812,12 @@ namespace gShell.Cmdlets.Directory.Roles
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/DeleteGDirectoryRoles">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Delete-GDirectoryRoles">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Delete", "GDirectoryRoles",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/roles/delete")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Delete-GDirectoryRoles")]
     public class DeleteGDirectoryRolesCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -7925,13 +7864,12 @@ namespace gShell.Cmdlets.Directory.Roles
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/GetGDirectoryRoles">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GDirectoryRoles">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.Get, "GDirectoryRoles",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/roles/get")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GDirectoryRoles")]
     public class GetGDirectoryRolesCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -7978,13 +7916,12 @@ namespace gShell.Cmdlets.Directory.Roles
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/InsertGDirectoryRoles">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Insert-GDirectoryRoles">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Insert", "GDirectoryRoles",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/roles/insert")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Insert-GDirectoryRoles")]
     public class InsertGDirectoryRolesCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -8032,13 +7969,12 @@ namespace gShell.Cmdlets.Directory.Roles
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/ListGDirectoryRoles">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/List-GDirectoryRoles">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("List", "GDirectoryRoles",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/roles/list")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/List-GDirectoryRoles")]
     public class ListGDirectoryRolesCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -8090,13 +8026,12 @@ namespace gShell.Cmdlets.Directory.Roles
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/PatchGDirectoryRoles">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Patch-GDirectoryRoles">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Patch", "GDirectoryRoles",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/roles/patch")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Patch-GDirectoryRoles")]
     public class PatchGDirectoryRolesCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -8153,13 +8088,12 @@ namespace gShell.Cmdlets.Directory.Roles
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/UpdateGDirectoryRoles">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Update-GDirectoryRoles">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsData.Update, "GDirectoryRoles",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/roles/update")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Update-GDirectoryRoles")]
     public class UpdateGDirectoryRolesCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -8223,13 +8157,12 @@ namespace gShell.Cmdlets.Directory.Schemas
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/DeleteGDirectorySchemas">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Delete-GDirectorySchemas">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Delete", "GDirectorySchemas",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/schemas/delete")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Delete-GDirectorySchemas")]
     public class DeleteGDirectorySchemasCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -8276,13 +8209,12 @@ namespace gShell.Cmdlets.Directory.Schemas
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/GetGDirectorySchemas">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GDirectorySchemas">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.Get, "GDirectorySchemas",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/schemas/get")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GDirectorySchemas")]
     public class GetGDirectorySchemasCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -8329,13 +8261,12 @@ namespace gShell.Cmdlets.Directory.Schemas
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/InsertGDirectorySchemas">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Insert-GDirectorySchemas">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Insert", "GDirectorySchemas",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/schemas/insert")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Insert-GDirectorySchemas")]
     public class InsertGDirectorySchemasCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -8383,13 +8314,12 @@ namespace gShell.Cmdlets.Directory.Schemas
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/ListGDirectorySchemas">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/List-GDirectorySchemas">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("List", "GDirectorySchemas",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/schemas/list")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/List-GDirectorySchemas")]
     public class ListGDirectorySchemasCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -8427,13 +8357,12 @@ namespace gShell.Cmdlets.Directory.Schemas
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/PatchGDirectorySchemas">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Patch-GDirectorySchemas">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Patch", "GDirectorySchemas",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/schemas/patch")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Patch-GDirectorySchemas")]
     public class PatchGDirectorySchemasCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -8490,13 +8419,12 @@ namespace gShell.Cmdlets.Directory.Schemas
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/UpdateGDirectorySchemas">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Update-GDirectorySchemas">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsData.Update, "GDirectorySchemas",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/schemas/update")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Update-GDirectorySchemas")]
     public class UpdateGDirectorySchemasCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -8560,13 +8488,12 @@ namespace gShell.Cmdlets.Directory.Tokens
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/DeleteGDirectoryTokens">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Delete-GDirectoryTokens">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Delete", "GDirectoryTokens",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/tokens/delete")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Delete-GDirectoryTokens")]
     public class DeleteGDirectoryTokensCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -8613,13 +8540,12 @@ namespace gShell.Cmdlets.Directory.Tokens
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/GetGDirectoryTokens">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GDirectoryTokens">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.Get, "GDirectoryTokens",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/tokens/get")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GDirectoryTokens")]
     public class GetGDirectoryTokensCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -8666,13 +8592,12 @@ namespace gShell.Cmdlets.Directory.Tokens
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/ListGDirectoryTokens">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/List-GDirectoryTokens">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("List", "GDirectoryTokens",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/tokens/list")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/List-GDirectoryTokens")]
     public class ListGDirectoryTokensCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -8717,13 +8642,12 @@ namespace gShell.Cmdlets.Directory.Users
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/DeleteGDirectoryUsers">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Delete-GDirectoryUsers">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Delete", "GDirectoryUsers",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/users/delete")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Delete-GDirectoryUsers")]
     public class DeleteGDirectoryUsersCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -8761,13 +8685,12 @@ namespace gShell.Cmdlets.Directory.Users
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/GetGDirectoryUsers">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GDirectoryUsers">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.Get, "GDirectoryUsers",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/users/get")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GDirectoryUsers")]
     public class GetGDirectoryUsersCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -8840,13 +8763,12 @@ namespace gShell.Cmdlets.Directory.Users
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/InsertGDirectoryUsers">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Insert-GDirectoryUsers">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Insert", "GDirectoryUsers",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/users/insert")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Insert-GDirectoryUsers")]
     public class InsertGDirectoryUsersCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -8885,13 +8807,12 @@ namespace gShell.Cmdlets.Directory.Users
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/ListGDirectoryUsers">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/List-GDirectoryUsers">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("List", "GDirectoryUsers",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/users/list")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/List-GDirectoryUsers")]
     public class ListGDirectoryUsersCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -9034,13 +8955,12 @@ namespace gShell.Cmdlets.Directory.Users
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/MakeAdminGDirectoryUsers">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/MakeAdmin-GDirectoryUsers">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("MakeAdmin", "GDirectoryUsers",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/users/makeAdmin")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/MakeAdmin-GDirectoryUsers")]
     public class MakeAdminGDirectoryUsersCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -9088,13 +9008,12 @@ namespace gShell.Cmdlets.Directory.Users
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/PatchGDirectoryUsers">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Patch-GDirectoryUsers">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Patch", "GDirectoryUsers",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/users/patch")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Patch-GDirectoryUsers")]
     public class PatchGDirectoryUsersCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -9142,13 +9061,12 @@ namespace gShell.Cmdlets.Directory.Users
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/UndeleteGDirectoryUsers">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Undelete-GDirectoryUsers">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Undelete", "GDirectoryUsers",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/users/undelete")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Undelete-GDirectoryUsers")]
     public class UndeleteGDirectoryUsersCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -9196,13 +9114,12 @@ namespace gShell.Cmdlets.Directory.Users
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/UpdateGDirectoryUsers">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Update-GDirectoryUsers">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsData.Update, "GDirectoryUsers",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/users/update")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Update-GDirectoryUsers")]
     public class UpdateGDirectoryUsersCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -9250,13 +9167,12 @@ namespace gShell.Cmdlets.Directory.Users
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/WatchGDirectoryUsers">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Watch-GDirectoryUsers">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.Watch, "GDirectoryUsers",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/users/watch")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Watch-GDirectoryUsers")]
     public class WatchGDirectoryUsersCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -9417,13 +9333,12 @@ namespace gShell.Cmdlets.Directory.Users.Aliases
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/DeleteGDirectoryAliases">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Delete-GDirectoryAliases">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Delete", "GDirectoryAliases",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/users/aliases/delete")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Delete-GDirectoryAliases")]
     public class DeleteGDirectoryAliasesCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -9470,13 +9385,12 @@ namespace gShell.Cmdlets.Directory.Users.Aliases
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/InsertGDirectoryAliases">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Insert-GDirectoryAliases">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Insert", "GDirectoryAliases",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/users/aliases/insert")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Insert-GDirectoryAliases")]
     public class InsertGDirectoryAliasesCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -9524,13 +9438,12 @@ namespace gShell.Cmdlets.Directory.Users.Aliases
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/ListGDirectoryAliases">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/List-GDirectoryAliases">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("List", "GDirectoryAliases",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/users/aliases/list")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/List-GDirectoryAliases")]
     public class ListGDirectoryAliasesCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -9583,13 +9496,12 @@ namespace gShell.Cmdlets.Directory.Users.Aliases
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/WatchGDirectoryAliases">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Watch-GDirectoryAliases">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.Watch, "GDirectoryAliases",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/users/aliases/watch")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Watch-GDirectoryAliases")]
     public class WatchGDirectoryAliasesCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -9659,13 +9571,12 @@ namespace gShell.Cmdlets.Directory.Users.Photos
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/DeleteGDirectoryPhotos">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Delete-GDirectoryPhotos">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Delete", "GDirectoryPhotos",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/users/photos/delete")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Delete-GDirectoryPhotos")]
     public class DeleteGDirectoryPhotosCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -9703,13 +9614,12 @@ namespace gShell.Cmdlets.Directory.Users.Photos
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/GetGDirectoryPhotos">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GDirectoryPhotos">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.Get, "GDirectoryPhotos",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/users/photos/get")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GDirectoryPhotos")]
     public class GetGDirectoryPhotosCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -9747,13 +9657,12 @@ namespace gShell.Cmdlets.Directory.Users.Photos
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/PatchGDirectoryPhotos">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Patch-GDirectoryPhotos">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Patch", "GDirectoryPhotos",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/users/photos/patch")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Patch-GDirectoryPhotos")]
     public class PatchGDirectoryPhotosCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -9801,13 +9710,12 @@ namespace gShell.Cmdlets.Directory.Users.Photos
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/UpdateGDirectoryPhotos">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Update-GDirectoryPhotos">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsData.Update, "GDirectoryPhotos",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/users/photos/update")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Update-GDirectoryPhotos")]
     public class UpdateGDirectoryPhotosCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -9862,13 +9770,12 @@ namespace gShell.Cmdlets.Directory.VerificationCodes
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/GenerateGDirectoryVerificationCodes">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Generate-GDirectoryVerificationCodes">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Generate", "GDirectoryVerificationCodes",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/verificationCodes/generate")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Generate-GDirectoryVerificationCodes")]
     public class GenerateGDirectoryVerificationCodesCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -9906,13 +9813,12 @@ namespace gShell.Cmdlets.Directory.VerificationCodes
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/InvalidateGDirectoryVerificationCodes">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Invalidate-GDirectoryVerificationCodes">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("Invalidate", "GDirectoryVerificationCodes",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/verificationCodes/invalidate")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Invalidate-GDirectoryVerificationCodes")]
     public class InvalidateGDirectoryVerificationCodesCommand : DirectoryServiceAccountBase
     {
         #region Properties
@@ -9950,13 +9856,12 @@ namespace gShell.Cmdlets.Directory.VerificationCodes
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/ListGDirectoryVerificationCodes">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/List-GDirectoryVerificationCodes">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet("List", "GDirectoryVerificationCodes",
     SupportsShouldProcess = true,
-
-      HelpUri = @"https://developers.google.com/admin-sdk/directory/directory_v1/reference/verificationCodes/list")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/List-GDirectoryVerificationCodes")]
     public class ListGDirectoryVerificationCodesCommand : DirectoryServiceAccountBase
     {
         #region Properties
