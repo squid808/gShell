@@ -6,6 +6,11 @@ using Data = Google.Apis.admin.Reports.reports_v1.Data;
 
 namespace gShell.Cmdlets.Reports
 {
+    public enum ApplicationNameEnum
+    {
+        admin, calendar, drive, groups, login, token
+    }
+
     /// <summary>
     /// <para type="synopsis">Creates a new Reports API Channel object.</para>
     /// <para type="description">This provides a Cmdlet-Based approach to creating a Channel object which may be required as a parameter for some other Cmdlets in the Reports API category.</para>
