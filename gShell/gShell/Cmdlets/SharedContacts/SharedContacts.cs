@@ -10,28 +10,54 @@ using gSharedContacts = gShell.dotNet.Sharedcontacts;
 
 namespace gShell.Cmdlets.Sharedcontacts
 {
+    /// <summary>
+    /// <para type="synopsis"></para>
+    /// <para type="description"></para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Shared Contacts API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Get-GSharedContact</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GSharedContact">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Get, "GSharedContact",
         SupportsShouldProcess = true,
-          HelpUri = @"",
-          DefaultParameterSetName="all")]
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GSharedContact",
+          DefaultParameterSetName = "all")]
     public class GetGSharedContact : SharedcontactsBase
     {
         #region Properties
-        [Parameter(Position = 0,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 0,
             Mandatory = true,
-            ParameterSetName="one")]
+            ParameterSetName = "one")]
         [ValidateNotNullOrEmpty]
         public string Id { get; set; }
 
-        [Parameter(Position = 0,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 0,
             Mandatory = false,
-            ParameterSetName="all")]
+            ParameterSetName = "all")]
         [ValidateNotNullOrEmpty]
         public bool? ShowDeleted { get; set; }
 
-        [Parameter(Position = 1,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 1,
             Mandatory = false,
-            ParameterSetName="all")]
+            ParameterSetName = "all")]
         [ValidateNotNullOrEmpty]
         public int? MaxResults { get; set; }
         #endregion
@@ -59,28 +85,58 @@ namespace gShell.Cmdlets.Sharedcontacts
     }
 
     #region ContactBuildingCmdlets
+    /// <summary>
+    /// <para type="synopsis"></para>
+    /// <para type="description"></para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Shared Contacts API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GSharedContact</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GSharedContact">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.New, "GSharedContact",
         SupportsShouldProcess = true,
-          HelpUri = @"")]
+          HelpUri = @"https://github.com/squid808/gShell/wiki/New-GSharedContact")]
     public class NewGSharedContact : SharedcontactsBase
     {
         #region Properties
-        [Parameter(Position = 0,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 0,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string Content { get; set; }
 
-        [Parameter(Position = 1,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 1,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public Data.Name Name { get; set; }
 
-        [Parameter(Position = 2,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 2,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public Data.PhoneNumber[] PhoneNumbers { get; set; }
 
-        [Parameter(Position = 3,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 3,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public Data.Email[] Emails { get; set; }
@@ -115,9 +171,23 @@ namespace gShell.Cmdlets.Sharedcontacts
     }
 
     #region New Contact Objects
+    /// <summary>
+    /// <para type="synopsis"></para>
+    /// <para type="description"></para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Shared Contacts API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GSharedContactEmailObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GSharedContactEmailObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.New, "GSharedContactEmailObj",
         SupportsShouldProcess = true,
-          HelpUri = @"")]
+          HelpUri = @"https://github.com/squid808/gShell/wiki/New-GSharedContactEmailObj")]
     public class NewGSharedContactEmailObj : PSCmdlet
     {
         public enum EmailRelEnum
@@ -126,27 +196,47 @@ namespace gShell.Cmdlets.Sharedcontacts
         }
 
         #region Properties
-        [Parameter(Position = 0,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 0,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public string Address { get; set; }
 
-        [Parameter(Position = 1,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 1,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string DisplayName { get; set; }
 
-        [Parameter(Position = 2,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 2,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string Label { get; set; }
 
-        [Parameter(Position = 3,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 3,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public EmailRelEnum? Rel { get; set; }
 
-        [Parameter(Position = 4,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 4,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public bool? Primary { get; set; }
@@ -172,23 +262,49 @@ namespace gShell.Cmdlets.Sharedcontacts
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis"></para>
+    /// <para type="description"></para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Shared Contacts API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GSharedContactExtendedPropertyObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GSharedContactExtendedPropertyObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.New, "GSharedContactExtendedPropertyObj",
         SupportsShouldProcess = true,
-          HelpUri = @"")]
+          HelpUri = @"https://github.com/squid808/gShell/wiki/New-GSharedContactExtendedPropertyObj")]
     public class NewGSharedContactExtendedPropertyObj : PSCmdlet
     {
         #region Properties
-        [Parameter(Position = 0,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 0,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public string Name { get; set; }
 
-        [Parameter(Position = 1,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 1,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string Value { get; set; }
 
-        [Parameter(Position = 2,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 2,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string Realm { get; set; }
@@ -209,9 +325,23 @@ namespace gShell.Cmdlets.Sharedcontacts
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis"></para>
+    /// <para type="description"></para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Shared Contacts API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GSharedContactImObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GSharedContactImObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.New, "GSharedContactImObj",
         SupportsShouldProcess = true,
-          HelpUri = @"")]
+          HelpUri = @"https://github.com/squid808/gShell/wiki/New-GSharedContactImObj")]
     public class NewGSharedContactImObj : PSCmdlet
     {
         public enum ImRelEnum
@@ -225,27 +355,47 @@ namespace gShell.Cmdlets.Sharedcontacts
         }
 
         #region Properties
-        [Parameter(Position = 0,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 0,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public string Address { get; set; }
 
-        [Parameter(Position = 1,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 1,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string Label { get; set; }
 
-        [Parameter(Position = 2,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 2,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public ImRelEnum? Rel { get; set; }
 
-        [Parameter(Position = 3,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 3,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public ImProtocolEnum? Protocol { get; set; }
 
-        [Parameter(Position = 4,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 4,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public bool? Primary { get; set; }
@@ -270,38 +420,76 @@ namespace gShell.Cmdlets.Sharedcontacts
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis"></para>
+    /// <para type="description"></para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Shared Contacts API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GSharedContactNameObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GSharedContactNameObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.New, "GSharedContactNameObj",
         SupportsShouldProcess = true,
-          HelpUri = @"")]
+          HelpUri = @"https://github.com/squid808/gShell/wiki/New-GSharedContactNameObj")]
     public class NewGSharedContactNameObj : PSCmdlet
     {
         #region Properties
-        [Parameter(Position = 0,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 0,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string GivenName { get; set; }
 
-        [Parameter(Position = 1,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 1,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string AdditionalName { get; set; }
 
-        [Parameter(Position = 2,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 2,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string FamilyName { get; set; }
 
-        [Parameter(Position = 3,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 3,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string NamePrefix { get; set; }
 
-        [Parameter(Position = 4,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 4,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string NameSuffix { get; set; }
 
-        [Parameter(Position = 5,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 5,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string FullName { get; set; }
@@ -336,55 +524,105 @@ namespace gShell.Cmdlets.Sharedcontacts
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis"></para>
+    /// <para type="description"></para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Shared Contacts API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GSharedContactOrgObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GSharedContactOrgObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.New, "GSharedContactOrgObj",
         SupportsShouldProcess = true,
-          HelpUri = @"")]
+          HelpUri = @"https://github.com/squid808/gShell/wiki/New-GSharedContactOrgObj")]
     public class NewGSharedContactOrgObj : PSCmdlet
     {
         public enum OrgRelEnum { other, work }
 
         #region Properties
-        [Parameter(Position = 0,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 0,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string Label { get; set; }
 
-        [Parameter(Position = 1,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 1,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string OrgDepartment { get; set; }
 
-        [Parameter(Position = 2,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 2,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string OrgJobDescription { get; set; }
 
-        [Parameter(Position = 3,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 3,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string OrgName { get; set; }
 
-        [Parameter(Position = 4,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 4,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string OrgSymbol { get; set; }
 
-        [Parameter(Position = 5,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 5,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string OrgTitle { get; set; }
 
-        [Parameter(Position = 6,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 6,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public bool? Primary { get; set; }
 
-        [Parameter(Position = 7,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 7,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public OrgRelEnum? Rel { get; set; }
 
-        [Parameter(Position = 8,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 8,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public Data.Where Where { get; set; }
@@ -419,38 +657,72 @@ namespace gShell.Cmdlets.Sharedcontacts
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis"></para>
+    /// <para type="description"></para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Shared Contacts API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GSharedContactPhoneNumberObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GSharedContactPhoneNumberObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.New, "GSharedContactPhoneNumberObj",
         SupportsShouldProcess = true,
-          HelpUri = @"")]
+          HelpUri = @"https://github.com/squid808/gShell/wiki/New-GSharedContactPhoneNumberObj")]
     public class NewGSharedContactPhoneNumberObj : PSCmdlet
     {
         public enum PhoneNumberRelEnum
-	    {
+        {
             assistant, callback, car, company_main, fax, home, home_fax, isdn, main, mobile, other, other_fax, pager, radio, telex, tty_tdd, work, work_fax, work_mobile, work_pager
-	    }
+        }
 
         #region Properties
-        [Parameter(Position = 0,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 0,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string Label { get; set; }
 
-        [Parameter(Position = 1,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 1,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public PhoneNumberRelEnum? Rel { get; set; }
 
-        [Parameter(Position = 2,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 2,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string Uri { get; set; }
 
-        [Parameter(Position = 3,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 3,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public bool? Primary { get; set; }
 
-        [Parameter(Position = 4,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 4,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public string Text { get; set; }
@@ -475,90 +747,168 @@ namespace gShell.Cmdlets.Sharedcontacts
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis"></para>
+    /// <para type="description"></para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Shared Contacts API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>VERB-NOUN</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GSharedContactPostalAddressObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.New, "GSharedContactPostalAddressObj",
         SupportsShouldProcess = true,
-          HelpUri = @"")]
+          HelpUri = @"https://github.com/squid808/gShell/wiki/New-GSharedContactPostalAddressObj")]
     public class NewGSharedContactPostalAddressObj : PSCmdlet
     {
         public enum PostalRelEnum { work, home, other }
 
         #region Properties
-        [Parameter(Position = 0,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 0,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public PostalRelEnum? Rel { get; set; }
 
-        [Parameter(Position = 1,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 1,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string MailClass { get; set; }
 
-        [Parameter(Position = 2,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 2,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string Usage { get; set; }
 
-        [Parameter(Position = 3,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 3,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string Label { get; set; }
 
-        [Parameter(Position = 4,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 4,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public bool? Primary { get; set; }
 
-        [Parameter(Position = 5,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 5,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string Agent { get; set; }
 
-        [Parameter(Position = 6,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 6,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string Housename { get; set; }
 
-        [Parameter(Position = 7,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 7,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string Street { get; set; }
 
-        [Parameter(Position = 8,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 8,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string PoBox { get; set; }
 
-        [Parameter(Position = 9,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 9,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string Neighborhood { get; set; }
 
-        [Parameter(Position = 10,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 10,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string City { get; set; }
 
-        [Parameter(Position = 11,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 11,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string Subregion { get; set; }
 
-        [Parameter(Position = 12,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 12,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string Region { get; set; }
 
-        [Parameter(Position = 13,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 13,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string Postcode { get; set; }
 
-        [Parameter(Position = 14,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 14,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string Country { get; set; }
 
-        [Parameter(Position = 15,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 15,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string FormattedAddress { get; set; }
@@ -607,30 +957,60 @@ namespace gShell.Cmdlets.Sharedcontacts
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis"></para>
+    /// <para type="description"></para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Shared Contacts API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GSharedContactWhereObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GSharedContactWhereObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.New, "GSharedContactWhereObj",
         SupportsShouldProcess = true,
-          HelpUri = @"")]
+          HelpUri = @"https://github.com/squid808/gShell/wiki/New-GSharedContactWhereObj")]
     public class NewGSharedContactWhereObj : PSCmdlet
     {
-        public enum WhereRelEnum { @event, alternate, parking}
+        public enum WhereRelEnum { @event, alternate, parking }
 
         #region Properties
-        [Parameter(Position = 0,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 0,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string Label { get; set; }
 
-        [Parameter(Position = 1,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 1,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public WhereRelEnum? Rel { get; set; }
 
-        [Parameter(Position = 2,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 2,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string ValueString { get; set; }
 
-        [Parameter(Position = 3,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 3,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public Data.EntryLink EntryLink { get; set; }
@@ -667,28 +1047,58 @@ namespace gShell.Cmdlets.Sharedcontacts
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis"></para>
+    /// <para type="description"></para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Shared Contacts API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GSharedContactEntryLinkObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GSharedContactEntryLinkObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.New, "GSharedContactEntryLinkObj",
         SupportsShouldProcess = true,
-          HelpUri = @"")]
+          HelpUri = @"https://github.com/squid808/gShell/wiki/New-GSharedContactEntryLinkObj")]
     public class NewGSharedContactEntryLinkObj : PSCmdlet
     {
         #region Properties
-        [Parameter(Position = 0,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 0,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string Href { get; set; }
 
-        [Parameter(Position = 1,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 1,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public bool? ReadOnly { get; set; }
 
-        [Parameter(Position = 2,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 2,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string Rel { get; set; }
 
-        [Parameter(Position = 3,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 3,
             Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public Data.Contact Entry { get; set; }
@@ -713,19 +1123,37 @@ namespace gShell.Cmdlets.Sharedcontacts
         }
     }
 
-    #endregion  
+    #endregion
     #endregion
 
+    /// <summary>
+    /// <para type="synopsis"></para>
+    /// <para type="description"></para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Shared Contacts API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Set-GSharedContact</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Set-GSharedContact">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Set, "GSharedContact",
         SupportsShouldProcess = true,
-          HelpUri = @"",
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GSharedContact",
           DefaultParameterSetName = "all")]
     public class SetGSharedContact : SharedcontactsBase
     {
         #region Properties
-        [Parameter(Position = 0,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 0,
             Mandatory = true,
-            ValueFromPipeline=true)]
+            ValueFromPipeline = true)]
         [ValidateNotNullOrEmpty]
         public Data.Contact ContactObj { get; set; }
         #endregion
@@ -733,7 +1161,7 @@ namespace gShell.Cmdlets.Sharedcontacts
         protected override void ProcessRecord()
         {
             string editUrl = ContactObj.Links.Where(x => x.Rel == ("link_edit")).Select(x => x.Href).First();
-            
+
             if (!string.IsNullOrWhiteSpace(editUrl) && !string.IsNullOrWhiteSpace(ContactObj.Id))
             {
                 string id = ContactObj.Id.Split('/').Last();
@@ -752,14 +1180,32 @@ namespace gShell.Cmdlets.Sharedcontacts
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis"></para>
+    /// <para type="description"></para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Shared Contacts API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Remove-GSharedContact</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Remove-GSharedContact">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Remove, "GSharedContact",
         SupportsShouldProcess = true,
-          HelpUri = @"",
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GSharedContact",
           DefaultParameterSetName = "all")]
     public class RemoveGSharedContact : SharedcontactsBase
     {
         #region Properties
-        [Parameter(Position = 0,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 0,
             Mandatory = true,
             ValueFromPipeline = true)]
         [ValidateNotNullOrEmpty]
