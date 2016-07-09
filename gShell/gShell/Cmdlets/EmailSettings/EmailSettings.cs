@@ -38,13 +38,31 @@ namespace gShell.Cmdlets.Emailsettings
 
 namespace gShell.Cmdlets.Emailsettings.Delegation
 {
+    /// <summary>
+    /// <para type="synopsis"></para>
+    /// <para type="description"></para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google HERE API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Get-GEmailSettingsDelegation</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GEmailSettingsDelegation">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Get, "GEmailSettingsDelegation",
           SupportsShouldProcess = true,
-          HelpUri = @"")]
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GEmailSettingsDelegation")]
     public class GetGEmailSettingsDelegation : EmailsettingsBase
     {
         #region Properties
-        [Parameter(Position = 0,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 0,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public string UserName { get; set; }
@@ -59,18 +77,40 @@ namespace gShell.Cmdlets.Emailsettings.Delegation
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis"></para>
+    /// <para type="description"></para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google HERE API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GEmailSettingsDelegation</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GEmailSettingsDelegation">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.New, "GEmailSettingsDelegation",
           SupportsShouldProcess = true,
-          HelpUri = @"")]
+          HelpUri = @"https://github.com/squid808/gShell/wiki/New-GEmailSettingsDelegation")]
     public class NewGEmailSettingsDelegation : EmailsettingsBase
     {
         #region Properties
-        [Parameter(Position = 0,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 0,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public string UserName { get; set; }
 
-        [Parameter(Position = 2,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 2,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public string Address { get; set; }
@@ -90,18 +130,40 @@ namespace gShell.Cmdlets.Emailsettings.Delegation
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis"></para>
+    /// <para type="description"></para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google HERE API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Remove-GEmailSettingsDelegation</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Remove-GEmailSettingsDelegation">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Remove, "GEmailSettingsDelegation",
           SupportsShouldProcess = true,
-          HelpUri = @"")]
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GEmailSettingsDelegation")]
     public class RemoveGEmailSettingsDelegation : EmailsettingsBase
     {
         #region Properties
-        [Parameter(Position = 0,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 0,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public string UserName { get; set; }
 
-        [Parameter(Position = 0,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 0,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public string DelegateEmail { get; set; }
@@ -119,66 +181,136 @@ namespace gShell.Cmdlets.Emailsettings.Delegation
 
 namespace gShell.Cmdlets.Emailsettings.Filters
 {
+    /// <summary>
+    /// <para type="synopsis"></para>
+    /// <para type="description"></para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google HERE API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GEmailSettingsFilter</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GEmailSettingsFilter">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.New, "GEmailSettingsFilter",
           SupportsShouldProcess = true,
-          HelpUri = @"")]
+          HelpUri = @"https://github.com/squid808/gShell/wiki/New-GEmailSettingsFilter")]
     public class NewGEmailSettingsFilter : EmailsettingsBase
     {
         #region Properties
-        [Parameter(Position = 0,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 0,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public string UserName { get; set; }
 
-        [Parameter(Position = 2)]
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 2)]
         [ValidateNotNullOrEmpty]
         public string From { get; set; }
 
-        [Parameter(Position = 3)]
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 3)]
         [ValidateNotNullOrEmpty]
         public string To { get; set; }
 
-        [Parameter(Position = 4)]
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 4)]
         [ValidateNotNullOrEmpty]
         public string Subject { get; set; }
 
-        [Parameter(Position = 5)]
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 5)]
         [ValidateNotNullOrEmpty]
         public string HasTheWords { get; set; }
 
-        [Parameter(Position = 6)]
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 6)]
         [ValidateNotNullOrEmpty]
         public string DoesntHave { get; set; }
 
-        [Parameter(Position = 7)]
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 7)]
         [ValidateNotNullOrEmpty]
         public bool? HasAttachment { get; set; }
 
-        [Parameter(Position = 8)]
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 8)]
         [ValidateNotNullOrEmpty]
         public bool? ArchiveIt { get; set; }
 
-        [Parameter(Position = 9)]
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 9)]
         [ValidateNotNullOrEmpty]
         public bool? MarkAsRead { get; set; }
 
-        [Parameter(Position = 10)]
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 10)]
         [ValidateNotNullOrEmpty]
         public bool? StarIt { get; set; }
 
-        [Parameter(Position = 11)]
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 11)]
         [ValidateNotNullOrEmpty]
         public string ApplyTheLabel { get; set; }
 
-        [Parameter(Position = 12)]
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 12)]
         [ValidateNotNullOrEmpty]
         public string ForwardIt { get; set; }
 
-        [Parameter(Position = 13)]
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 13)]
         [ValidateNotNullOrEmpty]
         public bool? DeleteIt { get; set; }
 
-        [Parameter(Position = 14)]
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 14)]
         [ValidateNotNullOrEmpty]
         public bool? NeverSendItToSpam { get; set; }
         #endregion
@@ -236,13 +368,31 @@ namespace gShell.Cmdlets.Emailsettings.Filters
 
 namespace gShell.Cmdlets.Emailsettings.Forwarding
 {
+    /// <summary>
+    /// <para type="synopsis"></para>
+    /// <para type="description"></para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google HERE API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Get-GEmailSettingsForwarding</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GEmailSettingsForwarding">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Get, "GEmailSettingsForwarding",
           SupportsShouldProcess = true,
-          HelpUri = @"")]
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GEmailSettingsForwarding")]
     public class NewGEmailSettingsForwarding : EmailsettingsBase
     {
         #region Properties
-        [Parameter(Position = 0,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 0,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public string UserName { get; set; }
@@ -257,28 +407,58 @@ namespace gShell.Cmdlets.Emailsettings.Forwarding
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis"></para>
+    /// <para type="description"></para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google HERE API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Set-GEmailSettingsForwarding</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Set-GEmailSettingsForwarding">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Set, "GEmailSettingsForwarding",
           SupportsShouldProcess = true,
-          HelpUri = @"")]
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GEmailSettingsForwarding")]
     public class SetGEmailSettingsForwarding : EmailsettingsBase
     {
         #region Properties
-        [Parameter(Position = 0,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 0,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public string UserName { get; set; }
 
-        [Parameter(Position = 2,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 2,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public bool Enable { get; set; }
 
-        [Parameter(Position = 3,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 3,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public string ForwardTo { get; set; }
 
-        [Parameter(Position = 4,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 4,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public ForwardingActionEnum Action { get; set; }
@@ -303,34 +483,72 @@ namespace gShell.Cmdlets.Emailsettings.Forwarding
 
 namespace gShell.Cmdlets.Emailsettings.General
 {
+    /// <summary>
+    /// <para type="synopsis"></para>
+    /// <para type="description"></para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google HERE API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Set-GEmailSettingsGeneral</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Set-GEmailSettingsGeneral">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Set, "GEmailSettingsGeneral",
           SupportsShouldProcess = true,
-          HelpUri = @"")]
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GEmailSettingsGeneral")]
     public class SetGEmailSettingsGeneral : EmailsettingsBase
     {
         #region Properties
-        [Parameter(Position = 0,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 0,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public string UserName { get; set; }
 
-        [Parameter(Position = 2)]
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 2)]
         [ValidateNotNullOrEmpty]
         public GeneralPageSizeEnum? PageSize { get; set; }
 
-        [Parameter(Position = 3)]
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 3)]
         [ValidateNotNullOrEmpty]
         public bool? Shortcuts { get; set; }
 
-        [Parameter(Position = 4)]
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 4)]
         [ValidateNotNullOrEmpty]
         public bool? Arrows { get; set; }
 
-        [Parameter(Position = 5)]
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 5)]
         [ValidateNotNullOrEmpty]
         public bool? Snippets { get; set; }
 
-        [Parameter(Position = 6)]
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 6)]
         [ValidateNotNullOrEmpty]
         public bool? Unicode { get; set; }
         #endregion
@@ -365,13 +583,31 @@ namespace gShell.Cmdlets.Emailsettings.General
 
 namespace gShell.Cmdlets.Emailsettings.Imap
 {
+    /// <summary>
+    /// <para type="synopsis"></para>
+    /// <para type="description"></para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google HERE API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Get-GEmailSettingsImap</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GEmailSettingsImap">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Get, "GEmailSettingsImap",
           SupportsShouldProcess = true,
-          HelpUri = @"")]
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GEmailSettingsImap")]
     public class GetGEmailSettingsImap : EmailsettingsBase
     {
         #region Properties
-        [Parameter(Position = 0,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 0,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public string UserName { get; set; }
@@ -386,18 +622,40 @@ namespace gShell.Cmdlets.Emailsettings.Imap
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis"></para>
+    /// <para type="description"></para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google HERE API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Set-GEmailSettingsImap</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Set-GEmailSettingsImap">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Set, "GEmailSettingsImap",
           SupportsShouldProcess = true,
-          HelpUri = @"")]
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GEmailSettingsImap")]
     public class SetGEmailSettingsImap : EmailsettingsBase
     {
         #region Properties
-        [Parameter(Position = 0,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 0,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public string UserName { get; set; }
 
-        [Parameter(Position = 2,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 2,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public bool Enable { get; set; }
@@ -420,13 +678,31 @@ namespace gShell.Cmdlets.Emailsettings.Imap
 
 namespace gShell.Cmdlets.Emailsettings.Label
 {
+    /// <summary>
+    /// <para type="synopsis"></para>
+    /// <para type="description"></para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google HERE API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Get-GEmailSettingsLabel</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GEmailSettingsLabel">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Get, "GEmailSettingsLabel",
           SupportsShouldProcess = true,
-          HelpUri = @"")]
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GEmailSettingsLabel")]
     public class GetEmailSettingsLabel : EmailsettingsBase
     {
         #region Properties
-        [Parameter(Position = 0,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 0,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public string UserName { get; set; }
@@ -441,18 +717,40 @@ namespace gShell.Cmdlets.Emailsettings.Label
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis"></para>
+    /// <para type="description"></para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google HERE API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GEmailSettingsLabel</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GEmailSettingsLabel">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.New, "GEmailSettingsLabel",
           SupportsShouldProcess = true,
-          HelpUri = @"")]
+          HelpUri = @"https://github.com/squid808/gShell/wiki/New-GEmailSettingsLabel")]
     public class NewEmailSettingsLabel : EmailsettingsBase
     {
         #region Properties
-        [Parameter(Position = 0,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 0,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public string UserName { get; set; }
 
-        [Parameter(Position = 2,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 2,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public string Label { get; set; }
@@ -472,18 +770,40 @@ namespace gShell.Cmdlets.Emailsettings.Label
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis"></para>
+    /// <para type="description"></para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google HERE API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Remove-GEmailSettingsLabel</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Remove-GEmailSettingsLabel">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Remove, "GEmailSettingsLabel",
           SupportsShouldProcess = true,
-          HelpUri = @"")]
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GEmailSettingsLabel")]
     public class RemoveEmailSettingsLabel : EmailsettingsBase
     {
         #region Properties
-        [Parameter(Position = 0,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 0,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public string UserName { get; set; }
 
-        [Parameter(Position = 0,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 0,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public string LabelName { get; set; }
@@ -501,28 +821,58 @@ namespace gShell.Cmdlets.Emailsettings.Label
 
 namespace gShell.Cmdlets.Emailsettings.Language
 {
+    /// <summary>
+    /// <para type="synopsis"></para>
+    /// <para type="description"></para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google HERE API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Get-GEmailSettingsLanguage</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GEmailSettingsLanguage">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Set, "GEmailSettingsLanguage",
           SupportsShouldProcess = true,
-          HelpUri = @"")]
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GEmailSettingsLanguage")]
     public class SetGEmailSettingsLanguage : EmailsettingsBase
     {
         #region Properties
-        [Parameter(Position = 0,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 0,
             Mandatory = true,
             ParameterSetName = "word")]
-        [Parameter(Position = 0,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 0,
             Mandatory = true,
             ParameterSetName = "abbrev")]
         [ValidateNotNullOrEmpty]
         public string UserName { get; set; }
 
-        [Parameter(Position = 2,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 2,
             Mandatory = true,
             ParameterSetName = "word")]
         [ValidateNotNullOrEmpty]
         public LanguageLanguageEnum Language { get; set; }
 
-        [Parameter(Position = 2,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 2,
            Mandatory = true,
            ParameterSetName = "abbrev")]
         [ValidateNotNullOrEmpty]
@@ -688,13 +1038,31 @@ namespace gShell.Cmdlets.Emailsettings.Language
 
 namespace gShell.Cmdlets.Emailsettings.Pop
 {
+    /// <summary>
+    /// <para type="synopsis"></para>
+    /// <para type="description"></para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google HERE API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Get-GEmailSettingsPop</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GEmailSettingsPop">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Get, "GEmailSettingsPop",
           SupportsShouldProcess = true,
-          HelpUri = @"")]
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GEmailSettingsPop")]
     public class GetGEmailSettingsPop : EmailsettingsBase
     {
         #region Properties
-        [Parameter(Position = 0,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 0,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public string UserName { get; set; }
@@ -709,27 +1077,57 @@ namespace gShell.Cmdlets.Emailsettings.Pop
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis"></para>
+    /// <para type="description"></para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google HERE API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Get-GEmailSettingsPop</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GEmailSettingsPop">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Set, "GEmailSettingsPop",
           SupportsShouldProcess = true,
-          HelpUri = @"")]
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GEmailSettingsPop")]
     public class SetGEmailSettingsPop : EmailsettingsBase
     {
         #region Properties
-        [Parameter(Position = 0,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 0,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public string UserName { get; set; }
 
-        [Parameter(Position = 2,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 2,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public bool Enable { get; set; }
 
-        [Parameter(Position = 3)]
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 3)]
         [ValidateNotNullOrEmpty]
         public PopEnableForEnum? EnableFor { get; set; }
 
-        [Parameter(Position = 4)]
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 4)]
         [ValidateNotNullOrEmpty]
         public PopActionEnum? Action { get; set; }
         #endregion
@@ -755,13 +1153,31 @@ namespace gShell.Cmdlets.Emailsettings.Pop
 
 namespace gShell.Cmdlets.Emailsettings.Signature
 {
+    /// <summary>
+    /// <para type="synopsis"></para>
+    /// <para type="description"></para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google HERE API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Get-GEmailSettingsSignature</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GEmailSettingsSignature">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Get, "GEmailSettingsSignature",
           SupportsShouldProcess = true,
-          HelpUri = @"")]
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GEmailSettingsSignature")]
     public class GetGEmailSettingsSignature : EmailsettingsBase
     {
         #region Properties
-        [Parameter(Position = 0,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 0,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public string UserName { get; set; }
@@ -776,18 +1192,40 @@ namespace gShell.Cmdlets.Emailsettings.Signature
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis"></para>
+    /// <para type="description"></para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google HERE API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Get-GEmailSettingsSignature</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GEmailSettingsSignature">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Set, "GEmailSettingsSignature",
           SupportsShouldProcess = true,
-          HelpUri = @"")]
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GEmailSettingsSignature")]
     public class SetGEmailSettingsSignature : EmailsettingsBase
     {
         #region Properties
-        [Parameter(Position = 0,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 0,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public string UserName { get; set; }
 
-        [Parameter(Position = 2,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 2,
             Mandatory = true)]
         [ValidateNotNull]
         public string Signature { get; set; }
@@ -810,13 +1248,31 @@ namespace gShell.Cmdlets.Emailsettings.Signature
 
 namespace gShell.Cmdlets.Emailsettings.SendasAlias
 {
+    /// <summary>
+    /// <para type="synopsis"></para>
+    /// <para type="description"></para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google HERE API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Get-GEmailSettingsSendasAlias</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GEmailSettingsSendasAlias">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Get, "GEmailSettingsSendasAlias",
           SupportsShouldProcess = true,
-          HelpUri = @"")]
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GEmailSettingsSendasAlias")]
     public class GetGEmailSettingsSendasAlias : EmailsettingsBase
     {
         #region Properties
-        [Parameter(Position = 0,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 0,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public string UserName { get; set; }
@@ -831,32 +1287,66 @@ namespace gShell.Cmdlets.Emailsettings.SendasAlias
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis"></para>
+    /// <para type="description"></para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google HERE API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GEmailSettingsSendasAlias</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GEmailSettingsSendasAlias">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.New, "GEmailSettingsSendasAlias",
           SupportsShouldProcess = true,
-          HelpUri = @"")]
+          HelpUri = @"https://github.com/squid808/gShell/wiki/New-GEmailSettingsSendasAlias")]
     public class NewGEmailSettingsSendasAlias : EmailsettingsBase
     {
         #region Properties
-        [Parameter(Position = 0,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 0,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public string UserName { get; set; }
 
-        [Parameter(Position = 2,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 2,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public string Name { get; set; }
 
-        [Parameter(Position = 3,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 3,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public string Address { get; set; }
 
-        [Parameter(Position = 4)]
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 4)]
         [ValidateNotNullOrEmpty]
         public string ReplyTo { get; set; }
 
-        [Parameter(Position = 5)]
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 5)]
         [ValidateNotNullOrEmpty]
         public bool? MakeDefault { get; set; }
         #endregion
@@ -883,13 +1373,31 @@ namespace gShell.Cmdlets.Emailsettings.SendasAlias
 
 namespace gShell.Cmdlets.Emailsettings.VacationResponder
 {
+    /// <summary>
+    /// <para type="synopsis"></para>
+    /// <para type="description"></para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google HERE API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Get-GEmailSettingsVacationResponder</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GEmailSettingsVacationResponder">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Get, "GEmailSettingsVacationResponder",
           SupportsShouldProcess = true,
-          HelpUri = @"")]
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GEmailSettingsVacationResponder")]
     public class GetGEmailSettingsVacationResponder : EmailsettingsBase
     {
         #region Properties
-        [Parameter(Position = 0,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 0,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public string UserName { get; set; }
@@ -904,47 +1412,93 @@ namespace gShell.Cmdlets.Emailsettings.VacationResponder
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis"></para>
+    /// <para type="description"></para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google HERE API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Get-GEmailSettingsVacationResponder</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GEmailSettingsVacationResponder">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Set, "GEmailSettingsVacationResponder",
           SupportsShouldProcess = true,
-          HelpUri = @"")]
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GEmailSettingsVacationResponder")]
     public class SetGEmailSettingsVacationResponder : EmailsettingsBase
     {
         #region Properties
-        [Parameter(Position = 0,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 0,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public string UserName { get; set; }
 
-        [Parameter(Position = 2,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 2,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public bool ContactsOnly { get; set; }
 
-        [Parameter(Position = 3)]
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 3)]
         [ValidateNotNullOrEmpty]
         public bool? DomainOnly { get; set; }
 
-        [Parameter(Position = 4,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 4,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public bool Enable { get; set; }
 
-        [Parameter(Position = 5,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 5,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public DateTime EndDate { get; set; }
 
-        [Parameter(Position = 6,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 6,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public string Message { get; set; }
 
-        [Parameter(Position = 7,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 7,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public DateTime StartDate { get; set; }
 
-        [Parameter(Position = 8,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 8,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public string Subject { get; set; }
@@ -973,18 +1527,40 @@ namespace gShell.Cmdlets.Emailsettings.VacationResponder
 
 namespace gShell.Cmdlets.Emailsettings.WebClip
 {
+    /// <summary>
+    /// <para type="synopsis"></para>
+    /// <para type="description"></para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google HERE API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Set-GEmailSettingsWebClip</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Set-GEmailSettingsWebClip">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Set, "GEmailSettingsWebClip",
           SupportsShouldProcess = true,
-          HelpUri = @"")]
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GEmailSettingsWebClip")]
     public class SetGEmailSettingsWebClip : EmailsettingsBase
     {
         #region Properties
-        [Parameter(Position = 0,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 0,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public string UserName { get; set; }
 
-        [Parameter(Position = 2,
+        /// <summary>
+        /// <para type="description"></para>
+        /// </summary>
+        [Parameter(HelpMessage = "",
+            Position = 2,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public bool Enable { get; set; }
