@@ -29,8 +29,6 @@ namespace gShell.Cmdlets.Groupssettings
         }
     }
 
-
-
     /// <summary>
     /// <para type="synopsis">Creates a new Groupssettings API Groups object.</para>
     /// <para type="description">This provides a Cmdlet-Based approach to creating a Groups object which may be required as a parameter for some other Cmdlets in the Groupssettings API category.</para>
@@ -47,9 +45,10 @@ namespace gShell.Cmdlets.Groupssettings
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GGroupssettingsObj",
-    SupportsShouldProcess = true)]
+    SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/New-GGroupssettingsObj")]
     [OutputType(typeof(Google.Apis.Groupssettings.v1.Data.Groups))]
-    public class NewGGroupssettingsObj : PSCmdlet
+    public class NewGGroupssettingsObjCommand : PSCmdlet
     {
         #region Properties
 
@@ -430,7 +429,7 @@ namespace gShell.Cmdlets.Groupssettings.Groups
     [Cmdlet(VerbsCommon.Get, "GGroupssettings",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GGroupssettings")]
-    public class GetGGroupssettings : GroupssettingsBase
+    public class GetGGroupssettingsCommand : GroupssettingsBase
     {
         #region Properties
 
@@ -471,7 +470,7 @@ namespace gShell.Cmdlets.Groupssettings.Groups
     [Cmdlet(VerbsCommon.Set, "GGroupssettings",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GGroupssettings")]
-    public class SetGGroupssettings : GroupssettingsBase
+    public class SetGGroupssettingsCommand : GroupssettingsBase
     {
         #region Properties
 

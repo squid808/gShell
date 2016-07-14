@@ -28,9 +28,10 @@ namespace gShell.Cmdlets.Directory
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GAAliasObj",
-    SupportsShouldProcess = true)]
+    SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/New-GAAliasObj")]
     [OutputType(typeof(Data.Alias))]
-    public class NewGAAliasObj : PSCmdlet
+    public class NewGAAliasObjCommand : PSCmdlet
     {
         #region Properties
 
@@ -94,9 +95,10 @@ namespace gShell.Cmdlets.Directory
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GACalendarResourceObj",
-    SupportsShouldProcess = true)]
+    SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/New-GACalendarResourceObj")]
     [OutputType(typeof(Data.CalendarResource))]
-    public class NewGACalendarResourceObj : PSCmdlet
+    public class NewGACalendarResourceObjCommand : PSCmdlet
     {
         #region Properties
 
@@ -190,9 +192,10 @@ namespace gShell.Cmdlets.Directory
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GACustomerObj",
-    SupportsShouldProcess = true)]
+    SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/New-GACustomerObj")]
     [OutputType(typeof(Google.Apis.admin.Directory.directory_v1.Data.Customer))]
-    public class NewGACustomerObj : PSCmdlet
+    public class NewGACustomerObjCommand : PSCmdlet
     {
         #region Properties
 
@@ -296,9 +299,10 @@ namespace gShell.Cmdlets.Directory
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GADomainAliasObj",
-    SupportsShouldProcess = true)]
+    SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/New-GADomainAliasObj")]
     [OutputType(typeof(Google.Apis.admin.Directory.directory_v1.Data.DomainAlias))]
-    public class NewGADomainAliasObj : PSCmdlet
+    public class NewGADomainAliasObjCommand : PSCmdlet
     {
         #region Properties
 
@@ -372,9 +376,10 @@ namespace gShell.Cmdlets.Directory
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GADomainsObj",
-    SupportsShouldProcess = true)]
+    SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/New-GADomainsObj")]
     [OutputType(typeof(Data.Domains))]
-    public class NewGADomainsObj : PSCmdlet
+    public class NewGADomainsObjCommand : PSCmdlet
     {
         #region Properties
 
@@ -458,9 +463,10 @@ namespace gShell.Cmdlets.Directory
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GACustomerPostalAddressObj",
-    SupportsShouldProcess = true)]
+    SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/New-GACustomerPostalAddressObj")]
     [OutputType(typeof(Google.Apis.admin.Directory.directory_v1.Data.CustomerPostalAddress))]
-    public class NewGACustomerPostalAddressObj : PSCmdlet
+    public class NewGACustomerPostalAddressObjCommand : PSCmdlet
     {
         #region Properties
 
@@ -584,9 +590,10 @@ namespace gShell.Cmdlets.Directory
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GARoleObj",
-    SupportsShouldProcess = true)]
+    SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/New-GARoleObj")]
     [OutputType(typeof(Google.Apis.admin.Directory.directory_v1.Data.Role))]
-    public class NewGARoleObj : PSCmdlet
+    public class NewGARoleObjCommand : PSCmdlet
     {
         #region Properties
 
@@ -681,9 +688,10 @@ namespace gShell.Cmdlets.Directory
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GARoleAssignmentObj",
-    SupportsShouldProcess = true)]
+    SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/New-GARoleAssignmentObj")]
     [OutputType(typeof(Data.RoleAssignment))]
-    public class NewGARoleAssignmentObj : PSCmdlet
+    public class NewGARoleAssignmentObjCommand : PSCmdlet
     {
         #region Properties
 
@@ -767,9 +775,10 @@ namespace gShell.Cmdlets.Directory
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GASchemaObj",
-    SupportsShouldProcess = true)]
+    SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/New-GASchemaObj")]
     [OutputType(typeof(Google.Apis.admin.Directory.directory_v1.Data.Schema))]
-    public class NewGASchemaObj : PSCmdlet
+    public class NewGASchemaObjCommand : PSCmdlet
     {
         #region Properties
 
@@ -818,7 +827,6 @@ namespace gShell.Cmdlets.Directory
         }
     }
 
-
     /// <summary>
     /// <para type="synopsis">Creates a new Directory API SchemaFieldSpec object.</para>
     /// <para type="description">This provides a Cmdlet-Based approach to creating a SchemaFieldSpec object which may be required as a parameter for some other Cmdlets in the Directory API category.</para>
@@ -835,9 +843,10 @@ namespace gShell.Cmdlets.Directory
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GASchemaFieldSpecObj",
-    SupportsShouldProcess = true)]
+    SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/New-GASchemaFieldSpecObj")]
     [OutputType(typeof(Google.Apis.admin.Directory.directory_v1.Data.SchemaFieldSpec))]
-    public class NewGASchemaFieldSpecObj : PSCmdlet
+    public class NewGASchemaFieldSpecObjCommand : PSCmdlet
     {
         #region Properties
 
@@ -941,9 +950,10 @@ namespace gShell.Cmdlets.Directory
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GAUserObj",
-    SupportsShouldProcess = true)]
+    SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/New-GAUserObj")]
     [OutputType(typeof(Google.Apis.admin.Directory.directory_v1.Data.User))]
-    public class NewGAUserObj : PSCmdlet
+    public class NewGAUserObjCommand : PSCmdlet
     {
         #region Properties
 
@@ -1278,9 +1288,10 @@ namespace gShell.Cmdlets.Directory
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GAUserAddressObj",
-    SupportsShouldProcess = true)]
+    SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/New-GAUserAddressObj")]
     [OutputType(typeof(Google.Apis.admin.Directory.directory_v1.Data.UserAddress))]
-    public class NewGAUserAddressObj : PSCmdlet
+    public class NewGAUserAddressObjCommand : PSCmdlet
     {
         #region Properties
 
@@ -1445,9 +1456,10 @@ namespace gShell.Cmdlets.Directory
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GAUserEmailObj",
-    SupportsShouldProcess = true)]
+    SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/New-GAUserEmailObj")]
     [OutputType(typeof(Google.Apis.admin.Directory.directory_v1.Data.UserEmail))]
-    public class NewGAUserEmailObj : PSCmdlet
+    public class NewGAUserEmailObjCommand : PSCmdlet
     {
         #region Properties
 
@@ -1522,9 +1534,10 @@ namespace gShell.Cmdlets.Directory
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GAUserExternalIdObj",
-    SupportsShouldProcess = true)]
+    SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/New-GAUserExternalIdObj")]
     [OutputType(typeof(Google.Apis.admin.Directory.directory_v1.Data.UserExternalId))]
-    public class NewGAUserExternalIdObj : PSCmdlet
+    public class NewGAUserExternalIdObjCommand : PSCmdlet
     {
         #region Properties
 
@@ -1589,9 +1602,10 @@ namespace gShell.Cmdlets.Directory
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GAUserImObj",
-    SupportsShouldProcess = true)]
+    SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/New-GAUserImObj")]
     [OutputType(typeof(Google.Apis.admin.Directory.directory_v1.Data.UserIm))]
-    public class NewGAUserImObj : PSCmdlet
+    public class NewGAUserImObjCommand : PSCmdlet
     {
         #region Properties
 
@@ -1686,9 +1700,10 @@ namespace gShell.Cmdlets.Directory
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GAUserNameObj",
-    SupportsShouldProcess = true)]
+    SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/New-GAUserNameObj")]
     [OutputType(typeof(Google.Apis.admin.Directory.directory_v1.Data.UserName))]
-    public class NewGAUserNameObj : PSCmdlet
+    public class NewGAUserNameObjCommand : PSCmdlet
     {
         #region Properties
 
@@ -1753,9 +1768,10 @@ namespace gShell.Cmdlets.Directory
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GAUserOrganizationObj",
-    SupportsShouldProcess = true)]
+    SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/New-GAUserOrganizationObj")]
     [OutputType(typeof(Google.Apis.admin.Directory.directory_v1.Data.UserOrganization))]
-    public class NewGAUserOrganizationObj : PSCmdlet
+    public class NewGAUserOrganizationObjCommand : PSCmdlet
     {
         #region Properties
 
@@ -1900,9 +1916,10 @@ namespace gShell.Cmdlets.Directory
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GAUserPhoneObj",
-    SupportsShouldProcess = true)]
+    SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/New-GAUserPhoneObj")]
     [OutputType(typeof(Google.Apis.admin.Directory.directory_v1.Data.UserPhone))]
-    public class NewGAUserPhoneObj : PSCmdlet
+    public class NewGAUserPhoneObjCommand : PSCmdlet
     {
         #region Properties
 
@@ -1977,9 +1994,10 @@ namespace gShell.Cmdlets.Directory
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GAUserRelationObj",
-    SupportsShouldProcess = true)]
+    SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/New-GAUserRelationObj")]
     [OutputType(typeof(Google.Apis.admin.Directory.directory_v1.Data.UserRelation))]
-    public class NewGAUserRelationObj : PSCmdlet
+    public class NewGAUserRelationObjCommand : PSCmdlet
     {
         #region Properties
 
@@ -2044,9 +2062,10 @@ namespace gShell.Cmdlets.Directory
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GAUserWebsiteObj",
-    SupportsShouldProcess = true)]
+    SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/New-GAUserWebsiteObj")]
     [OutputType(typeof(Google.Apis.admin.Directory.directory_v1.Data.UserWebsite))]
-    public class NewGAUserWebsiteObj : PSCmdlet
+    public class NewGAUserWebsiteObjCommand : PSCmdlet
     {
         #region Properties
 
@@ -2131,7 +2150,7 @@ namespace gShell.Cmdlets.Directory.GAAsp
           DefaultParameterSetName = "One",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAAsp")]
-    public class GetGAAsp : DirectoryBase
+    public class GetGAAspCommand : DirectoryBase
     {
         #region Properties
 
@@ -2201,7 +2220,7 @@ namespace gShell.Cmdlets.Directory.GAAsp
     [Cmdlet(VerbsCommon.Remove, "GAAsp",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAAsp")]
-    public class RemoveGAAsp : DirectoryBase
+    public class RemoveGAAspCommand : DirectoryBase
     {
         #region Properties
 
@@ -2284,7 +2303,7 @@ namespace gShell.Cmdlets.Directory.GAChannel
     [Cmdlet(VerbsLifecycle.Stop, "GAChannel",
     SupportsShouldProcess = true,
     HelpUri = @"https://github.com/squid808/gShell/wiki/Stop-GAChannel")]
-    public class StopGAChannel : DirectoryBase
+    public class StopGAChannelCommand : DirectoryBase
     {
         #region Properties
 
@@ -2374,7 +2393,7 @@ namespace gShell.Cmdlets.Directory.GAChromeosdevice
           DefaultParameterSetName = "One",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAChromeosdevice")]
-    public class GetGAChromeosdevice : DirectoryBase
+    public class GetGAChromeosdeviceCommand : DirectoryBase
     {
         #region Properties
 
@@ -2501,7 +2520,7 @@ namespace gShell.Cmdlets.Directory.GAChromeosdevice
     [Cmdlet(VerbsCommon.Set, "GAChromeosdevice",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAChromeosdevice")]
-    public class SetGAChromeosdevice : DirectoryBase
+    public class SetGAChromeosdeviceCommand : DirectoryBase
     {
         #region Properties
         [Parameter(Position = 0,
@@ -3149,7 +3168,7 @@ namespace gShell.Cmdlets.Directory.GAGroup
           DefaultParameterSetName = "OneUser",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAGroup")]
-    public class GetGAGroup : DirectoryBase
+    public class GetGAGroupCommand : DirectoryBase
     {
         #region Properties
 
@@ -3261,7 +3280,7 @@ namespace gShell.Cmdlets.Directory.GAGroup
           DefaultParameterSetName = "PasswordGenerated",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GAGroup")]
-    public class NewGAGroup : DirectoryBase
+    public class NewGAGroupCommand : DirectoryBase
     {
         #region Properties
 
@@ -3341,7 +3360,7 @@ namespace gShell.Cmdlets.Directory.GAGroup
           DefaultParameterSetName = "Email",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAGroup")]
-    public class RemoveGAGroup : DirectoryBase
+    public class RemoveGAGroupCommand : DirectoryBase
     {
         #region Properties
 
@@ -3444,7 +3463,7 @@ namespace gShell.Cmdlets.Directory.GAGroup
     [Cmdlet(VerbsCommon.Set, "GAGroup",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAGroup")]
-    public class SetGAGroup : DirectoryBase
+    public class SetGAGroupCommand : DirectoryBase
     {
         #region Properties
 
@@ -3727,7 +3746,7 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
           DefaultParameterSetName = "OneGroup",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Add-GAGroupMember")]
-    public class AddGAGroupMember : DirectoryBase
+    public class AddGAGroupMemberCommand : DirectoryBase
     {
         #region Properties
 
@@ -3805,7 +3824,7 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
           DefaultParameterSetName = "OneGroup",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAGroupMember")]
-    public class GetGAGroupMember : DirectoryBase
+    public class GetGAGroupMemberCommand : DirectoryBase
     {
         #region Properties
 
@@ -4081,7 +4100,7 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
           DefaultParameterSetName = "OneGroup",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAGroupMember")]
-    public class RemoveGAGroupMember : DirectoryBase
+    public class RemoveGAGroupMemberCommand : DirectoryBase
     {
         #region Properties
 
@@ -4167,7 +4186,7 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
           DefaultParameterSetName = "OneGroup",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAGroupMember")]
-    public class SetGAGroupMember : DirectoryBase
+    public class SetGAGroupMemberCommand : DirectoryBase
     {
         #region Properties
 
@@ -4248,7 +4267,7 @@ namespace gShell.Cmdlets.Directory.GAMobileDevice
         DefaultParameterSetName = "One",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAMobiledevice")]
-    public class GetGAMobiledevice : DirectoryBase
+    public class GetGAMobiledeviceCommand : DirectoryBase
     {
         #region Properties
 
@@ -4377,7 +4396,7 @@ namespace gShell.Cmdlets.Directory.GAMobileDevice
     [Cmdlet(VerbsCommon.Remove, "GAMobiledevice",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAMobiledevice")]
-    public class RemoveGAMobiledevice : DirectoryBase
+    public class RemoveGAMobiledeviceCommand : DirectoryBase
     {
         #region Properties
 
@@ -4460,7 +4479,7 @@ namespace gShell.Cmdlets.Directory.GAMobileDevice
     [Cmdlet(VerbsLifecycle.Invoke, "GAMobiledevice",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Invoke-GAMobiledevice")]
-    public class SetGAMobiledevice : DirectoryBase
+    public class SetGAMobiledeviceCommand : DirectoryBase
     {
         #region Properties
 
@@ -4538,7 +4557,7 @@ namespace gShell.Cmdlets.Directory.GANotification
           DefaultParameterSetName = "One",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GANotification")]
-    public class GetGANotification : DirectoryBase
+    public class GetGANotificationCommand : DirectoryBase
     {
         #region Properties
 
@@ -4632,7 +4651,7 @@ namespace gShell.Cmdlets.Directory.GANotification
     [Cmdlet(VerbsCommon.Remove, "GANotification",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GANotification")]
-    public class RemoveGANotification : DirectoryBase
+    public class RemoveGANotificationCommand : DirectoryBase
     {
         #region Properties
 
@@ -4711,7 +4730,7 @@ namespace gShell.Cmdlets.Directory.GANotification
     [Cmdlet(VerbsCommon.Set, "GANotification",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GANotification")]
-    public class SetGANotification : DirectoryBase
+    public class SetGANotificationCommand : DirectoryBase
     {
         #region Properties
 
@@ -4785,7 +4804,7 @@ namespace gShell.Cmdlets.Directory.GAOrgUnit
           DefaultParameterSetName = "One",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAOrgUnit")]
-    public class GetGAOrgUnit : DirectoryBase
+    public class GetGAOrgUnitCommand : DirectoryBase
     {
         #region Properties
 
@@ -4873,7 +4892,7 @@ namespace gShell.Cmdlets.Directory.GAOrgUnit
     [Cmdlet(VerbsCommon.Remove, "GAOrgUnit",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAOrgUnit")]
-    public class RemoveGAOrgUnit : DirectoryBase
+    public class RemoveGAOrgUnitCommand : DirectoryBase
     {
         #region Properties
 
@@ -4952,7 +4971,7 @@ namespace gShell.Cmdlets.Directory.GAOrgUnit
     [Cmdlet(VerbsCommon.Set, "GAOrgUnit",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAOrgUnit")]
-    public class SetGAOrgUnit : DirectoryBase
+    public class SetGAOrgUnitCommand : DirectoryBase
     {
         #region Properties
 
@@ -5065,7 +5084,7 @@ namespace gShell.Cmdlets.Directory.GAOrgUnit
     [Cmdlet(VerbsCommon.New, "GAOrgUnit",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GAOrgUnit")]
-    public class NewGAOrgUnit : DirectoryBase
+    public class NewGAOrgUnitCommand : DirectoryBase
     {
         #region Properties
         /// <summary>
@@ -5989,7 +6008,7 @@ namespace gShell.Cmdlets.Directory.GASchema
           DefaultParameterSetName = "One",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GASchema")]
-    public class GetGASchema : DirectoryBase
+    public class GetGASchemaCommand : DirectoryBase
     {
         #region Properties
 
@@ -6058,7 +6077,7 @@ namespace gShell.Cmdlets.Directory.GASchema
     [Cmdlet(VerbsCommon.Remove, "GASchema",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GASchema")]
-    public class RemoveGASchema : DirectoryBase
+    public class RemoveGASchemaCommand : DirectoryBase
     {
         #region Properties
 
@@ -6138,7 +6157,7 @@ namespace gShell.Cmdlets.Directory.GASchema
     [Cmdlet(VerbsCommon.Set, "GASchema",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GASchema")]
-    public class SetGASchema : DirectoryBase
+    public class SetGASchemaCommand : DirectoryBase
     {
         #region Properties
 
@@ -6206,7 +6225,7 @@ namespace gShell.Cmdlets.Directory.GASchema
     [Cmdlet(VerbsCommon.New, "GASchema",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Add-GASchema")]
-    public class NewGASchema : DirectoryBase
+    public class NewGASchemaCommand : DirectoryBase
     {
         #region Properties
 
@@ -6254,7 +6273,7 @@ namespace gShell.Cmdlets.Directory.GASchema
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GASchemaField",
           DefaultParameterSetName = "New")]
-    public class NewGASchemaField : PSCmdlet
+    public class NewGASchemaFieldCommand : PSCmdlet
     {
         #region Properties
         [Parameter(Position = 0,
@@ -6346,7 +6365,7 @@ namespace gShell.Cmdlets.Directory.GASchema
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GASchemaFieldCollection",
           DefaultParameterSetName = "New")]
-    public class NewGASchemaFieldCollection : PSCmdlet
+    public class NewGASchemaFieldCollectionCommand : PSCmdlet
     {
         #region Properties
         [Parameter(Position = 0,
@@ -6637,7 +6656,7 @@ namespace gShell.Cmdlets.Directory.GAToken
           DefaultParameterSetName = "One",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAToken")]
-    public class GetGAToken : DirectoryBase
+    public class GetGATokenCommand : DirectoryBase
     {
         #region Properties
 
@@ -6708,7 +6727,7 @@ namespace gShell.Cmdlets.Directory.GAToken
     [Cmdlet(VerbsCommon.Remove, "GAToken",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAToken")]
-    public class RemoveGAToken : DirectoryBase
+    public class RemoveGATokenCommand : DirectoryBase
     {
         #region Properties
 
@@ -6803,7 +6822,7 @@ namespace gShell.Cmdlets.Directory.GAUser
           DefaultParameterSetName = "OneUser",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAUser")]
-    public class GetGAUser : DirectoryBase
+    public class GetGAUserCommand : DirectoryBase
     {
         #region Properties
 
@@ -7024,7 +7043,7 @@ namespace gShell.Cmdlets.Directory.GAUser
           DefaultParameterSetName = "PasswordGenerated",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GAUser")]
-    public class NewGAUser : DirectoryBase
+    public class NewGAUserCommand : DirectoryBase
     {
         #region Properties
 
@@ -7238,7 +7257,7 @@ namespace gShell.Cmdlets.Directory.GAUser
         DefaultParameterSetName = "UserKey",
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAUser")]
-    public class RemoveGAUser : DirectoryBase
+    public class RemoveGAUserCommand : DirectoryBase
     {
         #region Properties
 
@@ -7339,7 +7358,7 @@ namespace gShell.Cmdlets.Directory.GAUser
     [Cmdlet(VerbsData.Restore, "GAUser",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Restore-GAUser")]
-    public class RestoreGAUser : DirectoryBase
+    public class RestoreGAUserCommand : DirectoryBase
     {
         #region Properties
 
@@ -7407,7 +7426,7 @@ namespace gShell.Cmdlets.Directory.GAUser
           DefaultParameterSetName = "NoPasswordProvided",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAUser")]
-    public class SetGAUser : DirectoryBase
+    public class SetGAUserCommand : DirectoryBase
     {
         #region Properties
 
@@ -7670,7 +7689,7 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
           DefaultParameterSetName = "OneUser",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAUserAlias")]
-    public class GetGAUserAlias : DirectoryBase
+    public class GetGAUserAliasCommand : DirectoryBase
     {
         #region Properties
 
@@ -7821,7 +7840,7 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
           DefaultParameterSetName = "PasswordGenerated",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GAUserAlias")]
-    public class NewGAUserAlias : DirectoryBase
+    public class NewGAUserAliasCommand : DirectoryBase
     {
         #region Properties
 
@@ -7879,7 +7898,7 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
     [Cmdlet(VerbsCommon.Remove, "GAUserAlias",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAUserAlias")]
-    public class RemoveGAUserAlias : DirectoryBase
+    public class RemoveGAUserAliasCommand : DirectoryBase
     {
         #region Properties
 
@@ -7972,7 +7991,7 @@ namespace gShell.Cmdlets.Directory.GAUserPhoto
     [Cmdlet(VerbsCommon.Get, "GAUserPhoto",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAUserPhoto")]
-    public class GetGAUserPhoto : DirectoryBase
+    public class GetGAUserPhotoCommand : DirectoryBase
     {
         #region Properties
 
@@ -8052,7 +8071,7 @@ namespace gShell.Cmdlets.Directory.GAUserPhoto
     [Cmdlet(VerbsCommon.Remove, "GAUserPhoto",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAUserPhoto")]
-    public class RemoveGAUserPhoto : DirectoryBase
+    public class RemoveGAUserPhotoCommand : DirectoryBase
     {
         #region Properties
 
@@ -8124,7 +8143,7 @@ namespace gShell.Cmdlets.Directory.GAUserPhoto
     [Cmdlet(VerbsCommon.Set, "GAUserPhoto",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAUserPhoto")]
-    public class SetGAUserPhoto : DirectoryBase
+    public class SetGAUserPhotoCommand : DirectoryBase
     {
         #region Properties
 
@@ -8218,7 +8237,7 @@ namespace gShell.Cmdlets.Directory.GAUserPhoto
 //todo: refactor?
 namespace gShell.Cmdlets.Directory.GAUserProperty
 {
-    public class GAUserPropertyBase : DirectoryBase
+    public class GAUserPropertyBaseCommand : DirectoryBase
     {
         #region Properties
 
@@ -9097,7 +9116,7 @@ namespace gShell.Cmdlets.Directory.GAUserProperty
     [Cmdlet(VerbsCommon.New, "GAUserProperty",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GAUserProperty")]
-    public class NewGAUserProperty : PSCmdlet, IDynamicParameters
+    public class NewGAUserPropertyCommand : PSCmdlet, IDynamicParameters
     {
         #region Properties
 
@@ -9740,7 +9759,7 @@ namespace gShell.Cmdlets.Directory.GAUserProperty
     [Cmdlet(VerbsCommon.New, "GAUserPropertyCollection",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GAUserPropertyCollection")]
-    public class NewGAUserPropertyCollection : PSCmdlet
+    public class NewGAUserPropertyCollectionCommand : PSCmdlet
     {
 
         protected override void ProcessRecord()
@@ -10041,7 +10060,7 @@ namespace gShell.Cmdlets.Directory.GAVerificationCode
     [Cmdlet(VerbsCommon.Get, "GAVerificationCode",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAVerificationCode")]
-    public class GetGAVerificationCode : DirectoryBase
+    public class GetGAVerificationCodeCommand : DirectoryBase
     {
         #region Properties
 
@@ -10085,7 +10104,7 @@ namespace gShell.Cmdlets.Directory.GAVerificationCode
     [Cmdlet(VerbsSecurity.Revoke, "GAVerificationCode",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Revoke-GAVerificationCode")]
-    public class RemoveGAVerificationCode : DirectoryBase
+    public class RemoveGAVerificationCodeCommand : DirectoryBase
     {
         #region Properties
 
@@ -10155,7 +10174,7 @@ namespace gShell.Cmdlets.Directory.GAVerificationCode
     [Cmdlet(VerbsCommon.New, "GAVerificationCode",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GAVerificationCode")]
-    public class NewGAVerificationCode : DirectoryBase
+    public class NewGAVerificationCodeCommand : DirectoryBase
     {
         #region Properties
 

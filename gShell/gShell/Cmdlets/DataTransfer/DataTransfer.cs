@@ -78,9 +78,10 @@ namespace gShell.Cmdlets.DataTransfer
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDataTransferApplicationDataObj",
-        SupportsShouldProcess = true)]
+        SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/New-GDataTransferApplicationDataObj")]
     [OutputType(typeof(ApplicationDataTransfer))]
-    public class NewGDataTransferApplicationDataObj : PSCmdlet
+    public class NewGDataTransferApplicationDataObjCommand : PSCmdlet
     {
         #region Properties
 
@@ -149,9 +150,10 @@ namespace gShell.Cmdlets.DataTransfer
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDataTransferDataObj",
-        SupportsShouldProcess = true)]
+        SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/New-GDataTransferDataObj")]
     [OutputType(typeof(Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer))]
-    public class NewGDataTransferDataObj : PSCmdlet
+    public class NewGDataTransferDataObjCommand : PSCmdlet
     {
         #region Properties
 
@@ -248,9 +250,10 @@ namespace gShell.Cmdlets.DataTransfer
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDataTransferApplicationObj",
-        SupportsShouldProcess = true)]
+        SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/New-GDataTransferApplicationObj")]
     [OutputType(typeof(Application))]
-    public class NewGDataTransferApplicationObj : PSCmdlet
+    public class NewGDataTransferApplicationObjCommand : PSCmdlet
     {
         #region Properties
 
@@ -317,9 +320,10 @@ namespace gShell.Cmdlets.DataTransfer
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GDataTransferApplicationParamObj",
-        SupportsShouldProcess = true)]
+        SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/New-GDataTransferApplicationParamObj")]
     [OutputType(typeof(ApplicationTransferParam))]
-    public class NewGDataTransferApplicationParamObj : PSCmdlet
+    public class NewGDataTransferApplicationParamObjCommand : PSCmdlet
     {
         #region Properties
 

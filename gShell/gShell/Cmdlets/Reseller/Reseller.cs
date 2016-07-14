@@ -24,9 +24,10 @@ namespace gShell.Cmdlets.Reseller
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GResellerCustomerObj",
-    SupportsShouldProcess = true)]
+    SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/New-GResellerCustomerObj")]
     [OutputType(typeof(Google.Apis.Reseller.v1.Data.Customer))]
-    public class NewGResellerCustomerObj : PSCmdlet
+    public class NewGResellerCustomerObjCommand : PSCmdlet
     {
         #region Properties
 
@@ -131,9 +132,10 @@ namespace gShell.Cmdlets.Reseller
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GResellerSubscriptionPlanDataObj",
-    SupportsShouldProcess = true)]
+    SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/New-GResellerSubscription.PlanDataObj")]
     [OutputType(typeof(Google.Apis.Reseller.v1.Data.Subscription.PlanData))]
-    public class NewGResellerSubscriptionPlanDataObj : PSCmdlet
+    public class NewGResellerSubscriptionPlanDataObjCommand : PSCmdlet
     {
         #region Properties
 
@@ -198,9 +200,10 @@ namespace gShell.Cmdlets.Reseller
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GResellerSubscriptionObj",
-    SupportsShouldProcess = true)]
+    SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/New-GResellerSubscriptionObj")]
     [OutputType(typeof(Google.Apis.Reseller.v1.Data.Subscription))]
-    public class NewGResellerSubscriptionObj : PSCmdlet
+    public class NewGResellerSubscriptionObjCommand : PSCmdlet
     {
         #region Properties
 
@@ -390,13 +393,14 @@ namespace gShell.Cmdlets.Reseller
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GResellerSubscription.TransferInfoDataObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GResellerSubscriptionTransferInfoDataObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GResellerSubscriptionTransferInfoDataObj",
-    SupportsShouldProcess = true)]
+    SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/New-GResellerSubscriptionTransferInfoDataObj")]
     [OutputType(typeof(Google.Apis.Reseller.v1.Data.Subscription.TransferInfoData))]
-    public class NewGResellerSubscriptionTransferInfoDataObj : PSCmdlet
+    public class NewGResellerSubscriptionTransferInfoDataObjCommand : PSCmdlet
     {
         #region Properties
 
@@ -450,9 +454,10 @@ namespace gShell.Cmdlets.Reseller
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GResellerRenewalSettingsObj",
-    SupportsShouldProcess = true)]
+    SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/New-GResellerRenewalSettingsObj")]
     [OutputType(typeof(Google.Apis.Reseller.v1.Data.RenewalSettings))]
-    public class NewGResellerRenewalSettingsObj : PSCmdlet
+    public class NewGResellerRenewalSettingsObjCommand : PSCmdlet
     {
         #region Properties
 
@@ -497,9 +502,10 @@ namespace gShell.Cmdlets.Reseller
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GResellerSubscriptionTrialSettingsDataObj",
-    SupportsShouldProcess = true)]
+    SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/New-GResellerSubscription.TrialSettingsDataObj")]
     [OutputType(typeof(Google.Apis.Reseller.v1.Data.Subscription.TrialSettingsData))]
-    public class NewGResellerSubscriptionTrialSettingsDataObj : PSCmdlet
+    public class NewGResellerSubscriptionTrialSettingsDataObjCommand : PSCmdlet
     {
         #region Properties
 
@@ -554,9 +560,10 @@ namespace gShell.Cmdlets.Reseller
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GResellerSeatsObj",
-    SupportsShouldProcess = true)]
+    SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/New-GResellerSeatsObj")]
     [OutputType(typeof(Google.Apis.Reseller.v1.Data.Seats))]
-    public class NewGResellerSeatsObj : PSCmdlet
+    public class NewGResellerSeatsObjCommand : PSCmdlet
     {
         #region Properties
 
@@ -626,7 +633,7 @@ namespace gShell.Cmdlets.Reseller.Customers
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GResellerCustomer",
           DefaultParameterSetName = "Params")]
-    public class GetGResellerCustomer : ResellerBase
+    public class GetGResellerCustomerCommand : ResellerBase
     {
         #region Properties
 
@@ -669,7 +676,7 @@ namespace gShell.Cmdlets.Reseller.Customers
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GResellerCustomer",
           DefaultParameterSetName = "Params")]
-    public class SetGResellerCustomer : ResellerBase
+    public class SetGResellerCustomerCommand : ResellerBase
     {
         #region Properties
 
@@ -901,7 +908,7 @@ namespace gShell.Cmdlets.Reseller.Customers
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GResellerCustomer",
           DefaultParameterSetName = "Params")]
-    public class NewGResellerCustomer : ResellerBase
+    public class NewGResellerCustomerCommand : ResellerBase
     {
         #region Properties
         /// <summary>
@@ -1148,7 +1155,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
     [Cmdlet(VerbsLifecycle.Enable, "GResellerSubscription",
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Enable-GResellerSubscription")]
-    public class EnableGResellerSubscription : ResellerBase
+    public class EnableGResellerSubscriptionCommand : ResellerBase
     {
         #region Properties
 
@@ -1199,7 +1206,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
     [Cmdlet(VerbsCommon.Set, "GResellerSubscriptionPlan",
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GResellerSubscriptionPlan")]
-    public class SetGResellerSubscriptionPlan : ResellerBase
+    public class SetGResellerSubscriptionPlanCommand : ResellerBase
     {
         public enum PlanNameEnum
         {
@@ -1327,7 +1334,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
     [Cmdlet(VerbsCommon.Set, "GResellerSubscriptionRenewal",
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GResellerSubscriptionRenewal")]
-    public class SetGResellerSubscriptionRenewal : ResellerBase
+    public class SetGResellerSubscriptionRenewalCommand : ResellerBase
     {
         public enum RenewalTypeEnum
         {
@@ -1400,7 +1407,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
     [Cmdlet(VerbsCommon.Set, "GResellerSubscriptionSeats",
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GResellerSubscriptionSeats")]
-    public class SetGResellerSubscriptionSeats : ResellerBase
+    public class SetGResellerSubscriptionSeatsCommand : ResellerBase
     {
         #region Properties
 
@@ -1477,7 +1484,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
     [Cmdlet(VerbsCommon.Remove, "GResellerSubscription",
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GResellerSubscription")]
-    public class RemoveGResellerSubscription : ResellerBase
+    public class RemoveGResellerSubscriptionCommand : ResellerBase
     {
         #region Properties
 
@@ -1543,7 +1550,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GResellerSubscription",
           DefaultParameterSetName="one")]
-    public class GetGResellerSubscription : ResellerBase
+    public class GetGResellerSubscriptionCommand : ResellerBase
     {
         #region Properties
 
@@ -1654,7 +1661,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
     [Cmdlet(VerbsCommon.New, "GResellerSubscription",
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GResellerSubscription")]
-    public class NewGResellerSubscription : ResellerBase
+    public class NewGResellerSubscriptionCommand : ResellerBase
     {
         public enum StatusEnum
         {
@@ -1974,7 +1981,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
     [Cmdlet(VerbsLifecycle.Start, "GResellerSubscriptionPaidService",
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Start-GResellerSubscriptionPaidService")]
-    public class StartGResellerSubscriptionPaidService : ResellerBase
+    public class StartGResellerSubscriptionPaidServiceCommand : ResellerBase
     {
         #region Properties
 
@@ -2026,7 +2033,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
     [Cmdlet(VerbsLifecycle.Suspend, "GResellerSubscription",
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Suspend-GResellerSubscription")]
-    public class SuspendGResellerSubscription : ResellerBase
+    public class SuspendGResellerSubscriptionCommand : ResellerBase
     {
         #region Properties
 

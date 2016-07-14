@@ -36,7 +36,7 @@ namespace gShell.Cmdlets.Licensing
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GLicenseAssignment",
           DefaultParameterSetName = "one")]
-    public class GetGLicenseAssignment : LicensingBase
+    public class GetGLicenseAssignmentCommand : LicensingBase
     {
         #region Properties
 
@@ -190,7 +190,7 @@ namespace gShell.Cmdlets.Licensing
     [Cmdlet(VerbsCommon.Set, "GLicenseAssignment",
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GLicenseAssignment")]
-    public class SetGLicenseAssignment : LicensingBase
+    public class SetGLicenseAssignmentCommand : LicensingBase
     {
         #region Properties
 
@@ -293,7 +293,7 @@ namespace gShell.Cmdlets.Licensing
     [Cmdlet(VerbsCommon.New, "GLicenseAssignment",
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GLicenseAssignment")]
-    public class NewGLicenseAssignment : LicensingBase
+    public class NewGLicenseAssignmentCommand : LicensingBase
     {
         #region Properties
 
@@ -356,7 +356,7 @@ namespace gShell.Cmdlets.Licensing
     [Cmdlet(VerbsCommon.Remove, "GLicenseAssignment",
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GLicenseAssignment")]
-    public class RemoveGLicenseAssignment : LicensingBase
+    public class RemoveGLicenseAssignmentCommand : LicensingBase
     {
         #region Properties
 

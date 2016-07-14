@@ -27,9 +27,10 @@ namespace gShell.Cmdlets.Reports
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.New, "GReportsChannelObj",
-    SupportsShouldProcess = true)]
+    SupportsShouldProcess = true,
+        HelpUri = @"https://github.com/squid808/gShell/wiki/New-GRepChannelObj")]
     [OutputType(typeof(Google.Apis.admin.Reports.reports_v1.Data.Channel))]
-    public class NewGReportsChannelObj : PSCmdlet
+    public class NewGReportsChannelObjCommand : PSCmdlet
     {
         #region Properties
 
@@ -158,7 +159,7 @@ namespace gShell.Cmdlets.Reports.GRepUserUsageReport
           DefaultParameterSetName = "datetime",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GRepUserUsageReport")]
-    public class GetGRepUserUsageReport : ReportsBase
+    public class GetGRepUserUsageReportCommand : ReportsBase
     {
         #region Properties
 
@@ -278,7 +279,7 @@ namespace gShell.Cmdlets.Reports.GRepCustomerUsageReport
           DefaultParameterSetName = "datetime",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GRepCustomerUsageReport")]
-    public class GetGRepCustomerUsageReport : ReportsBase
+    public class GetGRepCustomerUsageReportCommand : ReportsBase
     {
         #region Properties
 
@@ -381,7 +382,7 @@ namespace gShell.Cmdlets.Reports.GRepChannel
     [Cmdlet(VerbsLifecycle.Stop, "GRepChannel",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Stop-GRepChannel")]
-    public class StopGRepChannel : ReportsBase
+    public class StopGRepChannelCommand : ReportsBase
     {
         #region Properties
 
@@ -467,7 +468,7 @@ namespace gShell.Cmdlets.Reports.GRepActivity
         DefaultParameterSetName = "Params",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Watch-GRepActivity")]
-    public class WatchGRepActivity : ReportsBase
+    public class WatchGRepActivityCommand : ReportsBase
     {
         #region Properties
 
@@ -648,7 +649,7 @@ namespace gShell.Cmdlets.Reports.GRepActivity
           DefaultParameterSetName = "datetime",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GRepActivity")]
-    public class GetGRepActivity : ReportsBase
+    public class GetGRepActivityCommand : ReportsBase
     {
         #region Properties
 

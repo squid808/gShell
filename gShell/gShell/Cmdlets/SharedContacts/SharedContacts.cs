@@ -27,7 +27,7 @@ namespace gShell.Cmdlets.Sharedcontacts
     [Cmdlet(VerbsCommon.New, "GSharedContactEmailObj",
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GSharedContactEmailObj")]
-    public class NewGSharedContactEmailObj : PSCmdlet
+    public class NewGSharedContactEmailObjCommand : PSCmdlet
     {
         public enum EmailRelEnum
         {
@@ -118,7 +118,7 @@ namespace gShell.Cmdlets.Sharedcontacts
     [Cmdlet(VerbsCommon.New, "GSharedContactExtendedPropertyObj",
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GSharedContactExtendedPropertyObj")]
-    public class NewGSharedContactExtendedPropertyObj : PSCmdlet
+    public class NewGSharedContactExtendedPropertyObjCommand : PSCmdlet
     {
         #region Properties
         /// <summary>
@@ -181,7 +181,7 @@ namespace gShell.Cmdlets.Sharedcontacts
     [Cmdlet(VerbsCommon.New, "GSharedContactImObj",
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GSharedContactImObj")]
-    public class NewGSharedContactImObj : PSCmdlet
+    public class NewGSharedContactImObjCommand : PSCmdlet
     {
         public enum ImRelEnum
         {
@@ -276,7 +276,7 @@ namespace gShell.Cmdlets.Sharedcontacts
     [Cmdlet(VerbsCommon.New, "GSharedContactNameObj",
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GSharedContactNameObj")]
-    public class NewGSharedContactNameObj : PSCmdlet
+    public class NewGSharedContactNameObjCommand : PSCmdlet
     {
         #region Properties
         /// <summary>
@@ -380,7 +380,7 @@ namespace gShell.Cmdlets.Sharedcontacts
     [Cmdlet(VerbsCommon.New, "GSharedContactOrgObj",
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GSharedContactOrgObj")]
-    public class NewGSharedContactOrgObj : PSCmdlet
+    public class NewGSharedContactOrgObjCommand : PSCmdlet
     {
         public enum OrgRelEnum { other, work }
 
@@ -513,7 +513,7 @@ namespace gShell.Cmdlets.Sharedcontacts
     [Cmdlet(VerbsCommon.New, "GSharedContactPhoneNumberObj",
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GSharedContactPhoneNumberObj")]
-    public class NewGSharedContactPhoneNumberObj : PSCmdlet
+    public class NewGSharedContactPhoneNumberObjCommand : PSCmdlet
     {
         public enum PhoneNumberRelEnum
         {
@@ -603,7 +603,7 @@ namespace gShell.Cmdlets.Sharedcontacts
     [Cmdlet(VerbsCommon.New, "GSharedContactPostalAddressObj",
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GSharedContactPostalAddressObj")]
-    public class NewGSharedContactPostalAddressObj : PSCmdlet
+    public class NewGSharedContactPostalAddressObjCommand : PSCmdlet
     {
         /// <summary>Type of the address.</summary>
         public enum PostalRelEnum
@@ -824,7 +824,7 @@ namespace gShell.Cmdlets.Sharedcontacts
     [Cmdlet(VerbsCommon.New, "GSharedContactWhereObj",
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GSharedContactWhereObj")]
-    public class NewGSharedContactWhereObj : PSCmdlet
+    public class NewGSharedContactWhereObjCommand : PSCmdlet
     {
         public enum WhereRelEnum { @event, alternate, parking }
 
@@ -914,7 +914,7 @@ namespace gShell.Cmdlets.Sharedcontacts
     [Cmdlet(VerbsCommon.New, "GSharedContactEntryLinkObj",
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GSharedContactEntryLinkObj")]
-    public class NewGSharedContactEntryLinkObj : PSCmdlet
+    public class NewGSharedContactEntryLinkObjCommand : PSCmdlet
     {
         #region Properties
         /// <summary>

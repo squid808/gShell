@@ -31,7 +31,7 @@ namespace gShell.Cmdlets.GroupsMigration
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GGroupsMigration",
           DefaultParameterSetName = "NoUpload")]
-    public class NewGGroupsMigration : GroupsMigrationBase
+    public class NewGGroupsMigrationCommand : GroupsMigrationBase
     {
         #region Properties
 
