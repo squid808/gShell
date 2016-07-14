@@ -138,9 +138,7 @@
     <Compile Include="Cmdlets\GroupsMigration\GroupsMigration.cs" />
     <Compile Include="Cmdlets\GroupsSettings\GroupsSettings.cs" />
     <Compile Include="Cmdlets\Licensing\Licensing.cs" />
-    <Compile Include="Cmdlets\Reports\Enums.cs" />
     <Compile Include="Cmdlets\Reports\Reports.cs" />
-    <Compile Include="Cmdlets\Reports\ReportsBase.cs" />
     <Compile Include="Cmdlets\Reseller\Reseller.cs" />
     <Compile Include="Cmdlets\SharedContacts\SharedContacts.cs" />
     <Compile Include="dotNet\Adminsettings\Google.Apis.admin.Adminsettings.adminsettings_v1.cs" />
@@ -185,7 +183,6 @@
     <Compile Include="dotNet\ServiceWrapper.cs" />
     <Compile Include="dotNet\Utilities\MemoryObjectDataStore.cs" />
     <Compile Include="Cmdlets\Utilities\GshellSavedDomain\GshellDomain.cs" />
-    <Compile Include="Cmdlets\Directory\DirectoryBase.cs" />
     <Compile Include="Cmdlets\Utilities\OAuth2\OAuth2CmdletBase.cs" />
     <Compile Include="dotNet\Utilities\OAuth2\OAuth2Info.cs" />
     <Compile Include="dotNet\Utilities\OAuth2\OAuth2InfoConsumer.cs" />
