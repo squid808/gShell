@@ -54,6 +54,1761 @@ namespace gShell.Cmdlets.Calendar
         }
     }
 
+    /// <summary>
+    /// <para type="synopsis">Creates a new Calendar API AclRule object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a AclRule object which may be required as a parameter for some other Cmdlets in the Calendar API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Calendar.v3.Data.AclRule</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GCalendarAclRuleObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GCalendarAclRuleObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GCalendarAclRuleObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GCalendarAclRuleObj")]
+    [OutputType(typeof(Google.Apis.Calendar.v3.Data.AclRule))]
+    public class NewGCalendarAclRuleObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">Identifier of the ACL rule.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Identifier of the ACL rule.")]
+        public string Id { get; set; }
+
+        /// <summary>
+        /// <para type="description">The role assigned to the scope. Possible values are:- "none" - Provides no access.- "freeBusyReader" - Provides read access to free/busy information.- "reader" - Provides read access to the calendar. Private events will appear to users with reader access, but event details will be hidden.- "writer" - Provides read and write access to the calendar. Private events will appear to users with writer access, and event details will be visible.- "owner" - Provides ownership of the calendar. This role has all of the permissions of the writer role with the additional ability to see and manipulate ACLs.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The role assigned to the scope. Possible values are:  \n- \"none\" - Provides no access. \n- \"freeBusyReader\" - Provides read access to free/busy information. \n- \"reader\" - Provides read access to the calendar. Private events will appear to users with reader access, but event details will be hidden. \n- \"writer\" - Provides read and write access to the calendar. Private events will appear to users with writer access, and event details will be visible. \n- \"owner\" - Provides ownership of the calendar. This role has all of the permissions of the writer role with the additional ability to see and manipulate ACLs.")]
+        public string Role { get; set; }
+
+        /// <summary>
+        /// <para type="description">The scope of the rule.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The scope of the rule.")]
+        public AclRule.ScopeData Scope { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Calendar.v3.Data.AclRule()
+            {
+                Id = this.Id,
+                Role = this.Role,
+                Scope = this.Scope,
+            };
+
+            if (ShouldProcess("AclRule"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Calendar API AclRule.ScopeData object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a AclRule.ScopeData object which may be required as a parameter for some other Cmdlets in the Calendar API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Calendar.v3.Data.AclRule.ScopeData</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GCalendarAclRuleScopeDataObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GCalendarAclRule.ScopeDataObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GCalendarAclRuleScopeDataObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GCalendarAclRule.ScopeDataObj")]
+    [OutputType(typeof(Google.Apis.Calendar.v3.Data.AclRule.ScopeData))]
+    public class NewGCalendarAclRuleScopeDataObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">The type of the scope. Possible values are:- "default" - The public scope. This is the default value.- "user" - Limits the scope to a single user.- "group" - Limits the scope to a group.- "domain" - Limits the scope to a domain.  Note: The permissions granted to the "default", or public, scope apply to any user, authenticated or not.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The type of the scope. Possible values are:  \n- \"default\" - The public scope. This is the default value. \n- \"user\" - Limits the scope to a single user. \n- \"group\" - Limits the scope to a group. \n- \"domain\" - Limits the scope to a domain.  Note: The permissions granted to the \"default\", or public, scope apply to any user, authenticated or not.")]
+        public string Type { get; set; }
+
+        /// <summary>
+        /// <para type="description">The email address of a user or group, or the name of a domain, depending on the scope type. Omitted for type "default".</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The email address of a user or group, or the name of a domain, depending on the scope type. Omitted for type \"default\".")]
+        public string Value { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Calendar.v3.Data.AclRule.ScopeData()
+            {
+                Type = this.Type,
+                Value = this.Value,
+            };
+
+            if (ShouldProcess("AclRule.ScopeData"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Calendar API Channel object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a Channel object which may be required as a parameter for some other Cmdlets in the Calendar API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Calendar.v3.Data.Channel</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GCalendarChannelObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GCalendarChannelObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GCalendarChannelObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GCalendarChannelObj")]
+    [OutputType(typeof(Google.Apis.Calendar.v3.Data.Channel))]
+    public class NewGCalendarChannelObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">The address where notifications are delivered for this channel.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The address where notifications are delivered for this channel.")]
+        public string Address { get; set; }
+
+        /// <summary>
+        /// <para type="description">Date and time of notification channel expiration, expressed as a Unix timestamp, in milliseconds. Optional.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Date and time of notification channel expiration, expressed as a Unix timestamp, in milliseconds. Optional.")]
+        public System.Nullable<long> Expiration { get; set; }
+
+        /// <summary>
+        /// <para type="description">A UUID or similar unique string that identifies this channel.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "A UUID or similar unique string that identifies this channel.")]
+        public string Id { get; set; }
+
+        /// <summary>
+        /// <para type="description">Additional parameters controlling delivery channel behavior. Optional.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Additional parameters controlling delivery channel behavior. Optional.")]
+        public System.Collections.Generic.IDictionary<string, string> Params__ { get; set; }
+
+        /// <summary>
+        /// <para type="description">A Boolean value to indicate whether payload is wanted. Optional.</para>
+        /// </summary>
+        [Parameter(Position = 4,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "A Boolean value to indicate whether payload is wanted. Optional.")]
+        public System.Nullable<bool> Payload { get; set; }
+
+        /// <summary>
+        /// <para type="description">An opaque ID that identifies the resource being watched on this channel. Stable across different API versions.</para>
+        /// </summary>
+        [Parameter(Position = 5,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "An opaque ID that identifies the resource being watched on this channel. Stable across different API versions.")]
+        public string ResourceId { get; set; }
+
+        /// <summary>
+        /// <para type="description">A version-specific identifier for the watched resource.</para>
+        /// </summary>
+        [Parameter(Position = 6,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "A version-specific identifier for the watched resource.")]
+        public string ResourceUri { get; set; }
+
+        /// <summary>
+        /// <para type="description">An arbitrary string delivered to the target address with each notification delivered over this channel. Optional.</para>
+        /// </summary>
+        [Parameter(Position = 7,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "An arbitrary string delivered to the target address with each notification delivered over this channel. Optional.")]
+        public string Token { get; set; }
+
+        /// <summary>
+        /// <para type="description">The type of delivery mechanism used for this channel.</para>
+        /// </summary>
+        [Parameter(Position = 8,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The type of delivery mechanism used for this channel.")]
+        public string Type { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Calendar.v3.Data.Channel()
+            {
+                Address = this.Address,
+                Expiration = this.Expiration,
+                Id = this.Id,
+                Params__ = this.Params__,
+                Payload = this.Payload,
+                ResourceId = this.ResourceId,
+                ResourceUri = this.ResourceUri,
+                Token = this.Token,
+                Type = this.Type,
+            };
+
+            if (ShouldProcess("Channel"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+    
+    /// <summary>
+    /// <para type="synopsis">Creates a new Calendar API Calendar object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a Calendar object which may be required as a parameter for some other Cmdlets in the Calendar API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Calendar.v3.Data.Calendar</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GCalendarCalendarObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GCalendarCalendarObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GCalendarCalendarObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GCalendarCalendarObj")]
+    [OutputType(typeof(Google.Apis.Calendar.v3.Data.Calendar))]
+    public class NewGCalendarCalendarObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">Description of the calendar. Optional.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Description of the calendar. Optional.")]
+        public string Description { get; set; }
+
+        /// <summary>
+        /// <para type="description">Identifier of the calendar. To retrieve IDs call the calendarList.list() method.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Identifier of the calendar. To retrieve IDs call the calendarList.list() method.")]
+        public string Id { get; set; }
+
+        /// <summary>
+        /// <para type="description">Geographic location of the calendar as free-form text. Optional.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Geographic location of the calendar as free-form text. Optional.")]
+        public string Location { get; set; }
+
+        /// <summary>
+        /// <para type="description">Title of the calendar.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Title of the calendar.")]
+        public string Summary { get; set; }
+
+        /// <summary>
+        /// <para type="description">The time zone of the calendar. (Formatted as an IANA Time Zone Database name, e.g. "Europe/Zurich".) Optional.</para>
+        /// </summary>
+        [Parameter(Position = 4,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The time zone of the calendar. (Formatted as an IANA Time Zone Database name, e.g. \"Europe/Zurich\".) Optional.")]
+        public string TimeZone { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Calendar.v3.Data.Calendar()
+            {
+                Description = this.Description,
+                Id = this.Id,
+                Location = this.Location,
+                Summary = this.Summary,
+                TimeZone = this.TimeZone,
+            };
+
+            if (ShouldProcess("Calendar"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Calendar API CalendarListEntry object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a CalendarListEntry object which may be required as a parameter for some other Cmdlets in the Calendar API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Calendar.v3.Data.CalendarListEntry</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GCalendarCalendarListEntryObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GCalendarCalendarListEntryObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GCalendarCalendarListEntryObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GCalendarCalendarListEntryObj")]
+    [OutputType(typeof(Google.Apis.Calendar.v3.Data.CalendarListEntry))]
+    public class NewGCalendarCalendarListEntryObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">The effective access role that the authenticated user has on the calendar. Read-only. Possible values are:- "freeBusyReader" - Provides read access to free/busy information.- "reader" - Provides read access to the calendar. Private events will appear to users with reader access, but event details will be hidden.- "writer" - Provides read and write access to the calendar. Private events will appear to users with writer access, and event details will be visible.- "owner" - Provides ownership of the calendar. This role has all of the permissions of the writer role with the additional ability to see and manipulate ACLs.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The effective access role that the authenticated user has on the calendar. Read-only. Possible values are:  \n- \"freeBusyReader\" - Provides read access to free/busy information. \n- \"reader\" - Provides read access to the calendar. Private events will appear to users with reader access, but event details will be hidden. \n- \"writer\" - Provides read and write access to the calendar. Private events will appear to users with writer access, and event details will be visible. \n- \"owner\" - Provides ownership of the calendar. This role has all of the permissions of the writer role with the additional ability to see and manipulate ACLs.")]
+        public string AccessRole { get; set; }
+
+        /// <summary>
+        /// <para type="description">The main color of the calendar in the hexadecimal format "#0088aa". This property supersedes the index-based colorId property. To set or change this property, you need to specify colorRgbFormat=true in the parameters of the insert, update and patch methods. Optional.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The main color of the calendar in the hexadecimal format \"#0088aa\". This property supersedes the index-based colorId property. To set or change this property, you need to specify colorRgbFormat=true in the parameters of the insert, update and patch methods. Optional.")]
+        public string BackgroundColor { get; set; }
+
+        /// <summary>
+        /// <para type="description">The color of the calendar. This is an ID referring to an entry in the calendar section of the colors definition (see the colors endpoint). This property is superseded by the backgroundColor and foregroundColor properties and can be ignored when using these properties. Optional.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The color of the calendar. This is an ID referring to an entry in the calendar section of the colors definition (see the colors endpoint). This property is superseded by the backgroundColor and foregroundColor properties and can be ignored when using these properties. Optional.")]
+        public string ColorId { get; set; }
+
+        /// <summary>
+        /// <para type="description">The default reminders that the authenticated user has for this calendar.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The default reminders that the authenticated user has for this calendar.")]
+        public System.Collections.Generic.IList<EventReminder> DefaultReminders { get; set; }
+
+        /// <summary>
+        /// <para type="description">Whether this calendar list entry has been deleted from the calendar list. Read-only. Optional. The default is False.</para>
+        /// </summary>
+        [Parameter(Position = 4,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Whether this calendar list entry has been deleted from the calendar list. Read-only. Optional. The default is False.")]
+        public System.Nullable<bool> Deleted { get; set; }
+
+        /// <summary>
+        /// <para type="description">Description of the calendar. Optional. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 5,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Description of the calendar. Optional. Read-only.")]
+        public string Description { get; set; }
+
+        /// <summary>
+        /// <para type="description">The foreground color of the calendar in the hexadecimal format "#ffffff". This property supersedes the index-based colorId property. To set or change this property, you need to specify colorRgbFormat=true in the parameters of the insert, update and patch methods. Optional.</para>
+        /// </summary>
+        [Parameter(Position = 6,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The foreground color of the calendar in the hexadecimal format \"#ffffff\". This property supersedes the index-based colorId property. To set or change this property, you need to specify colorRgbFormat=true in the parameters of the insert, update and patch methods. Optional.")]
+        public string ForegroundColor { get; set; }
+
+        /// <summary>
+        /// <para type="description">Whether the calendar has been hidden from the list. Optional. The default is False.</para>
+        /// </summary>
+        [Parameter(Position = 7,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Whether the calendar has been hidden from the list. Optional. The default is False.")]
+        public System.Nullable<bool> Hidden { get; set; }
+
+        /// <summary>
+        /// <para type="description">Identifier of the calendar.</para>
+        /// </summary>
+        [Parameter(Position = 8,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Identifier of the calendar.")]
+        public string Id { get; set; }
+
+        /// <summary>
+        /// <para type="description">Geographic location of the calendar as free-form text. Optional. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 9,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Geographic location of the calendar as free-form text. Optional. Read-only.")]
+        public string Location { get; set; }
+
+        /// <summary>
+        /// <para type="description">The notifications that the authenticated user is receiving for this calendar.</para>
+        /// </summary>
+        [Parameter(Position = 10,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The notifications that the authenticated user is receiving for this calendar.")]
+        public CalendarListEntry.NotificationSettingsData NotificationSettings { get; set; }
+
+        /// <summary>
+        /// <para type="description">Whether the calendar is the primary calendar of the authenticated user. Read-only. Optional. The default is False.</para>
+        /// </summary>
+        [Parameter(Position = 11,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Whether the calendar is the primary calendar of the authenticated user. Read-only. Optional. The default is False.")]
+        public System.Nullable<bool> Primary { get; set; }
+
+        /// <summary>
+        /// <para type="description">Whether the calendar content shows up in the calendar UI. Optional. The default is False.</para>
+        /// </summary>
+        [Parameter(Position = 12,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Whether the calendar content shows up in the calendar UI. Optional. The default is False.")]
+        public System.Nullable<bool> Selected { get; set; }
+
+        /// <summary>
+        /// <para type="description">Title of the calendar. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 13,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Title of the calendar. Read-only.")]
+        public string Summary { get; set; }
+
+        /// <summary>
+        /// <para type="description">The summary that the authenticated user has set for this calendar. Optional.</para>
+        /// </summary>
+        [Parameter(Position = 14,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The summary that the authenticated user has set for this calendar. Optional.")]
+        public string SummaryOverride { get; set; }
+
+        /// <summary>
+        /// <para type="description">The time zone of the calendar. Optional. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 15,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The time zone of the calendar. Optional. Read-only.")]
+        public string TimeZone { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Calendar.v3.Data.CalendarListEntry()
+            {
+                AccessRole = this.AccessRole,
+                BackgroundColor = this.BackgroundColor,
+                ColorId = this.ColorId,
+                DefaultReminders = this.DefaultReminders,
+                Deleted = this.Deleted,
+                Description = this.Description,
+                ForegroundColor = this.ForegroundColor,
+                Hidden = this.Hidden,
+                Id = this.Id,
+                Location = this.Location,
+                NotificationSettings = this.NotificationSettings,
+                Primary = this.Primary,
+                Selected = this.Selected,
+                Summary = this.Summary,
+                SummaryOverride = this.SummaryOverride,
+                TimeZone = this.TimeZone,
+            };
+
+            if (ShouldProcess("CalendarListEntry"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Calendar API CalendarListEntry.NotificationSettingsData object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a CalendarListEntry.NotificationSettingsData object which may be required as a parameter for some other Cmdlets in the Calendar API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Calendar.v3.Data.CalendarListEntry.NotificationSettingsData</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GCalendarCalendarListEntryNotificationSettingsDataObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GCalendarCalendarListEntry.NotificationSettingsDataObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GCalendarCalendarListEntryNotificationSettingsDataObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GCalendarCalendarListEntry.NotificationSettingsDataObj")]
+    [OutputType(typeof(Google.Apis.Calendar.v3.Data.CalendarListEntry.NotificationSettingsData))]
+    public class NewGCalendarCalendarListEntryNotificationSettingsDataObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">The list of notifications set for this calendar.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The list of notifications set for this calendar.")]
+        public System.Collections.Generic.IList<CalendarNotification> Notifications { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Calendar.v3.Data.CalendarListEntry.NotificationSettingsData()
+            {
+                Notifications = this.Notifications,
+            };
+
+            if (ShouldProcess("CalendarListEntry.NotificationSettingsData"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Calendar API CalendarNotification object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a CalendarNotification object which may be required as a parameter for some other Cmdlets in the Calendar API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Calendar.v3.Data.CalendarNotification</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GCalendarCalendarNotificationObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GCalendarCalendarNotificationObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GCalendarCalendarNotificationObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GCalendarCalendarNotificationObj")]
+    [OutputType(typeof(Google.Apis.Calendar.v3.Data.CalendarNotification))]
+    public class NewGCalendarCalendarNotificationObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">The method used to deliver the notification. Possible values are:- "email" - Reminders are sent via email.- "sms" - Reminders are sent via SMS. This value is read-only and is ignored on inserts and updates. SMS reminders are only available for Google Apps for Work, Education, and Government customers.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The method used to deliver the notification. Possible values are:  \n- \"email\" - Reminders are sent via email. \n- \"sms\" - Reminders are sent via SMS. This value is read-only and is ignored on inserts and updates. SMS reminders are only available for Google Apps for Work, Education, and Government customers.")]
+        public string Method { get; set; }
+
+        /// <summary>
+        /// <para type="description">The type of notification. Possible values are:- "eventCreation" - Notification sent when a new event is put on the calendar.- "eventChange" - Notification sent when an event is changed.- "eventCancellation" - Notification sent when an event is cancelled.- "eventResponse" - Notification sent when an event is changed.- "agenda" - An agenda with the events of the day (sent out in the morning).</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The type of notification. Possible values are:  \n- \"eventCreation\" - Notification sent when a new event is put on the calendar. \n- \"eventChange\" - Notification sent when an event is changed. \n- \"eventCancellation\" - Notification sent when an event is cancelled. \n- \"eventResponse\" - Notification sent when an event is changed. \n- \"agenda\" - An agenda with the events of the day (sent out in the morning).")]
+        public string Type { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Calendar.v3.Data.CalendarNotification()
+            {
+                Method = this.Method,
+                Type = this.Type,
+            };
+
+            if (ShouldProcess("CalendarNotification"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Calendar API Event object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a Event object which may be required as a parameter for some other Cmdlets in the Calendar API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Calendar.v3.Data.Event</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GCalendarEventObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GCalendarEventObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GCalendarEventObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GCalendarEventObj")]
+    [OutputType(typeof(Google.Apis.Calendar.v3.Data.Event))]
+    public class NewGCalendarEventObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">Whether anyone can invite themselves to the event (currently works for Google+ events only). Optional. The default is False.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Whether anyone can invite themselves to the event (currently works for Google+ events only). Optional. The default is False.")]
+        public System.Nullable<bool> AnyoneCanAddSelf { get; set; }
+
+        /// <summary>
+        /// <para type="description">File attachments for the event. Currently only Google Drive attachments are supported.In order to modify attachments the supportsAttachments request parameter should be set to true.There can be at most 25 attachments per event,</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "File attachments for the event. Currently only Google Drive attachments are supported.\nIn order to modify attachments the supportsAttachments request parameter should be set to true.\nThere can be at most 25 attachments per event,")]
+        public System.Collections.Generic.IList<EventAttachment> Attachments { get; set; }
+
+        /// <summary>
+        /// <para type="description">The attendees of the event. See the Events with attendees guide for more information on scheduling events with other calendar users.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The attendees of the event. See the Events with attendees guide for more information on scheduling events with other calendar users.")]
+        public System.Collections.Generic.IList<EventAttendee> Attendees { get; set; }
+
+        /// <summary>
+        /// <para type="description">Whether attendees may have been omitted from the event's representation. When retrieving an event, this may be due to a restriction specified by the maxAttendee query parameter. When updating an event, this can be used to only update the participant's response. Optional. The default is False.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Whether attendees may have been omitted from the event's representation. When retrieving an event, this may be due to a restriction specified by the maxAttendee query parameter. When updating an event, this can be used to only update the participant's response. Optional. The default is False.")]
+        public System.Nullable<bool> AttendeesOmitted { get; set; }
+
+        /// <summary>
+        /// <para type="description">The color of the event. This is an ID referring to an entry in the event section of the colors definition (see the  colors endpoint). Optional.</para>
+        /// </summary>
+        [Parameter(Position = 4,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The color of the event. This is an ID referring to an entry in the event section of the colors definition (see the  colors endpoint). Optional.")]
+        public string ColorId { get; set; }
+
+        /// <summary>
+        /// <para type="description">Creation time of the event (as a RFC3339 timestamp). Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 5,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Creation time of the event (as a RFC3339 timestamp). Read-only.")]
+        public System.Nullable<System.DateTime> Created { get; set; }
+
+        /// <summary>
+        /// <para type="description">The creator of the event. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 6,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The creator of the event. Read-only.")]
+        public Event.CreatorData Creator { get; set; }
+
+        /// <summary>
+        /// <para type="description">Description of the event. Optional.</para>
+        /// </summary>
+        [Parameter(Position = 7,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Description of the event. Optional.")]
+        public string Description { get; set; }
+
+        /// <summary>
+        /// <para type="description">The (exclusive) end time of the event. For a recurring event, this is the end time of the first instance.</para>
+        /// </summary>
+        [Parameter(Position = 8,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The (exclusive) end time of the event. For a recurring event, this is the end time of the first instance.")]
+        public EventDateTime End { get; set; }
+
+        /// <summary>
+        /// <para type="description">Whether the end time is actually unspecified. An end time is still provided for compatibility reasons, even if this attribute is set to True. The default is False.</para>
+        /// </summary>
+        [Parameter(Position = 9,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Whether the end time is actually unspecified. An end time is still provided for compatibility reasons, even if this attribute is set to True. The default is False.")]
+        public System.Nullable<bool> EndTimeUnspecified { get; set; }
+
+        /// <summary>
+        /// <para type="description">Extended properties of the event.</para>
+        /// </summary>
+        [Parameter(Position = 10,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Extended properties of the event.")]
+        public Event.ExtendedPropertiesData ExtendedProperties { get; set; }
+
+        /// <summary>
+        /// <para type="description">A gadget that extends this event.</para>
+        /// </summary>
+        [Parameter(Position = 11,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "A gadget that extends this event.")]
+        public Event.GadgetData Gadget { get; set; }
+
+        /// <summary>
+        /// <para type="description">Whether attendees other than the organizer can invite others to the event. Optional. The default is True.</para>
+        /// </summary>
+        [Parameter(Position = 12,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Whether attendees other than the organizer can invite others to the event. Optional. The default is True.")]
+        public System.Nullable<bool> GuestsCanInviteOthers { get; set; }
+
+        /// <summary>
+        /// <para type="description">Whether attendees other than the organizer can modify the event. Optional. The default is False.</para>
+        /// </summary>
+        [Parameter(Position = 13,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Whether attendees other than the organizer can modify the event. Optional. The default is False.")]
+        public System.Nullable<bool> GuestsCanModify { get; set; }
+
+        /// <summary>
+        /// <para type="description">Whether attendees other than the organizer can see who the event's attendees are. Optional. The default is True.</para>
+        /// </summary>
+        [Parameter(Position = 14,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Whether attendees other than the organizer can see who the event's attendees are. Optional. The default is True.")]
+        public System.Nullable<bool> GuestsCanSeeOtherGuests { get; set; }
+
+        /// <summary>
+        /// <para type="description">An absolute link to the Google+ hangout associated with this event. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 15,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "An absolute link to the Google+ hangout associated with this event. Read-only.")]
+        public string HangoutLink { get; set; }
+
+        /// <summary>
+        /// <para type="description">An absolute link to this event in the Google Calendar Web UI. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 16,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "An absolute link to this event in the Google Calendar Web UI. Read-only.")]
+        public string HtmlLink { get; set; }
+
+        /// <summary>
+        /// <para type="description">Event unique identifier as defined in RFC5545. It is used to uniquely identify events accross calendaring systems and must be supplied when importing events via the import method.Note that the icalUID and the id are not identical and only one of them should be supplied at event creation time. One difference in their semantics is that in recurring events, all occurrences of one event have different ids while they all share the same icalUIDs.</para>
+        /// </summary>
+        [Parameter(Position = 17,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Event unique identifier as defined in RFC5545. It is used to uniquely identify events accross calendaring systems and must be supplied when importing events via the import method.\nNote that the icalUID and the id are not identical and only one of them should be supplied at event creation time. One difference in their semantics is that in recurring events, all occurrences of one event have different ids while they all share the same icalUIDs.")]
+        public string ICalUID { get; set; }
+
+        /// <summary>
+        /// <para type="description">Opaque identifier of the event. When creating new single or recurring events, you can specify their IDs. Provided IDs must follow these rules:- characters allowed in the ID are those used in base32hex encoding, i.e. lowercase letters a-v and digits 0-9, see section 3.1.2 in RFC2938- the length of the ID must be between 5 and 1024 characters- the ID must be unique per calendar  Due to the globally distributed nature of the system, we cannot guarantee that ID collisions will be detected at event creation time. To minimize the risk of collisions we recommend using an established UUID algorithm such as one described in RFC4122.If you do not specify an ID, it will be automatically generated by the server.Note that the icalUID and the id are not identical and only one of them should be supplied at event creation time. One difference in their semantics is that in recurring events, all occurrences of one event have different ids while they all share the same icalUIDs.</para>
+        /// </summary>
+        [Parameter(Position = 18,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Opaque identifier of the event. When creating new single or recurring events, you can specify their IDs. Provided IDs must follow these rules:  \n- characters allowed in the ID are those used in base32hex encoding, i.e. lowercase letters a-v and digits 0-9, see section 3.1.2 in RFC2938 \n- the length of the ID must be between 5 and 1024 characters \n- the ID must be unique per calendar  Due to the globally distributed nature of the system, we cannot guarantee that ID collisions will be detected at event creation time. To minimize the risk of collisions we recommend using an established UUID algorithm such as one described in RFC4122.\nIf you do not specify an ID, it will be automatically generated by the server.\nNote that the icalUID and the id are not identical and only one of them should be supplied at event creation time. One difference in their semantics is that in recurring events, all occurrences of one event have different ids while they all share the same icalUIDs.")]
+        public string Id { get; set; }
+
+        /// <summary>
+        /// <para type="description">Geographic location of the event as free-form text. Optional.</para>
+        /// </summary>
+        [Parameter(Position = 19,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Geographic location of the event as free-form text. Optional.")]
+        public string Location { get; set; }
+
+        /// <summary>
+        /// <para type="description">Whether this is a locked event copy where no changes can be made to the main event fields "summary", "description", "location", "start", "end" or "recurrence". The default is False. Read-Only.</para>
+        /// </summary>
+        [Parameter(Position = 20,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Whether this is a locked event copy where no changes can be made to the main event fields \"summary\", \"description\", \"location\", \"start\", \"end\" or \"recurrence\". The default is False. Read-Only.")]
+        public System.Nullable<bool> Locked { get; set; }
+
+        /// <summary>
+        /// <para type="description">The organizer of the event. If the organizer is also an attendee, this is indicated with a separate entry in attendees with the organizer field set to True. To change the organizer, use the move operation. Read-only, except when importing an event.</para>
+        /// </summary>
+        [Parameter(Position = 21,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The organizer of the event. If the organizer is also an attendee, this is indicated with a separate entry in attendees with the organizer field set to True. To change the organizer, use the move operation. Read-only, except when importing an event.")]
+        public Event.OrganizerData Organizer { get; set; }
+
+        /// <summary>
+        /// <para type="description">For an instance of a recurring event, this is the time at which this event would start according to the recurrence data in the recurring event identified by recurringEventId. Immutable.</para>
+        /// </summary>
+        [Parameter(Position = 22,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "For an instance of a recurring event, this is the time at which this event would start according to the recurrence data in the recurring event identified by recurringEventId. Immutable.")]
+        public EventDateTime OriginalStartTime { get; set; }
+
+        /// <summary>
+        /// <para type="description">Whether this is a private event copy where changes are not shared with other copies on other calendars. Optional. Immutable. The default is False.</para>
+        /// </summary>
+        [Parameter(Position = 23,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Whether this is a private event copy where changes are not shared with other copies on other calendars. Optional. Immutable. The default is False.")]
+        public System.Nullable<bool> PrivateCopy { get; set; }
+
+        /// <summary>
+        /// <para type="description">List of RRULE, EXRULE, RDATE and EXDATE lines for a recurring event, as specified in RFC5545. Note that DTSTART and DTEND lines are not allowed in this field; event start and end times are specified in the start and end fields. This field is omitted for single events or instances of recurring events.</para>
+        /// </summary>
+        [Parameter(Position = 24,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "List of RRULE, EXRULE, RDATE and EXDATE lines for a recurring event, as specified in RFC5545. Note that DTSTART and DTEND lines are not allowed in this field; event start and end times are specified in the start and end fields. This field is omitted for single events or instances of recurring events.")]
+        public System.Collections.Generic.IList<string> Recurrence { get; set; }
+
+        /// <summary>
+        /// <para type="description">For an instance of a recurring event, this is the id of the recurring event to which this instance belongs. Immutable.</para>
+        /// </summary>
+        [Parameter(Position = 25,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "For an instance of a recurring event, this is the id of the recurring event to which this instance belongs. Immutable.")]
+        public string RecurringEventId { get; set; }
+
+        /// <summary>
+        /// <para type="description">Information about the event's reminders for the authenticated user.</para>
+        /// </summary>
+        [Parameter(Position = 26,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Information about the event's reminders for the authenticated user.")]
+        public Event.RemindersData Reminders { get; set; }
+
+        /// <summary>
+        /// <para type="description">Sequence number as per iCalendar.</para>
+        /// </summary>
+        [Parameter(Position = 27,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Sequence number as per iCalendar.")]
+        public System.Nullable<int> Sequence { get; set; }
+
+        /// <summary>
+        /// <para type="description">Source from which the event was created. For example, a web page, an email message or any document identifiable by an URL with HTTP or HTTPS scheme. Can only be seen or modified by the creator of the event.</para>
+        /// </summary>
+        [Parameter(Position = 28,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Source from which the event was created. For example, a web page, an email message or any document identifiable by an URL with HTTP or HTTPS scheme. Can only be seen or modified by the creator of the event.")]
+        public Event.SourceData Source { get; set; }
+
+        /// <summary>
+        /// <para type="description">The (inclusive) start time of the event. For a recurring event, this is the start time of the first instance.</para>
+        /// </summary>
+        [Parameter(Position = 29,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The (inclusive) start time of the event. For a recurring event, this is the start time of the first instance.")]
+        public EventDateTime Start { get; set; }
+
+        /// <summary>
+        /// <para type="description">Status of the event. Optional. Possible values are:- "confirmed" - The event is confirmed. This is the default status.- "tentative" - The event is tentatively confirmed.- "cancelled" - The event is cancelled.</para>
+        /// </summary>
+        [Parameter(Position = 30,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Status of the event. Optional. Possible values are:  \n- \"confirmed\" - The event is confirmed. This is the default status. \n- \"tentative\" - The event is tentatively confirmed. \n- \"cancelled\" - The event is cancelled.")]
+        public string Status { get; set; }
+
+        /// <summary>
+        /// <para type="description">Title of the event.</para>
+        /// </summary>
+        [Parameter(Position = 31,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Title of the event.")]
+        public string Summary { get; set; }
+
+        /// <summary>
+        /// <para type="description">Whether the event blocks time on the calendar. Optional. Possible values are:- "opaque" - The event blocks time on the calendar. This is the default value.- "transparent" - The event does not block time on the calendar.</para>
+        /// </summary>
+        [Parameter(Position = 32,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Whether the event blocks time on the calendar. Optional. Possible values are:  \n- \"opaque\" - The event blocks time on the calendar. This is the default value. \n- \"transparent\" - The event does not block time on the calendar.")]
+        public string Transparency { get; set; }
+
+        /// <summary>
+        /// <para type="description">Last modification time of the event (as a RFC3339 timestamp). Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 33,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Last modification time of the event (as a RFC3339 timestamp). Read-only.")]
+        public System.Nullable<System.DateTime> Updated { get; set; }
+
+        /// <summary>
+        /// <para type="description">Visibility of the event. Optional. Possible values are:- "default" - Uses the default visibility for events on the calendar. This is the default value.- "public" - The event is public and event details are visible to all readers of the calendar.- "private" - The event is private and only event attendees may view event details.- "confidential" - The event is private. This value is provided for compatibility reasons.</para>
+        /// </summary>
+        [Parameter(Position = 34,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Visibility of the event. Optional. Possible values are:  \n- \"default\" - Uses the default visibility for events on the calendar. This is the default value. \n- \"public\" - The event is public and event details are visible to all readers of the calendar. \n- \"private\" - The event is private and only event attendees may view event details. \n- \"confidential\" - The event is private. This value is provided for compatibility reasons.")]
+        public string Visibility { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Calendar.v3.Data.Event()
+            {
+                AnyoneCanAddSelf = this.AnyoneCanAddSelf,
+                Attachments = this.Attachments,
+                Attendees = this.Attendees,
+                AttendeesOmitted = this.AttendeesOmitted,
+                ColorId = this.ColorId,
+                Created = this.Created,
+                Creator = this.Creator,
+                Description = this.Description,
+                End = this.End,
+                EndTimeUnspecified = this.EndTimeUnspecified,
+                ExtendedProperties = this.ExtendedProperties,
+                Gadget = this.Gadget,
+                GuestsCanInviteOthers = this.GuestsCanInviteOthers,
+                GuestsCanModify = this.GuestsCanModify,
+                GuestsCanSeeOtherGuests = this.GuestsCanSeeOtherGuests,
+                HangoutLink = this.HangoutLink,
+                HtmlLink = this.HtmlLink,
+                ICalUID = this.ICalUID,
+                Id = this.Id,
+                Location = this.Location,
+                Locked = this.Locked,
+                Organizer = this.Organizer,
+                OriginalStartTime = this.OriginalStartTime,
+                PrivateCopy = this.PrivateCopy,
+                Recurrence = this.Recurrence,
+                RecurringEventId = this.RecurringEventId,
+                Reminders = this.Reminders,
+                Sequence = this.Sequence,
+                Source = this.Source,
+                Start = this.Start,
+                Status = this.Status,
+                Summary = this.Summary,
+                Transparency = this.Transparency,
+                Updated = this.Updated,
+                Visibility = this.Visibility,
+            };
+
+            if (ShouldProcess("Event"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Calendar API Event.ExtendedPropertiesData object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a Event.ExtendedPropertiesData object which may be required as a parameter for some other Cmdlets in the Calendar API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Calendar.v3.Data.Event.ExtendedPropertiesData</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GCalendarEventExtendedPropertiesDataObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GCalendarEvent.ExtendedPropertiesDataObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GCalendarEventExtendedPropertiesDataObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GCalendarEvent.ExtendedPropertiesDataObj")]
+    [OutputType(typeof(Google.Apis.Calendar.v3.Data.Event.ExtendedPropertiesData))]
+    public class NewGCalendarEventExtendedPropertiesDataObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">Properties that are private to the copy of the event that appears on this calendar.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Properties that are private to the copy of the event that appears on this calendar.")]
+        public System.Collections.Generic.IDictionary<string, string> Private__ { get; set; }
+
+        /// <summary>
+        /// <para type="description">Properties that are shared between copies of the event on other attendees' calendars.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Properties that are shared between copies of the event on other attendees' calendars.")]
+        public System.Collections.Generic.IDictionary<string, string> Shared { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Calendar.v3.Data.Event.ExtendedPropertiesData()
+            {
+                Private__ = this.Private__,
+                Shared = this.Shared,
+            };
+
+            if (ShouldProcess("Event.ExtendedPropertiesData"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Calendar API Event.GadgetData object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a Event.GadgetData object which may be required as a parameter for some other Cmdlets in the Calendar API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Calendar.v3.Data.Event.GadgetData</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GCalendarEventGadgetDataObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GCalendarEvent.GadgetDataObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GCalendarEventGadgetDataObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GCalendarEvent.GadgetDataObj")]
+    [OutputType(typeof(Google.Apis.Calendar.v3.Data.Event.GadgetData))]
+    public class NewGCalendarEventGadgetDataObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">The gadget's display mode. Optional. Possible values are:- "icon" - The gadget displays next to the event's title in the calendar view.- "chip" - The gadget displays when the event is clicked.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The gadget's display mode. Optional. Possible values are:  \n- \"icon\" - The gadget displays next to the event's title in the calendar view. \n- \"chip\" - The gadget displays when the event is clicked.")]
+        public string Display { get; set; }
+
+        /// <summary>
+        /// <para type="description">The gadget's height in pixels. The height must be an integer greater than 0. Optional.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The gadget's height in pixels. The height must be an integer greater than 0. Optional.")]
+        public System.Nullable<int> Height { get; set; }
+
+        /// <summary>
+        /// <para type="description">The gadget's icon URL. The URL scheme must be HTTPS.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The gadget's icon URL. The URL scheme must be HTTPS.")]
+        public string IconLink { get; set; }
+
+        /// <summary>
+        /// <para type="description">The gadget's URL. The URL scheme must be HTTPS.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The gadget's URL. The URL scheme must be HTTPS.")]
+        public string Link { get; set; }
+
+        /// <summary>
+        /// <para type="description">Preferences.</para>
+        /// </summary>
+        [Parameter(Position = 4,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Preferences.")]
+        public System.Collections.Generic.IDictionary<string, string> Preferences { get; set; }
+
+        /// <summary>
+        /// <para type="description">The gadget's title.</para>
+        /// </summary>
+        [Parameter(Position = 5,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The gadget's title.")]
+        public string Title { get; set; }
+
+        /// <summary>
+        /// <para type="description">The gadget's type.</para>
+        /// </summary>
+        [Parameter(Position = 6,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The gadget's type.")]
+        public string Type { get; set; }
+
+        /// <summary>
+        /// <para type="description">The gadget's width in pixels. The width must be an integer greater than 0. Optional.</para>
+        /// </summary>
+        [Parameter(Position = 7,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The gadget's width in pixels. The width must be an integer greater than 0. Optional.")]
+        public System.Nullable<int> Width { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Calendar.v3.Data.Event.GadgetData()
+            {
+                Display = this.Display,
+                Height = this.Height,
+                IconLink = this.IconLink,
+                Link = this.Link,
+                Preferences = this.Preferences,
+                Title = this.Title,
+                Type = this.Type,
+                Width = this.Width,
+            };
+
+            if (ShouldProcess("Event.GadgetData"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Calendar API Event.OrganizerData object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a Event.OrganizerData object which may be required as a parameter for some other Cmdlets in the Calendar API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Calendar.v3.Data.Event.OrganizerData</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GCalendarEventOrganizerDataObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GCalendarEvent.OrganizerDataObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GCalendarEventOrganizerDataObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GCalendarEvent.OrganizerDataObj")]
+    [OutputType(typeof(Google.Apis.Calendar.v3.Data.Event.OrganizerData))]
+    public class NewGCalendarEventOrganizerDataObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">The organizer's name, if available.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The organizer's name, if available.")]
+        public string DisplayName { get; set; }
+
+        /// <summary>
+        /// <para type="description">The organizer's email address, if available. It must be a valid email address as per RFC5322.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The organizer's email address, if available. It must be a valid email address as per RFC5322.")]
+        public string Email { get; set; }
+
+        /// <summary>
+        /// <para type="description">The organizer's Profile ID, if available. It corresponds to theid field in the People collection of the Google+ API</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The organizer's Profile ID, if available. It corresponds to theid field in the People collection of the Google+ API")]
+        public string Id { get; set; }
+
+        /// <summary>
+        /// <para type="description">Whether the organizer corresponds to the calendar on which this copy of the event appears. Read-only. The default is False.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Whether the organizer corresponds to the calendar on which this copy of the event appears. Read-only. The default is False.")]
+        public System.Nullable<bool> Self { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Calendar.v3.Data.Event.OrganizerData()
+            {
+                DisplayName = this.DisplayName,
+                Email = this.Email,
+                Id = this.Id,
+                Self = this.Self,
+            };
+
+            if (ShouldProcess("Event.OrganizerData"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Calendar API Event.RemindersData object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a Event.RemindersData object which may be required as a parameter for some other Cmdlets in the Calendar API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Calendar.v3.Data.Event.RemindersData</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GCalendarEventRemindersDataObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GCalendarEvent.RemindersDataObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GCalendarEventRemindersDataObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GCalendarEvent.RemindersDataObj")]
+    [OutputType(typeof(Google.Apis.Calendar.v3.Data.Event.RemindersData))]
+    public class NewGCalendarEventRemindersDataObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">If the event doesn't use the default reminders, this lists the reminders specific to the event, or, if not set, indicates that no reminders are set for this event. The maximum number of override reminders is 5.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "If the event doesn't use the default reminders, this lists the reminders specific to the event, or, if not set, indicates that no reminders are set for this event. The maximum number of override reminders is 5.")]
+        public System.Collections.Generic.IList<EventReminder> Overrides { get; set; }
+
+        /// <summary>
+        /// <para type="description">Whether the default reminders of the calendar apply to the event.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Whether the default reminders of the calendar apply to the event.")]
+        public System.Nullable<bool> UseDefault { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Calendar.v3.Data.Event.RemindersData()
+            {
+                Overrides = this.Overrides,
+                UseDefault = this.UseDefault,
+            };
+
+            if (ShouldProcess("Event.RemindersData"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Calendar API Event.SourceData object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a Event.SourceData object which may be required as a parameter for some other Cmdlets in the Calendar API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Calendar.v3.Data.Event.SourceData</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GCalendarEventSourceDataObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GCalendarEvent.SourceDataObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GCalendarEventSourceDataObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GCalendarEvent.SourceDataObj")]
+    [OutputType(typeof(Google.Apis.Calendar.v3.Data.Event.SourceData))]
+    public class NewGCalendarEventSourceDataObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">Title of the source; for example a title of a web page or an email subject.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Title of the source; for example a title of a web page or an email subject.")]
+        public string Title { get; set; }
+
+        /// <summary>
+        /// <para type="description">URL of the source pointing to a resource. The URL scheme must be HTTP or HTTPS.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "URL of the source pointing to a resource. The URL scheme must be HTTP or HTTPS.")]
+        public string Url { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Calendar.v3.Data.Event.SourceData()
+            {
+                Title = this.Title,
+                Url = this.Url,
+            };
+
+            if (ShouldProcess("Event.SourceData"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Calendar API EventAttachment object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a EventAttachment object which may be required as a parameter for some other Cmdlets in the Calendar API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Calendar.v3.Data.EventAttachment</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GCalendarEventAttachmentObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GCalendarEventAttachmentObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GCalendarEventAttachmentObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GCalendarEventAttachmentObj")]
+    [OutputType(typeof(Google.Apis.Calendar.v3.Data.EventAttachment))]
+    public class NewGCalendarEventAttachmentObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">ID of the attached file. Read-only.For Google Drive files, this is the ID of the corresponding Files resource entry in the Drive API.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "ID of the attached file. Read-only.\nFor Google Drive files, this is the ID of the corresponding Files resource entry in the Drive API.")]
+        public string FileId { get; set; }
+
+        /// <summary>
+        /// <para type="description">URL link to the attachment.For adding Google Drive file attachments use the same format as in alternateLink property of the Files resource in the Drive API.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "URL link to the attachment.\nFor adding Google Drive file attachments use the same format as in alternateLink property of the Files resource in the Drive API.")]
+        public string FileUrl { get; set; }
+
+        /// <summary>
+        /// <para type="description">URL link to the attachment's icon. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "URL link to the attachment's icon. Read-only.")]
+        public string IconLink { get; set; }
+
+        /// <summary>
+        /// <para type="description">Internet media type (MIME type) of the attachment.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Internet media type (MIME type) of the attachment.")]
+        public string MimeType { get; set; }
+
+        /// <summary>
+        /// <para type="description">Attachment title.</para>
+        /// </summary>
+        [Parameter(Position = 4,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Attachment title.")]
+        public string Title { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Calendar.v3.Data.EventAttachment()
+            {
+                FileId = this.FileId,
+                FileUrl = this.FileUrl,
+                IconLink = this.IconLink,
+                MimeType = this.MimeType,
+                Title = this.Title,
+            };
+
+            if (ShouldProcess("EventAttachment"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Calendar API EventAttendee object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a EventAttendee object which may be required as a parameter for some other Cmdlets in the Calendar API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Calendar.v3.Data.EventAttendee</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GCalendarEventAttendeeObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GCalendarEventAttendeeObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GCalendarEventAttendeeObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GCalendarEventAttendeeObj")]
+    [OutputType(typeof(Google.Apis.Calendar.v3.Data.EventAttendee))]
+    public class NewGCalendarEventAttendeeObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">Number of additional guests. Optional. The default is 0.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Number of additional guests. Optional. The default is 0.")]
+        public System.Nullable<int> AdditionalGuests { get; set; }
+
+        /// <summary>
+        /// <para type="description">The attendee's response comment. Optional.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The attendee's response comment. Optional.")]
+        public string Comment { get; set; }
+
+        /// <summary>
+        /// <para type="description">The attendee's name, if available. Optional.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The attendee's name, if available. Optional.")]
+        public string DisplayName { get; set; }
+
+        /// <summary>
+        /// <para type="description">The attendee's email address, if available. This field must be present when adding an attendee. It must be a valid email address as per RFC5322.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The attendee's email address, if available. This field must be present when adding an attendee. It must be a valid email address as per RFC5322.")]
+        public string Email { get; set; }
+
+        /// <summary>
+        /// <para type="description">The attendee's Profile ID, if available. It corresponds to theid field in the People collection of the Google+ API</para>
+        /// </summary>
+        [Parameter(Position = 4,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The attendee's Profile ID, if available. It corresponds to theid field in the People collection of the Google+ API")]
+        public string Id { get; set; }
+
+        /// <summary>
+        /// <para type="description">Whether this is an optional attendee. Optional. The default is False.</para>
+        /// </summary>
+        [Parameter(Position = 5,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Whether this is an optional attendee. Optional. The default is False.")]
+        public System.Nullable<bool> Optional { get; set; }
+
+        /// <summary>
+        /// <para type="description">Whether the attendee is the organizer of the event. Read-only. The default is False.</para>
+        /// </summary>
+        [Parameter(Position = 6,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Whether the attendee is the organizer of the event. Read-only. The default is False.")]
+        public System.Nullable<bool> Organizer { get; set; }
+
+        /// <summary>
+        /// <para type="description">Whether the attendee is a resource. Read-only. The default is False.</para>
+        /// </summary>
+        [Parameter(Position = 7,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Whether the attendee is a resource. Read-only. The default is False.")]
+        public System.Nullable<bool> Resource { get; set; }
+
+        /// <summary>
+        /// <para type="description">The attendee's response status. Possible values are:- "needsAction" - The attendee has not responded to the invitation.- "declined" - The attendee has declined the invitation.- "tentative" - The attendee has tentatively accepted the invitation.- "accepted" - The attendee has accepted the invitation.</para>
+        /// </summary>
+        [Parameter(Position = 8,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The attendee's response status. Possible values are:  \n- \"needsAction\" - The attendee has not responded to the invitation. \n- \"declined\" - The attendee has declined the invitation. \n- \"tentative\" - The attendee has tentatively accepted the invitation. \n- \"accepted\" - The attendee has accepted the invitation.")]
+        public string ResponseStatus { get; set; }
+
+        /// <summary>
+        /// <para type="description">Whether this entry represents the calendar on which this copy of the event appears. Read-only. The default is False.</para>
+        /// </summary>
+        [Parameter(Position = 9,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Whether this entry represents the calendar on which this copy of the event appears. Read-only. The default is False.")]
+        public System.Nullable<bool> Self { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Calendar.v3.Data.EventAttendee()
+            {
+                AdditionalGuests = this.AdditionalGuests,
+                Comment = this.Comment,
+                DisplayName = this.DisplayName,
+                Email = this.Email,
+                Id = this.Id,
+                Optional = this.Optional,
+                Organizer = this.Organizer,
+                Resource = this.Resource,
+                ResponseStatus = this.ResponseStatus,
+                Self = this.Self,
+            };
+
+            if (ShouldProcess("EventAttendee"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Calendar API EventDateTime object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a EventDateTime object which may be required as a parameter for some other Cmdlets in the Calendar API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Calendar.v3.Data.EventDateTime</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GCalendarEventDateTimeObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GCalendarEventDateTimeObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GCalendarEventDateTimeObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GCalendarEventDateTimeObj")]
+    [OutputType(typeof(Google.Apis.Calendar.v3.Data.EventDateTime))]
+    public class NewGCalendarEventDateTimeObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">The date, in the format "yyyy-mm-dd", if this is an all-day event.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The date, in the format \"yyyy-mm-dd\", if this is an all-day event.")]
+        public string Date { get; set; }
+
+        /// <summary>
+        /// <para type="description">The time, as a combined date-time value (formatted according to RFC3339). A time zone offset is required unless a time zone is explicitly specified in timeZone.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The time, as a combined date-time value (formatted according to RFC3339). A time zone offset is required unless a time zone is explicitly specified in timeZone.")]
+        public System.Nullable<System.DateTime> DateTime { get; set; }
+
+        /// <summary>
+        /// <para type="description">The time zone in which the time is specified. (Formatted as an IANA Time Zone Database name, e.g. "Europe/Zurich".) For recurring events this field is required and specifies the time zone in which the recurrence is expanded. For single events this field is optional and indicates a custom time zone for the event start/end.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The time zone in which the time is specified. (Formatted as an IANA Time Zone Database name, e.g. \"Europe/Zurich\".) For recurring events this field is required and specifies the time zone in which the recurrence is expanded. For single events this field is optional and indicates a custom time zone for the event start/end.")]
+        public string TimeZone { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Calendar.v3.Data.EventDateTime()
+            {
+                Date = this.Date,
+                DateTime = this.DateTime,
+                TimeZone = this.TimeZone,
+            };
+
+            if (ShouldProcess("EventDateTime"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Calendar API EventReminder object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a EventReminder object which may be required as a parameter for some other Cmdlets in the Calendar API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Calendar.v3.Data.EventReminder</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GCalendarEventReminderObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GCalendarEventReminderObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GCalendarEventReminderObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GCalendarEventReminderObj")]
+    [OutputType(typeof(Google.Apis.Calendar.v3.Data.EventReminder))]
+    public class NewGCalendarEventReminderObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">The method used by this reminder. Possible values are:- "email" - Reminders are sent via email.- "sms" - Reminders are sent via SMS. These are only available for Google Apps for Work, Education, and Government customers. Requests to set SMS reminders for other account types are ignored.- "popup" - Reminders are sent via a UI popup.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The method used by this reminder. Possible values are:  \n- \"email\" - Reminders are sent via email. \n- \"sms\" - Reminders are sent via SMS. These are only available for Google Apps for Work, Education, and Government customers. Requests to set SMS reminders for other account types are ignored. \n- \"popup\" - Reminders are sent via a UI popup.")]
+        public string Method { get; set; }
+
+        /// <summary>
+        /// <para type="description">Number of minutes before the start of the event when the reminder should trigger. Valid values are between 0 and 40320 (4 weeks in minutes).</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Number of minutes before the start of the event when the reminder should trigger. Valid values are between 0 and 40320 (4 weeks in minutes).")]
+        public System.Nullable<int> Minutes { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Calendar.v3.Data.EventReminder()
+            {
+                Method = this.Method,
+                Minutes = this.Minutes,
+            };
+
+            if (ShouldProcess("EventReminder"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
 }
 
 namespace gShell.Cmdlets.Calendar.Acl
@@ -1450,13 +3205,13 @@ namespace gShell.Cmdlets.Calendar.Events
                 if (ParameterSetName == "one")
                 {
                     var properties = new gCalendar.Events.EventsGetProperties
-                {
-                    AlwaysIncludeEmail = AlwaysIncludeEmail,
-                    MaxAttendees = MaxAttendees,
-                    TimeZone = TimeZone
-                };
+                    {
+                        AlwaysIncludeEmail = AlwaysIncludeEmail,
+                        MaxAttendees = MaxAttendees,
+                        TimeZone = TimeZone
+                    };
 
-                WriteObject(events.Get(CalendarId, EventId, properties));
+                    WriteObject(events.Get(CalendarId, EventId, properties));
 
                 }
                 else
@@ -2173,7 +3928,7 @@ namespace gShell.Cmdlets.Calendar.Events
     /// </summary>
     [Cmdlet(VerbsCommon.Watch, "GCalendarEvent",
         SupportsShouldProcess = true,
-        HelpUri = @"https://github.com/squid808/gShell/wiki/Watch-GCalendarEvent")]
+        HelpUri = @"https://gaithub.com/squid808/gShell/wiki/Watch-GCalendarEvent")]
     public class WatchGCalendarEventCommand : CalendarServiceAccountBase
     {
         #region Properties
