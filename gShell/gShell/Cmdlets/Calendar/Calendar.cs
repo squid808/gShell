@@ -307,7 +307,7 @@ namespace gShell.Cmdlets.Calendar
             }
         }
     }
-    
+
     /// <summary>
     /// <para type="synopsis">Creates a new Calendar API Calendar object.</para>
     /// <para type="description">This provides a Cmdlet-Based approach to creating a Calendar object which may be required as a parameter for some other Cmdlets in the Calendar API category.</para>
@@ -1854,14 +1854,43 @@ namespace gShell.Cmdlets.Calendar.Acl
             HelpMessage = "ACL rule identifier.")]
         public string RuleId { get; set; }
 
+        /// <summary>
+        /// <para type="description">A switch to run the cmdlet without prompting</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        HelpMessage = "A switch to run the cmdlet without prompting")]
+        public SwitchParameter Force { get; set; }
+
         #endregion
 
         protected override void ProcessRecord()
         {
-            if (ShouldProcess("Calendar Acl", "Remove-GCalendarAcl"))
-            {
-                acl.Delete(CalendarId, RuleId);
-            }
+            string toRemoveTarget = "Calendar Acl";
+
+			if (ShouldProcess(toRemoveTarget))
+			{	
+				if (Force || ShouldContinue(toRemoveTarget + "will be removed.\nContinue?", "Confirm Removal"))
+				{
+					try
+					{
+						WriteDebug("Attempting to remove " + toRemoveTarget + "...");
+							
+						acl.Delete(CalendarId, RuleId);
+							
+						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
+					}
+					catch (Exception e)
+					{
+						WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, toRemoveTarget));
+					}
+				}
+				else
+				{
+					WriteError(new ErrorRecord(new Exception("Deletion not confirmed"),
+						"", ErrorCategory.InvalidData, toRemoveTarget));
+				}
+			}
         }
     }
 
@@ -2218,14 +2247,43 @@ namespace gShell.Cmdlets.Calendar.CalendarList
             )]
         public string CalendarId { get; set; }
 
+        /// <summary>
+        /// <para type="description">A switch to run the cmdlet without prompting</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        HelpMessage = "A switch to run the cmdlet without prompting")]
+        public SwitchParameter Force { get; set; }
+
         #endregion
 
         protected override void ProcessRecord()
         {
-            if (ShouldProcess("Calendar CalendarList", "Remove-GCalendarCalendarList"))
-            {
-                calendarList.Delete(CalendarId);
-            }
+            string toRemoveTarget = "Calendar List";
+
+			if (ShouldProcess(toRemoveTarget))
+			{	
+				if (Force || ShouldContinue(toRemoveTarget + "will be removed.\nContinue?", "Confirm Removal"))
+				{
+					try
+					{
+						WriteDebug("Attempting to remove " + toRemoveTarget + "...");
+
+                        calendarList.Delete(CalendarId);
+							
+						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
+					}
+					catch (Exception e)
+					{
+						WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, toRemoveTarget));
+					}
+				}
+				else
+				{
+					WriteError(new ErrorRecord(new Exception("Deletion not confirmed"),
+						"", ErrorCategory.InvalidData, toRemoveTarget));
+				}
+			}
         }
     }
 
@@ -2661,14 +2719,43 @@ namespace gShell.Cmdlets.Calendar.Calendars
             )]
         public string CalendarId { get; set; }
 
+        /// <summary>
+        /// <para type="description">A switch to run the cmdlet without prompting</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        HelpMessage = "A switch to run the cmdlet without prompting")]
+        public SwitchParameter Force { get; set; }
+
         #endregion
 
         protected override void ProcessRecord()
         {
-            if (ShouldProcess("Calendar Calendars", "Remove-GCalendarCalendars"))
-            {
-                calendars.Delete(CalendarId);
-            }
+            string toRemoveTarget = "Calendar";
+
+			if (ShouldProcess(toRemoveTarget))
+			{	
+				if (Force || ShouldContinue(toRemoveTarget + "will be removed.\nContinue?", "Confirm Removal"))
+				{
+					try
+					{
+						WriteDebug("Attempting to remove " + toRemoveTarget + "...");
+
+                        calendars.Delete(CalendarId);
+							
+						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
+					}
+					catch (Exception e)
+					{
+						WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, toRemoveTarget));
+					}
+				}
+				else
+				{
+					WriteError(new ErrorRecord(new Exception("Deletion not confirmed"),
+						"", ErrorCategory.InvalidData, toRemoveTarget));
+				}
+			}
         }
     }
 
@@ -2934,20 +3021,48 @@ namespace gShell.Cmdlets.Calendar.Events
                 "Whether to send notifications about the deletion of the event. Optional. The default is False.")]
         public bool? SendNotifications { get; set; }
 
+        /// <summary>
+        /// <para type="description">A switch to run the cmdlet without prompting</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        HelpMessage = "A switch to run the cmdlet without prompting")]
+        public SwitchParameter Force { get; set; }
+
         #endregion
 
         protected override void ProcessRecord()
         {
-            if (ShouldProcess("Calendar Events", "Remove-GCalendarEvent"))
-            {
-                var properties = new gCalendar.Events.EventsDeleteProperties
-                {
-                    SendNotifications = SendNotifications
-                };
+            string toRemoveTarget = "Calendar Event";
 
+			if (ShouldProcess(toRemoveTarget))
+			{	
+				if (Force || ShouldContinue(toRemoveTarget + "will be removed.\nContinue?", "Confirm Removal"))
+				{
+					try
+					{
+						WriteDebug("Attempting to remove " + toRemoveTarget + "...");
 
-                events.Delete(CalendarId, EventId, properties);
-            }
+                        var properties = new gCalendar.Events.EventsDeleteProperties
+                        {
+                            SendNotifications = SendNotifications
+                        };
+
+                        events.Delete(CalendarId, EventId, properties);
+							
+						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
+					}
+					catch (Exception e)
+					{
+						WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, toRemoveTarget));
+					}
+				}
+				else
+				{
+					WriteError(new ErrorRecord(new Exception("Deletion not confirmed"),
+						"", ErrorCategory.InvalidData, toRemoveTarget));
+				}
+			}
         }
     }
 
