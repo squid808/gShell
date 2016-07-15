@@ -1238,27 +1238,57 @@ namespace gShell.Cmdlets.Sharedcontacts
             ValueFromPipeline = true)]
         [ValidateNotNullOrEmpty]
         public Data.Contact ContactObj { get; set; }
+
+        /// <summary>
+        /// <para type="description">A switch to run the cmdlet without prompting</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        HelpMessage = "A switch to run the cmdlet without prompting")]
+        public SwitchParameter Force { get; set; }
+
         #endregion
 
         protected override void ProcessRecord()
         {
-            string editUrl = ContactObj.Links.Where(x => x.Rel == ("link_edit")).Select(x => x.Href).First();
+            string toRemoveTarget = "Shared Contact";
+            
+            if (Force || ShouldContinue(toRemoveTarget + "will be removed.\nContinue?", "Confirm Removal"))
+			{
+				try
+				{
+					WriteDebug("Attempting to remove " + toRemoveTarget + "...");
 
-            if (!string.IsNullOrWhiteSpace(editUrl) && !string.IsNullOrWhiteSpace(ContactObj.Id))
-            {
-                string id = ContactObj.Id.Split('/').Last();
-                string version = editUrl.Split('/').Last();
+                    string editUrl = ContactObj.Links.Where(x => x.Rel == ("link_edit")).Select(x => x.Href).First();
 
-                if (ShouldProcess("Shared Contact", "Remove-GSharedContact"))
-                {
-                    contact.Delete(Domain, id, version);
-                }
-            }
-            else
-            {
-                WriteError(new ErrorRecord(null, (new Exception(
-                    "Contact must have an edit URL."))));
-            }
+                    if (!string.IsNullOrWhiteSpace(editUrl) && !string.IsNullOrWhiteSpace(ContactObj.Id))
+                    {
+                        string id = ContactObj.Id.Split('/').Last();
+                        string version = editUrl.Split('/').Last();
+
+                        if (ShouldProcess("Shared Contact", "Remove-GSharedContact"))
+                        {
+                            contact.Delete(Domain, id, version);
+                        }
+                    }
+                    else
+                    {
+                        WriteError(new ErrorRecord(null, (new Exception(
+                            "Contact must have an edit URL."))));
+                    }
+							
+					WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
+				}
+				catch (Exception e)
+				{
+					WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, toRemoveTarget));
+				}
+			}
+			else
+			{
+				WriteError(new ErrorRecord(new Exception("Deletion not confirmed"),
+					"", ErrorCategory.InvalidData, toRemoveTarget));
+			}
         }
     }
 }

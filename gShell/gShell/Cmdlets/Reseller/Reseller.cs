@@ -1516,14 +1516,44 @@ namespace gShell.Cmdlets.Reseller.Subscription
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "Whether the subscription is to be fully cancelled or downgraded")]
         public SubscriptionsResource.DeleteRequest.DeletionTypeEnum DeletionType { get; set; }
+
+        /// <summary>
+        /// <para type="description">A switch to run the cmdlet without prompting</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        HelpMessage = "A switch to run the cmdlet without prompting")]
+        public SwitchParameter Force { get; set; }
+
         #endregion
 
         protected override void ProcessRecord()
         {
-            if (ShouldProcess("Reseller Subscription", "Remove-GResellerSubscription"))
-            {
-                subscriptions.Delete(CustomerId, SubscriptionId, DeletionType);
-            }
+            string toRemoveTarget = "Reseller Subscription";
+
+			if (ShouldProcess(toRemoveTarget))
+			{	
+				if (Force || ShouldContinue(toRemoveTarget + "will be removed.\nContinue?", "Confirm Removal"))
+				{
+					try
+					{
+						WriteDebug("Attempting to remove " + toRemoveTarget + "...");
+
+                        subscriptions.Delete(CustomerId, SubscriptionId, DeletionType);
+							
+						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
+					}
+					catch (Exception e)
+					{
+						WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, toRemoveTarget));
+					}
+				}
+				else
+				{
+					WriteError(new ErrorRecord(new Exception("Deletion not confirmed"),
+						"", ErrorCategory.InvalidData, toRemoveTarget));
+				}
+			}
         }
     }
 

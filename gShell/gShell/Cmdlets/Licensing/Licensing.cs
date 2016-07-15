@@ -151,10 +151,10 @@ namespace gShell.Cmdlets.Licensing
                 {
                     var properties = new gLicensing.LicenseAssignments.LicenseAssignmentsListForProductProperties()
                     {
-                        maxResults = 1000
+                        MaxResults = 1000
                     };
 
-                    if (MaxResults.HasValue) { properties.totalResults = this.MaxResults.Value; }
+                    if (MaxResults.HasValue) { properties.TotalResults = this.MaxResults.Value; }
 
                     WriteObject(licenseAssignments.ListForProduct(ProductId, CustomerId, properties));
                 }
@@ -162,10 +162,10 @@ namespace gShell.Cmdlets.Licensing
                 {
                     var properties = new gLicensing.LicenseAssignments.LicenseAssignmentsListForProductAndSkuProperties()
                     {
-                        maxResults = 1000
+                        MaxResults = 1000
                     };
 
-                    if (MaxResults.HasValue) { properties.totalResults = this.MaxResults.Value; }
+                    if (MaxResults.HasValue) { properties.TotalResults = this.MaxResults.Value; }
 
                     WriteObject(licenseAssignments.ListForProductAndSku(ProductId, SkuId, CustomerId, properties));
                 }
@@ -387,14 +387,43 @@ namespace gShell.Cmdlets.Licensing
         HelpMessage = "email id or unique Id of the user")]
         public string UserId { get; set; }
 
+        /// <summary>
+        /// <para type="description">A switch to run the cmdlet without prompting</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        HelpMessage = "A switch to run the cmdlet without prompting")]
+        public SwitchParameter Force { get; set; }
+
         #endregion
 
         protected override void ProcessRecord()
         {
-            if (ShouldProcess("Licensing", "Remove-GLicenseAssignment"))
-            {
-                licenseAssignments.Delete(ProductId, SkuId, UserId);
-            }
+            string toRemoveTarget = "License Assignment";
+
+			if (ShouldProcess(toRemoveTarget))
+			{	
+				if (Force || ShouldContinue(toRemoveTarget + "will be removed.\nContinue?", "Confirm Removal"))
+				{
+					try
+					{
+						WriteDebug("Attempting to remove " + toRemoveTarget + "...");
+
+                        licenseAssignments.Delete(ProductId, SkuId, UserId);
+							
+						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
+					}
+					catch (Exception e)
+					{
+						WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, toRemoveTarget));
+					}
+				}
+				else
+				{
+					WriteError(new ErrorRecord(new Exception("Deletion not confirmed"),
+						"", ErrorCategory.InvalidData, toRemoveTarget));
+				}
+			}
         }
     }
 }
