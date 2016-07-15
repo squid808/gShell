@@ -126,13 +126,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cmdlets\AdminSettings\AdminSettings.cs" />
-    <Compile Include="Cmdlets\Calendar\Google.Apis.Calendar.v3.cs" />
-    <Compile Include="Cmdlets\Classroom\Google.Apis.Classroom.v1.cs" />
+    <Compile Include="Cmdlets\Calendar\Calendar.cs" />
+    <Compile Include="Cmdlets\Classroom\Classroom.cs" />
     <Compile Include="Cmdlets\DataTransfer\DataTransfer.cs" />
     <Compile Include="Cmdlets\Directory\Directory.cs" />
     <Compile Include="Cmdlets\Directory\gShellUserObject.cs" />
     <Compile Include="Cmdlets\Discovery\DiscoveryBase.cs" />
-    <Compile Include="Cmdlets\Drive\Google.Apis.Drive.v3.cs" />
+    <Compile Include="Cmdlets\Drive\Drive.cs" />
     <Compile Include="Cmdlets\EmailSettings\EmailSettings.cs" />
     <Compile Include="Cmdlets\Gmail\Gmail.cs" />
     <Compile Include="Cmdlets\GroupsMigration\GroupsMigration.cs" />
