@@ -163,18 +163,48 @@ namespace gShell.Cmdlets.Emailsettings.Delegation
         /// <para type="description">The name of the user given access to a Gmail account.</para>
         /// </summary>
         [Parameter(HelpMessage = "The name of the user given access to a Gmail account.",
-            Position = 0,
+            Position = 1,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public string DelegateEmail { get; set; }
+
+        /// <summary>
+        /// <para type="description">A switch to run the cmdlet without prompting</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        HelpMessage = "A switch to run the cmdlet without prompting")]
+        public SwitchParameter Force { get; set; }
+
         #endregion
 
         protected override void ProcessRecord()
         {
-            if (ShouldProcess("Email Settings Delegation", "Remove-GEmailSettingsDelegation"))
-            {
-                delegation.Delete(Domain, GetUserFromEmail(UserName), DelegateEmail);
-            }
+            string toRemoveTarget = "Email Settings Delegation";
+
+			if (ShouldProcess(toRemoveTarget))
+			{	
+				if (Force || ShouldContinue(toRemoveTarget + "will be removed.\nContinue?", "Confirm Removal"))
+				{
+					try
+					{
+						WriteDebug("Attempting to remove " + toRemoveTarget + "...");
+
+                        delegation.Delete(Domain, GetUserFromEmail(UserName), DelegateEmail);
+							
+						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
+					}
+					catch (Exception e)
+					{
+						WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, toRemoveTarget));
+					}
+				}
+				else
+				{
+					WriteError(new ErrorRecord(new Exception("Deletion not confirmed"),
+						"", ErrorCategory.InvalidData, toRemoveTarget));
+				}
+			}
         }
     }
 }
@@ -803,18 +833,48 @@ namespace gShell.Cmdlets.Emailsettings.Label
         /// <para type="description">The label to delete.</para>
         /// </summary>
         [Parameter(HelpMessage = "The label to delete.",
-            Position = 0,
+            Position = 1,
             Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public string LabelName { get; set; }
+
+        /// <summary>
+        /// <para type="description">A switch to run the cmdlet without prompting</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        HelpMessage = "A switch to run the cmdlet without prompting")]
+        public SwitchParameter Force { get; set; }
+
         #endregion
 
         protected override void ProcessRecord()
         {
-            if (ShouldProcess("Email Settings Label", "Remove-GEmailSettingsLabel"))
-            {
-                labels.Delete(Domain, GetUserFromEmail(UserName), LabelName);
-            }
+            string toRemoveTarget = "Email Settings Label";
+
+			if (ShouldProcess(toRemoveTarget))
+			{	
+				if (Force || ShouldContinue(toRemoveTarget + "will be removed.\nContinue?", "Confirm Removal"))
+				{
+					try
+					{
+						WriteDebug("Attempting to remove " + toRemoveTarget + "...");
+
+                        labels.Delete(Domain, GetUserFromEmail(UserName), LabelName);
+							
+						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
+					}
+					catch (Exception e)
+					{
+						WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, toRemoveTarget));
+					}
+				}
+				else
+				{
+					WriteError(new ErrorRecord(new Exception("Deletion not confirmed"),
+						"", ErrorCategory.InvalidData, toRemoveTarget));
+				}
+			}
         }
     }
 }

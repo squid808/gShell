@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Management.Automation;
-
+using gShell.Cmdlets.Emailsettings.Language;
 using Data = Google.Apis.admin.Adminsettings.adminsettings_v1.Data;
 
 
@@ -100,11 +100,11 @@ namespace gShell.Cmdlets.Adminsettings.DefaultLanguage
 
             if (ParameterSetName == "word")
             {
-                body.DefaultLanguageValue = SetGEmailSettingsLanguage.LookupLanguage(this.DefaultLanguage);
+                body.DefaultLanguageValue = SetGEmailSettingsLanguageCommand.LookupLanguage(this.DefaultLanguage);
             }
             else
             {
-                body.DefaultLanguageValue = SetGEmailSettingsLanguage.LookupLanguage(this.LanguageAbbreviation);
+                body.DefaultLanguageValue = SetGEmailSettingsLanguageCommand.LookupLanguage(this.LanguageAbbreviation);
             }
 
             if (ShouldProcess("Admin Settings DefaultLanguage", "Get-GAdminSettingsDefaultLanguage"))
