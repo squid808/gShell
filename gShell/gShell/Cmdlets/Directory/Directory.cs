@@ -8709,13 +8709,13 @@ namespace gShell.Cmdlets.Directory.GAUserProperty
 
         public GAUserPropertyCollection(Data.User u)
         {
-            AddRange(GAUserPropertyBase.GetAddressFromUser(u));
-            AddRange(GAUserPropertyBase.GetEmailFromUser(u));
-            AddRange(GAUserPropertyBase.GetExIdFromUser(u));
-            AddRange(GAUserPropertyBase.GetImFromUser(u));
-            AddRange(GAUserPropertyBase.GetOrgFromUser(u));
-            AddRange(GAUserPropertyBase.GetPhoneFromUser(u));
-            AddRange(GAUserPropertyBase.GetRelationFromUser(u));
+            AddRange(GAUserPropertyBaseCommand.GetAddressFromUser(u));
+            AddRange(GAUserPropertyBaseCommand.GetEmailFromUser(u));
+            AddRange(GAUserPropertyBaseCommand.GetExIdFromUser(u));
+            AddRange(GAUserPropertyBaseCommand.GetImFromUser(u));
+            AddRange(GAUserPropertyBaseCommand.GetOrgFromUser(u));
+            AddRange(GAUserPropertyBaseCommand.GetPhoneFromUser(u));
+            AddRange(GAUserPropertyBaseCommand.GetRelationFromUser(u));
         }
         #endregion
 
@@ -9023,7 +9023,7 @@ namespace gShell.Cmdlets.Directory.GAUserProperty
     [Cmdlet(VerbsCommon.Get, "GAUserProperty",
          SupportsShouldProcess = true,
          HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAUserProperty")]
-    public class GetGAUserProperty : GAUserPropertyBase
+    public class GetGAUserPropertyCommand : GAUserPropertyBaseCommand
     {
         #region Properties
 
@@ -9772,7 +9772,7 @@ namespace gShell.Cmdlets.Directory.GAUserProperty
     [Cmdlet(VerbsCommon.Remove, "GAUserProperty",
          SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAUserProperty")]
-    public class RemoveGAUserProperty : GAUserPropertyBase
+    public class RemoveGAUserProperty : GAUserPropertyBaseCommand
     {
         #region Properties
 

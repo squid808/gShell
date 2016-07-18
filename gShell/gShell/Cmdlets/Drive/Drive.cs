@@ -2874,7 +2874,7 @@ namespace gShell.Cmdlets.Drive.Files
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Update-GDriveFile">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
-    [Cmdlet(VerbsData.Update, "GDriveFile`",
+    [Cmdlet(VerbsData.Update, "GDriveFile",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Update-GDriveFile")]
     public class UpdateGDriveFileCommand : DriveServiceAccountBase

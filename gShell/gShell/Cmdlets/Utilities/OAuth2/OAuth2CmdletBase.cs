@@ -1,27 +1,13 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Management.Automation;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Reflection;
 
-using Google.Apis.admin.Directory.directory_v1;
-//using Google.Apis.Drive.v2;
 using Google.Apis.Auth.OAuth2;
-using Google.Apis.Json;
 using Google.Apis.Util;
-using Google.Apis.Oauth2.v2;
-using Google.Apis.Oauth2.v2.Data;
-using Google.Apis.Services;
-//using Google.Apis.admin.Reports.reports_v1;
-//using Google.Apis.admin.Reports.reports_v1.Data;
 
 using gShell.Cmdlets.Utilities.ScopeHandler;
-
-//using gShell.Serialization;
 
 namespace gShell.dotNet.Utilities.OAuth2
 {

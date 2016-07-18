@@ -789,54 +789,54 @@ namespace gShell.Cmdlets.Groupssettings.Groups
         {
             if (ParameterSetName == "Params")
             {
-                var body = new Data.Groups()
+                var body = new Data.Groups
                 {
                     AllowExternalMembers =
-                        this.AllowExternalMembers.HasValue ? this.AllowExternalMembers.Value.ToString() : null,
+                        AllowExternalMembers.HasValue ? AllowExternalMembers.Value.ToString() : null,
                     AllowGoogleCommunication =
-                        this.AllowGoogleCommunication.HasValue ? this.AllowGoogleCommunication.Value.ToString() : null,
-                    AllowWebPosting = this.AllowWebPosting.HasValue ? this.AllowWebPosting.Value.ToString() : null,
-                    ArchiveOnly = this.ArchiveOnly.HasValue ? this.ArchiveOnly.Value.ToString() : null,
-                    CustomReplyTo = this.CustomReplyTo,
-                    DefaultMessageDenyNotificationText = this.DefaultMessageDenyNotificationText,
-                    Description = this.Description,
-                    Email = this.Email,
+                        AllowGoogleCommunication.HasValue ? AllowGoogleCommunication.Value.ToString() : null,
+                    AllowWebPosting = AllowWebPosting.HasValue ? AllowWebPosting.Value.ToString() : null,
+                    ArchiveOnly = ArchiveOnly.HasValue ? ArchiveOnly.Value.ToString() : null,
+                    CustomReplyTo = CustomReplyTo,
+                    DefaultMessageDenyNotificationText = DefaultMessageDenyNotificationText,
+                    Description = Description,
+                    Email = Email,
                     IncludeInGlobalAddressList =
-                        this.IncludeInGlobalAddressList.HasValue
-                            ? this.IncludeInGlobalAddressList.Value.ToString()
+                        IncludeInGlobalAddressList.HasValue
+                            ? IncludeInGlobalAddressList.Value.ToString()
                             : null,
-                    IsArchived = this.IsArchived.HasValue ? this.IsArchived.Value.ToString() : null,
+                    IsArchived = IsArchived.HasValue ? IsArchived.Value.ToString() : null,
                     Kind = "groupsSettings#groups",
-                    MaxMessageBytes = this.MaxMessageBytes,
+                    MaxMessageBytes = MaxMessageBytes,
                     MembersCanPostAsTheGroup =
-                        this.MembersCanPostAsTheGroup.HasValue ? this.MembersCanPostAsTheGroup.Value.ToString() : null,
-                    MessageDisplayFont = this.MessageDisplayFont != null ? this.MessageDisplayFont.ToString() : null,
+                        MembersCanPostAsTheGroup.HasValue ? MembersCanPostAsTheGroup.Value.ToString() : null,
+                    MessageDisplayFont = MessageDisplayFont != null ? MessageDisplayFont.ToString() : null,
                     MessageModerationLevel =
-                        this.MessageModerationLevel.HasValue ? this.MessageModerationLevel.Value.ToString() : null,
-                    Name = this.Name,
+                        MessageModerationLevel.HasValue ? MessageModerationLevel.Value.ToString() : null,
+                    Name = Name,
                     PrimaryLanguage =
-                        this.PrimaryLanguage.HasValue
-                            ? SetGEmailSettingsLanguage.LookupLanguage(this.PrimaryLanguage.Value)
+                        PrimaryLanguage.HasValue
+                            ? SetGEmailSettingsLanguageCommand.LookupLanguage(PrimaryLanguage.Value)
                             : null,
-                    ReplyTo = this.ReplyTo,
+                    ReplyTo = ReplyTo,
                     SendMessageDenyNotification =
-                        this.SendMessageDenyNotification.HasValue
-                            ? this.SendMessageDenyNotification.Value.ToString()
+                        SendMessageDenyNotification.HasValue
+                            ? SendMessageDenyNotification.Value.ToString()
                             : null,
                     ShowInGroupDirectory =
-                        this.ShowInGroupDirectory.HasValue ? this.ShowInGroupDirectory.Value.ToString() : null,
+                        ShowInGroupDirectory.HasValue ? ShowInGroupDirectory.Value.ToString() : null,
                     SpamModerationLevel =
-                        this.SpamModerationLevel.HasValue ? this.SpamModerationLevel.Value.ToString() : null,
-                    WhoCanAdd = this.WhoCanAdd.HasValue ? this.WhoCanAdd.Value.ToString() : null,
+                        SpamModerationLevel.HasValue ? SpamModerationLevel.Value.ToString() : null,
+                    WhoCanAdd = WhoCanAdd.HasValue ? WhoCanAdd.Value.ToString() : null,
                     WhoCanContactOwner =
-                        this.WhoCanContactOwner.HasValue ? this.WhoCanContactOwner.Value.ToString() : null,
-                    WhoCanInvite = this.WhoCanInvite.HasValue ? this.WhoCanInvite.Value.ToString() : null,
-                    WhoCanJoin = this.WhoCanJoin.HasValue ? this.WhoCanJoin.Value.ToString() : null,
-                    WhoCanLeaveGroup = this.WhoCanLeaveGroup.HasValue ? this.WhoCanLeaveGroup.Value.ToString() : null,
-                    WhoCanPostMessage = this.WhoCanPostMessage.HasValue ? this.WhoCanPostMessage.Value.ToString() : null,
-                    WhoCanViewGroup = this.WhoCanViewGroup.HasValue ? this.WhoCanViewGroup.Value.ToString() : null,
+                        WhoCanContactOwner.HasValue ? WhoCanContactOwner.Value.ToString() : null,
+                    WhoCanInvite = WhoCanInvite.HasValue ? WhoCanInvite.Value.ToString() : null,
+                    WhoCanJoin = WhoCanJoin.HasValue ? WhoCanJoin.Value.ToString() : null,
+                    WhoCanLeaveGroup = WhoCanLeaveGroup.HasValue ? WhoCanLeaveGroup.Value.ToString() : null,
+                    WhoCanPostMessage = WhoCanPostMessage.HasValue ? WhoCanPostMessage.Value.ToString() : null,
+                    WhoCanViewGroup = WhoCanViewGroup.HasValue ? WhoCanViewGroup.Value.ToString() : null,
                     WhoCanViewMembership =
-                        this.WhoCanViewMembership.HasValue ? this.WhoCanViewMembership.Value.ToString() : null
+                        WhoCanViewMembership.HasValue ? WhoCanViewMembership.Value.ToString() : null
                 };
 
                 if (!AllowExternalMembers.HasValue
