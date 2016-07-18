@@ -90,16 +90,18 @@ namespace gShell.Cmdlets.DataTransfer{
 
 
 
-            public Google.Apis.admin.DataTransfer.datatransfer_v1.Data.Application Get (long
 
-             applicationId)
+
+            public Google.Apis.admin.DataTransfer.datatransfer_v1.Data.Application Get (long ApplicationId)
             {
 
-                return mainBase.applications.Get(applicationId, gShellServiceAccount);
+                return mainBase.applications.Get(ApplicationId, gShellServiceAccount);
             }
 
 
-            public List<Google.Apis.admin.DataTransfer.datatransfer_v1.Data.ApplicationsListResponse> List(gDataTransfer.Applications.ApplicationsListProperties properties = null)
+
+
+            public List<Google.Apis.admin.DataTransfer.datatransfer_v1.Data.ApplicationsListResponse> List(gDataTransfer.Applications.ApplicationsListProperties properties= null)
             {
 
                 properties = (properties != null) ? properties : new gDataTransfer.Applications.ApplicationsListProperties();
@@ -109,7 +111,6 @@ namespace gShell.Cmdlets.DataTransfer{
                 return mainBase.applications.List(properties);
             }
         }
-
         #endregion
 
 
@@ -122,23 +123,28 @@ namespace gShell.Cmdlets.DataTransfer{
 
 
 
-            public Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer Get (string
 
-             dataTransferId)
+
+            public Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer Get (string DataTransferId)
             {
 
-                return mainBase.transfers.Get(dataTransferId, gShellServiceAccount);
+                return mainBase.transfers.Get(DataTransferId, gShellServiceAccount);
             }
 
 
-            public Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer Insert (Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer body)
+
+
+
+            public Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer Insert (Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer DataTransferBody)
             {
 
-                return mainBase.transfers.Insert(body, gShellServiceAccount);
+                return mainBase.transfers.Insert(DataTransferBody, gShellServiceAccount);
             }
 
 
-            public List<Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfersListResponse> List(gDataTransfer.Transfers.TransfersListProperties properties = null)
+
+
+            public List<Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfersListResponse> List(gDataTransfer.Transfers.TransfersListProperties properties= null)
             {
 
                 properties = (properties != null) ? properties : new gDataTransfer.Transfers.TransfersListProperties();
@@ -148,7 +154,6 @@ namespace gShell.Cmdlets.DataTransfer{
                 return mainBase.transfers.List(properties);
             }
         }
-
         #endregion
 
         #endregion
@@ -210,15 +215,13 @@ namespace gShell.dotNet
             }
 
 
-            public Google.Apis.admin.DataTransfer.datatransfer_v1.Data.Application Get (long
-
-             applicationId, string gShellServiceAccount = null)
+            public Google.Apis.admin.DataTransfer.datatransfer_v1.Data.Application Get (long ApplicationId, string gShellServiceAccount = null)
             {
-                return GetService(gShellServiceAccount).Applications.Get(applicationId).Execute();
+                return GetService(gShellServiceAccount).Applications.Get(ApplicationId).Execute();
             }
 
             public List<Google.Apis.admin.DataTransfer.datatransfer_v1.Data.ApplicationsListResponse> List(
-                ApplicationsListProperties properties = null, string gShellServiceAccount = null)
+                ApplicationsListProperties properties= null, string gShellServiceAccount = null)
             {
                 var results = new List<Google.Apis.admin.DataTransfer.datatransfer_v1.Data.ApplicationsListResponse>();
 
@@ -293,20 +296,18 @@ namespace gShell.dotNet
             }
 
 
-            public Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer Get (string
-
-             dataTransferId, string gShellServiceAccount = null)
+            public Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer Get (string DataTransferId, string gShellServiceAccount = null)
             {
-                return GetService(gShellServiceAccount).Transfers.Get(dataTransferId).Execute();
+                return GetService(gShellServiceAccount).Transfers.Get(DataTransferId).Execute();
             }
 
-            public Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer Insert (Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer body, string gShellServiceAccount = null)
+            public Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer Insert (Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer DataTransferBody, string gShellServiceAccount = null)
             {
-                return GetService(gShellServiceAccount).Transfers.Insert(body).Execute();
+                return GetService(gShellServiceAccount).Transfers.Insert(DataTransferBody).Execute();
             }
 
             public List<Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfersListResponse> List(
-                TransfersListProperties properties = null, string gShellServiceAccount = null)
+                TransfersListProperties properties= null, string gShellServiceAccount = null)
             {
                 var results = new List<Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfersListResponse>();
 

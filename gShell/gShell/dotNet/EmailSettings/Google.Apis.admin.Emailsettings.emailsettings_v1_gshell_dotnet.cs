@@ -115,6 +115,8 @@ namespace gShell.Cmdlets.Emailsettings{
 
 
 
+
+
             public void Delete (string
 
              domain, string
@@ -128,6 +130,9 @@ namespace gShell.Cmdlets.Emailsettings{
             }
 
 
+
+
+
             public Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Delegates Get (string
 
              domain, string
@@ -139,6 +144,9 @@ namespace gShell.Cmdlets.Emailsettings{
             }
 
 
+
+
+
             public Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Delegate Insert (Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Delegate body, string
 
              domain, string
@@ -148,8 +156,9 @@ namespace gShell.Cmdlets.Emailsettings{
 
                 return mainBase.delegation.Insert(body, domain, userKey, gShellServiceAccount);
             }
-        }
 
+
+        }
         #endregion
 
 
@@ -158,6 +167,8 @@ namespace gShell.Cmdlets.Emailsettings{
 
         public class Filters
         {
+
+
 
 
 
@@ -171,8 +182,9 @@ namespace gShell.Cmdlets.Emailsettings{
 
                 return mainBase.filters.Insert(body, domain, userKey, gShellServiceAccount);
             }
-        }
 
+
+        }
         #endregion
 
 
@@ -181,6 +193,8 @@ namespace gShell.Cmdlets.Emailsettings{
 
         public class Forwarding
         {
+
+
 
 
 
@@ -196,6 +210,9 @@ namespace gShell.Cmdlets.Emailsettings{
             }
 
 
+
+
+
             public Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Forwarding Update (Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Forwarding body, string
 
              domain, string
@@ -205,8 +222,9 @@ namespace gShell.Cmdlets.Emailsettings{
 
                 return mainBase.forwarding.Update(body, domain, userKey, gShellServiceAccount);
             }
-        }
 
+
+        }
         #endregion
 
 
@@ -215,6 +233,8 @@ namespace gShell.Cmdlets.Emailsettings{
 
         public class General
         {
+
+
 
 
 
@@ -228,8 +248,9 @@ namespace gShell.Cmdlets.Emailsettings{
 
                 return mainBase.general.Update(body, domain, userKey, gShellServiceAccount);
             }
-        }
 
+
+        }
         #endregion
 
 
@@ -238,6 +259,8 @@ namespace gShell.Cmdlets.Emailsettings{
 
         public class Imap
         {
+
+
 
 
 
@@ -253,6 +276,9 @@ namespace gShell.Cmdlets.Emailsettings{
             }
 
 
+
+
+
             public Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Imap Update (Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Imap body, string
 
              domain, string
@@ -262,8 +288,9 @@ namespace gShell.Cmdlets.Emailsettings{
 
                 return mainBase.imap.Update(body, domain, userKey, gShellServiceAccount);
             }
-        }
 
+
+        }
         #endregion
 
 
@@ -272,6 +299,8 @@ namespace gShell.Cmdlets.Emailsettings{
 
         public class Labels
         {
+
+
 
 
 
@@ -289,6 +318,9 @@ namespace gShell.Cmdlets.Emailsettings{
             }
 
 
+
+
+
             public Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Labels Get (string
 
              domain, string
@@ -300,6 +332,9 @@ namespace gShell.Cmdlets.Emailsettings{
             }
 
 
+
+
+
             public Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Label Insert (Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Label body, string
 
              domain, string
@@ -309,8 +344,9 @@ namespace gShell.Cmdlets.Emailsettings{
 
                 return mainBase.labels.Insert(body, domain, userKey, gShellServiceAccount);
             }
-        }
 
+
+        }
         #endregion
 
 
@@ -319,6 +355,8 @@ namespace gShell.Cmdlets.Emailsettings{
 
         public class Language
         {
+
+
 
 
 
@@ -332,8 +370,9 @@ namespace gShell.Cmdlets.Emailsettings{
 
                 return mainBase.language.Update(body, domain, userKey, gShellServiceAccount);
             }
-        }
 
+
+        }
         #endregion
 
 
@@ -342,6 +381,8 @@ namespace gShell.Cmdlets.Emailsettings{
 
         public class Pop
         {
+
+
 
 
 
@@ -357,6 +398,9 @@ namespace gShell.Cmdlets.Emailsettings{
             }
 
 
+
+
+
             public Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Pop Update (Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Pop body, string
 
              domain, string
@@ -366,8 +410,9 @@ namespace gShell.Cmdlets.Emailsettings{
 
                 return mainBase.pop.Update(body, domain, userKey, gShellServiceAccount);
             }
-        }
 
+
+        }
         #endregion
 
 
@@ -376,6 +421,8 @@ namespace gShell.Cmdlets.Emailsettings{
 
         public class SendasAliases
         {
+
+
 
 
 
@@ -391,6 +438,9 @@ namespace gShell.Cmdlets.Emailsettings{
             }
 
 
+
+
+
             public Google.Apis.admin.Emailsettings.emailsettings_v1.Data.SendasAlias Insert (Google.Apis.admin.Emailsettings.emailsettings_v1.Data.SendasAlias body, string
 
              domain, string
@@ -400,8 +450,9 @@ namespace gShell.Cmdlets.Emailsettings{
 
                 return mainBase.sendasAliases.Insert(body, domain, userKey, gShellServiceAccount);
             }
-        }
 
+
+        }
         #endregion
 
 
@@ -410,6 +461,8 @@ namespace gShell.Cmdlets.Emailsettings{
 
         public class Signature
         {
+
+
 
 
 
@@ -425,6 +478,9 @@ namespace gShell.Cmdlets.Emailsettings{
             }
 
 
+
+
+
             public Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Signature Update (Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Signature body, string
 
              domain, string
@@ -434,8 +490,9 @@ namespace gShell.Cmdlets.Emailsettings{
 
                 return mainBase.signature.Update(body, domain, userKey, gShellServiceAccount);
             }
-        }
 
+
+        }
         #endregion
 
 
@@ -444,6 +501,8 @@ namespace gShell.Cmdlets.Emailsettings{
 
         public class VacationResponder
         {
+
+
 
 
 
@@ -459,6 +518,9 @@ namespace gShell.Cmdlets.Emailsettings{
             }
 
 
+
+
+
             public Google.Apis.admin.Emailsettings.emailsettings_v1.Data.VacationResponder Update (Google.Apis.admin.Emailsettings.emailsettings_v1.Data.VacationResponder body, string
 
              domain, string
@@ -468,8 +530,9 @@ namespace gShell.Cmdlets.Emailsettings{
 
                 return mainBase.vacationResponder.Update(body, domain, userKey, gShellServiceAccount);
             }
-        }
 
+
+        }
         #endregion
 
 
@@ -478,6 +541,8 @@ namespace gShell.Cmdlets.Emailsettings{
 
         public class WebClip
         {
+
+
 
 
 
@@ -491,8 +556,9 @@ namespace gShell.Cmdlets.Emailsettings{
 
                 return mainBase.webClip.Update(body, domain, userKey, gShellServiceAccount);
             }
-        }
 
+
+        }
         #endregion
 
         #endregion

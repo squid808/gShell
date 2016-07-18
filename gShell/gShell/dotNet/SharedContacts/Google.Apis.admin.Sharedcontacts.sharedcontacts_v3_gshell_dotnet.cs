@@ -95,6 +95,8 @@ namespace gShell.Cmdlets.Sharedcontacts{
 
 
 
+
+
             public void Delete (string
 
              domain, string
@@ -108,6 +110,9 @@ namespace gShell.Cmdlets.Sharedcontacts{
             }
 
 
+
+
+
             public Google.Apis.admin.Sharedcontacts.sharedcontacts_v3.Data.Contact Get (string
 
              domain, string
@@ -119,6 +124,9 @@ namespace gShell.Cmdlets.Sharedcontacts{
             }
 
 
+
+
+
             public Google.Apis.admin.Sharedcontacts.sharedcontacts_v3.Data.Contact Insert (Google.Apis.admin.Sharedcontacts.sharedcontacts_v3.Data.Contact body, string
 
              domain)
@@ -126,6 +134,9 @@ namespace gShell.Cmdlets.Sharedcontacts{
 
                 return mainBase.contact.Insert(body, domain, gShellServiceAccount);
             }
+
+
+
 
 
             public Google.Apis.admin.Sharedcontacts.sharedcontacts_v3.Data.Contacts List (string
@@ -139,6 +150,9 @@ namespace gShell.Cmdlets.Sharedcontacts{
             }
 
 
+
+
+
             public Google.Apis.admin.Sharedcontacts.sharedcontacts_v3.Data.Contact Update (Google.Apis.admin.Sharedcontacts.sharedcontacts_v3.Data.Contact body, string
 
              domain, string
@@ -150,8 +164,9 @@ namespace gShell.Cmdlets.Sharedcontacts{
 
                 return mainBase.contact.Update(body, domain, id, version, gShellServiceAccount);
             }
-        }
 
+
+        }
         #endregion
 
 
@@ -160,6 +175,8 @@ namespace gShell.Cmdlets.Sharedcontacts{
 
         public class Photo
         {
+
+
 
 
 
@@ -173,8 +190,9 @@ namespace gShell.Cmdlets.Sharedcontacts{
 
                 return mainBase.photo.Get(domain, id, gShellServiceAccount);
             }
-        }
 
+
+        }
         #endregion
 
         #endregion

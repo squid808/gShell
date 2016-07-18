@@ -36,7 +36,13 @@ function Generate-GshellLibraries ($OutputName, $ApiName, $Version, $OutputPath 
 
 }
 
+Generate-GshellLibraries "Discovery" "discovery" "v1"
+
+Generate-GshellLibraries "Discovery" "discovery" "v1" -Variant "posh" -OutputPath "Documents\gShell\gShell\gShell\Cmdlets"
+
 Generate-GshellLibraries "GroupsSettings" "groupssettings" "v1"
+
+Generate-GshellLibraries "GroupsSettings" "groupssettings" "v1" -Variant "posh" -OutputPath "Documents\gShell\gShell\gShell\Cmdlets"
 
 Generate-GshellLibraries "Directory" "admin" "directory_v1"
 
@@ -46,11 +52,19 @@ Generate-GshellLibraries "Reports" "admin" "reports_v1"
 
 Generate-GshellLibraries "DataTransfer" "admin" "datatransfer_v1"
 
+Generate-GshellLibraries "DataTransfer" "admin" "datatransfer_v1" -Variant "posh" -OutputPath "Documents\gShell\gShell\gShell\Cmdlets"
+
 Generate-GshellLibraries "GroupsMigration" "groupsmigration" "v1"
+
+Generate-GshellLibraries "GroupsMigration" "groupsmigration" "v1"  -Variant "posh" -OutputPath "Documents\gShell\gShell\gShell\Cmdlets"
 
 Generate-GshellLibraries "Licensing" "licensing" "v1"
 
+Generate-GshellLibraries "Licensing" "licensing" "v1" -Variant "posh" -OutputPath "Documents\gShell\gShell\gShell\Cmdlets"
+
 Generate-GshellLibraries "Reseller" "reseller" "v1"
+
+Generate-GshellLibraries "Reseller" "reseller" "v1" -Variant "posh" -OutputPath "Documents\gShell\gShell\gShell\Cmdlets"
 
 Generate-GshellLibraries "Drive" "drive" "v3"
 
@@ -69,10 +83,10 @@ Generate-GshellLibraries "Classroom" "classroom" "v1"
 Generate-GshellLibraries "Classroom" "classroom" "v1" -Variant "posh" -OutputPath "Documents\gShell\gShell\gShell\Cmdlets"
 
 Generate-GshellLibraries "Adminsettings" "admin" "adminsettings_v1" `
-    "$env:USERPROFILE\Documents\gdata-client-library-bridge\AdminSettings\admin_adminsettings_v1.json"
+    -JsonPath "$env:USERPROFILE\Documents\gdata-client-library-bridge\AdminSettings\admin_adminsettings_v1.json"
 
 Generate-GshellLibraries "Emailsettings" "admin" "emailsettings_v1" `
-    "$env:USERPROFILE\Documents\gdata-client-library-bridge\EmailSettings\admin_emailsettings_v1.json"
+    -JsonPath "$env:USERPROFILE\Documents\gdata-client-library-bridge\EmailSettings\admin_emailsettings_v1.json"
 
 Generate-GshellLibraries "SharedContacts" "admin" "sharedcontacts_v3" `
-    "C:\Users\svarney\Documents\gdata-client-library-bridge\SharedContacts\admin_sharedcontacts_v3.json"
+    -JsonPath "C:\Users\svarney\Documents\gdata-client-library-bridge\SharedContacts\admin_sharedcontacts_v3.json"
