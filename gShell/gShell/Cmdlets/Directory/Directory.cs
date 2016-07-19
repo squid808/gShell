@@ -3898,8 +3898,13 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
                     case "OneGroup":
                         if (ShouldProcess(GroupName, "Get-GAGroupMember"))
                         {
+                            var properties = new dotNet.Directory.Members.MembersListProperties()
+                            {
+                                Roles = DetermineRoles()
+                            };
+
                             GroupName = GetFullEmailAddress(GroupName, Domain);
-                            WriteObject(members.List(GroupName).SelectMany(x => x.MembersValue).ToList());
+                            WriteObject(members.List(GroupName, properties).SelectMany(x => x.MembersValue).ToList());
                         }
                         break;
 
