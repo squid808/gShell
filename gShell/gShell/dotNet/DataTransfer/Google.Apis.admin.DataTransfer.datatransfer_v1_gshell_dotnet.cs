@@ -108,7 +108,7 @@ namespace gShell.Cmdlets.DataTransfer{
                 properties.startProgressBar = StartProgressBar;
                 properties.updateProgressBar = UpdateProgressBar;
 
-                return mainBase.applications.List(properties);
+                return mainBase.applications.List(properties, gShellServiceAccount);
             }
         }
         #endregion
@@ -151,7 +151,7 @@ namespace gShell.Cmdlets.DataTransfer{
                 properties.startProgressBar = StartProgressBar;
                 properties.updateProgressBar = UpdateProgressBar;
 
-                return mainBase.transfers.List(properties);
+                return mainBase.transfers.List(properties, gShellServiceAccount);
             }
         }
         #endregion

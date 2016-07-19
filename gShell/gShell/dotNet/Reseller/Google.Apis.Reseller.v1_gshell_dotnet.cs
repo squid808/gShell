@@ -304,7 +304,7 @@ namespace gShell.Cmdlets.Reseller{
                 properties.StartProgressBar = StartProgressBar;
                 properties.UpdateProgressBar = UpdateProgressBar;
 
-                return mainBase.subscriptions.List(properties);
+                return mainBase.subscriptions.List(properties, gShellServiceAccount);
             }
 
             /// <summary>Starts paid service of a trial subscription</summary>

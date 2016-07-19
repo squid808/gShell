@@ -312,7 +312,7 @@ namespace gShell.Cmdlets.Drive{
                 properties = properties ?? new gDrive.Comments.CommentsListProperties();
 
 
-                return mainBase.comments.List(FileId, properties);
+                return mainBase.comments.List(FileId, properties, gShellServiceAccount);
             }
 
             /// <summary>Updates a comment with patch semantics.</summary>
@@ -441,7 +441,7 @@ namespace gShell.Cmdlets.Drive{
                 properties = properties ?? new gDrive.Files.FilesListProperties();
 
 
-                return mainBase.files.List(properties);
+                return mainBase.files.List(properties, gShellServiceAccount);
             }
 
             /// <summary>Updates a file's metadata and/or content with patch semantics.</summary>
@@ -622,7 +622,7 @@ namespace gShell.Cmdlets.Drive{
                 properties = properties ?? new gDrive.Replies.RepliesListProperties();
 
 
-                return mainBase.replies.List(FileId, CommentId, properties);
+                return mainBase.replies.List(FileId, CommentId, properties, gShellServiceAccount);
             }
 
             /// <summary>Updates a reply with patch semantics.</summary>

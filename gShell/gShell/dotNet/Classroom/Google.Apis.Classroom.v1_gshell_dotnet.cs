@@ -219,7 +219,7 @@ namespace gShell.Cmdlets.Classroom{
                     properties = properties ?? new gClassroom.Courses.Aliases.AliasesListProperties();
 
 
-                    return mainBase.courses.aliases.List(CourseId, properties);
+                    return mainBase.courses.aliases.List(CourseId, properties, gShellServiceAccount);
                 }
             }
             #endregion
@@ -299,7 +299,7 @@ namespace gShell.Cmdlets.Classroom{
                     properties = properties ?? new gClassroom.Courses.Students.StudentsListProperties();
 
 
-                    return mainBase.courses.students.List(CourseId, properties);
+                    return mainBase.courses.students.List(CourseId, properties, gShellServiceAccount);
                 }
             }
             #endregion
@@ -378,7 +378,7 @@ namespace gShell.Cmdlets.Classroom{
                     properties = properties ?? new gClassroom.Courses.Teachers.TeachersListProperties();
 
 
-                    return mainBase.courses.teachers.List(CourseId, properties);
+                    return mainBase.courses.teachers.List(CourseId, properties, gShellServiceAccount);
                 }
             }
             #endregion
@@ -437,7 +437,7 @@ namespace gShell.Cmdlets.Classroom{
                 properties = properties ?? new gClassroom.Courses.CoursesListProperties();
 
 
-                return mainBase.courses.List(properties);
+                return mainBase.courses.List(properties, gShellServiceAccount);
             }
 
             /// <summary>Updates one or more fields in a course. This method returns the following error codes: *
@@ -554,7 +554,7 @@ namespace gShell.Cmdlets.Classroom{
                 properties = properties ?? new gClassroom.Invitations.InvitationsListProperties();
 
 
-                return mainBase.invitations.List(properties);
+                return mainBase.invitations.List(properties, gShellServiceAccount);
             }
         }
         #endregion

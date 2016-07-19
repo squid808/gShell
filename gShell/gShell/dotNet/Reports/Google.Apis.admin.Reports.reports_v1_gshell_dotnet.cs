@@ -166,7 +166,7 @@ namespace gShell.Cmdlets.Reports{
                 properties.StartProgressBar = StartProgressBar;
                 properties.UpdateProgressBar = UpdateProgressBar;
 
-                return mainBase.activities.List(UserKey, ApplicationName, properties);
+                return mainBase.activities.List(UserKey, ApplicationName, properties, gShellServiceAccount);
             }
 
             /// <summary>Push changes to activities</summary>

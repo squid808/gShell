@@ -310,7 +310,7 @@ namespace gShell.Cmdlets.Directory{
                 properties.StartProgressBar = StartProgressBar;
                 properties.UpdateProgressBar = UpdateProgressBar;
 
-                return mainBase.chromeosdevices.List(CustomerId, properties);
+                return mainBase.chromeosdevices.List(CustomerId, properties, gShellServiceAccount);
             }
 
             /// <summary>Update Chrome OS Device. This method supports patch semantics.</summary>
@@ -616,7 +616,7 @@ namespace gShell.Cmdlets.Directory{
                 properties.StartProgressBar = StartProgressBar;
                 properties.UpdateProgressBar = UpdateProgressBar;
 
-                return mainBase.groups.List(properties);
+                return mainBase.groups.List(properties, gShellServiceAccount);
             }
 
             /// <summary>Update Group. This method supports patch semantics.</summary>
@@ -702,7 +702,7 @@ namespace gShell.Cmdlets.Directory{
                 properties.StartProgressBar = StartProgressBar;
                 properties.UpdateProgressBar = UpdateProgressBar;
 
-                return mainBase.members.List(GroupKey, properties);
+                return mainBase.members.List(GroupKey, properties, gShellServiceAccount);
             }
 
             /// <summary>Update membership of a user in the specified group. This method supports patch
@@ -798,7 +798,7 @@ namespace gShell.Cmdlets.Directory{
                 properties.StartProgressBar = StartProgressBar;
                 properties.UpdateProgressBar = UpdateProgressBar;
 
-                return mainBase.mobiledevices.List(CustomerId, properties);
+                return mainBase.mobiledevices.List(CustomerId, properties, gShellServiceAccount);
             }
         }
         #endregion
@@ -849,7 +849,7 @@ namespace gShell.Cmdlets.Directory{
                 properties.StartProgressBar = StartProgressBar;
                 properties.UpdateProgressBar = UpdateProgressBar;
 
-                return mainBase.notifications.List(Customer, properties);
+                return mainBase.notifications.List(Customer, properties, gShellServiceAccount);
             }
 
             /// <summary>Updates a notification. This method supports patch semantics.</summary>
@@ -1069,7 +1069,7 @@ namespace gShell.Cmdlets.Directory{
                     properties.StartProgressBar = StartProgressBar;
                     properties.UpdateProgressBar = UpdateProgressBar;
 
-                    return mainBase.resources.calendars.List(Customer, properties);
+                    return mainBase.resources.calendars.List(Customer, properties, gShellServiceAccount);
                 }
 
                 /// <summary>Updates a calendar resource. This method supports patch semantics.</summary>
@@ -1162,7 +1162,7 @@ namespace gShell.Cmdlets.Directory{
                 properties.StartProgressBar = StartProgressBar;
                 properties.UpdateProgressBar = UpdateProgressBar;
 
-                return mainBase.roleAssignments.List(Customer, properties);
+                return mainBase.roleAssignments.List(Customer, properties, gShellServiceAccount);
             }
         }
         #endregion
@@ -1224,7 +1224,7 @@ namespace gShell.Cmdlets.Directory{
                 properties.StartProgressBar = StartProgressBar;
                 properties.UpdateProgressBar = UpdateProgressBar;
 
-                return mainBase.roles.List(Customer, properties);
+                return mainBase.roles.List(Customer, properties, gShellServiceAccount);
             }
 
             /// <summary>Updates a role. This method supports patch semantics.</summary>
@@ -1571,7 +1571,7 @@ namespace gShell.Cmdlets.Directory{
                 properties.StartProgressBar = StartProgressBar;
                 properties.UpdateProgressBar = UpdateProgressBar;
 
-                return mainBase.users.List(properties);
+                return mainBase.users.List(properties, gShellServiceAccount);
             }
 
             /// <summary>change admin status of a user</summary>

@@ -218,7 +218,7 @@ namespace gShell.Cmdlets.Calendar{
                 properties.StartProgressBar = StartProgressBar;
                 properties.UpdateProgressBar = UpdateProgressBar;
 
-                return mainBase.acl.List(CalendarId, properties);
+                return mainBase.acl.List(CalendarId, properties, gShellServiceAccount);
             }
 
             /// <summary>Updates an access control rule. This method supports patch semantics.</summary>
@@ -322,7 +322,7 @@ namespace gShell.Cmdlets.Calendar{
                 properties.StartProgressBar = StartProgressBar;
                 properties.UpdateProgressBar = UpdateProgressBar;
 
-                return mainBase.calendarList.List(properties);
+                return mainBase.calendarList.List(properties, gShellServiceAccount);
             }
 
             /// <summary>Updates an entry on the user's calendar list. This method supports patch semantics.</summary>
@@ -600,7 +600,7 @@ namespace gShell.Cmdlets.Calendar{
                 properties.StartProgressBar = StartProgressBar;
                 properties.UpdateProgressBar = UpdateProgressBar;
 
-                return mainBase.events.List(CalendarId, properties);
+                return mainBase.events.List(CalendarId, properties, gShellServiceAccount);
             }
 
             /// <summary>Moves an event to another calendar, i.e. changes an event's organizer.</summary>
@@ -741,7 +741,7 @@ namespace gShell.Cmdlets.Calendar{
                 properties.StartProgressBar = StartProgressBar;
                 properties.UpdateProgressBar = UpdateProgressBar;
 
-                return mainBase.settings.List(properties);
+                return mainBase.settings.List(properties, gShellServiceAccount);
             }
 
             /// <summary>Watch for changes to Settings resources.</summary>

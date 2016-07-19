@@ -236,7 +236,7 @@ namespace gShell.Cmdlets.Gmail{
                     properties.StartProgressBar = StartProgressBar;
                     properties.UpdateProgressBar = UpdateProgressBar;
 
-                    return mainBase.users.drafts.List(UserId, properties);
+                    return mainBase.users.drafts.List(UserId, properties, gShellServiceAccount);
                 }
 
                 /// <summary>Sends the specified, existing draft to the recipients in the To, Cc, and Bcc
@@ -300,7 +300,7 @@ namespace gShell.Cmdlets.Gmail{
                     properties.StartProgressBar = StartProgressBar;
                     properties.UpdateProgressBar = UpdateProgressBar;
 
-                    return mainBase.users.history.List(UserId, properties);
+                    return mainBase.users.history.List(UserId, properties, gShellServiceAccount);
                 }
             }
             #endregion
@@ -641,7 +641,7 @@ namespace gShell.Cmdlets.Gmail{
                     properties.StartProgressBar = StartProgressBar;
                     properties.UpdateProgressBar = UpdateProgressBar;
 
-                    return mainBase.users.threads.List(UserId, properties);
+                    return mainBase.users.threads.List(UserId, properties, gShellServiceAccount);
                 }
 
                 /// <summary>Modifies the labels applied to the thread. This applies to all messages in the
