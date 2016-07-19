@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Management.Automation;
 using Google.Apis.Drive.v3;
 using Google.Apis.Drive.v3.Data;
@@ -1826,7 +1827,7 @@ namespace gShell.Cmdlets.Drive.Changes
                 };
 
 
-                WriteObject(changes.List(PageToken, properties));
+                WriteObject(changes.List(PageToken, properties).Changes);
             }
         }
     }
@@ -2226,7 +2227,7 @@ namespace gShell.Cmdlets.Drive.Comments
                         StartModifiedTime = StartModifiedTime
                     };
 
-                    WriteObject(comments.List(FileId, properties));
+                    WriteObject(comments.List(FileId, properties).SelectMany(x => x.Comments).ToList());
                 }
             }
         }
@@ -2854,7 +2855,7 @@ namespace gShell.Cmdlets.Drive.Files
                         Spaces = Spaces
                     };
 
-                    WriteObject(files.List(properties));
+                    WriteObject(files.List(properties).SelectMany(x => x.Files).ToList());
                 }
             }
         }
@@ -3277,7 +3278,7 @@ namespace gShell.Cmdlets.Drive.Permissions
                 }
                 else
                 {
-                    WriteObject(permissions.List(FileId));
+                    WriteObject(permissions.List(FileId).Permissions);
                 }
             }
         }
@@ -3541,7 +3542,7 @@ namespace gShell.Cmdlets.Drive.Replies
                         PageSize = PageSize
                     };
 
-                    WriteObject(replies.List(FileId, CommentId, properties));
+                    WriteObject(replies.List(FileId, CommentId, properties).SelectMany(x => x.Replies).ToList());
                 }
             }
         }
@@ -3713,7 +3714,7 @@ namespace gShell.Cmdlets.Drive.Revisions
                 }
                 else
                 {
-                    WriteObject(revisions.List(FileId));
+                    WriteObject(revisions.List(FileId).Revisions);
                 }
             }
         }

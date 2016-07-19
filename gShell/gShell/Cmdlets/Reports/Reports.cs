@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Management.Automation;
 using System.Xml;
 using Data = Google.Apis.admin.Reports.reports_v1.Data;
@@ -797,7 +798,7 @@ namespace gShell.Cmdlets.Reports.GRepActivity
                 //Allow for the use of 'all'
                 string _userKey = (UserKey == "all") ? "all" : GetFullEmailAddress(UserKey, Domain);
 
-                WriteObject(activities.List(ApplicationName.ToString(), _userKey, properties));
+                WriteObject(activities.List(ApplicationName.ToString(), _userKey, properties).SelectMany(x => x.Items).ToList());
             }
         }
     }

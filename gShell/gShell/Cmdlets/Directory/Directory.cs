@@ -2196,7 +2196,7 @@ namespace gShell.Cmdlets.Directory.GAAsp
                         WriteObject(asps.Get(UserKey, CodeId));
                         break;
                     case "List":
-                        WriteObject(asps.List(UserKey));
+                        WriteObject(asps.List(UserKey).Items);
                         break;
                 }
             }
@@ -2496,7 +2496,7 @@ namespace gShell.Cmdlets.Directory.GAChromeosdevice
 
                         if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
 
-                        WriteObject(chromeosdevices.List(CustomerId, properties));
+                        WriteObject(chromeosdevices.List(CustomerId, properties).SelectMany(x => x.Chromeosdevices).ToList());
                         break;
                 }
             }
@@ -2874,7 +2874,7 @@ namespace gShell.Cmdlets.Directory.GADomainAlias
                         ParentDomainName = this.ParentDomainName
                     };
 
-                    WriteObject(domainAliases.List(Customer, properties));
+                    WriteObject(domainAliases.List(Customer, properties).DomainAliasesValue);
                 }
             }
         }
@@ -3079,7 +3079,7 @@ namespace gShell.Cmdlets.Directory.GADomain
                 }
                 else
                 {
-                    WriteObject(domains.List(Customer));
+                    WriteObject(domains.List(Customer).Domains);
                 }
             }
         }
@@ -3255,7 +3255,7 @@ namespace gShell.Cmdlets.Directory.GAGroup
 
                         if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
 
-                        WriteObject(groups.List(properties));
+                        WriteObject(groups.List(properties).SelectMany(x => x.GroupsValue).ToList());
                     }
                     break;
             }
@@ -3718,7 +3718,7 @@ namespace gShell.Cmdlets.Directory.GAGroupAlias
         {
             if (ShouldProcess("Directory Aliases", "Get-GAGroupAlias"))
             {
-                WriteObject(groups.aliases.List(GroupKey));
+                WriteObject(groups.aliases.List(GroupKey).AliasesValue);
             }
 
         }
@@ -3899,7 +3899,7 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
                         if (ShouldProcess(GroupName, "Get-GAGroupMember"))
                         {
                             GroupName = GetFullEmailAddress(GroupName, Domain);
-                            WriteObject(members.List(GroupName));
+                            WriteObject(members.List(GroupName).SelectMany(x => x.MembersValue).ToList());
                         }
                         break;
 
@@ -4372,7 +4372,7 @@ namespace gShell.Cmdlets.Directory.GAMobileDevice
 
                         if (MaxResults.HasValue) properties.MaxResults = MaxResults.Value;
 
-                        WriteObject(mobiledevices.List(CustomerId, properties));
+                        WriteObject(mobiledevices.List(CustomerId, properties).SelectMany(x => x.Mobiledevices).ToList());
                         break;
                 }
             }
@@ -4627,7 +4627,7 @@ namespace gShell.Cmdlets.Directory.GANotification
 
                         if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
 
-                        WriteObject(notifications.List(Customer, properties));
+                        WriteObject(notifications.List(Customer, properties).SelectMany(x => x.Items).ToList());
                         break;
                 }
             }
@@ -4865,7 +4865,7 @@ namespace gShell.Cmdlets.Directory.GAOrgUnit
                     {
                         OrgUnitPath = OrgUnitPath,
                         Type = Type
-                    }));
+                    }).OrganizationUnits);
                 }
                 else
                 {
@@ -5195,7 +5195,7 @@ namespace gShell.Cmdlets.Directory.GAPrivilege
             if (ShouldProcess("Directory Privilege", "Get-GAPrivilege"))
             {
 
-                WriteObject(privileges.List(Customer));
+                WriteObject(privileges.List(Customer).Items);
             }
 
         }
@@ -5363,7 +5363,7 @@ namespace gShell.Cmdlets.Directory.GACalendar
 
                     if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
 
-                    WriteObject(resources.calendars.List(Customer, properties));
+                    WriteObject(resources.calendars.List(Customer, properties).SelectMany(x => x.Items).ToList());
                 }
             }
 
@@ -5646,7 +5646,7 @@ namespace gShell.Cmdlets.Directory.GARole
 
                     if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
 
-                    WriteObject(roles.List(Customer, properties));
+                    WriteObject(roles.List(Customer, properties).SelectMany(x => x.Items).ToList());
                 }
             }
         }
@@ -5924,7 +5924,7 @@ namespace gShell.Cmdlets.Directory.GARoleAssignment
 
                     if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
 
-                    WriteObject(roleAssignments.List(Customer, properties));
+                    WriteObject(roleAssignments.List(Customer, properties).SelectMany(x => x.Items).ToList());
                 }
             }
         }
@@ -6703,7 +6703,7 @@ namespace gShell.Cmdlets.Directory.GAToken
                         WriteObject(tokens.Get(UserKey, ClientId));
                         break;
                     case "List":
-                        WriteObject(tokens.List(UserKey));
+                        WriteObject(tokens.List(UserKey).Items);
                         break;
                 }
             }
@@ -6905,15 +6905,15 @@ namespace gShell.Cmdlets.Directory.GAUser
             HelpMessage = "Immutable id of the Google Apps account. In case of multi-domain, to fetch all users for a customer, fill this field instead of domain.")]
         public string Customer { get; set; }
 
-        /// <summary>
-        /// <para type="description">Name of the domain. Fill this field to get users from only this domain. To return all users in a multi-domain fill customer field instead.</para>
-        /// </summary>
-        [Parameter(Position = 6,
-        ParameterSetName = "AllUsers",
-        Mandatory = false,
-        ValueFromPipelineByPropertyName = true,
-        HelpMessage = "Name of the domain. Fill this field to get users from only this domain. To return all users in a multi-domain fill customer field instead.")]
-        public string Domain { get; set; }
+        ///// <summary>
+        ///// <para type="description">Name of the domain. Fill this field to get users from only this domain. To return all users in a multi-domain fill customer field instead.</para>
+        ///// </summary>
+        //[Parameter(Position = 6,
+        //ParameterSetName = "AllUsers",
+        //Mandatory = false,
+        //ValueFromPipelineByPropertyName = true,
+        //HelpMessage = "Name of the domain. Fill this field to get users from only this domain. To return all users in a multi-domain fill customer field instead.")]
+        //public string OneDomain { get; set; }
 
         /// <summary>
         /// <para type="description">Event on which subscription is intended (if subscribing)</para>
@@ -7004,8 +7004,6 @@ namespace gShell.Cmdlets.Directory.GAUser
                         var listproperties = new dotNet.Directory.Users.UsersListProperties()
                         {
                             CustomFieldMask = this.CustomFieldMask,
-                            Customer = this.Customer,
-                            Domain = this.Domain,
                             Event = this.Event,
                             OrderBy = this.OrderBy,
                             Projection = this.ProjectionType,
@@ -7014,6 +7012,9 @@ namespace gShell.Cmdlets.Directory.GAUser
                             SortOrder = this.SortOrder,
                             ViewType = this.ViewType
                         };
+
+                        if (!string.IsNullOrWhiteSpace(this.Customer)) listproperties.Customer = this.Customer;
+                        else listproperties.Domain = this.Domain;
 
                         //Make sure to include the domain here because List could use things other than domain (customer, etc)
                         List<Data.User> result = users.List(listproperties).SelectMany(x => x.UsersValue).ToList();
@@ -7744,7 +7745,7 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
                             Event = this.Event
                         };
 
-                        WriteObject(users.aliases.List(UserKey, properties));
+                        WriteObject(users.aliases.List(UserKey, properties).AliasesValue);
                     }
                     break;
 
@@ -10082,7 +10083,7 @@ namespace gShell.Cmdlets.Directory.GAVerificationCode
 
             if (ShouldProcess(UserKey, "Get-GAVerificationCode"))
             {
-                WriteObject(verificationCodes.List(UserKey));
+                WriteObject(verificationCodes.List(UserKey).Items);
             }
         }
     }

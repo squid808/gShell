@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Management.Automation;
 
 using Google.Apis.Gmail.v1;
@@ -681,7 +682,7 @@ namespace gShell.Cmdlets.Gmail.Users.Drafts
 
                     if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
 
-                    WriteObject(users.drafts.List(UserId, properties));
+                    WriteObject(users.drafts.List(UserId, properties).SelectMany(x => x.Drafts).ToList());
                 }
                 else
                 {
@@ -893,7 +894,7 @@ namespace gShell.Cmdlets.Gmail.Users.History
 
             if (ShouldProcess("Gmail User History", "Get-GGmailHistory"))
             {
-                WriteObject(users.history.List(UserId, properties));
+                WriteObject(users.history.List(UserId, properties).SelectMany(x => x.History).ToList());
             }
         }
     }
@@ -1128,7 +1129,7 @@ namespace gShell.Cmdlets.Gmail.Users.Labels
             {
                 if (ParameterSetName == "list")
                 {
-                    WriteObject(users.labels.List(UserId));
+                    WriteObject(users.labels.List(UserId).Labels);
                 }
                 else
                 {
@@ -1479,7 +1480,7 @@ namespace gShell.Cmdlets.Gmail.Users.Messages
                     
                     if (this.LabelIds != null) properties.LabelIds = this.LabelIds;
                     if (MaxResults.HasValue) properties.TotalResults = this.MaxResults.Value;
-                    WriteObject(users.messages.List(UserId, properties));
+                    WriteObject(users.messages.List(UserId, properties).SelectMany(x => x.Messages).ToList());
                 }
                 else
                 {
@@ -2049,7 +2050,7 @@ namespace gShell.Cmdlets.Gmail.Users.Threads
                     if (this.LabelIds != null) properties.LabelIds = this.LabelIds;
 
                     if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
-                    WriteObject(users.threads.List(UserId, properties));
+                    WriteObject(users.threads.List(UserId, properties).SelectMany(x => x.Threads).ToList());
 
                 }
                 else

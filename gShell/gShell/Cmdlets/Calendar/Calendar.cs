@@ -24,6 +24,7 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.Linq;
 using System.Management.Automation;
 using Google.Apis.Calendar.v3;
 using Google.Apis.Calendar.v3.Data;
@@ -2006,7 +2007,7 @@ namespace gShell.Cmdlets.Calendar.Acl
 
                     if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
 
-                    WriteObject(acl.List(CalendarId, properties));
+                    WriteObject(acl.List(CalendarId, properties).SelectMany(x => x.Items).ToList());
                 }
             }
         }
@@ -2413,7 +2414,7 @@ namespace gShell.Cmdlets.Calendar.CalendarList
 
                     if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
 
-                    WriteObject(calendarList.List(properties));
+                    WriteObject(calendarList.List(properties).SelectMany(x => x.Items).ToList());
                 }
             }
         }
@@ -3352,7 +3353,9 @@ namespace gShell.Cmdlets.Calendar.Events
 
                     if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
 
-                    WriteObject(events.List(CalendarId, properties));
+                    var results = events.List(CalendarId, properties).SelectMany(x => x.Items).ToList();
+
+                    WriteObject(results);
                 }
             }
         }
@@ -4391,7 +4394,7 @@ namespace gShell.Cmdlets.Calendar.Settings
 
                     if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
 
-                    WriteObject(settings.List(properties));
+                    WriteObject(settings.List(properties).SelectMany(x => x.Items.ToList()));
                 }
             }
         }

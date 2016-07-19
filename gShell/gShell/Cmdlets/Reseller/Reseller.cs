@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Management.Automation;
 
 using Google.Apis.Reseller.v1;
@@ -1668,7 +1669,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
 
                 if (ShouldProcess("Reseller Subscription", "Get-GResellerSubscription"))
                 {
-                    WriteObject(subscriptions.List(properties));
+                    WriteObject(subscriptions.List(properties).SelectMany(x => x.SubscriptionsValue).ToList());
                 }
             }
         }

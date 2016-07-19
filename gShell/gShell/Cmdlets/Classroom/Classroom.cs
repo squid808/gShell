@@ -25,6 +25,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Management.Automation;
 using Google.Apis.Classroom.v1.Data;
 using gClassroom = gShell.dotNet.Classroom;
@@ -897,7 +898,7 @@ namespace gShell.Cmdlets.Classroom.Courses
                         PageSize = PageSize
                     };
 
-                    WriteObject(courses.List(properties));
+                    WriteObject(courses.List(properties).SelectMany(x => x.Courses).ToList());
                 }
             }
         }
@@ -1167,7 +1168,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Aliases
                     PageSize = PageSize
                 };
 
-                WriteObject(courses.aliases.List(CourseId, properties));
+                WriteObject(courses.aliases.List(CourseId, properties).SelectMany(x => x.Aliases).ToList());
             }
         }
     }
@@ -1416,7 +1417,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Students
                         PageSize = PageSize
                     };
 
-                    WriteObject(courses.students.List(CourseId, properties));
+                    WriteObject(courses.students.List(CourseId, properties).SelectMany(x => x.Students).ToList());
                 }
             }
         }
@@ -1649,7 +1650,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Teachers
                         PageSize = PageSize
                     };
 
-                    WriteObject(courses.teachers.List(CourseId, properties));
+                    WriteObject(courses.teachers.List(CourseId, properties).SelectMany(x => x.Teachers).ToList());
                 }
             }
         }
@@ -1910,7 +1911,7 @@ namespace gShell.Cmdlets.Classroom.Invitations
                         PageSize = PageSize
                     };
 
-                    WriteObject(invitations.List(properties));
+                    WriteObject(invitations.List(properties).SelectMany(x => x.Invitations).ToList());
                 }
             }
         }
