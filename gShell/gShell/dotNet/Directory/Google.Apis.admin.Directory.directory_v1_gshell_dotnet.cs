@@ -164,9 +164,9 @@ namespace gShell.Cmdlets.Directory{
             }
             else
             {
-                WriteError(new ErrorRecord(null, (new Exception(
+                throw new Exception(
                     "Client Secrets must be set before running cmdlets. Run 'Get-Help "
-                    + "Set-gShellClientSecrets -online' for more information."))));
+                    + "Set-gShellClientSecrets -online' for more information.");
             }
         }
 

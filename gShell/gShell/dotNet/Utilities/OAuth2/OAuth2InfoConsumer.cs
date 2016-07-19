@@ -17,15 +17,22 @@ namespace gShell.dotNet.Utilities.OAuth2
     {
         #region Properties
 
-        public gShellSettings settings { get; set; }
-
-        public static string dataStoreLocation
+        public static gShellSettings settings
         {
             get
             {
-                return Path.Combine(Environment.GetFolderPath(
-                    Environment.SpecialFolder.LocalApplicationData), @"gShell\");
+                if (_settings == null)
+                    _settings = gShellSettingsLoader.Load();
+
+                return _settings;
             }
+        }
+
+        private static gShellSettings _settings { get; set; }
+
+        public static string dataStoreLocation
+        {
+            get { return settings.AuthInfoPath; }
         }
 
         /// <summary>The data store responsible for saving and loading the OAuth2 information.</summary>
@@ -41,9 +48,7 @@ namespace gShell.dotNet.Utilities.OAuth2
 
         public OAuth2InfoConsumer()
         {
-            settings = gShellSettingsLoader.Load();
-
-            if (settings == null || settings.SerializeType == gShellSettings.SerializeTypes.Json)
+            if (settings.SerializeType == gShellSettings.SerializeTypes.Json)
             {
                 _dataStore = new OAuth2JsonDataStore(dataStoreLocation);
             }

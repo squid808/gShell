@@ -575,8 +575,18 @@ namespace gShell.Cmdlets.Utilities.gShellDomain
         /// <para type="description">The type of file gShell should save the serialization information in to. Options are Bin or Json.</para>
         /// </summary>
         [Parameter(Position = 0,
+            Mandatory = false,
             HelpMessage = "The type of file gShell should save the serialization information in to. Options are Bin or Json.")]
         public gShellSettings.SerializeTypes? SerializedFileType { get; set; }
+
+        /// <summary>
+        /// <para type="description">The directory path for where gShell looks for the authentication information file.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+            Mandatory = false,
+            HelpMessage = "The directory path for where gShell looks for the authentication information file.")]
+        [ValidateNotNullOrEmpty]
+        public string AuthInfoPath { get; set; }
 
         #endregion
 
@@ -584,16 +594,13 @@ namespace gShell.Cmdlets.Utilities.gShellDomain
         {
             if (ShouldProcess("Domain", "Set-GShellDomain"))
             {
-                if (SerializedFileType.HasValue)
-                {
-                    gShellSettings settings = gShellSettingsLoader.Load();
+                gShellSettings settings = gShellSettingsLoader.Load();
 
-                    if (settings == null) settings = new gShellSettings();
+                if (SerializedFileType.HasValue) settings.SerializeType = SerializedFileType.Value;
 
-                    settings.SerializeType = SerializedFileType.Value;
+                if (!string.IsNullOrWhiteSpace(AuthInfoPath)) settings.AuthInfoPath = AuthInfoPath;
 
-                    gShellSettingsLoader.Save(settings);
-                }
+                gShellSettingsLoader.Save(settings);
             }
         }
     }

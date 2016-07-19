@@ -1,6 +1,7 @@
 ﻿using System.IO;
 
 using Newtonsoft.Json;
+using System;
 
 namespace gShell.dotNet.Utilities.Settings
 {
@@ -12,9 +13,13 @@ namespace gShell.dotNet.Utilities.Settings
         [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         public SerializeTypes SerializeType { get; set; }
 
+        [JsonProperty(PropertyName = "AuthInfoPath")]
+        public string AuthInfoPath { get; set; }
+
         public gShellSettings()
         {
-            SerializeType = SerializeTypes.Bin;
+            SerializeType = SerializeTypes.Json;
+            AuthInfoPath = Path.GetDirectoryName((new Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase)).AbsolutePath);
         }
     }
 
@@ -28,8 +33,8 @@ namespace gShell.dotNet.Utilities.Settings
         {
             get
             {
-                return Path.Combine(
-                    OAuth2.OAuth2InfoConsumer.dataStoreLocation, fileName);
+                var executingPath = Path.GetDirectoryName((new System.Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase)).AbsolutePath);
+                return Path.Combine(executingPath, fileName);
             }
         }
 
@@ -40,20 +45,18 @@ namespace gShell.dotNet.Utilities.Settings
             File.WriteAllText(filePath, json);
         }
 
-        /// <summary>Return the saved settings, or null if no file exists.</summary>
+        /// <summary>Return the saved settings, or creates one if no file exists.</summary>
         public static gShellSettings Load()
         {
-            if (!File.Exists(filePath)) { return null; }
-
-            gShellSettings settings = null;
+            if (!File.Exists(filePath))
+                Save(new gShellSettings());
 
             using (StreamReader file = File.OpenText(filePath))
             {
                 JsonSerializer serializer = new JsonSerializer();
-                settings = (gShellSettings)serializer.Deserialize(file, typeof(gShellSettings));
+                var settings = (gShellSettings)serializer.Deserialize(file, typeof(gShellSettings));
+                return settings;
             }
-
-            return settings;
         }
     }
 }
