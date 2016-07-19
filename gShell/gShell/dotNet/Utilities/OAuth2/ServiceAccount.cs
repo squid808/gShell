@@ -7,6 +7,10 @@ namespace gShell.dotNet.Utilities.OAuth2
     {
         public X509Certificate2 certificate { get; set; }
 
+        public string privateKey { get; set; }
+
+        public OAuth2Domain.CertTypeEnum certType { get; set; }
+
         public string email { get; set; }
     }
 }

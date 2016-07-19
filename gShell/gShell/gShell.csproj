@@ -141,6 +141,7 @@
     <Compile Include="Cmdlets\Reports\Reports.cs" />
     <Compile Include="Cmdlets\Reseller\Reseller.cs" />
     <Compile Include="Cmdlets\SharedContacts\SharedContacts.cs" />
+    <Compile Include="Cmdlets\Utilities\JsonKeyModel.cs" />
     <Compile Include="dotNet\Adminsettings\Google.Apis.admin.Adminsettings.adminsettings_v1.cs" />
     <Compile Include="dotNet\Adminsettings\Google.Apis.admin.Adminsettings.adminsettings_v1_gshell_dotnet.cs" />
     <Compile Include="dotNet\Calendar\Google.Apis.Calendar.v3.cs" />

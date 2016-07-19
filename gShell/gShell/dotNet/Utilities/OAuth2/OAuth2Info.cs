@@ -136,25 +136,37 @@ namespace gShell.dotNet.Utilities.OAuth2
             users = (Dictionary<string, OAuth2DomainUser>)info.GetValue("users",
                 typeof(Dictionary<string, OAuth2DomainUser>));
 
-            defaultUser = (string)info.GetValue("defaultUser", typeof(string));
-            domain = (string)info.GetValue("domain", typeof(string));
-            certType = (CertTypeEnum)info.GetValue("certType", typeof(CertTypeEnum));
+            foreach(SerializationEntry entry in info) {
+                switch(entry.Name) {
+                    case "defaultUser":
+                        defaultUser = (string)info.GetValue("defaultUser", typeof(string));
+                        break;
 
-            if (certType.HasValue)
-            {
-                keyPassword = (string)info.GetValue("keyPassword", typeof(string));
-                serviceAccountEmail = (string)info.GetValue("serviceAccountEmail", typeof(string));
+                    case "domain":
+                        domain = (string)info.GetValue("domain", typeof(string));
+                        break;
 
-                if (certType.Value == CertTypeEnum.x509)
-                {
-                    certificateByteArray = (byte[])info.GetValue("certificateByteArray", typeof(byte[]));
-                    p12Certificate = new X509Certificate2(certificateByteArray, keyPassword, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.PersistKeySet);
-                    //p12Certificate.Import(certificateByteArray, keyPassword, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.PersistKeySet);
-                    // else certificateByteArray = new byte[0];
-                }
-                else
-                {
-                    jsonCertificate = (string)info.GetValue("jsonCertificate", typeof(string));
+                    case "certType":
+                        certType = (CertTypeEnum)info.GetValue("certType", typeof(CertTypeEnum));
+
+                        if (certType.HasValue)
+                        {
+                            keyPassword = (string)info.GetValue("keyPassword", typeof(string));
+                            serviceAccountEmail = (string)info.GetValue("serviceAccountEmail", typeof(string));
+
+                            if (certType.Value == CertTypeEnum.x509)
+                            {
+                                certificateByteArray = (byte[])info.GetValue("certificateByteArray", typeof(byte[]));
+                                p12Certificate = new X509Certificate2(certificateByteArray, keyPassword, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.PersistKeySet);
+                                //p12Certificate.Import(certificateByteArray, keyPassword, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.PersistKeySet);
+                                // else certificateByteArray = new byte[0];
+                            }
+                            else
+                            {
+                                jsonCertificate = (string)info.GetValue("jsonCertificate", typeof(string));
+                            }
+                        }
+                        break;
                 }
             }
         }

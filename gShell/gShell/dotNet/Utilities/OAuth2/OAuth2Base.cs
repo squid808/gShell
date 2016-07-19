@@ -12,6 +12,7 @@ using Google.Apis.Services;
 
 using gShell.dotNet.CustomSerializer.Json;
 using gShell.dotNet.CustomSerializer.Xml;
+using Newtonsoft.Json;
 
 namespace gShell.dotNet.Utilities.OAuth2
 {
@@ -294,8 +295,10 @@ namespace gShell.dotNet.Utilities.OAuth2
             {
                 using (StreamReader file = File.OpenText(certificatePath))
                 {
-                    string certContents = file.ReadToEnd();
-                    SetJsonServiceAccount(domain, email, certContents, keyPassword);
+                    JsonSerializer serializer = new JsonSerializer();
+                    var jsonCert = (JsonKeyModel)serializer.Deserialize(file, typeof(JsonKeyModel));
+                    //string certContents = file.ReadToEnd();
+                    SetJsonServiceAccount(domain, email, jsonCert.private_key, keyPassword);
                 }
             }
             else
@@ -397,13 +400,26 @@ namespace gShell.dotNet.Utilities.OAuth2
                 scopes = new string[] { "https://www.googleapis.com/auth/drive" };
             }
 
+            ServiceAccountCredential credential = null;
 
-            ServiceAccountCredential credential = new ServiceAccountCredential(
-               new ServiceAccountCredential.Initializer(serviceAccount.email)
-               {
-                   User = serviceAccountUser,
-                   Scopes = scopes
-               }.FromCertificate(serviceAccount.certificate));
+            if (serviceAccount.certType == OAuth2Domain.CertTypeEnum.json)
+            {
+                credential = new ServiceAccountCredential(
+                    new ServiceAccountCredential.Initializer(serviceAccount.email)
+                    {
+                        User = serviceAccountUser,
+                        Scopes = scopes
+                    }.FromPrivateKey(serviceAccount.privateKey));
+            }
+            else
+            {
+                credential = new ServiceAccountCredential(
+                    new ServiceAccountCredential.Initializer(serviceAccount.email)
+                    {
+                        User = serviceAccountUser,
+                        Scopes = scopes
+                    }.FromCertificate(serviceAccount.certificate));
+            }
 
             var init = new BaseClientService.Initializer()
             {

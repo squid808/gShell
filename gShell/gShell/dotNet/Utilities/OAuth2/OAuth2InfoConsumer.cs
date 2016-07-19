@@ -43,7 +43,7 @@ namespace gShell.dotNet.Utilities.OAuth2
         {
             settings = gShellSettingsLoader.Load();
 
-            if (settings != null && settings.SerializeType == gShellSettings.SerializeTypes.Json)
+            if (settings == null || settings.SerializeType == gShellSettings.SerializeTypes.Json)
             {
                 _dataStore = new OAuth2JsonDataStore(dataStoreLocation);
             }
@@ -481,11 +481,19 @@ namespace gShell.dotNet.Utilities.OAuth2
         {
             if (DomainExists(Domain))
             {
-                return new ServiceAccount()
+                var svcAcct = new ServiceAccount()
                 {
                     email = info.domains[Domain].serviceAccountEmail,
-                    certificate = info.domains[Domain].p12Certificate
                 };
+
+                svcAcct.certType = info.domains[Domain].certType.Value;
+
+                if (svcAcct.certType == OAuth2Domain.CertTypeEnum.x509)
+                    svcAcct.certificate = info.domains[Domain].p12Certificate;
+                else
+                    svcAcct.privateKey = info.domains[Domain].jsonCertificate;
+
+                return svcAcct;
             }
 
             return null;
