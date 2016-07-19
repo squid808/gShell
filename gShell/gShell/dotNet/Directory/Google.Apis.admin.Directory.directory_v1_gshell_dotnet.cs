@@ -1869,7 +1869,7 @@ namespace gShell.dotNet
             public class ChromeosdevicesListProperties
             {
                 /// <summary>Maximum number of results to return. Default is 100</summary>
-                public int MaxResults = 0;
+                public int? MaxResults = null;
 
                 /// <summary>Column to use for sorting results</summary>
                 public directory_v1.ChromeosdevicesResource.ListRequest.OrderByEnum?OrderBy = null;
@@ -2159,7 +2159,7 @@ namespace gShell.dotNet
                 public string Domain = null;
 
                 /// <summary>Maximum number of results to return. Default is 200</summary>
-                public int MaxResults = 0;
+                public int? MaxResults = null;
 
                 /// <summary>Email or immutable Id of the user if only those groups are to be listed, the given user is a member of. If Id, it should match with id of user object</summary>
                 public string UserKey = null;
@@ -2321,7 +2321,7 @@ namespace gShell.dotNet
             public class MembersListProperties
             {
                 /// <summary>Maximum number of results to return. Default is 200</summary>
-                public int MaxResults = 0;
+                public int? MaxResults = null;
 
                 /// <summary>Comma separated role values to filter list results on.</summary>
                 public string Roles = null;
@@ -2465,7 +2465,7 @@ namespace gShell.dotNet
             public class MobiledevicesListProperties
             {
                 /// <summary>Maximum number of results to return. Default is 100</summary>
-                public int MaxResults = 0;
+                public int? MaxResults = null;
 
                 /// <summary>Column to use for sorting results</summary>
                 public directory_v1.MobiledevicesResource.ListRequest.OrderByEnum?OrderBy = null;
@@ -2595,7 +2595,7 @@ namespace gShell.dotNet
                 public string Language = null;
 
                 /// <summary>Maximum number of notifications to return per page. The default is 100.</summary>
-                public int MaxResults = 0;
+                public int? MaxResults = null;
 
                 /// <summary>A delegate that is used to start a progress bar.</summary>
                 public Action<string, string> StartProgressBar = null;

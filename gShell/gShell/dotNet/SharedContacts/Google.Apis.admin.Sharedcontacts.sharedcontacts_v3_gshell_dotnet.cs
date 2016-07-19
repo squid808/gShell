@@ -245,7 +245,7 @@ namespace gShell.dotNet
 
             public class ContactListProperties
             {
-                public int maxResults = 0;
+                public int? MaxResults = null;
                 public     System.Nullable<int>     startIndex = null; //test
                 public     string     updatedMin = null; //test
                 public     string     orderby = null; //test

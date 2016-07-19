@@ -844,7 +844,7 @@ namespace gShell.dotNet
             public class AclListProperties
             {
                 /// <summary>Maximum number of entries returned on one result page. By default the value is 100 entries. The page size can never be larger than 250 entries. Optional.</summary>
-                public int MaxResults = 0;
+                public int? MaxResults = null;
 
                 /// <summary>Whether to include deleted ACLs in the result. Deleted ACLs are represented by role equal to "none". Deleted ACLs will always be included if syncToken is provided. Optional. The default is False.</summary>
                 public System.Nullable<bool> ShowDeleted = null;
@@ -866,7 +866,7 @@ namespace gShell.dotNet
             public class AclWatchProperties
             {
                 /// <summary>Maximum number of entries returned on one result page. By default the value is 100 entries. The page size can never be larger than 250 entries. Optional.</summary>
-                public int MaxResults = 0;
+                public int? MaxResults = null;
 
                 /// <summary>Whether to include deleted ACLs in the result. Deleted ACLs are represented by role equal to "none". Deleted ACLs will always be included if syncToken is provided. Optional. The default is False.</summary>
                 public System.Nullable<bool> ShowDeleted = null;
@@ -1019,7 +1019,7 @@ namespace gShell.dotNet
             public class CalendarListListProperties
             {
                 /// <summary>Maximum number of entries returned on one result page. By default the value is 100 entries. The page size can never be larger than 250 entries. Optional.</summary>
-                public int MaxResults = 0;
+                public int? MaxResults = null;
 
                 /// <summary>The minimum access role for the user in the returned entries. Optional. The default is no restriction.</summary>
                 public v3.CalendarListResource.ListRequest.MinAccessRoleEnum?MinAccessRole = null;
@@ -1061,7 +1061,7 @@ namespace gShell.dotNet
             public class CalendarListWatchProperties
             {
                 /// <summary>Maximum number of entries returned on one result page. By default the value is 100 entries. The page size can never be larger than 250 entries. Optional.</summary>
-                public int MaxResults = 0;
+                public int? MaxResults = null;
 
                 /// <summary>The minimum access role for the user in the returned entries. Optional. The default is no restriction.</summary>
                 public v3.CalendarListResource.WatchRequest.MinAccessRoleEnum?MinAccessRole = null;
@@ -1349,7 +1349,7 @@ namespace gShell.dotNet
                 public System.Nullable<int> MaxAttendees = null;
 
                 /// <summary>Maximum number of events returned on one result page. By default the value is 250 events. The page size can never be larger than 2500 events. Optional.</summary>
-                public int MaxResults = 0;
+                public int? MaxResults = null;
 
                 /// <summary>The original start time of the instance in the result. Optional.</summary>
                 public string OriginalStart = null;
@@ -1389,7 +1389,7 @@ namespace gShell.dotNet
                 public System.Nullable<int> MaxAttendees = null;
 
                 /// <summary>Maximum number of events returned on one result page. By default the value is 250 events. The page size can never be larger than 2500 events. Optional.</summary>
-                public int MaxResults = 0;
+                public int? MaxResults = null;
 
                 /// <summary>The order of the events returned in the result. Optional. The default is an unspecified, stable order.</summary>
                 public v3.EventsResource.ListRequest.OrderByEnum?OrderBy = null;
@@ -1496,7 +1496,7 @@ namespace gShell.dotNet
                 public System.Nullable<int> MaxAttendees = null;
 
                 /// <summary>Maximum number of events returned on one result page. By default the value is 250 events. The page size can never be larger than 2500 events. Optional.</summary>
-                public int MaxResults = 0;
+                public int? MaxResults = null;
 
                 /// <summary>The order of the events returned in the result. Optional. The default is an unspecified, stable order.</summary>
                 public v3.EventsResource.WatchRequest.OrderByEnum?OrderBy = null;
@@ -1810,7 +1810,7 @@ namespace gShell.dotNet
             public class SettingsListProperties
             {
                 /// <summary>Maximum number of entries returned on one result page. By default the value is 100 entries. The page size can never be larger than 250 entries. Optional.</summary>
-                public int MaxResults = 0;
+                public int? MaxResults = null;
 
                 /// <summary>Token obtained from the nextSyncToken field returned on the last page of results from the previous list request. It makes the result of this list request contain only entries that have changed since then.If the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.Learn more about incremental synchronization.Optional. The default is to return all entries.</summary>
                 public string SyncToken = null;
@@ -1829,7 +1829,7 @@ namespace gShell.dotNet
             public class SettingsWatchProperties
             {
                 /// <summary>Maximum number of entries returned on one result page. By default the value is 100 entries. The page size can never be larger than 250 entries. Optional.</summary>
-                public int MaxResults = 0;
+                public int? MaxResults = null;
 
                 /// <summary>Token obtained from the nextSyncToken field returned on the last page of results from the previous list request. It makes the result of this list request contain only entries that have changed since then.If the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.Learn more about incremental synchronization.Optional. The default is to return all entries.</summary>
                 public string SyncToken = null;

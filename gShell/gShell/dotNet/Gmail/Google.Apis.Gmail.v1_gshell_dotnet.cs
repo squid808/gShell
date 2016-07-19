@@ -533,7 +533,7 @@ namespace gShell.Cmdlets.Gmail{
                     properties.StartProgressBar = StartProgressBar;
                     properties.UpdateProgressBar = UpdateProgressBar;
 
-                    return mainBase.users.messages.List(UserId, properties);
+                    return mainBase.users.messages.List(UserId, properties, gShellServiceAccount);
                 }
 
                 /// <summary>Modifies the labels on the specified message.</summary>
@@ -845,7 +845,7 @@ namespace gShell.dotNet
                         public System.Nullable<bool> IncludeSpamTrash = null;
 
                         /// <summary>Maximum number of drafts to return.</summary>
-                        public int MaxResults = 0;
+                        public int? MaxResults = null;
 
                         /// <summary>A delegate that is used to start a progress bar.</summary>
                         public Action<string, string> StartProgressBar = null;
@@ -999,7 +999,7 @@ namespace gShell.dotNet
                         public string LabelId = null;
 
                         /// <summary>The maximum number of history records to return.</summary>
-                        public int MaxResults = 0;
+                        public int? MaxResults = null;
 
                         /// <summary>Required. Returns history records after the specified startHistoryId. The supplied startHistoryId should be obtained from the historyId of a message, thread, or previous list response. History IDs increase chronologically but are not contiguous with random gaps in between valid IDs. Supplying an invalid or out of date startHistoryId typically returns an HTTP 404 error code. A historyId is typically valid for at least a week, but in some rare circumstances may be valid for only a few hours. If you receive an HTTP 404 error response, your application should perform a full sync. If you receive no nextPageToken in the response, there are no updates to retrieve and you can store the returned historyId for a future request.</summary>
                         public System.Nullable<ulong> StartHistoryId = null;
@@ -1201,7 +1201,7 @@ namespace gShell.dotNet
                         public Google.Apis.Util.Repeatable<string>LabelIds = null;
 
                         /// <summary>Maximum number of messages to return.</summary>
-                        public int MaxResults = 0;
+                        public int? MaxResults = null;
 
                         /// <summary>Only return messages matching the specified query. Supports the same query format as the Gmail search box. For example, "from:someuser@example.com rfc822msgid: is:unread".</summary>
                         public string Q = null;
@@ -1436,7 +1436,7 @@ namespace gShell.dotNet
                         public Google.Apis.Util.Repeatable<string>LabelIds = null;
 
                         /// <summary>Maximum number of threads to return.</summary>
-                        public int MaxResults = 0;
+                        public int? MaxResults = null;
 
                         /// <summary>Only return threads matching the specified query. Supports the same query format as the Gmail search box. For example, "from:someuser@example.com rfc822msgid: is:unread".</summary>
                         public string Q = null;
