@@ -598,7 +598,11 @@ namespace gShell.Cmdlets.Utilities.gShellDomain
 
                 if (SerializedFileType.HasValue) settings.SerializeType = SerializedFileType.Value;
 
-                if (!string.IsNullOrWhiteSpace(AuthInfoPath)) settings.AuthInfoPath = AuthInfoPath;
+                if (!string.IsNullOrWhiteSpace(AuthInfoPath))
+                {
+                    settings.AuthInfoPath = AuthInfoPath;
+                    OAuth2InfoConsumer.UpdateSettings(settings);
+                }
 
                 gShellSettingsLoader.Save(settings);
             }

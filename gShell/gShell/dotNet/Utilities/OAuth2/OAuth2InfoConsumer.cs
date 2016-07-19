@@ -547,5 +547,14 @@ namespace gShell.dotNet.Utilities.OAuth2
 
         #endregion
 
+        #region Settings
+
+        public static void UpdateSettings(gShellSettings settings)
+        {
+            _settings = settings;
+        }
+
+        #endregion
+
     }
 }
