@@ -48,7 +48,7 @@ namespace gShell.Cmdlets.Calendar
 
         protected override void BeginProcessing()
         {
-            gShellServiceAccount = TargetUserEmail;
+            gShellServiceAccount = GetFullEmailAddress(TargetUserEmail, Domain);
 
             base.BeginProcessing();
         }

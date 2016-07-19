@@ -1056,7 +1056,7 @@ namespace gShell.Cmdlets.Sharedcontacts
 
                     if (ShowDeleted.HasValue) properties.showdeleted = this.ShowDeleted.Value.ToString();
 
-                    if (MaxResults.HasValue) properties.maxResults = this.MaxResults.Value;
+                    if (MaxResults.HasValue) properties.MaxResults = this.MaxResults.Value;
 
                     WriteObject(contact.List(Domain, properties).ContactsValue);
                 }

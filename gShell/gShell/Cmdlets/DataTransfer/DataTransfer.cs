@@ -56,7 +56,7 @@ namespace gShell.Cmdlets.DataTransfer
 
         protected override void BeginProcessing()
         {
-            gShellServiceAccount = TargetUserEmail;
+            gShellServiceAccount = GetFullEmailAddress(TargetUserEmail, Domain);
 
             base.BeginProcessing();
         }

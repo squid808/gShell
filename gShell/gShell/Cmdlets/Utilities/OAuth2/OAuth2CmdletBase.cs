@@ -286,6 +286,12 @@ namespace gShell.dotNet.Utilities.OAuth2
 
         protected string GetFullEmailAddress(string account, string domain)
         {
+            if (string.IsNullOrWhiteSpace(domain))
+            {
+                domain = OAuth2Base.CheckDomain();
+                if (string.IsNullOrWhiteSpace(domain)) return null;
+            }
+
             return Utils.GetFullEmailAddress(account, domain);
         }
 

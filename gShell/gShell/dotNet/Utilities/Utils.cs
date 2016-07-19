@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using gShell.dotNet.Utilities.OAuth2;
 
 namespace gShell.dotNet.Utilities
 {
@@ -11,6 +12,8 @@ namespace gShell.dotNet.Utilities
         /// <returns></returns>
         public static string GetFullEmailAddress(string userName, string domain)
         {
+            if (string.IsNullOrWhiteSpace(userName)) return null;
+
             if (!userName.Contains("@"))
             {
                 userName += "@" + domain;

@@ -24,7 +24,7 @@ namespace gShell.Cmdlets.Drive
 
         protected override void BeginProcessing()
         {
-            gShellServiceAccount = TargetUserEmail;
+            gShellServiceAccount = GetFullEmailAddress(TargetUserEmail, Domain);
 
             base.BeginProcessing();
         }
