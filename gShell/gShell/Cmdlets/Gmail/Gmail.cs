@@ -1319,10 +1319,9 @@ namespace gShell.Cmdlets.Gmail.Users.Messages
                         }
                         else
                         {
-                            var body = new Data.BatchDeleteMessagesRequest()
-                            {
-                                Ids = BatchDeleteIds
-                            };
+                            var body = new Data.BatchDeleteMessagesRequest();
+
+                            if (this.BatchDeleteIds != null) body.Ids = BatchDeleteIds;
 
                             users.messages.BatchDelete(body, UserId);
                         }
@@ -1474,9 +1473,11 @@ namespace gShell.Cmdlets.Gmail.Users.Messages
                     var properties = new gGmail.Users.Messages.MessagesListProperties()
                     {
                         IncludeSpamTrash = this.IncludeSpamTrash,
-                        LabelIds = this.LabelIds,
+                        //LabelIds = this.LabelIds,
                         Q = this.Query
                     };
+                    
+                    if (this.LabelIds != null) properties.LabelIds = this.LabelIds;
                     if (MaxResults.HasValue) properties.TotalResults = this.MaxResults.Value;
                     WriteObject(users.messages.List(UserId, properties));
                 }
@@ -1484,9 +1485,10 @@ namespace gShell.Cmdlets.Gmail.Users.Messages
                 {
                     var properties = new gGmail.Users.Messages.MessagesGetProperties()
                     {
-                        Format = this.Format,
-                        MetadataHeaders = this.MetadataHeaders
+                        Format = this.Format
                     };
+
+                    if (this.MetadataHeaders != null) properties.MetadataHeaders = this.MetadataHeaders;
                     WriteObject(users.messages.Get(UserId, Id, properties));
                 }
             }
@@ -1726,11 +1728,11 @@ namespace gShell.Cmdlets.Gmail.Users.Messages
                         if (AddLabelIds == null && RemoveLabelIds == null)
                             throw (new Exception("Must supply at least a label to add or a label to remove."));
 
-                        var body = new Data.ModifyMessageRequest()
-                        {
-                            AddLabelIds = this.AddLabelIds,
-                            RemoveLabelIds = this.RemoveLabelIds
-                        };
+                        var body = new Data.ModifyMessageRequest();
+
+                        if (this.AddLabelIds != null) body.AddLabelIds = this.AddLabelIds;
+                        if (this.RemoveLabelIds != null) body.RemoveLabelIds = this.RemoveLabelIds;
+
                         WriteObject(users.messages.Modify(body, UserId, Id));
                         break;
 
@@ -2041,9 +2043,10 @@ namespace gShell.Cmdlets.Gmail.Users.Threads
                     var properties = new gGmail.Users.Threads.ThreadsListProperties()
                     {
                         IncludeSpamTrash = this.IncludeSpamTrash,
-                        LabelIds = this.LabelIds,
                         Q = this.Query
                     };
+
+                    if (this.LabelIds != null) properties.LabelIds = this.LabelIds;
 
                     if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
                     WriteObject(users.threads.List(UserId, properties));
@@ -2056,6 +2059,8 @@ namespace gShell.Cmdlets.Gmail.Users.Threads
                         Format = this.Format,
                         MetadataHeaders = this.MetadataHeaders
                     };
+
+                    if (this.MetadataHeaders != null) properties.MetadataHeaders = this.MetadataHeaders;
 
                     WriteObject(users.threads.Get(UserId, Id, properties));
                 }
@@ -2192,6 +2197,9 @@ namespace gShell.Cmdlets.Gmail.Users.Threads
                             AddLabelIds = this.AddLabelIds,
                             RemoveLabelIds = this.RemoveLabelIds
                         };
+
+                        if (this.AddLabelIds != null) body.AddLabelIds = this.AddLabelIds;
+                        if (this.RemoveLabelIds != null) body.RemoveLabelIds = this.RemoveLabelIds;
                         WriteObject(users.threads.Modify(body, UserId, Id));
                         break;
 

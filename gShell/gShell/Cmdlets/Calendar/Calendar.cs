@@ -3336,9 +3336,7 @@ namespace gShell.Cmdlets.Calendar.Events
                         ICalUID = ICalUID,
                         MaxAttendees = MaxAttendees,
                         OrderBy = OrderBy,
-                        PrivateExtendedProperty = PrivateExtendedProperty,
                         Q = Q,
-                        SharedExtendedProperty = SharedExtendedProperty,
                         ShowDeleted = ShowDeleted,
                         ShowHiddenInvitations = ShowHiddenInvitations,
                         SingleEvents = SingleEvents,
@@ -3348,6 +3346,9 @@ namespace gShell.Cmdlets.Calendar.Events
                         TimeZone = TimeZone,
                         UpdatedMin = UpdatedMin
                     };
+
+                    if (this.PrivateExtendedProperty != null) properties.PrivateExtendedProperty = this.PrivateExtendedProperty;
+                    if (this.SharedExtendedProperty != null) properties.SharedExtendedProperty = this.SharedExtendedProperty;
 
                     if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
 
@@ -4247,9 +4248,7 @@ namespace gShell.Cmdlets.Calendar.Events
                     ICalUID = ICalUID,
                     MaxAttendees = MaxAttendees,
                     OrderBy = OrderBy,
-                    PrivateExtendedProperty = PrivateExtendedProperty,
                     Q = Q,
-                    SharedExtendedProperty = SharedExtendedProperty,
                     ShowDeleted = ShowDeleted,
                     ShowHiddenInvitations = ShowHiddenInvitations,
                     SingleEvents = SingleEvents,
@@ -4260,6 +4259,8 @@ namespace gShell.Cmdlets.Calendar.Events
                     UpdatedMin = UpdatedMin
                 };
 
+                if (this.PrivateExtendedProperty != null) properties.PrivateExtendedProperty = this.PrivateExtendedProperty;
+                if (this.SharedExtendedProperty != null) properties.SharedExtendedProperty = this.SharedExtendedProperty;
 
                 WriteObject(events.Watch(ChannelBody, CalendarId, properties));
             }
