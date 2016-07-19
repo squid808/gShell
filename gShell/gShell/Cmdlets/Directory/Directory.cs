@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
+using System.Runtime.InteropServices;
+using System.Security;
 using Data = Google.Apis.admin.Directory.directory_v1.Data;
 
 namespace gShell.Cmdlets.Directory
@@ -7049,7 +7051,7 @@ namespace gShell.Cmdlets.Directory.GAUser
           DefaultParameterSetName = "PasswordGenerated",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GAUser")]
-    public class NewGAUserCommand : DirectoryBase
+    public sealed class NewGAUserCommand : DirectoryBase
     {
         #region Properties
 
@@ -7057,13 +7059,6 @@ namespace gShell.Cmdlets.Directory.GAUser
         /// <para type="description">User's name</para>
         /// </summary>
         [Parameter(Position = 0,
-            ParameterSetName = "PasswordProvided",
-            Mandatory = true,
-            ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "User's name")]
-        [Parameter(Position = 0,
-            ParameterSetName = "PasswordGenerated",
             Mandatory = true,
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true,
@@ -7082,6 +7077,10 @@ namespace gShell.Cmdlets.Directory.GAUser
             ParameterSetName = "PasswordGenerated",
             Mandatory = true,
         HelpMessage = "First Name")]
+        [Parameter(Position = 2,
+            ParameterSetName = "SecureString",
+            Mandatory = true,
+        HelpMessage = "First Name")]
         public string GivenName { get; set; }
 
         /// <summary>
@@ -7095,6 +7094,10 @@ namespace gShell.Cmdlets.Directory.GAUser
             ParameterSetName = "PasswordGenerated",
             Mandatory = true,
             HelpMessage = "Full Name")]
+        [Parameter(Position = 3,
+            ParameterSetName = "SecureString",
+            Mandatory = true,
+            HelpMessage = "Full Name")]
         public string FamilyName { get; set; }
 
         /// <summary>
@@ -7104,6 +7107,14 @@ namespace gShell.Cmdlets.Directory.GAUser
             ParameterSetName = "PasswordProvided",
             HelpMessage = "User's password")]
         public string Password { get; set; }
+
+        /// <summary>
+        /// <para type="description">A secure string password.</para>
+        /// </summary>
+        [Parameter(Position = 6,
+            HelpMessage = "A secure string password.",
+            ParameterSetName = "SecureString")]
+        public SecureString SecureStringPassword { get; set; }
 
         /// <summary>
         /// <para type="description">The desired length of the generated password</para>
@@ -7130,6 +7141,9 @@ namespace gShell.Cmdlets.Directory.GAUser
         [Parameter(Position = 7,
             ParameterSetName = "PasswordGenerated",
             HelpMessage = "Boolean indicating if user is included in Global Address List")]
+        [Parameter(Position = 7,
+            ParameterSetName = "SecureString",
+            HelpMessage = "Boolean indicating if user is included in Global Address List")]
         public bool? IncludeInDirectory { get; set; }
 
         /// <summary>
@@ -7141,6 +7155,9 @@ namespace gShell.Cmdlets.Directory.GAUser
         [Parameter(Position = 8,
             ParameterSetName = "PasswordGenerated",
             HelpMessage = "Indicates if user is suspended")]
+        [Parameter(Position = 8,
+            ParameterSetName = "SecureString",
+            HelpMessage = "Indicates if user is suspended")]
         public bool? Suspended { get; set; }
 
         /// <summary>
@@ -7151,6 +7168,9 @@ namespace gShell.Cmdlets.Directory.GAUser
             HelpMessage = "Boolean indicating if ip is whitelisted")]
         [Parameter(Position = 9,
             ParameterSetName = "PasswordGenerated",
+            HelpMessage = "Boolean indicating if ip is whitelisted")]
+        [Parameter(Position = 9,
+            ParameterSetName = "SecureString",
             HelpMessage = "Boolean indicating if ip is whitelisted")]
         public bool? IpWhiteListed { get; set; }
 
@@ -7165,6 +7185,10 @@ namespace gShell.Cmdlets.Directory.GAUser
             ParameterSetName = "PasswordGenerated",
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "Boolean indicating if the user should change password in next login")]
+        [Parameter(Position = 10,
+            ParameterSetName = "SecureString",
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Boolean indicating if the user should change password in next login")]
         public bool? ChangePasswordAtNextLogin { get; set; }
 
         /// <summary>
@@ -7175,6 +7199,9 @@ namespace gShell.Cmdlets.Directory.GAUser
             HelpMessage = "OrgUnit of User")]
         [Parameter(Position = 11,
             ParameterSetName = "PasswordGenerated",
+            HelpMessage = "OrgUnit of User")]
+        [Parameter(Position = 11,
+            ParameterSetName = "SecureString",
             HelpMessage = "OrgUnit of User")]
         public string OrgUnitPath { get; set; }
 
@@ -7229,6 +7256,11 @@ namespace gShell.Cmdlets.Directory.GAUser
                     userAcct.HashFunction = "MD5";
                     userAcct.Password = GeneratePassword(PasswordLength, ShowNewPassword);
                     break;
+
+                case "SecureString":
+                    userAcct.HashFunction = "MD5";
+                    userAcct.Password = GetMd5Hash(ConvertToUnsecureString(SecureStringPassword));
+                    break;
             }
 
             if (IncludeInDirectory.HasValue) userAcct.IncludeInGlobalAddressList = IncludeInDirectory;
@@ -7242,6 +7274,23 @@ namespace gShell.Cmdlets.Directory.GAUser
             if (!string.IsNullOrWhiteSpace(OrgUnitPath)) userAcct.OrgUnitPath = OrgUnitPath;
 
             users.Insert(userAcct);
+        }
+
+        private string ConvertToUnsecureString(SecureString securePassword)
+        {
+            if (securePassword == null)
+                throw new ArgumentNullException("securePassword");
+
+            IntPtr unmanagedString = IntPtr.Zero;
+            try
+            {
+                unmanagedString = Marshal.SecureStringToGlobalAllocUnicode(securePassword);
+                return Marshal.PtrToStringUni(unmanagedString);
+            }
+            finally
+            {
+                Marshal.ZeroFreeGlobalAllocUnicode(unmanagedString);
+            }
         }
     }
 
@@ -7432,7 +7481,7 @@ namespace gShell.Cmdlets.Directory.GAUser
           DefaultParameterSetName = "NoPasswordProvided",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAUser")]
-    public class SetGAUserCommand : DirectoryBase
+    public sealed class SetGAUserCommand : DirectoryBase
     {
         #region Properties
 
@@ -7440,19 +7489,6 @@ namespace gShell.Cmdlets.Directory.GAUser
         /// <para type="description">User's name</para>
         /// </summary>
         [Parameter(Position = 0,
-            ParameterSetName = "PasswordProvided",
-            Mandatory = true,
-            ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "The username of the user to update.")]
-        [Parameter(Position = 0,
-            ParameterSetName = "PasswordGenerated",
-            Mandatory = true,
-            ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "The username of the user to update.")]
-        [Parameter(Position = 0,
-            ParameterSetName = "Body",
             Mandatory = true,
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true,
@@ -7469,6 +7505,9 @@ namespace gShell.Cmdlets.Directory.GAUser
         [Parameter(Position = 2,
             ParameterSetName = "PasswordGenerated",
             HelpMessage = "The user's first name. Required when creating a user account.")]
+        [Parameter(Position = 2,
+            ParameterSetName = "SecureString",
+            HelpMessage = "The user's first name. Required when creating a user account.")]
         public string NewGivenName { get; set; }
 
         /// <summary>
@@ -7479,6 +7518,9 @@ namespace gShell.Cmdlets.Directory.GAUser
             HelpMessage = "The user's last name. Required when creating a user account.")]
         [Parameter(Position = 3,
             ParameterSetName = "PasswordGenerated",
+            HelpMessage = "The user's last name. Required when creating a user account.")]
+        [Parameter(Position = 3,
+            ParameterSetName = "SecureString",
             HelpMessage = "The user's last name. Required when creating a user account.")]
         public string NewFamilyName { get; set; }
 
@@ -7491,6 +7533,9 @@ namespace gShell.Cmdlets.Directory.GAUser
         [Parameter(Position = 4,
             ParameterSetName = "PasswordGenerated",
             HelpMessage = "The user's username, post-update.")]
+        [Parameter(Position = 4,
+            ParameterSetName = "SecureString",
+            HelpMessage = "The user's username, post-update.")]
         public string NewUserName { get; set; }
 
         /// <summary>
@@ -7502,6 +7547,9 @@ namespace gShell.Cmdlets.Directory.GAUser
         [Parameter(Position = 5,
             ParameterSetName = "PasswordGenerated",
             HelpMessage = "Indicates if the user is suspended.")]
+        [Parameter(Position = 5,
+            ParameterSetName = "SecureString",
+            HelpMessage = "Indicates if the user is suspended.")]
         public bool? Suspended { get; set; }
 
         /// <summary>
@@ -7511,6 +7559,14 @@ namespace gShell.Cmdlets.Directory.GAUser
             HelpMessage = "Stores the password for the user account. A password can contain any combination of ASCII characters. A minimum of 8 characters is required. The maximum length is 100 characters.",
             ParameterSetName = "PasswordProvided")]
         public string NewPassword { get; set; }
+
+        /// <summary>
+        /// <para type="description">A secure string password.</para>
+        /// </summary>
+        [Parameter(Position = 6,
+            HelpMessage = "A secure string password.",
+            ParameterSetName = "SecureString")]
+        public SecureString SecureStringPassword { get; set; }
 
         /// <summary>
         /// <para type="description">The desired length of the generated password</para>
@@ -7537,6 +7593,9 @@ namespace gShell.Cmdlets.Directory.GAUser
         [Parameter(Position = 9,
             ParameterSetName = "PasswordGenerated",
             HelpMessage = "Indicates if the user is forced to change their password at next login.")]
+        [Parameter(Position = 9,
+            ParameterSetName = "SecureString",
+            HelpMessage = "Indicates if the user is forced to change their password at next login.")]
         public bool? ChangePasswordAtNextLogin { get; set; }
 
         /// <summary>
@@ -7548,6 +7607,9 @@ namespace gShell.Cmdlets.Directory.GAUser
         [Parameter(Position = 10,
             ParameterSetName = "PasswordGenerated",
             HelpMessage = "The full path of the parent organization associated with the user. If the parent organization is the top-level, it is represented as a forward slash (/).")]
+        [Parameter(Position = 10,
+            ParameterSetName = "SecureString",
+            HelpMessage = "The full path of the parent organization associated with the user. If the parent organization is the top-level, it is represented as a forward slash (/).")]
         public string OrgUnitPath { get; set; }
 
         /// <summary>
@@ -7558,6 +7620,9 @@ namespace gShell.Cmdlets.Directory.GAUser
             HelpMessage = "A supplied property collection to update the user with. Create with New/Get-GAUserPropertyCollection and update with New/Remove-GauserProperty")]
         [Parameter(Position = 11,
             ParameterSetName = "PasswordGenerated",
+            HelpMessage = "A supplied property collection to update the user with. Create with New/Get-GAUserPropertyCollection and update with New/Remove-GauserProperty")]
+        [Parameter(Position = 11,
+            ParameterSetName = "SecureString",
             HelpMessage = "A supplied property collection to update the user with. Create with New/Get-GAUserPropertyCollection and update with New/Remove-GauserProperty")]
         public GAUserPropertyCollection PropertyCollection { get; set; }
 
@@ -7603,7 +7668,8 @@ namespace gShell.Cmdlets.Directory.GAUser
                 ShowNewPassword == false &&
                 !Suspended.HasValue &&
                 !ChangePasswordAtNextLogin.HasValue &&
-                null == PropertyCollection)
+                null == PropertyCollection &&
+                null == SecureStringPassword)
             {
                 WriteError(new ErrorRecord(new Exception(
                     string.Format("No data was entered to update {0}.", UserKey)),
@@ -7614,16 +7680,22 @@ namespace gShell.Cmdlets.Directory.GAUser
                 userAcct.Suspended = Suspended.Value;
 
             if (!String.IsNullOrWhiteSpace(NewGivenName))
+            {
                 if (userAcct.Name == null) userAcct.Name = new Data.UserName();
                 userAcct.Name.GivenName = NewGivenName;
+            }
 
             if (!String.IsNullOrWhiteSpace(NewFamilyName))
+            {
                 if (userAcct.Name == null) userAcct.Name = new Data.UserName();
                 userAcct.Name.FamilyName = NewFamilyName;
+            }
 
             if (!String.IsNullOrWhiteSpace(NewUserName))
+            {
                 NewUserName = GetFullEmailAddress(NewUserName, Domain);
                 userAcct.PrimaryEmail = NewUserName;
+            }
 
             switch (ParameterSetName)
             {
@@ -7635,6 +7707,11 @@ namespace gShell.Cmdlets.Directory.GAUser
                 case "PasswordGenerated":
                     userAcct.HashFunction = "MD5";
                     userAcct.Password = GeneratePassword(PasswordLength, ShowNewPassword);
+                    break;
+
+                case "SecureString":
+                    userAcct.HashFunction = "MD5";
+                    userAcct.Password = GetMd5Hash(ConvertToUnsecureString(SecureStringPassword));
                     break;
             }
 
@@ -7670,6 +7747,23 @@ namespace gShell.Cmdlets.Directory.GAUser
             }
 
             users.Patch(userAcct, UserKey);
+        }
+
+        private string ConvertToUnsecureString(SecureString securePassword)
+        {
+            if (securePassword == null)
+                throw new ArgumentNullException("securePassword");
+
+            IntPtr unmanagedString = IntPtr.Zero;
+            try
+            {
+                unmanagedString = Marshal.SecureStringToGlobalAllocUnicode(securePassword);
+                return Marshal.PtrToStringUni(unmanagedString);
+            }
+            finally
+            {
+                Marshal.ZeroFreeGlobalAllocUnicode(unmanagedString);
+            }
         }
     }
 }
