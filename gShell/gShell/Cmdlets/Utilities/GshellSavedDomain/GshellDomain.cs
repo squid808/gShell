@@ -552,7 +552,7 @@ namespace gShell.Cmdlets.Utilities.gShellDomain
     /// <summary>
     /// <para type="synopsis">Update one or more settings specific to gShell itself.</para>
     /// <para type="description">Update one or more settings specific to gShell itself.
-    /// Currently you can change the file type that gShell will use when serializing the authentication information.</para>
+    /// Currently you can change the file type that gShell will use when serializing the authentication information and the location where the authentication information is stored.</para>
     /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>

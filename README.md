@@ -1,23 +1,23 @@
-#Welcome to gShell!
+# Welcome to gShell!
 
-##What is gShell?
+## What is gShell?
 gShell is a project that primarily aims to make any Apps Admin-related Google APIs available through Microsoft PowerShell, starting with the Administrative APIs. As a result, gShell also provides dotNet developers with a [framework to ease the burden of authenticating and calling on the APIs in dotNet](https://github.com/squid808/gShell/wiki/DotNet-Guide).
 
-###What's New?
-Version 0.0.8.0 is now available! Fixes some decently annoying authentication issues from 0.0.7.0 by reworking the authentication experience, with a few other adjustments as well. Most notably, you can now choose to serialize your auth information to a json file instead so that it's human readable (but less secure). [Check out the News page for more!](https://github.com/squid808/gShell/wiki/News)
+### What's New?
+Version 0.0.9.0 beta is now available! Over [250 new cmdlets](https://github.com/squid808/gShell/wiki/Cmdlets-Index) added, covering a whopping 15 APIs and more. This is the final major update to gShell. Note: A handful of breaking changes have been made, so please be sure to test. [Check out the News page for more!](https://github.com/squid808/gShell/wiki/News)
 
-###PowerShell Cmdlets for Google APIs
+### PowerShell Cmdlets for Google APIs
 
-gShell is a toolset that is here to help you access and manage information from your Google Apps domain through [Windows PowerShell](http://en.wikipedia.org/wiki/Windows_PowerShell). The goal is to be the only set of Cmdlets you'll need to use the Google APIs in PowerShell, though it's a long road.
+gShell is a toolset to help you access and manage information from your Google Apps domain through [Windows PowerShell](http://en.wikipedia.org/wiki/Windows_PowerShell).
 
 Check out the [Getting Started](https://github.com/squid808/gShell/wiki/Getting-Started) page to get going, or hop over to [Downloads](https://github.com/squid808/gShell/wiki/Downloads) if you want to dive in with the installer.
 
 Please keep an eye on the documentation here in the [Wiki](https://github.com/squid808/gShell/wiki) for what is available; this is a work in progress done in my spare time so things are added irregularly but as frequently as possible.
 
-Finally, I'm always open to adding something new, so if there is a particular API that you want to use that I don't have yet, [let me know](https://github.com/squid808/gShell/wiki/Discussion-Groups)!
+Finally, I'm always open to adding something new, so if you have an idea [let me know](https://github.com/squid808/gShell/wiki/Discussion-Groups)! Alternately, please file bugs and issues in the [issue tracker](https://github.com/squid808/gShell/issues).
 
-####Quick Examples####
-The idea of gShell is to allow you quick and easy access to your Google Apps domain. Down the road, I hope to expand it to include additional Google APIs that can be used with _ANY_ Google-based account. Check out some of the following examples to see how this can be helpful to you, once you get past the [quick setup](https://github.com/squid808/gShell/wiki/Getting-Started).
+#### Quick Examples
+The idea of gShell is to allow you quick and easy access to your Google Apps domain. Check out some of the following examples to see how this can be helpful to you, once you get past the [quick setup](https://github.com/squid808/gShell/wiki/Getting-Started).
 
 First, you can grab a user from your domain and get it back as a [GAUser](https://github.com/squid808/gShell/wiki/GAUser) object:
 ```PowerShell
@@ -42,7 +42,7 @@ PS C:\> $AllUsers.Count
 9001
 ```
 
-Better yet, perhaps you need to get a list of all users in all [groups](https://github.com/squid808/gShell/wiki/GAGroup) in the domain...
+Better yet, perhaps you need to get a list of all users in all [groups](https://github.com/squid808/gShell/wiki/Get-GAGroup) in the domain...
 ```PowerShell
 PS C:\> $AllGroups = Get-GAGroup mydomain.com -All -Members -Owners
 #A progress bar will show up for this, since it's potentially a long wait
@@ -82,4 +82,4 @@ PS C:\> (Get-Content "C:\AllDomainGroupMemberships.csv")[0..1]
 
 This is the tip of the iceberg of what's possible and what's available. If you need help or have questions, requests or you found a bug, drop a line in the [discussion group](https://github.com/squid808/gShell/wiki/Discussion-Groups).
 
-Stay tuned, and please reach out if you have any questions, concerns or requests.
+Please reach out if you have any questions, concerns or requests.

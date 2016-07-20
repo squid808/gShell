@@ -208,9 +208,17 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
         /// A list of APIs that are used in gShell. Needs to be curated manually.
         /// </summary>
         private ApiChoice[] apiChoices = new ApiChoice[]{
-            new ApiChoice(1, "v2", "oauth2"),
-            new ApiChoice(2, "directory_v1","admin"),
-            new ApiChoice(3, "reports_v1","admin")
+            new ApiChoice(1, "v3", "calendar"),
+            new ApiChoice(2, "v1", "classroom"),
+            new ApiChoice(3, "datatransfer_v1", "admin"),
+            new ApiChoice(4, "directory_v1","admin"),
+            new ApiChoice(5, "v3", "drive"),
+            new ApiChoice(6, "v1", "gmail"),
+            new ApiChoice(7, "v1", "groupsmigration"),
+            new ApiChoice(8, "v1", "groupssettings"),
+            new ApiChoice(9, "v1", "licensing"),
+            new ApiChoice(10, "reports_v1","admin"),
+            new ApiChoice(11, "v1", "reseller")
         };
 
         public ScopeHandlerBase() 
