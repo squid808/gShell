@@ -94,23 +94,29 @@
         <RemoveFile Name="gShell.dll" Id="gShelldll" On="uninstall" />
         <RegistryValue Root="HKCU" Key="Software\gShell" Type="string" Value="4" KeyPath="yes" />
 
-        <File Id="Google.Apis.Admin.Directory.directory_v1.dll"
-              Name="Google.Apis.Admin.Directory.directory_v1.dll"
+        <!-- <File Id="Google.Apis.admin.Directory.directory_v1.dll"
+              Name="Google.Apis.admin.Directory.directory_v1.dll"
               DiskId="1"
-              Source="$(var.gShell.TargetDir)/Google.Apis.Admin.Directory.directory_v1.dll" />
-        <RemoveFile Name="Google.Apis.Admin.Directory.directory_v1.dll" Id="Google.Apis.Admin.Directory.directory_v1.dll" On="uninstall" />
-
-        <File Id="Google.Apis.Discovery.v1.dll"
-              Name="Google.Apis.Discovery.v1.dll"
-              DiskId="1"
-              Source="$(var.gShell.TargetDir)/Google.Apis.Discovery.v1.dll" />
-        <RemoveFile Name="Google.Apis.Discovery.v1.dll" Id="Google.Apis.Discovery.v1.dll" On="uninstall" />
+              Source="$(var.gShell.TargetDir)/Google.Apis.admin.Directory.directory_v1.dll" />
+        <RemoveFile Name="Google.Apis.admin.Directory.directory_v1.dll" Id="Google.Apis.admin.Directory.directory_v1.dll" On="uninstall" />
 
         <File Id="Google.Apis.Admin.Reports.reports_v1.dll"
               Name="Google.Apis.Admin.Reports.reports_v1.dll"
               DiskId="1"
               Source="$(var.gShell.TargetDir)/Google.Apis.Admin.Reports.reports_v1.dll" />
-        <RemoveFile Name="Google.Apis.Admin.Reports.reports_v1.dll" Id="Google.Apis.Admin.Reports.reports_v1.dll" On="uninstall" />
+        <RemoveFile Name="Google.Apis.Admin.Reports.reports_v1.dll" Id="Google.Apis.Admin.Reports.reports_v1.dll" On="uninstall" /> -->
+
+        <File Id="BouncyCastle.Crypto.dll"
+              Name="BouncyCastle.Crypto.dll"
+              DiskId="1"
+              Source="$(var.gShell.TargetDir)/BouncyCastle.Crypto.dll" />
+        <RemoveFile Name="BouncyCastle.Crypto.dll" Id="BouncyCastle.Crypto.dll" On="uninstall" />
+
+        <File Id="Google.Apis.dll"
+              Name="Google.Apis.dll"
+              DiskId="1"
+              Source="$(var.gShell.TargetDir)/Google.Apis.dll" />
+        <RemoveFile Name="Google.Apis.dll" Id="Google.Apis.dll" On="uninstall" />
 
         <File Id="Google.Apis.Auth.dll"
               Name="Google.Apis.Auth.dll"
@@ -124,17 +130,17 @@
               Source="$(var.gShell.TargetDir)/Google.Apis.Auth.PlatformServices.dll" />
         <RemoveFile Name="Google.Apis.Auth.PlatformServices.dll" Id="Google.Apis.Auth.PlatformServices.dll" On="uninstall" />
 
-        <File Id="Google.Apis.dll"
-              Name="Google.Apis.dll"
-              DiskId="1"
-              Source="$(var.gShell.TargetDir)/Google.Apis.dll" />
-        <RemoveFile Name="Google.Apis.dll" Id="Google.Apis.dll" On="uninstall" />
-
-        <File Id="Google.Apis.Coredll"
+        <File Id="Google.Apis.Core.dll"
               Name="Google.Apis.Core.dll"
               DiskId="1"
               Source="$(var.gShell.TargetDir)/Google.Apis.Core.dll" />
         <RemoveFile Name="Google.Apis.Core.dll" Id="Google.Apis.Core.dll" On="uninstall" />
+
+        <File Id="Google.Apis.Discovery.v1.dll"
+              Name="Google.Apis.Discovery.v1.dll"
+              DiskId="1"
+              Source="$(var.gShell.TargetDir)/Google.Apis.Discovery.v1.dll" />
+        <RemoveFile Name="Google.Apis.Discovery.v1.dll" Id="Google.Apis.Discovery.v1.dll" On="uninstall" />
 
         <File Id="Google.Apis.Oauth2.v2.dll"
               Name="Google.Apis.Oauth2.v2.dll"
@@ -160,17 +166,17 @@
               Source="$(var.gShell.TargetDir)/Microsoft.Threading.Tasks.dll" />
         <RemoveFile Name="Microsoft.Threading.Tasks.dll" Id="Microsoft.Threading.Tasks.dll" On="uninstall" />
 
-        <File Id="Microsoft.Threading.Tasks.Extensions.Desktop.dll"
-              Name="Microsoft.Threading.Tasks.Extensions.Desktop.dll"
-              DiskId="1"
-              Source="$(var.gShell.TargetDir)/Microsoft.Threading.Tasks.Extensions.Desktop.dll" />
-        <RemoveFile Name="Microsoft.Threading.Tasks.Extensions.Desktop.dll" Id="Microsoft.Threading.Tasks.Extensions.Desktop.dll" On="uninstall" />
-
         <File Id="Microsoft.Threading.Tasks.Extensions.dll"
               Name="Microsoft.Threading.Tasks.Extensions.dll"
               DiskId="1"
               Source="$(var.gShell.TargetDir)/Microsoft.Threading.Tasks.Extensions.dll" />
         <RemoveFile Name="Microsoft.Threading.Tasks.Extensions.dll" Id="Microsoft.Threading.Tasks.Extensions.dll" On="uninstall" />
+        
+        <File Id="Microsoft.Threading.Tasks.Extensions.Desktop.dll"
+              Name="Microsoft.Threading.Tasks.Extensions.Desktop.dll"
+              DiskId="1"
+              Source="$(var.gShell.TargetDir)/Microsoft.Threading.Tasks.Extensions.Desktop.dll" />
+        <RemoveFile Name="Microsoft.Threading.Tasks.Extensions.Desktop.dll" Id="Microsoft.Threading.Tasks.Extensions.Desktop.dll" On="uninstall" />
 
         <File Id="Newtonsoft.Json.dll"
               Name="Newtonsoft.Json.dll"
@@ -232,6 +238,12 @@
               Source="$(var.gShell.ProjectDir)/InstallerFiles/gShell.Format.ps1xml" />
         <RemoveFile Name="gShell.Format.ps1xml" Id="gShell.Format.ps1xml" On="uninstall" />
 
+        <File Id="gShell.dll_Help.xml"
+                      Name="gShell.dll-Help.xml"
+                      DiskId="1"
+                      Source="$(var.gShell.TargetDir)/gShell.dll-Help.xml" />
+        <RemoveFile Name="gShell.dll-Help.xml" Id="gShell.dll_Help.xml" On="uninstall" />
+        
         <!--<File Id="idname"
               Name="filename"
               DiskId="1"

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 
 using Google.Apis.Auth.OAuth2;
 using gShell.dotNet.Utilities.OAuth2.DataStores;
@@ -16,15 +17,22 @@ namespace gShell.dotNet.Utilities.OAuth2
     {
         #region Properties
 
-        public gShellSettings settings { get; set; }
-
-        public static string dataStoreLocation
+        public static gShellSettings settings
         {
             get
             {
-                return Path.Combine(Environment.GetFolderPath(
-                    Environment.SpecialFolder.LocalApplicationData), @"gShell\");
+                if (_settings == null)
+                    _settings = gShellSettingsLoader.Load();
+
+                return _settings;
             }
+        }
+
+        private static gShellSettings _settings { get; set; }
+
+        public static string dataStoreLocation
+        {
+            get { return settings.AuthInfoPath; }
         }
 
         /// <summary>The data store responsible for saving and loading the OAuth2 information.</summary>
@@ -40,9 +48,7 @@ namespace gShell.dotNet.Utilities.OAuth2
 
         public OAuth2InfoConsumer()
         {
-            settings = gShellSettingsLoader.Load();
-
-            if (settings != null && settings.SerializeType == gShellSettings.SerializeTypes.Json)
+            if (settings.SerializeType == gShellSettings.SerializeTypes.Json)
             {
                 _dataStore = new OAuth2JsonDataStore(dataStoreLocation);
             }
@@ -376,6 +382,14 @@ namespace gShell.dotNet.Utilities.OAuth2
             }
         }
 
+        public void SetClientSecrets(string Domain, string UserName, string ClientId, string ClientSecret)
+        {
+            SetClientSecrets(Domain, UserName, new ClientSecrets() {
+                ClientId = ClientId,
+                ClientSecret = ClientSecret
+            });
+        }
+
         /// <summary>Sets the client secrets for the given domain user.</summary>
         public void SetClientSecrets(string Domain, string UserName, ClientSecrets Secrets)
         {
@@ -429,6 +443,16 @@ namespace gShell.dotNet.Utilities.OAuth2
         }
 
         /// <summary>Set the default client secrets.</summary>
+        public void SetDefaultClientSecrets(string ClientId, string ClientSecret)
+        {
+            SetDefaultClientSecrets(new ClientSecrets()
+            {
+                ClientId = ClientId,
+                ClientSecret = ClientSecret
+            });
+        }
+
+        /// <summary>Set the default client secrets.</summary>
         public void SetDefaultClientSecrets(ClientSecrets Secrets)
         {
             if (Secrets != null)
@@ -457,28 +481,77 @@ namespace gShell.dotNet.Utilities.OAuth2
 
         #region ServiceAccount
 
-        /// <summary>Summary.</summary>
-        public void GetServiceAccount()
+        /// <summary>Retrive a service account for a domain.</summary>
+        public ServiceAccount GetServiceAccount(string Domain)
         {
-            throw new NotImplementedException();
+            if (DomainExists(Domain))
+            {
+                var svcAcct = new ServiceAccount()
+                {
+                    email = info.domains[Domain].serviceAccountEmail,
+                };
+
+                svcAcct.certType = info.domains[Domain].certType.Value;
+
+                if (svcAcct.certType == OAuth2Domain.CertTypeEnum.x509)
+                    svcAcct.certificate = info.domains[Domain].p12Certificate;
+                else
+                    svcAcct.privateKey = info.domains[Domain].jsonCertificate;
+
+                return svcAcct;
+            }
+
+            return null;
         }
 
-        /// <summary>Summary.</summary>
-        public void SetServiceAccount()
+        /// <summary>Set a service account for a domain using a p12 cert.</summary>
+        public void SetServiceAccount(string Domain, string EmailAccount, X509Certificate2 certificate, string keyPassword)
         {
-            throw new NotImplementedException();
+            info.domains[Domain].certType = OAuth2Domain.CertTypeEnum.x509;
+            info.domains[Domain].keyPassword = keyPassword;
+            info.domains[Domain].serviceAccountEmail = EmailAccount;
+            info.domains[Domain].p12Certificate = new X509Certificate2(certificate);
+            dataStore.SaveInfo(info);
         }
 
-        /// <summary>Summary.</summary>
-        public void CheckServiceAccount()
+        /// <summary>Set a service account for a domain using a json cert.</summary>
+        public void SetServiceAccount(string Domain, string EmailAccount, string certificate, string keyPassword)
         {
-            throw new NotImplementedException();
+            info.domains[Domain].certType = OAuth2Domain.CertTypeEnum.json;
+            info.domains[Domain].keyPassword = keyPassword;
+            info.domains[Domain].serviceAccountEmail = EmailAccount;
+            info.domains[Domain].jsonCertificate = certificate;
+            dataStore.SaveInfo(info);
         }
 
-        /// <summary>Summary.</summary>
-        public void RemoveServiceAccount()
+        /// <summary>Checks if the default user exists for a domain.</summary>
+        public bool ServiceAccountExists(string Domain)
         {
-            throw new NotImplementedException();
+            if (DomainExists(Domain) 
+                && !string.IsNullOrWhiteSpace(info.domains[Domain].serviceAccountEmail)
+                && info.domains[Domain].p12Certificate != null)
+            {
+                return true;
+            }
+            
+            return false;
+        }
+
+        /// <summary>Removes the service account information from a domain.</summary>
+        public void RemoveServiceAccount(string Domain)
+        {
+            info.domains[Domain].serviceAccountEmail = string.Empty;
+            info.domains[Domain].p12Certificate = null;
+            dataStore.SaveInfo(info);
+        }
+
+        #endregion
+
+        #region Settings
+
+        public static void UpdateSettings(gShellSettings settings)
+        {
+            _settings = settings;
         }
 
         #endregion

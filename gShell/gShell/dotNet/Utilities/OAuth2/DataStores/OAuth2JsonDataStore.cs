@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using Newtonsoft.Json;
 
 namespace gShell.dotNet.Utilities.OAuth2.DataStores
@@ -14,10 +13,6 @@ namespace gShell.dotNet.Utilities.OAuth2.DataStores
     {
         #region Parameters
 
-        //private static string destFolder = Path.Combine(Environment.GetFolderPath(
-        //    Environment.SpecialFolder.LocalApplicationData), @"gShell\");
-        //private static string destFile = Path.Combine(Environment.GetFolderPath(
-        //    Environment.SpecialFolder.LocalApplicationData), @"gShell\gShell_OAuth2.json");
         public override string fileName { get { return "gShell_OAuth2.json"; } }
 
         #endregion

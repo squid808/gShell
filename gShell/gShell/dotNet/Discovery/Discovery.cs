@@ -21,7 +21,7 @@ namespace gShell.dotNet
         /// <summary>
         /// Initialize and return a new DiscoveryService
         /// </summary>
-        protected override discovery_v1.DiscoveryService CreateNewService(string domain)
+        protected override discovery_v1.DiscoveryService CreateNewService(string domain, AuthenticatedUserInfo authInfo, string serviceAcctUser)
         {
             return new discovery_v1.DiscoveryService(OAuth2Base.GetInitializer());
         }
@@ -40,7 +40,8 @@ namespace gShell.dotNet
             {
                 if (_service == null)
                 {
-                    _service = new discovery_v1.DiscoveryService(new gShell.dotNet.CustomSerializer.gInitializer());
+                    _service = new discovery_v1.DiscoveryService(
+                        new gShell.dotNet.CustomSerializer.Json.gJsonInitializer());
                 }
 
                 return _service;

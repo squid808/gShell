@@ -106,24 +106,6 @@ namespace gShell.dotNet.Utilities.OAuth2.DataStores
         }
 
         #endregion
-
-        #region Custom Exceptions
-
-        private static void ThrowNoOauthSettingsError(string Domain = null)
-        {
-            if (Domain == null)
-            {
-                throw new System.InvalidOperationException(
-                    "No Oauth settings file found");
-            }
-            else
-            {
-                throw new System.InvalidOperationException(
-                     "No Oauth domain settings exist for " + Domain);
-            }
-        }
-
-        #endregion
     }
 
     #region Serialization Surrogates

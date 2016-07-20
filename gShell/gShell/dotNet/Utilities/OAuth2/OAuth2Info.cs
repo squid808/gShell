@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Security.Cryptography.X509Certificates;
 
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Auth.OAuth2.Responses;
-using Google.Apis.Oauth2.v2.Data;
 
-using gShell.dotNet.Utilities;
 
 namespace gShell.dotNet.Utilities.OAuth2
 {
@@ -16,37 +13,6 @@ namespace gShell.dotNet.Utilities.OAuth2
     [Serializable]
     public class OAuth2Info : ISerializable
     {
-        /////<summary> Client credential details for installed and web applications customized for serialization. </summary>
-        //[Serializable]
-        //public class gClientSecrets
-        //{
-        //    public string ClientId { get; set; }
-
-        //    public string ClientSecret { get; set; }
-
-        //    public static implicit operator ClientSecrets(gClientSecrets secrets)
-        //    {
-        //        if (secrets == null) return null;
-
-        //        return new ClientSecrets()
-        //        {
-        //            ClientId = secrets.ClientId,
-        //            ClientSecret = secrets.ClientSecret
-        //        };
-        //    }
-
-        //    public static implicit operator gClientSecrets(ClientSecrets secrets)
-        //    {
-        //        if (secrets == null) return null;
-
-        //        return new gClientSecrets()
-        //        {
-        //            ClientId = secrets.ClientId,
-        //            ClientSecret = secrets.ClientSecret
-        //        };
-        //    }
-        //}
-
         #region Properties
 
         /// <summary> Increment this number any time you happen to change anything in these files. </summary>
@@ -117,8 +83,11 @@ namespace gShell.dotNet.Utilities.OAuth2
 
     /// <summary> A collection of <OAuth2DomainUser/> objects, and a reference to the default account for the domain. </summary>
     [Serializable]
-    public class OAuth2Domain
+    public class OAuth2Domain : ISerializable
     {
+        [Serializable]
+        public enum CertTypeEnum { json, x509}
+
         #region Properties
 
         /// <summary> The default username for this domain. </summary>
@@ -133,12 +102,23 @@ namespace gShell.dotNet.Utilities.OAuth2
         /// <summary> The email address of the service account for this domain. </summary>
         public string serviceAccountEmail { get; set; }
 
+        /// <summary>The format of the certificate to use, either json or x509 (p12).</summary>
+        public CertTypeEnum? certType { get; set; }
+
         /// <summary> The stored cert for the service account. </summary>
-        public X509Certificate2 serviceAccountCertificate { get; set; }
+        /// <remarks>This is how a p12/X509 certificate is stored in memory.</remarks>
+        public X509Certificate2 p12Certificate { get; set; }
+
+        /// <summary> The stored cert for the service account. </summary>
+        /// <remarks>This is how a p12/X509 certificate is stored in memory.</remarks>
+        public string jsonCertificate { get; set; }
 
         /// <summary> The stored byte array for the service account. </summary>
+        /// <remarks>This is how the certificate is stored in the serialized file.</remarks>
         public byte[] certificateByteArray { get; set; }
 
+        /// <summary>The key password.</summary>
+        public string keyPassword { get; set; }
         #endregion
 
         #region Constructors
@@ -147,12 +127,6 @@ namespace gShell.dotNet.Utilities.OAuth2
             users = new Dictionary<string, OAuth2DomainUser>();
             certificateByteArray = new byte[0];
         }
-
-        //public OAuth2Domain(string userEmail, string storedToken, HashSet<string> scopes) : this()
-        //{
-        //    _defaultEmail = userEmail;
-        //    users.Add(userEmail, new OAuth2DomainUser(userEmail));
-        //}
         #endregion
 
         #region Serialization
@@ -162,21 +136,38 @@ namespace gShell.dotNet.Utilities.OAuth2
             users = (Dictionary<string, OAuth2DomainUser>)info.GetValue("users",
                 typeof(Dictionary<string, OAuth2DomainUser>));
 
-            defaultUser = (string)info.GetValue("defaultUser", typeof(string));
-            domain = (string)info.GetValue("domain", typeof(string));
-            serviceAccountEmail = (string)info.GetValue("serviceAccountEmail", typeof(string));
+            foreach(SerializationEntry entry in info) {
+                switch(entry.Name) {
+                    case "defaultUser":
+                        defaultUser = (string)info.GetValue("defaultUser", typeof(string));
+                        break;
 
-            //It's possible this is not declared, so check to see if it's empty or not.
-            if (serviceAccountEmail != "temp")
-            {
-                certificateByteArray = (byte[])info.GetValue("certificateByteArray", typeof(byte[]));
-                serviceAccountCertificate = new X509Certificate2();
-                serviceAccountCertificate.Import(certificateByteArray, "notasecret", X509KeyStorageFlags.Exportable);
-            }
-            else
-            {
-                certificateByteArray = new byte[0];
-                serviceAccountEmail = string.Empty;
+                    case "domain":
+                        domain = (string)info.GetValue("domain", typeof(string));
+                        break;
+
+                    case "certType":
+                        certType = (CertTypeEnum)info.GetValue("certType", typeof(CertTypeEnum));
+
+                        if (certType.HasValue)
+                        {
+                            keyPassword = (string)info.GetValue("keyPassword", typeof(string));
+                            serviceAccountEmail = (string)info.GetValue("serviceAccountEmail", typeof(string));
+
+                            if (certType.Value == CertTypeEnum.x509)
+                            {
+                                certificateByteArray = (byte[])info.GetValue("certificateByteArray", typeof(byte[]));
+                                p12Certificate = new X509Certificate2(certificateByteArray, keyPassword, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.PersistKeySet);
+                                //p12Certificate.Import(certificateByteArray, keyPassword, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.PersistKeySet);
+                                // else certificateByteArray = new byte[0];
+                            }
+                            else
+                            {
+                                jsonCertificate = (string)info.GetValue("jsonCertificate", typeof(string));
+                            }
+                        }
+                        break;
+                }
             }
         }
 
@@ -187,17 +178,22 @@ namespace gShell.dotNet.Utilities.OAuth2
             info.AddValue("defaultUser", defaultUser, typeof(string));
             info.AddValue("domain", domain, typeof(string));
 
-            if (string.IsNullOrWhiteSpace(serviceAccountEmail))
+            if (certType.HasValue)
             {
-                info.AddValue("serviceAccountEmail", "temp", typeof(string));
-            }
-            else
-            {
+                info.AddValue("certType", certType, typeof(CertTypeEnum));
+                info.AddValue("keyPassword", keyPassword, typeof(string));
                 info.AddValue("serviceAccountEmail", serviceAccountEmail, typeof(string));
-                info.AddValue("certificateByteArray",
-                    serviceAccountCertificate.Export(X509ContentType.Pkcs12, "notasecret"), typeof(byte[]));
-            }
 
+                if (certType.Value == CertTypeEnum.x509)
+                {
+                    info.AddValue("certificateByteArray",
+                        p12Certificate.Export(X509ContentType.Pkcs12, keyPassword), typeof(byte[]));
+                }
+                else
+                {
+                    info.AddValue("jsonCertificate", jsonCertificate, typeof(string));
+                }
+            }
         }
         #endregion
 
@@ -207,7 +203,7 @@ namespace gShell.dotNet.Utilities.OAuth2
     /// An [authenticated] user for a single domain. Meant to be stored in an OAuth2Domain object and serialized.
     /// </summary>
     [Serializable]
-    public class OAuth2DomainUser
+    public class OAuth2DomainUser : ISerializable
     {
         #region Properties
 
@@ -233,12 +229,6 @@ namespace gShell.dotNet.Utilities.OAuth2
         {
             tokenAndScopesByApi = new Dictionary<string, OAuth2TokenInfo>();
         }
-
-        //public OAuth2DomainUser(string UserEmail)
-        //    : this()
-        //{
-        //    this.email = UserEmail;
-        //}
         #endregion
 
         #region Serialization
