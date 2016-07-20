@@ -1,27 +1,13 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Management.Automation;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Reflection;
 
-using Google.Apis.Admin.Directory.directory_v1;
-//using Google.Apis.Drive.v2;
 using Google.Apis.Auth.OAuth2;
-using Google.Apis.Json;
 using Google.Apis.Util;
-using Google.Apis.Oauth2.v2;
-using Google.Apis.Oauth2.v2.Data;
-using Google.Apis.Services;
-using Google.Apis.Admin.Reports.reports_v1;
-using Google.Apis.Admin.Reports.reports_v1.Data;
 
 using gShell.Cmdlets.Utilities.ScopeHandler;
-
-//using gShell.Serialization;
 
 namespace gShell.dotNet.Utilities.OAuth2
 {
@@ -78,6 +64,12 @@ namespace gShell.dotNet.Utilities.OAuth2
 
                 return Assembly.LoadFrom(path);
             }
+            else if (args.Name.ToLower().StartsWith("newtonsoft.json"))
+            {
+                string path = System.IO.Path.Combine(AssemblyDirectory, "Newtonsoft.Json.dll");
+
+                return Assembly.LoadFrom(path);
+            }
             else
             {
                 return null;
@@ -116,14 +108,15 @@ namespace gShell.dotNet.Utilities.OAuth2
         protected override abstract void BeginProcessing();
 
         /// <summary>Load token and scope information for API call, and authenticate if necessary.</summary>
-        protected abstract AuthenticatedUserInfo Authenticate(IEnumerable<string> Scopes, ClientSecrets Secrets);
+        protected abstract AuthenticatedUserInfo Authenticate(IEnumerable<string> Scopes, ClientSecrets Secrets,
+            string Domain=null);
 
         /// <summary>Determines if the user needs to be prompted to select the scopes.</summary>
         /// <remarks>
         /// Api is derived from the class that inherits this. User is the domain's default user. Returns null if scopes
         /// already exist since they'll be pulled up during authentication anyways.
         /// </remarks>
-        public IEnumerable<string> EnsureScopesExist(string Domain)
+        public IEnumerable<string> EnsureScopesExist(string Domain, HashSet<string> forcedScopes = null)
         {
             //Since the domain could be null, see if we have a default ready or if the saved info contains this one
             Domain = OAuth2Base.CheckDomain(Domain);
@@ -151,12 +144,18 @@ namespace gShell.dotNet.Utilities.OAuth2
                     ScopeHandlerBase scopeBase = new ScopeHandlerBase(this);
 
                     return scopeBase.ChooseScopes(
-                        apiNameAndVersion.Split(':')[0], apiNameAndVersion.Split(':')[1]);
+                        apiNameAndVersion.Split(':')[0],
+                        apiNameAndVersion.Split(':')[1],
+                        forcedScopes);
                 }
                 else
                 {
                     WriteWarning("No scopes were chosen. You can run this process manually with Invoke-ScopeManager later.");
                 }
+            }
+            else
+            {
+                return OAuth2Base.infoConsumer.GetTokenInfo(Domain, defaultUser, apiNameAndVersion).scopes;
             }
 
             return null;
@@ -287,7 +286,18 @@ namespace gShell.dotNet.Utilities.OAuth2
 
         protected string GetFullEmailAddress(string account, string domain)
         {
+            if (string.IsNullOrWhiteSpace(domain))
+            {
+                domain = OAuth2Base.CheckDomain();
+                if (string.IsNullOrWhiteSpace(domain)) return null;
+            }
+
             return Utils.GetFullEmailAddress(account, domain);
+        }
+
+        protected string GetUserFromEmail(string userName)
+        {
+            return Utils.GetUserFromEmail(userName);
         }
         #endregion
     }
