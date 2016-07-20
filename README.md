@@ -4,7 +4,10 @@
 gShell is a project that primarily aims to make any Apps Admin-related Google APIs available through Microsoft PowerShell, starting with the Administrative APIs. As a result, gShell also provides dotNet developers with a [framework to ease the burden of authenticating and calling on the APIs in dotNet](https://github.com/squid808/gShell/wiki/DotNet-Guide).
 
 ### What's New?
-Version 0.0.9.0 beta is now available! Over [250 new cmdlets](https://github.com/squid808/gShell/wiki/Cmdlets-Index) added, covering a whopping 15 APIs and more. This is the final major update to gShell. Note: A handful of breaking changes have been made, so please be sure to test. [Check out the News page for more!](https://github.com/squid808/gShell/wiki/News)
+Version 0.0.9.0 beta is now available! Over [250 new cmdlets](https://github.com/squid808/gShell/wiki/Cmdlets-Index) added, covering a whopping 15 APIs and more. This is the final major update to gShell. [Check out the News page for more!](https://github.com/squid808/gShell/wiki/News)
+
+Note: A handful of breaking changes have been made, so please be sure to test.
+Note: I'm calling this a beta release because it's so big I couldn't test it all. Please try it out and [let me know how it works](https://github.com/squid808/gShell/wiki/Discussion-Groups) or [file an issue if you find one!](https://github.com/squid808/gShell/issues).
 
 ### PowerShell Cmdlets for Google APIs
 
