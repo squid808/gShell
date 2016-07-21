@@ -3230,12 +3230,12 @@ namespace gShell.Cmdlets.Directory.GAGroup
                         var properties = new dotNet.Directory.Groups.GroupsListProperties()
                         {
                             Domain = Domain,
-                            UserKey = UserName
+                            UserKey = GetFullEmailAddress(UserName, Domain)
                         };
 
-                        if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value; 
+                        if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
 
-                        WriteObject(groups.List());
+                        WriteObject(groups.List(properties).SelectMany(x => x.GroupsValue).ToList());
                     }
                     break;
                 case "OneGroup":
