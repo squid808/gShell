@@ -7478,7 +7478,7 @@ namespace gShell.Cmdlets.Directory.GAUser
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.Set, "GAUser",
-          DefaultParameterSetName = "NoPasswordProvided",
+          DefaultParameterSetName = "PasswordProvided",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAUser")]
     public sealed class SetGAUserCommand : DirectoryBase
@@ -7700,8 +7700,11 @@ namespace gShell.Cmdlets.Directory.GAUser
             switch (ParameterSetName)
             {
                 case "PasswordProvided":
-                    userAcct.HashFunction = "MD5";
-                    userAcct.Password = GetMd5Hash(NewPassword);
+                    if (!string.IsNullOrWhiteSpace(NewPassword))
+                    {
+                        userAcct.HashFunction = "MD5";
+                        userAcct.Password = GetMd5Hash(NewPassword);
+                    }
                     break;
 
                 case "PasswordGenerated":
