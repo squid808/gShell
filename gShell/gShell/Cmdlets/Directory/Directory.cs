@@ -6922,15 +6922,15 @@ namespace gShell.Cmdlets.Directory.GAUser
         //HelpMessage = "Name of the domain. Fill this field to get users from only this domain. To return all users in a multi-domain fill customer field instead.")]
         //public string OneDomain { get; set; }
 
-        /// <summary>
-        /// <para type="description">Event on which subscription is intended (if subscribing)</para>
-        /// </summary>
-        [Parameter(Position = 7,
-        ParameterSetName = "AllUsers",
-        Mandatory = false,
-        ValueFromPipelineByPropertyName = true,
-        HelpMessage = "Event on which subscription is intended (if subscribing)")]
-        public UsersResource.ListRequest.EventEnum? Event { get; set; }
+        ///// <summary>
+        ///// <para type="description">Event on which subscription is intended (if subscribing)</para>
+        ///// </summary>
+        //[Parameter(Position = 7,
+        //ParameterSetName = "AllUsers",
+        //Mandatory = false,
+        //ValueFromPipelineByPropertyName = true,
+        //HelpMessage = "Event on which subscription is intended (if subscribing)")]
+        //public UsersResource.ListRequest.EventEnum? Event { get; set; }
 
         /// <summary>
         /// <para type="description">Maximum number of results to return. Default is 100. Max allowed is 500</para>
@@ -7011,7 +7011,7 @@ namespace gShell.Cmdlets.Directory.GAUser
                         var listproperties = new dotNet.Directory.Users.UsersListProperties()
                         {
                             CustomFieldMask = this.CustomFieldMask,
-                            Event = this.Event,
+                            //Event = this.Event,
                             OrderBy = this.OrderBy,
                             Projection = this.ProjectionType,
                             Query = this.Query,
@@ -7809,17 +7809,6 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
         public string UserKey { get; set; }
 
         /// <summary>
-        /// <para type="description">Event on which subscription is intended (if subscribing)</para>
-        /// </summary>
-        [Parameter(Position = 0,
-            ParameterSetName = "OneUser",
-            Mandatory = true,
-            ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "Event on which subscription is intended (if subscribing)")]
-        public UsersResource.AliasesResource.ListRequest.EventEnum? Event { get; set; }
-
-        /// <summary>
         /// <para type="description">A switch to list all results</para>
         /// </summary>
         [Parameter(Position = 2,
@@ -7844,7 +7833,7 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
                     {
                         var properties = new dotNet.Directory.Users.Aliases.AliasesListProperties()
                         {
-                            Event = this.Event
+                            //Event = this.Event
                         };
 
                         WriteObject(users.aliases.List(UserKey, properties).AliasesValue);
