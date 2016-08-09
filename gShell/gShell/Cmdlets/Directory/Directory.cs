@@ -7831,12 +7831,14 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
 
                     if (ShouldProcess(UserKey, "Get-GAUserAlias"))
                     {
-                        var properties = new dotNet.Directory.Users.Aliases.AliasesListProperties()
-                        {
-                            //Event = this.Event
-                        };
+                        //var properties = new dotNet.Directory.Users.Aliases.AliasesListProperties()
+                        //{
+                        //    //Event = this.Event
+                        //};
 
-                        WriteObject(users.aliases.List(UserKey, properties).AliasesValue);
+                        var results = users.aliases.List(UserKey);
+
+                        WriteObject(results.AliasesValue.ToList());
                     }
                     break;
 

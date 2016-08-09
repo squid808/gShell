@@ -2,7 +2,7 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
      xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
   <Product Id="*" Name="gShell PoSh Cmdlets"
-           Language="1033" Version="0.9.3.0" Manufacturer="Spencer Varney"
+           Language="1033" Version="0.9.4.0" Manufacturer="Spencer Varney"
            UpgradeCode="16053A29-5B09-4630-B7B2-ADA5366DA766">
     <Package Id="*" InstallerVersion="200" Compressed="yes" InstallScope="perMachine" InstallPrivileges="elevated" />
 
@@ -20,12 +20,12 @@
     <Upgrade Id="16025265-05DE-4BBD-89C6-AE89F0B7F88D">
       <UpgradeVersion OnlyDetect='no' Property='SELFFOUND'
         Minimum='0.0.1.0' IncludeMinimum='yes'
-        Maximum='0.9.3.0' IncludeMaximum='no' />
+        Maximum='0.9.4.0' IncludeMaximum='no' />
       <UpgradeVersion OnlyDetect='yes' Property='NEWERFOUND'
-        Minimum='0.9.3.0' IncludeMinimum='no' />
+        Minimum='0.9.4.0' IncludeMinimum='no' />
     </Upgrade>
 
-    <CustomAction Id='AlreadyUpdated' Error='[ProductName] has already been updated to 0.9.3.0 or newer.' />
+    <CustomAction Id='AlreadyUpdated' Error='[ProductName] has already been updated to 0.9.4.0 or newer.' />
     <CustomAction Id='NoDowngrade' Error='A later version of [ProductName] is already installed.' />
 
     <InstallExecuteSequence>
