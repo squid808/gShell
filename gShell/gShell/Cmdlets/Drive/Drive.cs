@@ -2613,7 +2613,7 @@ namespace gShell.Cmdlets.Drive.Files
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Export-GDriveFile -FileId $SomeFileIdString -MimeType $SomeMimeTypeString</code>
+    ///   <code>PS C:\>Export-GDriveFile -FileId $SomeFileIdString -MimeType $SomeMimeTypeString -DownloadPath $SomeDownloadPath</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2637,13 +2637,22 @@ namespace gShell.Cmdlets.Drive.Files
         public string FileId { get; set; }
 
         /// <summary>
-        /// <para type="description">The MIME type of the format requested for this export.</para>
+        /// <para type="description">The MIME type of the format requested for this export. For details on the acceptable MIME types, please see uri="https://developers.google.com/drive/v3/web/manage-downloads">[DownloadFiles]</para>
         /// </summary>
         [Parameter(Position = 1,
             Mandatory = true,
             ValueFromPipelineByPropertyName = true,
-            HelpMessage = "The MIME type of the format requested for this export.")]
+            HelpMessage = "The MIME type of the format requested for this export. For details on the acceptable MIME types, please see uri=\"https://developers.google.com/drive/v3/web/manage-downloads\">[DownloadFiles]")]
         public string MimeType { get; set; }
+
+        /// <summary>
+        /// <para type="description">The target download path of the file, including filename and extension.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "The target download path of the file, including filename and extension.")]
+        public string DownloadPath { get; set; }
 
         #endregion
 
@@ -2651,7 +2660,9 @@ namespace gShell.Cmdlets.Drive.Files
         {
             if (ShouldProcess("Drive Files", "Export-GDriveFile"))
             {
-                files.Export(FileId, MimeType);
+                var properties = new gDrive.Files.FilesExportProperties();
+
+                files.Export(FileId, MimeType, DownloadPath, properties);
             }
         }
     }

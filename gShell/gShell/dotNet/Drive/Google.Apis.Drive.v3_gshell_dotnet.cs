@@ -399,10 +399,13 @@ namespace gShell.Cmdlets.Drive{
             /// <param name="FileId">The ID of the file.</param>
             /// <param name="MimeType">The MIME type of the format
             /// requested for this export.</param>
-            public void Export (string FileId, string MimeType)
+            public void Export (string FileId, string MimeType, string DownloadPath, gDrive.Files.FilesExportProperties properties = null)
             {
+                properties = properties ?? new gShell.dotNet.Drive.Files.FilesExportProperties();
+                properties.StartProgressBar = StartProgressBar;
+                properties.UpdateProgressBar = UpdateProgressBar;
 
-                mainBase.files.Export(FileId, MimeType, gShellServiceAccount);
+                mainBase.files.Export(FileId, MimeType, DownloadPath, gShellServiceAccount, properties);
             }
 
 
@@ -1049,6 +1052,16 @@ namespace gShell.dotNet
             }
 
             /// <summary>Optional parameters for the Files GenerateIds method.</summary>
+            public class FilesExportProperties
+            {
+                /// <summary>A delegate that is used to start a progress bar.</summary>
+                public Action<string, string> StartProgressBar = null;
+
+                /// <summary>A delegate that is used to update a progress bar.</summary>
+                public Action<int, int, string, string> UpdateProgressBar = null;
+            }
+
+            /// <summary>Optional parameters for the Files GenerateIds method.</summary>
             public class FilesGenerateIdsProperties
             {
                 /// <summary>The number of IDs to return.</summary>
@@ -1166,10 +1179,36 @@ namespace gShell.dotNet
             /// <param name="MimeType">The MIME type of the format
             /// requested for this export.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void Export (string FileId, string MimeType, string gShellServiceAccount = null)
+            public void Export(string FileId, string MimeType, string DownloadPath, string gShellServiceAccount = null, FilesExportProperties properties = null)
             {
+                //properties.UpdateProgressBar(5, 10, "Gathering Users",
+                    //string.Format("-Collecting Users {0} to {1}",
+                    //    (results.Count + 1).ToString(),
+                    //    (results.Count + request.MaxResults).ToString()));
+
                 GetService(gShellServiceAccount).Files.Export(FileId, MimeType).Execute();
+                using (var fileStream = new System.IO.FileStream(
+                    DownloadPath, System.IO.FileMode.Create, System.IO.FileAccess.Write))
+                {
+                    if (null != properties.StartProgressBar)
+                    {
+                        properties.StartProgressBar("Downloading file",
+                            string.Format("-Downloading file "));
+                    }
+
+                    // Add a handler which will be notified on progress changes.
+                    // It will notify on each chunk download and when the
+                    // download is completed or failed.
+                    var request = GetService(gShellServiceAccount).Files.Export(FileId, MimeType);
+                    //request.MediaDownloader.ProgressChanged += Download_ProgressChanged;
+                    request.Download(fileStream);
+                }
             }
+
+            //static void Download_ProgressChanged(Google.Apis.Download.IDownloadProgress progress)
+            //{
+            //    Console.WriteLine(progress.Status + " " + progress.BytesDownloaded);
+            //}
 
             /// <summary>Generates a set of file IDs which can be provided in create requests.</summary>
             /// <param name="properties">The optional properties for this method.</param>
