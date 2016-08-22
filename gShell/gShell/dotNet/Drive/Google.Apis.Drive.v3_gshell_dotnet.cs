@@ -440,7 +440,6 @@ namespace gShell.Cmdlets.Drive{
 
                 properties = properties ?? new gDrive.Files.FilesListProperties();
 
-
                 return mainBase.files.List(properties, gShellServiceAccount);
             }
 
@@ -1206,8 +1205,9 @@ namespace gShell.dotNet
                     request.PageSize = properties.PageSize;
                     request.Q = properties.Q;
                     request.Spaces = properties.Spaces;
-
                 }
+
+                if (!properties.PageSize.HasValue) properties.PageSize = 100; //default value
 
                 if (null != properties.StartProgressBar)
                 {
@@ -1223,7 +1223,7 @@ namespace gShell.dotNet
 
                     while (!string.IsNullOrWhiteSpace(pagedResult.NextPageToken) &&
                         pagedResult.NextPageToken != request.PageToken &&
-                    (properties.TotalResults == 0 || results.Count < properties.TotalResults))
+                    (properties.TotalResults == 0 || results.Count * properties.PageSize.Value < properties.TotalResults))
                     {
                         request.PageToken = pagedResult.NextPageToken;
 

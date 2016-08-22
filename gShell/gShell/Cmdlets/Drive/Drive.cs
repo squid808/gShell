@@ -2828,6 +2828,16 @@ namespace gShell.Cmdlets.Drive.Files
             )]
         public string Spaces { get; set; }
 
+        /// <summary>
+        /// <para type="description">Maximum number of results to return.</para>
+        /// </summary>
+        [Parameter(Position = 6,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        ParameterSetName = "list",
+        HelpMessage = "Maximum number of results to return.")]
+        public int? MaxResults { get; set; }
+
         #endregion
 
         protected override void ProcessRecord()
@@ -2841,7 +2851,6 @@ namespace gShell.Cmdlets.Drive.Files
                         AcknowledgeAbuse = AcknowledgeAbuse
                     };
 
-
                     WriteObject(files.Get(FileId, properties));
                 }
                 else
@@ -2854,6 +2863,8 @@ namespace gShell.Cmdlets.Drive.Files
                         Q = Q,
                         Spaces = Spaces
                     };
+
+                    if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
 
                     WriteObject(files.List(properties).SelectMany(x => x.Files).ToList());
                 }
