@@ -7668,6 +7668,7 @@ namespace gShell.Cmdlets.Directory.GAUser
                 ShowNewPassword == false &&
                 !Suspended.HasValue &&
                 !ChangePasswordAtNextLogin.HasValue &&
+                String.IsNullOrWhiteSpace(OrgUnitPath) &&
                 null == PropertyCollection &&
                 null == SecureStringPassword)
             {
