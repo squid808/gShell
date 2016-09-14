@@ -2742,7 +2742,7 @@ namespace gShell.Cmdlets.Directory.GADomainAlias
         /// <para type="description">Immutable id of the Google Apps account.</para>
         /// </summary>
         [Parameter(Position = 0,
-        Mandatory = true,
+        Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "Immutable id of the Google Apps account.")]
         public string Customer { get; set; }
@@ -2767,6 +2767,8 @@ namespace gShell.Cmdlets.Directory.GADomainAlias
 
         protected override void ProcessRecord()
         {
+            Customer = string.IsNullOrWhiteSpace(Customer) ? "my_customer" : Customer;
+
             string toRemoveTarget = "domain alias";
 
             if (ShouldProcess(toRemoveTarget))
@@ -2826,7 +2828,7 @@ namespace gShell.Cmdlets.Directory.GADomainAlias
         /// <para type="description">Immutable id of the Google Apps account.</para>
         /// </summary>
         [Parameter(Position = 0,
-        Mandatory = true,
+        Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "Immutable id of the Google Apps account.")]
         public string Customer { get; set; }
@@ -2863,6 +2865,8 @@ namespace gShell.Cmdlets.Directory.GADomainAlias
 
         protected override void ProcessRecord()
         {
+            Customer = string.IsNullOrWhiteSpace(Customer) ? "my_customer" : Customer;
+
             if (ShouldProcess("Directory DomainAliases", "Get-GADomainAlias"))
             {
                 if (ParameterSetName == "One")
@@ -2907,7 +2911,7 @@ namespace gShell.Cmdlets.Directory.GADomainAlias
         /// <para type="description">Immutable id of the Google Apps account.</para>
         /// </summary>
         [Parameter(Position = 0,
-        Mandatory = true,
+        Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "Immutable id of the Google Apps account.")]
         public string Customer { get; set; }
@@ -2925,6 +2929,8 @@ namespace gShell.Cmdlets.Directory.GADomainAlias
 
         protected override void ProcessRecord()
         {
+            Customer = string.IsNullOrWhiteSpace(Customer) ? "my_customer" : Customer;
+
             if (ShouldProcess("Directory DomainAliases", "Insert-GADomainAlias"))
             {
                 WriteObject(domainAliases.Insert(DomainAliasBody, Customer));
@@ -2960,7 +2966,7 @@ namespace gShell.Cmdlets.Directory.GADomain
         /// <para type="description">Immutable id of the Google Apps account.</para>
         /// </summary>
         [Parameter(Position = 0,
-        Mandatory = true,
+        Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "Immutable id of the Google Apps account.")]
         public string Customer { get; set; }
@@ -2985,6 +2991,8 @@ namespace gShell.Cmdlets.Directory.GADomain
 
         protected override void ProcessRecord()
         {
+            Customer = string.IsNullOrWhiteSpace(Customer) ? "my_customer" : Customer;
+
             string toRemoveTarget = "Domain";
 
 			if (ShouldProcess(toRemoveTarget))
@@ -3045,7 +3053,7 @@ namespace gShell.Cmdlets.Directory.GADomain
         /// <para type="description">Immutable id of the Google Apps account.</para>
         /// </summary>
         [Parameter(Position = 0,
-        Mandatory = true,
+        Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "Immutable id of the Google Apps account.")]
         public string Customer { get; set; }
@@ -3073,6 +3081,8 @@ namespace gShell.Cmdlets.Directory.GADomain
 
         protected override void ProcessRecord()
         {
+            Customer = string.IsNullOrWhiteSpace(Customer) ? "my_customer" : Customer;
+
             if (ShouldProcess("Directory Domain", "Get-GADomain"))
             {
                 if (ParameterSetName == "One")
@@ -3113,7 +3123,7 @@ namespace gShell.Cmdlets.Directory.GADomain
         /// <para type="description">Immutable id of the Google Apps account.</para>
         /// </summary>
         [Parameter(Position = 0,
-        Mandatory = true,
+        Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "Immutable id of the Google Apps account.")]
         public string Customer { get; set; }
@@ -3132,6 +3142,8 @@ namespace gShell.Cmdlets.Directory.GADomain
 
         protected override void ProcessRecord()
         {
+            Customer = string.IsNullOrWhiteSpace(Customer) ? "my_customer" : Customer;
+
             if (ShouldProcess("Directory Domain", "Insert-GADomain"))
             {
                 WriteObject(domains.Insert(DomainBody, Customer));
@@ -4578,7 +4590,7 @@ namespace gShell.Cmdlets.Directory.GANotification
         /// <para type="description">The unique ID for the customer's Google account. The customerId is also returned as part of the Users resource.</para>
         /// </summary>
         [Parameter(Position = 0,
-            Mandatory = true,
+            Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "The unique ID for the customer's Google account. The customerId is also returned as part of the Users resource.")]
         [ValidateNotNullOrEmpty]
@@ -4625,6 +4637,8 @@ namespace gShell.Cmdlets.Directory.GANotification
 
         protected override void ProcessRecord()
         {
+            Customer = string.IsNullOrWhiteSpace(Customer) ? "my_customer" : Customer;
+
             if (ShouldProcess(Customer, "Get-GANotification"))
             {
                 switch (ParameterSetName)
@@ -4672,7 +4686,7 @@ namespace gShell.Cmdlets.Directory.GANotification
         /// <para type="description">The unique ID for the customer's Google account. The customerId is also returned as part of the Users resource.</para>
         /// </summary>
         [Parameter(Position = 0,
-            Mandatory = true,
+            Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "The unique ID for the customer's Google account. The customerId is also returned as part of the Users resource.")]
         [ValidateNotNullOrEmpty]
@@ -4699,6 +4713,8 @@ namespace gShell.Cmdlets.Directory.GANotification
 
         protected override void ProcessRecord()
         {
+            Customer = string.IsNullOrWhiteSpace(Customer) ? "my_customer" : Customer;
+
             if (ShouldProcess(Customer, "Remove-GANotification"))
             {
                 if (Force || ShouldContinue((String.Format("Notification {0} with NotificationId {2} will be removed from the {1} Google Apps domain.\nContinue?",
@@ -4751,7 +4767,7 @@ namespace gShell.Cmdlets.Directory.GANotification
         /// <para type="description">The unique ID for the customer's Google account.</para>
         /// </summary>
         [Parameter(Position = 0,
-            Mandatory = true,
+            Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "The unique ID for the customer's Google account.")]
         [ValidateNotNullOrEmpty]
@@ -4780,6 +4796,8 @@ namespace gShell.Cmdlets.Directory.GANotification
 
         protected override void ProcessRecord()
         {
+            Customer = string.IsNullOrWhiteSpace(Customer) ? "my_customer" : Customer;
+
             if (ShouldProcess(Customer, "Set-GANotification"))
             {
                 Data.Notification body = new Data.Notification();
@@ -5204,7 +5222,7 @@ namespace gShell.Cmdlets.Directory.GAPrivilege
         /// <para type="description">Immutable ID of the Google Apps account.</para>
         /// </summary>
         [Parameter(Position = 0,
-        Mandatory = true,
+        Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "Immutable ID of the Google Apps account.")]
         public string Customer { get; set; }
@@ -5212,6 +5230,7 @@ namespace gShell.Cmdlets.Directory.GAPrivilege
 
         protected override void ProcessRecord()
         {
+            Customer = string.IsNullOrWhiteSpace(Customer) ? "my_customer" : Customer;
 
             if (ShouldProcess("Directory Privilege", "Get-GAPrivilege"))
             {
@@ -5250,7 +5269,7 @@ namespace gShell.Cmdlets.Directory.GACalendar
         /// <para type="description">The unique ID for the customer's Google account. As an account administrator, you can also use the my_customer alias to represent your account's customer ID.</para>
         /// </summary>
         [Parameter(Position = 0,
-        Mandatory = true,
+        Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "The unique ID for the customer's Google account. As an account administrator, you can also use the my_customer alias to represent your account's customer ID.")]
         public string Customer { get; set; }
@@ -5275,6 +5294,8 @@ namespace gShell.Cmdlets.Directory.GACalendar
 
         protected override void ProcessRecord()
         {
+            Customer = string.IsNullOrWhiteSpace(Customer) ? "my_customer" : Customer;
+
             string toRemoveTarget = "Calendar";
 
 			if (ShouldProcess(toRemoveTarget))
@@ -5334,7 +5355,7 @@ namespace gShell.Cmdlets.Directory.GACalendar
         /// <para type="description">The unique ID for the customer's Google account. As an account administrator, you can also use the my_customer alias to represent your account's customer ID.</para>
         /// </summary>
         [Parameter(Position = 0,
-        Mandatory = true,
+        Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "The unique ID for the customer's Google account. As an account administrator, you can also use the my_customer alias to represent your account's customer ID.")]
         public string Customer { get; set; }
@@ -5371,6 +5392,7 @@ namespace gShell.Cmdlets.Directory.GACalendar
 
         protected override void ProcessRecord()
         {
+            Customer = string.IsNullOrWhiteSpace(Customer) ? "my_customer" : Customer;
 
             if (ShouldProcess("Directory Calendar", "Get-GACalendar"))
             {
@@ -5417,7 +5439,7 @@ namespace gShell.Cmdlets.Directory.GACalendar
         /// <para type="description">The unique ID for the customer's Google account. As an account administrator, you can also use the my_customer alias to represent your account's customer ID.</para>
         /// </summary>
         [Parameter(Position = 0,
-        Mandatory = true,
+        Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "The unique ID for the customer's Google account. As an account administrator, you can also use the my_customer alias to represent your account's customer ID.")]
         public string Customer { get; set; }
@@ -5435,6 +5457,8 @@ namespace gShell.Cmdlets.Directory.GACalendar
 
         protected override void ProcessRecord()
         {
+            Customer = string.IsNullOrWhiteSpace(Customer) ? "my_customer" : Customer;
+
             if (ShouldProcess("Directory Calendar", "New-GACalendar"))
             {
 
@@ -5469,7 +5493,7 @@ namespace gShell.Cmdlets.Directory.GACalendar
         /// <para type="description">The unique ID for the customer's Google account. As an account administrator, you can also use the my_customer alias to represent your account's customer ID.</para>
         /// </summary>
         [Parameter(Position = 0,
-        Mandatory = true,
+        Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "The unique ID for the customer's Google account. As an account administrator, you can also use the my_customer alias to represent your account's customer ID.")]
         public string Customer { get; set; }
@@ -5496,6 +5520,8 @@ namespace gShell.Cmdlets.Directory.GACalendar
 
         protected override void ProcessRecord()
         {
+            Customer = string.IsNullOrWhiteSpace(Customer) ? "my_customer" : Customer;
+
             if (ShouldProcess("Directory Calendar", "Set-GACalendar"))
             {
                 WriteObject(resources.calendars.Patch(CalendarResourceBody, Customer, CalendarResourceId));
@@ -5532,7 +5558,7 @@ namespace gShell.Cmdlets.Directory.GARole
         /// <para type="description">Immutable ID of the Google Apps account.</para>
         /// </summary>
         [Parameter(Position = 0,
-            Mandatory = true,
+            Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "Immutable ID of the Google Apps account.")]
         public string Customer { get; set; }
@@ -5558,6 +5584,8 @@ namespace gShell.Cmdlets.Directory.GARole
 
         protected override void ProcessRecord()
         {
+            Customer = string.IsNullOrWhiteSpace(Customer) ? "my_customer" : Customer;
+
             string toRemoveTarget = "Role";
 
 			if (ShouldProcess(toRemoveTarget))
@@ -5617,7 +5645,7 @@ namespace gShell.Cmdlets.Directory.GARole
         /// <para type="description">Immutable ID of the Google Apps account.</para>
         /// </summary>
         [Parameter(Position = 0,
-            Mandatory = true,
+            Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "Immutable ID of the Google Apps account.")]
         public string Customer { get; set; }
@@ -5655,6 +5683,8 @@ namespace gShell.Cmdlets.Directory.GARole
 
         protected override void ProcessRecord()
         {
+            Customer = string.IsNullOrWhiteSpace(Customer) ? "my_customer" : Customer;
+
             if (ShouldProcess("Directory Role", "Get-GARole"))
             {
                 if (ParameterSetName == "One")
@@ -5698,7 +5728,7 @@ namespace gShell.Cmdlets.Directory.GARole
         /// <para type="description">Immutable ID of the Google Apps account.</para>
         /// </summary>
         [Parameter(Position = 0,
-            Mandatory = true,
+            Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "Immutable ID of the Google Apps account.")]
         public string Customer { get; set; }
@@ -5717,6 +5747,8 @@ namespace gShell.Cmdlets.Directory.GARole
 
         protected override void ProcessRecord()
         {
+            Customer = string.IsNullOrWhiteSpace(Customer) ? "my_customer" : Customer;
+
             if (ShouldProcess("Directory Role", "New-GARole"))
             {
                 WriteObject(roles.Insert(RoleBody, Customer));
@@ -5751,7 +5783,7 @@ namespace gShell.Cmdlets.Directory.GARole
         /// <para type="description">Immutable ID of the Google Apps account.</para>
         /// </summary>
         [Parameter(Position = 0,
-            Mandatory = true,
+            Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "Immutable ID of the Google Apps account.")]
         public string Customer { get; set; }
@@ -5779,6 +5811,8 @@ namespace gShell.Cmdlets.Directory.GARole
 
         protected override void ProcessRecord()
         {
+            Customer = string.IsNullOrWhiteSpace(Customer) ? "my_customer" : Customer;
+
             if (ShouldProcess("Directory Role", "Set-GARole"))
             {
                 WriteObject(roles.Patch(RoleBody, Customer, RoleId));
@@ -5815,7 +5849,7 @@ namespace gShell.Cmdlets.Directory.GARoleAssignment
         /// <para type="description">Immutable ID of the Google Apps account.</para>
         /// </summary>
         [Parameter(Position = 0,
-        Mandatory = true,
+        Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "Immutable ID of the Google Apps account.")]
         public string Customer { get; set; }
@@ -5832,6 +5866,8 @@ namespace gShell.Cmdlets.Directory.GARoleAssignment
 
         protected override void ProcessRecord()
         {
+            Customer = string.IsNullOrWhiteSpace(Customer) ? "my_customer" : Customer;
+
             if (ShouldProcess("Directory RoleAssignment", "Remove-GARoleAssignment"))
             {
                 roleAssignments.Delete(Customer, RoleAssignmentId);
@@ -5871,7 +5907,7 @@ namespace gShell.Cmdlets.Directory.GARoleAssignment
         /// <para type="description">Immutable ID of the Google Apps account.</para>
         /// </summary>
         [Parameter(Position = 0,
-        Mandatory = true,
+        Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "Immutable ID of the Google Apps account.")]
         public string Customer { get; set; }
@@ -5929,6 +5965,8 @@ namespace gShell.Cmdlets.Directory.GARoleAssignment
 
         protected override void ProcessRecord()
         {
+            Customer = string.IsNullOrWhiteSpace(Customer) ? "my_customer" : Customer;
+
             if (ShouldProcess("Directory RoleAssignment", "Get-GARoleAssignment"))
             {
                 if (ParameterSetName == "One")
@@ -5977,7 +6015,7 @@ namespace gShell.Cmdlets.Directory.GARoleAssignment
         /// <para type="description">Immutable ID of the Google Apps account.</para>
         /// </summary>
         [Parameter(Position = 0,
-        Mandatory = true,
+        Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "Immutable ID of the Google Apps account.")]
         public string Customer { get; set; }
@@ -5995,6 +6033,8 @@ namespace gShell.Cmdlets.Directory.GARoleAssignment
 
         protected override void ProcessRecord()
         {
+            Customer = string.IsNullOrWhiteSpace(Customer) ? "my_customer" : Customer;
+
             if (ShouldProcess("Directory RoleAssignment", "New-GARoleAssignment"))
             {
                 WriteObject(roleAssignments.Insert(RoleAssignmentBody, Customer));
@@ -7028,6 +7068,9 @@ namespace gShell.Cmdlets.Directory.GAUser
                     break;
 
                 case "AllUsers":
+
+                    Customer = string.IsNullOrWhiteSpace(Customer) ? "my_customer" : Customer;
+
                     if (ShouldProcess("All Users", "Get-GAUser"))
                     {
                         var listproperties = new dotNet.Directory.Users.UsersListProperties()
