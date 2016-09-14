@@ -2403,7 +2403,7 @@ namespace gShell.Cmdlets.Directory.GAChromeosdevice
         /// <para type="description">Immutable id of the Google Apps account</para>
         /// </summary>
         [Parameter(Position = 0,
-        Mandatory = true,
+        Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "Immutable id of the Google Apps account")]
         public string CustomerId { get; set; }
@@ -4360,6 +4360,8 @@ namespace gShell.Cmdlets.Directory.GAMobileDevice
 
         protected override void ProcessRecord()
         {
+            CustomerId = string.IsNullOrWhiteSpace(CustomerId) ? "my_customer" : CustomerId;
+
             if (ShouldProcess(CustomerId, "Get-GAMobiledevice"))
             {
                 switch (ParameterSetName)
@@ -4438,6 +4440,8 @@ namespace gShell.Cmdlets.Directory.GAMobileDevice
 
         protected override void ProcessRecord()
         {
+            CustomerId = string.IsNullOrWhiteSpace(CustomerId) ? "my_customer" : CustomerId;
+
             if (ShouldProcess(CustomerId, "Remove-GAMobiledevice"))
             {
                 if (Force ||
@@ -4525,6 +4529,8 @@ namespace gShell.Cmdlets.Directory.GAMobileDevice
 
         protected override void ProcessRecord()
         {
+            CustomerId = string.IsNullOrWhiteSpace(CustomerId) ? "my_customer" : CustomerId;
+
             if (ShouldProcess(CustomerId, "Invoke-GAMobiledevice"))
             {
                 var body = new Data.MobileDeviceAction()
@@ -4864,6 +4870,8 @@ namespace gShell.Cmdlets.Directory.GAOrgUnit
 
         protected override void ProcessRecord()
         {
+            CustomerId = string.IsNullOrWhiteSpace(CustomerId) ? "my_customer" : CustomerId;
+
             if (ShouldProcess(CustomerId, "Get-GAOrgUnit"))
             {
                 if (ParameterSetName == "List")
@@ -4934,6 +4942,8 @@ namespace gShell.Cmdlets.Directory.GAOrgUnit
 
         protected override void ProcessRecord()
         {
+            CustomerId = string.IsNullOrWhiteSpace(CustomerId) ? "my_customer" : CustomerId;
+
             if (ShouldProcess(CustomerId, "Remove-GAOrgUnit"))
             {
                 if (Force || ShouldContinue((String.Format("OrgUnit {0} for CustomerId {2} will be removed from the {1} Google Apps domain.\nContinue?",
@@ -5045,6 +5055,8 @@ namespace gShell.Cmdlets.Directory.GAOrgUnit
 
         protected override void ProcessRecord()
         {
+            CustomerId = string.IsNullOrWhiteSpace(CustomerId) ? "my_customer" : CustomerId;
+
             if (ShouldProcess(CustomerId, "Set-GAOrgUnit"))
             {
                 Data.OrgUnit body = new Data.OrgUnit();
@@ -5147,6 +5159,8 @@ namespace gShell.Cmdlets.Directory.GAOrgUnit
 
         protected override void ProcessRecord()
         {
+            CustomerId = string.IsNullOrWhiteSpace(CustomerId) ? "my_customer" : CustomerId;
+
             if (ShouldProcess(CustomerId, "Add-GAOrgUnit"))
             {
                 Data.OrgUnit body = new Data.OrgUnit()
@@ -6023,7 +6037,7 @@ namespace gShell.Cmdlets.Directory.GASchema
         /// <para type="description">Immutable id of the Google Apps account</para>
         /// </summary>
         [Parameter(Position = 0,
-            Mandatory = true,
+            Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "Immutable id of the Google Apps account")]
         [ValidateNotNullOrEmpty]
@@ -6052,6 +6066,8 @@ namespace gShell.Cmdlets.Directory.GASchema
 
         protected override void ProcessRecord()
         {
+            CustomerId = string.IsNullOrWhiteSpace(CustomerId) ? "my_customer" : CustomerId;
+
             if (ShouldProcess(CustomerId, "Get-GASchema"))
             {
                 switch (ParameterSetName)
@@ -6092,7 +6108,7 @@ namespace gShell.Cmdlets.Directory.GASchema
         /// <para type="description">Immutable id of the Google Apps account</para>
         /// </summary>
         [Parameter(Position = 0,
-            Mandatory = true,
+            Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "Immutable id of the Google Apps account")]
         [ValidateNotNullOrEmpty]
@@ -6120,6 +6136,8 @@ namespace gShell.Cmdlets.Directory.GASchema
 
         protected override void ProcessRecord()
         {
+            CustomerId = string.IsNullOrWhiteSpace(CustomerId) ? "my_customer" : CustomerId;
+
             if (ShouldProcess(CustomerId, "Remove-GASchema"))
             {
                 if (Force || ShouldContinue((String.Format("Schema Key {0} for CustomerId {2} will be removed from the {1} Google Apps domain.\nContinue?",
@@ -6172,7 +6190,7 @@ namespace gShell.Cmdlets.Directory.GASchema
         /// <para type="description">Immutable id of the Google Apps account</para>
         /// </summary>
         [Parameter(Position = 0,
-            Mandatory = true,
+            Mandatory = false,
             ValueFromPipelineByPropertyName = true,
         HelpMessage = "Immutable id of the Google Apps account")]
         [ValidateNotNullOrEmpty]
@@ -6208,6 +6226,8 @@ namespace gShell.Cmdlets.Directory.GASchema
 
         protected override void ProcessRecord()
         {
+            CustomerId = string.IsNullOrWhiteSpace(CustomerId) ? "my_customer" : CustomerId;
+
             if (ShouldProcess(CustomerId, "Set-GASchema"))
             {
                 WriteObject(schemas.Patch((Data.Schema)FieldCollection, CustomerId, SchemaKey));
@@ -6240,7 +6260,7 @@ namespace gShell.Cmdlets.Directory.GASchema
         /// <para type="description">Immutable id of the Google Apps account</para>
         /// </summary>
         [Parameter(Position = 0,
-            Mandatory = true,
+            Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "Immutable id of the Google Apps account")]
         [ValidateNotNullOrEmpty]
@@ -6268,6 +6288,8 @@ namespace gShell.Cmdlets.Directory.GASchema
 
         protected override void ProcessRecord()
         {
+            CustomerId = string.IsNullOrWhiteSpace(CustomerId) ? "my_customer" : CustomerId;
+
             if (ShouldProcess(CustomerId, "Add-GASchema"))
             {
                 WriteObject(schemas.Insert((Data.Schema)FieldCollection, CustomerId));
