@@ -2,6 +2,7 @@
 
 using Newtonsoft.Json;
 using System;
+using System.Management.Automation;
 
 namespace gShell.dotNet.Utilities.Settings
 {
@@ -19,7 +20,7 @@ namespace gShell.dotNet.Utilities.Settings
         public gShellSettings()
         {
             SerializeType = SerializeTypes.Json;
-            AuthInfoPath = Path.GetDirectoryName((new Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase)).AbsolutePath);
+            AuthInfoPath = Path.GetDirectoryName((new Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase)).LocalPath);
         }
     }
 
@@ -33,7 +34,7 @@ namespace gShell.dotNet.Utilities.Settings
         {
             get
             {
-                var executingPath = Path.GetDirectoryName((new System.Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase)).AbsolutePath);
+                var executingPath = Path.GetDirectoryName((new System.Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase)).LocalPath);
                 return Path.Combine(executingPath, fileName);
             }
         }

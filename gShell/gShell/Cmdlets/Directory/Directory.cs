@@ -5373,7 +5373,7 @@ namespace gShell.Cmdlets.Directory.GACalendar
         /// <summary>
         /// <para type="description">A switch to list all results</para>
         /// </summary>
-        [Parameter(Position = 2,
+        [Parameter(Position = 1,
         Mandatory = true,
         ParameterSetName = "List",
         HelpMessage = "A switch to list all results.")]
