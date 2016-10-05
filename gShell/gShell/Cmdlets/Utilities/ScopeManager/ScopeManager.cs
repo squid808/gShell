@@ -369,12 +369,7 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
 
                         for (int i = 0; i < possibleScopes.Count; i++)
                         {
-                            bool isChecked = false;
-
-                            if (possibleScopes[i].scope == "https://www.googleapis.com/auth/userinfo.email")
-                            {
-                                isChecked = true;
-                            }
+                            bool isChecked = possibleScopes[i].scope == "https://www.googleapis.com/auth/userinfo.email";
 
                             allPossibleChoices.Add(new ScopeChoice(i + 1, possibleScopes[i].scope, possibleScopes[i].description, isChecked));
                         }
@@ -382,7 +377,9 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
 
                     foreach (var choice in allPossibleChoices)
                     {
-                        PrintPretty(choice.ToString(), "Yellow");
+                        string color = "Yellow";
+                        if (choice.IsChecked) color = "DarkYellow";
+                        PrintPretty(choice.ToString(), color);
                     }
                     #endregion
 
@@ -396,6 +393,7 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
                     {
                         script = "Read-Host '\nToggle your choices separated by commas or hit [enter] to finish and authenticate'";
                     }
+
                     Collection<PSObject> results = invokablePSInstance.InvokeCommand.InvokeScript(script);
                     string rList = results[0].ToString().Replace(" ", "");
 
@@ -406,8 +404,31 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
                     {
                         if (stringChoices[0] == "")
                         {
-                            properlySelected = true;
-                            break;
+                            var checkedCount = allPossibleChoices.Where(x => x.IsChecked).Count();
+
+                            if (checkedCount > 20)
+                            {
+                                WriteWarning(
+                                    string.Format(
+                                        "You have chosen {0} scopes. Scope counts greater than 20 may cause some scopes to be ignored by Google. To proceed anyways, enter Y. Otherwise, enter N to go back and choose your scopes again.",
+                                        checkedCount));
+                                var bigScopeScript = "Read-Host";
+                                Collection<PSObject> bigScopesResult =
+                                    invokablePSInstance.InvokeCommand.InvokeScript(bigScopeScript);
+                                string bigScopesResultOne = bigScopesResult[0].ToString();
+
+                                if (!string.IsNullOrWhiteSpace(bigScopesResultOne)
+                                    && bigScopesResultOne.ToLower()[0] == 'y')
+                                {
+                                    properlySelected = true;
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                properlySelected = true;
+                                break;
+                            }
                         }
                     }
                     else if (stringChoices.Count == 0 && !hasSelectedOnce)
@@ -483,7 +504,6 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
                     }
                 }
                 #endregion
-
 
                 HashSet<string> scopesResult = new HashSet<string>();
 
