@@ -518,7 +518,7 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
             Collection<PSObject> results = invokablePSInstance.InvokeCommand.InvokeScript(script);
 
             //Now, authenticate.
-            AuthenticatedUserInfo info = OAuth2Base.GetAuthTokenFlow(api + ":" + version, scopes, secrets);
+            AuthenticatedUserInfo info = OAuth2Base.GetAuthTokenFlow(api + ":" + version, scopes, secrets, force:true);
 
             PrintPretty(string.Format("{0}:{1} has been authenticated and saved.", api, version), "green");
 
