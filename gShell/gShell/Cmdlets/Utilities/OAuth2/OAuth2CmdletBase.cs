@@ -118,6 +118,7 @@ namespace gShell.dotNet.Utilities.OAuth2
         /// </remarks>
         public IEnumerable<string> EnsureScopesExist(string Domain, HashSet<string> forcedScopes = null)
         {
+            var OriginalDomain = Domain;
             //Since the domain could be null, see if we have a default ready or if the saved info contains this one
             Domain = OAuth2Base.CheckDomain(Domain);
 
@@ -130,11 +131,14 @@ namespace gShell.dotNet.Utilities.OAuth2
             if (string.IsNullOrWhiteSpace(Domain) || string.IsNullOrWhiteSpace(defaultUser) || 
                 !OAuth2Base.infoConsumer.TokenAndScopesExist(Domain, defaultUser, apiNameAndVersion))
             {
-                if (string.IsNullOrWhiteSpace(Domain)) Domain = "no domain provided";
+                if (!string.IsNullOrWhiteSpace(OriginalDomain))
+                    OriginalDomain = "is for domain (" + OriginalDomain + "), which ";
+                else 
+                    OriginalDomain = null;
 
-                WriteWarning(string.Format("The Cmdlet you've just started is for domain ({0}) doesn't"
+                WriteWarning(string.Format("The Cmdlet you've just started {0}doesn't"
                     + " seem to have any saved authentication for this API ({1}). In order to continue you'll need to"
-                    + " choose which permissions gShell can use for this API.", Domain, apiNameAndVersion));
+                    + " choose which permissions gShell can use for this API.", OriginalDomain, apiNameAndVersion));
 
                 string chooseApiNowScript = "Read-Host '\nWould you like to choose your API scopes now? y or n'";
                 Collection<PSObject> chooseApiNowResults = this.InvokeCommand.InvokeScript(chooseApiNowScript);
