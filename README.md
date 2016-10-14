@@ -24,7 +24,7 @@ The idea of gShell is to allow you quick and easy access to your Google Apps dom
 
 First, you can grab a user from your domain and get it back as a [GAUser](https://github.com/squid808/gShell/wiki/GAUser) object:
 ```PowerShell
-PS C:\> Get-GAUser BMcGee mydomain.com
+PS C:\> Get-GAUser BMcGee@mydomain.com
 
 GivenName     : Bobby
 FamilyName    : McGee
@@ -37,7 +37,7 @@ LastLoginTime : 2013-10-25T05:10:40.000Z
 Or, you can elect to get all users in the domain and throw them in a variable, perhaps to compare against your AD Environment:
 
 ```PowerShell
-PS C:\> $AllUsers = Get-GAUser -all
+PS C:\> $AllUsers = Get-GAUser -All
 
 ----
 PS C:\> $AllUsers.Count
@@ -45,42 +45,43 @@ PS C:\> $AllUsers.Count
 9001
 ```
 
-Better yet, perhaps you need to get a list of all users in all [groups](https://github.com/squid808/gShell/wiki/Get-GAGroup) in the domain...
+Perhaps you need to get a list of all members in a specific [group](https://github.com/squid808/gShell/wiki/Get-GAGroupMember) in the domain...
 ```PowerShell
-PS C:\> $AllGroups = Get-GAGroup mydomain.com -All -Members -Owners
+PS C:\> $MyGroupMembers = Get-GAGroupMember mygroup@mydomain.com
 #A progress bar will show up for this, since it's potentially a long wait
 
 ----
-PS C:\> $AllGroups.Count
+PS C:\> $MyGroupMembers.Count
 
 42
 ```
-...or you want to find all members of all groups, and throw that in a list for easy export to CSV Got that covered:
+...or you want to find all [groups](https://github.com/squid808/gShell/wiki/Get-GAGroup) with more than 10 members, and throw that in a list for easy export to CSV. Got that covered:
 
 ```PowerShell
-PS C:\> $AllMembers = (Get-GAGroupMember -All).ToSingleList()
+PS C:\> $AllGroups = (Get-GAGroup -All | where {$_.DirectMembersCount -gt 10})
 
 ----
-PS C:\> $AllMembers[0]
+PS C:\> $AllGroups[0]
 
-Email : bobbymcgee@mydomain.com
-ETag  : "01...rs/44...HQ"
-Id    : 123456789123456789123
-Kind  : admin#directory#member
-Role  : MEMBER
-Type  : USER
-Group : songcharacters@mydomain.com
+AdminCreated       : True
+Aliases            :
+Description        :
+DirectMembersCount : 12
+Email              : mygroup@mydomain.com
+ETag               : "01...rs/44...HQ"
+Id                 : 123456789123456789123
+Kind               : admin#directory#group
+Name               : My Group
 
 ----
-PS C:\> $AllMembers | Export-Csv -Path "C:\AllGroupMemberships.csv" -NoTypeInformation
+PS C:\> $AllGroups | Export-Csv -Path "C:\AllGroupMemberships.csv" -NoTypeInformation
 
 ----
 PS C:\> (Get-Content "C:\AllDomainGroupMemberships.csv")[0..1]
 #Let's look directly at the CSV file...
 
-"Email","ETag","Id","Kind","Role","Type","Group"
-,"""01...rs/44...HQ""","12...23","admin#directory#member","MEMBER","USER"
-,"songcharacters@mydomain.com"
+"AdminCreated","Aliases","Description","DirectMembersCount","Email","ETag","Id","Kind","Name"
+"True","","","12","mygroup@mydomain.com","""01...rs/44...HQ""","123456789123456789123","admin#directory#group","My Group"
 ```
 
 This is the tip of the iceberg of what's possible and what's available. If you need help or have questions, requests or you found a bug, drop a line in the [discussion group](https://github.com/squid808/gShell/wiki/Discussion-Groups).
