@@ -3195,7 +3195,7 @@ namespace gShell.Cmdlets.Directory.GAGroup
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "Email or immutable Id of the group")]
         [ValidateNotNullOrEmpty]
-        public string GroupName { get; set; }
+        public string GroupKey { get; set; }
 
         /// <summary>
         /// <para type="description">A switch to list all results.</para>
@@ -3230,6 +3230,28 @@ namespace gShell.Cmdlets.Directory.GAGroup
         HelpMessage = "Maximum number of results to return. Default is 200")]
         public int? MaxResults { get; set; }
 
+        /// <summary>
+        /// <para type="description">The unique ID for the customer's Google account. In case of a multi-domain account, to fetch all groups for a customer, fill this field instead of domain. As an account administrator, you can also use the my_customer alias to represent your account's customerId. The customerId is also returned as part of the Users resource.</para>
+        /// </summary>
+        [Parameter(Position = 4,
+            ParameterSetName = "AllGroups",
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The unique ID for the customer's Google account. In case of a multi-domain account, to fetch all groups for a customer, fill this field instead of domain. As an account administrator, you can also use the my_customer alias to represent your account's customerId. The customerId is also returned as part of the Users resource.")]
+        [ValidateNotNullOrEmpty]
+        public string Customer { get; set; }
+
+        ///// <summary>
+        ///// <para type="description">The domain name. Use this field to get fields from only one domain. To return all domains for a customer account, use the customer query parameter instead.</para>
+        ///// </summary>
+        //[Parameter(Position = 5,
+        //    ParameterSetName = "AllGroups",
+        //Mandatory = false,
+        //ValueFromPipelineByPropertyName = true,
+        //HelpMessage = "The domain name. Use this field to get fields from only one domain. To return all domains for a customer account, use the customer query parameter instead.")]
+        //[ValidateNotNullOrEmpty]
+        //public string Domain { get; set; }
+
         #endregion
 
         protected override void ProcessRecord()
@@ -3237,13 +3259,17 @@ namespace gShell.Cmdlets.Directory.GAGroup
             switch (ParameterSetName)
             {
                 case "OneUser":
-                    if (ShouldProcess(GroupName, "Get-GAGroup"))
+                    if (ShouldProcess(GroupKey, "Get-GAGroup"))
                     {
+                        Customer = string.IsNullOrWhiteSpace(Customer) ? "my_customer" : Customer;
+
                         var properties = new dotNet.Directory.Groups.GroupsListProperties()
                         {
-                            Domain = Domain,
                             UserKey = GetFullEmailAddress(UserName, Domain)
                         };
+
+                        if (!string.IsNullOrWhiteSpace(this.Customer)) properties.Customer = this.Customer;
+                        else properties.Domain = this.Domain;
 
                         if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
 
@@ -3251,21 +3277,23 @@ namespace gShell.Cmdlets.Directory.GAGroup
                     }
                     break;
                 case "OneGroup":
-                    GroupName = GetFullEmailAddress(GroupName, Domain);
+                    GroupKey = GetFullEmailAddress(GroupKey, Domain);
 
-                    if (ShouldProcess(GroupName, "Get-GAGroup"))
+                    if (ShouldProcess(GroupKey, "Get-GAGroup"))
                     {
-                        WriteObject(groups.Get(GroupName));
+                        WriteObject(groups.Get(GroupKey));
                     }
                     break;
 
                 case "AllGroups":
                     if (ShouldProcess("All Groups", "Get-GAGroup"))
                     {
-                        var properties = new dotNet.Directory.Groups.GroupsListProperties()
-                        {
-                            Domain = Domain
-                        };
+                        Customer = string.IsNullOrWhiteSpace(Customer) ? "my_customer" : Customer;
+
+                        var properties = new dotNet.Directory.Groups.GroupsListProperties();
+
+                        if (!string.IsNullOrWhiteSpace(this.Customer)) properties.Customer = this.Customer;
+                        else properties.Domain = this.Domain;
 
                         if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
 
