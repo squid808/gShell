@@ -8,8 +8,10 @@ using Google.Apis.Auth.OAuth2;
 using Google.Apis.Util;
 
 using gShell.Cmdlets.Utilities.ScopeHandler;
+using gShell.dotNet.Utilities.OAuth2;
+using gShell.dotNet.Utilities;
 
-namespace gShell.dotNet.Utilities.OAuth2
+namespace gShell.Cmdlets.Utilities.OAuth2
 {
     /// <summary>
     /// The base from which all gShell cmdlet type classes must derive containing

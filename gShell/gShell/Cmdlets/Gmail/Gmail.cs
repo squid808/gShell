@@ -14,17 +14,14 @@ namespace gShell.Cmdlets.Gmail
     public abstract class GmailServiceAccountBase : GmailBase
     {
         #region Properties
+        /// <summary>
+        /// <para type="description">The email account to be targeted by the service account.</para>
+        /// </summary>
+        [Alias("ServiceAccountTarget")]
         [Parameter(Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string TargetUserEmail { get; set; }
         #endregion
-
-        protected override void BeginProcessing()
-        {
-            gShellServiceAccount = GetFullEmailAddress(TargetUserEmail, Domain);
-
-            base.BeginProcessing();
-        }
     }
 
     /// <summary>

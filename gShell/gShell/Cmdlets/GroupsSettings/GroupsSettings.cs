@@ -9,25 +9,7 @@ using gShell.Cmdlets.Emailsettings.Language;
 namespace gShell.Cmdlets.Groupssettings
 {
     /// <summary>A base class which provides support for service account integration and schema objects.</summary>
-    public abstract class GroupssettingsServiceAccountBase : GroupssettingsBase
-    {
-        #region Properties
-
-        /// <summary>
-        /// <para type="description">The email account to be targeted by the service account.</para>
-        /// </summary>
-        [Parameter(Mandatory = false)]
-        [ValidateNotNullOrEmpty]
-        public string TargetUserEmail { get; set; }
-        #endregion
-
-        protected override void BeginProcessing()
-        {
-            gShellServiceAccount = GetFullEmailAddress(TargetUserEmail, Domain);
-
-            base.BeginProcessing();
-        }
-    }
+    public abstract class GroupssettingsServiceAccountBase : GroupssettingsBase { }
 
     /// <summary>
     /// <para type="synopsis">Creates a new Groupssettings API Groups object.</para>

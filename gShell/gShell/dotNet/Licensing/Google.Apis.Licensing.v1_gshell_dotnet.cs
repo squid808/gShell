@@ -23,6 +23,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using gShell.Cmdlets.Utilities.OAuth2;
+
 namespace gShell.Cmdlets.Licensing{
 
     using System;
@@ -41,17 +43,10 @@ namespace gShell.Cmdlets.Licensing{
     /// <summary>
     /// A PowerShell-ready wrapper for the Licensing api, as well as the resources and methods therein.
     /// </summary>
-    public abstract class LicensingBase : OAuth2CmdletBase
+    public abstract class LicensingBase : AuthenticatedCmdletBase
     {
 
         #region Properties
-
-        /// <summary>
-        /// <para type="description">The domain against which this cmdlet should run.</para>
-        /// </summary>
-        [Parameter(Mandatory = false)]
-        [ValidateNotNullOrEmpty]
-        public string Domain { get; set; }
 
         /// <summary>The gShell dotNet class wrapper base.</summary>
         protected static gLicensing mainBase { get; set; }
@@ -60,11 +55,10 @@ namespace gShell.Cmdlets.Licensing{
         /// <summary>An instance of the LicenseAssignments gShell dotNet resource.</summary>
         public LicenseAssignments licenseAssignments { get; set; }
 
-        /// <summary>Returns the api name and version in {name}:{version} format.</summary>
-        protected override string apiNameAndVersion { get { return mainBase.apiNameAndVersion; } }
-
-        /// <summary>Gets or sets the email account the gShell Service Account should impersonate.</summary>
-        protected static string gShellServiceAccount { get; set; }
+        /// <summary>
+        /// Required to be able to store and retrieve the mainBase from the ServiceWrapperDictionary
+        /// </summary>
+        protected override Type mainBaseType { get { return typeof(gLicensing); } }
         #endregion
 
         #region Constructors
@@ -72,58 +66,9 @@ namespace gShell.Cmdlets.Licensing{
         {
             mainBase = new gLicensing();
 
+            ServiceWrapperDictionary[mainBaseType] = mainBase;
+
             licenseAssignments = new LicenseAssignments();
-        }
-        #endregion
-
-        #region PowerShell Methods
-        /// <summary>The gShell base implementation of the PowerShell BeginProcessing method.</summary>
-        /// <remarks>If a service account needs to be identified, it should be in a child class that overrides
-        /// and calls this method.</remarks>
-        protected override void BeginProcessing()
-        {
-            var secrets = CheckForClientSecrets();
-            if (secrets != null)
-            {
-                IEnumerable<string> scopes = EnsureScopesExist(Domain);
-                Domain = mainBase.BuildService(Authenticate(scopes, secrets, Domain), gShellServiceAccount).domain;
-
-                GWriteProgress = new gWriteProgress(WriteProgress);
-            }
-            else
-            {
-                WriteError(new ErrorRecord(null, (new Exception(
-                    "Client Secrets must be set before running cmdlets. Run 'Get-Help "
-                    + "Set-gShellClientSecrets -online' for more information."))));
-            }
-        }
-
-        /// <summary>The gShell base implementation of the PowerShell EndProcessing method.</summary>
-        /// <remarks>We need to reset the service account after every Cmdlet call to prevent the next
-        /// Cmdlet from inheriting it as well.</remarks>
-        protected override void EndProcessing()
-        {
-            gShellServiceAccount = string.Empty;
-        }
-
-        /// <summary>The gShell base implementation of the PowerShell StopProcessing method.</summary>
-        /// <remarks>We need to reset the service account after every Cmdlet call to prevent the next
-        /// Cmdlet from inheriting it as well.</remarks>
-        protected override void StopProcessing()
-        {
-            gShellServiceAccount = string.Empty;
-        }
-        #endregion
-
-        #region Authentication & Processing
-        /// <summary>Ensure the user, domain and client secret combination work with an authenticated user.</summary>
-        /// <param name="Scopes">The scopes that need to be passed through to the user authentication to Google.</param>
-        /// <param name="Secrets">The client secrets.`</param>
-        /// <param name="Domain">The domain for which this authentication is intended.</param>
-        /// <returns>The AuthenticatedUserInfo for the authenticated user.</returns>
-        protected override AuthenticatedUserInfo Authenticate(IEnumerable<string> Scopes, ClientSecrets Secrets, string Domain = null)
-        {
-            return mainBase.Authenticate(apiNameAndVersion, Scopes, Secrets, Domain);
         }
         #endregion
 
@@ -148,7 +93,7 @@ namespace gShell.Cmdlets.Licensing{
             public void Delete (string ProductId, string SkuId, string UserId)
             {
 
-                mainBase.licenseAssignments.Delete(ProductId, SkuId, UserId, gShellServiceAccount);
+                mainBase.licenseAssignments.Delete(ProductId, SkuId, UserId);
             }
 
 
@@ -161,7 +106,7 @@ namespace gShell.Cmdlets.Licensing{
             public Google.Apis.Licensing.v1.Data.LicenseAssignment Get (string ProductId, string SkuId, string UserId)
             {
 
-                return mainBase.licenseAssignments.Get(ProductId, SkuId, UserId, gShellServiceAccount);
+                return mainBase.licenseAssignments.Get(ProductId, SkuId, UserId);
             }
 
 
@@ -173,7 +118,7 @@ namespace gShell.Cmdlets.Licensing{
             public Google.Apis.Licensing.v1.Data.LicenseAssignment Insert (Google.Apis.Licensing.v1.Data.LicenseAssignmentInsert LicenseAssignmentInsertBody, string ProductId, string SkuId)
             {
 
-                return mainBase.licenseAssignments.Insert(LicenseAssignmentInsertBody, ProductId, SkuId, gShellServiceAccount);
+                return mainBase.licenseAssignments.Insert(LicenseAssignmentInsertBody, ProductId, SkuId);
             }
 
 
@@ -220,7 +165,7 @@ namespace gShell.Cmdlets.Licensing{
             public Google.Apis.Licensing.v1.Data.LicenseAssignment Patch (Google.Apis.Licensing.v1.Data.LicenseAssignment LicenseAssignmentBody, string ProductId, string SkuId, string UserId)
             {
 
-                return mainBase.licenseAssignments.Patch(LicenseAssignmentBody, ProductId, SkuId, UserId, gShellServiceAccount);
+                return mainBase.licenseAssignments.Patch(LicenseAssignmentBody, ProductId, SkuId, UserId);
             }
 
 
@@ -234,7 +179,7 @@ namespace gShell.Cmdlets.Licensing{
             public Google.Apis.Licensing.v1.Data.LicenseAssignment Update (Google.Apis.Licensing.v1.Data.LicenseAssignment LicenseAssignmentBody, string ProductId, string SkuId, string UserId)
             {
 
-                return mainBase.licenseAssignments.Update(LicenseAssignmentBody, ProductId, SkuId, UserId, gShellServiceAccount);
+                return mainBase.licenseAssignments.Update(LicenseAssignmentBody, ProductId, SkuId, UserId);
             }
 
 
@@ -260,7 +205,7 @@ namespace gShell.dotNet
     using Data = Google.Apis.Licensing.v1.Data;
 
     /// <summary>The dotNet gShell version of the licensing api.</summary>
-    public class Licensing : ServiceWrapper<v1.LicensingService>
+    public class Licensing : ServiceWrapper<v1.LicensingService>, IServiceWrapper<Google.Apis.Services.IClientService>
     {
 
         protected override bool worksWithGmail { get { return true; } }
@@ -272,7 +217,7 @@ namespace gShell.dotNet
 
         protected override v1.LicensingService CreateNewService(string domain, AuthenticatedUserInfo authInfo, string gShellServiceAccount = null)
         {
-            return new v1.LicensingService(OAuth2Base.GetInitializer(domain, authInfo, gShellServiceAccount));
+            return new v1.LicensingService(OAuth2Base.GetInitializer(domain, authInfo));
         }
 
         /// <summary>Returns the api name and version in {name}:{version} format.</summary>
@@ -333,9 +278,9 @@ namespace gShell.dotNet
             /// <param
             /// name="UserId">email id or unique Id of the user</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void Delete (string ProductId, string SkuId, string UserId, string gShellServiceAccount = null)
+            public void Delete (string ProductId, string SkuId, string UserId)
             {
-                GetService(gShellServiceAccount).LicenseAssignments.Delete(ProductId, SkuId, UserId).Execute();
+                GetService().LicenseAssignments.Delete(ProductId, SkuId, UserId).Execute();
             }
 
             /// <summary>Get license assignment of a particular product and sku for a user</summary>
@@ -344,9 +289,9 @@ namespace gShell.dotNet
             /// <param
             /// name="UserId">email id or unique Id of the user</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Licensing.v1.Data.LicenseAssignment Get (string ProductId, string SkuId, string UserId, string gShellServiceAccount = null)
+            public Google.Apis.Licensing.v1.Data.LicenseAssignment Get (string ProductId, string SkuId, string UserId)
             {
-                return GetService(gShellServiceAccount).LicenseAssignments.Get(ProductId, SkuId, UserId).Execute();
+                return GetService().LicenseAssignments.Get(ProductId, SkuId, UserId).Execute();
             }
 
             /// <summary>Assign License.</summary>
@@ -354,9 +299,9 @@ namespace gShell.dotNet
             /// <param name="ProductId">Name for product</param>
             /// <param name="SkuId">Name for sku</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Licensing.v1.Data.LicenseAssignment Insert (Google.Apis.Licensing.v1.Data.LicenseAssignmentInsert LicenseAssignmentInsertBody, string ProductId, string SkuId, string gShellServiceAccount = null)
+            public Google.Apis.Licensing.v1.Data.LicenseAssignment Insert (Google.Apis.Licensing.v1.Data.LicenseAssignmentInsert LicenseAssignmentInsertBody, string ProductId, string SkuId)
             {
-                return GetService(gShellServiceAccount).LicenseAssignments.Insert(LicenseAssignmentInsertBody, ProductId, SkuId).Execute();
+                return GetService().LicenseAssignments.Insert(LicenseAssignmentInsertBody, ProductId, SkuId).Execute();
             }
 
             /// <summary>List license assignments for given product of the customer.</summary>
@@ -366,11 +311,11 @@ namespace gShell.dotNet
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public List<Google.Apis.Licensing.v1.Data.LicenseAssignmentList> ListForProduct(
-                string ProductId, string CustomerId, LicenseAssignmentsListForProductProperties properties= null, string gShellServiceAccount = null)
+                string ProductId, string CustomerId, LicenseAssignmentsListForProductProperties properties= null)
             {
                 var results = new List<Google.Apis.Licensing.v1.Data.LicenseAssignmentList>();
 
-                v1.LicenseAssignmentsResource.ListForProductRequest request = GetService(gShellServiceAccount).LicenseAssignments.ListForProduct(ProductId, CustomerId);
+                v1.LicenseAssignmentsResource.ListForProductRequest request = GetService().LicenseAssignments.ListForProduct(ProductId, CustomerId);
 
                 if (properties != null)
                 {
@@ -425,11 +370,11 @@ namespace gShell.dotNet
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public List<Google.Apis.Licensing.v1.Data.LicenseAssignmentList> ListForProductAndSku(
-                string ProductId, string SkuId, string CustomerId, LicenseAssignmentsListForProductAndSkuProperties properties= null, string gShellServiceAccount = null)
+                string ProductId, string SkuId, string CustomerId, LicenseAssignmentsListForProductAndSkuProperties properties= null)
             {
                 var results = new List<Google.Apis.Licensing.v1.Data.LicenseAssignmentList>();
 
-                v1.LicenseAssignmentsResource.ListForProductAndSkuRequest request = GetService(gShellServiceAccount).LicenseAssignments.ListForProductAndSku(ProductId, SkuId, CustomerId);
+                v1.LicenseAssignmentsResource.ListForProductAndSkuRequest request = GetService().LicenseAssignments.ListForProductAndSku(ProductId, SkuId, CustomerId);
 
                 if (properties != null)
                 {
@@ -483,9 +428,9 @@ namespace gShell.dotNet
             /// revoked</param>
             /// <param name="UserId">email id or unique Id of the user</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Licensing.v1.Data.LicenseAssignment Patch (Google.Apis.Licensing.v1.Data.LicenseAssignment LicenseAssignmentBody, string ProductId, string SkuId, string UserId, string gShellServiceAccount = null)
+            public Google.Apis.Licensing.v1.Data.LicenseAssignment Patch (Google.Apis.Licensing.v1.Data.LicenseAssignment LicenseAssignmentBody, string ProductId, string SkuId, string UserId)
             {
-                return GetService(gShellServiceAccount).LicenseAssignments.Patch(LicenseAssignmentBody, ProductId, SkuId, UserId).Execute();
+                return GetService().LicenseAssignments.Patch(LicenseAssignmentBody, ProductId, SkuId, UserId).Execute();
             }
 
             /// <summary>Assign License.</summary>
@@ -495,9 +440,9 @@ namespace gShell.dotNet
             /// revoked</param>
             /// <param name="UserId">email id or unique Id of the user</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Licensing.v1.Data.LicenseAssignment Update (Google.Apis.Licensing.v1.Data.LicenseAssignment LicenseAssignmentBody, string ProductId, string SkuId, string UserId, string gShellServiceAccount = null)
+            public Google.Apis.Licensing.v1.Data.LicenseAssignment Update (Google.Apis.Licensing.v1.Data.LicenseAssignment LicenseAssignmentBody, string ProductId, string SkuId, string UserId)
             {
-                return GetService(gShellServiceAccount).LicenseAssignments.Update(LicenseAssignmentBody, ProductId, SkuId, UserId).Execute();
+                return GetService().LicenseAssignments.Update(LicenseAssignmentBody, ProductId, SkuId, UserId).Execute();
             }
 
         }

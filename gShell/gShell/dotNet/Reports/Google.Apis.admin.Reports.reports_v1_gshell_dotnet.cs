@@ -23,6 +23,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using gShell.Cmdlets.Utilities.OAuth2;
+
 namespace gShell.Cmdlets.Reports{
 
     using System;
@@ -41,17 +43,10 @@ namespace gShell.Cmdlets.Reports{
     /// <summary>
     /// A PowerShell-ready wrapper for the Reports api, as well as the resources and methods therein.
     /// </summary>
-    public abstract class ReportsBase : OAuth2CmdletBase
+    public abstract class ReportsBase : AuthenticatedCmdletBase
     {
 
         #region Properties
-
-        /// <summary>
-        /// <para type="description">The domain against which this cmdlet should run.</para>
-        /// </summary>
-        [Parameter(Mandatory = false)]
-        [ValidateNotNullOrEmpty]
-        public string Domain { get; set; }
 
         /// <summary>The gShell dotNet class wrapper base.</summary>
         protected static gReports mainBase { get; set; }
@@ -69,11 +64,10 @@ namespace gShell.Cmdlets.Reports{
         /// <summary>An instance of the UserUsageReport gShell dotNet resource.</summary>
         public UserUsageReport userUsageReport { get; set; }
 
-        /// <summary>Returns the api name and version in {name}:{version} format.</summary>
-        protected override string apiNameAndVersion { get { return mainBase.apiNameAndVersion; } }
-
-        /// <summary>Gets or sets the email account the gShell Service Account should impersonate.</summary>
-        protected static string gShellServiceAccount { get; set; }
+        /// <summary>
+        /// Required to be able to store and retrieve the mainBase from the ServiceWrapperDictionary
+        /// </summary>
+        protected override Type mainBaseType { get { return typeof(gReports); } }
         #endregion
 
         #region Constructors
@@ -81,61 +75,12 @@ namespace gShell.Cmdlets.Reports{
         {
             mainBase = new gReports();
 
+            ServiceWrapperDictionary[mainBaseType] = mainBase;
+
             activities = new Activities();
             channels = new Channels();
             customerUsageReports = new CustomerUsageReports();
             userUsageReport = new UserUsageReport();
-        }
-        #endregion
-
-        #region PowerShell Methods
-        /// <summary>The gShell base implementation of the PowerShell BeginProcessing method.</summary>
-        /// <remarks>If a service account needs to be identified, it should be in a child class that overrides
-        /// and calls this method.</remarks>
-        protected override void BeginProcessing()
-        {
-            var secrets = CheckForClientSecrets();
-            if (secrets != null)
-            {
-                IEnumerable<string> scopes = EnsureScopesExist(Domain);
-                Domain = mainBase.BuildService(Authenticate(scopes, secrets, Domain), gShellServiceAccount).domain;
-
-                GWriteProgress = new gWriteProgress(WriteProgress);
-            }
-            else
-            {
-                WriteError(new ErrorRecord(null, (new Exception(
-                    "Client Secrets must be set before running cmdlets. Run 'Get-Help "
-                    + "Set-gShellClientSecrets -online' for more information."))));
-            }
-        }
-
-        /// <summary>The gShell base implementation of the PowerShell EndProcessing method.</summary>
-        /// <remarks>We need to reset the service account after every Cmdlet call to prevent the next
-        /// Cmdlet from inheriting it as well.</remarks>
-        protected override void EndProcessing()
-        {
-            gShellServiceAccount = string.Empty;
-        }
-
-        /// <summary>The gShell base implementation of the PowerShell StopProcessing method.</summary>
-        /// <remarks>We need to reset the service account after every Cmdlet call to prevent the next
-        /// Cmdlet from inheriting it as well.</remarks>
-        protected override void StopProcessing()
-        {
-            gShellServiceAccount = string.Empty;
-        }
-        #endregion
-
-        #region Authentication & Processing
-        /// <summary>Ensure the user, domain and client secret combination work with an authenticated user.</summary>
-        /// <param name="Scopes">The scopes that need to be passed through to the user authentication to Google.</param>
-        /// <param name="Secrets">The client secrets.`</param>
-        /// <param name="Domain">The domain for which this authentication is intended.</param>
-        /// <returns>The AuthenticatedUserInfo for the authenticated user.</returns>
-        protected override AuthenticatedUserInfo Authenticate(IEnumerable<string> Scopes, ClientSecrets Secrets, string Domain = null)
-        {
-            return mainBase.Authenticate(apiNameAndVersion, Scopes, Secrets, Domain);
         }
         #endregion
 
@@ -166,7 +111,7 @@ namespace gShell.Cmdlets.Reports{
                 properties.StartProgressBar = StartProgressBar;
                 properties.UpdateProgressBar = UpdateProgressBar;
 
-                return mainBase.activities.List(UserKey, ApplicationName, properties, gShellServiceAccount);
+                return mainBase.activities.List(UserKey, ApplicationName, properties);
             }
 
             /// <summary>Push changes to activities</summary>
@@ -181,7 +126,7 @@ namespace gShell.Cmdlets.Reports{
 
                 properties = properties ?? new gReports.Activities.ActivitiesWatchProperties();
 
-                return mainBase.activities.Watch(ChannelBody, UserKey, ApplicationName, properties, gShellServiceAccount);
+                return mainBase.activities.Watch(ChannelBody, UserKey, ApplicationName, properties);
             }
 
 
@@ -204,7 +149,7 @@ namespace gShell.Cmdlets.Reports{
             public void Stop (Google.Apis.admin.Reports.reports_v1.Data.Channel ChannelBody)
             {
 
-                mainBase.channels.Stop(ChannelBody, gShellServiceAccount);
+                mainBase.channels.Stop(ChannelBody);
             }
 
 
@@ -288,7 +233,7 @@ namespace gShell.dotNet
     using Data = Google.Apis.admin.Reports.reports_v1.Data;
 
     /// <summary>The dotNet gShell version of the admin api.</summary>
-    public class Reports : ServiceWrapper<reports_v1.ReportsService>
+    public class Reports : ServiceWrapper<reports_v1.ReportsService>, IServiceWrapper<Google.Apis.Services.IClientService>
     {
 
         protected override bool worksWithGmail { get { return false; } }
@@ -300,7 +245,7 @@ namespace gShell.dotNet
 
         protected override reports_v1.ReportsService CreateNewService(string domain, AuthenticatedUserInfo authInfo, string gShellServiceAccount = null)
         {
-            return new reports_v1.ReportsService(OAuth2Base.GetInitializer(domain, authInfo, gShellServiceAccount));
+            return new reports_v1.ReportsService(OAuth2Base.GetInitializer(domain, authInfo));
         }
 
         /// <summary>Returns the api name and version in {name}:{version} format.</summary>
@@ -402,11 +347,11 @@ namespace gShell.dotNet
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public List<Google.Apis.admin.Reports.reports_v1.Data.Activities> List(
-                string UserKey, string ApplicationName, ActivitiesListProperties properties= null, string gShellServiceAccount = null)
+                string UserKey, string ApplicationName, ActivitiesListProperties properties= null)
             {
                 var results = new List<Google.Apis.admin.Reports.reports_v1.Data.Activities>();
 
-                reports_v1.ActivitiesResource.ListRequest request = GetService(gShellServiceAccount).Activities.List(UserKey, ApplicationName);
+                reports_v1.ActivitiesResource.ListRequest request = GetService().Activities.List(UserKey, ApplicationName);
 
                 if (properties != null)
                 {
@@ -467,9 +412,9 @@ namespace gShell.dotNet
             /// name="ApplicationName">Application name for which the events are to be retrieved.</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Reports.reports_v1.Data.Channel Watch (Google.Apis.admin.Reports.reports_v1.Data.Channel ChannelBody, string UserKey, string ApplicationName, ActivitiesWatchProperties properties= null, string gShellServiceAccount = null)
+            public Google.Apis.admin.Reports.reports_v1.Data.Channel Watch (Google.Apis.admin.Reports.reports_v1.Data.Channel ChannelBody, string UserKey, string ApplicationName, ActivitiesWatchProperties properties= null)
             {
-                return GetService(gShellServiceAccount).Activities.Watch(ChannelBody, UserKey, ApplicationName).Execute();
+                return GetService().Activities.Watch(ChannelBody, UserKey, ApplicationName).Execute();
             }
 
         }
@@ -484,9 +429,9 @@ namespace gShell.dotNet
             /// <summary>Stop watching resources through this channel</summary>
             /// <param name="ChannelBody">The body of the request.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void Stop (Google.Apis.admin.Reports.reports_v1.Data.Channel ChannelBody, string gShellServiceAccount = null)
+            public void Stop (Google.Apis.admin.Reports.reports_v1.Data.Channel ChannelBody)
             {
-                GetService(gShellServiceAccount).Channels.Stop(ChannelBody).Execute();
+                GetService().Channels.Stop(ChannelBody).Execute();
             }
 
         }
@@ -521,11 +466,11 @@ namespace gShell.dotNet
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public List<Google.Apis.admin.Reports.reports_v1.Data.UsageReports> Get(
-                string Date, CustomerUsageReportsGetProperties properties= null, string gShellServiceAccount = null)
+                string Date, CustomerUsageReportsGetProperties properties= null)
             {
                 var results = new List<Google.Apis.admin.Reports.reports_v1.Data.UsageReports>();
 
-                reports_v1.CustomerUsageReportsResource.GetRequest request = GetService(gShellServiceAccount).CustomerUsageReports.Get(Date);
+                reports_v1.CustomerUsageReportsResource.GetRequest request = GetService().CustomerUsageReports.Get(Date);
 
                 if (properties != null)
                 {
@@ -614,11 +559,11 @@ namespace gShell.dotNet
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public List<Google.Apis.admin.Reports.reports_v1.Data.UsageReports> Get(
-                string UserKey, string Date, UserUsageReportGetProperties properties= null, string gShellServiceAccount = null)
+                string UserKey, string Date, UserUsageReportGetProperties properties= null)
             {
                 var results = new List<Google.Apis.admin.Reports.reports_v1.Data.UsageReports>();
 
-                reports_v1.UserUsageReportResource.GetRequest request = GetService(gShellServiceAccount).UserUsageReport.Get(UserKey, Date);
+                reports_v1.UserUsageReportResource.GetRequest request = GetService().UserUsageReport.Get(UserKey, Date);
 
                 if (properties != null)
                 {

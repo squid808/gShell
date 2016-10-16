@@ -23,6 +23,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using gShell.Cmdlets.Utilities.OAuth2;
+using gShell.dotNet;
+
 namespace gShell.Cmdlets.Directory{
 
     using System;
@@ -41,21 +44,13 @@ namespace gShell.Cmdlets.Directory{
     /// <summary>
     /// A PowerShell-ready wrapper for the Directory api, as well as the resources and methods therein.
     /// </summary>
-    public abstract class DirectoryBase : OAuth2CmdletBase
+    public abstract class DirectoryBase : AuthenticatedCmdletBase
     {
 
         #region Properties
 
-        /// <summary>
-        /// <para type="description">The domain against which this cmdlet should run.</para>
-        /// </summary>
-        [Parameter(Mandatory = false)]
-        [ValidateNotNullOrEmpty]
-        public string Domain { get; set; }
-
         /// <summary>The gShell dotNet class wrapper base.</summary>
         protected static gDirectory mainBase { get; set; }
-
 
         /// <summary>An instance of the Asps gShell dotNet resource.</summary>
         public Asps asps { get; set; }
@@ -114,17 +109,19 @@ namespace gShell.Cmdlets.Directory{
         /// <summary>An instance of the VerificationCodes gShell dotNet resource.</summary>
         public VerificationCodes verificationCodes { get; set; }
 
-        /// <summary>Returns the api name and version in {name}:{version} format.</summary>
-        protected override string apiNameAndVersion { get { return mainBase.apiNameAndVersion; } }
-
-        /// <summary>Gets or sets the email account the gShell Service Account should impersonate.</summary>
-        protected static string gShellServiceAccount { get; set; }
+        /// <summary>
+        /// Required to be able to store and retrieve the mainBase from the ServiceWrapperDictionary
+        /// </summary>
+        protected override Type mainBaseType { get { return typeof(gDirectory); } }
         #endregion
 
-        #region Constructors
+        #region Constructors 
+
         protected DirectoryBase()
         {
             mainBase = new gDirectory();
+
+            ServiceWrapperDictionary[mainBaseType] = mainBase;
 
             asps = new Asps();
             channels = new Channels();
@@ -145,57 +142,6 @@ namespace gShell.Cmdlets.Directory{
             tokens = new Tokens();
             users = new Users();
             verificationCodes = new VerificationCodes();
-        }
-        #endregion
-
-        #region PowerShell Methods
-        /// <summary>The gShell base implementation of the PowerShell BeginProcessing method.</summary>
-        /// <remarks>If a service account needs to be identified, it should be in a child class that overrides
-        /// and calls this method.</remarks>
-        protected override void BeginProcessing()
-        {
-            var secrets = CheckForClientSecrets();
-            if (secrets != null)
-            {
-                IEnumerable<string> scopes = EnsureScopesExist(Domain);
-                Domain = mainBase.BuildService(Authenticate(scopes, secrets, Domain), gShellServiceAccount).domain;
-
-                GWriteProgress = new gWriteProgress(WriteProgress);
-            }
-            else
-            {
-                throw new Exception(
-                    "Client Secrets must be set before running cmdlets. Run 'Get-Help "
-                    + "Set-gShellClientSecrets -online' for more information.");
-            }
-        }
-
-        /// <summary>The gShell base implementation of the PowerShell EndProcessing method.</summary>
-        /// <remarks>We need to reset the service account after every Cmdlet call to prevent the next
-        /// Cmdlet from inheriting it as well.</remarks>
-        protected override void EndProcessing()
-        {
-            gShellServiceAccount = string.Empty;
-        }
-
-        /// <summary>The gShell base implementation of the PowerShell StopProcessing method.</summary>
-        /// <remarks>We need to reset the service account after every Cmdlet call to prevent the next
-        /// Cmdlet from inheriting it as well.</remarks>
-        protected override void StopProcessing()
-        {
-            gShellServiceAccount = string.Empty;
-        }
-        #endregion
-
-        #region Authentication & Processing
-        /// <summary>Ensure the user, domain and client secret combination work with an authenticated user.</summary>
-        /// <param name="Scopes">The scopes that need to be passed through to the user authentication to Google.</param>
-        /// <param name="Secrets">The client secrets.`</param>
-        /// <param name="Domain">The domain for which this authentication is intended.</param>
-        /// <returns>The AuthenticatedUserInfo for the authenticated user.</returns>
-        protected override AuthenticatedUserInfo Authenticate(IEnumerable<string> Scopes, ClientSecrets Secrets, string Domain = null)
-        {
-            return mainBase.Authenticate(apiNameAndVersion, Scopes, Secrets, Domain);
         }
         #endregion
 
@@ -220,7 +166,7 @@ namespace gShell.Cmdlets.Directory{
             public void Delete (string UserKey, int CodeId)
             {
 
-                mainBase.asps.Delete(UserKey, CodeId, gShellServiceAccount);
+                mainBase.asps.Delete(UserKey, CodeId);
             }
 
 
@@ -232,7 +178,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.Asp Get (string UserKey, int CodeId)
             {
 
-                return mainBase.asps.Get(UserKey, CodeId, gShellServiceAccount);
+                return mainBase.asps.Get(UserKey, CodeId);
             }
 
 
@@ -243,7 +189,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.Asps List (string UserKey)
             {
 
-                return mainBase.asps.List(UserKey, gShellServiceAccount);
+                return mainBase.asps.List(UserKey);
             }
 
 
@@ -266,7 +212,7 @@ namespace gShell.Cmdlets.Directory{
             public void Stop (Google.Apis.admin.Directory.directory_v1.Data.Channel ChannelBody)
             {
 
-                mainBase.channels.Stop(ChannelBody, gShellServiceAccount);
+                mainBase.channels.Stop(ChannelBody);
             }
 
 
@@ -294,7 +240,7 @@ namespace gShell.Cmdlets.Directory{
 
                 properties = properties ?? new gDirectory.Chromeosdevices.ChromeosdevicesGetProperties();
 
-                return mainBase.chromeosdevices.Get(CustomerId, DeviceId, properties, gShellServiceAccount);
+                return mainBase.chromeosdevices.Get(CustomerId, DeviceId, properties);
             }
 
 
@@ -310,7 +256,7 @@ namespace gShell.Cmdlets.Directory{
                 properties.StartProgressBar = StartProgressBar;
                 properties.UpdateProgressBar = UpdateProgressBar;
 
-                return mainBase.chromeosdevices.List(CustomerId, properties, gShellServiceAccount);
+                return mainBase.chromeosdevices.List(CustomerId, properties);
             }
 
             /// <summary>Update Chrome OS Device. This method supports patch semantics.</summary>
@@ -324,7 +270,7 @@ namespace gShell.Cmdlets.Directory{
 
                 properties = properties ?? new gDirectory.Chromeosdevices.ChromeosdevicesPatchProperties();
 
-                return mainBase.chromeosdevices.Patch(ChromeOsDeviceBody, CustomerId, DeviceId, properties, gShellServiceAccount);
+                return mainBase.chromeosdevices.Patch(ChromeOsDeviceBody, CustomerId, DeviceId, properties);
             }
 
 
@@ -340,7 +286,7 @@ namespace gShell.Cmdlets.Directory{
 
                 properties = properties ?? new gDirectory.Chromeosdevices.ChromeosdevicesUpdateProperties();
 
-                return mainBase.chromeosdevices.Update(ChromeOsDeviceBody, CustomerId, DeviceId, properties, gShellServiceAccount);
+                return mainBase.chromeosdevices.Update(ChromeOsDeviceBody, CustomerId, DeviceId, properties);
             }
 
 
@@ -363,7 +309,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.Customer Get (string CustomerKey)
             {
 
-                return mainBase.customers.Get(CustomerKey, gShellServiceAccount);
+                return mainBase.customers.Get(CustomerKey);
             }
 
 
@@ -374,7 +320,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.Customer Patch (Google.Apis.admin.Directory.directory_v1.Data.Customer CustomerBody, string CustomerKey)
             {
 
-                return mainBase.customers.Patch(CustomerBody, CustomerKey, gShellServiceAccount);
+                return mainBase.customers.Patch(CustomerBody, CustomerKey);
             }
 
 
@@ -385,7 +331,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.Customer Update (Google.Apis.admin.Directory.directory_v1.Data.Customer CustomerBody, string CustomerKey)
             {
 
-                return mainBase.customers.Update(CustomerBody, CustomerKey, gShellServiceAccount);
+                return mainBase.customers.Update(CustomerBody, CustomerKey);
             }
 
 
@@ -410,7 +356,7 @@ namespace gShell.Cmdlets.Directory{
             public void Delete (string Customer, string DomainAliasName)
             {
 
-                mainBase.domainAliases.Delete(Customer, DomainAliasName, gShellServiceAccount);
+                mainBase.domainAliases.Delete(Customer, DomainAliasName);
             }
 
 
@@ -422,7 +368,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.DomainAlias Get (string Customer, string DomainAliasName)
             {
 
-                return mainBase.domainAliases.Get(Customer, DomainAliasName, gShellServiceAccount);
+                return mainBase.domainAliases.Get(Customer, DomainAliasName);
             }
 
 
@@ -433,7 +379,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.DomainAlias Insert (Google.Apis.admin.Directory.directory_v1.Data.DomainAlias DomainAliasBody, string Customer)
             {
 
-                return mainBase.domainAliases.Insert(DomainAliasBody, Customer, gShellServiceAccount);
+                return mainBase.domainAliases.Insert(DomainAliasBody, Customer);
             }
 
 
@@ -446,7 +392,7 @@ namespace gShell.Cmdlets.Directory{
 
                 properties = properties ?? new gDirectory.DomainAliases.DomainAliasesListProperties();
 
-                return mainBase.domainAliases.List(Customer, properties, gShellServiceAccount);
+                return mainBase.domainAliases.List(Customer, properties);
             }
 
 
@@ -471,7 +417,7 @@ namespace gShell.Cmdlets.Directory{
             public void Delete (string Customer, string DomainName)
             {
 
-                mainBase.domains.Delete(Customer, DomainName, gShellServiceAccount);
+                mainBase.domains.Delete(Customer, DomainName);
             }
 
 
@@ -483,7 +429,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.Domains Get (string Customer, string DomainName)
             {
 
-                return mainBase.domains.Get(Customer, DomainName, gShellServiceAccount);
+                return mainBase.domains.Get(Customer, DomainName);
             }
 
 
@@ -494,7 +440,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.Domains Insert (Google.Apis.admin.Directory.directory_v1.Data.Domains DomainsBody, string Customer)
             {
 
-                return mainBase.domains.Insert(DomainsBody, Customer, gShellServiceAccount);
+                return mainBase.domains.Insert(DomainsBody, Customer);
             }
 
 
@@ -504,7 +450,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.Domains2 List (string Customer)
             {
 
-                return mainBase.domains.List(Customer, gShellServiceAccount);
+                return mainBase.domains.List(Customer);
             }
 
 
@@ -547,7 +493,7 @@ namespace gShell.Cmdlets.Directory{
                 public void Delete (string GroupKey, string Alias)
                 {
 
-                    mainBase.groups.aliases.Delete(GroupKey, Alias, gShellServiceAccount);
+                    mainBase.groups.aliases.Delete(GroupKey, Alias);
                 }
 
 
@@ -558,7 +504,7 @@ namespace gShell.Cmdlets.Directory{
                 public Google.Apis.admin.Directory.directory_v1.Data.Alias Insert (Google.Apis.admin.Directory.directory_v1.Data.Alias AliasBody, string GroupKey)
                 {
 
-                    return mainBase.groups.aliases.Insert(AliasBody, GroupKey, gShellServiceAccount);
+                    return mainBase.groups.aliases.Insert(AliasBody, GroupKey);
                 }
 
 
@@ -568,7 +514,7 @@ namespace gShell.Cmdlets.Directory{
                 public Google.Apis.admin.Directory.directory_v1.Data.Aliases List (string GroupKey)
                 {
 
-                    return mainBase.groups.aliases.List(GroupKey, gShellServiceAccount);
+                    return mainBase.groups.aliases.List(GroupKey);
                 }
 
 
@@ -581,7 +527,7 @@ namespace gShell.Cmdlets.Directory{
             public void Delete (string GroupKey)
             {
 
-                mainBase.groups.Delete(GroupKey, gShellServiceAccount);
+                mainBase.groups.Delete(GroupKey);
             }
 
 
@@ -591,7 +537,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.Group Get (string GroupKey)
             {
 
-                return mainBase.groups.Get(GroupKey, gShellServiceAccount);
+                return mainBase.groups.Get(GroupKey);
             }
 
 
@@ -601,7 +547,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.Group Insert (Google.Apis.admin.Directory.directory_v1.Data.Group GroupBody)
             {
 
-                return mainBase.groups.Insert(GroupBody, gShellServiceAccount);
+                return mainBase.groups.Insert(GroupBody);
             }
 
 
@@ -616,7 +562,7 @@ namespace gShell.Cmdlets.Directory{
                 properties.StartProgressBar = StartProgressBar;
                 properties.UpdateProgressBar = UpdateProgressBar;
 
-                return mainBase.groups.List(properties, gShellServiceAccount);
+                return mainBase.groups.List(properties);
             }
 
             /// <summary>Update Group. This method supports patch semantics.</summary>
@@ -626,7 +572,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.Group Patch (Google.Apis.admin.Directory.directory_v1.Data.Group GroupBody, string GroupKey)
             {
 
-                return mainBase.groups.Patch(GroupBody, GroupKey, gShellServiceAccount);
+                return mainBase.groups.Patch(GroupBody, GroupKey);
             }
 
 
@@ -638,7 +584,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.Group Update (Google.Apis.admin.Directory.directory_v1.Data.Group GroupBody, string GroupKey)
             {
 
-                return mainBase.groups.Update(GroupBody, GroupKey, gShellServiceAccount);
+                return mainBase.groups.Update(GroupBody, GroupKey);
             }
 
 
@@ -663,7 +609,7 @@ namespace gShell.Cmdlets.Directory{
             public void Delete (string GroupKey, string MemberKey)
             {
 
-                mainBase.members.Delete(GroupKey, MemberKey, gShellServiceAccount);
+                mainBase.members.Delete(GroupKey, MemberKey);
             }
 
 
@@ -675,7 +621,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.Member Get (string GroupKey, string MemberKey)
             {
 
-                return mainBase.members.Get(GroupKey, MemberKey, gShellServiceAccount);
+                return mainBase.members.Get(GroupKey, MemberKey);
             }
 
 
@@ -686,7 +632,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.Member Insert (Google.Apis.admin.Directory.directory_v1.Data.Member MemberBody, string GroupKey)
             {
 
-                return mainBase.members.Insert(MemberBody, GroupKey, gShellServiceAccount);
+                return mainBase.members.Insert(MemberBody, GroupKey);
             }
 
 
@@ -702,7 +648,7 @@ namespace gShell.Cmdlets.Directory{
                 properties.StartProgressBar = StartProgressBar;
                 properties.UpdateProgressBar = UpdateProgressBar;
 
-                return mainBase.members.List(GroupKey, properties, gShellServiceAccount);
+                return mainBase.members.List(GroupKey, properties);
             }
 
             /// <summary>Update membership of a user in the specified group. This method supports patch
@@ -715,7 +661,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.Member Patch (Google.Apis.admin.Directory.directory_v1.Data.Member MemberBody, string GroupKey, string MemberKey)
             {
 
-                return mainBase.members.Patch(MemberBody, GroupKey, MemberKey, gShellServiceAccount);
+                return mainBase.members.Patch(MemberBody, GroupKey, MemberKey);
             }
 
 
@@ -729,7 +675,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.Member Update (Google.Apis.admin.Directory.directory_v1.Data.Member MemberBody, string GroupKey, string MemberKey)
             {
 
-                return mainBase.members.Update(MemberBody, GroupKey, MemberKey, gShellServiceAccount);
+                return mainBase.members.Update(MemberBody, GroupKey, MemberKey);
             }
 
 
@@ -755,7 +701,7 @@ namespace gShell.Cmdlets.Directory{
             public void Action (Google.Apis.admin.Directory.directory_v1.Data.MobileDeviceAction MobileDeviceActionBody, string CustomerId, string ResourceId)
             {
 
-                mainBase.mobiledevices.Action(MobileDeviceActionBody, CustomerId, ResourceId, gShellServiceAccount);
+                mainBase.mobiledevices.Action(MobileDeviceActionBody, CustomerId, ResourceId);
             }
 
 
@@ -767,7 +713,7 @@ namespace gShell.Cmdlets.Directory{
             public void Delete (string CustomerId, string ResourceId)
             {
 
-                mainBase.mobiledevices.Delete(CustomerId, ResourceId, gShellServiceAccount);
+                mainBase.mobiledevices.Delete(CustomerId, ResourceId);
             }
 
 
@@ -782,7 +728,7 @@ namespace gShell.Cmdlets.Directory{
 
                 properties = properties ?? new gDirectory.Mobiledevices.MobiledevicesGetProperties();
 
-                return mainBase.mobiledevices.Get(CustomerId, ResourceId, properties, gShellServiceAccount);
+                return mainBase.mobiledevices.Get(CustomerId, ResourceId, properties);
             }
 
 
@@ -798,7 +744,7 @@ namespace gShell.Cmdlets.Directory{
                 properties.StartProgressBar = StartProgressBar;
                 properties.UpdateProgressBar = UpdateProgressBar;
 
-                return mainBase.mobiledevices.List(CustomerId, properties, gShellServiceAccount);
+                return mainBase.mobiledevices.List(CustomerId, properties);
             }
         }
         #endregion
@@ -821,7 +767,7 @@ namespace gShell.Cmdlets.Directory{
             public void Delete (string Customer, string NotificationId)
             {
 
-                mainBase.notifications.Delete(Customer, NotificationId, gShellServiceAccount);
+                mainBase.notifications.Delete(Customer, NotificationId);
             }
 
 
@@ -833,7 +779,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.Notification Get (string Customer, string NotificationId)
             {
 
-                return mainBase.notifications.Get(Customer, NotificationId, gShellServiceAccount);
+                return mainBase.notifications.Get(Customer, NotificationId);
             }
 
 
@@ -849,7 +795,7 @@ namespace gShell.Cmdlets.Directory{
                 properties.StartProgressBar = StartProgressBar;
                 properties.UpdateProgressBar = UpdateProgressBar;
 
-                return mainBase.notifications.List(Customer, properties, gShellServiceAccount);
+                return mainBase.notifications.List(Customer, properties);
             }
 
             /// <summary>Updates a notification. This method supports patch semantics.</summary>
@@ -860,7 +806,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.Notification Patch (Google.Apis.admin.Directory.directory_v1.Data.Notification NotificationBody, string Customer, string NotificationId)
             {
 
-                return mainBase.notifications.Patch(NotificationBody, Customer, NotificationId, gShellServiceAccount);
+                return mainBase.notifications.Patch(NotificationBody, Customer, NotificationId);
             }
 
 
@@ -873,7 +819,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.Notification Update (Google.Apis.admin.Directory.directory_v1.Data.Notification NotificationBody, string Customer, string NotificationId)
             {
 
-                return mainBase.notifications.Update(NotificationBody, Customer, NotificationId, gShellServiceAccount);
+                return mainBase.notifications.Update(NotificationBody, Customer, NotificationId);
             }
 
 
@@ -898,7 +844,7 @@ namespace gShell.Cmdlets.Directory{
             public void Delete (string CustomerId, Google.Apis.Util.Repeatable<string> OrgUnitPath)
             {
 
-                mainBase.orgunits.Delete(CustomerId, OrgUnitPath, gShellServiceAccount);
+                mainBase.orgunits.Delete(CustomerId, OrgUnitPath);
             }
 
 
@@ -910,7 +856,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.OrgUnit Get (string CustomerId, Google.Apis.Util.Repeatable<string> OrgUnitPath)
             {
 
-                return mainBase.orgunits.Get(CustomerId, OrgUnitPath, gShellServiceAccount);
+                return mainBase.orgunits.Get(CustomerId, OrgUnitPath);
             }
 
 
@@ -921,7 +867,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.OrgUnit Insert (Google.Apis.admin.Directory.directory_v1.Data.OrgUnit OrgUnitBody, string CustomerId)
             {
 
-                return mainBase.orgunits.Insert(OrgUnitBody, CustomerId, gShellServiceAccount);
+                return mainBase.orgunits.Insert(OrgUnitBody, CustomerId);
             }
 
 
@@ -934,7 +880,7 @@ namespace gShell.Cmdlets.Directory{
 
                 properties = properties ?? new gDirectory.Orgunits.OrgunitsListProperties();
 
-                return mainBase.orgunits.List(CustomerId, properties, gShellServiceAccount);
+                return mainBase.orgunits.List(CustomerId, properties);
             }
 
 
@@ -947,7 +893,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.OrgUnit Patch (Google.Apis.admin.Directory.directory_v1.Data.OrgUnit OrgUnitBody, string CustomerId, Google.Apis.Util.Repeatable<string> OrgUnitPath)
             {
 
-                return mainBase.orgunits.Patch(OrgUnitBody, CustomerId, OrgUnitPath, gShellServiceAccount);
+                return mainBase.orgunits.Patch(OrgUnitBody, CustomerId, OrgUnitPath);
             }
 
 
@@ -960,7 +906,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.OrgUnit Update (Google.Apis.admin.Directory.directory_v1.Data.OrgUnit OrgUnitBody, string CustomerId, Google.Apis.Util.Repeatable<string> OrgUnitPath)
             {
 
-                return mainBase.orgunits.Update(OrgUnitBody, CustomerId, OrgUnitPath, gShellServiceAccount);
+                return mainBase.orgunits.Update(OrgUnitBody, CustomerId, OrgUnitPath);
             }
 
 
@@ -983,7 +929,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.Privileges List (string Customer)
             {
 
-                return mainBase.privileges.List(Customer, gShellServiceAccount);
+                return mainBase.privileges.List(Customer);
             }
 
 
@@ -1027,7 +973,7 @@ namespace gShell.Cmdlets.Directory{
                 public void Delete (string Customer, string CalendarResourceId)
                 {
 
-                    mainBase.resources.calendars.Delete(Customer, CalendarResourceId, gShellServiceAccount);
+                    mainBase.resources.calendars.Delete(Customer, CalendarResourceId);
                 }
 
 
@@ -1040,7 +986,7 @@ namespace gShell.Cmdlets.Directory{
                 public Google.Apis.admin.Directory.directory_v1.Data.CalendarResource Get (string Customer, string CalendarResourceId)
                 {
 
-                    return mainBase.resources.calendars.Get(Customer, CalendarResourceId, gShellServiceAccount);
+                    return mainBase.resources.calendars.Get(Customer, CalendarResourceId);
                 }
 
 
@@ -1052,7 +998,7 @@ namespace gShell.Cmdlets.Directory{
                 public Google.Apis.admin.Directory.directory_v1.Data.CalendarResource Insert (Google.Apis.admin.Directory.directory_v1.Data.CalendarResource CalendarResourceBody, string Customer)
                 {
 
-                    return mainBase.resources.calendars.Insert(CalendarResourceBody, Customer, gShellServiceAccount);
+                    return mainBase.resources.calendars.Insert(CalendarResourceBody, Customer);
                 }
 
 
@@ -1069,7 +1015,7 @@ namespace gShell.Cmdlets.Directory{
                     properties.StartProgressBar = StartProgressBar;
                     properties.UpdateProgressBar = UpdateProgressBar;
 
-                    return mainBase.resources.calendars.List(Customer, properties, gShellServiceAccount);
+                    return mainBase.resources.calendars.List(Customer, properties);
                 }
 
                 /// <summary>Updates a calendar resource. This method supports patch semantics.</summary>
@@ -1081,7 +1027,7 @@ namespace gShell.Cmdlets.Directory{
                 public Google.Apis.admin.Directory.directory_v1.Data.CalendarResource Patch (Google.Apis.admin.Directory.directory_v1.Data.CalendarResource CalendarResourceBody, string Customer, string CalendarResourceId)
                 {
 
-                    return mainBase.resources.calendars.Patch(CalendarResourceBody, Customer, CalendarResourceId, gShellServiceAccount);
+                    return mainBase.resources.calendars.Patch(CalendarResourceBody, Customer, CalendarResourceId);
                 }
 
 
@@ -1095,7 +1041,7 @@ namespace gShell.Cmdlets.Directory{
                 public Google.Apis.admin.Directory.directory_v1.Data.CalendarResource Update (Google.Apis.admin.Directory.directory_v1.Data.CalendarResource CalendarResourceBody, string Customer, string CalendarResourceId)
                 {
 
-                    return mainBase.resources.calendars.Update(CalendarResourceBody, Customer, CalendarResourceId, gShellServiceAccount);
+                    return mainBase.resources.calendars.Update(CalendarResourceBody, Customer, CalendarResourceId);
                 }
 
 
@@ -1123,7 +1069,7 @@ namespace gShell.Cmdlets.Directory{
             public void Delete (string Customer, string RoleAssignmentId)
             {
 
-                mainBase.roleAssignments.Delete(Customer, RoleAssignmentId, gShellServiceAccount);
+                mainBase.roleAssignments.Delete(Customer, RoleAssignmentId);
             }
 
 
@@ -1135,7 +1081,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.RoleAssignment Get (string Customer, string RoleAssignmentId)
             {
 
-                return mainBase.roleAssignments.Get(Customer, RoleAssignmentId, gShellServiceAccount);
+                return mainBase.roleAssignments.Get(Customer, RoleAssignmentId);
             }
 
 
@@ -1146,7 +1092,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.RoleAssignment Insert (Google.Apis.admin.Directory.directory_v1.Data.RoleAssignment RoleAssignmentBody, string Customer)
             {
 
-                return mainBase.roleAssignments.Insert(RoleAssignmentBody, Customer, gShellServiceAccount);
+                return mainBase.roleAssignments.Insert(RoleAssignmentBody, Customer);
             }
 
 
@@ -1162,7 +1108,7 @@ namespace gShell.Cmdlets.Directory{
                 properties.StartProgressBar = StartProgressBar;
                 properties.UpdateProgressBar = UpdateProgressBar;
 
-                return mainBase.roleAssignments.List(Customer, properties, gShellServiceAccount);
+                return mainBase.roleAssignments.List(Customer, properties);
             }
         }
         #endregion
@@ -1185,7 +1131,7 @@ namespace gShell.Cmdlets.Directory{
             public void Delete (string Customer, string RoleId)
             {
 
-                mainBase.roles.Delete(Customer, RoleId, gShellServiceAccount);
+                mainBase.roles.Delete(Customer, RoleId);
             }
 
 
@@ -1197,7 +1143,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.Role Get (string Customer, string RoleId)
             {
 
-                return mainBase.roles.Get(Customer, RoleId, gShellServiceAccount);
+                return mainBase.roles.Get(Customer, RoleId);
             }
 
 
@@ -1208,7 +1154,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.Role Insert (Google.Apis.admin.Directory.directory_v1.Data.Role RoleBody, string Customer)
             {
 
-                return mainBase.roles.Insert(RoleBody, Customer, gShellServiceAccount);
+                return mainBase.roles.Insert(RoleBody, Customer);
             }
 
 
@@ -1224,7 +1170,7 @@ namespace gShell.Cmdlets.Directory{
                 properties.StartProgressBar = StartProgressBar;
                 properties.UpdateProgressBar = UpdateProgressBar;
 
-                return mainBase.roles.List(Customer, properties, gShellServiceAccount);
+                return mainBase.roles.List(Customer, properties);
             }
 
             /// <summary>Updates a role. This method supports patch semantics.</summary>
@@ -1235,7 +1181,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.Role Patch (Google.Apis.admin.Directory.directory_v1.Data.Role RoleBody, string Customer, string RoleId)
             {
 
-                return mainBase.roles.Patch(RoleBody, Customer, RoleId, gShellServiceAccount);
+                return mainBase.roles.Patch(RoleBody, Customer, RoleId);
             }
 
 
@@ -1248,7 +1194,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.Role Update (Google.Apis.admin.Directory.directory_v1.Data.Role RoleBody, string Customer, string RoleId)
             {
 
-                return mainBase.roles.Update(RoleBody, Customer, RoleId, gShellServiceAccount);
+                return mainBase.roles.Update(RoleBody, Customer, RoleId);
             }
 
 
@@ -1273,7 +1219,7 @@ namespace gShell.Cmdlets.Directory{
             public void Delete (string CustomerId, string SchemaKey)
             {
 
-                mainBase.schemas.Delete(CustomerId, SchemaKey, gShellServiceAccount);
+                mainBase.schemas.Delete(CustomerId, SchemaKey);
             }
 
 
@@ -1285,7 +1231,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.Schema Get (string CustomerId, string SchemaKey)
             {
 
-                return mainBase.schemas.Get(CustomerId, SchemaKey, gShellServiceAccount);
+                return mainBase.schemas.Get(CustomerId, SchemaKey);
             }
 
 
@@ -1296,7 +1242,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.Schema Insert (Google.Apis.admin.Directory.directory_v1.Data.Schema SchemaBody, string CustomerId)
             {
 
-                return mainBase.schemas.Insert(SchemaBody, CustomerId, gShellServiceAccount);
+                return mainBase.schemas.Insert(SchemaBody, CustomerId);
             }
 
 
@@ -1306,7 +1252,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.Schemas List (string CustomerId)
             {
 
-                return mainBase.schemas.List(CustomerId, gShellServiceAccount);
+                return mainBase.schemas.List(CustomerId);
             }
 
 
@@ -1319,7 +1265,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.Schema Patch (Google.Apis.admin.Directory.directory_v1.Data.Schema SchemaBody, string CustomerId, string SchemaKey)
             {
 
-                return mainBase.schemas.Patch(SchemaBody, CustomerId, SchemaKey, gShellServiceAccount);
+                return mainBase.schemas.Patch(SchemaBody, CustomerId, SchemaKey);
             }
 
 
@@ -1332,7 +1278,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.Schema Update (Google.Apis.admin.Directory.directory_v1.Data.Schema SchemaBody, string CustomerId, string SchemaKey)
             {
 
-                return mainBase.schemas.Update(SchemaBody, CustomerId, SchemaKey, gShellServiceAccount);
+                return mainBase.schemas.Update(SchemaBody, CustomerId, SchemaKey);
             }
 
 
@@ -1358,7 +1304,7 @@ namespace gShell.Cmdlets.Directory{
             public void Delete (string UserKey, string ClientId)
             {
 
-                mainBase.tokens.Delete(UserKey, ClientId, gShellServiceAccount);
+                mainBase.tokens.Delete(UserKey, ClientId);
             }
 
 
@@ -1371,7 +1317,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.Token Get (string UserKey, string ClientId)
             {
 
-                return mainBase.tokens.Get(UserKey, ClientId, gShellServiceAccount);
+                return mainBase.tokens.Get(UserKey, ClientId);
             }
 
 
@@ -1382,7 +1328,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.Tokens List (string UserKey)
             {
 
-                return mainBase.tokens.List(UserKey, gShellServiceAccount);
+                return mainBase.tokens.List(UserKey);
             }
 
 
@@ -1430,7 +1376,7 @@ namespace gShell.Cmdlets.Directory{
                 public void Delete (string UserKey, string Alias)
                 {
 
-                    mainBase.users.aliases.Delete(UserKey, Alias, gShellServiceAccount);
+                    mainBase.users.aliases.Delete(UserKey, Alias);
                 }
 
 
@@ -1441,7 +1387,7 @@ namespace gShell.Cmdlets.Directory{
                 public Google.Apis.admin.Directory.directory_v1.Data.Alias Insert (Google.Apis.admin.Directory.directory_v1.Data.Alias AliasBody, string UserKey)
                 {
 
-                    return mainBase.users.aliases.Insert(AliasBody, UserKey, gShellServiceAccount);
+                    return mainBase.users.aliases.Insert(AliasBody, UserKey);
                 }
 
 
@@ -1454,7 +1400,7 @@ namespace gShell.Cmdlets.Directory{
 
                     properties = properties ?? new gDirectory.Users.Aliases.AliasesListProperties();
 
-                    return mainBase.users.aliases.List(UserKey, properties, gShellServiceAccount);
+                    return mainBase.users.aliases.List(UserKey, properties);
                 }
 
 
@@ -1468,7 +1414,7 @@ namespace gShell.Cmdlets.Directory{
 
                     properties = properties ?? new gDirectory.Users.Aliases.AliasesWatchProperties();
 
-                    return mainBase.users.aliases.Watch(ChannelBody, UserKey, properties, gShellServiceAccount);
+                    return mainBase.users.aliases.Watch(ChannelBody, UserKey, properties);
                 }
 
 
@@ -1488,7 +1434,7 @@ namespace gShell.Cmdlets.Directory{
                 public void Delete (string UserKey)
                 {
 
-                    mainBase.users.photos.Delete(UserKey, gShellServiceAccount);
+                    mainBase.users.photos.Delete(UserKey);
                 }
 
 
@@ -1498,7 +1444,7 @@ namespace gShell.Cmdlets.Directory{
                 public Google.Apis.admin.Directory.directory_v1.Data.UserPhoto Get (string UserKey)
                 {
 
-                    return mainBase.users.photos.Get(UserKey, gShellServiceAccount);
+                    return mainBase.users.photos.Get(UserKey);
                 }
 
 
@@ -1509,7 +1455,7 @@ namespace gShell.Cmdlets.Directory{
                 public Google.Apis.admin.Directory.directory_v1.Data.UserPhoto Patch (Google.Apis.admin.Directory.directory_v1.Data.UserPhoto UserPhotoBody, string UserKey)
                 {
 
-                    return mainBase.users.photos.Patch(UserPhotoBody, UserKey, gShellServiceAccount);
+                    return mainBase.users.photos.Patch(UserPhotoBody, UserKey);
                 }
 
 
@@ -1520,7 +1466,7 @@ namespace gShell.Cmdlets.Directory{
                 public Google.Apis.admin.Directory.directory_v1.Data.UserPhoto Update (Google.Apis.admin.Directory.directory_v1.Data.UserPhoto UserPhotoBody, string UserKey)
                 {
 
-                    return mainBase.users.photos.Update(UserPhotoBody, UserKey, gShellServiceAccount);
+                    return mainBase.users.photos.Update(UserPhotoBody, UserKey);
                 }
 
 
@@ -1533,7 +1479,7 @@ namespace gShell.Cmdlets.Directory{
             public void Delete (string UserKey)
             {
 
-                mainBase.users.Delete(UserKey, gShellServiceAccount);
+                mainBase.users.Delete(UserKey);
             }
 
 
@@ -1546,7 +1492,7 @@ namespace gShell.Cmdlets.Directory{
 
                 properties = properties ?? new gDirectory.Users.UsersGetProperties();
 
-                return mainBase.users.Get(UserKey, properties, gShellServiceAccount);
+                return mainBase.users.Get(UserKey, properties);
             }
 
 
@@ -1556,7 +1502,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.User Insert (Google.Apis.admin.Directory.directory_v1.Data.User UserBody)
             {
 
-                return mainBase.users.Insert(UserBody, gShellServiceAccount);
+                return mainBase.users.Insert(UserBody);
             }
 
 
@@ -1571,7 +1517,7 @@ namespace gShell.Cmdlets.Directory{
                 properties.StartProgressBar = StartProgressBar;
                 properties.UpdateProgressBar = UpdateProgressBar;
 
-                return mainBase.users.List(properties, gShellServiceAccount);
+                return mainBase.users.List(properties);
             }
 
             /// <summary>change admin status of a user</summary>
@@ -1580,7 +1526,7 @@ namespace gShell.Cmdlets.Directory{
             public void MakeAdmin (Google.Apis.admin.Directory.directory_v1.Data.UserMakeAdmin UserMakeAdminBody, string UserKey)
             {
 
-                mainBase.users.MakeAdmin(UserMakeAdminBody, UserKey, gShellServiceAccount);
+                mainBase.users.MakeAdmin(UserMakeAdminBody, UserKey);
             }
 
 
@@ -1591,7 +1537,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.User Patch (Google.Apis.admin.Directory.directory_v1.Data.User UserBody, string UserKey)
             {
 
-                return mainBase.users.Patch(UserBody, UserKey, gShellServiceAccount);
+                return mainBase.users.Patch(UserBody, UserKey);
             }
 
 
@@ -1602,7 +1548,7 @@ namespace gShell.Cmdlets.Directory{
             public void Undelete (Google.Apis.admin.Directory.directory_v1.Data.UserUndelete UserUndeleteBody, string UserKey)
             {
 
-                mainBase.users.Undelete(UserUndeleteBody, UserKey, gShellServiceAccount);
+                mainBase.users.Undelete(UserUndeleteBody, UserKey);
             }
 
 
@@ -1613,7 +1559,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.User Update (Google.Apis.admin.Directory.directory_v1.Data.User UserBody, string UserKey)
             {
 
-                return mainBase.users.Update(UserBody, UserKey, gShellServiceAccount);
+                return mainBase.users.Update(UserBody, UserKey);
             }
 
 
@@ -1626,7 +1572,7 @@ namespace gShell.Cmdlets.Directory{
 
                 properties = properties ?? new gDirectory.Users.UsersWatchProperties();
 
-                return mainBase.users.Watch(ChannelBody, properties, gShellServiceAccount);
+                return mainBase.users.Watch(ChannelBody, properties);
             }
 
 
@@ -1649,7 +1595,7 @@ namespace gShell.Cmdlets.Directory{
             public void Generate (string UserKey)
             {
 
-                mainBase.verificationCodes.Generate(UserKey, gShellServiceAccount);
+                mainBase.verificationCodes.Generate(UserKey);
             }
 
 
@@ -1659,7 +1605,7 @@ namespace gShell.Cmdlets.Directory{
             public void Invalidate (string UserKey)
             {
 
-                mainBase.verificationCodes.Invalidate(UserKey, gShellServiceAccount);
+                mainBase.verificationCodes.Invalidate(UserKey);
             }
 
 
@@ -1670,7 +1616,7 @@ namespace gShell.Cmdlets.Directory{
             public Google.Apis.admin.Directory.directory_v1.Data.VerificationCodes List (string UserKey)
             {
 
-                return mainBase.verificationCodes.List(UserKey, gShellServiceAccount);
+                return mainBase.verificationCodes.List(UserKey);
             }
 
 
@@ -1696,7 +1642,7 @@ namespace gShell.dotNet
     using Data = Google.Apis.admin.Directory.directory_v1.Data;
 
     /// <summary>The dotNet gShell version of the admin api.</summary>
-    public class Directory : ServiceWrapper<directory_v1.DirectoryService>
+    public class Directory : ServiceWrapper<directory_v1.DirectoryService>, IServiceWrapper<Google.Apis.Services.IClientService>
     {
 
         protected override bool worksWithGmail { get { return false; } }
@@ -1708,7 +1654,7 @@ namespace gShell.dotNet
 
         protected override directory_v1.DirectoryService CreateNewService(string domain, AuthenticatedUserInfo authInfo, string gShellServiceAccount = null)
         {
-            return new directory_v1.DirectoryService(OAuth2Base.GetInitializer(domain, authInfo, gShellServiceAccount));
+            return new directory_v1.DirectoryService(OAuth2Base.GetInitializer(domain, authInfo));
         }
 
         /// <summary>Returns the api name and version in {name}:{version} format.</summary>
@@ -1811,9 +1757,9 @@ namespace gShell.dotNet
             /// <param name="CodeId">The unique ID of the ASP to be
             /// deleted.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void Delete (string UserKey, int CodeId, string gShellServiceAccount = null)
+            public void Delete (string UserKey, int CodeId)
             {
-                GetService(gShellServiceAccount).Asps.Delete(UserKey, CodeId).Execute();
+                GetService().Asps.Delete(UserKey, CodeId).Execute();
             }
 
             /// <summary>Get information about an ASP issued by a user.</summary>
@@ -1821,18 +1767,18 @@ namespace gShell.dotNet
             /// alias email address, or unique user ID.</param>
             /// <param name="CodeId">The unique ID of the ASP.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.Asp Get (string UserKey, int CodeId, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Asp Get (string UserKey, int CodeId)
             {
-                return GetService(gShellServiceAccount).Asps.Get(UserKey, CodeId).Execute();
+                return GetService().Asps.Get(UserKey, CodeId).Execute();
             }
 
             /// <summary>List the ASPs issued by a user.</summary>
             /// <param name="UserKey">Identifies the user in the API request. The value can be the user's primary email address,
             /// alias email address, or unique user ID.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.Asps List (string UserKey, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Asps List (string UserKey)
             {
-                return GetService(gShellServiceAccount).Asps.List(UserKey).Execute();
+                return GetService().Asps.List(UserKey).Execute();
             }
 
         }
@@ -1847,9 +1793,9 @@ namespace gShell.dotNet
             /// <summary>Stop watching resources through this channel</summary>
             /// <param name="ChannelBody">The body of the request.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void Stop (Google.Apis.admin.Directory.directory_v1.Data.Channel ChannelBody, string gShellServiceAccount = null)
+            public void Stop (Google.Apis.admin.Directory.directory_v1.Data.Channel ChannelBody)
             {
-                GetService(gShellServiceAccount).Channels.Stop(ChannelBody).Execute();
+                GetService().Channels.Stop(ChannelBody).Execute();
             }
 
         }
@@ -1914,9 +1860,9 @@ namespace gShell.dotNet
             /// of Chrome OS Device</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.ChromeOsDevice Get (string CustomerId, string DeviceId, ChromeosdevicesGetProperties properties= null, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.ChromeOsDevice Get (string CustomerId, string DeviceId, ChromeosdevicesGetProperties properties= null)
             {
-                return GetService(gShellServiceAccount).Chromeosdevices.Get(CustomerId, DeviceId).Execute();
+                return GetService().Chromeosdevices.Get(CustomerId, DeviceId).Execute();
             }
 
             /// <summary>Retrieve all Chrome OS Devices of a customer (paginated)</summary>
@@ -1924,11 +1870,11 @@ namespace gShell.dotNet
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public List<Google.Apis.admin.Directory.directory_v1.Data.ChromeOsDevices> List(
-                string CustomerId, ChromeosdevicesListProperties properties= null, string gShellServiceAccount = null)
+                string CustomerId, ChromeosdevicesListProperties properties= null)
             {
                 var results = new List<Google.Apis.admin.Directory.directory_v1.Data.ChromeOsDevices>();
 
-                directory_v1.ChromeosdevicesResource.ListRequest request = GetService(gShellServiceAccount).Chromeosdevices.List(CustomerId);
+                directory_v1.ChromeosdevicesResource.ListRequest request = GetService().Chromeosdevices.List(CustomerId);
 
                 if (properties != null)
                 {
@@ -1986,9 +1932,9 @@ namespace gShell.dotNet
             /// of Chrome OS Device</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.ChromeOsDevice Patch (Google.Apis.admin.Directory.directory_v1.Data.ChromeOsDevice ChromeOsDeviceBody, string CustomerId, string DeviceId, ChromeosdevicesPatchProperties properties= null, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.ChromeOsDevice Patch (Google.Apis.admin.Directory.directory_v1.Data.ChromeOsDevice ChromeOsDeviceBody, string CustomerId, string DeviceId, ChromeosdevicesPatchProperties properties= null)
             {
-                return GetService(gShellServiceAccount).Chromeosdevices.Patch(ChromeOsDeviceBody, CustomerId, DeviceId).Execute();
+                return GetService().Chromeosdevices.Patch(ChromeOsDeviceBody, CustomerId, DeviceId).Execute();
             }
 
             /// <summary>Update Chrome OS Device</summary>
@@ -1998,9 +1944,9 @@ namespace gShell.dotNet
             /// of Chrome OS Device</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.ChromeOsDevice Update (Google.Apis.admin.Directory.directory_v1.Data.ChromeOsDevice ChromeOsDeviceBody, string CustomerId, string DeviceId, ChromeosdevicesUpdateProperties properties= null, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.ChromeOsDevice Update (Google.Apis.admin.Directory.directory_v1.Data.ChromeOsDevice ChromeOsDeviceBody, string CustomerId, string DeviceId, ChromeosdevicesUpdateProperties properties= null)
             {
-                return GetService(gShellServiceAccount).Chromeosdevices.Update(ChromeOsDeviceBody, CustomerId, DeviceId).Execute();
+                return GetService().Chromeosdevices.Update(ChromeOsDeviceBody, CustomerId, DeviceId).Execute();
             }
 
         }
@@ -2015,27 +1961,27 @@ namespace gShell.dotNet
             /// <summary>Retrives a customer.</summary>
             /// <param name="CustomerKey">Id of the customer to be retrieved</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.Customer Get (string CustomerKey, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Customer Get (string CustomerKey)
             {
-                return GetService(gShellServiceAccount).Customers.Get(CustomerKey).Execute();
+                return GetService().Customers.Get(CustomerKey).Execute();
             }
 
             /// <summary>Updates a customer. This method supports patch semantics.</summary>
             /// <param name="CustomerBody">The body of the request.</param>
             /// <param name="CustomerKey">Id of the customer to be updated</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.Customer Patch (Google.Apis.admin.Directory.directory_v1.Data.Customer CustomerBody, string CustomerKey, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Customer Patch (Google.Apis.admin.Directory.directory_v1.Data.Customer CustomerBody, string CustomerKey)
             {
-                return GetService(gShellServiceAccount).Customers.Patch(CustomerBody, CustomerKey).Execute();
+                return GetService().Customers.Patch(CustomerBody, CustomerKey).Execute();
             }
 
             /// <summary>Updates a customer.</summary>
             /// <param name="CustomerBody">The body of the request.</param>
             /// <param name="CustomerKey">Id of the customer to be updated</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.Customer Update (Google.Apis.admin.Directory.directory_v1.Data.Customer CustomerBody, string CustomerKey, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Customer Update (Google.Apis.admin.Directory.directory_v1.Data.Customer CustomerBody, string CustomerKey)
             {
-                return GetService(gShellServiceAccount).Customers.Update(CustomerBody, CustomerKey).Execute();
+                return GetService().Customers.Update(CustomerBody, CustomerKey).Execute();
             }
 
         }
@@ -2057,9 +2003,9 @@ namespace gShell.dotNet
             /// <param name="DomainAliasName">Name
             /// of domain alias to be retrieved.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void Delete (string Customer, string DomainAliasName, string gShellServiceAccount = null)
+            public void Delete (string Customer, string DomainAliasName)
             {
-                GetService(gShellServiceAccount).DomainAliases.Delete(Customer, DomainAliasName).Execute();
+                GetService().DomainAliases.Delete(Customer, DomainAliasName).Execute();
             }
 
             /// <summary>Retrieves a domain alias of the customer.</summary>
@@ -2067,27 +2013,27 @@ namespace gShell.dotNet
             /// <param name="DomainAliasName">Name
             /// of domain alias to be retrieved.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.DomainAlias Get (string Customer, string DomainAliasName, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.DomainAlias Get (string Customer, string DomainAliasName)
             {
-                return GetService(gShellServiceAccount).DomainAliases.Get(Customer, DomainAliasName).Execute();
+                return GetService().DomainAliases.Get(Customer, DomainAliasName).Execute();
             }
 
             /// <summary>Inserts a Domain alias of the customer.</summary>
             /// <param name="DomainAliasBody">The body of the request.</param>
             /// <param name="Customer">Immutable id of the Google Apps account.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.DomainAlias Insert (Google.Apis.admin.Directory.directory_v1.Data.DomainAlias DomainAliasBody, string Customer, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.DomainAlias Insert (Google.Apis.admin.Directory.directory_v1.Data.DomainAlias DomainAliasBody, string Customer)
             {
-                return GetService(gShellServiceAccount).DomainAliases.Insert(DomainAliasBody, Customer).Execute();
+                return GetService().DomainAliases.Insert(DomainAliasBody, Customer).Execute();
             }
 
             /// <summary>Lists the domain aliases of the customer.</summary>
             /// <param name="Customer">Immutable id of the Google Apps account.</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.DomainAliases List (string Customer, DomainAliasesListProperties properties= null, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.DomainAliases List (string Customer, DomainAliasesListProperties properties= null)
             {
-                return GetService(gShellServiceAccount).DomainAliases.List(Customer).Execute();
+                return GetService().DomainAliases.List(Customer).Execute();
             }
 
         }
@@ -2104,9 +2050,9 @@ namespace gShell.dotNet
             /// <param name="DomainName">Name of
             /// domain to be deleted</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void Delete (string Customer, string DomainName, string gShellServiceAccount = null)
+            public void Delete (string Customer, string DomainName)
             {
-                GetService(gShellServiceAccount).Domains.Delete(Customer, DomainName).Execute();
+                GetService().Domains.Delete(Customer, DomainName).Execute();
             }
 
             /// <summary>Retrives a domain of the customer.</summary>
@@ -2114,26 +2060,26 @@ namespace gShell.dotNet
             /// <param name="DomainName">Name of
             /// domain to be retrieved</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.Domains Get (string Customer, string DomainName, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Domains Get (string Customer, string DomainName)
             {
-                return GetService(gShellServiceAccount).Domains.Get(Customer, DomainName).Execute();
+                return GetService().Domains.Get(Customer, DomainName).Execute();
             }
 
             /// <summary>Inserts a domain of the customer.</summary>
             /// <param name="DomainsBody">The body of the request.</param>
             /// <param name="Customer">Immutable id of the Google Apps account.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.Domains Insert (Google.Apis.admin.Directory.directory_v1.Data.Domains DomainsBody, string Customer, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Domains Insert (Google.Apis.admin.Directory.directory_v1.Data.Domains DomainsBody, string Customer)
             {
-                return GetService(gShellServiceAccount).Domains.Insert(DomainsBody, Customer).Execute();
+                return GetService().Domains.Insert(DomainsBody, Customer).Execute();
             }
 
             /// <summary>Lists the domains of the customer.</summary>
             /// <param name="Customer">Immutable id of the Google Apps account.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.Domains2 List (string Customer, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Domains2 List (string Customer)
             {
-                return GetService(gShellServiceAccount).Domains.List(Customer).Execute();
+                return GetService().Domains.List(Customer).Execute();
             }
 
         }
@@ -2178,36 +2124,36 @@ namespace gShell.dotNet
             /// <summary>Delete Group</summary>
             /// <param name="GroupKey">Email or immutable Id of the group</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void Delete (string GroupKey, string gShellServiceAccount = null)
+            public void Delete (string GroupKey)
             {
-                GetService(gShellServiceAccount).Groups.Delete(GroupKey).Execute();
+                GetService().Groups.Delete(GroupKey).Execute();
             }
 
             /// <summary>Retrieve Group</summary>
             /// <param name="GroupKey">Email or immutable Id of the group</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.Group Get (string GroupKey, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Group Get (string GroupKey)
             {
-                return GetService(gShellServiceAccount).Groups.Get(GroupKey).Execute();
+                return GetService().Groups.Get(GroupKey).Execute();
             }
 
             /// <summary>Create Group</summary>
             /// <param name="GroupBody">The body of the request.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.Group Insert (Google.Apis.admin.Directory.directory_v1.Data.Group GroupBody, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Group Insert (Google.Apis.admin.Directory.directory_v1.Data.Group GroupBody)
             {
-                return GetService(gShellServiceAccount).Groups.Insert(GroupBody).Execute();
+                return GetService().Groups.Insert(GroupBody).Execute();
             }
 
             /// <summary>Retrieve all groups in a domain (paginated)</summary>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public List<Google.Apis.admin.Directory.directory_v1.Data.Groups> List(
-                GroupsListProperties properties= null, string gShellServiceAccount = null)
+                GroupsListProperties properties= null)
             {
                 var results = new List<Google.Apis.admin.Directory.directory_v1.Data.Groups>();
 
-                directory_v1.GroupsResource.ListRequest request = GetService(gShellServiceAccount).Groups.List();
+                directory_v1.GroupsResource.ListRequest request = GetService().Groups.List();
 
                 if (properties != null)
                 {
@@ -2262,9 +2208,9 @@ namespace gShell.dotNet
             /// <param name="GroupKey">Email or immutable Id of the group. If Id, it should match with id of group
             /// object</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.Group Patch (Google.Apis.admin.Directory.directory_v1.Data.Group GroupBody, string GroupKey, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Group Patch (Google.Apis.admin.Directory.directory_v1.Data.Group GroupBody, string GroupKey)
             {
-                return GetService(gShellServiceAccount).Groups.Patch(GroupBody, GroupKey).Execute();
+                return GetService().Groups.Patch(GroupBody, GroupKey).Execute();
             }
 
             /// <summary>Update Group</summary>
@@ -2272,9 +2218,9 @@ namespace gShell.dotNet
             /// <param name="GroupKey">Email or immutable Id of the group. If Id, it should match with id of group
             /// object</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.Group Update (Google.Apis.admin.Directory.directory_v1.Data.Group GroupBody, string GroupKey, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Group Update (Google.Apis.admin.Directory.directory_v1.Data.Group GroupBody, string GroupKey)
             {
-                return GetService(gShellServiceAccount).Groups.Update(GroupBody, GroupKey).Execute();
+                return GetService().Groups.Update(GroupBody, GroupKey).Execute();
             }
                 /// <summary>The "aliases" collection of methods.</summary>
                 public class Aliases
@@ -2288,26 +2234,26 @@ namespace gShell.dotNet
                     /// <param name="Alias">The alias to be
                     /// removed</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public void Delete (string GroupKey, string Alias, string gShellServiceAccount = null)
+                    public void Delete (string GroupKey, string Alias)
                     {
-                        GetService(gShellServiceAccount).Groups.Aliases.Delete(GroupKey, Alias).Execute();
+                        GetService().Groups.Aliases.Delete(GroupKey, Alias).Execute();
                     }
 
                     /// <summary>Add a alias for the group</summary>
                     /// <param name="AliasBody">The body of the request.</param>
                     /// <param name="GroupKey">Email or immutable Id of the group</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.admin.Directory.directory_v1.Data.Alias Insert (Google.Apis.admin.Directory.directory_v1.Data.Alias AliasBody, string GroupKey, string gShellServiceAccount = null)
+                    public Google.Apis.admin.Directory.directory_v1.Data.Alias Insert (Google.Apis.admin.Directory.directory_v1.Data.Alias AliasBody, string GroupKey)
                     {
-                        return GetService(gShellServiceAccount).Groups.Aliases.Insert(AliasBody, GroupKey).Execute();
+                        return GetService().Groups.Aliases.Insert(AliasBody, GroupKey).Execute();
                     }
 
                     /// <summary>List all aliases for a group</summary>
                     /// <param name="GroupKey">Email or immutable Id of the group</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.admin.Directory.directory_v1.Data.Aliases List (string GroupKey, string gShellServiceAccount = null)
+                    public Google.Apis.admin.Directory.directory_v1.Data.Aliases List (string GroupKey)
                     {
-                        return GetService(gShellServiceAccount).Groups.Aliases.List(GroupKey).Execute();
+                        return GetService().Groups.Aliases.List(GroupKey).Execute();
                     }
 
                 }
@@ -2342,9 +2288,9 @@ namespace gShell.dotNet
             /// <param name="MemberKey">Email or immutable
             /// Id of the member</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void Delete (string GroupKey, string MemberKey, string gShellServiceAccount = null)
+            public void Delete (string GroupKey, string MemberKey)
             {
-                GetService(gShellServiceAccount).Members.Delete(GroupKey, MemberKey).Execute();
+                GetService().Members.Delete(GroupKey, MemberKey).Execute();
             }
 
             /// <summary>Retrieve Group Member</summary>
@@ -2352,18 +2298,18 @@ namespace gShell.dotNet
             /// <param name="MemberKey">Email or immutable
             /// Id of the member</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.Member Get (string GroupKey, string MemberKey, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Member Get (string GroupKey, string MemberKey)
             {
-                return GetService(gShellServiceAccount).Members.Get(GroupKey, MemberKey).Execute();
+                return GetService().Members.Get(GroupKey, MemberKey).Execute();
             }
 
             /// <summary>Add user to the specified group.</summary>
             /// <param name="MemberBody">The body of the request.</param>
             /// <param name="GroupKey">Email or immutable Id of the group</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.Member Insert (Google.Apis.admin.Directory.directory_v1.Data.Member MemberBody, string GroupKey, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Member Insert (Google.Apis.admin.Directory.directory_v1.Data.Member MemberBody, string GroupKey)
             {
-                return GetService(gShellServiceAccount).Members.Insert(MemberBody, GroupKey).Execute();
+                return GetService().Members.Insert(MemberBody, GroupKey).Execute();
             }
 
             /// <summary>Retrieve all members in a group (paginated)</summary>
@@ -2371,11 +2317,11 @@ namespace gShell.dotNet
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public List<Google.Apis.admin.Directory.directory_v1.Data.Members> List(
-                string GroupKey, MembersListProperties properties= null, string gShellServiceAccount = null)
+                string GroupKey, MembersListProperties properties= null)
             {
                 var results = new List<Google.Apis.admin.Directory.directory_v1.Data.Members>();
 
-                directory_v1.MembersResource.ListRequest request = GetService(gShellServiceAccount).Members.List(GroupKey);
+                directory_v1.MembersResource.ListRequest request = GetService().Members.List(GroupKey);
 
                 if (properties != null)
                 {
@@ -2431,9 +2377,9 @@ namespace gShell.dotNet
             /// <param name="MemberKey">Email or immutable Id of the user. If Id, it should match with id of
             /// member object</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.Member Patch (Google.Apis.admin.Directory.directory_v1.Data.Member MemberBody, string GroupKey, string MemberKey, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Member Patch (Google.Apis.admin.Directory.directory_v1.Data.Member MemberBody, string GroupKey, string MemberKey)
             {
-                return GetService(gShellServiceAccount).Members.Patch(MemberBody, GroupKey, MemberKey).Execute();
+                return GetService().Members.Patch(MemberBody, GroupKey, MemberKey).Execute();
             }
 
             /// <summary>Update membership of a user in the specified group.</summary>
@@ -2443,9 +2389,9 @@ namespace gShell.dotNet
             /// <param name="MemberKey">Email or immutable Id of the user. If Id, it should match with id of
             /// member object</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.Member Update (Google.Apis.admin.Directory.directory_v1.Data.Member MemberBody, string GroupKey, string MemberKey, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Member Update (Google.Apis.admin.Directory.directory_v1.Data.Member MemberBody, string GroupKey, string MemberKey)
             {
-                return GetService(gShellServiceAccount).Members.Update(MemberBody, GroupKey, MemberKey).Execute();
+                return GetService().Members.Update(MemberBody, GroupKey, MemberKey).Execute();
             }
 
         }
@@ -2496,9 +2442,9 @@ namespace gShell.dotNet
             /// <param name="ResourceId">Immutable
             /// id of Mobile Device</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void Action (Google.Apis.admin.Directory.directory_v1.Data.MobileDeviceAction MobileDeviceActionBody, string CustomerId, string ResourceId, string gShellServiceAccount = null)
+            public void Action (Google.Apis.admin.Directory.directory_v1.Data.MobileDeviceAction MobileDeviceActionBody, string CustomerId, string ResourceId)
             {
-                GetService(gShellServiceAccount).Mobiledevices.Action(MobileDeviceActionBody, CustomerId, ResourceId).Execute();
+                GetService().Mobiledevices.Action(MobileDeviceActionBody, CustomerId, ResourceId).Execute();
             }
 
             /// <summary>Delete Mobile Device</summary>
@@ -2506,9 +2452,9 @@ namespace gShell.dotNet
             /// <param name="ResourceId">Immutable
             /// id of Mobile Device</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void Delete (string CustomerId, string ResourceId, string gShellServiceAccount = null)
+            public void Delete (string CustomerId, string ResourceId)
             {
-                GetService(gShellServiceAccount).Mobiledevices.Delete(CustomerId, ResourceId).Execute();
+                GetService().Mobiledevices.Delete(CustomerId, ResourceId).Execute();
             }
 
             /// <summary>Retrieve Mobile Device</summary>
@@ -2517,9 +2463,9 @@ namespace gShell.dotNet
             /// id of Mobile Device</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.MobileDevice Get (string CustomerId, string ResourceId, MobiledevicesGetProperties properties= null, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.MobileDevice Get (string CustomerId, string ResourceId, MobiledevicesGetProperties properties= null)
             {
-                return GetService(gShellServiceAccount).Mobiledevices.Get(CustomerId, ResourceId).Execute();
+                return GetService().Mobiledevices.Get(CustomerId, ResourceId).Execute();
             }
 
             /// <summary>Retrieve all Mobile Devices of a customer (paginated)</summary>
@@ -2527,11 +2473,11 @@ namespace gShell.dotNet
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public List<Google.Apis.admin.Directory.directory_v1.Data.MobileDevices> List(
-                string CustomerId, MobiledevicesListProperties properties= null, string gShellServiceAccount = null)
+                string CustomerId, MobiledevicesListProperties properties= null)
             {
                 var results = new List<Google.Apis.admin.Directory.directory_v1.Data.MobileDevices>();
 
-                directory_v1.MobiledevicesResource.ListRequest request = GetService(gShellServiceAccount).Mobiledevices.List(CustomerId);
+                directory_v1.MobiledevicesResource.ListRequest request = GetService().Mobiledevices.List(CustomerId);
 
                 if (properties != null)
                 {
@@ -2613,9 +2559,9 @@ namespace gShell.dotNet
             /// the Users resource.</param>
             /// <param name="NotificationId">The unique ID of the notification.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void Delete (string Customer, string NotificationId, string gShellServiceAccount = null)
+            public void Delete (string Customer, string NotificationId)
             {
-                GetService(gShellServiceAccount).Notifications.Delete(Customer, NotificationId).Execute();
+                GetService().Notifications.Delete(Customer, NotificationId).Execute();
             }
 
             /// <summary>Retrieves a notification.</summary>
@@ -2623,9 +2569,9 @@ namespace gShell.dotNet
             /// the Users resource.</param>
             /// <param name="NotificationId">The unique ID of the notification.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.Notification Get (string Customer, string NotificationId, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Notification Get (string Customer, string NotificationId)
             {
-                return GetService(gShellServiceAccount).Notifications.Get(Customer, NotificationId).Execute();
+                return GetService().Notifications.Get(Customer, NotificationId).Execute();
             }
 
             /// <summary>Retrieves a list of notifications.</summary>
@@ -2633,11 +2579,11 @@ namespace gShell.dotNet
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public List<Google.Apis.admin.Directory.directory_v1.Data.Notifications> List(
-                string Customer, NotificationsListProperties properties= null, string gShellServiceAccount = null)
+                string Customer, NotificationsListProperties properties= null)
             {
                 var results = new List<Google.Apis.admin.Directory.directory_v1.Data.Notifications>();
 
-                directory_v1.NotificationsResource.ListRequest request = GetService(gShellServiceAccount).Notifications.List(Customer);
+                directory_v1.NotificationsResource.ListRequest request = GetService().Notifications.List(Customer);
 
                 if (properties != null)
                 {
@@ -2691,9 +2637,9 @@ namespace gShell.dotNet
             /// <param
             /// name="NotificationId">The unique ID of the notification.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.Notification Patch (Google.Apis.admin.Directory.directory_v1.Data.Notification NotificationBody, string Customer, string NotificationId, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Notification Patch (Google.Apis.admin.Directory.directory_v1.Data.Notification NotificationBody, string Customer, string NotificationId)
             {
-                return GetService(gShellServiceAccount).Notifications.Patch(NotificationBody, Customer, NotificationId).Execute();
+                return GetService().Notifications.Patch(NotificationBody, Customer, NotificationId).Execute();
             }
 
             /// <summary>Updates a notification.</summary>
@@ -2702,9 +2648,9 @@ namespace gShell.dotNet
             /// <param
             /// name="NotificationId">The unique ID of the notification.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.Notification Update (Google.Apis.admin.Directory.directory_v1.Data.Notification NotificationBody, string Customer, string NotificationId, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Notification Update (Google.Apis.admin.Directory.directory_v1.Data.Notification NotificationBody, string Customer, string NotificationId)
             {
-                return GetService(gShellServiceAccount).Notifications.Update(NotificationBody, Customer, NotificationId).Execute();
+                return GetService().Notifications.Update(NotificationBody, Customer, NotificationId).Execute();
             }
 
         }
@@ -2729,9 +2675,9 @@ namespace gShell.dotNet
             /// <param name="OrgUnitPath">Full path
             /// of the organization unit or its Id</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void Delete (string CustomerId, Google.Apis.Util.Repeatable<string> OrgUnitPath, string gShellServiceAccount = null)
+            public void Delete (string CustomerId, Google.Apis.Util.Repeatable<string> OrgUnitPath)
             {
-                GetService(gShellServiceAccount).Orgunits.Delete(CustomerId, OrgUnitPath).Execute();
+                GetService().Orgunits.Delete(CustomerId, OrgUnitPath).Execute();
             }
 
             /// <summary>Retrieve Organization Unit</summary>
@@ -2739,27 +2685,27 @@ namespace gShell.dotNet
             /// <param name="OrgUnitPath">Full path
             /// of the organization unit or its Id</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.OrgUnit Get (string CustomerId, Google.Apis.Util.Repeatable<string> OrgUnitPath, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.OrgUnit Get (string CustomerId, Google.Apis.Util.Repeatable<string> OrgUnitPath)
             {
-                return GetService(gShellServiceAccount).Orgunits.Get(CustomerId, OrgUnitPath).Execute();
+                return GetService().Orgunits.Get(CustomerId, OrgUnitPath).Execute();
             }
 
             /// <summary>Add Organization Unit</summary>
             /// <param name="OrgUnitBody">The body of the request.</param>
             /// <param name="CustomerId">Immutable id of the Google Apps account</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.OrgUnit Insert (Google.Apis.admin.Directory.directory_v1.Data.OrgUnit OrgUnitBody, string CustomerId, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.OrgUnit Insert (Google.Apis.admin.Directory.directory_v1.Data.OrgUnit OrgUnitBody, string CustomerId)
             {
-                return GetService(gShellServiceAccount).Orgunits.Insert(OrgUnitBody, CustomerId).Execute();
+                return GetService().Orgunits.Insert(OrgUnitBody, CustomerId).Execute();
             }
 
             /// <summary>Retrieve all Organization Units</summary>
             /// <param name="CustomerId">Immutable id of the Google Apps account</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.OrgUnits List (string CustomerId, OrgunitsListProperties properties= null, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.OrgUnits List (string CustomerId, OrgunitsListProperties properties= null)
             {
-                return GetService(gShellServiceAccount).Orgunits.List(CustomerId).Execute();
+                return GetService().Orgunits.List(CustomerId).Execute();
             }
 
             /// <summary>Update Organization Unit. This method supports patch semantics.</summary>
@@ -2768,9 +2714,9 @@ namespace gShell.dotNet
             /// <param name="OrgUnitPath">Full path
             /// of the organization unit or its Id</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.OrgUnit Patch (Google.Apis.admin.Directory.directory_v1.Data.OrgUnit OrgUnitBody, string CustomerId, Google.Apis.Util.Repeatable<string> OrgUnitPath, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.OrgUnit Patch (Google.Apis.admin.Directory.directory_v1.Data.OrgUnit OrgUnitBody, string CustomerId, Google.Apis.Util.Repeatable<string> OrgUnitPath)
             {
-                return GetService(gShellServiceAccount).Orgunits.Patch(OrgUnitBody, CustomerId, OrgUnitPath).Execute();
+                return GetService().Orgunits.Patch(OrgUnitBody, CustomerId, OrgUnitPath).Execute();
             }
 
             /// <summary>Update Organization Unit</summary>
@@ -2779,9 +2725,9 @@ namespace gShell.dotNet
             /// <param name="OrgUnitPath">Full path
             /// of the organization unit or its Id</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.OrgUnit Update (Google.Apis.admin.Directory.directory_v1.Data.OrgUnit OrgUnitBody, string CustomerId, Google.Apis.Util.Repeatable<string> OrgUnitPath, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.OrgUnit Update (Google.Apis.admin.Directory.directory_v1.Data.OrgUnit OrgUnitBody, string CustomerId, Google.Apis.Util.Repeatable<string> OrgUnitPath)
             {
-                return GetService(gShellServiceAccount).Orgunits.Update(OrgUnitBody, CustomerId, OrgUnitPath).Execute();
+                return GetService().Orgunits.Update(OrgUnitBody, CustomerId, OrgUnitPath).Execute();
             }
 
         }
@@ -2796,9 +2742,9 @@ namespace gShell.dotNet
             /// <summary>Retrieves a paginated list of all privileges for a customer.</summary>
             /// <param name="Customer">Immutable ID of the Google Apps account.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.Privileges List (string Customer, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Privileges List (string Customer)
             {
-                return GetService(gShellServiceAccount).Privileges.List(Customer).Execute();
+                return GetService().Privileges.List(Customer).Execute();
             }
 
         }
@@ -2843,9 +2789,9 @@ namespace gShell.dotNet
                     /// <param
                     /// name="CalendarResourceId">The unique ID of the calendar resource to delete.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public void Delete (string Customer, string CalendarResourceId, string gShellServiceAccount = null)
+                    public void Delete (string Customer, string CalendarResourceId)
                     {
-                        GetService(gShellServiceAccount).Resources.Calendars.Delete(Customer, CalendarResourceId).Execute();
+                        GetService().Resources.Calendars.Delete(Customer, CalendarResourceId).Execute();
                     }
 
                     /// <summary>Retrieves a calendar resource.</summary>
@@ -2854,9 +2800,9 @@ namespace gShell.dotNet
                     /// <param
                     /// name="CalendarResourceId">The unique ID of the calendar resource to retrieve.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.admin.Directory.directory_v1.Data.CalendarResource Get (string Customer, string CalendarResourceId, string gShellServiceAccount = null)
+                    public Google.Apis.admin.Directory.directory_v1.Data.CalendarResource Get (string Customer, string CalendarResourceId)
                     {
-                        return GetService(gShellServiceAccount).Resources.Calendars.Get(Customer, CalendarResourceId).Execute();
+                        return GetService().Resources.Calendars.Get(Customer, CalendarResourceId).Execute();
                     }
 
                     /// <summary>Inserts a calendar resource.</summary>
@@ -2864,9 +2810,9 @@ namespace gShell.dotNet
                     /// <param name="Customer">The unique ID for the customer's Google account. As an account administrator, you can also
                     /// use the my_customer alias to represent your account's customer ID.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.admin.Directory.directory_v1.Data.CalendarResource Insert (Google.Apis.admin.Directory.directory_v1.Data.CalendarResource CalendarResourceBody, string Customer, string gShellServiceAccount = null)
+                    public Google.Apis.admin.Directory.directory_v1.Data.CalendarResource Insert (Google.Apis.admin.Directory.directory_v1.Data.CalendarResource CalendarResourceBody, string Customer)
                     {
-                        return GetService(gShellServiceAccount).Resources.Calendars.Insert(CalendarResourceBody, Customer).Execute();
+                        return GetService().Resources.Calendars.Insert(CalendarResourceBody, Customer).Execute();
                     }
 
                     /// <summary>Retrieves a list of calendar resources for an account.</summary>
@@ -2875,11 +2821,11 @@ namespace gShell.dotNet
                     /// <param name="properties">The optional properties for this method.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
                     public List<Google.Apis.admin.Directory.directory_v1.Data.CalendarResources> List(
-                        string Customer, CalendarsListProperties properties= null, string gShellServiceAccount = null)
+                        string Customer, CalendarsListProperties properties= null)
                     {
                         var results = new List<Google.Apis.admin.Directory.directory_v1.Data.CalendarResources>();
 
-                        directory_v1.ResourcesResource.CalendarsResource.ListRequest request = GetService(gShellServiceAccount).Resources.Calendars.List(Customer);
+                        directory_v1.ResourcesResource.CalendarsResource.ListRequest request = GetService().Resources.Calendars.List(Customer);
 
                         if (properties != null)
                         {
@@ -2933,9 +2879,9 @@ namespace gShell.dotNet
                     /// <param
                     /// name="CalendarResourceId">The unique ID of the calendar resource to update.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.admin.Directory.directory_v1.Data.CalendarResource Patch (Google.Apis.admin.Directory.directory_v1.Data.CalendarResource CalendarResourceBody, string Customer, string CalendarResourceId, string gShellServiceAccount = null)
+                    public Google.Apis.admin.Directory.directory_v1.Data.CalendarResource Patch (Google.Apis.admin.Directory.directory_v1.Data.CalendarResource CalendarResourceBody, string Customer, string CalendarResourceId)
                     {
-                        return GetService(gShellServiceAccount).Resources.Calendars.Patch(CalendarResourceBody, Customer, CalendarResourceId).Execute();
+                        return GetService().Resources.Calendars.Patch(CalendarResourceBody, Customer, CalendarResourceId).Execute();
                     }
 
                     /// <summary>Updates a calendar resource.</summary>
@@ -2945,9 +2891,9 @@ namespace gShell.dotNet
                     /// <param
                     /// name="CalendarResourceId">The unique ID of the calendar resource to update.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.admin.Directory.directory_v1.Data.CalendarResource Update (Google.Apis.admin.Directory.directory_v1.Data.CalendarResource CalendarResourceBody, string Customer, string CalendarResourceId, string gShellServiceAccount = null)
+                    public Google.Apis.admin.Directory.directory_v1.Data.CalendarResource Update (Google.Apis.admin.Directory.directory_v1.Data.CalendarResource CalendarResourceBody, string Customer, string CalendarResourceId)
                     {
-                        return GetService(gShellServiceAccount).Resources.Calendars.Update(CalendarResourceBody, Customer, CalendarResourceId).Execute();
+                        return GetService().Resources.Calendars.Update(CalendarResourceBody, Customer, CalendarResourceId).Execute();
                     }
 
                 }
@@ -2985,9 +2931,9 @@ namespace gShell.dotNet
             /// <param
             /// name="RoleAssignmentId">Immutable ID of the role assignment.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void Delete (string Customer, string RoleAssignmentId, string gShellServiceAccount = null)
+            public void Delete (string Customer, string RoleAssignmentId)
             {
-                GetService(gShellServiceAccount).RoleAssignments.Delete(Customer, RoleAssignmentId).Execute();
+                GetService().RoleAssignments.Delete(Customer, RoleAssignmentId).Execute();
             }
 
             /// <summary>Retrieve a role assignment.</summary>
@@ -2995,18 +2941,18 @@ namespace gShell.dotNet
             /// <param
             /// name="RoleAssignmentId">Immutable ID of the role assignment.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.RoleAssignment Get (string Customer, string RoleAssignmentId, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.RoleAssignment Get (string Customer, string RoleAssignmentId)
             {
-                return GetService(gShellServiceAccount).RoleAssignments.Get(Customer, RoleAssignmentId).Execute();
+                return GetService().RoleAssignments.Get(Customer, RoleAssignmentId).Execute();
             }
 
             /// <summary>Creates a role assignment.</summary>
             /// <param name="RoleAssignmentBody">The body of the request.</param>
             /// <param name="Customer">Immutable ID of the Google Apps account.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.RoleAssignment Insert (Google.Apis.admin.Directory.directory_v1.Data.RoleAssignment RoleAssignmentBody, string Customer, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.RoleAssignment Insert (Google.Apis.admin.Directory.directory_v1.Data.RoleAssignment RoleAssignmentBody, string Customer)
             {
-                return GetService(gShellServiceAccount).RoleAssignments.Insert(RoleAssignmentBody, Customer).Execute();
+                return GetService().RoleAssignments.Insert(RoleAssignmentBody, Customer).Execute();
             }
 
             /// <summary>Retrieves a paginated list of all roleAssignments.</summary>
@@ -3014,11 +2960,11 @@ namespace gShell.dotNet
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public List<Google.Apis.admin.Directory.directory_v1.Data.RoleAssignments> List(
-                string Customer, RoleAssignmentsListProperties properties= null, string gShellServiceAccount = null)
+                string Customer, RoleAssignmentsListProperties properties= null)
             {
                 var results = new List<Google.Apis.admin.Directory.directory_v1.Data.RoleAssignments>();
 
-                directory_v1.RoleAssignmentsResource.ListRequest request = GetService(gShellServiceAccount).RoleAssignments.List(Customer);
+                directory_v1.RoleAssignmentsResource.ListRequest request = GetService().RoleAssignments.List(Customer);
 
                 if (properties != null)
                 {
@@ -3095,9 +3041,9 @@ namespace gShell.dotNet
             /// <param name="RoleId">Immutable ID of
             /// the role.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void Delete (string Customer, string RoleId, string gShellServiceAccount = null)
+            public void Delete (string Customer, string RoleId)
             {
-                GetService(gShellServiceAccount).Roles.Delete(Customer, RoleId).Execute();
+                GetService().Roles.Delete(Customer, RoleId).Execute();
             }
 
             /// <summary>Retrieves a role.</summary>
@@ -3105,18 +3051,18 @@ namespace gShell.dotNet
             /// <param name="RoleId">Immutable ID of
             /// the role.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.Role Get (string Customer, string RoleId, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Role Get (string Customer, string RoleId)
             {
-                return GetService(gShellServiceAccount).Roles.Get(Customer, RoleId).Execute();
+                return GetService().Roles.Get(Customer, RoleId).Execute();
             }
 
             /// <summary>Creates a role.</summary>
             /// <param name="RoleBody">The body of the request.</param>
             /// <param name="Customer">Immutable ID of the Google Apps account.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.Role Insert (Google.Apis.admin.Directory.directory_v1.Data.Role RoleBody, string Customer, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Role Insert (Google.Apis.admin.Directory.directory_v1.Data.Role RoleBody, string Customer)
             {
-                return GetService(gShellServiceAccount).Roles.Insert(RoleBody, Customer).Execute();
+                return GetService().Roles.Insert(RoleBody, Customer).Execute();
             }
 
             /// <summary>Retrieves a paginated list of all the roles in a domain.</summary>
@@ -3124,11 +3070,11 @@ namespace gShell.dotNet
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public List<Google.Apis.admin.Directory.directory_v1.Data.Roles> List(
-                string Customer, RolesListProperties properties= null, string gShellServiceAccount = null)
+                string Customer, RolesListProperties properties= null)
             {
                 var results = new List<Google.Apis.admin.Directory.directory_v1.Data.Roles>();
 
-                directory_v1.RolesResource.ListRequest request = GetService(gShellServiceAccount).Roles.List(Customer);
+                directory_v1.RolesResource.ListRequest request = GetService().Roles.List(Customer);
 
                 if (properties != null)
                 {
@@ -3181,9 +3127,9 @@ namespace gShell.dotNet
             /// <param name="RoleId">Immutable ID of
             /// the role.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.Role Patch (Google.Apis.admin.Directory.directory_v1.Data.Role RoleBody, string Customer, string RoleId, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Role Patch (Google.Apis.admin.Directory.directory_v1.Data.Role RoleBody, string Customer, string RoleId)
             {
-                return GetService(gShellServiceAccount).Roles.Patch(RoleBody, Customer, RoleId).Execute();
+                return GetService().Roles.Patch(RoleBody, Customer, RoleId).Execute();
             }
 
             /// <summary>Updates a role.</summary>
@@ -3192,9 +3138,9 @@ namespace gShell.dotNet
             /// <param name="RoleId">Immutable ID of
             /// the role.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.Role Update (Google.Apis.admin.Directory.directory_v1.Data.Role RoleBody, string Customer, string RoleId, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Role Update (Google.Apis.admin.Directory.directory_v1.Data.Role RoleBody, string Customer, string RoleId)
             {
-                return GetService(gShellServiceAccount).Roles.Update(RoleBody, Customer, RoleId).Execute();
+                return GetService().Roles.Update(RoleBody, Customer, RoleId).Execute();
             }
 
         }
@@ -3211,9 +3157,9 @@ namespace gShell.dotNet
             /// <param name="SchemaKey">Name or
             /// immutable Id of the schema</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void Delete (string CustomerId, string SchemaKey, string gShellServiceAccount = null)
+            public void Delete (string CustomerId, string SchemaKey)
             {
-                GetService(gShellServiceAccount).Schemas.Delete(CustomerId, SchemaKey).Execute();
+                GetService().Schemas.Delete(CustomerId, SchemaKey).Execute();
             }
 
             /// <summary>Retrieve schema</summary>
@@ -3221,26 +3167,26 @@ namespace gShell.dotNet
             /// <param name="SchemaKey">Name or
             /// immutable Id of the schema</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.Schema Get (string CustomerId, string SchemaKey, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Schema Get (string CustomerId, string SchemaKey)
             {
-                return GetService(gShellServiceAccount).Schemas.Get(CustomerId, SchemaKey).Execute();
+                return GetService().Schemas.Get(CustomerId, SchemaKey).Execute();
             }
 
             /// <summary>Create schema.</summary>
             /// <param name="SchemaBody">The body of the request.</param>
             /// <param name="CustomerId">Immutable id of the Google Apps account</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.Schema Insert (Google.Apis.admin.Directory.directory_v1.Data.Schema SchemaBody, string CustomerId, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Schema Insert (Google.Apis.admin.Directory.directory_v1.Data.Schema SchemaBody, string CustomerId)
             {
-                return GetService(gShellServiceAccount).Schemas.Insert(SchemaBody, CustomerId).Execute();
+                return GetService().Schemas.Insert(SchemaBody, CustomerId).Execute();
             }
 
             /// <summary>Retrieve all schemas for a customer</summary>
             /// <param name="CustomerId">Immutable id of the Google Apps account</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.Schemas List (string CustomerId, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Schemas List (string CustomerId)
             {
-                return GetService(gShellServiceAccount).Schemas.List(CustomerId).Execute();
+                return GetService().Schemas.List(CustomerId).Execute();
             }
 
             /// <summary>Update schema. This method supports patch semantics.</summary>
@@ -3249,9 +3195,9 @@ namespace gShell.dotNet
             /// <param name="SchemaKey">Name or
             /// immutable Id of the schema.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.Schema Patch (Google.Apis.admin.Directory.directory_v1.Data.Schema SchemaBody, string CustomerId, string SchemaKey, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Schema Patch (Google.Apis.admin.Directory.directory_v1.Data.Schema SchemaBody, string CustomerId, string SchemaKey)
             {
-                return GetService(gShellServiceAccount).Schemas.Patch(SchemaBody, CustomerId, SchemaKey).Execute();
+                return GetService().Schemas.Patch(SchemaBody, CustomerId, SchemaKey).Execute();
             }
 
             /// <summary>Update schema</summary>
@@ -3260,9 +3206,9 @@ namespace gShell.dotNet
             /// <param name="SchemaKey">Name or
             /// immutable Id of the schema.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.Schema Update (Google.Apis.admin.Directory.directory_v1.Data.Schema SchemaBody, string CustomerId, string SchemaKey, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Schema Update (Google.Apis.admin.Directory.directory_v1.Data.Schema SchemaBody, string CustomerId, string SchemaKey)
             {
-                return GetService(gShellServiceAccount).Schemas.Update(SchemaBody, CustomerId, SchemaKey).Execute();
+                return GetService().Schemas.Update(SchemaBody, CustomerId, SchemaKey).Execute();
             }
 
         }
@@ -3280,9 +3226,9 @@ namespace gShell.dotNet
             /// <param name="ClientId">The Client ID of the application the
             /// token is issued to.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void Delete (string UserKey, string ClientId, string gShellServiceAccount = null)
+            public void Delete (string UserKey, string ClientId)
             {
-                GetService(gShellServiceAccount).Tokens.Delete(UserKey, ClientId).Execute();
+                GetService().Tokens.Delete(UserKey, ClientId).Execute();
             }
 
             /// <summary>Get information about an access token issued by a user.</summary>
@@ -3291,18 +3237,18 @@ namespace gShell.dotNet
             /// <param name="ClientId">The Client ID of the application the
             /// token is issued to.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.Token Get (string UserKey, string ClientId, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Token Get (string UserKey, string ClientId)
             {
-                return GetService(gShellServiceAccount).Tokens.Get(UserKey, ClientId).Execute();
+                return GetService().Tokens.Get(UserKey, ClientId).Execute();
             }
 
             /// <summary>Returns the set of tokens specified user has issued to 3rd party applications.</summary>
             /// <param name="UserKey">Identifies the user in the API request. The value can be the user's primary email address,
             /// alias email address, or unique user ID.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.Tokens List (string UserKey, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Tokens List (string UserKey)
             {
-                return GetService(gShellServiceAccount).Tokens.List(UserKey).Execute();
+                return GetService().Tokens.List(UserKey).Execute();
             }
 
         }
@@ -3422,37 +3368,37 @@ namespace gShell.dotNet
             /// <summary>Delete user</summary>
             /// <param name="UserKey">Email or immutable Id of the user</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void Delete (string UserKey, string gShellServiceAccount = null)
+            public void Delete (string UserKey)
             {
-                GetService(gShellServiceAccount).Users.Delete(UserKey).Execute();
+                GetService().Users.Delete(UserKey).Execute();
             }
 
             /// <summary>retrieve user</summary>
             /// <param name="UserKey">Email or immutable Id of the user</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.User Get (string UserKey, UsersGetProperties properties= null, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.User Get (string UserKey, UsersGetProperties properties= null)
             {
-                return GetService(gShellServiceAccount).Users.Get(UserKey).Execute();
+                return GetService().Users.Get(UserKey).Execute();
             }
 
             /// <summary>create user.</summary>
             /// <param name="UserBody">The body of the request.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.User Insert (Google.Apis.admin.Directory.directory_v1.Data.User UserBody, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.User Insert (Google.Apis.admin.Directory.directory_v1.Data.User UserBody)
             {
-                return GetService(gShellServiceAccount).Users.Insert(UserBody).Execute();
+                return GetService().Users.Insert(UserBody).Execute();
             }
 
             /// <summary>Retrieve either deleted users or all users in a domain (paginated)</summary>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public List<Google.Apis.admin.Directory.directory_v1.Data.Users> List(
-                UsersListProperties properties= null, string gShellServiceAccount = null)
+                UsersListProperties properties= null)
             {
                 var results = new List<Google.Apis.admin.Directory.directory_v1.Data.Users>();
 
-                directory_v1.UsersResource.ListRequest request = GetService(gShellServiceAccount).Users.List();
+                directory_v1.UsersResource.ListRequest request = GetService().Users.List();
 
                 if (properties != null)
                 {
@@ -3513,45 +3459,45 @@ namespace gShell.dotNet
             /// <param name="UserMakeAdminBody">The body of the request.</param>
             /// <param name="UserKey">Email or immutable Id of the user as admin</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void MakeAdmin (Google.Apis.admin.Directory.directory_v1.Data.UserMakeAdmin UserMakeAdminBody, string UserKey, string gShellServiceAccount = null)
+            public void MakeAdmin (Google.Apis.admin.Directory.directory_v1.Data.UserMakeAdmin UserMakeAdminBody, string UserKey)
             {
-                GetService(gShellServiceAccount).Users.MakeAdmin(UserMakeAdminBody, UserKey).Execute();
+                GetService().Users.MakeAdmin(UserMakeAdminBody, UserKey).Execute();
             }
 
             /// <summary>update user. This method supports patch semantics.</summary>
             /// <param name="UserBody">The body of the request.</param>
             /// <param name="UserKey">Email or immutable Id of the user. If Id, it should match with id of user object</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.User Patch (Google.Apis.admin.Directory.directory_v1.Data.User UserBody, string UserKey, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.User Patch (Google.Apis.admin.Directory.directory_v1.Data.User UserBody, string UserKey)
             {
-                return GetService(gShellServiceAccount).Users.Patch(UserBody, UserKey).Execute();
+                return GetService().Users.Patch(UserBody, UserKey).Execute();
             }
 
             /// <summary>Undelete a deleted user</summary>
             /// <param name="UserUndeleteBody">The body of the request.</param>
             /// <param name="UserKey">The immutable id of the user</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void Undelete (Google.Apis.admin.Directory.directory_v1.Data.UserUndelete UserUndeleteBody, string UserKey, string gShellServiceAccount = null)
+            public void Undelete (Google.Apis.admin.Directory.directory_v1.Data.UserUndelete UserUndeleteBody, string UserKey)
             {
-                GetService(gShellServiceAccount).Users.Undelete(UserUndeleteBody, UserKey).Execute();
+                GetService().Users.Undelete(UserUndeleteBody, UserKey).Execute();
             }
 
             /// <summary>update user</summary>
             /// <param name="UserBody">The body of the request.</param>
             /// <param name="UserKey">Email or immutable Id of the user. If Id, it should match with id of user object</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.User Update (Google.Apis.admin.Directory.directory_v1.Data.User UserBody, string UserKey, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.User Update (Google.Apis.admin.Directory.directory_v1.Data.User UserBody, string UserKey)
             {
-                return GetService(gShellServiceAccount).Users.Update(UserBody, UserKey).Execute();
+                return GetService().Users.Update(UserBody, UserKey).Execute();
             }
 
             /// <summary>Watch for changes in users list</summary>
             /// <param name="ChannelBody">The body of the request.</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.Channel Watch (Google.Apis.admin.Directory.directory_v1.Data.Channel ChannelBody, UsersWatchProperties properties= null, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.Channel Watch (Google.Apis.admin.Directory.directory_v1.Data.Channel ChannelBody, UsersWatchProperties properties= null)
             {
-                return GetService(gShellServiceAccount).Users.Watch(ChannelBody).Execute();
+                return GetService().Users.Watch(ChannelBody).Execute();
             }
                 /// <summary>The "aliases" collection of methods.</summary>
                 public class Aliases
@@ -3577,27 +3523,27 @@ namespace gShell.dotNet
                     /// <param name="Alias">The alias to be
                     /// removed</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public void Delete (string UserKey, string Alias, string gShellServiceAccount = null)
+                    public void Delete (string UserKey, string Alias)
                     {
-                        GetService(gShellServiceAccount).Users.Aliases.Delete(UserKey, Alias).Execute();
+                        GetService().Users.Aliases.Delete(UserKey, Alias).Execute();
                     }
 
                     /// <summary>Add a alias for the user</summary>
                     /// <param name="AliasBody">The body of the request.</param>
                     /// <param name="UserKey">Email or immutable Id of the user</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.admin.Directory.directory_v1.Data.Alias Insert (Google.Apis.admin.Directory.directory_v1.Data.Alias AliasBody, string UserKey, string gShellServiceAccount = null)
+                    public Google.Apis.admin.Directory.directory_v1.Data.Alias Insert (Google.Apis.admin.Directory.directory_v1.Data.Alias AliasBody, string UserKey)
                     {
-                        return GetService(gShellServiceAccount).Users.Aliases.Insert(AliasBody, UserKey).Execute();
+                        return GetService().Users.Aliases.Insert(AliasBody, UserKey).Execute();
                     }
 
                     /// <summary>List all aliases for a user</summary>
                     /// <param name="UserKey">Email or immutable Id of the user</param>
                     /// <param name="properties">The optional properties for this method.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.admin.Directory.directory_v1.Data.Aliases List (string UserKey, AliasesListProperties properties= null, string gShellServiceAccount = null)
+                    public Google.Apis.admin.Directory.directory_v1.Data.Aliases List (string UserKey, AliasesListProperties properties= null)
                     {
-                        return GetService(gShellServiceAccount).Users.Aliases.List(UserKey).Execute();
+                        return GetService().Users.Aliases.List(UserKey).Execute();
                     }
 
                     /// <summary>Watch for changes in user aliases list</summary>
@@ -3605,9 +3551,9 @@ namespace gShell.dotNet
                     /// <param name="UserKey">Email or immutable Id of the user</param>
                     /// <param name="properties">The optional properties for this method.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.admin.Directory.directory_v1.Data.Channel Watch (Google.Apis.admin.Directory.directory_v1.Data.Channel ChannelBody, string UserKey, AliasesWatchProperties properties= null, string gShellServiceAccount = null)
+                    public Google.Apis.admin.Directory.directory_v1.Data.Channel Watch (Google.Apis.admin.Directory.directory_v1.Data.Channel ChannelBody, string UserKey, AliasesWatchProperties properties= null)
                     {
-                        return GetService(gShellServiceAccount).Users.Aliases.Watch(ChannelBody, UserKey).Execute();
+                        return GetService().Users.Aliases.Watch(ChannelBody, UserKey).Execute();
                     }
 
                 }    /// <summary>The "photos" collection of methods.</summary>
@@ -3620,35 +3566,35 @@ namespace gShell.dotNet
                     /// <summary>Remove photos for the user</summary>
                     /// <param name="UserKey">Email or immutable Id of the user</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public void Delete (string UserKey, string gShellServiceAccount = null)
+                    public void Delete (string UserKey)
                     {
-                        GetService(gShellServiceAccount).Users.Photos.Delete(UserKey).Execute();
+                        GetService().Users.Photos.Delete(UserKey).Execute();
                     }
 
                     /// <summary>Retrieve photo of a user</summary>
                     /// <param name="UserKey">Email or immutable Id of the user</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.admin.Directory.directory_v1.Data.UserPhoto Get (string UserKey, string gShellServiceAccount = null)
+                    public Google.Apis.admin.Directory.directory_v1.Data.UserPhoto Get (string UserKey)
                     {
-                        return GetService(gShellServiceAccount).Users.Photos.Get(UserKey).Execute();
+                        return GetService().Users.Photos.Get(UserKey).Execute();
                     }
 
                     /// <summary>Add a photo for the user. This method supports patch semantics.</summary>
                     /// <param name="UserPhotoBody">The body of the request.</param>
                     /// <param name="UserKey">Email or immutable Id of the user</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.admin.Directory.directory_v1.Data.UserPhoto Patch (Google.Apis.admin.Directory.directory_v1.Data.UserPhoto UserPhotoBody, string UserKey, string gShellServiceAccount = null)
+                    public Google.Apis.admin.Directory.directory_v1.Data.UserPhoto Patch (Google.Apis.admin.Directory.directory_v1.Data.UserPhoto UserPhotoBody, string UserKey)
                     {
-                        return GetService(gShellServiceAccount).Users.Photos.Patch(UserPhotoBody, UserKey).Execute();
+                        return GetService().Users.Photos.Patch(UserPhotoBody, UserKey).Execute();
                     }
 
                     /// <summary>Add a photo for the user</summary>
                     /// <param name="UserPhotoBody">The body of the request.</param>
                     /// <param name="UserKey">Email or immutable Id of the user</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.admin.Directory.directory_v1.Data.UserPhoto Update (Google.Apis.admin.Directory.directory_v1.Data.UserPhoto UserPhotoBody, string UserKey, string gShellServiceAccount = null)
+                    public Google.Apis.admin.Directory.directory_v1.Data.UserPhoto Update (Google.Apis.admin.Directory.directory_v1.Data.UserPhoto UserPhotoBody, string UserKey)
                     {
-                        return GetService(gShellServiceAccount).Users.Photos.Update(UserPhotoBody, UserKey).Execute();
+                        return GetService().Users.Photos.Update(UserPhotoBody, UserKey).Execute();
                     }
 
                 }
@@ -3664,26 +3610,26 @@ namespace gShell.dotNet
             /// <summary>Generate new backup verification codes for the user.</summary>
             /// <param name="UserKey">Email or immutable Id of the user</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void Generate (string UserKey, string gShellServiceAccount = null)
+            public void Generate (string UserKey)
             {
-                GetService(gShellServiceAccount).VerificationCodes.Generate(UserKey).Execute();
+                GetService().VerificationCodes.Generate(UserKey).Execute();
             }
 
             /// <summary>Invalidate the current backup verification codes for the user.</summary>
             /// <param name="UserKey">Email or immutable Id of the user</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void Invalidate (string UserKey, string gShellServiceAccount = null)
+            public void Invalidate (string UserKey)
             {
-                GetService(gShellServiceAccount).VerificationCodes.Invalidate(UserKey).Execute();
+                GetService().VerificationCodes.Invalidate(UserKey).Execute();
             }
 
             /// <summary>Returns the current set of valid backup verification codes for the specified user.</summary>
             /// <param name="UserKey">Identifies the user in the API request. The value can be the user's primary email address,
             /// alias email address, or unique user ID.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Directory.directory_v1.Data.VerificationCodes List (string UserKey, string gShellServiceAccount = null)
+            public Google.Apis.admin.Directory.directory_v1.Data.VerificationCodes List (string UserKey)
             {
-                return GetService(gShellServiceAccount).VerificationCodes.List(UserKey).Execute();
+                return GetService().VerificationCodes.List(UserKey).Execute();
             }
 
         }

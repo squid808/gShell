@@ -33,25 +33,7 @@ using gClassroom = gShell.dotNet.Classroom;
 namespace gShell.Cmdlets.Classroom
 {
     /// <summary>A base class which provides support for service account integration and schema objects.</summary>
-    public abstract class ClassroomServiceAccountBase : ClassroomBase
-    {
-        #region Properties
-
-        /// <summary>
-        /// <para type="description">The email account to be targeted by the service account.</para>
-        /// </summary>
-        [Parameter(Mandatory = false)]
-        [ValidateNotNullOrEmpty]
-        public string TargetUserEmail { get; set; }
-        #endregion
-
-        protected override void BeginProcessing()
-        {
-            gShellServiceAccount = GetFullEmailAddress(TargetUserEmail, Domain);
-
-            base.BeginProcessing();
-        }
-    }
+    public abstract class ClassroomServiceAccountBase : ClassroomBase { }
 
 
     /// <summary>

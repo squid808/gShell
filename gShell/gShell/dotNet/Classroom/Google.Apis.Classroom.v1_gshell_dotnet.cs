@@ -23,6 +23,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using gShell.Cmdlets.Utilities.OAuth2;
+
 namespace gShell.Cmdlets.Classroom{
 
     using System;
@@ -41,17 +43,10 @@ namespace gShell.Cmdlets.Classroom{
     /// <summary>
     /// A PowerShell-ready wrapper for the Classroom api, as well as the resources and methods therein.
     /// </summary>
-    public abstract class ClassroomBase : OAuth2CmdletBase
+    public abstract class ClassroomBase : AuthenticatedCmdletBase
     {
 
         #region Properties
-
-        /// <summary>
-        /// <para type="description">The domain against which this cmdlet should run.</para>
-        /// </summary>
-        [Parameter(Mandatory = false)]
-        [ValidateNotNullOrEmpty]
-        public string Domain { get; set; }
 
         /// <summary>The gShell dotNet class wrapper base.</summary>
         protected static gClassroom mainBase { get; set; }
@@ -66,11 +61,10 @@ namespace gShell.Cmdlets.Classroom{
         /// <summary>An instance of the UserProfiles gShell dotNet resource.</summary>
         public UserProfiles userProfiles { get; set; }
 
-        /// <summary>Returns the api name and version in {name}:{version} format.</summary>
-        protected override string apiNameAndVersion { get { return mainBase.apiNameAndVersion; } }
-
-        /// <summary>Gets or sets the email account the gShell Service Account should impersonate.</summary>
-        protected static string gShellServiceAccount { get; set; }
+        /// <summary>
+        /// Required to be able to store and retrieve the mainBase from the ServiceWrapperDictionary
+        /// </summary>
+        protected override Type mainBaseType { get { return typeof(gClassroom); } }
         #endregion
 
         #region Constructors
@@ -78,60 +72,11 @@ namespace gShell.Cmdlets.Classroom{
         {
             mainBase = new gClassroom();
 
+            ServiceWrapperDictionary[mainBaseType] = mainBase;
+
             courses = new Courses();
             invitations = new Invitations();
             userProfiles = new UserProfiles();
-        }
-        #endregion
-
-        #region PowerShell Methods
-        /// <summary>The gShell base implementation of the PowerShell BeginProcessing method.</summary>
-        /// <remarks>If a service account needs to be identified, it should be in a child class that overrides
-        /// and calls this method.</remarks>
-        protected override void BeginProcessing()
-        {
-            var secrets = CheckForClientSecrets();
-            if (secrets != null)
-            {
-                IEnumerable<string> scopes = EnsureScopesExist(Domain);
-                Domain = mainBase.BuildService(Authenticate(scopes, secrets, Domain), gShellServiceAccount).domain;
-
-                GWriteProgress = new gWriteProgress(WriteProgress);
-            }
-            else
-            {
-                WriteError(new ErrorRecord(null, (new Exception(
-                    "Client Secrets must be set before running cmdlets. Run 'Get-Help "
-                    + "Set-gShellClientSecrets -online' for more information."))));
-            }
-        }
-
-        /// <summary>The gShell base implementation of the PowerShell EndProcessing method.</summary>
-        /// <remarks>We need to reset the service account after every Cmdlet call to prevent the next
-        /// Cmdlet from inheriting it as well.</remarks>
-        protected override void EndProcessing()
-        {
-            gShellServiceAccount = string.Empty;
-        }
-
-        /// <summary>The gShell base implementation of the PowerShell StopProcessing method.</summary>
-        /// <remarks>We need to reset the service account after every Cmdlet call to prevent the next
-        /// Cmdlet from inheriting it as well.</remarks>
-        protected override void StopProcessing()
-        {
-            gShellServiceAccount = string.Empty;
-        }
-        #endregion
-
-        #region Authentication & Processing
-        /// <summary>Ensure the user, domain and client secret combination work with an authenticated user.</summary>
-        /// <param name="Scopes">The scopes that need to be passed through to the user authentication to Google.</param>
-        /// <param name="Secrets">The client secrets.`</param>
-        /// <param name="Domain">The domain for which this authentication is intended.</param>
-        /// <returns>The AuthenticatedUserInfo for the authenticated user.</returns>
-        protected override AuthenticatedUserInfo Authenticate(IEnumerable<string> Scopes, ClientSecrets Secrets, string Domain = null)
-        {
-            return mainBase.Authenticate(apiNameAndVersion, Scopes, Secrets, Domain);
         }
         #endregion
 
@@ -186,7 +131,7 @@ namespace gShell.Cmdlets.Classroom{
                 public Google.Apis.Classroom.v1.Data.CourseAlias Create (Google.Apis.Classroom.v1.Data.CourseAlias CourseAliasBody, string CourseId)
                 {
 
-                    return mainBase.courses.aliases.Create(CourseAliasBody, CourseId, gShellServiceAccount);
+                    return mainBase.courses.aliases.Create(CourseAliasBody, CourseId);
                 }
 
 
@@ -201,7 +146,7 @@ namespace gShell.Cmdlets.Classroom{
                 public Google.Apis.Classroom.v1.Data.Empty Delete (string CourseId, string Alias)
                 {
 
-                    return mainBase.courses.aliases.Delete(CourseId, Alias, gShellServiceAccount);
+                    return mainBase.courses.aliases.Delete(CourseId, Alias);
                 }
 
 
@@ -219,7 +164,7 @@ namespace gShell.Cmdlets.Classroom{
                     properties = properties ?? new gClassroom.Courses.Aliases.AliasesListProperties();
 
 
-                    return mainBase.courses.aliases.List(CourseId, properties, gShellServiceAccount);
+                    return mainBase.courses.aliases.List(CourseId, properties);
                 }
             }
             #endregion
@@ -247,7 +192,7 @@ namespace gShell.Cmdlets.Classroom{
 
                     properties = properties ?? new gClassroom.Courses.Students.StudentsCreateProperties();
 
-                    return mainBase.courses.students.Create(StudentBody, CourseId, properties, gShellServiceAccount);
+                    return mainBase.courses.students.Create(StudentBody, CourseId, properties);
                 }
 
 
@@ -264,7 +209,7 @@ namespace gShell.Cmdlets.Classroom{
                 public Google.Apis.Classroom.v1.Data.Empty Delete (string CourseId, string UserId)
                 {
 
-                    return mainBase.courses.students.Delete(CourseId, UserId, gShellServiceAccount);
+                    return mainBase.courses.students.Delete(CourseId, UserId);
                 }
 
 
@@ -281,7 +226,7 @@ namespace gShell.Cmdlets.Classroom{
                 public Google.Apis.Classroom.v1.Data.Student Get (string CourseId, string UserId)
                 {
 
-                    return mainBase.courses.students.Get(CourseId, UserId, gShellServiceAccount);
+                    return mainBase.courses.students.Get(CourseId, UserId);
                 }
 
 
@@ -299,7 +244,7 @@ namespace gShell.Cmdlets.Classroom{
                     properties = properties ?? new gClassroom.Courses.Students.StudentsListProperties();
 
 
-                    return mainBase.courses.students.List(CourseId, properties, gShellServiceAccount);
+                    return mainBase.courses.students.List(CourseId, properties);
                 }
             }
             #endregion
@@ -325,7 +270,7 @@ namespace gShell.Cmdlets.Classroom{
                 public Google.Apis.Classroom.v1.Data.Teacher Create (Google.Apis.Classroom.v1.Data.Teacher TeacherBody, string CourseId)
                 {
 
-                    return mainBase.courses.teachers.Create(TeacherBody, CourseId, gShellServiceAccount);
+                    return mainBase.courses.teachers.Create(TeacherBody, CourseId);
                 }
 
 
@@ -343,7 +288,7 @@ namespace gShell.Cmdlets.Classroom{
                 public Google.Apis.Classroom.v1.Data.Empty Delete (string CourseId, string UserId)
                 {
 
-                    return mainBase.courses.teachers.Delete(CourseId, UserId, gShellServiceAccount);
+                    return mainBase.courses.teachers.Delete(CourseId, UserId);
                 }
 
 
@@ -360,7 +305,7 @@ namespace gShell.Cmdlets.Classroom{
                 public Google.Apis.Classroom.v1.Data.Teacher Get (string CourseId, string UserId)
                 {
 
-                    return mainBase.courses.teachers.Get(CourseId, UserId, gShellServiceAccount);
+                    return mainBase.courses.teachers.Get(CourseId, UserId);
                 }
 
 
@@ -378,7 +323,7 @@ namespace gShell.Cmdlets.Classroom{
                     properties = properties ?? new gClassroom.Courses.Teachers.TeachersListProperties();
 
 
-                    return mainBase.courses.teachers.List(CourseId, properties, gShellServiceAccount);
+                    return mainBase.courses.teachers.List(CourseId, properties);
                 }
             }
             #endregion
@@ -394,7 +339,7 @@ namespace gShell.Cmdlets.Classroom{
             public Google.Apis.Classroom.v1.Data.Course Create (Google.Apis.Classroom.v1.Data.Course CourseBody)
             {
 
-                return mainBase.courses.Create(CourseBody, gShellServiceAccount);
+                return mainBase.courses.Create(CourseBody);
             }
 
 
@@ -407,7 +352,7 @@ namespace gShell.Cmdlets.Classroom{
             public Google.Apis.Classroom.v1.Data.Empty Delete (string Id)
             {
 
-                return mainBase.courses.Delete(Id, gShellServiceAccount);
+                return mainBase.courses.Delete(Id);
             }
 
 
@@ -420,7 +365,7 @@ namespace gShell.Cmdlets.Classroom{
             public Google.Apis.Classroom.v1.Data.Course Get (string Id)
             {
 
-                return mainBase.courses.Get(Id, gShellServiceAccount);
+                return mainBase.courses.Get(Id);
             }
 
 
@@ -437,7 +382,7 @@ namespace gShell.Cmdlets.Classroom{
                 properties = properties ?? new gClassroom.Courses.CoursesListProperties();
 
 
-                return mainBase.courses.List(properties, gShellServiceAccount);
+                return mainBase.courses.List(properties);
             }
 
             /// <summary>Updates one or more fields in a course. This method returns the following error codes: *
@@ -454,7 +399,7 @@ namespace gShell.Cmdlets.Classroom{
 
                 properties = properties ?? new gClassroom.Courses.CoursesPatchProperties();
 
-                return mainBase.courses.Patch(CourseBody, Id, properties, gShellServiceAccount);
+                return mainBase.courses.Patch(CourseBody, Id, properties);
             }
 
 
@@ -469,7 +414,7 @@ namespace gShell.Cmdlets.Classroom{
             public Google.Apis.Classroom.v1.Data.Course Update (Google.Apis.Classroom.v1.Data.Course CourseBody, string Id)
             {
 
-                return mainBase.courses.Update(CourseBody, Id, gShellServiceAccount);
+                return mainBase.courses.Update(CourseBody, Id);
             }
 
 
@@ -497,7 +442,7 @@ namespace gShell.Cmdlets.Classroom{
             public Google.Apis.Classroom.v1.Data.Empty Accept (string Id)
             {
 
-                return mainBase.invitations.Accept(Id, gShellServiceAccount);
+                return mainBase.invitations.Accept(Id);
             }
 
 
@@ -513,7 +458,7 @@ namespace gShell.Cmdlets.Classroom{
             public Google.Apis.Classroom.v1.Data.Invitation Create (Google.Apis.Classroom.v1.Data.Invitation InvitationBody)
             {
 
-                return mainBase.invitations.Create(InvitationBody, gShellServiceAccount);
+                return mainBase.invitations.Create(InvitationBody);
             }
 
 
@@ -525,7 +470,7 @@ namespace gShell.Cmdlets.Classroom{
             public Google.Apis.Classroom.v1.Data.Empty Delete (string Id)
             {
 
-                return mainBase.invitations.Delete(Id, gShellServiceAccount);
+                return mainBase.invitations.Delete(Id);
             }
 
 
@@ -537,7 +482,7 @@ namespace gShell.Cmdlets.Classroom{
             public Google.Apis.Classroom.v1.Data.Invitation Get (string Id)
             {
 
-                return mainBase.invitations.Get(Id, gShellServiceAccount);
+                return mainBase.invitations.Get(Id);
             }
 
 
@@ -554,7 +499,7 @@ namespace gShell.Cmdlets.Classroom{
                 properties = properties ?? new gClassroom.Invitations.InvitationsListProperties();
 
 
-                return mainBase.invitations.List(properties, gShellServiceAccount);
+                return mainBase.invitations.List(properties);
             }
         }
         #endregion
@@ -579,7 +524,7 @@ namespace gShell.Cmdlets.Classroom{
             public Google.Apis.Classroom.v1.Data.UserProfile Get (string UserId)
             {
 
-                return mainBase.userProfiles.Get(UserId, gShellServiceAccount);
+                return mainBase.userProfiles.Get(UserId);
             }
 
 
@@ -605,7 +550,7 @@ namespace gShell.dotNet
     using Data = Google.Apis.Classroom.v1.Data;
 
     /// <summary>The dotNet gShell version of the classroom api.</summary>
-    public class Classroom : ServiceWrapper<v1.ClassroomService>
+    public class Classroom : ServiceWrapper<v1.ClassroomService>, IServiceWrapper<Google.Apis.Services.IClientService>
     {
 
         protected override bool worksWithGmail { get { return true; } }
@@ -615,9 +560,9 @@ namespace gShell.dotNet
         /// <param name="authInfo">The authenticated AuthInfo for this user and domain.</param>
         /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
 
-        protected override v1.ClassroomService CreateNewService(string domain, AuthenticatedUserInfo authInfo, string gShellServiceAccount = null)
+        protected override v1.ClassroomService CreateNewService(string domain, AuthenticatedUserInfo authInfo, string serviceAccountUser = null)
         {
-            return new v1.ClassroomService(OAuth2Base.GetInitializer(domain, authInfo, gShellServiceAccount));
+            return new v1.ClassroomService(OAuth2Base.GetInitializer(domain, authInfo));
         }
 
         /// <summary>Returns the api name and version in {name}:{version} format.</summary>
@@ -700,9 +645,9 @@ namespace gShell.dotNet
             /// `id` and already exists.</summary>
             /// <param name="CourseBody">The body of the request.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Classroom.v1.Data.Course Create (Google.Apis.Classroom.v1.Data.Course CourseBody, string gShellServiceAccount = null)
+            public Google.Apis.Classroom.v1.Data.Course Create (Google.Apis.Classroom.v1.Data.Course CourseBody)
             {
-                return GetService(gShellServiceAccount).Courses.Create(CourseBody).Execute();
+                return GetService().Courses.Create(CourseBody).Execute();
             }
 
             /// <summary>Deletes a course. This method returns the following error codes: * `PERMISSION_DENIED` if the
@@ -711,9 +656,9 @@ namespace gShell.dotNet
             /// <param name="Id">Identifier of the course to delete. This identifier can be either the Classroom-assigned identifier
             /// or an alias.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Classroom.v1.Data.Empty Delete (string Id, string gShellServiceAccount = null)
+            public Google.Apis.Classroom.v1.Data.Empty Delete (string Id)
             {
-                return GetService(gShellServiceAccount).Courses.Delete(Id).Execute();
+                return GetService().Courses.Delete(Id).Execute();
             }
 
             /// <summary>Returns a course. This method returns the following error codes: * `PERMISSION_DENIED` if the
@@ -722,9 +667,9 @@ namespace gShell.dotNet
             /// <param name="Id">Identifier of the course to return. This identifier can be either the Classroom-assigned identifier
             /// or an alias.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Classroom.v1.Data.Course Get (string Id, string gShellServiceAccount = null)
+            public Google.Apis.Classroom.v1.Data.Course Get (string Id)
             {
-                return GetService(gShellServiceAccount).Courses.Get(Id).Execute();
+                return GetService().Courses.Get(Id).Execute();
             }
 
             /// <summary>Returns a list of courses that the requesting user is permitted to view, restricted to those
@@ -734,11 +679,11 @@ namespace gShell.dotNet
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public List<Google.Apis.Classroom.v1.Data.ListCoursesResponse> List(
-                CoursesListProperties properties= null, string gShellServiceAccount = null)
+                CoursesListProperties properties= null)
             {
                 var results = new List<Google.Apis.Classroom.v1.Data.ListCoursesResponse>();
 
-                v1.CoursesResource.ListRequest request = GetService(gShellServiceAccount).Courses.List();
+                v1.CoursesResource.ListRequest request = GetService().Courses.List();
 
                 if (properties != null)
                 {
@@ -797,9 +742,9 @@ namespace gShell.dotNet
             /// or an alias.</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Classroom.v1.Data.Course Patch (Google.Apis.Classroom.v1.Data.Course CourseBody, string Id, CoursesPatchProperties properties= null, string gShellServiceAccount = null)
+            public Google.Apis.Classroom.v1.Data.Course Patch (Google.Apis.Classroom.v1.Data.Course CourseBody, string Id, CoursesPatchProperties properties= null)
             {
-                return GetService(gShellServiceAccount).Courses.Patch(CourseBody, Id).Execute();
+                return GetService().Courses.Patch(CourseBody, Id).Execute();
             }
 
             /// <summary>Updates a course. This method returns the following error codes: * `PERMISSION_DENIED` if the
@@ -810,9 +755,9 @@ namespace gShell.dotNet
             /// <param name="Id">Identifier of the course to update. This identifier can be either the Classroom-assigned identifier
             /// or an alias.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Classroom.v1.Data.Course Update (Google.Apis.Classroom.v1.Data.Course CourseBody, string Id, string gShellServiceAccount = null)
+            public Google.Apis.Classroom.v1.Data.Course Update (Google.Apis.Classroom.v1.Data.Course CourseBody, string Id)
             {
-                return GetService(gShellServiceAccount).Courses.Update(CourseBody, Id).Execute();
+                return GetService().Courses.Update(CourseBody, Id).Execute();
             }
                 /// <summary>The "aliases" collection of methods.</summary>
                 public class Aliases
@@ -843,9 +788,9 @@ namespace gShell.dotNet
                     /// <param name="CourseId">Identifier of the course to alias. This identifier can be either the Classroom-assigned
                     /// identifier or an alias.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Classroom.v1.Data.CourseAlias Create (Google.Apis.Classroom.v1.Data.CourseAlias CourseAliasBody, string CourseId, string gShellServiceAccount = null)
+                    public Google.Apis.Classroom.v1.Data.CourseAlias Create (Google.Apis.Classroom.v1.Data.CourseAlias CourseAliasBody, string CourseId)
                     {
-                        return GetService(gShellServiceAccount).Courses.Aliases.Create(CourseAliasBody, CourseId).Execute();
+                        return GetService().Courses.Aliases.Create(CourseAliasBody, CourseId).Execute();
                     }
 
                     /// <summary>Deletes an alias of a course. This method returns the following error codes: *
@@ -856,9 +801,9 @@ namespace gShell.dotNet
                     /// <param name="Alias">Alias to delete. This may not be the
                     /// Classroom-assigned identifier.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Classroom.v1.Data.Empty Delete (string CourseId, string Alias, string gShellServiceAccount = null)
+                    public Google.Apis.Classroom.v1.Data.Empty Delete (string CourseId, string Alias)
                     {
-                        return GetService(gShellServiceAccount).Courses.Aliases.Delete(CourseId, Alias).Execute();
+                        return GetService().Courses.Aliases.Delete(CourseId, Alias).Execute();
                     }
 
                     /// <summary>Returns a list of aliases for a course. This method returns the following error codes:
@@ -869,11 +814,11 @@ namespace gShell.dotNet
                     /// <param name="properties">The optional properties for this method.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
                     public List<Google.Apis.Classroom.v1.Data.ListCourseAliasesResponse> List(
-                        string CourseId, AliasesListProperties properties= null, string gShellServiceAccount = null)
+                        string CourseId, AliasesListProperties properties= null)
                     {
                         var results = new List<Google.Apis.Classroom.v1.Data.ListCourseAliasesResponse>();
 
-                        v1.CoursesResource.AliasesResource.ListRequest request = GetService(gShellServiceAccount).Courses.Aliases.List(CourseId);
+                        v1.CoursesResource.AliasesResource.ListRequest request = GetService().Courses.Aliases.List(CourseId);
 
                         if (properties != null)
                         {
@@ -959,9 +904,9 @@ namespace gShell.dotNet
                     /// Classroom-assigned identifier or an alias.</param>
                     /// <param name="properties">The optional properties for this method.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Classroom.v1.Data.Student Create (Google.Apis.Classroom.v1.Data.Student StudentBody, string CourseId, StudentsCreateProperties properties= null, string gShellServiceAccount = null)
+                    public Google.Apis.Classroom.v1.Data.Student Create (Google.Apis.Classroom.v1.Data.Student StudentBody, string CourseId, StudentsCreateProperties properties= null)
                     {
-                        return GetService(gShellServiceAccount).Courses.Students.Create(StudentBody, CourseId).Execute();
+                        return GetService().Courses.Students.Create(StudentBody, CourseId).Execute();
                     }
 
                     /// <summary>Deletes a student of a course. This method returns the following error codes: *
@@ -974,9 +919,9 @@ namespace gShell.dotNet
                     /// following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`,
                     /// indicating the requesting user</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Classroom.v1.Data.Empty Delete (string CourseId, string UserId, string gShellServiceAccount = null)
+                    public Google.Apis.Classroom.v1.Data.Empty Delete (string CourseId, string UserId)
                     {
-                        return GetService(gShellServiceAccount).Courses.Students.Delete(CourseId, UserId).Execute();
+                        return GetService().Courses.Students.Delete(CourseId, UserId).Execute();
                     }
 
                     /// <summary>Returns a student of a course. This method returns the following error codes: *
@@ -989,9 +934,9 @@ namespace gShell.dotNet
                     /// following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`,
                     /// indicating the requesting user</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Classroom.v1.Data.Student Get (string CourseId, string UserId, string gShellServiceAccount = null)
+                    public Google.Apis.Classroom.v1.Data.Student Get (string CourseId, string UserId)
                     {
-                        return GetService(gShellServiceAccount).Courses.Students.Get(CourseId, UserId).Execute();
+                        return GetService().Courses.Students.Get(CourseId, UserId).Execute();
                     }
 
                     /// <summary>Returns a list of students of this course that the requester is permitted to view. This
@@ -1002,11 +947,11 @@ namespace gShell.dotNet
                     /// <param name="properties">The optional properties for this method.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
                     public List<Google.Apis.Classroom.v1.Data.ListStudentsResponse> List(
-                        string CourseId, StudentsListProperties properties= null, string gShellServiceAccount = null)
+                        string CourseId, StudentsListProperties properties= null)
                     {
                         var results = new List<Google.Apis.Classroom.v1.Data.ListStudentsResponse>();
 
-                        v1.CoursesResource.StudentsResource.ListRequest request = GetService(gShellServiceAccount).Courses.Students.List(CourseId);
+                        v1.CoursesResource.StudentsResource.ListRequest request = GetService().Courses.Students.List(CourseId);
 
                         if (properties != null)
                         {
@@ -1085,9 +1030,9 @@ namespace gShell.dotNet
                     /// <param name="CourseId">Identifier of the course. This identifier can be either the Classroom-assigned identifier or
                     /// an alias.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Classroom.v1.Data.Teacher Create (Google.Apis.Classroom.v1.Data.Teacher TeacherBody, string CourseId, string gShellServiceAccount = null)
+                    public Google.Apis.Classroom.v1.Data.Teacher Create (Google.Apis.Classroom.v1.Data.Teacher TeacherBody, string CourseId)
                     {
-                        return GetService(gShellServiceAccount).Courses.Teachers.Create(TeacherBody, CourseId).Execute();
+                        return GetService().Courses.Teachers.Create(TeacherBody, CourseId).Execute();
                     }
 
                     /// <summary>Deletes a teacher of a course. This method returns the following error codes: *
@@ -1101,9 +1046,9 @@ namespace gShell.dotNet
                     /// following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`,
                     /// indicating the requesting user</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Classroom.v1.Data.Empty Delete (string CourseId, string UserId, string gShellServiceAccount = null)
+                    public Google.Apis.Classroom.v1.Data.Empty Delete (string CourseId, string UserId)
                     {
-                        return GetService(gShellServiceAccount).Courses.Teachers.Delete(CourseId, UserId).Execute();
+                        return GetService().Courses.Teachers.Delete(CourseId, UserId).Execute();
                     }
 
                     /// <summary>Returns a teacher of a course. This method returns the following error codes: *
@@ -1116,9 +1061,9 @@ namespace gShell.dotNet
                     /// following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`,
                     /// indicating the requesting user</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Classroom.v1.Data.Teacher Get (string CourseId, string UserId, string gShellServiceAccount = null)
+                    public Google.Apis.Classroom.v1.Data.Teacher Get (string CourseId, string UserId)
                     {
-                        return GetService(gShellServiceAccount).Courses.Teachers.Get(CourseId, UserId).Execute();
+                        return GetService().Courses.Teachers.Get(CourseId, UserId).Execute();
                     }
 
                     /// <summary>Returns a list of teachers of this course that the requester is permitted to view. This
@@ -1129,11 +1074,11 @@ namespace gShell.dotNet
                     /// <param name="properties">The optional properties for this method.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
                     public List<Google.Apis.Classroom.v1.Data.ListTeachersResponse> List(
-                        string CourseId, TeachersListProperties properties= null, string gShellServiceAccount = null)
+                        string CourseId, TeachersListProperties properties= null)
                     {
                         var results = new List<Google.Apis.Classroom.v1.Data.ListTeachersResponse>();
 
-                        v1.CoursesResource.TeachersResource.ListRequest request = GetService(gShellServiceAccount).Courses.Teachers.List(CourseId);
+                        v1.CoursesResource.TeachersResource.ListRequest request = GetService().Courses.Teachers.List(CourseId);
 
                         if (properties != null)
                         {
@@ -1218,9 +1163,9 @@ namespace gShell.dotNet
             /// UserGroupsMembershipLimitReached * `NOT_FOUND` if no invitation exists with the requested ID.</summary>
             /// <param name="Id">Identifier of the invitation to accept.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Classroom.v1.Data.Empty Accept (string Id, string gShellServiceAccount = null)
+            public Google.Apis.Classroom.v1.Data.Empty Accept (string Id)
             {
-                return GetService(gShellServiceAccount).Invitations.Accept(Id).Execute();
+                return GetService().Invitations.Accept(Id).Execute();
             }
 
             /// <summary>Creates an invitation. Only one invitation for a user and course may exist at a time. Delete
@@ -1232,9 +1177,9 @@ namespace gShell.dotNet
             /// exists.</summary>
             /// <param name="InvitationBody">The body of the request.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Classroom.v1.Data.Invitation Create (Google.Apis.Classroom.v1.Data.Invitation InvitationBody, string gShellServiceAccount = null)
+            public Google.Apis.Classroom.v1.Data.Invitation Create (Google.Apis.Classroom.v1.Data.Invitation InvitationBody)
             {
-                return GetService(gShellServiceAccount).Invitations.Create(InvitationBody).Execute();
+                return GetService().Invitations.Create(InvitationBody).Execute();
             }
 
             /// <summary>Deletes an invitation. This method returns the following error codes: * `PERMISSION_DENIED` if
@@ -1242,9 +1187,9 @@ namespace gShell.dotNet
             /// `NOT_FOUND` if no invitation exists with the requested ID.</summary>
             /// <param name="Id">Identifier of the invitation to delete.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Classroom.v1.Data.Empty Delete (string Id, string gShellServiceAccount = null)
+            public Google.Apis.Classroom.v1.Data.Empty Delete (string Id)
             {
-                return GetService(gShellServiceAccount).Invitations.Delete(Id).Execute();
+                return GetService().Invitations.Delete(Id).Execute();
             }
 
             /// <summary>Returns an invitation. This method returns the following error codes: * `PERMISSION_DENIED` if
@@ -1252,9 +1197,9 @@ namespace gShell.dotNet
             /// `NOT_FOUND` if no invitation exists with the requested ID.</summary>
             /// <param name="Id">Identifier of the invitation to return.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Classroom.v1.Data.Invitation Get (string Id, string gShellServiceAccount = null)
+            public Google.Apis.Classroom.v1.Data.Invitation Get (string Id)
             {
-                return GetService(gShellServiceAccount).Invitations.Get(Id).Execute();
+                return GetService().Invitations.Get(Id).Execute();
             }
 
             /// <summary>Returns a list of invitations that the requesting user is permitted to view, restricted to
@@ -1264,11 +1209,11 @@ namespace gShell.dotNet
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public List<Google.Apis.Classroom.v1.Data.ListInvitationsResponse> List(
-                InvitationsListProperties properties= null, string gShellServiceAccount = null)
+                InvitationsListProperties properties= null)
             {
                 var results = new List<Google.Apis.Classroom.v1.Data.ListInvitationsResponse>();
 
-                v1.InvitationsResource.ListRequest request = GetService(gShellServiceAccount).Invitations.List();
+                v1.InvitationsResource.ListRequest request = GetService().Invitations.List();
 
                 if (properties != null)
                 {
@@ -1333,9 +1278,9 @@ namespace gShell.dotNet
             /// identifier for the user * the email address of the user * the string literal `"me"`, indicating the requesting
             /// user</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Classroom.v1.Data.UserProfile Get (string UserId, string gShellServiceAccount = null)
+            public Google.Apis.Classroom.v1.Data.UserProfile Get (string UserId)
             {
-                return GetService(gShellServiceAccount).UserProfiles.Get(UserId).Execute();
+                return GetService().UserProfiles.Get(UserId).Execute();
             }
 
         }

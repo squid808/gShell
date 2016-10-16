@@ -16,7 +16,7 @@ namespace gShell.dotNet
     /// in turn sets the OAuth2Base.currentAuthInfo, which contains the currently authenticated domain and user (and 
     /// possibly more).
     /// </remarks>
-    public abstract class ServiceWrapper<T> where T : BaseClientService
+    public abstract class ServiceWrapper<T> : IServiceWrapper<T> where T : IClientService
     {
         #region Properties
         /// <summary>
@@ -80,7 +80,7 @@ namespace gShell.dotNet
                 }
             }
 
-            return null;
+            return default(T);
         }
 
         public static T GetService(string serviceAccountUser = null)

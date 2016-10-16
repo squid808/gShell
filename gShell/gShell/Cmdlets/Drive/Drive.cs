@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
+using gShell.dotNet.Utilities.OAuth2;
 using Google.Apis.Drive.v3;
 using Google.Apis.Drive.v3.Data;
 using gDrive = gShell.dotNet.Drive;
@@ -16,18 +17,12 @@ namespace gShell.Cmdlets.Drive
         /// <summary>
         /// <para type="description">The email account to be targeted by the service account.</para>
         /// </summary>
+        [Alias("ServiceAccountTarget")]
         [Parameter(Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string TargetUserEmail { get; set; }
 
         #endregion
-
-        protected override void BeginProcessing()
-        {
-            gShellServiceAccount = GetFullEmailAddress(TargetUserEmail, Domain);
-
-            base.BeginProcessing();
-        }
     }
 
     public enum DriveIdSpaceEnum { drive, appDataFolder }
