@@ -1048,7 +1048,7 @@ namespace gShell.Cmdlets.Sharedcontacts
             {
                 if (ParameterSetName == "one")
                 {
-                    WriteObject(contact.Get(Domain, Id));
+                    WriteObject(contact.Get(GAuthId, Id));
                 }
                 else
                 {
@@ -1058,7 +1058,7 @@ namespace gShell.Cmdlets.Sharedcontacts
 
                     if (MaxResults.HasValue) properties.MaxResults = this.MaxResults.Value;
 
-                    WriteObject(contact.List(Domain, properties).ContactsValue);
+                    WriteObject(contact.List(GAuthId, properties).ContactsValue);
                 }
             }
         }
@@ -1144,7 +1144,7 @@ namespace gShell.Cmdlets.Sharedcontacts
             if (ShouldProcess("Shared Contact", "New-GSharedContact"))
             {
                 //WriteObject(contact.Get(Domain, Id));
-                WriteObject(contact.Insert(body, Domain));
+                WriteObject(contact.Insert(body, GAuthId));
             }
         }
     }
@@ -1192,7 +1192,7 @@ namespace gShell.Cmdlets.Sharedcontacts
 
                 if (ShouldProcess("Shared Contact", "Set-GSharedContact"))
                 {
-                    WriteObject(contact.Update(this.ContactObj, Domain, id, version));
+                    WriteObject(contact.Update(this.ContactObj, GAuthId, id, version));
                 }
             }
             else
@@ -1268,7 +1268,7 @@ namespace gShell.Cmdlets.Sharedcontacts
 
                         if (ShouldProcess("Shared Contact", "Remove-GSharedContact"))
                         {
-                            contact.Delete(Domain, id, version);
+                            contact.Delete(GAuthId, id, version);
                         }
                     }
                     else

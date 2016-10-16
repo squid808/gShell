@@ -42,7 +42,7 @@ namespace gShell.Cmdlets.Adminsettings.DefaultLanguage
         {
             if (ShouldProcess("Admin Settings DefaultLanguage", "-GAdminSettingsDefaultLanguage"))
             {
-                WriteObject(defaultLanguage.Get(Domain));
+                WriteObject(defaultLanguage.Get(GAuthId));
             }
         }
     }
@@ -109,7 +109,7 @@ namespace gShell.Cmdlets.Adminsettings.DefaultLanguage
 
             if (ShouldProcess("Admin Settings DefaultLanguage", "Get-GAdminSettingsDefaultLanguage"))
             {
-                WriteObject(defaultLanguage.Update(body, Domain));
+                WriteObject(defaultLanguage.Update(body, GAuthId));
             }
         }
     }
@@ -140,7 +140,7 @@ namespace gShell.Cmdlets.Adminsettings.OrganizationName
         {
             if (ShouldProcess("Admin Settings OrganizationName", "Get-GAdminSettingsOrganizationName"))
             {
-                WriteObject(organizationName.Get(Domain));
+                WriteObject(organizationName.Get(GAuthId));
             }
         }
     }
@@ -184,7 +184,7 @@ namespace gShell.Cmdlets.Adminsettings.OrganizationName
 
             if (ShouldProcess("Admin Settings OrganizationName", "Set-GAdminSettingsOrganizationName"))
             {
-                WriteObject(organizationName.Update(body, Domain));
+                WriteObject(organizationName.Update(body, GAuthId));
             }
         }
     }
@@ -215,7 +215,7 @@ namespace gShell.Cmdlets.Adminsettings.MaximumUsers
         {
             if (ShouldProcess("Admin Settings MaximumUsers", "Get-GAdminSettingsMaximumUsers"))
             {
-                WriteObject(maximumUsers.Get(Domain));
+                WriteObject(maximumUsers.Get(GAuthId));
             }
         }
     }
@@ -246,7 +246,7 @@ namespace gShell.Cmdlets.Adminsettings.CurrentUsers
         {
             if (ShouldProcess("Admin Settings CurrentUsers", "Get-GAdminSettingsCurrentUsers"))
             {
-                WriteObject(currentUsers.Get(Domain));
+                WriteObject(currentUsers.Get(GAuthId));
             }
         }
     }
@@ -277,7 +277,7 @@ namespace gShell.Cmdlets.Adminsettings.ProductVersion
         {
             if (ShouldProcess("Admin Settings ProductVersion", "Get-GAdminSettingsProductVersion"))
             {
-                WriteObject(productVersion.Get(Domain));
+                WriteObject(productVersion.Get(GAuthId));
             }
         }
     }
@@ -308,7 +308,7 @@ namespace gShell.Cmdlets.Adminsettings.CustomerPin
         {
             if (ShouldProcess("Admin Settings CustomerPin", "Get-GAdminSettingsCustomerPin"))
             {
-                WriteObject(customerPin.Get(Domain));
+                WriteObject(customerPin.Get(GAuthId));
             }
         }
     }
@@ -339,7 +339,7 @@ namespace gShell.Cmdlets.Adminsettings.CreationTime
         {
             if (ShouldProcess("Admin Settings CreationTime", "Get-GAdminSettingsCreationTime"))
             {
-                WriteObject(creationTime.Get(Domain));
+                WriteObject(creationTime.Get(GAuthId));
             }
         }
     }
@@ -370,7 +370,7 @@ namespace gShell.Cmdlets.Adminsettings.CountryCode
         {
             if (ShouldProcess("Admin Settings CountryCode", "Get-GAdminSettingsCountryCode"))
             {
-                WriteObject(countryCode.Get(Domain));
+                WriteObject(countryCode.Get(GAuthId));
             }
         }
     }
@@ -401,7 +401,7 @@ namespace gShell.Cmdlets.Adminsettings.AdminSecondaryEmail
         {
             if (ShouldProcess("Admin Settings AdminSecondaryEmail", "Get-GAdminSettingsAdminSecondaryEmail"))
             {
-                WriteObject(adminSecondaryEmail.Get(Domain));
+                WriteObject(adminSecondaryEmail.Get(GAuthId));
             }
         }
     }
@@ -495,7 +495,7 @@ namespace gShell.Cmdlets.Adminsettings.CustomLogo
 
             if (ShouldProcess("Admin Settings CustomLogo", "Set-GAdminSettingsCustomLogo"))
             {
-                WriteObject(customLogo.Update(body, Domain));
+                WriteObject(customLogo.Update(body, GAuthId));
             }
         }
     }
@@ -526,7 +526,7 @@ namespace gShell.Cmdlets.Adminsettings.MxVerificationRecords
         {
             if (ShouldProcess("Admin Settings MxVerificationRecords", "Get-GAdminSettingsMxVerificationRecords"))
             {
-                WriteObject(mxVerificationStatus.Get(Domain));
+                WriteObject(mxVerificationStatus.Get(GAuthId));
             }
         }
     }
@@ -575,7 +575,7 @@ namespace gShell.Cmdlets.Adminsettings.MxVerificationRecords
 
             if (ShouldProcess("Admin Settings MxVerificationRecords", "Set-GAdminSettingsMxVerificationRecords"))
             {
-                WriteObject(mxVerificationStatus.Update(body, Domain));
+                WriteObject(mxVerificationStatus.Update(body, GAuthId));
             }
         }
     }
@@ -606,7 +606,7 @@ namespace gShell.Cmdlets.Adminsettings.SsoSettings
         {
             if (ShouldProcess("Admin Settings SsoSettings", "Get-GAdminSettingsSsoSettings"))
             {
-                WriteObject(ssoSettings.Get(Domain));
+                WriteObject(ssoSettings.Get(GAuthId));
             }
         }
     }
@@ -708,7 +708,7 @@ namespace gShell.Cmdlets.Adminsettings.SsoSettings
 
             if (ShouldProcess("Admin Settings SsoSettings", "Set-GAdminSettingsSsoSettings"))
             {
-                WriteObject(ssoSettings.Update(body, Domain));
+                WriteObject(ssoSettings.Update(body, GAuthId));
             }
         }
     }
@@ -739,7 +739,7 @@ namespace gShell.Cmdlets.Adminsettings.SsoSigningKey
         {
             if (ShouldProcess("Admin Settings SsoSigningKey", "Get-GAdminSettingsSsoSigningKey"))
             {
-                WriteObject(ssoSigningKey.Get(Domain));
+                WriteObject(ssoSigningKey.Get(GAuthId));
             }
         }
     }
@@ -783,7 +783,7 @@ namespace gShell.Cmdlets.Adminsettings.SsoSigningKey
 
             if (ShouldProcess("Admin Settings SsoSigningKey", "Set-GAdminSettingsSsoSigningKey"))
             {
-                WriteObject(ssoSigningKey.Update(body, Domain));
+                WriteObject(ssoSigningKey.Update(body, GAuthId));
             }
         }
     }
@@ -814,7 +814,7 @@ namespace gShell.Cmdlets.Adminsettings.EmailGateway
         {
             if (ShouldProcess("Admin Settings EmailGateway", "Get-GAdminSettingsEmailGateway"))
             {
-                WriteObject(emailGateway.Get(Domain));
+                WriteObject(emailGateway.Get(GAuthId));
             }
         }
     }
@@ -868,7 +868,7 @@ namespace gShell.Cmdlets.Adminsettings.EmailGateway
 
             if (ShouldProcess("Admin Settings EmailGateway", "Set-GAdminSettingsEmailGateway"))
             {
-                WriteObject(emailGateway.Update(body, Domain));
+                WriteObject(emailGateway.Update(body, GAuthId));
             }
         }
     }
@@ -956,7 +956,7 @@ namespace gShell.Cmdlets.Adminsettings.EmailRouting
 
             if (ShouldProcess("Admin Settings EmailRouting", "Set-GAdminSettingsEmailRouting"))
             {
-                WriteObject(emailRouting.Update(body, Domain));
+                WriteObject(emailRouting.Update(body, GAuthId));
             }
         }
     }

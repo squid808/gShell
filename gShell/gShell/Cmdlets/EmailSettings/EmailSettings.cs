@@ -72,7 +72,7 @@ namespace gShell.Cmdlets.Emailsettings.Delegation
         {
             if (ShouldProcess("Email Settings Delegation", "Get-GEmailSettingsDelegation"))
             {
-                WriteObject(delegation.Get(Domain, GetUserFromEmail(UserName)).DelegatesValue);
+                WriteObject(delegation.Get(GAuthId, GetUserFromEmail(UserName)).DelegatesValue);
             }
         }
     }
@@ -125,7 +125,7 @@ namespace gShell.Cmdlets.Emailsettings.Delegation
 
             if (ShouldProcess("Email Settings Delegation", "New-GEmailSettingsDelegation"))
             {
-                WriteObject(delegation.Insert(body, Domain, GetUserFromEmail(UserName)));
+                WriteObject(delegation.Insert(body, GAuthId, GetUserFromEmail(UserName)));
             }
         }
     }
@@ -190,7 +190,7 @@ namespace gShell.Cmdlets.Emailsettings.Delegation
 					{
 						WriteDebug("Attempting to remove " + toRemoveTarget + "...");
 
-                        delegation.Delete(Domain, GetUserFromEmail(UserName), DelegateEmail);
+                        delegation.Delete(GAuthId, GetUserFromEmail(UserName), DelegateEmail);
 							
 						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
 					}
@@ -390,7 +390,7 @@ namespace gShell.Cmdlets.Emailsettings.Filters
 
             if (ShouldProcess("Email Settings Filter", "New-GEmailSettingsFilter"))
             {
-                WriteObject(filters.Insert(body, Domain, GetUserFromEmail(UserName)));
+                WriteObject(filters.Insert(body, GAuthId, GetUserFromEmail(UserName)));
             }
         }
     }
@@ -432,7 +432,7 @@ namespace gShell.Cmdlets.Emailsettings.Forwarding
         {
             if (ShouldProcess("Email Settings Forwarding", "Get-GEmailSettingsForwarding"))
             {
-                WriteObject(forwarding.Get(Domain, GetUserFromEmail(UserName)));
+                WriteObject(forwarding.Get(GAuthId, GetUserFromEmail(UserName)));
             }
         }
     }
@@ -505,7 +505,7 @@ namespace gShell.Cmdlets.Emailsettings.Forwarding
 
             if (ShouldProcess("Email Settings Forwarding", "Set-GEmailSettingsForwarding"))
             {
-                WriteObject(forwarding.Update(body, Domain, GetUserFromEmail(UserName)));
+                WriteObject(forwarding.Update(body, GAuthId, GetUserFromEmail(UserName)));
             }
         }
     }
@@ -605,7 +605,7 @@ namespace gShell.Cmdlets.Emailsettings.General
 
             if (ShouldProcess("Email Settings General", "Set-GEmailSettingsGeneral"))
             {
-                WriteObject(general.Update(body, Domain, GetUserFromEmail(UserName)));
+                WriteObject(general.Update(body, GAuthId, GetUserFromEmail(UserName)));
             }
         }
     }
@@ -647,7 +647,7 @@ namespace gShell.Cmdlets.Emailsettings.Imap
         {
             if (ShouldProcess("Email Settings Imap", "Get-GEmailSettingsImap"))
             {
-                WriteObject(imap.Get(Domain, GetUserFromEmail(UserName)));
+                WriteObject(imap.Get(GAuthId, GetUserFromEmail(UserName)));
             }
         }
     }
@@ -700,7 +700,7 @@ namespace gShell.Cmdlets.Emailsettings.Imap
 
             if (ShouldProcess("Email Settings Imap", "Set-GEmailSettingsImap"))
             {
-                WriteObject(imap.Update(body, Domain, GetUserFromEmail(UserName)));
+                WriteObject(imap.Update(body, GAuthId, GetUserFromEmail(UserName)));
             }
         }
     }
@@ -742,7 +742,7 @@ namespace gShell.Cmdlets.Emailsettings.Label
         {
             if (ShouldProcess("Email Settings Label", "Get-GEmailSettingsLabel"))
             {
-                WriteObject(labels.Get(Domain, GetUserFromEmail(UserName)).LabelsValue);
+                WriteObject(labels.Get(GAuthId, GetUserFromEmail(UserName)).LabelsValue);
             }
         }
     }
@@ -795,7 +795,7 @@ namespace gShell.Cmdlets.Emailsettings.Label
                     LabelValue = Label
                 };
 
-                WriteObject(labels.Insert(newLabel, Domain, GetUserFromEmail(UserName)));
+                WriteObject(labels.Insert(newLabel, GAuthId, GetUserFromEmail(UserName)));
             }
         }
     }
@@ -860,7 +860,7 @@ namespace gShell.Cmdlets.Emailsettings.Label
 					{
 						WriteDebug("Attempting to remove " + toRemoveTarget + "...");
 
-                        labels.Delete(Domain, GetUserFromEmail(UserName), LabelName);
+                        labels.Delete(GAuthId, GetUserFromEmail(UserName), LabelName);
 							
 						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
 					}
@@ -956,7 +956,7 @@ namespace gShell.Cmdlets.Emailsettings.Language
 
             if (ShouldProcess("Email Settings Language", "Get-GEmailSettingsLanguage"))
             {
-                WriteObject(language.Update(body, Domain, GetUserFromEmail(UserName)));
+                WriteObject(language.Update(body, GAuthId, GetUserFromEmail(UserName)));
             }
         }
 
@@ -1134,7 +1134,7 @@ namespace gShell.Cmdlets.Emailsettings.Pop
         {
             if (ShouldProcess("Email Settings Pop", "Get-GEmailSettingsPop"))
             {
-                WriteObject(pop.Get(Domain, GetUserFromEmail(UserName)));
+                WriteObject(pop.Get(GAuthId, GetUserFromEmail(UserName)));
             }
         }
     }
@@ -1207,7 +1207,7 @@ namespace gShell.Cmdlets.Emailsettings.Pop
 
             if (ShouldProcess("Email Settings Pop", "Get-GEmailSettingsPop"))
             {
-                WriteObject(pop.Update(body, Domain, GetUserFromEmail(UserName)));
+                WriteObject(pop.Update(body, GAuthId, GetUserFromEmail(UserName)));
             }
         }
     }
@@ -1249,7 +1249,7 @@ namespace gShell.Cmdlets.Emailsettings.Signature
         {
             if (ShouldProcess("Email Settings Signature", "Get-GEmailSettingsSignature"))
             {
-                WriteObject(signature.Get(Domain, GetUserFromEmail(UserName)));
+                WriteObject(signature.Get(GAuthId, GetUserFromEmail(UserName)));
             }
         }
     }
@@ -1302,7 +1302,7 @@ namespace gShell.Cmdlets.Emailsettings.Signature
 
             if (ShouldProcess("Email Settings Signature", "Set-GEmailSettingsSignature"))
             {
-                WriteObject(signature.Update(body, Domain, GetUserFromEmail(UserName)));
+                WriteObject(signature.Update(body, GAuthId, GetUserFromEmail(UserName)));
             }
         }
     }
@@ -1344,7 +1344,7 @@ namespace gShell.Cmdlets.Emailsettings.SendasAlias
         {
             if (ShouldProcess("Email Settings SendasAlias", "Get-GEmailSettingsSendasAlias"))
             {
-                WriteObject(sendasAliases.Get(Domain, GetUserFromEmail(UserName)).SendasAliases);
+                WriteObject(sendasAliases.Get(GAuthId, GetUserFromEmail(UserName)).SendasAliases);
             }
         }
     }
@@ -1427,7 +1427,7 @@ namespace gShell.Cmdlets.Emailsettings.SendasAlias
 
             if (ShouldProcess("Email Settings SendasAlias", "New-GEmailSettingsSendasAlias"))
             {
-                WriteObject(sendasAliases.Insert(body, Domain, GetUserFromEmail(UserName)));
+                WriteObject(sendasAliases.Insert(body, GAuthId, GetUserFromEmail(UserName)));
             }
         }
     }
@@ -1469,7 +1469,7 @@ namespace gShell.Cmdlets.Emailsettings.VacationResponder
         {
             if (ShouldProcess("Email Settings VacationResponder", "Get-GEmailSettingsVacationResponder"))
             {
-                WriteObject(vacationResponder.Get(Domain, GetUserFromEmail(UserName)));
+                WriteObject(vacationResponder.Get(GAuthId, GetUserFromEmail(UserName)));
             }
         }
     }
@@ -1582,7 +1582,7 @@ namespace gShell.Cmdlets.Emailsettings.VacationResponder
 
             if (ShouldProcess("Email Settings VacationResponder", "Get-GEmailSettingsVacationResponder"))
             {
-                WriteObject(vacationResponder.Update(body, Domain, GetUserFromEmail(UserName)));
+                WriteObject(vacationResponder.Update(body, GAuthId, GetUserFromEmail(UserName)));
             }
         }
     }
@@ -1638,7 +1638,7 @@ namespace gShell.Cmdlets.Emailsettings.WebClip
 
             if (ShouldProcess("Email Settings WebClip", "Set-GEmailSettingsWebClip"))
             {
-                WriteObject(webClip.Update(body, Domain, GetUserFromEmail(UserName)));
+                WriteObject(webClip.Update(body, GAuthId, GetUserFromEmail(UserName)));
             }
         }
     }

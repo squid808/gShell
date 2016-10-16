@@ -39,7 +39,7 @@ namespace gShell.Cmdlets.Utilities.OAuth2
         /// </summary>
         [Parameter(Mandatory = false)]
         [ValidateNotNullOrEmpty]
-        public string Domain { get; set; }
+        public string GAuthId { get; set; }
 
         /// <summary>The gShell base implementation of the PowerShell BeginProcessing method.</summary>
         /// <remarks>If a service account needs to be identified, it should be in a child class that overrides
@@ -49,8 +49,8 @@ namespace gShell.Cmdlets.Utilities.OAuth2
             var secrets = CheckForClientSecrets();
             if (secrets != null)
             {
-                IEnumerable<string> scopes = EnsureScopesExist(Domain);
-                Domain = (ServiceWrapperDictionary[mainBaseType].BuildService(Authenticate(scopes, secrets, Domain))).domain;
+                IEnumerable<string> scopes = EnsureScopesExist(GAuthId);
+                GAuthId = (ServiceWrapperDictionary[mainBaseType].BuildService(Authenticate(scopes, secrets, GAuthId))).domain;
 
                 GWriteProgress = new gWriteProgress(WriteProgress);
             }

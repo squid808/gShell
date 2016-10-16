@@ -252,7 +252,7 @@ namespace gShell.Cmdlets.Reports.GRepUserUsageReport
                 if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
 
                 //Allow for the use of 'all'
-                string _userKey = (UserKey == "all") ? "all" : GetFullEmailAddress(UserKey, Domain);
+                string _userKey = (UserKey == "all") ? "all" : GetFullEmailAddress(UserKey, GAuthId);
 
                 WriteObject(userUsageReport.Get(_userKey, _datestring, properties));
             }
@@ -622,11 +622,11 @@ namespace gShell.Cmdlets.Reports.GRepActivity
                         body.Params__ = new Dictionary<string, string>();
                         body.Params__["ttl"] = Ttl;
                     }
-                    WriteObject(activities.Watch(body, GetFullEmailAddress(UserKey, Domain), ApplicationName.ToString()));
+                    WriteObject(activities.Watch(body, GetFullEmailAddress(UserKey, GAuthId), ApplicationName.ToString()));
                 }
                 else
                 {
-                    WriteObject(activities.Watch(ChannelBody, GetFullEmailAddress(UserKey, Domain), ApplicationName.ToString()));
+                    WriteObject(activities.Watch(ChannelBody, GetFullEmailAddress(UserKey, GAuthId), ApplicationName.ToString()));
                 }
             }
         }
@@ -796,7 +796,7 @@ namespace gShell.Cmdlets.Reports.GRepActivity
                     properties.TotalResults = MaxResults.Value;
 
                 //Allow for the use of 'all'
-                string _userKey = (UserKey == "all") ? "all" : GetFullEmailAddress(UserKey, Domain);
+                string _userKey = (UserKey == "all") ? "all" : GetFullEmailAddress(UserKey, GAuthId);
 
                 WriteObject(activities.List(_userKey, ApplicationName.ToString(), properties).SelectMany(x => x.Items).ToList());
             }

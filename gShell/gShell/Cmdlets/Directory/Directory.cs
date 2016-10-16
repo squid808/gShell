@@ -2188,7 +2188,7 @@ namespace gShell.Cmdlets.Directory.GAAsp
 
         protected override void ProcessRecord()
         {
-            UserKey = GetFullEmailAddress(UserKey, Domain);
+            UserKey = GetFullEmailAddress(UserKey, GAuthId);
 
             if (ShouldProcess("Directory Asps", "Get-GAAsp"))
             {
@@ -2256,12 +2256,12 @@ namespace gShell.Cmdlets.Directory.GAAsp
 
         protected override void ProcessRecord()
         {
-            UserKey = GetFullEmailAddress(UserKey, Domain);
+            UserKey = GetFullEmailAddress(UserKey, GAuthId);
 
             if (ShouldProcess("Directory Asps", "Remove-GAAsp"))
             {
                 if (Force || ShouldContinue((string.Format("Asp {0} with CodeID {2} will be removed from the {1} Google Apps domain.\nContinue?",
-                    UserKey, Domain, CodeId)), "Confirm Google Apps Asp Removal"))
+                    UserKey, GAuthId, CodeId)), "Confirm Google Apps Asp Removal"))
                 {
                     try
                     {
@@ -3265,11 +3265,11 @@ namespace gShell.Cmdlets.Directory.GAGroup
 
                         var properties = new dotNet.Directory.Groups.GroupsListProperties()
                         {
-                            UserKey = GetFullEmailAddress(UserName, Domain)
+                            UserKey = GetFullEmailAddress(UserName, GAuthId)
                         };
 
                         if (!string.IsNullOrWhiteSpace(this.Customer)) properties.Customer = this.Customer;
-                        else properties.Domain = this.Domain;
+                        else properties.Domain = this.GAuthId;
 
                         if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
 
@@ -3277,7 +3277,7 @@ namespace gShell.Cmdlets.Directory.GAGroup
                     }
                     break;
                 case "OneGroup":
-                    GroupKey = GetFullEmailAddress(GroupKey, Domain);
+                    GroupKey = GetFullEmailAddress(GroupKey, GAuthId);
 
                     if (ShouldProcess(GroupKey, "Get-GAGroup"))
                     {
@@ -3293,7 +3293,7 @@ namespace gShell.Cmdlets.Directory.GAGroup
                         var properties = new dotNet.Directory.Groups.GroupsListProperties();
 
                         if (!string.IsNullOrWhiteSpace(this.Customer)) properties.Customer = this.Customer;
-                        else properties.Domain = this.Domain;
+                        else properties.Domain = this.GAuthId;
 
                         if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
 
@@ -3367,7 +3367,7 @@ namespace gShell.Cmdlets.Directory.GAGroup
         {
             Data.Group groupAcct = new Data.Group();
 
-            groupAcct.Email = GetFullEmailAddress(Email, Domain);
+            groupAcct.Email = GetFullEmailAddress(Email, GAuthId);
 
             if (!string.IsNullOrWhiteSpace(Name))
             {
@@ -3446,15 +3446,15 @@ namespace gShell.Cmdlets.Directory.GAGroup
             if (ShouldProcess(GroupName, "Remove-GAGroup"))
             {
                 if (Force || ShouldContinue((String.Format("Group {0} will be removed from the {1} Google Apps domain.\nContinue?",
-                    GroupName, Domain)), "Confirm Google Apps Group Removal"))
+                    GroupName, GAuthId)), "Confirm Google Apps Group Removal"))
                 {
                     try
                     {
                         WriteDebug(string.Format("Attempting to remove group {0}@{1}...",
-                            GroupName, Domain));
+                            GroupName, GAuthId));
                         RemoveGroup();
                         WriteVerbose(string.Format("Removal of {0}@{1} completed without error.",
-                            GroupName, Domain));
+                            GroupName, GAuthId));
                     }
                     catch (Exception e)
                     {
@@ -3476,7 +3476,7 @@ namespace gShell.Cmdlets.Directory.GAGroup
             {
                 case "Email":
                     fullEmail = GroupName;
-                    fullEmail = GetFullEmailAddress(fullEmail, Domain);
+                    fullEmail = GetFullEmailAddress(fullEmail, GAuthId);
                     break;
 
                 case "GAGroupObject":
@@ -3578,7 +3578,7 @@ namespace gShell.Cmdlets.Directory.GAGroup
 
             if (!String.IsNullOrWhiteSpace(NewEmailAddress))
             {
-                string _newEmail = GetFullEmailAddress(NewEmailAddress, Domain);
+                string _newEmail = GetFullEmailAddress(NewEmailAddress, GAuthId);
                 groupAcct.Email = _newEmail;
             }
 
@@ -3587,7 +3587,7 @@ namespace gShell.Cmdlets.Directory.GAGroup
                 groupAcct.Name = NewName;
             }
 
-            GroupName = GetFullEmailAddress(GroupName, Domain);
+            GroupName = GetFullEmailAddress(GroupName, GAuthId);
             WriteObject(groups.Patch(groupAcct, GroupName));
         }
     }
@@ -3823,13 +3823,13 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
 
         protected override void ProcessRecord()
         {
-            GroupName = GetFullEmailAddress(GroupName, Domain);
+            GroupName = GetFullEmailAddress(GroupName, GAuthId);
 
             if (ShouldProcess(GroupName, "Add-GAGroupMember"))
             {
                 Data.Member member = new Data.Member
                 {
-                    Email = GetFullEmailAddress(UserName, Domain),
+                    Email = GetFullEmailAddress(UserName, GAuthId),
                     Role = this.Role.ToString()
                 };
 
@@ -3928,8 +3928,8 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
             {
                 if (ShouldProcess(GroupName, "Get-GAGroupMember"))
                 {
-                    GroupName = GetFullEmailAddress(GroupName, Domain);
-                    UserName = GetFullEmailAddress(UserName, Domain);
+                    GroupName = GetFullEmailAddress(GroupName, GAuthId);
+                    UserName = GetFullEmailAddress(UserName, GAuthId);
                     WriteObject(members.Get(GroupName, UserName));
                 }
             }
@@ -3945,7 +3945,7 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
                                 Roles = DetermineRoles()
                             };
 
-                            GroupName = GetFullEmailAddress(GroupName, Domain);
+                            GroupName = GetFullEmailAddress(GroupName, GAuthId);
                             WriteObject(members.List(GroupName, properties).SelectMany(x => x.MembersValue).ToList());
                         }
                         break;
@@ -4016,7 +4016,7 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
 
             foreach (Data.Group group in allGroups)
             {
-                GroupName = GetFullEmailAddress(GroupName, Domain);
+                GroupName = GetFullEmailAddress(GroupName, GAuthId);
                 List<Data.Member> membersList = members.List(GroupName).SelectMany(x => x.MembersValue).ToList();
 
                 multiList.Add(group.Email, membersList);
@@ -4182,16 +4182,16 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
 
         protected override void ProcessRecord()
         {
-            GroupName = GetFullEmailAddress(GroupName, Domain);
+            GroupName = GetFullEmailAddress(GroupName, GAuthId);
 
             if (ShouldProcess(GroupName, "Remove-GAGroupMember"))
             {
                 if (Force || ShouldContinue((String.Format("Group member {0} will be removed from the {1}@{2} group.\nContinue?",
-                    UserName, GroupName, Domain)), "Confirm Google Apps Group Member Removal"))
+                    UserName, GroupName, GAuthId)), "Confirm Google Apps Group Member Removal"))
                 {
                     try
                     {
-                        UserName = GetFullEmailAddress(UserName, Domain);
+                        UserName = GetFullEmailAddress(UserName, GAuthId);
 
                         WriteDebug(string.Format("Attempting to remove member {0} from group {1}...",
                             UserName, GroupName));
@@ -4279,8 +4279,8 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
                     Role = this.Role.ToString()
                 };
 
-                GroupName = GetFullEmailAddress(GroupName, Domain);
-                UserName = GetFullEmailAddress(UserName, Domain);
+                GroupName = GetFullEmailAddress(GroupName, GAuthId);
+                UserName = GetFullEmailAddress(UserName, GAuthId);
 
                 WriteObject(members.Update(member, GroupName, UserName));
             }
@@ -4488,7 +4488,7 @@ namespace gShell.Cmdlets.Directory.GAMobileDevice
                     ShouldContinue(
                         (String.Format(
                             "Mobile Device {0} with ResourceId {2} will be removed from the {1} Google Apps domain.\nContinue?",
-                            CustomerId, Domain, ResourceId)), "Confirm Google Apps Mobile Device Removal"))
+                            CustomerId, GAuthId, ResourceId)), "Confirm Google Apps Mobile Device Removal"))
                 {
                     try
                     {
@@ -4746,7 +4746,7 @@ namespace gShell.Cmdlets.Directory.GANotification
             if (ShouldProcess(Customer, "Remove-GANotification"))
             {
                 if (Force || ShouldContinue((String.Format("Notification {0} with NotificationId {2} will be removed from the {1} Google Apps domain.\nContinue?",
-                    Customer, Domain, NotificationId)), "Confirm Google Apps Notification Removal"))
+                    Customer, GAuthId, NotificationId)), "Confirm Google Apps Notification Removal"))
                 {
                     try
                     {
@@ -4993,7 +4993,7 @@ namespace gShell.Cmdlets.Directory.GAOrgUnit
             if (ShouldProcess(CustomerId, "Remove-GAOrgUnit"))
             {
                 if (Force || ShouldContinue((String.Format("OrgUnit {0} for CustomerId {2} will be removed from the {1} Google Apps domain.\nContinue?",
-                    OrgUnitPath, Domain, CustomerId)), "Confirm Google Apps OrgUnit Removal"))
+                    OrgUnitPath, GAuthId, CustomerId)), "Confirm Google Apps OrgUnit Removal"))
                 {
                     try
                     {
@@ -6209,7 +6209,7 @@ namespace gShell.Cmdlets.Directory.GASchema
             if (ShouldProcess(CustomerId, "Remove-GASchema"))
             {
                 if (Force || ShouldContinue((String.Format("Schema Key {0} for CustomerId {2} will be removed from the {1} Google Apps domain.\nContinue?",
-                    SchemaKey, Domain, CustomerId)), "Confirm Google Apps Schema Removal"))
+                    SchemaKey, GAuthId, CustomerId)), "Confirm Google Apps Schema Removal"))
                 {
                     try
                     {
@@ -6790,7 +6790,7 @@ namespace gShell.Cmdlets.Directory.GAToken
 
         protected override void ProcessRecord()
         {
-            UserKey = GetFullEmailAddress(UserKey, Domain);
+            UserKey = GetFullEmailAddress(UserKey, GAuthId);
 
             if (ShouldProcess(UserKey, "Get-GAToken"))
             {
@@ -6860,12 +6860,12 @@ namespace gShell.Cmdlets.Directory.GAToken
 
         protected override void ProcessRecord()
         {
-            UserKey = GetFullEmailAddress(UserKey, Domain);
+            UserKey = GetFullEmailAddress(UserKey, GAuthId);
 
             if (ShouldProcess(ClientId, "Remove-GAToken"))
             {
                 if (Force || ShouldContinue((String.Format("Token for application with Client ID of {0} will be removed for user {2} from the {1} Google Apps domain.\nContinue?",
-                    ClientId, Domain, UserKey)), "Confirm Google Apps Token Removal"))
+                    ClientId, GAuthId, UserKey)), "Confirm Google Apps Token Removal"))
                 {
                     try
                     {
@@ -7080,7 +7080,7 @@ namespace gShell.Cmdlets.Directory.GAUser
             {
                 case "OneUser":
 
-                    UserKey = GetFullEmailAddress(UserKey, Domain);
+                    UserKey = GetFullEmailAddress(UserKey, GAuthId);
 
                     var properties = new dotNet.Directory.Users.UsersGetProperties()
                     {
@@ -7114,7 +7114,7 @@ namespace gShell.Cmdlets.Directory.GAUser
                         };
 
                         if (!string.IsNullOrWhiteSpace(this.Customer)) listproperties.Customer = this.Customer;
-                        else listproperties.Domain = this.Domain;
+                        else listproperties.Domain = this.GAuthId;
 
                         //Make sure to include the domain here because List could use things other than domain (customer, etc)
                         List<Data.User> result = users.List(listproperties).SelectMany(x => x.UsersValue).ToList();
@@ -7336,7 +7336,7 @@ namespace gShell.Cmdlets.Directory.GAUser
 
             userAcct.Name.FamilyName = FamilyName;
 
-            userAcct.PrimaryEmail = GetFullEmailAddress(UserName, Domain);
+            userAcct.PrimaryEmail = GetFullEmailAddress(UserName, GAuthId);
 
             switch (ParameterSetName)
             {
@@ -7447,15 +7447,15 @@ namespace gShell.Cmdlets.Directory.GAUser
             if (ShouldProcess(UserKey, "Remove-GAUser"))
             {
                 if (Force || ShouldContinue((String.Format("User {0} will be removed from the {1} Google Apps domain.\nContinue?",
-                    UserKey, Domain)), "Confirm Google Apps User Removal"))
+                    UserKey, GAuthId)), "Confirm Google Apps User Removal"))
                 {
                     try
                     {
                         WriteDebug(string.Format("Attempting to remove user {0}@{1}...",
-                            UserKey, Domain));
+                            UserKey, GAuthId));
                         RemoveUser();
                         WriteVerbose(string.Format("Removal of {0}@{1} completed without error.",
-                            UserKey, Domain));
+                            UserKey, GAuthId));
                     }
                     catch (Exception e)
                     {
@@ -7485,7 +7485,7 @@ namespace gShell.Cmdlets.Directory.GAUser
                     break;
             }
 
-            users.Delete(GetFullEmailAddress(fullEmail, Domain));
+            users.Delete(GetFullEmailAddress(fullEmail, GAuthId));
         }
     }
 
@@ -7734,7 +7734,7 @@ namespace gShell.Cmdlets.Directory.GAUser
 
         protected override void ProcessRecord()
         {
-            UserKey = GetFullEmailAddress(UserKey, Domain);
+            UserKey = GetFullEmailAddress(UserKey, GAuthId);
 
             if (ShouldProcess(UserKey, "Set-GAUser"))
             {
@@ -7787,7 +7787,7 @@ namespace gShell.Cmdlets.Directory.GAUser
 
             if (!String.IsNullOrWhiteSpace(NewUserName))
             {
-                NewUserName = GetFullEmailAddress(NewUserName, Domain);
+                NewUserName = GetFullEmailAddress(NewUserName, GAuthId);
                 userAcct.PrimaryEmail = NewUserName;
             }
 
@@ -7921,7 +7921,7 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
             switch (ParameterSetName)
             {
                 case "OneUser":
-                    UserKey = GetFullEmailAddress(UserKey, Domain);
+                    UserKey = GetFullEmailAddress(UserKey, GAuthId);
 
                     if (ShouldProcess(UserKey, "Get-GAUserAlias"))
                     {
@@ -8055,13 +8055,13 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
 
         protected override void ProcessRecord()
         {
-            UserName = GetFullEmailAddress(UserName, Domain);
+            UserName = GetFullEmailAddress(UserName, GAuthId);
 
             if (ShouldProcess(UserName, "New-GAUserAlias"))
             {
                 Data.Alias aliasBody = new Data.Alias()
                 {
-                    AliasValue = GetFullEmailAddress(Alias, Domain)
+                    AliasValue = GetFullEmailAddress(Alias, GAuthId)
                 };
 
                 WriteObject(users.aliases.Insert(aliasBody, UserName));
@@ -8123,17 +8123,17 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
 
         protected override void ProcessRecord()
         {
-            UserAliasName = GetFullEmailAddress(UserAliasName, Domain);
+            UserAliasName = GetFullEmailAddress(UserAliasName, GAuthId);
 
             if (ShouldProcess(UserAliasName, "Remove-GAUserAlias"))
             {
                 if (Force || ShouldContinue((String.Format("User alias {0} will be removed from the {1} Google Apps domain.\nContinue?",
-                    UserAliasName, Domain)), "Confirm Google Apps user alias Removal"))
+                    UserAliasName, GAuthId)), "Confirm Google Apps user alias Removal"))
                 {
                     try
                     {
                         WriteDebug(string.Format("Attempting to remove user alias {0}@{1}...",
-                            UserAliasName, Domain));
+                            UserAliasName, GAuthId));
 
                         if (string.IsNullOrWhiteSpace(UserKey))
                         {
@@ -8143,7 +8143,7 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
                         users.aliases.Delete(UserKey, UserAliasName);
 
                         WriteVerbose(string.Format("Removal of {0}@{1} completed without error.",
-                            UserAliasName, Domain));
+                            UserAliasName, GAuthId));
                     }
                     catch (Exception e)
                     {
@@ -8215,7 +8215,7 @@ namespace gShell.Cmdlets.Directory.GAUserPhoto
 
         protected override void ProcessRecord()
         {
-            UserKey = GetFullEmailAddress(UserKey, Domain);
+            UserKey = GetFullEmailAddress(UserKey, GAuthId);
 
             if (ShouldProcess(UserKey, "Get-GAUserPhoto"))
             {
@@ -8285,12 +8285,12 @@ namespace gShell.Cmdlets.Directory.GAUserPhoto
 
         protected override void ProcessRecord()
         {
-            UserKey = GetFullEmailAddress(UserKey, Domain);
+            UserKey = GetFullEmailAddress(UserKey, GAuthId);
 
             if (ShouldProcess(UserKey, "Remove-GAUserPhoto"))
             {
                 if (Force || ShouldContinue((String.Format("Photo for User {0} will be removed from the {1} Google Apps domain.\nContinue?",
-                    UserKey, Domain)), "Confirm Google Apps User Photo Removal"))
+                    UserKey, GAuthId)), "Confirm Google Apps User Photo Removal"))
                 {
                     try
                     {
@@ -8388,7 +8388,7 @@ namespace gShell.Cmdlets.Directory.GAUserPhoto
 
         protected override void ProcessRecord()
         {
-            UserKey = GetFullEmailAddress(UserKey, Domain);
+            UserKey = GetFullEmailAddress(UserKey, GAuthId);
 
             if (ShouldProcess(UserKey, "Set-GAUserPhoto"))
             {
@@ -9242,7 +9242,7 @@ namespace gShell.Cmdlets.Directory.GAUserProperty
 
         protected override void ProcessRecord()
         {
-            UserName = GetFullEmailAddress(UserName, Domain);
+            UserName = GetFullEmailAddress(UserName, GAuthId);
 
             if (ShouldProcess(UserName, "Get-GAUserProperty"))
             {
@@ -10015,7 +10015,7 @@ namespace gShell.Cmdlets.Directory.GAUserProperty
             if (ShouldProcess(UserName, "Get-GAUserProperty"))
             {
                 if (Force || ShouldContinue((String.Format("One or more user property types of type {0} will be removed from {1}@{2}.\nContinue?",
-                    PropertyType.ToString(), UserName, Domain)), "Confirm Google Apps User Property Removal"))
+                    PropertyType.ToString(), UserName, GAuthId)), "Confirm Google Apps User Property Removal"))
                 {
                     Data.User u = new Data.User();
 
@@ -10025,7 +10025,7 @@ namespace gShell.Cmdlets.Directory.GAUserProperty
                     }
                     else if (!string.IsNullOrWhiteSpace(UserName))
                     {
-                        UserName = GetFullEmailAddress(UserName, Domain);
+                        UserName = GetFullEmailAddress(UserName, GAuthId);
                         u = users.Get(UserName);
                     }
                     else
@@ -10158,7 +10158,7 @@ namespace gShell.Cmdlets.Directory.GAUserProperty
                     }
                     break;
             }
-            string UserKey = GetFullEmailAddress(u.PrimaryEmail, Domain);
+            string UserKey = GetFullEmailAddress(u.PrimaryEmail, GAuthId);
             users.Update(userAcct, UserKey);
         }
 
@@ -10202,7 +10202,7 @@ namespace gShell.Cmdlets.Directory.GAUserProperty
                     break;
             }
 
-            string UserKey = GetFullEmailAddress(u.PrimaryEmail, Domain);
+            string UserKey = GetFullEmailAddress(u.PrimaryEmail, GAuthId);
             users.Patch(userAcct, UserKey);
 
         }
@@ -10223,7 +10223,7 @@ namespace gShell.Cmdlets.Directory.GAUserProperty
             userAcct.Phones = NullTokenProvider.NullToken;
             userAcct.Relations = NullTokenProvider.NullToken;
 
-            string UserKey = GetFullEmailAddress(u.PrimaryEmail, Domain);
+            string UserKey = GetFullEmailAddress(u.PrimaryEmail, GAuthId);
             users.Patch(userAcct, UserKey);
         }
     }
@@ -10266,7 +10266,7 @@ namespace gShell.Cmdlets.Directory.GAVerificationCode
 
         protected override void ProcessRecord()
         {
-            UserKey = GetFullEmailAddress(UserKey, Domain);
+            UserKey = GetFullEmailAddress(UserKey, GAuthId);
 
             if (ShouldProcess(UserKey, "Get-GAVerificationCode"))
             {
@@ -10321,7 +10321,7 @@ namespace gShell.Cmdlets.Directory.GAVerificationCode
             if (ShouldProcess(UserKey, "Revoke-GAVerificationCode"))
             {
                 if (Force || ShouldContinue((String.Format("Verification Codes for user {0} will be invalidated on the {1} Google Apps domain.\nContinue?",
-                    UserKey, Domain)), "Confirm Google Apps Verification Code Invalidation"))
+                    UserKey, GAuthId)), "Confirm Google Apps Verification Code Invalidation"))
                 {
                     try
                     {
@@ -10380,7 +10380,7 @@ namespace gShell.Cmdlets.Directory.GAVerificationCode
 
         protected override void ProcessRecord()
         {
-            UserKey = GetFullEmailAddress(UserKey, Domain);
+            UserKey = GetFullEmailAddress(UserKey, GAuthId);
 
             if (ShouldProcess(UserKey, "New-GAVerificationCode"))
             {

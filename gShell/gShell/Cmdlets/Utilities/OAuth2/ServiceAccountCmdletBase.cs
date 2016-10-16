@@ -29,13 +29,13 @@ namespace gShell.Cmdlets.Utilities.OAuth2
         {
             if (!string.IsNullOrWhiteSpace(TargetUserEmail))
             {
-                gShellServiceAccount = GetFullEmailAddress(TargetUserEmail, Domain);
+                gShellServiceAccount = GetFullEmailAddress(TargetUserEmail, GAuthId);
 
-                if (!OAuth2Base.infoConsumer.ServiceAccountExists(Domain))
+                if (!OAuth2Base.infoConsumer.ServiceAccountExists(GAuthId))
                 {
                     WriteWarning(String.Format("No service account was found for domain {0}. Please set a service"+
                         " account with Set-GShellServiceAccount, or see https://github.com/squid808/gShell/wiki/Service-Accounts"+
-                        " for more information.", Domain));
+                        " for more information.", GAuthId));
                 }
             }
 
@@ -43,8 +43,8 @@ namespace gShell.Cmdlets.Utilities.OAuth2
             var secrets = CheckForClientSecrets();
             if (secrets != null)
             {
-                IEnumerable<string> scopes = EnsureScopesExist(Domain);
-                Domain = mainBase.BuildService(Authenticate(scopes, secrets, Domain), gShellServiceAccount).domain;
+                IEnumerable<string> scopes = EnsureScopesExist(GAuthId);
+                GAuthId = mainBase.BuildService(Authenticate(scopes, secrets, GAuthId), gShellServiceAccount).domain;
 
                 GWriteProgress = new gWriteProgress(WriteProgress);
             }
