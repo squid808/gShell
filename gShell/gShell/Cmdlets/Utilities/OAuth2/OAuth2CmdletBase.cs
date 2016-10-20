@@ -305,6 +305,11 @@ namespace gShell.Cmdlets.Utilities.OAuth2
         {
             return Utils.GetUserFromEmail(userName);
         }
+
+        protected string GetDomainFromEmail(string email)
+        {
+            return Utils.GetDomainFromEmail(email);
+        }
         #endregion
     }
 

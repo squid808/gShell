@@ -34,6 +34,28 @@ namespace gShell.Cmdlets.Emailsettings
 
     public enum GeneralPageSizeEnum
     { _25 = 25, _50 = 50, _100 = 100 }
+
+    public abstract class EmailsettingsCmdletBase : EmailsettingsBase
+    {
+        #region Parameters
+        /// <summary>
+        /// <para type="description">The target domain for this email settings cmdlet.</para>
+        /// </summary>
+        [Parameter(
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The target domain for this email settings cmdlet.")]
+        [ValidateNotNullOrEmpty]
+        public string Domain { get; set; }
+        #endregion
+
+        protected override void BeginProcessing()
+        {
+            base.BeginProcessing();
+
+            if (string.IsNullOrWhiteSpace(Domain)) Domain = GetDomainFromEmail(GAuthId);
+        }
+    }
 }
 
 namespace gShell.Cmdlets.Emailsettings.Delegation
@@ -55,7 +77,7 @@ namespace gShell.Cmdlets.Emailsettings.Delegation
     [Cmdlet(VerbsCommon.Get, "GEmailSettingsDelegation",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GEmailSettingsDelegation")]
-    public class GetGEmailSettingsDelegationCommand : EmailsettingsBase
+    public class GetGEmailSettingsDelegationCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -72,7 +94,7 @@ namespace gShell.Cmdlets.Emailsettings.Delegation
         {
             if (ShouldProcess("Email Settings Delegation", "Get-GEmailSettingsDelegation"))
             {
-                WriteObject(delegation.Get(GAuthId, GetUserFromEmail(UserName)).DelegatesValue);
+                WriteObject(delegation.Get(Domain, GetUserFromEmail(UserName)).DelegatesValue);
             }
         }
     }
@@ -94,7 +116,7 @@ namespace gShell.Cmdlets.Emailsettings.Delegation
     [Cmdlet(VerbsCommon.New, "GEmailSettingsDelegation",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GEmailSettingsDelegation")]
-    public class NewGEmailSettingsDelegationCommand : EmailsettingsBase
+    public class NewGEmailSettingsDelegationCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -125,7 +147,7 @@ namespace gShell.Cmdlets.Emailsettings.Delegation
 
             if (ShouldProcess("Email Settings Delegation", "New-GEmailSettingsDelegation"))
             {
-                WriteObject(delegation.Insert(body, GAuthId, GetUserFromEmail(UserName)));
+                WriteObject(delegation.Insert(body, Domain, GetUserFromEmail(UserName)));
             }
         }
     }
@@ -147,7 +169,7 @@ namespace gShell.Cmdlets.Emailsettings.Delegation
     [Cmdlet(VerbsCommon.Remove, "GEmailSettingsDelegation",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GEmailSettingsDelegation")]
-    public class RemoveGEmailSettingsDelegationCommand : EmailsettingsBase
+    public class RemoveGEmailSettingsDelegationCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -190,7 +212,7 @@ namespace gShell.Cmdlets.Emailsettings.Delegation
 					{
 						WriteDebug("Attempting to remove " + toRemoveTarget + "...");
 
-                        delegation.Delete(GAuthId, GetUserFromEmail(UserName), DelegateEmail);
+                        delegation.Delete(Domain, GetUserFromEmail(UserName), DelegateEmail);
 							
 						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
 					}
@@ -228,7 +250,7 @@ namespace gShell.Cmdlets.Emailsettings.Filters
     [Cmdlet(VerbsCommon.New, "GEmailSettingsFilter",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GEmailSettingsFilter")]
-    public class NewGEmailSettingsFilterCommand : EmailsettingsBase
+    public class NewGEmailSettingsFilterCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -390,7 +412,7 @@ namespace gShell.Cmdlets.Emailsettings.Filters
 
             if (ShouldProcess("Email Settings Filter", "New-GEmailSettingsFilter"))
             {
-                WriteObject(filters.Insert(body, GAuthId, GetUserFromEmail(UserName)));
+                WriteObject(filters.Insert(body, Domain, GetUserFromEmail(UserName)));
             }
         }
     }
@@ -415,7 +437,7 @@ namespace gShell.Cmdlets.Emailsettings.Forwarding
     [Cmdlet(VerbsCommon.Get, "GEmailSettingsForwarding",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GEmailSettingsForwarding")]
-    public class NewGEmailSettingsForwardingCommand : EmailsettingsBase
+    public class NewGEmailSettingsForwardingCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -432,7 +454,7 @@ namespace gShell.Cmdlets.Emailsettings.Forwarding
         {
             if (ShouldProcess("Email Settings Forwarding", "Get-GEmailSettingsForwarding"))
             {
-                WriteObject(forwarding.Get(GAuthId, GetUserFromEmail(UserName)));
+                WriteObject(forwarding.Get(Domain, GetUserFromEmail(UserName)));
             }
         }
     }
@@ -454,7 +476,7 @@ namespace gShell.Cmdlets.Emailsettings.Forwarding
     [Cmdlet(VerbsCommon.Set, "GEmailSettingsForwarding",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GEmailSettingsForwarding")]
-    public class SetGEmailSettingsForwardingCommand : EmailsettingsBase
+    public class SetGEmailSettingsForwardingCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -505,7 +527,7 @@ namespace gShell.Cmdlets.Emailsettings.Forwarding
 
             if (ShouldProcess("Email Settings Forwarding", "Set-GEmailSettingsForwarding"))
             {
-                WriteObject(forwarding.Update(body, GAuthId, GetUserFromEmail(UserName)));
+                WriteObject(forwarding.Update(body, Domain, GetUserFromEmail(UserName)));
             }
         }
     }
@@ -530,7 +552,7 @@ namespace gShell.Cmdlets.Emailsettings.General
     [Cmdlet(VerbsCommon.Set, "GEmailSettingsGeneral",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GEmailSettingsGeneral")]
-    public class SetGEmailSettingsGeneralCommand : EmailsettingsBase
+    public class SetGEmailSettingsGeneralCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -605,7 +627,7 @@ namespace gShell.Cmdlets.Emailsettings.General
 
             if (ShouldProcess("Email Settings General", "Set-GEmailSettingsGeneral"))
             {
-                WriteObject(general.Update(body, GAuthId, GetUserFromEmail(UserName)));
+                WriteObject(general.Update(body, Domain, GetUserFromEmail(UserName)));
             }
         }
     }
@@ -630,7 +652,7 @@ namespace gShell.Cmdlets.Emailsettings.Imap
     [Cmdlet(VerbsCommon.Get, "GEmailSettingsImap",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GEmailSettingsImap")]
-    public class GetGEmailSettingsImapCommand : EmailsettingsBase
+    public class GetGEmailSettingsImapCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -647,7 +669,7 @@ namespace gShell.Cmdlets.Emailsettings.Imap
         {
             if (ShouldProcess("Email Settings Imap", "Get-GEmailSettingsImap"))
             {
-                WriteObject(imap.Get(GAuthId, GetUserFromEmail(UserName)));
+                WriteObject(imap.Get(Domain, GetUserFromEmail(UserName)));
             }
         }
     }
@@ -669,7 +691,7 @@ namespace gShell.Cmdlets.Emailsettings.Imap
     [Cmdlet(VerbsCommon.Set, "GEmailSettingsImap",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GEmailSettingsImap")]
-    public class SetGEmailSettingsImapCommand : EmailsettingsBase
+    public class SetGEmailSettingsImapCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -700,7 +722,7 @@ namespace gShell.Cmdlets.Emailsettings.Imap
 
             if (ShouldProcess("Email Settings Imap", "Set-GEmailSettingsImap"))
             {
-                WriteObject(imap.Update(body, GAuthId, GetUserFromEmail(UserName)));
+                WriteObject(imap.Update(body, Domain, GetUserFromEmail(UserName)));
             }
         }
     }
@@ -725,7 +747,7 @@ namespace gShell.Cmdlets.Emailsettings.Label
     [Cmdlet(VerbsCommon.Get, "GEmailSettingsLabel",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GEmailSettingsLabel")]
-    public class GetEmailSettingsLabelCommand : EmailsettingsBase
+    public class GetEmailSettingsLabelCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -742,7 +764,7 @@ namespace gShell.Cmdlets.Emailsettings.Label
         {
             if (ShouldProcess("Email Settings Label", "Get-GEmailSettingsLabel"))
             {
-                WriteObject(labels.Get(GAuthId, GetUserFromEmail(UserName)).LabelsValue);
+                WriteObject(labels.Get(Domain, GetUserFromEmail(UserName)).LabelsValue);
             }
         }
     }
@@ -764,7 +786,7 @@ namespace gShell.Cmdlets.Emailsettings.Label
     [Cmdlet(VerbsCommon.New, "GEmailSettingsLabel",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GEmailSettingsLabel")]
-    public class NewEmailSettingsLabelCommand : EmailsettingsBase
+    public class NewEmailSettingsLabelCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -795,7 +817,7 @@ namespace gShell.Cmdlets.Emailsettings.Label
                     LabelValue = Label
                 };
 
-                WriteObject(labels.Insert(newLabel, GAuthId, GetUserFromEmail(UserName)));
+                WriteObject(labels.Insert(newLabel, Domain, GetUserFromEmail(UserName)));
             }
         }
     }
@@ -817,7 +839,7 @@ namespace gShell.Cmdlets.Emailsettings.Label
     [Cmdlet(VerbsCommon.Remove, "GEmailSettingsLabel",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GEmailSettingsLabel")]
-    public class RemoveEmailSettingsLabelCommand : EmailsettingsBase
+    public class RemoveEmailSettingsLabelCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -860,7 +882,7 @@ namespace gShell.Cmdlets.Emailsettings.Label
 					{
 						WriteDebug("Attempting to remove " + toRemoveTarget + "...");
 
-                        labels.Delete(GAuthId, GetUserFromEmail(UserName), LabelName);
+                        labels.Delete(Domain, GetUserFromEmail(UserName), LabelName);
 							
 						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
 					}
@@ -903,7 +925,7 @@ namespace gShell.Cmdlets.Emailsettings.Language
     [Cmdlet(VerbsCommon.Set, "GEmailSettingsLanguage",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GEmailSettingsLanguage")]
-    public class SetGEmailSettingsLanguageCommand : EmailsettingsBase
+    public class SetGEmailSettingsLanguageCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -956,7 +978,7 @@ namespace gShell.Cmdlets.Emailsettings.Language
 
             if (ShouldProcess("Email Settings Language", "Get-GEmailSettingsLanguage"))
             {
-                WriteObject(language.Update(body, GAuthId, GetUserFromEmail(UserName)));
+                WriteObject(language.Update(body, Domain, GetUserFromEmail(UserName)));
             }
         }
 
@@ -1117,7 +1139,7 @@ namespace gShell.Cmdlets.Emailsettings.Pop
     [Cmdlet(VerbsCommon.Get, "GEmailSettingsPop",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GEmailSettingsPop")]
-    public class GetGEmailSettingsPopCommand : EmailsettingsBase
+    public class GetGEmailSettingsPopCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -1134,7 +1156,7 @@ namespace gShell.Cmdlets.Emailsettings.Pop
         {
             if (ShouldProcess("Email Settings Pop", "Get-GEmailSettingsPop"))
             {
-                WriteObject(pop.Get(GAuthId, GetUserFromEmail(UserName)));
+                WriteObject(pop.Get(Domain, GetUserFromEmail(UserName)));
             }
         }
     }
@@ -1156,7 +1178,7 @@ namespace gShell.Cmdlets.Emailsettings.Pop
     [Cmdlet(VerbsCommon.Set, "GEmailSettingsPop",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GEmailSettingsPop")]
-    public class SetGEmailSettingsPopCommand : EmailsettingsBase
+    public class SetGEmailSettingsPopCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -1207,7 +1229,7 @@ namespace gShell.Cmdlets.Emailsettings.Pop
 
             if (ShouldProcess("Email Settings Pop", "Get-GEmailSettingsPop"))
             {
-                WriteObject(pop.Update(body, GAuthId, GetUserFromEmail(UserName)));
+                WriteObject(pop.Update(body, Domain, GetUserFromEmail(UserName)));
             }
         }
     }
@@ -1232,7 +1254,7 @@ namespace gShell.Cmdlets.Emailsettings.Signature
     [Cmdlet(VerbsCommon.Get, "GEmailSettingsSignature",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GEmailSettingsSignature")]
-    public class GetGEmailSettingsSignatureCommand : EmailsettingsBase
+    public class GetGEmailSettingsSignatureCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -1249,7 +1271,7 @@ namespace gShell.Cmdlets.Emailsettings.Signature
         {
             if (ShouldProcess("Email Settings Signature", "Get-GEmailSettingsSignature"))
             {
-                WriteObject(signature.Get(GAuthId, GetUserFromEmail(UserName)));
+                WriteObject(signature.Get(Domain, GetUserFromEmail(UserName)));
             }
         }
     }
@@ -1271,7 +1293,7 @@ namespace gShell.Cmdlets.Emailsettings.Signature
     [Cmdlet(VerbsCommon.Set, "GEmailSettingsSignature",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GEmailSettingsSignature")]
-    public class SetGEmailSettingsSignatureCommand : EmailsettingsBase
+    public class SetGEmailSettingsSignatureCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -1302,7 +1324,7 @@ namespace gShell.Cmdlets.Emailsettings.Signature
 
             if (ShouldProcess("Email Settings Signature", "Set-GEmailSettingsSignature"))
             {
-                WriteObject(signature.Update(body, GAuthId, GetUserFromEmail(UserName)));
+                WriteObject(signature.Update(body, Domain, GetUserFromEmail(UserName)));
             }
         }
     }
@@ -1327,7 +1349,7 @@ namespace gShell.Cmdlets.Emailsettings.SendasAlias
     [Cmdlet(VerbsCommon.Get, "GEmailSettingsSendasAlias",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GEmailSettingsSendasAlias")]
-    public class GetGEmailSettingsSendasAliasCommand : EmailsettingsBase
+    public class GetGEmailSettingsSendasAliasCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -1344,7 +1366,7 @@ namespace gShell.Cmdlets.Emailsettings.SendasAlias
         {
             if (ShouldProcess("Email Settings SendasAlias", "Get-GEmailSettingsSendasAlias"))
             {
-                WriteObject(sendasAliases.Get(GAuthId, GetUserFromEmail(UserName)).SendasAliases);
+                WriteObject(sendasAliases.Get(Domain, GetUserFromEmail(UserName)).SendasAliases);
             }
         }
     }
@@ -1366,7 +1388,7 @@ namespace gShell.Cmdlets.Emailsettings.SendasAlias
     [Cmdlet(VerbsCommon.New, "GEmailSettingsSendasAlias",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GEmailSettingsSendasAlias")]
-    public class NewGEmailSettingsSendasAliasCommand : EmailsettingsBase
+    public class NewGEmailSettingsSendasAliasCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -1427,7 +1449,7 @@ namespace gShell.Cmdlets.Emailsettings.SendasAlias
 
             if (ShouldProcess("Email Settings SendasAlias", "New-GEmailSettingsSendasAlias"))
             {
-                WriteObject(sendasAliases.Insert(body, GAuthId, GetUserFromEmail(UserName)));
+                WriteObject(sendasAliases.Insert(body, Domain, GetUserFromEmail(UserName)));
             }
         }
     }
@@ -1452,7 +1474,7 @@ namespace gShell.Cmdlets.Emailsettings.VacationResponder
     [Cmdlet(VerbsCommon.Get, "GEmailSettingsVacationResponder",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GEmailSettingsVacationResponder")]
-    public class GetGEmailSettingsVacationResponderCommand : EmailsettingsBase
+    public class GetGEmailSettingsVacationResponderCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -1469,7 +1491,7 @@ namespace gShell.Cmdlets.Emailsettings.VacationResponder
         {
             if (ShouldProcess("Email Settings VacationResponder", "Get-GEmailSettingsVacationResponder"))
             {
-                WriteObject(vacationResponder.Get(GAuthId, GetUserFromEmail(UserName)));
+                WriteObject(vacationResponder.Get(Domain, GetUserFromEmail(UserName)));
             }
         }
     }
@@ -1492,7 +1514,7 @@ namespace gShell.Cmdlets.Emailsettings.VacationResponder
     [Cmdlet(VerbsCommon.Set, "GEmailSettingsVacationResponder",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GEmailSettingsVacationResponder")]
-    public class SetGEmailSettingsVacationResponderCommand : EmailsettingsBase
+    public class SetGEmailSettingsVacationResponderCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -1582,7 +1604,7 @@ namespace gShell.Cmdlets.Emailsettings.VacationResponder
 
             if (ShouldProcess("Email Settings VacationResponder", "Get-GEmailSettingsVacationResponder"))
             {
-                WriteObject(vacationResponder.Update(body, GAuthId, GetUserFromEmail(UserName)));
+                WriteObject(vacationResponder.Update(body, Domain, GetUserFromEmail(UserName)));
             }
         }
     }
@@ -1607,7 +1629,7 @@ namespace gShell.Cmdlets.Emailsettings.WebClip
     [Cmdlet(VerbsCommon.Set, "GEmailSettingsWebClip",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GEmailSettingsWebClip")]
-    public class SetGEmailSettingsWebClipCommand : EmailsettingsBase
+    public class SetGEmailSettingsWebClipCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -1638,7 +1660,7 @@ namespace gShell.Cmdlets.Emailsettings.WebClip
 
             if (ShouldProcess("Email Settings WebClip", "Set-GEmailSettingsWebClip"))
             {
-                WriteObject(webClip.Update(body, GAuthId, GetUserFromEmail(UserName)));
+                WriteObject(webClip.Update(body, Domain, GetUserFromEmail(UserName)));
             }
         }
     }

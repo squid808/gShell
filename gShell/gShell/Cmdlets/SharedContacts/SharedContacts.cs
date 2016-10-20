@@ -10,6 +10,28 @@ using gSharedContacts = gShell.dotNet.Sharedcontacts;
 
 namespace gShell.Cmdlets.Sharedcontacts
 {
+    public abstract class SharedcontactsCmdletBase : SharedcontactsBase
+    {
+        #region Parameters
+        /// <summary>
+        /// <para type="description">The target domain for this shared contacts cmdlet.</para>
+        /// </summary>
+        [Parameter(
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The target domain for this shared contacts cmdlet.")]
+        [ValidateNotNullOrEmpty]
+        public string Domain { get; set; }
+        #endregion
+
+        protected override void BeginProcessing()
+        {
+            base.BeginProcessing();
+
+            if (string.IsNullOrWhiteSpace(Domain)) Domain = GetDomainFromEmail(GAuthId);
+        }
+    }
+
     /// <summary>
     /// <para type="synopsis">Create a new shared contact email object.</para>
     /// <para type="description">Create a new shared contact email object.</para>
@@ -999,7 +1021,7 @@ namespace gShell.Cmdlets.Sharedcontacts
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GSharedContact",
           DefaultParameterSetName = "all")]
-    public class GetGSharedContact : SharedcontactsBase
+    public class GetGSharedContact : SharedcontactsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -1048,7 +1070,7 @@ namespace gShell.Cmdlets.Sharedcontacts
             {
                 if (ParameterSetName == "one")
                 {
-                    WriteObject(contact.Get(GAuthId, Id));
+                    WriteObject(contact.Get(Domain, Id));
                 }
                 else
                 {
@@ -1058,7 +1080,7 @@ namespace gShell.Cmdlets.Sharedcontacts
 
                     if (MaxResults.HasValue) properties.MaxResults = this.MaxResults.Value;
 
-                    WriteObject(contact.List(GAuthId, properties).ContactsValue);
+                    WriteObject(contact.List(Domain, properties).ContactsValue);
                 }
             }
         }
@@ -1081,7 +1103,7 @@ namespace gShell.Cmdlets.Sharedcontacts
     [Cmdlet(VerbsCommon.New, "GSharedContact",
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GSharedContact")]
-    public class NewGSharedContact : SharedcontactsBase
+    public class NewGSharedContact : SharedcontactsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -1144,7 +1166,7 @@ namespace gShell.Cmdlets.Sharedcontacts
             if (ShouldProcess("Shared Contact", "New-GSharedContact"))
             {
                 //WriteObject(contact.Get(Domain, Id));
-                WriteObject(contact.Insert(body, GAuthId));
+                WriteObject(contact.Insert(body, Domain));
             }
         }
     }
@@ -1167,7 +1189,7 @@ namespace gShell.Cmdlets.Sharedcontacts
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GSharedContact",
           DefaultParameterSetName = "all")]
-    public class SetGSharedContact : SharedcontactsBase
+    public class SetGSharedContact : SharedcontactsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -1192,7 +1214,7 @@ namespace gShell.Cmdlets.Sharedcontacts
 
                 if (ShouldProcess("Shared Contact", "Set-GSharedContact"))
                 {
-                    WriteObject(contact.Update(this.ContactObj, GAuthId, id, version));
+                    WriteObject(contact.Update(this.ContactObj, Domain, id, version));
                 }
             }
             else
@@ -1226,7 +1248,7 @@ namespace gShell.Cmdlets.Sharedcontacts
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GSharedContact",
           DefaultParameterSetName = "all")]
-    public class RemoveGSharedContact : SharedcontactsBase
+    public class RemoveGSharedContact : SharedcontactsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -1268,7 +1290,7 @@ namespace gShell.Cmdlets.Sharedcontacts
 
                         if (ShouldProcess("Shared Contact", "Remove-GSharedContact"))
                         {
-                            contact.Delete(GAuthId, id, version);
+                            contact.Delete(Domain, id, version);
                         }
                     }
                     else

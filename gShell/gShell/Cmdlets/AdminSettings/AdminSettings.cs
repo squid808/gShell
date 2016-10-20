@@ -13,6 +13,27 @@ namespace gShell.Cmdlets.Adminsettings
     /// <summary>The account handling options for Route.</summary>
     public enum RouteAccountHandlingEnum
     { allAccounts, provisionedAccounts, unknownAccounts }
+
+    public abstract class AdminsettingsCmdletBase : AdminsettingsBase {
+        #region Parameters
+        /// <summary>
+        /// <para type="description">The target domain for this admin settings cmdlet.</para>
+        /// </summary>
+        [Parameter(
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The target domain for this admin settings cmdlet.")]
+        [ValidateNotNullOrEmpty]
+        public string Domain { get; set; }
+        #endregion
+
+        protected override void BeginProcessing()
+        {
+            base.BeginProcessing();
+
+            if (string.IsNullOrWhiteSpace(Domain)) Domain = GetDomainFromEmail(GAuthId);
+        }
+    }
 }
 
 namespace gShell.Cmdlets.Adminsettings.DefaultLanguage
@@ -36,13 +57,13 @@ namespace gShell.Cmdlets.Adminsettings.DefaultLanguage
     [Cmdlet(VerbsCommon.Get, "GAdminSettingsDefaultLanguage",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAdminSettingsDefaultLanguage")]
-    public class GetGAdminSettingsDefaultLanguageCommand : AdminsettingsBase
+    public class GetGAdminSettingsDefaultLanguageCommand : AdminsettingsCmdletBase
     {
         protected override void ProcessRecord()
         {
             if (ShouldProcess("Admin Settings DefaultLanguage", "-GAdminSettingsDefaultLanguage"))
             {
-                WriteObject(defaultLanguage.Get(GAuthId));
+                WriteObject(defaultLanguage.Get(Domain));
             }
         }
     }
@@ -69,7 +90,7 @@ namespace gShell.Cmdlets.Adminsettings.DefaultLanguage
     [Cmdlet(VerbsCommon.Set, "GAdminSettingsDefaultLanguage",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAdminSettingsDefaultLanguage")]
-    public class SetGAdminSettingsDefaultLanguageCommand : AdminsettingsBase
+    public class SetGAdminSettingsDefaultLanguageCommand : AdminsettingsCmdletBase
     {
         #region Properties
 
@@ -109,7 +130,7 @@ namespace gShell.Cmdlets.Adminsettings.DefaultLanguage
 
             if (ShouldProcess("Admin Settings DefaultLanguage", "Get-GAdminSettingsDefaultLanguage"))
             {
-                WriteObject(defaultLanguage.Update(body, GAuthId));
+                WriteObject(defaultLanguage.Update(body, Domain));
             }
         }
     }
@@ -134,13 +155,13 @@ namespace gShell.Cmdlets.Adminsettings.OrganizationName
     [Cmdlet(VerbsCommon.Get, "GAdminSettingsOrganizationName",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAdminSettingsOrganizationName")]
-    public class GetGAdminSettingsOrganizationNameCommand : AdminsettingsBase
+    public class GetGAdminSettingsOrganizationNameCommand : AdminsettingsCmdletBase
     {
         protected override void ProcessRecord()
         {
             if (ShouldProcess("Admin Settings OrganizationName", "Get-GAdminSettingsOrganizationName"))
             {
-                WriteObject(organizationName.Get(GAuthId));
+                WriteObject(organizationName.Get(Domain));
             }
         }
     }
@@ -162,7 +183,7 @@ namespace gShell.Cmdlets.Adminsettings.OrganizationName
     [Cmdlet(VerbsCommon.Set, "GAdminSettingsOrganizationName",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAdminSettingsOrganizationName")]
-    public class SetGAdminSettingsOrganizationNameCommand : AdminsettingsBase
+    public class SetGAdminSettingsOrganizationNameCommand : AdminsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -184,7 +205,7 @@ namespace gShell.Cmdlets.Adminsettings.OrganizationName
 
             if (ShouldProcess("Admin Settings OrganizationName", "Set-GAdminSettingsOrganizationName"))
             {
-                WriteObject(organizationName.Update(body, GAuthId));
+                WriteObject(organizationName.Update(body, Domain));
             }
         }
     }
@@ -209,13 +230,13 @@ namespace gShell.Cmdlets.Adminsettings.MaximumUsers
     [Cmdlet(VerbsCommon.Get, "GAdminSettingsMaximumUsers",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAdminSettingsMaximumUsers")]
-    public class GetGAdminSettingsMaximumUsersCommand : AdminsettingsBase
+    public class GetGAdminSettingsMaximumUsersCommand : AdminsettingsCmdletBase
     {
         protected override void ProcessRecord()
         {
             if (ShouldProcess("Admin Settings MaximumUsers", "Get-GAdminSettingsMaximumUsers"))
             {
-                WriteObject(maximumUsers.Get(GAuthId));
+                WriteObject(maximumUsers.Get(Domain));
             }
         }
     }
@@ -240,13 +261,13 @@ namespace gShell.Cmdlets.Adminsettings.CurrentUsers
     [Cmdlet(VerbsCommon.Get, "GAdminSettingsCurrentUsers",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAdminSettingsCurrentUsers")]
-    public class GetGAdminSettingsCurrentUsersCommand : AdminsettingsBase
+    public class GetGAdminSettingsCurrentUsersCommand : AdminsettingsCmdletBase
     {
         protected override void ProcessRecord()
         {
             if (ShouldProcess("Admin Settings CurrentUsers", "Get-GAdminSettingsCurrentUsers"))
             {
-                WriteObject(currentUsers.Get(GAuthId));
+                WriteObject(currentUsers.Get(Domain));
             }
         }
     }
@@ -271,13 +292,13 @@ namespace gShell.Cmdlets.Adminsettings.ProductVersion
     [Cmdlet(VerbsCommon.Get, "GAdminSettingsProductVersion",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAdminSettingsProductVersion")]
-    public class GetGAdminSettingsProductVersionCommand : AdminsettingsBase
+    public class GetGAdminSettingsProductVersionCommand : AdminsettingsCmdletBase
     {
         protected override void ProcessRecord()
         {
             if (ShouldProcess("Admin Settings ProductVersion", "Get-GAdminSettingsProductVersion"))
             {
-                WriteObject(productVersion.Get(GAuthId));
+                WriteObject(productVersion.Get(Domain));
             }
         }
     }
@@ -302,13 +323,13 @@ namespace gShell.Cmdlets.Adminsettings.CustomerPin
     [Cmdlet(VerbsCommon.Get, "GAdminSettingsCustomerPin",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAdminSettingsCustomerPin")]
-    public class GetGAdminSettingsCustomerPinCommand : AdminsettingsBase
+    public class GetGAdminSettingsCustomerPinCommand : AdminsettingsCmdletBase
     {
         protected override void ProcessRecord()
         {
             if (ShouldProcess("Admin Settings CustomerPin", "Get-GAdminSettingsCustomerPin"))
             {
-                WriteObject(customerPin.Get(GAuthId));
+                WriteObject(customerPin.Get(Domain));
             }
         }
     }
@@ -333,13 +354,13 @@ namespace gShell.Cmdlets.Adminsettings.CreationTime
     [Cmdlet(VerbsCommon.Get, "GAdminSettingsCreationTime",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAdminSettingsCreationTime")]
-    public class GetGAdminSettingsCreationTimeCommand : AdminsettingsBase
+    public class GetGAdminSettingsCreationTimeCommand : AdminsettingsCmdletBase
     {
         protected override void ProcessRecord()
         {
             if (ShouldProcess("Admin Settings CreationTime", "Get-GAdminSettingsCreationTime"))
             {
-                WriteObject(creationTime.Get(GAuthId));
+                WriteObject(creationTime.Get(Domain));
             }
         }
     }
@@ -364,13 +385,13 @@ namespace gShell.Cmdlets.Adminsettings.CountryCode
     [Cmdlet(VerbsCommon.Get, "GAdminSettingsCountryCode",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAdminSettingsCountryCode")]
-    public class GetGAdminSettingsCountryCodeCommand : AdminsettingsBase
+    public class GetGAdminSettingsCountryCodeCommand : AdminsettingsCmdletBase
     {
         protected override void ProcessRecord()
         {
             if (ShouldProcess("Admin Settings CountryCode", "Get-GAdminSettingsCountryCode"))
             {
-                WriteObject(countryCode.Get(GAuthId));
+                WriteObject(countryCode.Get(Domain));
             }
         }
     }
@@ -395,13 +416,13 @@ namespace gShell.Cmdlets.Adminsettings.AdminSecondaryEmail
     [Cmdlet(VerbsCommon.Get, "GAdminSettingsAdminSecondaryEmail",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAdminSettingsAdminSecondaryEmail")]
-    public class GetGAdminSettingsAdminSecondaryEmailCommand : AdminsettingsBase
+    public class GetGAdminSettingsAdminSecondaryEmailCommand : AdminsettingsCmdletBase
     {
         protected override void ProcessRecord()
         {
             if (ShouldProcess("Admin Settings AdminSecondaryEmail", "Get-GAdminSettingsAdminSecondaryEmail"))
             {
-                WriteObject(adminSecondaryEmail.Get(GAuthId));
+                WriteObject(adminSecondaryEmail.Get(Domain));
             }
         }
     }
@@ -423,7 +444,7 @@ namespace gShell.Cmdlets.Adminsettings.AdminSecondaryEmail
     [Cmdlet(VerbsCommon.Set, "GAdminSettingAdminSecondaryEmails",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAdminSettingsAdminSecondaryEmail")]
-    public class SetGAdminSettingsAdminSecondaryEmailCommand : AdminsettingsBase
+    public class SetGAdminSettingsAdminSecondaryEmailCommand : AdminsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -472,7 +493,7 @@ namespace gShell.Cmdlets.Adminsettings.CustomLogo
     [Cmdlet(VerbsCommon.Set, "GAdminSettingsCustomLogo",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAdminSettingsCustomLogo")]
-    public class SetGAdminSettingsCustomLogoCommand : AdminsettingsBase
+    public class SetGAdminSettingsCustomLogoCommand : AdminsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -495,7 +516,7 @@ namespace gShell.Cmdlets.Adminsettings.CustomLogo
 
             if (ShouldProcess("Admin Settings CustomLogo", "Set-GAdminSettingsCustomLogo"))
             {
-                WriteObject(customLogo.Update(body, GAuthId));
+                WriteObject(customLogo.Update(body, Domain));
             }
         }
     }
@@ -520,13 +541,13 @@ namespace gShell.Cmdlets.Adminsettings.MxVerificationRecords
     [Cmdlet(VerbsCommon.Get, "GAdminSettingsMxVerificationRecords",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAdminSettingsMxVerificationRecords")]
-    public class GetGAdminSettingsMxVerificationRecordsCommand : AdminsettingsBase
+    public class GetGAdminSettingsMxVerificationRecordsCommand : AdminsettingsCmdletBase
     {
         protected override void ProcessRecord()
         {
             if (ShouldProcess("Admin Settings MxVerificationRecords", "Get-GAdminSettingsMxVerificationRecords"))
             {
-                WriteObject(mxVerificationStatus.Get(GAuthId));
+                WriteObject(mxVerificationStatus.Get(Domain));
             }
         }
     }
@@ -548,7 +569,7 @@ namespace gShell.Cmdlets.Adminsettings.MxVerificationRecords
     [Cmdlet(VerbsCommon.Set, "GAdminSettingsMxVerificationRecords",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAdminSettingsMxVerificationRecords")]
-    public class SetGAdminSettingsMxVerificationRecordsCommand : AdminsettingsBase
+    public class SetGAdminSettingsMxVerificationRecordsCommand : AdminsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -575,7 +596,7 @@ namespace gShell.Cmdlets.Adminsettings.MxVerificationRecords
 
             if (ShouldProcess("Admin Settings MxVerificationRecords", "Set-GAdminSettingsMxVerificationRecords"))
             {
-                WriteObject(mxVerificationStatus.Update(body, GAuthId));
+                WriteObject(mxVerificationStatus.Update(body, Domain));
             }
         }
     }
@@ -600,13 +621,13 @@ namespace gShell.Cmdlets.Adminsettings.SsoSettings
     [Cmdlet(VerbsCommon.Get, "GAdminSettingsSsoSettings",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAdminSettingsSsoSettings")]
-    public class GetGAdminSettingsSsoSettingsCommand : AdminsettingsBase
+    public class GetGAdminSettingsSsoSettingsCommand : AdminsettingsCmdletBase
     {
         protected override void ProcessRecord()
         {
             if (ShouldProcess("Admin Settings SsoSettings", "Get-GAdminSettingsSsoSettings"))
             {
-                WriteObject(ssoSettings.Get(GAuthId));
+                WriteObject(ssoSettings.Get(Domain));
             }
         }
     }
@@ -630,7 +651,7 @@ namespace gShell.Cmdlets.Adminsettings.SsoSettings
     [Cmdlet(VerbsCommon.Set, "GAdminSettingsSsoSettings",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAdminSettingsSsoSettings")]
-    public class SetGAdminSettingsSsoSettingsCommand : AdminsettingsBase
+    public class SetGAdminSettingsSsoSettingsCommand : AdminsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -708,7 +729,7 @@ namespace gShell.Cmdlets.Adminsettings.SsoSettings
 
             if (ShouldProcess("Admin Settings SsoSettings", "Set-GAdminSettingsSsoSettings"))
             {
-                WriteObject(ssoSettings.Update(body, GAuthId));
+                WriteObject(ssoSettings.Update(body, Domain));
             }
         }
     }
@@ -733,13 +754,13 @@ namespace gShell.Cmdlets.Adminsettings.SsoSigningKey
     [Cmdlet(VerbsCommon.Get, "GAdminSettingsSsoSigningKey",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAdminSettingsSsoSigningKey")]
-    public class GetGAdminSettingsSsoSigningKeyCommand : AdminsettingsBase
+    public class GetGAdminSettingsSsoSigningKeyCommand : AdminsettingsCmdletBase
     {
         protected override void ProcessRecord()
         {
             if (ShouldProcess("Admin Settings SsoSigningKey", "Get-GAdminSettingsSsoSigningKey"))
             {
-                WriteObject(ssoSigningKey.Get(GAuthId));
+                WriteObject(ssoSigningKey.Get(Domain));
             }
         }
     }
@@ -761,7 +782,7 @@ namespace gShell.Cmdlets.Adminsettings.SsoSigningKey
     [Cmdlet(VerbsCommon.Set, "GAdminSettingsSsoSigningKey",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAdminSettingsSsoSigningKey")]
-    public class SetGAdminSettingsSsoSigningKeyCommand : AdminsettingsBase
+    public class SetGAdminSettingsSsoSigningKeyCommand : AdminsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -783,7 +804,7 @@ namespace gShell.Cmdlets.Adminsettings.SsoSigningKey
 
             if (ShouldProcess("Admin Settings SsoSigningKey", "Set-GAdminSettingsSsoSigningKey"))
             {
-                WriteObject(ssoSigningKey.Update(body, GAuthId));
+                WriteObject(ssoSigningKey.Update(body, Domain));
             }
         }
     }
@@ -808,13 +829,13 @@ namespace gShell.Cmdlets.Adminsettings.EmailGateway
     [Cmdlet(VerbsCommon.Get, "GAdminSettingsEmailGateway",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAdminSettingsEmailGateway")]
-    public class GetGAdminSettingsEmailGatewayCommand : AdminsettingsBase
+    public class GetGAdminSettingsEmailGatewayCommand : AdminsettingsCmdletBase
     {
         protected override void ProcessRecord()
         {
             if (ShouldProcess("Admin Settings EmailGateway", "Get-GAdminSettingsEmailGateway"))
             {
-                WriteObject(emailGateway.Get(GAuthId));
+                WriteObject(emailGateway.Get(Domain));
             }
         }
     }
@@ -836,7 +857,7 @@ namespace gShell.Cmdlets.Adminsettings.EmailGateway
     [Cmdlet(VerbsCommon.Set, "GAdminSettingsEmailGateway",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAdminSettingsEmailGateway")]
-    public class SetGAdminSettingsEmailGatewayCommand : AdminsettingsBase
+    public class SetGAdminSettingsEmailGatewayCommand : AdminsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -868,7 +889,7 @@ namespace gShell.Cmdlets.Adminsettings.EmailGateway
 
             if (ShouldProcess("Admin Settings EmailGateway", "Set-GAdminSettingsEmailGateway"))
             {
-                WriteObject(emailGateway.Update(body, GAuthId));
+                WriteObject(emailGateway.Update(body, Domain));
             }
         }
     }
@@ -894,7 +915,7 @@ namespace gShell.Cmdlets.Adminsettings.EmailRouting
     [Cmdlet(VerbsCommon.Set, "GAdminSettingsEmailRouting",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAdminSettingsEmailRouting")]
-    public class SetGAdminSettingsEmailRoutingCommand : AdminsettingsBase
+    public class SetGAdminSettingsEmailRoutingCommand : AdminsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -956,7 +977,7 @@ namespace gShell.Cmdlets.Adminsettings.EmailRouting
 
             if (ShouldProcess("Admin Settings EmailRouting", "Set-GAdminSettingsEmailRouting"))
             {
-                WriteObject(emailRouting.Update(body, GAuthId));
+                WriteObject(emailRouting.Update(body, Domain));
             }
         }
     }
