@@ -11,18 +11,6 @@ using gGmail = gShell.dotNet.Gmail;
 
 namespace gShell.Cmdlets.Gmail
 {
-    public abstract class GmailServiceAccountBase : GmailBase
-    {
-        #region Properties
-        /// <summary>
-        /// <para type="description">The email account to be targeted by the service account.</para>
-        /// </summary>
-        [Alias("ServiceAccountTarget")]
-        [Parameter(Mandatory = false)]
-        [ValidateNotNullOrEmpty]
-        public string TargetUserEmail { get; set; }
-        #endregion
-    }
 
     /// <summary>
     /// <para type="synopsis">Creates a new Gmail API MessagePart object.</para>
@@ -315,7 +303,7 @@ namespace gShell.Cmdlets.Gmail.Users
     [Cmdlet(VerbsCommon.Get, "GGmailProfile",
     SupportsShouldProcess = true,
     HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GGmailProfile")]
-    public class GetGGmailProfileCommandCommand : GmailServiceAccountBase
+    public class GetGGmailProfileCommandCommand : GmailBase
     {
         #region Properties
 
@@ -356,7 +344,7 @@ namespace gShell.Cmdlets.Gmail.Users
     [Cmdlet(VerbsCommon.Watch, "GGmail",
     SupportsShouldProcess = true,
     HelpUri = @"https://github.com/squid808/gShell/wiki/Watch-GGmail")]
-    public class WatchGGmailCommandCommand : GmailServiceAccountBase
+    public class WatchGGmailCommandCommand : GmailBase
     {
         #region Properties
 
@@ -407,7 +395,7 @@ namespace gShell.Cmdlets.Gmail.Users
     [Cmdlet(VerbsLifecycle.Stop, "GGmail",
     SupportsShouldProcess = true,
     HelpUri = @"https://github.com/squid808/gShell/wiki/Stop-GGmail")]
-    public class StopGGmailCommandCommand : GmailServiceAccountBase
+    public class StopGGmailCommandCommand : GmailBase
     {
         #region Properties
 
@@ -454,7 +442,7 @@ namespace gShell.Cmdlets.Gmail.Users.Drafts
     [Cmdlet(VerbsCommon.New, "GGmailDraft",
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GGmailDraft")]
-    public class NewGGmailDraftCommand : GmailServiceAccountBase
+    public class NewGGmailDraftCommand : GmailBase
     {
         public enum DraftUploadTypeEnum { media, multipart, resumable }
 
@@ -512,7 +500,7 @@ namespace gShell.Cmdlets.Gmail.Users.Drafts
     [Cmdlet(VerbsCommon.Remove, "GGmailDraft",
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GGmailDraft")]
-    public class RemoveGGmailDraftCommand : GmailServiceAccountBase
+    public class RemoveGGmailDraftCommand : GmailBase
     {
         #region Properties
 
@@ -599,7 +587,7 @@ namespace gShell.Cmdlets.Gmail.Users.Drafts
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GGmailDraft",
         DefaultParameterSetName = "one")]
-    public class GetGGmailDraftCommand : GmailServiceAccountBase
+    public class GetGGmailDraftCommand : GmailBase
     {
         public enum GetDraftFormatEnum { full, metadata, minimal, raw }
 
@@ -711,7 +699,7 @@ namespace gShell.Cmdlets.Gmail.Users.Drafts
     [Cmdlet(VerbsCommon.Set, "GGmailDraft",
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GGmailDraft")]
-    public class SetGGmailDraftCommand : GmailServiceAccountBase
+    public class SetGGmailDraftCommand : GmailBase
     {
         #region Properties
 
@@ -778,7 +766,7 @@ namespace gShell.Cmdlets.Gmail.Users.Drafts
     [Cmdlet(VerbsCommunications.Send, "GGmailDraft",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Send-GGmailDraft")]
-    public class SendGGmailDraftCommand : GmailServiceAccountBase
+    public class SendGGmailDraftCommand : GmailBase
     {
         #region Properties
 
@@ -834,7 +822,7 @@ namespace gShell.Cmdlets.Gmail.Users.History
     [Cmdlet(VerbsCommon.Get, "GGmailHistory",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GGmailHistory")]
-    public class GetGGmailHistoryCommand : GmailServiceAccountBase
+    public class GetGGmailHistoryCommand : GmailBase
     {
         #region Properties
 
@@ -920,7 +908,7 @@ namespace gShell.Cmdlets.Gmail.Users.Labels
     [Cmdlet(VerbsCommon.New, "GGmailLabel",
         SupportsShouldProcess = true,
         HelpUri = @"")]
-    public class NewGGmailLabelCommand : GmailServiceAccountBase
+    public class NewGGmailLabelCommand : GmailBase
     {
         #region Properties
 
@@ -998,7 +986,7 @@ namespace gShell.Cmdlets.Gmail.Users.Labels
     [Cmdlet(VerbsCommon.Remove, "GGmailLabel",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GGmailLabel")]
-    public class RemoveGGmailLabelCommand : GmailServiceAccountBase
+    public class RemoveGGmailLabelCommand : GmailBase
     {
         #region Properties
 
@@ -1085,7 +1073,7 @@ namespace gShell.Cmdlets.Gmail.Users.Labels
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GGmailLabel",
         DefaultParameterSetName = "one")]
-    public class GetGGmailLabelCommand : GmailServiceAccountBase
+    public class GetGGmailLabelCommand : GmailBase
     {
         #region Properties
 
@@ -1153,7 +1141,7 @@ namespace gShell.Cmdlets.Gmail.Users.Labels
     [Cmdlet(VerbsCommon.Set, "GGmailLabel",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GGmailLabel")]
-    public class SetGGmailLabelCommand : GmailServiceAccountBase
+    public class SetGGmailLabelCommand : GmailBase
     {
         #region Properties
 
@@ -1253,7 +1241,7 @@ namespace gShell.Cmdlets.Gmail.Users.Messages
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GGmailMessage",
         DefaultParameterSetName = "one")]
-    public class RemoveGGmailMessageCommand : GmailServiceAccountBase
+    public class RemoveGGmailMessageCommand : GmailBase
     {
         #region Properties
 
@@ -1363,7 +1351,7 @@ namespace gShell.Cmdlets.Gmail.Users.Messages
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GGmailMessage",
           DefaultParameterSetName = "one")]
-    public class GetGGmailMessageCommand : GmailServiceAccountBase
+    public class GetGGmailMessageCommand : GmailBase
     {
         #region Properties
 
@@ -1510,7 +1498,7 @@ namespace gShell.Cmdlets.Gmail.Users.Messages
     [Cmdlet(VerbsCommon.New, "GGmailMessage",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/New-GGmailMessage")]
-    public class NewGGmailMessageCommand : GmailServiceAccountBase
+    public class NewGGmailMessageCommand : GmailBase
     {
         #region Properties
 
@@ -1586,7 +1574,7 @@ namespace gShell.Cmdlets.Gmail.Users.Messages
     [Cmdlet(VerbsCommunications.Send, "GGmailMessage",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Send-GGmailMessage")]
-    public class SendGGmailMessageCommand : GmailServiceAccountBase
+    public class SendGGmailMessageCommand : GmailBase
     {
         #region Properties
 
@@ -1649,7 +1637,7 @@ namespace gShell.Cmdlets.Gmail.Users.Messages
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GGmailMessage",
         DefaultParameterSetName = "modify")]
-    public class SetGGmailMessageCommand : GmailServiceAccountBase
+    public class SetGGmailMessageCommand : GmailBase
     {
         #region Properties
 
@@ -1763,7 +1751,7 @@ namespace gShell.Cmdlets.Gmail.Users.Messages
     [Cmdlet(VerbsData.Import, "GGmailMessage",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Import-GGmailMessage")]
-    public class ImportGGmailMessageCommand : GmailServiceAccountBase
+    public class ImportGGmailMessageCommand : GmailBase
     {
         #region Properties
 
@@ -1861,7 +1849,7 @@ namespace gShell.Cmdlets.Gmail.Users.Messages.Attachments
     [Cmdlet(VerbsCommon.Get, "GGmailAttachment",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GGmailAttachment")]
-    public class GetGGmailAttachmentCommand : GmailServiceAccountBase
+    public class GetGGmailAttachmentCommand : GmailBase
     {
         #region Properties
 
@@ -1932,7 +1920,7 @@ namespace gShell.Cmdlets.Gmail.Users.Threads
         SupportsShouldProcess = true,
           HelpUri = @"",
           DefaultParameterSetName = "one")]
-    public class GetGGmailThreadCommand : GmailServiceAccountBase
+    public class GetGGmailThreadCommand : GmailBase
     {
         #region Properties
 
@@ -2094,7 +2082,7 @@ namespace gShell.Cmdlets.Gmail.Users.Threads
         SupportsShouldProcess = true,
           HelpUri = @"",
           DefaultParameterSetName = "modify")]
-    public class SetGGmailThreadCommand : GmailServiceAccountBase
+    public class SetGGmailThreadCommand : GmailBase
     {
         #region Properties
 
@@ -2230,7 +2218,7 @@ namespace gShell.Cmdlets.Gmail.Users.Threads
     [Cmdlet(VerbsCommon.Remove, "GGmailThread",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GGmailThread")]
-    public class RemoveGGmailThreadCommand : GmailServiceAccountBase
+    public class RemoveGGmailThreadCommand : GmailBase
     {
         #region Properties
 

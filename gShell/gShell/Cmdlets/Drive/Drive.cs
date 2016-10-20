@@ -9,22 +9,6 @@ using gDrive = gShell.dotNet.Drive;
 
 namespace gShell.Cmdlets.Drive
 {
-    /// <summary>A base class which provides support for service account integration and schema objects.</summary>
-    public abstract class DriveServiceAccountBase : DriveBase
-    {
-        #region Properties
-
-        /// <summary>
-        /// <para type="description">The email account to be targeted by the service account.</para>
-        /// </summary>
-        [Alias("ServiceAccountTarget")]
-        [Parameter(Mandatory = false)]
-        [ValidateNotNullOrEmpty]
-        public string TargetUserEmail { get; set; }
-
-        #endregion
-    }
-
     public enum DriveIdSpaceEnum { drive, appDataFolder }
 
     /// <summary>
@@ -1696,7 +1680,7 @@ namespace gShell.Cmdlets.Drive.About
     [Cmdlet(VerbsCommon.Get, "GDriveAbout",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GDriveAbout")]
-    public class GetGDriveAboutCommand : DriveServiceAccountBase
+    public class GetGDriveAboutCommand : DriveBase
     {
         protected override void ProcessRecord()
         {
@@ -1727,7 +1711,7 @@ namespace gShell.Cmdlets.Drive.Changes
     [Cmdlet(VerbsCommon.Get, "GDriveChangeStartPageToken",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GDriveChangeStartPageToken")]
-    public class GetGDriveChangeStartPageTokenCommand : DriveServiceAccountBase
+    public class GetGDriveChangeStartPageTokenCommand : DriveBase
     {
         protected override void ProcessRecord()
         {
@@ -1750,7 +1734,7 @@ namespace gShell.Cmdlets.Drive.Changes
     [Cmdlet(VerbsCommon.Get, "GDriveChange",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GDriveChange")]
-    public class GetGDriveChangeCommand : DriveServiceAccountBase
+    public class GetGDriveChangeCommand : DriveBase
     {
         #region Properties
 
@@ -1844,7 +1828,7 @@ namespace gShell.Cmdlets.Drive.Changes
     [Cmdlet(VerbsCommon.Watch, "GDriveChange",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Watch-GDriveChange")]
-    public class WatchGDriveChangeCommand : DriveServiceAccountBase
+    public class WatchGDriveChangeCommand : DriveBase
     {
         #region Properties
 
@@ -1951,7 +1935,7 @@ namespace gShell.Cmdlets.Drive.Channels
     [Cmdlet(VerbsLifecycle.Stop, "GDriveChannel",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Stop-GDriveChannel")]
-    public class StopGDriveChannelCommand : DriveServiceAccountBase
+    public class StopGDriveChannelCommand : DriveBase
     {
         #region Properties
 
@@ -1996,7 +1980,7 @@ namespace gShell.Cmdlets.Drive.Comments
     [Cmdlet(VerbsCommon.New, "GDriveComment",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/New-GDriveComment")]
-    public class NewGDriveCommentCommand : DriveServiceAccountBase
+    public class NewGDriveCommentCommand : DriveBase
     {
         #region Properties
 
@@ -2047,7 +2031,7 @@ namespace gShell.Cmdlets.Drive.Comments
     [Cmdlet(VerbsCommon.Remove, "GDriveComment",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GDriveComment")]
-    public class RemoveGDriveCommentCommand : DriveServiceAccountBase
+    public class RemoveGDriveCommentCommand : DriveBase
     {
         #region Properties
 
@@ -2136,7 +2120,7 @@ namespace gShell.Cmdlets.Drive.Comments
     [Cmdlet(VerbsCommon.Get, "GDriveComment",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GDriveComment")]
-    public class GetGDriveCommentCommand : DriveServiceAccountBase
+    public class GetGDriveCommentCommand : DriveBase
     {
         #region Properties
 
@@ -2245,7 +2229,7 @@ namespace gShell.Cmdlets.Drive.Comments
     [Cmdlet(VerbsData.Update, "GDriveComment",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Update-GDriveComment")]
-    public class UpdateGDriveCommentCommand : DriveServiceAccountBase
+    public class UpdateGDriveCommentCommand : DriveBase
     {
         #region Properties
 
@@ -2308,7 +2292,7 @@ namespace gShell.Cmdlets.Drive.Files
     [Cmdlet(VerbsCommon.Copy, "GDriveFile",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Copy-GDriveFile")]
-    public class CopyGDriveFileCommand : DriveServiceAccountBase
+    public class CopyGDriveFileCommand : DriveBase
     {
         #region Properties
 
@@ -2398,7 +2382,7 @@ namespace gShell.Cmdlets.Drive.Files
     [Cmdlet(VerbsCommon.New, "GDriveFile",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/New-GDriveFile")]
-    public class NewGDriveFileCommand : DriveServiceAccountBase
+    public class NewGDriveFileCommand : DriveBase
     {
         #region Properties
 
@@ -2489,7 +2473,7 @@ namespace gShell.Cmdlets.Drive.Files
     [Cmdlet(VerbsCommon.Remove, "GDriveFile",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GDriveFile")]
-    public class RemoveGDriveFileCommand : DriveServiceAccountBase
+    public class RemoveGDriveFileCommand : DriveBase
     {
         #region Properties
 
@@ -2559,7 +2543,7 @@ namespace gShell.Cmdlets.Drive.Files
     [Cmdlet(VerbsCommon.Clear, "GDriveTrash",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Clear-GDriveTrash")]
-    public class ClearGDriveTrashCommand : DriveServiceAccountBase
+    public class ClearGDriveTrashCommand : DriveBase
     {
         #region Properties
         /// <summary>
@@ -2618,7 +2602,7 @@ namespace gShell.Cmdlets.Drive.Files
     [Cmdlet(VerbsData.Export, "GDriveFile",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Export-GDriveFile")]
-    public class ExportGDriveFileCommand : DriveServiceAccountBase
+    public class ExportGDriveFileCommand : DriveBase
     {
         #region Properties
 
@@ -2679,7 +2663,7 @@ namespace gShell.Cmdlets.Drive.Files
     [Cmdlet("New", "GDriveFileId",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/New-GDriveFileId")]
-    public class NewGDriveFileIdCommand : DriveServiceAccountBase
+    public class NewGDriveFileIdCommand : DriveBase
     {
         #region Properties
 
@@ -2744,7 +2728,7 @@ namespace gShell.Cmdlets.Drive.Files
         SupportsShouldProcess = true,
         DefaultParameterSetName = "one",
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GDriveFile")]
-    public class GetGDriveFileCommand : DriveServiceAccountBase
+    public class GetGDriveFileCommand : DriveBase
     {
         #region Properties
 
@@ -2895,7 +2879,7 @@ namespace gShell.Cmdlets.Drive.Files
     [Cmdlet(VerbsData.Update, "GDriveFile",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Update-GDriveFile")]
-    public class UpdateGDriveFileCommand : DriveServiceAccountBase
+    public class UpdateGDriveFileCommand : DriveBase
     {
         #region Properties
 
@@ -3003,7 +2987,7 @@ namespace gShell.Cmdlets.Drive.Files
     [Cmdlet(VerbsCommon.Watch, "GDriveFile",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Watch-GDriveFile")]
-    public class WatchGDriveFileCommand : DriveServiceAccountBase
+    public class WatchGDriveFileCommand : DriveBase
     {
         #region Properties
 
@@ -3074,7 +3058,7 @@ namespace gShell.Cmdlets.Drive.Permissions
     [Cmdlet(VerbsCommon.New, "GDrivePermission",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/New-GDrivePermission")]
-    public class NewGDrivePermissionCommand : DriveServiceAccountBase
+    public class NewGDrivePermissionCommand : DriveBase
     {
         #region Properties
 
@@ -3166,7 +3150,7 @@ namespace gShell.Cmdlets.Drive.Permissions
     [Cmdlet(VerbsCommon.Remove, "GDrivePermission",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GDrivePermission")]
-    public class RemoveGDrivePermissionCommand : DriveServiceAccountBase
+    public class RemoveGDrivePermissionCommand : DriveBase
     {
         #region Properties
 
@@ -3251,7 +3235,7 @@ namespace gShell.Cmdlets.Drive.Permissions
         SupportsShouldProcess = true,
         DefaultParameterSetName = "one",
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GDrivePermission")]
-    public class GetGDrivePermissionCommand : DriveServiceAccountBase
+    public class GetGDrivePermissionCommand : DriveBase
     {
         #region Properties
 
@@ -3321,7 +3305,7 @@ namespace gShell.Cmdlets.Drive.Replies
     [Cmdlet(VerbsCommon.New, "GDriveReply",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/New-GDriveReply")]
-    public class NewGDriveReplyCommand : DriveServiceAccountBase
+    public class NewGDriveReplyCommand : DriveBase
     {
         #region Properties
 
@@ -3381,7 +3365,7 @@ namespace gShell.Cmdlets.Drive.Replies
     [Cmdlet(VerbsCommon.Remove, "GDriveReply",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GDriveReply")]
-    public class RemoveGDriveReplyCommand : DriveServiceAccountBase
+    public class RemoveGDriveReplyCommand : DriveBase
     {
         #region Properties
 
@@ -3475,7 +3459,7 @@ namespace gShell.Cmdlets.Drive.Replies
         SupportsShouldProcess = true,
         DefaultParameterSetName = "one",
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GDriveReply")]
-    public class GetGDriveReplyCommand : DriveServiceAccountBase
+    public class GetGDriveReplyCommand : DriveBase
     {
         #region Properties
 
@@ -3585,7 +3569,7 @@ namespace gShell.Cmdlets.Drive.Revisions
     [Cmdlet(VerbsCommon.Remove, "GDriveRevision",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GDriveRevision")]
-    public class RemoveGDriveRevisionCommand : DriveServiceAccountBase
+    public class RemoveGDriveRevisionCommand : DriveBase
     {
         #region Properties
 
@@ -3670,7 +3654,7 @@ namespace gShell.Cmdlets.Drive.Revisions
         SupportsShouldProcess = true,
         DefaultParameterSetName = "one",
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GDriveRevision")]
-    public class GetGDriveRevisionCommand : DriveServiceAccountBase
+    public class GetGDriveRevisionCommand : DriveBase
     {
         #region Properties
 

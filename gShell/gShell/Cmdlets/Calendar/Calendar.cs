@@ -32,22 +32,6 @@ using gCalendar = gShell.dotNet.Calendar;
 
 namespace gShell.Cmdlets.Calendar
 {
-    /// <summary>A base class which provides support for service account integration and schema objects.</summary>
-    public abstract class CalendarServiceAccountBase : CalendarBase
-    {
-        #region Properties
-
-        /// <summary>
-        /// <para type="description">The email account to be targeted by the service account.</para>
-        /// </summary>
-        [Alias("ServiceAccountTarget")]
-        [Parameter(Mandatory = false)]
-        [ValidateNotNullOrEmpty]
-        public string TargetUserEmail { get; set; }
-
-        #endregion
-    }
-
     /// <summary>
     /// <para type="synopsis">Creates a new Calendar API AclRule object.</para>
     /// <para type="description">This provides a Cmdlet-Based approach to creating a AclRule object which may be required as a parameter for some other Cmdlets in the Calendar API category.</para>
@@ -1824,7 +1808,7 @@ namespace gShell.Cmdlets.Calendar.Acl
     [Cmdlet(VerbsCommon.Remove, "GCalendarAcl",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GCalendarAcl")]
-    public class RemoveGCalendarAclCommand : CalendarServiceAccountBase
+    public class RemoveGCalendarAclCommand : CalendarBase
     {
         #region Properties
 
@@ -1911,7 +1895,7 @@ namespace gShell.Cmdlets.Calendar.Acl
         SupportsShouldProcess = true,
         DefaultParameterSetName = "one",
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GCalendarAcl")]
-    public class GetGCalendarAclCommand : CalendarServiceAccountBase
+    public class GetGCalendarAclCommand : CalendarBase
     {
         #region Properties
 
@@ -2024,7 +2008,7 @@ namespace gShell.Cmdlets.Calendar.Acl
     [Cmdlet(VerbsCommon.New, "GCalendarAcl",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/New-GCalendarAcl")]
-    public class NewGCalendarAclCommand : CalendarServiceAccountBase
+    public class NewGCalendarAclCommand : CalendarBase
     {
         #region Properties
 
@@ -2074,7 +2058,7 @@ namespace gShell.Cmdlets.Calendar.Acl
     [Cmdlet(VerbsCommon.Set, "GCalendarAcl",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GCalendarAcl")]
-    public class SetGCalendarAclCommand : CalendarServiceAccountBase
+    public class SetGCalendarAclCommand : CalendarBase
     {
         #region Properties
 
@@ -2133,7 +2117,7 @@ namespace gShell.Cmdlets.Calendar.Acl
     [Cmdlet(VerbsCommon.Watch, "GCalendarAcl",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Watch-GCalendarAcl")]
-    public class WatchGCalendarAclCommand : CalendarServiceAccountBase
+    public class WatchGCalendarAclCommand : CalendarBase
     {
         #region Properties
 
@@ -2226,7 +2210,7 @@ namespace gShell.Cmdlets.Calendar.CalendarList
     [Cmdlet(VerbsCommon.Remove, "GCalendarList",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GCalendarList")]
-    public class RemoveGCalendarListCommand : CalendarServiceAccountBase
+    public class RemoveGCalendarListCommand : CalendarBase
     {
         #region Properties
 
@@ -2304,7 +2288,7 @@ namespace gShell.Cmdlets.Calendar.CalendarList
         SupportsShouldProcess = true,
         DefaultParameterSetName = "one",
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GCalendarList")]
-    public class GetGCalendarListCommand : CalendarServiceAccountBase
+    public class GetGCalendarListCommand : CalendarBase
     {
         #region Properties
 
@@ -2431,7 +2415,7 @@ namespace gShell.Cmdlets.Calendar.CalendarList
     [Cmdlet(VerbsCommon.New, "GCalendarList",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/New-GCalendarList")]
-    public class NewGCalendarListCommand : CalendarServiceAccountBase
+    public class NewGCalendarListCommand : CalendarBase
     {
         #region Properties
 
@@ -2486,7 +2470,7 @@ namespace gShell.Cmdlets.Calendar.CalendarList
     [Cmdlet(VerbsCommon.Set, "GCalendarList",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GCalendarList")]
-    public class SetGCalendarListCommand : CalendarServiceAccountBase
+    public class SetGCalendarListCommand : CalendarBase
     {
         #region Properties
 
@@ -2553,7 +2537,7 @@ namespace gShell.Cmdlets.Calendar.CalendarList
     [Cmdlet(VerbsCommon.Watch, "GCalendarList",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Watch-GCalendarList")]
-    public class WatchGCalendarListCommand : CalendarServiceAccountBase
+    public class WatchGCalendarListCommand : CalendarBase
     {
         #region Properties
 
@@ -2655,7 +2639,7 @@ namespace gShell.Cmdlets.Calendar.Calendars
     [Cmdlet(VerbsCommon.Clear, "GCalendar",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Clear-GCalendar")]
-    public class ClearGCalendarCommand : CalendarServiceAccountBase
+    public class ClearGCalendarCommand : CalendarBase
     {
         #region Properties
 
@@ -2698,7 +2682,7 @@ namespace gShell.Cmdlets.Calendar.Calendars
     [Cmdlet(VerbsCommon.Remove, "GCalendar",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GCalendar")]
-    public class RemoveGCalendarCommand : CalendarServiceAccountBase
+    public class RemoveGCalendarCommand : CalendarBase
     {
         #region Properties
 
@@ -2770,7 +2754,7 @@ namespace gShell.Cmdlets.Calendar.Calendars
     [Cmdlet(VerbsCommon.Get, "GCalendar",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GCalendar")]
-    public class GetGCalendarCommand : CalendarServiceAccountBase
+    public class GetGCalendarCommand : CalendarBase
     {
         #region Properties
 
@@ -2813,7 +2797,7 @@ namespace gShell.Cmdlets.Calendar.Calendars
     [Cmdlet(VerbsCommon.New, "GCalendar",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/New-GCalendar")]
-    public class NewGCalendarCommand : CalendarServiceAccountBase
+    public class NewGCalendarCommand : CalendarBase
     {
         #region Properties
 
@@ -2851,7 +2835,7 @@ namespace gShell.Cmdlets.Calendar.Calendars
     [Cmdlet(VerbsCommon.Set, "GCalendar",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GCalendar")]
-    public class SetGCalendarCommand : CalendarServiceAccountBase
+    public class SetGCalendarCommand : CalendarBase
     {
         #region Properties
 
@@ -2905,7 +2889,7 @@ namespace gShell.Cmdlets.Calendar.Channels
     [Cmdlet(VerbsLifecycle.Stop, "GCalendarChannel",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Stop-GCalendarChannel")]
-    public class StopGCalendarChannelCommand : CalendarServiceAccountBase
+    public class StopGCalendarChannelCommand : CalendarBase
     {
         #region Properties
 
@@ -2946,7 +2930,7 @@ namespace gShell.Cmdlets.Calendar.Colors
     [Cmdlet(VerbsCommon.Get, "GCalendarColor",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GCalendarColor")]
-    public class GetGCalendarColorCommand : CalendarServiceAccountBase
+    public class GetGCalendarColorCommand : CalendarBase
     {
         #region Properties
 
@@ -2981,7 +2965,7 @@ namespace gShell.Cmdlets.Calendar.Events
     [Cmdlet(VerbsCommon.Remove, "GCalendarEvent",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GCalendarEvent")]
-    public class RemoveGCalendarEventCommand : CalendarServiceAccountBase
+    public class RemoveGCalendarEventCommand : CalendarBase
     {
         #region Properties
 
@@ -3083,7 +3067,7 @@ namespace gShell.Cmdlets.Calendar.Events
         SupportsShouldProcess = true,
         DefaultParameterSetName = "one",
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GCalendarEvent")]
-    public class GetGCalendarEventCommand : CalendarServiceAccountBase
+    public class GetGCalendarEventCommand : CalendarBase
     {
         #region Properties
 
@@ -3372,7 +3356,7 @@ namespace gShell.Cmdlets.Calendar.Events
     [Cmdlet(VerbsData.Import, "GCalendarEvent",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Import-GCalendarEvent")]
-    public class ImportGCalendarEventCommand : CalendarServiceAccountBase
+    public class ImportGCalendarEventCommand : CalendarBase
     {
         #region Properties
 
@@ -3438,7 +3422,7 @@ namespace gShell.Cmdlets.Calendar.Events
     [Cmdlet(VerbsCommon.New, "GCalendarEvent",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/New-GCalendarEvent")]
-    public class NewGCalendarEventCommand : CalendarServiceAccountBase
+    public class NewGCalendarEventCommand : CalendarBase
     {
         #region Properties
 
@@ -3527,7 +3511,7 @@ namespace gShell.Cmdlets.Calendar.Events
     [Cmdlet(VerbsCommon.Get, "GCalendarEventInstance",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GCalendarEventInstance")]
-    public class GetGCalendarEventInstanceCommand : CalendarServiceAccountBase
+    public class GetGCalendarEventInstanceCommand : CalendarBase
     {
         #region Properties
 
@@ -3675,7 +3659,7 @@ namespace gShell.Cmdlets.Calendar.Events
     [Cmdlet(VerbsCommon.Move, "GCalendarEvent",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Move-GCalendarEvent")]
-    public class MoveGCalendarEventCommand : CalendarServiceAccountBase
+    public class MoveGCalendarEventCommand : CalendarBase
     {
         #region Properties
 
@@ -3751,7 +3735,7 @@ namespace gShell.Cmdlets.Calendar.Events
     [Cmdlet(VerbsCommon.Set, "GCalendarEvent",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GCalendarEvent")]
-    public class SetGCalendarEventCommand : CalendarServiceAccountBase
+    public class SetGCalendarEventCommand : CalendarBase
     {
         #region Properties
 
@@ -3862,7 +3846,7 @@ namespace gShell.Cmdlets.Calendar.Events
     [Cmdlet(VerbsCommon.Add, "GCalendarEvent",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Add-GCalendarEvent")]
-    public class AddGCalendarEventCommand : CalendarServiceAccountBase
+    public class AddGCalendarEventCommand : CalendarBase
     {
         #region Properties
 
@@ -3930,7 +3914,7 @@ namespace gShell.Cmdlets.Calendar.Events
     [Cmdlet(VerbsData.Update, "GCalendarEvent",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Update-GCalendarEvent")]
-    public class UpdateGCalendarEventCommand : CalendarServiceAccountBase
+    public class UpdateGCalendarEventCommand : CalendarBase
     {
         #region Properties
 
@@ -4041,7 +4025,7 @@ namespace gShell.Cmdlets.Calendar.Events
     [Cmdlet(VerbsCommon.Watch, "GCalendarEvent",
         SupportsShouldProcess = true,
         HelpUri = @"https://gaithub.com/squid808/gShell/wiki/Watch-GCalendarEvent")]
-    public class WatchGCalendarEventCommand : CalendarServiceAccountBase
+    public class WatchGCalendarEventCommand : CalendarBase
     {
         #region Properties
 
@@ -4284,7 +4268,7 @@ namespace gShell.Cmdlets.Calendar.Freebusy
     [Cmdlet(VerbsCommon.Get, "GCalendarFreebusy",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GCalendarFreebusy")]
-    public class GetGCalendarFreebusyCommand : CalendarServiceAccountBase
+    public class GetGCalendarFreebusyCommand : CalendarBase
     {
         #region Properties
 
@@ -4331,7 +4315,7 @@ namespace gShell.Cmdlets.Calendar.Settings
         SupportsShouldProcess = true,
         DefaultParameterSetName = "one",
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GCalendarSettings")]
-    public class GetGCalendarSettingsCommand : CalendarServiceAccountBase
+    public class GetGCalendarSettingsCommand : CalendarBase
     {
         #region Properties
 
@@ -4411,7 +4395,7 @@ namespace gShell.Cmdlets.Calendar.Settings
     [Cmdlet(VerbsCommon.Watch, "GCalendarSettings",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Watch-GCalendarSettings")]
-    public class WatchGCalendarSettingsCommand : CalendarServiceAccountBase
+    public class WatchGCalendarSettingsCommand : CalendarBase
     {
         #region Properties
 
