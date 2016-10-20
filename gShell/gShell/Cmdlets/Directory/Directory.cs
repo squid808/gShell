@@ -3241,16 +3241,16 @@ namespace gShell.Cmdlets.Directory.GAGroup
         [ValidateNotNullOrEmpty]
         public string Customer { get; set; }
 
-        ///// <summary>
-        ///// <para type="description">The domain name. Use this field to get fields from only one domain. To return all domains for a customer account, use the customer query parameter instead.</para>
-        ///// </summary>
-        //[Parameter(Position = 5,
-        //    ParameterSetName = "AllGroups",
-        //Mandatory = false,
-        //ValueFromPipelineByPropertyName = true,
-        //HelpMessage = "The domain name. Use this field to get fields from only one domain. To return all domains for a customer account, use the customer query parameter instead.")]
-        //[ValidateNotNullOrEmpty]
-        //public string Domain { get; set; }
+        /// <summary>
+        /// <para type="description">The domain name. Use this field to get fields from only one domain. To return all domains for a customer account, use the customer query parameter instead.</para>
+        /// </summary>
+        [Parameter(Position = 5,
+            ParameterSetName = "AllGroups",
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The domain name. Use this field to get fields from only one domain. To return all domains for a customer account, use the customer query parameter instead.")]
+        [ValidateNotNullOrEmpty]
+        public string Domain { get; set; }
 
         #endregion
 
@@ -3288,12 +3288,15 @@ namespace gShell.Cmdlets.Directory.GAGroup
                 case "AllGroups":
                     if (ShouldProcess("All Groups", "Get-GAGroup"))
                     {
-                        Customer = string.IsNullOrWhiteSpace(Customer) ? "my_customer" : Customer;
+                        if (string.IsNullOrWhiteSpace(Customer) && string.IsNullOrWhiteSpace(Domain))
+                        {
+                            Customer = "my_customer";
+                        }
 
                         var properties = new dotNet.Directory.Groups.GroupsListProperties();
 
                         if (!string.IsNullOrWhiteSpace(this.Customer)) properties.Customer = this.Customer;
-                        else properties.Domain = this.GAuthId;
+                        if (!string.IsNullOrWhiteSpace(this.Domain)) properties.Domain = this.Domain;
 
                         if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
 
@@ -7002,15 +7005,15 @@ namespace gShell.Cmdlets.Directory.GAUser
             HelpMessage = "Immutable id of the Google Apps account. In case of multi-domain, to fetch all users for a customer, fill this field instead of domain.")]
         public string Customer { get; set; }
 
-        ///// <summary>
-        ///// <para type="description">Name of the domain. Fill this field to get users from only this domain. To return all users in a multi-domain fill customer field instead.</para>
-        ///// </summary>
-        //[Parameter(Position = 6,
-        //ParameterSetName = "AllUsers",
-        //Mandatory = false,
-        //ValueFromPipelineByPropertyName = true,
-        //HelpMessage = "Name of the domain. Fill this field to get users from only this domain. To return all users in a multi-domain fill customer field instead.")]
-        //public string OneDomain { get; set; }
+        /// <summary>
+        /// <para type="description">Name of the domain. Fill this field to get users from only this domain. To return all users in a multi-domain fill customer field instead.</para>
+        /// </summary>
+        [Parameter(Position = 6,
+        ParameterSetName = "AllUsers",
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Name of the domain. Fill this field to get users from only this domain. To return all users in a multi-domain fill customer field instead.")]
+        public string Domain { get; set; }
 
         ///// <summary>
         ///// <para type="description">Event on which subscription is intended (if subscribing)</para>
@@ -7097,7 +7100,10 @@ namespace gShell.Cmdlets.Directory.GAUser
 
                 case "AllUsers":
 
-                    Customer = string.IsNullOrWhiteSpace(Customer) ? "my_customer" : Customer;
+                    if (string.IsNullOrWhiteSpace(Customer) && string.IsNullOrWhiteSpace(Domain))
+                    {
+                        Customer = "my_customer";
+                    }
 
                     if (ShouldProcess("All Users", "Get-GAUser"))
                     {
@@ -7114,7 +7120,7 @@ namespace gShell.Cmdlets.Directory.GAUser
                         };
 
                         if (!string.IsNullOrWhiteSpace(this.Customer)) listproperties.Customer = this.Customer;
-                        else listproperties.Domain = this.GAuthId;
+                        if (!string.IsNullOrWhiteSpace(this.Domain)) listproperties.Customer = this.Domain;
 
                         //Make sure to include the domain here because List could use things other than domain (customer, etc)
                         List<Data.User> result = users.List(listproperties).SelectMany(x => x.UsersValue).ToList();
