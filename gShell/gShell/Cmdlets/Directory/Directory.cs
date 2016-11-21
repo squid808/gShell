@@ -2456,12 +2456,12 @@ namespace gShell.Cmdlets.Directory.GAChromeosdevice
         public ChromeosdevicesResource.ListRequest.ProjectionEnum? Projection { get; set; }
 
         /// <summary>
-        /// <para type="description">Search string in the format given at http://support.google.com/chromeos/a/bin/answer.py?hl=en=1698333</para>
+        /// <para type="description">Search string in the format given at https://support.google.com/chrome/a/answer/1698333</para>
         /// </summary>
         [Parameter(Position = 7,
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
-        HelpMessage = "Search string in the format given at http://support.google.com/chromeos/a/bin/answer.py?hl=en=1698333")]
+        HelpMessage = "Search string in the format given at https://support.google.com/chrome/a/answer/1698333")]
         public string Query { get; set; }
 
         /// <summary>
