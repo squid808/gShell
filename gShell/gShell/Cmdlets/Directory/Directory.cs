@@ -3809,12 +3809,13 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
         public string GroupName { get; set; }
 
         /// <summary>
-        /// <para type="description">Email of member (Read-only)</para>
+        /// <para type="description">Email of member</para>
         /// </summary>
+        [Alias("UserName")]
         [Parameter(Position = 2,
             Mandatory = true,
             HelpMessage = "The username of the group member you want to add.")]
-        public string UserName { get; set; }
+        public string Email { get; set; }
 
         /// <summary>
         /// <para type="description">Role of member</para>
