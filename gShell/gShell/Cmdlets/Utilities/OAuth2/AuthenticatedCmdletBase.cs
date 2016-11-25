@@ -50,7 +50,7 @@ namespace gShell.Cmdlets.Utilities.OAuth2
             if (secrets != null)
             {
                 IEnumerable<string> scopes = EnsureScopesExist(GAuthId);
-                GAuthId = (ServiceWrapperDictionary[mainBaseType].BuildService(Authenticate(scopes, secrets, GAuthId))).domain;
+                GAuthId = ServiceWrapperDictionary[mainBaseType].BuildService(Authenticate(scopes, secrets, GAuthId)).domain;
 
                 GWriteProgress = new gWriteProgress(WriteProgress);
             }

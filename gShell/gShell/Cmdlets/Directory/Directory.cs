@@ -3780,7 +3780,7 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Add-GAMembers -GroupKey $SomeGroupKeyString -MemberBody $SomeMemberObj</code>
+    ///   <code>PS C:\>Add-GAGroupMembers -GroupKey $SomeGroupKeyString -MemberBody $SomeMemberObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -5363,12 +5363,12 @@ namespace gShell.Cmdlets.Directory.GACalendar
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GACalendar -Customer $SomeCustomerString -CalendarResourceId $SomeCalendarResourceIdString</code>
+    ///   <code>PS C:\>Get-GACalendar -CalendarResourceId $SomeCalendarResourceIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>List-GACalendar -Customer $SomeCustomerString -All</code>
+    ///   <code>PS C:\>Get-GACalendar -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -5384,18 +5384,9 @@ namespace gShell.Cmdlets.Directory.GACalendar
         #region Properties
 
         /// <summary>
-        /// <para type="description">The unique ID for the customer's Google account. As an account administrator, you can also use the my_customer alias to represent your account's customer ID.</para>
-        /// </summary>
-        [Parameter(Position = 0,
-        Mandatory = false,
-        ValueFromPipelineByPropertyName = true,
-        HelpMessage = "The unique ID for the customer's Google account. As an account administrator, you can also use the my_customer alias to represent your account's customer ID.")]
-        public string Customer { get; set; }
-
-        /// <summary>
         /// <para type="description">The unique ID of the calendar resource to retrieve.</para>
         /// </summary>
-        [Parameter(Position = 1,
+        [Parameter(Position = 0,
         Mandatory = true,
         ValueFromPipelineByPropertyName = true,
         ParameterSetName = "One",
@@ -5405,7 +5396,7 @@ namespace gShell.Cmdlets.Directory.GACalendar
         /// <summary>
         /// <para type="description">A switch to list all results</para>
         /// </summary>
-        [Parameter(Position = 1,
+        [Parameter(Position = 0,
         Mandatory = true,
         ParameterSetName = "List",
         HelpMessage = "A switch to list all results.")]
@@ -5414,12 +5405,21 @@ namespace gShell.Cmdlets.Directory.GACalendar
         /// <summary>
         /// <para type="description">Maximum number of results to return.</para>
         /// </summary>
-        [Parameter(Position = 2,
+        [Parameter(Position = 1,
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         ParameterSetName = "List",
         HelpMessage = "Maximum number of results to return.")]
         public int? MaxResults { get; set; }
+
+        /// <summary>
+        /// <para type="description">The unique ID for the customer's Google account. As an account administrator, you can also use the my_customer alias to represent your account's customer ID.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The unique ID for the customer's Google account. As an account administrator, you can also use the my_customer alias to represent your account's customer ID.")]
+        public string Customer { get; set; }
         #endregion
 
         protected override void ProcessRecord()
