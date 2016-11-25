@@ -529,7 +529,7 @@ namespace gShell.dotNet.Utilities.OAuth2
         {
             if (DomainExists(Domain) 
                 && !string.IsNullOrWhiteSpace(info.domains[Domain].serviceAccountEmail)
-                && info.domains[Domain].p12Certificate != null)
+                && (info.domains[Domain].p12Certificate != null || info.domains[Domain].jsonCertificate !=null))
             {
                 return true;
             }

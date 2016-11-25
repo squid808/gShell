@@ -3833,7 +3833,7 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
             {
                 Data.Member member = new Data.Member
                 {
-                    Email = GetFullEmailAddress(UserName, GAuthId),
+                    Email = GetFullEmailAddress(Email, GAuthId),
                     Role = this.Role.ToString()
                 };
 
