@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
+using Google.Apis.Classroom.v1;
 using Google.Apis.Classroom.v1.Data;
 using gClassroom = gShell.dotNet.Classroom;
 
@@ -35,69 +36,97 @@ namespace gShell.Cmdlets.Classroom
     /// <summary>A base class which provides support for service account integration and schema objects.</summary>
     public abstract class ClassroomServiceAccountBase : ClassroomBase { }
 
-
     /// <summary>
-    /// <para type="synopsis">Creates a new Classroom API Student object.</para>
-    /// <para type="description">This provides a Cmdlet-Based approach to creating a Student object which may be required as a parameter for some other Cmdlets in the Classroom API category.</para>
-    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Classroom.v1.Data.Student</para>
+    /// <para type="synopsis">Creates a new Classroom API MultipleChoiceSubmission object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a MultipleChoiceSubmission object which may be required as a parameter for some other Cmdlets in the Classroom API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Classroom.v1.Data.MultipleChoiceSubmission</para>
     /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GClassroomStudentObj</code>
+    ///   <code>PS C:\>New-GClassroomMultipleChoiceSubmissionObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GClassroomStudentObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GClassroomMultipleChoiceSubmissionObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
-    [Cmdlet(VerbsCommon.New, "GClassroomStudentObj",
+    [Cmdlet(VerbsCommon.New, "GClassroomMultipleChoiceSubmissionObj",
     SupportsShouldProcess = true,
-    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomStudentObj")]
-    [OutputType(typeof(Google.Apis.Classroom.v1.Data.Student))]
-    public class NewGClassroomStudentObjCommand : PSCmdlet
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomMultipleChoiceSubmissionObj")]
+    [OutputType(typeof(Google.Apis.Classroom.v1.Data.MultipleChoiceSubmission))]
+    public class NewGClassroomMultipleChoiceSubmissionObjCommand : PSCmdlet
     {
         #region Properties
 
 
         /// <summary>
-        /// <para type="description">Identifier of the course. Read-only.</para>
+        /// <para type="description">Student's select choice.</para>
         /// </summary>
         [Parameter(Position = 0,
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
-        HelpMessage = "Identifier of the course. Read-only.")]
-        public string CourseId { get; set; }
-
-        /// <summary>
-        /// <para type="description">Global user information for the student. Read-only.</para>
-        /// </summary>
-        [Parameter(Position = 1,
-        Mandatory = false,
-        ValueFromPipelineByPropertyName = true,
-        HelpMessage = "Global user information for the student. Read-only.")]
-        public UserProfile Profile { get; set; }
-
-        /// <summary>
-        /// <para type="description">Identifier of the user. When specified as a parameter of a request, this identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`, indicating the requesting user</para>
-        /// </summary>
-        [Parameter(Position = 2,
-        Mandatory = false,
-        ValueFromPipelineByPropertyName = true,
-        HelpMessage = "Identifier of the user. When specified as a parameter of a request, this identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `\"me\"`, indicating the requesting user")]
-        public string UserId { get; set; }
+        HelpMessage = "Student's select choice.")]
+        public string Answer { get; set; }
         #endregion
 
-        protected override void ProcessRecord()
+         protected override void ProcessRecord()
         {
-            var body = new Google.Apis.Classroom.v1.Data.Student()
+            var body = new Google.Apis.Classroom.v1.Data.MultipleChoiceSubmission()
             {
-                CourseId = this.CourseId,
-                Profile = this.Profile,
-                UserId = this.UserId,
+                Answer = this.Answer,
             };
 
-            if (ShouldProcess("Student"))
+            if (ShouldProcess("MultipleChoiceSubmission"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Classroom API ShortAnswerSubmission object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a ShortAnswerSubmission object which may be required as a parameter for some other Cmdlets in the Classroom API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Classroom.v1.Data.ShortAnswerSubmission</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GClassroomShortAnswerSubmissionObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GClassroomShortAnswerSubmissionObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GClassroomShortAnswerSubmissionObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomShortAnswerSubmissionObj")]
+    [OutputType(typeof(Google.Apis.Classroom.v1.Data.ShortAnswerSubmission))]
+    public class NewGClassroomShortAnswerSubmissionObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">Student response to a short-answer question.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Student response to a short-answer question.")]
+        public string Answer { get; set; }
+        #endregion
+
+         protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Classroom.v1.Data.ShortAnswerSubmission()
+            {
+                Answer = this.Answer,
+            };
+
+            if (ShouldProcess("ShortAnswerSubmission"))
             {
                 WriteObject(body);
             }
@@ -105,157 +134,77 @@ namespace gShell.Cmdlets.Classroom
     }
 
     /// <summary>
-    /// <para type="synopsis">Creates a new Classroom API Course object.</para>
-    /// <para type="description">This provides a Cmdlet-Based approach to creating a Course object which may be required as a parameter for some other Cmdlets in the Classroom API category.</para>
-    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Classroom.v1.Data.Course</para>
+    /// <para type="synopsis">Creates a new Classroom API Attachment object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a Attachment object which may be required as a parameter for some other Cmdlets in the Classroom API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Classroom.v1.Data.Attachment</para>
     /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GClassroomCourseObj</code>
+    ///   <code>PS C:\>New-GClassroomAttachmentObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GClassroomCourseObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GClassroomAttachmentObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
-    [Cmdlet(VerbsCommon.New, "GClassroomCourseObj",
+    [Cmdlet(VerbsCommon.New, "GClassroomAttachmentObj",
     SupportsShouldProcess = true,
-    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomCourseObj")]
-    [OutputType(typeof(Google.Apis.Classroom.v1.Data.Course))]
-    public class NewGClassroomCourseObjCommand : PSCmdlet
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomAttachmentObj")]
+    [OutputType(typeof(Google.Apis.Classroom.v1.Data.Attachment))]
+    public class NewGClassroomAttachmentObjCommand : PSCmdlet
     {
         #region Properties
 
 
         /// <summary>
-        /// <para type="description">Absolute link to this course in the Classroom web UI. Read-only.</para>
+        /// <para type="description">Google Drive file attachment.</para>
         /// </summary>
         [Parameter(Position = 0,
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
-        HelpMessage = "Absolute link to this course in the Classroom web UI. Read-only.")]
-        public string AlternateLink { get; set; }
+        HelpMessage = "Google Drive file attachment.")]
+        public DriveFile DriveFile { get; set; }
 
         /// <summary>
-        /// <para type="description">State of the course. If unspecified, the default state is `PROVISIONED`.</para>
+        /// <para type="description">Google Forms attachment.</para>
         /// </summary>
         [Parameter(Position = 1,
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
-        HelpMessage = "State of the course. If unspecified, the default state is `PROVISIONED`.")]
-        public string CourseState { get; set; }
+        HelpMessage = "Google Forms attachment.")]
+        public Form Form { get; set; }
 
         /// <summary>
-        /// <para type="description">Creation time of the course. Specifying this field in a course update mask will result in an error. Read-only.</para>
+        /// <para type="description">Link attachment.</para>
         /// </summary>
         [Parameter(Position = 2,
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
-        HelpMessage = "Creation time of the course. Specifying this field in a course update mask will result in an error. Read-only.")]
-        public string CreationTime { get; set; }
+        HelpMessage = "Link attachment.")]
+        public Link Link { get; set; }
 
         /// <summary>
-        /// <para type="description">Optional description. For example, "We'll be learning about the structure of living creatures from a combination of textbooks, guest lectures, and lab work. Expect to be excited!" If set, this field must be a valid UTF-8 string and no longer than 30,000 characters.</para>
+        /// <para type="description">Youtube video attachment.</para>
         /// </summary>
         [Parameter(Position = 3,
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
-        HelpMessage = "Optional description. For example, \"We'll be learning about the structure of living creatures from a combination of textbooks, guest lectures, and lab work. Expect to be excited!\" If set, this field must be a valid UTF-8 string and no longer than 30,000 characters.")]
-        public string Description { get; set; }
-
-        /// <summary>
-        /// <para type="description">Optional heading for the description. For example, "Welcome to 10th Grade Biology." If set, this field must be a valid UTF-8 string and no longer than 3600 characters.</para>
-        /// </summary>
-        [Parameter(Position = 4,
-        Mandatory = false,
-        ValueFromPipelineByPropertyName = true,
-        HelpMessage = "Optional heading for the description. For example, \"Welcome to 10th Grade Biology.\" If set, this field must be a valid UTF-8 string and no longer than 3600 characters.")]
-        public string DescriptionHeading { get; set; }
-
-        /// <summary>
-        /// <para type="description">Enrollment code to use when joining this course. Specifying this field in a course update mask will result in an error. Read-only.</para>
-        /// </summary>
-        [Parameter(Position = 5,
-        Mandatory = false,
-        ValueFromPipelineByPropertyName = true,
-        HelpMessage = "Enrollment code to use when joining this course. Specifying this field in a course update mask will result in an error. Read-only.")]
-        public string EnrollmentCode { get; set; }
-
-        /// <summary>
-        /// <para type="description">Identifier for this course assigned by Classroom. When creating a course, you may optionally set this identifier to an alias string in the request to create a corresponding alias. The `id` is still assigned by Classroom and cannot be updated after the course is created. Specifying this field in a course update mask will result in an error.</para>
-        /// </summary>
-        [Parameter(Position = 6,
-        Mandatory = false,
-        ValueFromPipelineByPropertyName = true,
-        HelpMessage = "Identifier for this course assigned by Classroom. When creating a course, you may optionally set this identifier to an alias string in the request to create a corresponding alias. The `id` is still assigned by Classroom and cannot be updated after the course is created. Specifying this field in a course update mask will result in an error.")]
-        public string Id { get; set; }
-
-        /// <summary>
-        /// <para type="description">Name of the course. For example, "10th Grade Biology". The name is required. It must be between 1 and 750 characters and a valid UTF-8 string.</para>
-        /// </summary>
-        [Parameter(Position = 7,
-        Mandatory = false,
-        ValueFromPipelineByPropertyName = true,
-        HelpMessage = "Name of the course. For example, \"10th Grade Biology\". The name is required. It must be between 1 and 750 characters and a valid UTF-8 string.")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// <para type="description">The identifier of the owner of a course. When specified as a parameter of a create course request, this field is required. The identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`, indicating the requesting user This must be set in a create request. Specifying this field in a course update mask will result in an `INVALID_ARGUMENT` error.</para>
-        /// </summary>
-        [Parameter(Position = 8,
-        Mandatory = false,
-        ValueFromPipelineByPropertyName = true,
-        HelpMessage = "The identifier of the owner of a course. When specified as a parameter of a create course request, this field is required. The identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `\"me\"`, indicating the requesting user This must be set in a create request. Specifying this field in a course update mask will result in an `INVALID_ARGUMENT` error.")]
-        public string OwnerId { get; set; }
-
-        /// <summary>
-        /// <para type="description">Optional room location. For example, "301". If set, this field must be a valid UTF-8 string and no longer than 650 characters.</para>
-        /// </summary>
-        [Parameter(Position = 9,
-        Mandatory = false,
-        ValueFromPipelineByPropertyName = true,
-        HelpMessage = "Optional room location. For example, \"301\". If set, this field must be a valid UTF-8 string and no longer than 650 characters.")]
-        public string Room { get; set; }
-
-        /// <summary>
-        /// <para type="description">Section of the course. For example, "Period 2". If set, this field must be a valid UTF-8 string and no longer than 2800 characters.</para>
-        /// </summary>
-        [Parameter(Position = 10,
-        Mandatory = false,
-        ValueFromPipelineByPropertyName = true,
-        HelpMessage = "Section of the course. For example, \"Period 2\". If set, this field must be a valid UTF-8 string and no longer than 2800 characters.")]
-        public string Section { get; set; }
-
-        /// <summary>
-        /// <para type="description">Time of the most recent update to this course. Specifying this field in a course update mask will result in an error. Read-only.</para>
-        /// </summary>
-        [Parameter(Position = 11,
-        Mandatory = false,
-        ValueFromPipelineByPropertyName = true,
-        HelpMessage = "Time of the most recent update to this course. Specifying this field in a course update mask will result in an error. Read-only.")]
-        public string UpdateTime { get; set; }
+        HelpMessage = "Youtube video attachment.")]
+        public YouTubeVideo YouTubeVideo { get; set; }
         #endregion
 
-        protected override void ProcessRecord()
+         protected override void ProcessRecord()
         {
-            var body = new Google.Apis.Classroom.v1.Data.Course()
+            var body = new Google.Apis.Classroom.v1.Data.Attachment()
             {
-                AlternateLink = this.AlternateLink,
-                CourseState = this.CourseState,
-                CreationTime = this.CreationTime,
-                Description = this.Description,
-                DescriptionHeading = this.DescriptionHeading,
-                EnrollmentCode = this.EnrollmentCode,
-                Id = this.Id,
-                Name = this.Name,
-                OwnerId = this.OwnerId,
-                Room = this.Room,
-                Section = this.Section,
-                UpdateTime = this.UpdateTime,
+                DriveFile = this.DriveFile,
+                Form = this.Form,
+                Link = this.Link,
+                YouTubeVideo = this.YouTubeVideo,
             };
 
-            if (ShouldProcess("Course"))
+            if (ShouldProcess("Attachment"))
             {
                 WriteObject(body);
             }
@@ -263,309 +212,77 @@ namespace gShell.Cmdlets.Classroom
     }
 
     /// <summary>
-    /// <para type="synopsis">Creates a new Classroom API CourseAlias object.</para>
-    /// <para type="description">This provides a Cmdlet-Based approach to creating a CourseAlias object which may be required as a parameter for some other Cmdlets in the Classroom API category.</para>
-    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Classroom.v1.Data.CourseAlias</para>
+    /// <para type="synopsis">Creates a new Classroom API TimeOfDay object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a TimeOfDay object which may be required as a parameter for some other Cmdlets in the Classroom API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Classroom.v1.Data.TimeOfDay</para>
     /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GClassroomCourseAliasObj</code>
+    ///   <code>PS C:\>New-GClassroomTimeOfDayObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GClassroomCourseAliasObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GClassroomTimeOfDayObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
-    [Cmdlet(VerbsCommon.New, "GClassroomCourseAliasObj",
+    [Cmdlet(VerbsCommon.New, "GClassroomTimeOfDayObj",
     SupportsShouldProcess = true,
-    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomCourseAliasObj")]
-    [OutputType(typeof(Google.Apis.Classroom.v1.Data.CourseAlias))]
-    public class NewGClassroomCourseAliasObjCommand : PSCmdlet
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomTimeOfDayObj")]
+    [OutputType(typeof(Google.Apis.Classroom.v1.Data.TimeOfDay))]
+    public class NewGClassroomTimeOfDayObjCommand : PSCmdlet
     {
         #region Properties
 
 
         /// <summary>
-        /// <para type="description">Alias string. The format of the string indicates the desired alias scoping. * `d:` indicates a domain-scoped alias. Example: `d:math_101` * `p:` indicates a project-scoped alias. Example: `p:abc123` This field has a maximum length of 256 characters.</para>
+        /// <para type="description">Hours of day in 24 hour format. Should be from 0 to 23. An API may choose to allow the value "24:00:00" for scenarios like business closing time.</para>
         /// </summary>
         [Parameter(Position = 0,
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
-        HelpMessage = "Alias string. The format of the string indicates the desired alias scoping. * `d:` indicates a domain-scoped alias. Example: `d:math_101` * `p:` indicates a project-scoped alias. Example: `p:abc123` This field has a maximum length of 256 characters.")]
-        public string Alias { get; set; }
-        #endregion
-
-        protected override void ProcessRecord()
-        {
-            var body = new Google.Apis.Classroom.v1.Data.CourseAlias()
-            {
-                Alias = this.Alias,
-            };
-
-            if (ShouldProcess("CourseAlias"))
-            {
-                WriteObject(body);
-            }
-        }
-    }
-
-    /// <summary>
-    /// <para type="synopsis">Creates a new Classroom API Invitation object.</para>
-    /// <para type="description">This provides a Cmdlet-Based approach to creating a Invitation object which may be required as a parameter for some other Cmdlets in the Classroom API category.</para>
-    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Classroom.v1.Data.Invitation</para>
-    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
-    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
-    /// </description></item></list>
-    /// <example>
-    ///   <code>PS C:\>New-GClassroomInvitationObj</code>
-    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
-    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
-    /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GClassroomInvitationObj">[Wiki page for this Cmdlet]</para>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
-    /// </summary>
-    [Cmdlet(VerbsCommon.New, "GClassroomInvitationObj",
-    SupportsShouldProcess = true,
-    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomInvitationObj")]
-    [OutputType(typeof(Google.Apis.Classroom.v1.Data.Invitation))]
-    public class NewGClassroomInvitationObjCommand : PSCmdlet
-    {
-        #region Properties
-
+        HelpMessage = "Hours of day in 24 hour format. Should be from 0 to 23. An API may choose to allow the value \"24:00:00\" for scenarios like business closing time.")]
+        public System.Nullable<int> Hours { get; set; }
 
         /// <summary>
-        /// <para type="description">Identifier of the course to invite the user to.</para>
-        /// </summary>
-        [Parameter(Position = 0,
-        Mandatory = false,
-        ValueFromPipelineByPropertyName = true,
-        HelpMessage = "Identifier of the course to invite the user to.")]
-        public string CourseId { get; set; }
-
-        /// <summary>
-        /// <para type="description">Identifier assigned by Classroom. Read-only.</para>
+        /// <para type="description">Minutes of hour of day. Must be from 0 to 59.</para>
         /// </summary>
         [Parameter(Position = 1,
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
-        HelpMessage = "Identifier assigned by Classroom. Read-only.")]
-        public string Id { get; set; }
+        HelpMessage = "Minutes of hour of day. Must be from 0 to 59.")]
+        public System.Nullable<int> Minutes { get; set; }
 
         /// <summary>
-        /// <para type="description">Role to invite the user to have. Must not be `COURSE_ROLE_UNSPECIFIED`.</para>
+        /// <para type="description">Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999.</para>
         /// </summary>
         [Parameter(Position = 2,
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
-        HelpMessage = "Role to invite the user to have. Must not be `COURSE_ROLE_UNSPECIFIED`.")]
-        public string Role { get; set; }
+        HelpMessage = "Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999.")]
+        public System.Nullable<int> Nanos { get; set; }
 
         /// <summary>
-        /// <para type="description">Identifier of the invited user. When specified as a parameter of a request, this identifier can be set to one of the following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`, indicating the requesting user</para>
+        /// <para type="description">Seconds of minutes of the time. Must normally be from 0 to 59. An API may allow the value 60 if it allows leap-seconds.</para>
         /// </summary>
         [Parameter(Position = 3,
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
-        HelpMessage = "Identifier of the invited user. When specified as a parameter of a request, this identifier can be set to one of the following: * the numeric identifier for the user * the email address of the user * the string literal `\"me\"`, indicating the requesting user")]
-        public string UserId { get; set; }
+        HelpMessage = "Seconds of minutes of the time. Must normally be from 0 to 59. An API may allow the value 60 if it allows leap-seconds.")]
+        public System.Nullable<int> Seconds { get; set; }
         #endregion
 
-        protected override void ProcessRecord()
+         protected override void ProcessRecord()
         {
-            var body = new Google.Apis.Classroom.v1.Data.Invitation()
+            var body = new Google.Apis.Classroom.v1.Data.TimeOfDay()
             {
-                CourseId = this.CourseId,
-                Id = this.Id,
-                Role = this.Role,
-                UserId = this.UserId,
+                Hours = this.Hours,
+                Minutes = this.Minutes,
+                Nanos = this.Nanos,
+                Seconds = this.Seconds,
             };
 
-            if (ShouldProcess("Invitation"))
-            {
-                WriteObject(body);
-            }
-        }
-    }
-
-    /// <summary>
-    /// <para type="synopsis">Creates a new Classroom API GlobalPermission object.</para>
-    /// <para type="description">This provides a Cmdlet-Based approach to creating a GlobalPermission object which may be required as a parameter for some other Cmdlets in the Classroom API category.</para>
-    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Classroom.v1.Data.GlobalPermission</para>
-    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
-    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
-    /// </description></item></list>
-    /// <example>
-    ///   <code>PS C:\>New-GClassroomGlobalPermissionObj</code>
-    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
-    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
-    /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GClassroomGlobalPermissionObj">[Wiki page for this Cmdlet]</para>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
-    /// </summary>
-    [Cmdlet(VerbsCommon.New, "GClassroomGlobalPermissionObj",
-    SupportsShouldProcess = true,
-    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomGlobalPermissionObj")]
-    [OutputType(typeof(Google.Apis.Classroom.v1.Data.GlobalPermission))]
-    public class NewGClassroomGlobalPermissionObjCommand : PSCmdlet
-    {
-        #region Properties
-
-
-        /// <summary>
-        /// <para type="description">Permission value.</para>
-        /// </summary>
-        [Parameter(Position = 0,
-        Mandatory = false,
-        ValueFromPipelineByPropertyName = true,
-        HelpMessage = "Permission value.")]
-        public string Permission { get; set; }
-        #endregion
-
-        protected override void ProcessRecord()
-        {
-            var body = new Google.Apis.Classroom.v1.Data.GlobalPermission()
-            {
-                Permission = this.Permission,
-            };
-
-            if (ShouldProcess("GlobalPermission"))
-            {
-                WriteObject(body);
-            }
-        }
-    }
-
-    /// <summary>
-    /// <para type="synopsis">Creates a new Classroom API Name object.</para>
-    /// <para type="description">This provides a Cmdlet-Based approach to creating a Name object which may be required as a parameter for some other Cmdlets in the Classroom API category.</para>
-    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Classroom.v1.Data.Name</para>
-    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
-    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
-    /// </description></item></list>
-    /// <example>
-    ///   <code>PS C:\>New-GClassroomNameObj</code>
-    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
-    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
-    /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GClassroomNameObj">[Wiki page for this Cmdlet]</para>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
-    /// </summary>
-    [Cmdlet(VerbsCommon.New, "GClassroomNameObj",
-    SupportsShouldProcess = true,
-    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomNameObj")]
-    [OutputType(typeof(Google.Apis.Classroom.v1.Data.Name))]
-    public class NewGClassroomNameObjCommand : PSCmdlet
-    {
-        #region Properties
-
-
-        /// <summary>
-        /// <para type="description">The user's last name. Read-only.</para>
-        /// </summary>
-        [Parameter(Position = 0,
-        Mandatory = false,
-        ValueFromPipelineByPropertyName = true,
-        HelpMessage = "The user's last name. Read-only.")]
-        public string FamilyName { get; set; }
-
-        /// <summary>
-        /// <para type="description">The user's full name formed by concatenating the first and last name values. Read-only.</para>
-        /// </summary>
-        [Parameter(Position = 1,
-        Mandatory = false,
-        ValueFromPipelineByPropertyName = true,
-        HelpMessage = "The user's full name formed by concatenating the first and last name values. Read-only.")]
-        public string FullName { get; set; }
-
-        /// <summary>
-        /// <para type="description">The user's first name. Read-only.</para>
-        /// </summary>
-        [Parameter(Position = 2,
-        Mandatory = false,
-        ValueFromPipelineByPropertyName = true,
-        HelpMessage = "The user's first name. Read-only.")]
-        public string GivenName { get; set; }
-        #endregion
-
-        protected override void ProcessRecord()
-        {
-            var body = new Google.Apis.Classroom.v1.Data.Name()
-            {
-                FamilyName = this.FamilyName,
-                FullName = this.FullName,
-                GivenName = this.GivenName,
-            };
-
-            if (ShouldProcess("Name"))
-            {
-                WriteObject(body);
-            }
-        }
-    }
-
-    /// <summary>
-    /// <para type="synopsis">Creates a new Classroom API Teacher object.</para>
-    /// <para type="description">This provides a Cmdlet-Based approach to creating a Teacher object which may be required as a parameter for some other Cmdlets in the Classroom API category.</para>
-    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Classroom.v1.Data.Teacher</para>
-    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
-    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
-    /// </description></item></list>
-    /// <example>
-    ///   <code>PS C:\>New-GClassroomTeacherObj</code>
-    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
-    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
-    /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GClassroomTeacherObj">[Wiki page for this Cmdlet]</para>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
-    /// </summary>
-    [Cmdlet(VerbsCommon.New, "GClassroomTeacherObj",
-    SupportsShouldProcess = true,
-    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomTeacherObj")]
-    [OutputType(typeof(Google.Apis.Classroom.v1.Data.Teacher))]
-    public class NewGClassroomTeacherObjCommand : PSCmdlet
-    {
-        #region Properties
-
-
-        /// <summary>
-        /// <para type="description">Identifier of the course. Read-only.</para>
-        /// </summary>
-        [Parameter(Position = 0,
-        Mandatory = false,
-        ValueFromPipelineByPropertyName = true,
-        HelpMessage = "Identifier of the course. Read-only.")]
-        public string CourseId { get; set; }
-
-        /// <summary>
-        /// <para type="description">Global user information for the teacher. Read-only.</para>
-        /// </summary>
-        [Parameter(Position = 1,
-        Mandatory = false,
-        ValueFromPipelineByPropertyName = true,
-        HelpMessage = "Global user information for the teacher. Read-only.")]
-        public UserProfile Profile { get; set; }
-
-        /// <summary>
-        /// <para type="description">Identifier of the user. When specified as a parameter of a request, this identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`, indicating the requesting user</para>
-        /// </summary>
-        [Parameter(Position = 2,
-        Mandatory = false,
-        ValueFromPipelineByPropertyName = true,
-        HelpMessage = "Identifier of the user. When specified as a parameter of a request, this identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `\"me\"`, indicating the requesting user")]
-        public string UserId { get; set; }
-        #endregion
-
-        protected override void ProcessRecord()
-        {
-            var body = new Google.Apis.Classroom.v1.Data.Teacher()
-            {
-                CourseId = this.CourseId,
-                Profile = this.Profile,
-                UserId = this.UserId,
-            };
-
-            if (ShouldProcess("Teacher"))
+            if (ShouldProcess("TimeOfDay"))
             {
                 WriteObject(body);
             }
@@ -642,7 +359,7 @@ namespace gShell.Cmdlets.Classroom
         public string PhotoUrl { get; set; }
         #endregion
 
-        protected override void ProcessRecord()
+         protected override void ProcessRecord()
         {
             var body = new Google.Apis.Classroom.v1.Data.UserProfile()
             {
@@ -654,6 +371,2028 @@ namespace gShell.Cmdlets.Classroom
             };
 
             if (ShouldProcess("UserProfile"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Classroom API CourseMaterialSet object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a CourseMaterialSet object which may be required as a parameter for some other Cmdlets in the Classroom API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Classroom.v1.Data.CourseMaterialSet</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GClassroomCourseMaterialSetObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GClassroomCourseMaterialSetObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GClassroomCourseMaterialSetObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomCourseMaterialSetObj")]
+    [OutputType(typeof(Google.Apis.Classroom.v1.Data.CourseMaterialSet))]
+    public class NewGClassroomCourseMaterialSetObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">Materials attached to this set.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Materials attached to this set.")]
+        public System.Collections.Generic.IList<CourseMaterial> Materials { get; set; }
+
+        /// <summary>
+        /// <para type="description">Title for this set.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Title for this set.")]
+        public string Title { get; set; }
+        #endregion
+
+         protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Classroom.v1.Data.CourseMaterialSet()
+            {
+                Materials = this.Materials,
+                Title = this.Title,
+            };
+
+            if (ShouldProcess("CourseMaterialSet"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Classroom API AssignmentSubmission object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a AssignmentSubmission object which may be required as a parameter for some other Cmdlets in the Classroom API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Classroom.v1.Data.AssignmentSubmission</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GClassroomAssignmentSubmissionObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GClassroomAssignmentSubmissionObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GClassroomAssignmentSubmissionObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomAssignmentSubmissionObj")]
+    [OutputType(typeof(Google.Apis.Classroom.v1.Data.AssignmentSubmission))]
+    public class NewGClassroomAssignmentSubmissionObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">Attachments added by the student. Drive files that correspond to materials with a share mode of SUBMISSION_COPY may not exist yet if the student has not accessed the assignment in Classroom. Some attachment metadata is only populated if the requesting user has permission to access it. Identifier and alternate_link fields are available, but others (e.g. title) may not be.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Attachments added by the student. Drive files that correspond to materials with a share mode of SUBMISSION_COPY may not exist yet if the student has not accessed the assignment in Classroom. Some attachment metadata is only populated if the requesting user has permission to access it. Identifier and alternate_link fields are available, but others (e.g. title) may not be.")]
+        public System.Collections.Generic.IList<Attachment> Attachments { get; set; }
+        #endregion
+
+         protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Classroom.v1.Data.AssignmentSubmission()
+            {
+                Attachments = this.Attachments,
+            };
+
+            if (ShouldProcess("AssignmentSubmission"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Classroom API Form object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a Form object which may be required as a parameter for some other Cmdlets in the Classroom API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Classroom.v1.Data.Form</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GClassroomFormObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GClassroomFormObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GClassroomFormObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomFormObj")]
+    [OutputType(typeof(Google.Apis.Classroom.v1.Data.Form))]
+    public class NewGClassroomFormObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">URL of the form.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "URL of the form.")]
+        public string FormUrl { get; set; }
+
+        /// <summary>
+        /// <para type="description">URL of the form responses document. Only set if respsonses have been recorded and only when the requesting user is an editor of the form. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "URL of the form responses document. Only set if respsonses have been recorded and only when the requesting user is an editor of the form. Read-only.")]
+        public string ResponseUrl { get; set; }
+
+        /// <summary>
+        /// <para type="description">URL of a thumbnail image of the Form. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "URL of a thumbnail image of the Form. Read-only.")]
+        public string ThumbnailUrl { get; set; }
+
+        /// <summary>
+        /// <para type="description">Title of the Form. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Title of the Form. Read-only.")]
+        public string Title { get; set; }
+        #endregion
+
+         protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Classroom.v1.Data.Form()
+            {
+                FormUrl = this.FormUrl,
+                ResponseUrl = this.ResponseUrl,
+                ThumbnailUrl = this.ThumbnailUrl,
+                Title = this.Title,
+            };
+
+            if (ShouldProcess("Form"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Classroom API Guardian object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a Guardian object which may be required as a parameter for some other Cmdlets in the Classroom API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Classroom.v1.Data.Guardian</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GClassroomGuardianObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GClassroomGuardianObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GClassroomGuardianObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomGuardianObj")]
+    [OutputType(typeof(Google.Apis.Classroom.v1.Data.Guardian))]
+    public class NewGClassroomGuardianObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">Identifier for the guardian.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Identifier for the guardian.")]
+        public string GuardianId { get; set; }
+
+        /// <summary>
+        /// <para type="description">User profile for the guardian.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "User profile for the guardian.")]
+        public UserProfile GuardianProfile { get; set; }
+
+        /// <summary>
+        /// <para type="description">The email address to which the initial guardian invitation was sent. This field is only visible to domain administrators.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The email address to which the initial guardian invitation was sent. This field is only visible to domain administrators.")]
+        public string InvitedEmailAddress { get; set; }
+
+        /// <summary>
+        /// <para type="description">Identifier for the student to whom the guardian relationship applies.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Identifier for the student to whom the guardian relationship applies.")]
+        public string StudentId { get; set; }
+        #endregion
+
+         protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Classroom.v1.Data.Guardian()
+            {
+                GuardianId = this.GuardianId,
+                GuardianProfile = this.GuardianProfile,
+                InvitedEmailAddress = this.InvitedEmailAddress,
+                StudentId = this.StudentId,
+            };
+
+            if (ShouldProcess("Guardian"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Classroom API Material object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a Material object which may be required as a parameter for some other Cmdlets in the Classroom API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Classroom.v1.Data.Material</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GClassroomMaterialObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GClassroomMaterialObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GClassroomMaterialObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomMaterialObj")]
+    [OutputType(typeof(Google.Apis.Classroom.v1.Data.Material))]
+    public class NewGClassroomMaterialObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">Google Drive file material.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Google Drive file material.")]
+        public SharedDriveFile DriveFile { get; set; }
+
+        /// <summary>
+        /// <para type="description">Google Forms material.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Google Forms material.")]
+        public Form Form { get; set; }
+
+        /// <summary>
+        /// <para type="description">Link material.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Link material.")]
+        public Link Link { get; set; }
+
+        /// <summary>
+        /// <para type="description">YouTube video material.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "YouTube video material.")]
+        public YouTubeVideo YoutubeVideo { get; set; }
+        #endregion
+
+         protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Classroom.v1.Data.Material()
+            {
+                DriveFile = this.DriveFile,
+                Form = this.Form,
+                Link = this.Link,
+                YoutubeVideo = this.YoutubeVideo,
+            };
+
+            if (ShouldProcess("Material"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Classroom API YouTubeVideo object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a YouTubeVideo object which may be required as a parameter for some other Cmdlets in the Classroom API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Classroom.v1.Data.YouTubeVideo</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GClassroomYouTubeVideoObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GClassroomYouTubeVideoObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GClassroomYouTubeVideoObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomYouTubeVideoObj")]
+    [OutputType(typeof(Google.Apis.Classroom.v1.Data.YouTubeVideo))]
+    public class NewGClassroomYouTubeVideoObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">URL that can be used to view the YouTube video. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "URL that can be used to view the YouTube video. Read-only.")]
+        public string AlternateLink { get; set; }
+
+        /// <summary>
+        /// <para type="description">YouTube API resource ID.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "YouTube API resource ID.")]
+        public string Id { get; set; }
+
+        /// <summary>
+        /// <para type="description">URL of a thumbnail image of the YouTube video. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "URL of a thumbnail image of the YouTube video. Read-only.")]
+        public string ThumbnailUrl { get; set; }
+
+        /// <summary>
+        /// <para type="description">Title of the YouTube video. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Title of the YouTube video. Read-only.")]
+        public string Title { get; set; }
+        #endregion
+
+         protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Classroom.v1.Data.YouTubeVideo()
+            {
+                AlternateLink = this.AlternateLink,
+                Id = this.Id,
+                ThumbnailUrl = this.ThumbnailUrl,
+                Title = this.Title,
+            };
+
+            if (ShouldProcess("YouTubeVideo"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Classroom API DriveFile object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a DriveFile object which may be required as a parameter for some other Cmdlets in the Classroom API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Classroom.v1.Data.DriveFile</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GClassroomDriveFileObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GClassroomDriveFileObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GClassroomDriveFileObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomDriveFileObj")]
+    [OutputType(typeof(Google.Apis.Classroom.v1.Data.DriveFile))]
+    public class NewGClassroomDriveFileObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">URL that can be used to access the Drive item. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "URL that can be used to access the Drive item. Read-only.")]
+        public string AlternateLink { get; set; }
+
+        /// <summary>
+        /// <para type="description">Drive API resource ID.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Drive API resource ID.")]
+        public string Id { get; set; }
+
+        /// <summary>
+        /// <para type="description">URL of a thumbnail image of the Drive item. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "URL of a thumbnail image of the Drive item. Read-only.")]
+        public string ThumbnailUrl { get; set; }
+
+        /// <summary>
+        /// <para type="description">Title of the Drive item. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Title of the Drive item. Read-only.")]
+        public string Title { get; set; }
+        #endregion
+
+         protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Classroom.v1.Data.DriveFile()
+            {
+                AlternateLink = this.AlternateLink,
+                Id = this.Id,
+                ThumbnailUrl = this.ThumbnailUrl,
+                Title = this.Title,
+            };
+
+            if (ShouldProcess("DriveFile"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Classroom API Link object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a Link object which may be required as a parameter for some other Cmdlets in the Classroom API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Classroom.v1.Data.Link</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GClassroomLinkObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GClassroomLinkObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GClassroomLinkObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomLinkObj")]
+    [OutputType(typeof(Google.Apis.Classroom.v1.Data.Link))]
+    public class NewGClassroomLinkObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">URL of a thumbnail image of the target URL. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "URL of a thumbnail image of the target URL. Read-only.")]
+        public string ThumbnailUrl { get; set; }
+
+        /// <summary>
+        /// <para type="description">Title of the target of the URL. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Title of the target of the URL. Read-only.")]
+        public string Title { get; set; }
+
+        /// <summary>
+        /// <para type="description">URL to link to. This must be a valid UTF-8 string containing between 1 and 2024 characters.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "URL to link to. This must be a valid UTF-8 string containing between 1 and 2024 characters.")]
+        public string Url { get; set; }
+        #endregion
+
+         protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Classroom.v1.Data.Link()
+            {
+                ThumbnailUrl = this.ThumbnailUrl,
+                Title = this.Title,
+                Url = this.Url,
+            };
+
+            if (ShouldProcess("Link"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Classroom API Student object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a Student object which may be required as a parameter for some other Cmdlets in the Classroom API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Classroom.v1.Data.Student</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GClassroomStudentObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GClassroomStudentObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GClassroomStudentObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomStudentObj")]
+    [OutputType(typeof(Google.Apis.Classroom.v1.Data.Student))]
+    public class NewGClassroomStudentObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">Identifier of the course. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Identifier of the course. Read-only.")]
+        public string CourseId { get; set; }
+
+        /// <summary>
+        /// <para type="description">Global user information for the student. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Global user information for the student. Read-only.")]
+        public UserProfile Profile { get; set; }
+
+        /// <summary>
+        /// <para type="description">Information about a Drive Folder for this student's work in this course. Only visible to the student and domain administrators. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Information about a Drive Folder for this student's work in this course. Only visible to the student and domain administrators. Read-only.")]
+        public DriveFolder StudentWorkFolder { get; set; }
+
+        /// <summary>
+        /// <para type="description">Identifier of the user. When specified as a parameter of a request, this identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`, indicating the requesting user</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Identifier of the user. When specified as a parameter of a request, this identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `\"me\"`, indicating the requesting user")]
+        public string UserId { get; set; }
+        #endregion
+
+         protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Classroom.v1.Data.Student()
+            {
+                CourseId = this.CourseId,
+                Profile = this.Profile,
+                StudentWorkFolder = this.StudentWorkFolder,
+                UserId = this.UserId,
+            };
+
+            if (ShouldProcess("Student"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Classroom API Date object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a Date object which may be required as a parameter for some other Cmdlets in the Classroom API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Classroom.v1.Data.Date</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GClassroomDateObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GClassroomDateObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GClassroomDateObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomDateObj")]
+    [OutputType(typeof(Google.Apis.Classroom.v1.Data.Date))]
+    public class NewGClassroomDateObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">Day of month. Must be from 1 to 31 and valid for the year and month, or 0 if specifying a year/month where the day is not significant.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Day of month. Must be from 1 to 31 and valid for the year and month, or 0 if specifying a year/month where the day is not significant.")]
+        public System.Nullable<int> Day { get; set; }
+
+        /// <summary>
+        /// <para type="description">Month of year. Must be from 1 to 12.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Month of year. Must be from 1 to 12.")]
+        public System.Nullable<int> Month { get; set; }
+
+        /// <summary>
+        /// <para type="description">Year of date. Must be from 1 to 9999, or 0 if specifying a date without a year.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Year of date. Must be from 1 to 9999, or 0 if specifying a date without a year.")]
+        public System.Nullable<int> Year { get; set; }
+        #endregion
+
+         protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Classroom.v1.Data.Date()
+            {
+                Day = this.Day,
+                Month = this.Month,
+                Year = this.Year,
+            };
+
+            if (ShouldProcess("Date"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Classroom API SharedDriveFile object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a SharedDriveFile object which may be required as a parameter for some other Cmdlets in the Classroom API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Classroom.v1.Data.SharedDriveFile</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GClassroomSharedDriveFileObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GClassroomSharedDriveFileObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GClassroomSharedDriveFileObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomSharedDriveFileObj")]
+    [OutputType(typeof(Google.Apis.Classroom.v1.Data.SharedDriveFile))]
+    public class NewGClassroomSharedDriveFileObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">Drive file details.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Drive file details.")]
+        public DriveFile DriveFile { get; set; }
+
+        /// <summary>
+        /// <para type="description">Mechanism by which students access the Drive item.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Mechanism by which students access the Drive item.")]
+        public string ShareMode { get; set; }
+        #endregion
+
+         protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Classroom.v1.Data.SharedDriveFile()
+            {
+                DriveFile = this.DriveFile,
+                ShareMode = this.ShareMode,
+            };
+
+            if (ShouldProcess("SharedDriveFile"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Classroom API Teacher object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a Teacher object which may be required as a parameter for some other Cmdlets in the Classroom API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Classroom.v1.Data.Teacher</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GClassroomTeacherObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GClassroomTeacherObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GClassroomTeacherObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomTeacherObj")]
+    [OutputType(typeof(Google.Apis.Classroom.v1.Data.Teacher))]
+    public class NewGClassroomTeacherObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">Identifier of the course. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Identifier of the course. Read-only.")]
+        public string CourseId { get; set; }
+
+        /// <summary>
+        /// <para type="description">Global user information for the teacher. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Global user information for the teacher. Read-only.")]
+        public UserProfile Profile { get; set; }
+
+        /// <summary>
+        /// <para type="description">Identifier of the user. When specified as a parameter of a request, this identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`, indicating the requesting user</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Identifier of the user. When specified as a parameter of a request, this identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `\"me\"`, indicating the requesting user")]
+        public string UserId { get; set; }
+        #endregion
+
+         protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Classroom.v1.Data.Teacher()
+            {
+                CourseId = this.CourseId,
+                Profile = this.Profile,
+                UserId = this.UserId,
+            };
+
+            if (ShouldProcess("Teacher"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Classroom API CourseMaterial object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a CourseMaterial object which may be required as a parameter for some other Cmdlets in the Classroom API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Classroom.v1.Data.CourseMaterial</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GClassroomCourseMaterialObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GClassroomCourseMaterialObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GClassroomCourseMaterialObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomCourseMaterialObj")]
+    [OutputType(typeof(Google.Apis.Classroom.v1.Data.CourseMaterial))]
+    public class NewGClassroomCourseMaterialObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">Google Drive file attachment.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Google Drive file attachment.")]
+        public DriveFile DriveFile { get; set; }
+
+        /// <summary>
+        /// <para type="description">Google Forms attachment.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Google Forms attachment.")]
+        public Form Form { get; set; }
+
+        /// <summary>
+        /// <para type="description">Link atatchment.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Link atatchment.")]
+        public Link Link { get; set; }
+
+        /// <summary>
+        /// <para type="description">Youtube video attachment.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Youtube video attachment.")]
+        public YouTubeVideo YouTubeVideo { get; set; }
+        #endregion
+
+         protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Classroom.v1.Data.CourseMaterial()
+            {
+                DriveFile = this.DriveFile,
+                Form = this.Form,
+                Link = this.Link,
+                YouTubeVideo = this.YouTubeVideo,
+            };
+
+            if (ShouldProcess("CourseMaterial"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Classroom API Name object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a Name object which may be required as a parameter for some other Cmdlets in the Classroom API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Classroom.v1.Data.Name</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GClassroomNameObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GClassroomNameObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GClassroomNameObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomNameObj")]
+    [OutputType(typeof(Google.Apis.Classroom.v1.Data.Name))]
+    public class NewGClassroomNameObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">The user's last name. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The user's last name. Read-only.")]
+        public string FamilyName { get; set; }
+
+        /// <summary>
+        /// <para type="description">The user's full name formed by concatenating the first and last name values. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The user's full name formed by concatenating the first and last name values. Read-only.")]
+        public string FullName { get; set; }
+
+        /// <summary>
+        /// <para type="description">The user's first name. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The user's first name. Read-only.")]
+        public string GivenName { get; set; }
+        #endregion
+
+         protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Classroom.v1.Data.Name()
+            {
+                FamilyName = this.FamilyName,
+                FullName = this.FullName,
+                GivenName = this.GivenName,
+            };
+
+            if (ShouldProcess("Name"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Classroom API DriveFolder object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a DriveFolder object which may be required as a parameter for some other Cmdlets in the Classroom API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Classroom.v1.Data.DriveFolder</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GClassroomDriveFolderObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GClassroomDriveFolderObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GClassroomDriveFolderObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomDriveFolderObj")]
+    [OutputType(typeof(Google.Apis.Classroom.v1.Data.DriveFolder))]
+    public class NewGClassroomDriveFolderObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">URL that can be used to access the Drive folder. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "URL that can be used to access the Drive folder. Read-only.")]
+        public string AlternateLink { get; set; }
+
+        /// <summary>
+        /// <para type="description">Drive API resource ID.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Drive API resource ID.")]
+        public string Id { get; set; }
+
+        /// <summary>
+        /// <para type="description">Title of the Drive folder. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Title of the Drive folder. Read-only.")]
+        public string Title { get; set; }
+        #endregion
+
+         protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Classroom.v1.Data.DriveFolder()
+            {
+                AlternateLink = this.AlternateLink,
+                Id = this.Id,
+                Title = this.Title,
+            };
+
+            if (ShouldProcess("DriveFolder"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Classroom API Invitation object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a Invitation object which may be required as a parameter for some other Cmdlets in the Classroom API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Classroom.v1.Data.Invitation</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GClassroomInvitationObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GClassroomInvitationObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GClassroomInvitationObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomInvitationObj")]
+    [OutputType(typeof(Google.Apis.Classroom.v1.Data.Invitation))]
+    public class NewGClassroomInvitationObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">Identifier of the course to invite the user to.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Identifier of the course to invite the user to.")]
+        public string CourseId { get; set; }
+
+        /// <summary>
+        /// <para type="description">Identifier assigned by Classroom. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Identifier assigned by Classroom. Read-only.")]
+        public string Id { get; set; }
+
+        /// <summary>
+        /// <para type="description">Role to invite the user to have. Must not be `COURSE_ROLE_UNSPECIFIED`.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Role to invite the user to have. Must not be `COURSE_ROLE_UNSPECIFIED`.")]
+        public string Role { get; set; }
+
+        /// <summary>
+        /// <para type="description">Identifier of the invited user. When specified as a parameter of a request, this identifier can be set to one of the following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`, indicating the requesting user</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Identifier of the invited user. When specified as a parameter of a request, this identifier can be set to one of the following: * the numeric identifier for the user * the email address of the user * the string literal `\"me\"`, indicating the requesting user")]
+        public string UserId { get; set; }
+        #endregion
+
+         protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Classroom.v1.Data.Invitation()
+            {
+                CourseId = this.CourseId,
+                Id = this.Id,
+                Role = this.Role,
+                UserId = this.UserId,
+            };
+
+            if (ShouldProcess("Invitation"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Classroom API MultipleChoiceQuestion object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a MultipleChoiceQuestion object which may be required as a parameter for some other Cmdlets in the Classroom API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Classroom.v1.Data.MultipleChoiceQuestion</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GClassroomMultipleChoiceQuestionObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GClassroomMultipleChoiceQuestionObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GClassroomMultipleChoiceQuestionObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomMultipleChoiceQuestionObj")]
+    [OutputType(typeof(Google.Apis.Classroom.v1.Data.MultipleChoiceQuestion))]
+    public class NewGClassroomMultipleChoiceQuestionObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">Possible choices.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Possible choices.")]
+        public System.Collections.Generic.IList<string> Choices { get; set; }
+        #endregion
+
+         protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Classroom.v1.Data.MultipleChoiceQuestion()
+            {
+                Choices = this.Choices,
+            };
+
+            if (ShouldProcess("MultipleChoiceQuestion"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Classroom API CourseWork object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a CourseWork object which may be required as a parameter for some other Cmdlets in the Classroom API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Classroom.v1.Data.CourseWork</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GClassroomCourseWorkObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GClassroomCourseWorkObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GClassroomCourseWorkObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomCourseWorkObj")]
+    [OutputType(typeof(Google.Apis.Classroom.v1.Data.CourseWork))]
+    public class NewGClassroomCourseWorkObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">Absolute link to this course work in the Classroom web UI. This is only populated if `state` is `PUBLISHED`. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Absolute link to this course work in the Classroom web UI. This is only populated if `state` is `PUBLISHED`. Read-only.")]
+        public string AlternateLink { get; set; }
+
+        /// <summary>
+        /// <para type="description">Assignment details. This is populated only when `work_type` is `ASSIGNMENT`.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Assignment details. This is populated only when `work_type` is `ASSIGNMENT`.")]
+        public Assignment Assignment { get; set; }
+
+        /// <summary>
+        /// <para type="description">Whether this course work item is associated with the Developer Console project making the request. See google.classroom.Work.CreateCourseWork for more details. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Whether this course work item is associated with the Developer Console project making the request. See google.classroom.Work.CreateCourseWork for more details. Read-only.")]
+        public System.Nullable<bool> AssociatedWithDeveloper { get; set; }
+
+        /// <summary>
+        /// <para type="description">Identifier of the course. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Identifier of the course. Read-only.")]
+        public string CourseId { get; set; }
+
+        /// <summary>
+        /// <para type="description">Timestamp when this course work was created. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 4,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Timestamp when this course work was created. Read-only.")]
+        public string CreationTime { get; set; }
+
+        /// <summary>
+        /// <para type="description">Optional description of this course work. If set, the description must be a valid UTF-8 string containing no more than 30,000 characters.</para>
+        /// </summary>
+        [Parameter(Position = 5,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Optional description of this course work. If set, the description must be a valid UTF-8 string containing no more than 30,000 characters.")]
+        public string Description { get; set; }
+
+        /// <summary>
+        /// <para type="description">Optional date, in UTC, that submissions for this this course work are due. This must be specified if `due_time` is specified.</para>
+        /// </summary>
+        [Parameter(Position = 6,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Optional date, in UTC, that submissions for this this course work are due. This must be specified if `due_time` is specified.")]
+        public Date DueDate { get; set; }
+
+        /// <summary>
+        /// <para type="description">Optional time of day, in UTC, that submissions for this this course work are due. This must be specified if `due_date` is specified.</para>
+        /// </summary>
+        [Parameter(Position = 7,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Optional time of day, in UTC, that submissions for this this course work are due. This must be specified if `due_date` is specified.")]
+        public TimeOfDay DueTime { get; set; }
+
+        /// <summary>
+        /// <para type="description">Classroom-assigned identifier of this course work, unique per course. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 8,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Classroom-assigned identifier of this course work, unique per course. Read-only.")]
+        public string Id { get; set; }
+
+        /// <summary>
+        /// <para type="description">Additional materials. CourseWork must have no more than 20 material items.</para>
+        /// </summary>
+        [Parameter(Position = 9,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Additional materials. CourseWork must have no more than 20 material items.")]
+        public System.Collections.Generic.IList<Material> Materials { get; set; }
+
+        /// <summary>
+        /// <para type="description">Maximum grade for this course work. If zero or unspecified, this assignment is considered ungraded. This must be a non-negative integer value.</para>
+        /// </summary>
+        [Parameter(Position = 10,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Maximum grade for this course work. If zero or unspecified, this assignment is considered ungraded. This must be a non-negative integer value.")]
+        public System.Nullable<double> MaxPoints { get; set; }
+
+        /// <summary>
+        /// <para type="description">Multiple choice question details. This is populated only when `work_type` is `MULTIPLE_CHOICE_QUESTION`.</para>
+        /// </summary>
+        [Parameter(Position = 11,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Multiple choice question details. This is populated only when `work_type` is `MULTIPLE_CHOICE_QUESTION`.")]
+        public MultipleChoiceQuestion MultipleChoiceQuestion { get; set; }
+
+        /// <summary>
+        /// <para type="description">Status of this course work. If unspecified, the default state is `DRAFT`.</para>
+        /// </summary>
+        [Parameter(Position = 12,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Status of this course work. If unspecified, the default state is `DRAFT`.")]
+        public string State { get; set; }
+
+        /// <summary>
+        /// <para type="description">Setting to determine when students are allowed to modify submissions. If unspecified, the default value is `MODIFIABLE_UNTIL_TURNED_IN`.</para>
+        /// </summary>
+        [Parameter(Position = 13,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Setting to determine when students are allowed to modify submissions. If unspecified, the default value is `MODIFIABLE_UNTIL_TURNED_IN`.")]
+        public string SubmissionModificationMode { get; set; }
+
+        /// <summary>
+        /// <para type="description">Title of this course work. The title must be a valid UTF-8 string containing between 1 and 3000 characters.</para>
+        /// </summary>
+        [Parameter(Position = 14,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Title of this course work. The title must be a valid UTF-8 string containing between 1 and 3000 characters.")]
+        public string Title { get; set; }
+
+        /// <summary>
+        /// <para type="description">Timestamp of the most recent change to this course work. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 15,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Timestamp of the most recent change to this course work. Read-only.")]
+        public string UpdateTime { get; set; }
+
+        /// <summary>
+        /// <para type="description">Type of this course work. The type is set when the course work is created and cannot be changed. When creating course work, this must be `ASSIGNMENT`.</para>
+        /// </summary>
+        [Parameter(Position = 16,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Type of this course work. The type is set when the course work is created and cannot be changed. When creating course work, this must be `ASSIGNMENT`.")]
+        public string WorkType { get; set; }
+        #endregion
+
+         protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Classroom.v1.Data.CourseWork()
+            {
+                AlternateLink = this.AlternateLink,
+                Assignment = this.Assignment,
+                AssociatedWithDeveloper = this.AssociatedWithDeveloper,
+                CourseId = this.CourseId,
+                CreationTime = this.CreationTime,
+                Description = this.Description,
+                DueDate = this.DueDate,
+                DueTime = this.DueTime,
+                Id = this.Id,
+                Materials = this.Materials,
+                MaxPoints = this.MaxPoints,
+                MultipleChoiceQuestion = this.MultipleChoiceQuestion,
+                State = this.State,
+                SubmissionModificationMode = this.SubmissionModificationMode,
+                Title = this.Title,
+                UpdateTime = this.UpdateTime,
+                WorkType = this.WorkType,
+            };
+
+            if (ShouldProcess("CourseWork"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Classroom API StudentSubmission object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a StudentSubmission object which may be required as a parameter for some other Cmdlets in the Classroom API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Classroom.v1.Data.StudentSubmission</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GClassroomStudentSubmissionObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GClassroomStudentSubmissionObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GClassroomStudentSubmissionObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomStudentSubmissionObj")]
+    [OutputType(typeof(Google.Apis.Classroom.v1.Data.StudentSubmission))]
+    public class NewGClassroomStudentSubmissionObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">Absolute link to the submission in the Classroom web UI. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Absolute link to the submission in the Classroom web UI. Read-only.")]
+        public string AlternateLink { get; set; }
+
+        /// <summary>
+        /// <para type="description">Optional grade. If unset, no grade was set. This must be a non-negative integer value. This may be modified only by course teachers.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Optional grade. If unset, no grade was set. This must be a non-negative integer value. This may be modified only by course teachers.")]
+        public System.Nullable<double> AssignedGrade { get; set; }
+
+        /// <summary>
+        /// <para type="description">Submission content when course_work_type is ASSIGNMENT .</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Submission content when course_work_type is ASSIGNMENT .")]
+        public AssignmentSubmission AssignmentSubmission { get; set; }
+
+        /// <summary>
+        /// <para type="description">Whether this student submission is associated with the Developer Console project making the request. See google.classroom.Work.CreateCourseWork for more details. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Whether this student submission is associated with the Developer Console project making the request. See google.classroom.Work.CreateCourseWork for more details. Read-only.")]
+        public System.Nullable<bool> AssociatedWithDeveloper { get; set; }
+
+        /// <summary>
+        /// <para type="description">Identifier of the course. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 4,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Identifier of the course. Read-only.")]
+        public string CourseId { get; set; }
+
+        /// <summary>
+        /// <para type="description">Identifier for the course work this corresponds to. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 5,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Identifier for the course work this corresponds to. Read-only.")]
+        public string CourseWorkId { get; set; }
+
+        /// <summary>
+        /// <para type="description">Type of course work this submission is for. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 6,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Type of course work this submission is for. Read-only.")]
+        public string CourseWorkType { get; set; }
+
+        /// <summary>
+        /// <para type="description">Creation time of this submission. This may be unset if the student has not accessed this item. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 7,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Creation time of this submission. This may be unset if the student has not accessed this item. Read-only.")]
+        public string CreationTime { get; set; }
+
+        /// <summary>
+        /// <para type="description">Optional pending grade. If unset, no grade was set. This must be a non-negative integer value. This is only visible to and modifiable by course teachers.</para>
+        /// </summary>
+        [Parameter(Position = 8,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Optional pending grade. If unset, no grade was set. This must be a non-negative integer value. This is only visible to and modifiable by course teachers.")]
+        public System.Nullable<double> DraftGrade { get; set; }
+
+        /// <summary>
+        /// <para type="description">Classroom-assigned Identifier for the student submission. This is unique among submissions for the relevant course work. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 9,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Classroom-assigned Identifier for the student submission. This is unique among submissions for the relevant course work. Read-only.")]
+        public string Id { get; set; }
+
+        /// <summary>
+        /// <para type="description">Whether this submission is late. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 10,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Whether this submission is late. Read-only.")]
+        public System.Nullable<bool> Late { get; set; }
+
+        /// <summary>
+        /// <para type="description">Submission content when course_work_type is MULTIPLE_CHOICE_QUESTION.</para>
+        /// </summary>
+        [Parameter(Position = 11,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Submission content when course_work_type is MULTIPLE_CHOICE_QUESTION.")]
+        public MultipleChoiceSubmission MultipleChoiceSubmission { get; set; }
+
+        /// <summary>
+        /// <para type="description">Submission content when course_work_type is SHORT_ANSWER_QUESTION.</para>
+        /// </summary>
+        [Parameter(Position = 12,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Submission content when course_work_type is SHORT_ANSWER_QUESTION.")]
+        public ShortAnswerSubmission ShortAnswerSubmission { get; set; }
+
+        /// <summary>
+        /// <para type="description">State of this submission. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 13,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "State of this submission. Read-only.")]
+        public string State { get; set; }
+
+        /// <summary>
+        /// <para type="description">Last update time of this submission. This may be unset if the student has not accessed this item. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 14,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Last update time of this submission. This may be unset if the student has not accessed this item. Read-only.")]
+        public string UpdateTime { get; set; }
+
+        /// <summary>
+        /// <para type="description">Identifier for the student that owns this submission. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 15,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Identifier for the student that owns this submission. Read-only.")]
+        public string UserId { get; set; }
+        #endregion
+
+         protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Classroom.v1.Data.StudentSubmission()
+            {
+                AlternateLink = this.AlternateLink,
+                AssignedGrade = this.AssignedGrade,
+                AssignmentSubmission = this.AssignmentSubmission,
+                AssociatedWithDeveloper = this.AssociatedWithDeveloper,
+                CourseId = this.CourseId,
+                CourseWorkId = this.CourseWorkId,
+                CourseWorkType = this.CourseWorkType,
+                CreationTime = this.CreationTime,
+                DraftGrade = this.DraftGrade,
+                Id = this.Id,
+                Late = this.Late,
+                MultipleChoiceSubmission = this.MultipleChoiceSubmission,
+                ShortAnswerSubmission = this.ShortAnswerSubmission,
+                State = this.State,
+                UpdateTime = this.UpdateTime,
+                UserId = this.UserId,
+            };
+
+            if (ShouldProcess("StudentSubmission"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Classroom API Course object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a Course object which may be required as a parameter for some other Cmdlets in the Classroom API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Classroom.v1.Data.Course</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GClassroomCourseObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GClassroomCourseObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GClassroomCourseObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomCourseObj")]
+    [OutputType(typeof(Google.Apis.Classroom.v1.Data.Course))]
+    public class NewGClassroomCourseObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">Absolute link to this course in the Classroom web UI. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Absolute link to this course in the Classroom web UI. Read-only.")]
+        public string AlternateLink { get; set; }
+
+        /// <summary>
+        /// <para type="description">The email address of a Google group containing all members of the course. This group does not accept email and can only be used for permissions. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The email address of a Google group containing all members of the course. This group does not accept email and can only be used for permissions. Read-only.")]
+        public string CourseGroupEmail { get; set; }
+
+        /// <summary>
+        /// <para type="description">Sets of materials that appear on the "about" page of this course. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Sets of materials that appear on the \"about\" page of this course. Read-only.")]
+        public System.Collections.Generic.IList<CourseMaterialSet> CourseMaterialSets { get; set; }
+
+        /// <summary>
+        /// <para type="description">State of the course. If unspecified, the default state is `PROVISIONED`.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "State of the course. If unspecified, the default state is `PROVISIONED`.")]
+        public string CourseState { get; set; }
+
+        /// <summary>
+        /// <para type="description">Creation time of the course. Specifying this field in a course update mask results in an error. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 4,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Creation time of the course. Specifying this field in a course update mask results in an error. Read-only.")]
+        public string CreationTime { get; set; }
+
+        /// <summary>
+        /// <para type="description">Optional description. For example, "We'll be learning about the structure of living creatures from a combination of textbooks, guest lectures, and lab work. Expect to be excited!" If set, this field must be a valid UTF-8 string and no longer than 30,000 characters.</para>
+        /// </summary>
+        [Parameter(Position = 5,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Optional description. For example, \"We'll be learning about the structure of living creatures from a combination of textbooks, guest lectures, and lab work. Expect to be excited!\" If set, this field must be a valid UTF-8 string and no longer than 30,000 characters.")]
+        public string Description { get; set; }
+
+        /// <summary>
+        /// <para type="description">Optional heading for the description. For example, "Welcome to 10th Grade Biology." If set, this field must be a valid UTF-8 string and no longer than 3600 characters.</para>
+        /// </summary>
+        [Parameter(Position = 6,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Optional heading for the description. For example, \"Welcome to 10th Grade Biology.\" If set, this field must be a valid UTF-8 string and no longer than 3600 characters.")]
+        public string DescriptionHeading { get; set; }
+
+        /// <summary>
+        /// <para type="description">Enrollment code to use when joining this course. Specifying this field in a course update mask results in an error. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 7,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Enrollment code to use when joining this course. Specifying this field in a course update mask results in an error. Read-only.")]
+        public string EnrollmentCode { get; set; }
+
+        /// <summary>
+        /// <para type="description">Whether or not guardian notifications are enabled for this course. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 8,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Whether or not guardian notifications are enabled for this course. Read-only.")]
+        public System.Nullable<bool> GuardiansEnabled { get; set; }
+
+        /// <summary>
+        /// <para type="description">Identifier for this course assigned by Classroom. When creating a course, you may optionally set this identifier to an alias string in the request to create a corresponding alias. The `id` is still assigned by Classroom and cannot be updated after the course is created. Specifying this field in a course update mask results in an error.</para>
+        /// </summary>
+        [Parameter(Position = 9,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Identifier for this course assigned by Classroom. When creating a course, you may optionally set this identifier to an alias string in the request to create a corresponding alias. The `id` is still assigned by Classroom and cannot be updated after the course is created. Specifying this field in a course update mask results in an error.")]
+        public string Id { get; set; }
+
+        /// <summary>
+        /// <para type="description">Name of the course. For example, "10th Grade Biology". The name is required. It must be between 1 and 750 characters and a valid UTF-8 string.</para>
+        /// </summary>
+        [Parameter(Position = 10,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Name of the course. For example, \"10th Grade Biology\". The name is required. It must be between 1 and 750 characters and a valid UTF-8 string.")]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// <para type="description">The identifier of the owner of a course. When specified as a parameter of a create course request, this field is required. The identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`, indicating the requesting user This must be set in a create request. Specifying this field in a course update mask results in an `INVALID_ARGUMENT` error.</para>
+        /// </summary>
+        [Parameter(Position = 11,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The identifier of the owner of a course. When specified as a parameter of a create course request, this field is required. The identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `\"me\"`, indicating the requesting user This must be set in a create request. Specifying this field in a course update mask results in an `INVALID_ARGUMENT` error.")]
+        public string OwnerId { get; set; }
+
+        /// <summary>
+        /// <para type="description">Optional room location. For example, "301". If set, this field must be a valid UTF-8 string and no longer than 650 characters.</para>
+        /// </summary>
+        [Parameter(Position = 12,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Optional room location. For example, \"301\". If set, this field must be a valid UTF-8 string and no longer than 650 characters.")]
+        public string Room { get; set; }
+
+        /// <summary>
+        /// <para type="description">Section of the course. For example, "Period 2". If set, this field must be a valid UTF-8 string and no longer than 2800 characters.</para>
+        /// </summary>
+        [Parameter(Position = 13,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Section of the course. For example, \"Period 2\". If set, this field must be a valid UTF-8 string and no longer than 2800 characters.")]
+        public string Section { get; set; }
+
+        /// <summary>
+        /// <para type="description">Information about a Drive Folder that is shared with all teachers of the course. This field will only be set for teachers of the course and domain administrators. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 14,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Information about a Drive Folder that is shared with all teachers of the course. This field will only be set for teachers of the course and domain administrators. Read-only.")]
+        public DriveFolder TeacherFolder { get; set; }
+
+        /// <summary>
+        /// <para type="description">The email address of a Google group containing all teachers of the course. This group does not accept email and can only be used for permissions. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 15,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The email address of a Google group containing all teachers of the course. This group does not accept email and can only be used for permissions. Read-only.")]
+        public string TeacherGroupEmail { get; set; }
+
+        /// <summary>
+        /// <para type="description">Time of the most recent update to this course. Specifying this field in a course update mask results in an error. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 16,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Time of the most recent update to this course. Specifying this field in a course update mask results in an error. Read-only.")]
+        public string UpdateTime { get; set; }
+        #endregion
+
+         protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Classroom.v1.Data.Course()
+            {
+                AlternateLink = this.AlternateLink,
+                CourseGroupEmail = this.CourseGroupEmail,
+                CourseMaterialSets = this.CourseMaterialSets,
+                CourseState = this.CourseState,
+                CreationTime = this.CreationTime,
+                Description = this.Description,
+                DescriptionHeading = this.DescriptionHeading,
+                EnrollmentCode = this.EnrollmentCode,
+                GuardiansEnabled = this.GuardiansEnabled,
+                Id = this.Id,
+                Name = this.Name,
+                OwnerId = this.OwnerId,
+                Room = this.Room,
+                Section = this.Section,
+                TeacherFolder = this.TeacherFolder,
+                TeacherGroupEmail = this.TeacherGroupEmail,
+                UpdateTime = this.UpdateTime,
+            };
+
+            if (ShouldProcess("Course"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Classroom API CourseAlias object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a CourseAlias object which may be required as a parameter for some other Cmdlets in the Classroom API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Classroom.v1.Data.CourseAlias</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GClassroomCourseAliasObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GClassroomCourseAliasObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GClassroomCourseAliasObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomCourseAliasObj")]
+    [OutputType(typeof(Google.Apis.Classroom.v1.Data.CourseAlias))]
+    public class NewGClassroomCourseAliasObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">Alias string. The format of the string indicates the desired alias scoping. * `d:` indicates a domain-scoped alias. Example: `d:math_101` * `p:` indicates a project-scoped alias. Example: `p:abc123` This field has a maximum length of 256 characters.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Alias string. The format of the string indicates the desired alias scoping. * `d:` indicates a domain-scoped alias. Example: `d:math_101` * `p:` indicates a project-scoped alias. Example: `p:abc123` This field has a maximum length of 256 characters.")]
+        public string Alias { get; set; }
+        #endregion
+
+         protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Classroom.v1.Data.CourseAlias()
+            {
+                Alias = this.Alias,
+            };
+
+            if (ShouldProcess("CourseAlias"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Classroom API Assignment object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a Assignment object which may be required as a parameter for some other Cmdlets in the Classroom API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Classroom.v1.Data.Assignment</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GClassroomAssignmentObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GClassroomAssignmentObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GClassroomAssignmentObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomAssignmentObj")]
+    [OutputType(typeof(Google.Apis.Classroom.v1.Data.Assignment))]
+    public class NewGClassroomAssignmentObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">Drive folder where attachments from student submissions are placed. This is only populated for course teachers.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Drive folder where attachments from student submissions are placed. This is only populated for course teachers.")]
+        public DriveFolder StudentWorkFolder { get; set; }
+        #endregion
+
+         protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Classroom.v1.Data.Assignment()
+            {
+                StudentWorkFolder = this.StudentWorkFolder,
+            };
+
+            if (ShouldProcess("Assignment"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Classroom API GlobalPermission object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a GlobalPermission object which may be required as a parameter for some other Cmdlets in the Classroom API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Classroom.v1.Data.GlobalPermission</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GClassroomGlobalPermissionObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GClassroomGlobalPermissionObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GClassroomGlobalPermissionObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomGlobalPermissionObj")]
+    [OutputType(typeof(Google.Apis.Classroom.v1.Data.GlobalPermission))]
+    public class NewGClassroomGlobalPermissionObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">Permission value.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Permission value.")]
+        public string Permission { get; set; }
+        #endregion
+
+         protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Classroom.v1.Data.GlobalPermission()
+            {
+                Permission = this.Permission,
+            };
+
+            if (ShouldProcess("GlobalPermission"))
+            {
+                WriteObject(body);
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Creates a new Classroom API GuardianInvitation object.</para>
+    /// <para type="description">This provides a Cmdlet-Based approach to creating a GuardianInvitation object which may be required as a parameter for some other Cmdlets in the Classroom API category.</para>
+    /// <para type="description">You could alternately create this object by calling New-Object -TypeName Google.Apis.Classroom.v1.Data.GuardianInvitation</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GClassroomGuardianInvitationObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GClassroomGuardianInvitationObj">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.New, "GClassroomGuardianInvitationObj",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomGuardianInvitationObj")]
+    [OutputType(typeof(Google.Apis.Classroom.v1.Data.GuardianInvitation))]
+    public class NewGClassroomGuardianInvitationObjCommand : PSCmdlet
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">The time that this invitation was created. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The time that this invitation was created. Read-only.")]
+        public string CreationTime { get; set; }
+
+        /// <summary>
+        /// <para type="description">Unique identifier for this invitation. Read-only.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Unique identifier for this invitation. Read-only.")]
+        public string InvitationId { get; set; }
+
+        /// <summary>
+        /// <para type="description">Email address that the invitation was sent to. This field is only visible to domain administrators.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Email address that the invitation was sent to. This field is only visible to domain administrators.")]
+        public string InvitedEmailAddress { get; set; }
+
+        /// <summary>
+        /// <para type="description">The state that this invitation is in.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The state that this invitation is in.")]
+        public string State { get; set; }
+
+        /// <summary>
+        /// <para type="description">ID of the student (in standard format)</para>
+        /// </summary>
+        [Parameter(Position = 4,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "ID of the student (in standard format)")]
+        public string StudentId { get; set; }
+        #endregion
+
+         protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.Classroom.v1.Data.GuardianInvitation()
+            {
+                CreationTime = this.CreationTime,
+                InvitationId = this.InvitationId,
+                InvitedEmailAddress = this.InvitedEmailAddress,
+                State = this.State,
+                StudentId = this.StudentId,
+            };
+
+            if (ShouldProcess("GuardianInvitation"))
             {
                 WriteObject(body);
             }
@@ -1944,4 +3683,970 @@ namespace gShell.Cmdlets.Classroom.UserProfiles
             }
         }
     }
+}
+
+
+namespace gShell.Cmdlets.Classroom.Courses.CourseWork
+{
+    /// <summary>
+    /// <para type="synopsis">Creates course work. The resulting course work (and corresponding student submissions) are associated with the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to make the request. Classroom API requests to modify course work and student submissions must be made with an OAuth client ID from the associated Developer Console project. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course, create course work in the requested course, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course does not exist.</para>
+    /// <para type="description">Creates course work. The resulting course work (and corresponding student submissions) are associated with the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to make the request. Classroom API requests to modify course work and student submissions must be made with an OAuth client ID from the associated Developer Console project. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course, create course work in the requested course, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course does not exist.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>New-GClassroomCourseWork -CourseId $SomeCourseIdString -CourseWorkBody $SomeCourseWorkObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Create-GClassroomCourseWork">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet("New", "GClassroomCourseWork",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Create-GClassroomCourseWork")]
+    public class NewGClassroomCourseWorkCommand : ClassroomServiceAccountBase
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.")]
+        public string CourseId { get; set; }
+
+        /// <summary>
+        /// <para type="description">Course work created by a teacher for students of the course.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = true,
+        ValueFromPipeline = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Course work created by a teacher for students of the course.")]
+        public Google.Apis.Classroom.v1.Data.CourseWork CourseWorkBody { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+
+            if (ShouldProcess("Classroom CourseWork", "New-GClassroomCourseWork"))
+            {
+
+                WriteObject(courses.courseWork.Create(CourseWorkBody, CourseId));
+            }
+
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Returns one or more course work. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or course work, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course or course work does not exist.</para>
+    /// <para type="description">Returns one or more course work. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or course work, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course or course work does not exist.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Get-GClassroomCourseWork -CourseId $SomeCourseIdString -Id $SomeIdString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <example>
+    ///   <code>PS C:\>Get-GClassroomCourseWork -CourseId $SomeCourseIdString -All</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GClassroomCourseWork">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.Get, "GClassroomCourseWork",
+    SupportsShouldProcess = true,
+    DefaultParameterSetName = "one",
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GClassroomCourseWork")]
+    public class GetGClassroomCourseWorkCommand : ClassroomServiceAccountBase
+    {
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.")]
+        public string CourseId { get; set; }
+
+        /// <summary>
+        /// <para type="description">Identifier of the course work.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        ParameterSetName = "one",
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Identifier of the course work.")]
+        public string Id { get; set; }
+
+        /// <summary>
+        /// <para type="description">Restriction on the work status to return. Only courseWork that matches is returned. If unspecified, items with a work status of `PUBLISHED` is returned.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        ParameterSetName = "list",
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Restriction on the work status to return. Only courseWork that matches is returned. If unspecified, items with a work status of `PUBLISHED` is returned.")]
+        public CoursesResource.CourseWorkResource.ListRequest.CourseWorkStatesEnum? CourseWorkStates { get; set; }
+
+        /// <summary>
+        /// <para type="description">Optional sort ordering for results. A comma-separated list of fields with an optional sort direction keyword. Supported fields are `updateTime` and `dueDate`. Supported direction keywords are `asc` and `desc`. If not specified, `updateTime desc` is the default behavior. Examples: `dueDate asc,updateTime desc`, `updateTime,dueDate desc`</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        ParameterSetName = "list",
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Optional sort ordering for results. A comma-separated list of fields with an optional sort direction keyword. Supported fields are `updateTime` and `dueDate`. Supported direction keywords are `asc` and `desc`. If not specified, `updateTime desc` is the default behavior. Examples: `dueDate asc,updateTime desc`, `updateTime,dueDate desc`")]
+        public string OrderBy { get; set; }
+
+        /// <summary>
+        /// <para type="description">Maximum number of items to return. Zero or unspecified indicates that the server may assign a maximum. The server may return fewer than the specified number of results.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        ParameterSetName = "list",
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Maximum number of items to return. Zero or unspecified indicates that the server may assign a maximum. The server may return fewer than the specified number of results.")]
+        public System.Nullable<int> PageSize { get; set; }
+
+        /// <summary>
+        /// <para type="description">A switch to list all results.</para>
+        /// </summary>
+        [Parameter(Position = 4,
+            ParameterSetName = "list",
+            Mandatory = false,
+            HelpMessage = "Indicates if you would like to get all members of all groups in the domain.")]
+        public SwitchParameter All { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess("Classroom CourseWork", "Get-GClassroomCourseWork"))
+            {
+                if (ParameterSetName == "one")
+                {
+                    WriteObject(courses.courseWork.Get(CourseId, Id));
+                }
+                else
+                {
+                    var properties = new gClassroom.Courses.CourseWork.CourseWorkListProperties()
+                    {
+                        CourseWorkStates = this.CourseWorkStates,
+                        OrderBy = this.OrderBy,
+                        PageSize = this.PageSize
+                    };
+
+
+                    WriteObject(courses.courseWork.List(CourseId, properties));
+                }
+            }
+        }
+    }
+
+}
+
+namespace gShell.Cmdlets.Classroom.Courses.CourseWork.StudentSubmissions
+{
+    /// <summary>
+    /// <para type="synopsis">Returns one or more student submission. * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course, course work, or student submission or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course, course work, or student submission does not exist.</para>
+    /// <para type="description">Returns one or more student submission. * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course, course work, or student submission or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course, course work, or student submission does not exist.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Get-GClassroomStudentSubmission -CourseId $SomeCourseIdString -CourseWorkId $SomeCourseWorkIdString -Id $SomeIdString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <example>
+    ///   <code>PS C:\>Get-GClassroomStudentSubmission -CourseId $SomeCourseIdString -CourseWorkId $SomeCourseWorkIdString -All</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GClassroomStudentSubmission">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.Get, "GClassroomStudentSubmission",
+    SupportsShouldProcess = true,
+    DefaultParameterSetName = "one",
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GClassroomStudentSubmission")]
+    public class GetGClassroomStudentSubmissionCommand : ClassroomServiceAccountBase
+    {
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.")]
+        public string CourseId { get; set; }
+
+        /// <summary>
+        /// <para type="description">Identifier of the course work.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Identifier of the course work.")]
+        public string CourseWorkId { get; set; }
+
+        /// <summary>
+        /// <para type="description">Identifier of the student submission.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = true,
+        ParameterSetName = "one",
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Identifier of the student submission.")]
+        public string Id { get; set; }
+
+        /// <summary>
+        /// <para type="description">Optional argument to restrict returned student work to those owned by the student with the specified identifier. The identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`, indicating the requesting user</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ParameterSetName = "list",
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Optional argument to restrict returned student work to those owned by the student with the specified identifier. The identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `\"me\"`, indicating the requesting user")]
+        public string UserId { get; set; }
+
+        /// <summary>
+        /// <para type="description">Requested submission states. If specified, returned student submissions match one of the specified submission states.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ParameterSetName = "list",
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Requested submission states. If specified, returned student submissions match one of the specified submission states.")]
+        public CoursesResource.CourseWorkResource.StudentSubmissionsResource.ListRequest.StatesEnum? States { get; set; }
+
+        /// <summary>
+        /// <para type="description">Requested lateness value. If specified, returned student submissions are restricted by the requested value. If unspecified, submissions are returned regardless of `late` value.</para>
+        /// </summary>
+        [Parameter(Position = 4,
+        Mandatory = false,
+        ParameterSetName = "list",
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Requested lateness value. If specified, returned student submissions are restricted by the requested value. If unspecified, submissions are returned regardless of `late` value.")]
+        public CoursesResource.CourseWorkResource.StudentSubmissionsResource.ListRequest.LateEnum? Late { get; set; }
+
+        /// <summary>
+        /// <para type="description">Maximum number of items to return. Zero or unspecified indicates that the server may assign a maximum. The server may return fewer than the specified number of results.</para>
+        /// </summary>
+        [Parameter(Position = 5,
+        Mandatory = false,
+        ParameterSetName = "list",
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Maximum number of items to return. Zero or unspecified indicates that the server may assign a maximum. The server may return fewer than the specified number of results.")]
+        public System.Nullable<int> PageSize { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess("Classroom StudentSubmissions", "Get-GClassroomStudentSubmission"))
+            {
+                if (ParameterSetName == "one")
+                {
+                    WriteObject(courses.courseWork.studentSubmissions.Get(CourseId, CourseWorkId, Id));
+                }
+                else
+                {
+                    var properties = new gClassroom.Courses.CourseWork.StudentSubmissions.StudentSubmissionsListProperties()
+                    {
+                        UserId = this.UserId,
+                        States = this.States,
+                        Late = this.Late,
+                        PageSize = this.PageSize
+                    };
+
+                    WriteObject(courses.courseWork.studentSubmissions.List(CourseId, CourseWorkId, properties));
+                }
+            }
+
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Modifies attachments of student submission. Attachments may only be added to student submissions whose type is `ASSIGNMENT`. This request must be made by the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding course work item. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or course work, if the user is not permitted to modify attachments on the requested student submission, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course, course work, or student submission does not exist.</para>
+    /// <para type="description">Modifies attachments of student submission. Attachments may only be added to student submissions whose type is `ASSIGNMENT`. This request must be made by the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding course work item. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or course work, if the user is not permitted to modify attachments on the requested student submission, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course, course work, or student submission does not exist.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Set-GClassroomStudentSubmissionAttachment -CourseId $SomeCourseIdString -CourseWorkId $SomeCourseWorkIdString -Id $SomeIdString -AddAttachments $SomeAddAttachmentsObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Set-GClassroomStudentSubmissionAttachment">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet("Set", "GClassroomStudentSubmissionAttachment",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/ModifyAttachments-GClassroomStudentSubmission")]
+    public class SetGClassroomStudentSubmissionAttachmentCommand : ClassroomServiceAccountBase
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.")]
+        public string CourseId { get; set; }
+
+        /// <summary>
+        /// <para type="description">Identifier of the course work.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Identifier of the course work.")]
+        public string CourseWorkId { get; set; }
+
+        /// <summary>
+        /// <para type="description">Identifier of the student submission.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Identifier of the student submission.")]
+        public string Id { get; set; }
+
+        /// <summary>
+        /// <para type="description">Attachments to add. A student submission may not have more than 20 attachments. This may only contain link attachments.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Attachments to add. A student submission may not have more than 20 attachments. This may only contain link attachments.")]
+        public System.Collections.Generic.IList<Attachment> AddAttachments { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            if (ShouldProcess("Classroom StudentSubmissions", "ModifyAttachments-GClassroomStudentSubmission"))
+            {
+                Google.Apis.Classroom.v1.Data.ModifyAttachmentsRequest ModifyAttachmentsRequestBody
+                    = new Google.Apis.Classroom.v1.Data.ModifyAttachmentsRequest()
+                    {
+                        AddAttachments = this.AddAttachments
+                    };
+
+                WriteObject(courses.courseWork.studentSubmissions.ModifyAttachments(ModifyAttachmentsRequestBody, CourseId, CourseWorkId, Id));
+            }
+
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Updates one or more fields of a student submission. See google.classroom.v1.StudentSubmission for details of which fields may be updated and who may change them. This request must be made by the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding course work item. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting developer project did not create the corresponding course work, if the user is not permitted to make the requested modification to the student submission, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course, course work, or student submission does not exist.</para>
+    /// <para type="description">Updates one or more fields of a student submission. See google.classroom.v1.StudentSubmission for details of which fields may be updated and who may change them. This request must be made by the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding course work item. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting developer project did not create the corresponding course work, if the user is not permitted to make the requested modification to the student submission, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course, course work, or student submission does not exist.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Set-GClassroomStudentSubmission -CourseId $SomeCourseIdString -CourseWorkId $SomeCourseWorkIdString -Id $SomeIdString -StudentSubmissionBody $SomeStudentSubmissionObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <example>
+    ///   <code>PS C:\>Set-GClassroomStudentSubmission -CourseId $SomeCourseIdString -CourseWorkId $SomeCourseWorkIdString -Id $SomeIdString -Reclaim</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <example>
+    ///   <code>PS C:\>Set-GClassroomStudentSubmission -CourseId $SomeCourseIdString -CourseWorkId $SomeCourseWorkIdString -Id $SomeIdString -Return</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <example>
+    ///   <code>PS C:\>Set-GClassroomStudentSubmission -CourseId $SomeCourseIdString -CourseWorkId $SomeCourseWorkIdString -Id $SomeIdString -TurnIn</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Set-GClassroomStudentSubmission">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet("Set", "GClassroomStudentSubmission",
+    SupportsShouldProcess = true,
+    DefaultParameterSetName = "update",
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GClassroomStudentSubmission")]
+    public class SetGClassroomStudentSubmissionCommand : ClassroomServiceAccountBase
+    {
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.")]
+        public string CourseId { get; set; }
+
+        /// <summary>
+        /// <para type="description">Identifier of the course work.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Identifier of the course work.")]
+        public string CourseWorkId { get; set; }
+
+        /// <summary>
+        /// <para type="description">Identifier of the student submission.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Identifier of the student submission.")]
+        public string Id { get; set; }
+
+        /// <summary>
+        /// <para type="description">Student submission for course work. StudentSubmission items are generated when a CourseWork item is created. StudentSubmissions that have never been accessed (i.e. with `state` = NEW) may not have a creation time or update time.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ParameterSetName = "update",
+        ValueFromPipeline = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Student submission for course work. StudentSubmission items are generated when a CourseWork item is created. StudentSubmissions that have never been accessed (i.e. with `state` = NEW) may not have a creation time or update time.")]
+        public Google.Apis.Classroom.v1.Data.StudentSubmission StudentSubmissionBody { get; set; }
+
+        /// <summary>
+        /// <para type="description">Mask that identifies which fields on the student submission to update. This field is required to do an update. The update fails if invalid fields are specified. The following fields may be specified by teachers: * `draft_grade` * `assigned_grade`</para>
+        /// </summary>
+        [Parameter(Position = 4,
+        Mandatory = false,
+        ParameterSetName = "update",
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Mask that identifies which fields on the student submission to update. This field is required to do an update. The update fails if invalid fields are specified. The following fields may be specified by teachers: * `draft_grade` * `assigned_grade`")]
+        public string UpdateMask { get; set; }
+
+        /// <summary>
+        /// <para type="description">Reclaims a student submission on behalf of the student that owns it. Reclaiming a student submission transfers ownership of attached Drive files to the student and update the submission state. Only the student that ownes the requested student submission may call this method, and only for a student submission that has been turned in. This request must be made by the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding course work item. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or course work, unsubmit the requested student submission, or for access errors. * `FAILED_PRECONDITION` if the student submission has not been turned in. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course, course work, or student submission does not exist.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ParameterSetName = "reclaim",
+        ValueFromPipelineByPropertyName = false,
+        HelpMessage = "Reclaims a student submission on behalf of the student that owns it. Reclaiming a student submission transfers ownership of attached Drive files to the student and update the submission state. Only the student that ownes the requested student submission may call this method, and only for a student submission that has been turned in. This request must be made by the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding course work item. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or course work, unsubmit the requested student submission, or for access errors. * `FAILED_PRECONDITION` if the student submission has not been turned in. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course, course work, or student submission does not exist.")]
+        public SwitchParameter Reclaim { get; set; }
+
+        /// <summary>
+        /// <para type="description">Returns a student submission. Returning a student submission transfers ownership of attached Drive files to the student and may also update the submission state. Unlike the Classroom application, returning a student submission does not set assignedGrade to the draftGrade value. Only a teacher of the course that contains the requested student submission may call this method. This request must be made by the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding course work item. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or course work, return the requested student submission, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course, course work, or student submission does not exist.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ParameterSetName = "return",
+        ValueFromPipelineByPropertyName = false,
+        HelpMessage = "Returns a student submission. Returning a student submission transfers ownership of attached Drive files to the student and may also update the submission state. Unlike the Classroom application, returning a student submission does not set assignedGrade to the draftGrade value. Only a teacher of the course that contains the requested student submission may call this method. This request must be made by the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding course work item. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or course work, return the requested student submission, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course, course work, or student submission does not exist.")]
+        public SwitchParameter Return { get; set; }
+
+        /// <summary>
+        /// <para type="description">Turns in a student submission. Turning in a student submission transfers ownership of attached Drive files to the teacher and may also update the submission state. This may only be called by the student that owns the specified student submission. This request must be made by the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding course work item. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or course work, turn in the requested student submission, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course, course work, or student submission does not exist.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ParameterSetName = "turnIn",
+        ValueFromPipelineByPropertyName = false,
+        HelpMessage = "Turns in a student submission. Turning in a student submission transfers ownership of attached Drive files to the teacher and may also update the submission state. This may only be called by the student that owns the specified student submission. This request must be made by the Developer Console project of the [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding course work item. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or course work, turn in the requested student submission, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course, course work, or student submission does not exist.")]
+        public SwitchParameter TurnIn { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+
+            if (ShouldProcess("Classroom StudentSubmissions", "Set-GClassroomStudentSubmission"))
+            {
+                if (ParameterSetName == "reclaim")
+                {
+                    var body = new Google.Apis.Classroom.v1.Data.ReclaimStudentSubmissionRequest();
+                    WriteObject(courses.courseWork.studentSubmissions.Reclaim(body, CourseId, CourseWorkId, Id));
+                }
+                else if (ParameterSetName == "return")
+                {
+                    var body = new Google.Apis.Classroom.v1.Data.ReturnStudentSubmissionRequest();
+                    WriteObject(courses.courseWork.studentSubmissions.ClassroomReturn(body, CourseId, CourseWorkId, Id));
+                }
+                else if (ParameterSetName == "turnIn")
+                {
+                    var body = new Google.Apis.Classroom.v1.Data.TurnInStudentSubmissionRequest();
+                    WriteObject(courses.courseWork.studentSubmissions.TurnIn(body, CourseId, CourseWorkId, Id));
+                }
+                else
+                {
+                    var properties = new gClassroom.Courses.CourseWork.StudentSubmissions.
+                        StudentSubmissionsPatchProperties()
+                    {
+                        UpdateMask = this.UpdateMask
+                    };
+
+                    WriteObject(courses.courseWork.studentSubmissions.Patch(StudentSubmissionBody, CourseId,
+                        CourseWorkId, Id, properties));
+                }
+            }
+
+        }
+    }
+}
+
+namespace gShell.Cmdlets.Classroom.UserProfiles.GuardianInvitations
+{
+
+
+    /// <summary>
+    /// <para type="synopsis">Creates a guardian invitation, and sends an email to the guardian asking them to confirm that they are the student's guardian. Once the guardian accepts the invitation, their `state` will change to `COMPLETED` and they will start receiving guardian notifications. A `Guardian` resource will also be created to represent the active guardian. The request object must have the `student_id` and `invited_email_address` fields set. Failing to set these fields, or setting any other fields in the request, will result in an error. This method returns the following error codes: * `PERMISSION_DENIED` if the current user does not have permission to manage guardians, if the guardian in question has already rejected too many requests for that student, if guardians are not enabled for the domain in question, or for other access errors. * `RESOURCE_EXHAUSTED` if the student or guardian has exceeded the guardian link limit. * `INVALID_ARGUMENT` if the guardian email address is not valid (for example, if it is too long), or if the format of the student ID provided cannot be recognized (it is not an email address, nor a `user_id` from this API). This error will also be returned if read-only fields are set, or if the `state` field is set to to a value other than `PENDING`. * `NOT_FOUND` if the student ID provided is a valid student ID, but Classroom has no record of that student. * `ALREADY_EXISTS` if there is already a pending guardian invitation for the student and `invited_email_address` provided, or if the provided `invited_email_address` matches the Google account of an existing `Guardian` for this user.</para>
+    /// <para type="description">Creates a guardian invitation, and sends an email to the guardian asking them to confirm that they are the student's guardian. Once the guardian accepts the invitation, their `state` will change to `COMPLETED` and they will start receiving guardian notifications. A `Guardian` resource will also be created to represent the active guardian. The request object must have the `student_id` and `invited_email_address` fields set. Failing to set these fields, or setting any other fields in the request, will result in an error. This method returns the following error codes: * `PERMISSION_DENIED` if the current user does not have permission to manage guardians, if the guardian in question has already rejected too many requests for that student, if guardians are not enabled for the domain in question, or for other access errors. * `RESOURCE_EXHAUSTED` if the student or guardian has exceeded the guardian link limit. * `INVALID_ARGUMENT` if the guardian email address is not valid (for example, if it is too long), or if the format of the student ID provided cannot be recognized (it is not an email address, nor a `user_id` from this API). This error will also be returned if read-only fields are set, or if the `state` field is set to to a value other than `PENDING`. * `NOT_FOUND` if the student ID provided is a valid student ID, but Classroom has no record of that student. * `ALREADY_EXISTS` if there is already a pending guardian invitation for the student and `invited_email_address` provided, or if the provided `invited_email_address` matches the Google account of an existing `Guardian` for this user.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Create-GClassroomGuardianInvitations -StudentId $SomeStudentIdString -GuardianInvitationBody $SomeGuardianInvitationObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Create-GClassroomGuardianInvitations">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet("New", "GClassroomGuardianInvitations",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Create-GClassroomGuardianInvitations")]
+    public class NewGClassroomGuardianInvitationsCommand : ClassroomServiceAccountBase
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">ID of the student (in standard format)</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "ID of the student (in standard format)")]
+        public string StudentId { get; set; }
+
+        /// <summary>
+        /// <para type="description">An invitation to become the guardian of a specified user, sent to a specified email address.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipeline = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "An invitation to become the guardian of a specified user, sent to a specified email address.")]
+        public Google.Apis.Classroom.v1.Data.GuardianInvitation GuardianInvitationBody { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+
+            if (ShouldProcess("Classroom GuardianInvitations", "Create-GClassroomGuardianInvitations"))
+            {
+
+                WriteObject(userProfiles.guardianInvitations.Create(GuardianInvitationBody, StudentId));
+            }
+
+        }
+    }
+    /// <summary>
+    /// <para type="synopsis">Returns a specific guardian invitation. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to view guardian invitations for the student identified by the `student_id`, if guardians are not enabled for the domain in question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the literal string `me`). * `NOT_FOUND` if Classroom cannot find any record of the given student or `invitation_id`. May also be returned if the student exists, but the requesting user does not have access to see that student.</para>
+    /// <para type="description">Returns a specific guardian invitation. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to view guardian invitations for the student identified by the `student_id`, if guardians are not enabled for the domain in question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the literal string `me`). * `NOT_FOUND` if Classroom cannot find any record of the given student or `invitation_id`. May also be returned if the student exists, but the requesting user does not have access to see that student.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Get-GClassroomGuardianInvitations -StudentId $SomeStudentIdString -InvitationId $SomeInvitationIdString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GClassroomGuardianInvitations">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.Get, "GClassroomGuardianInvitations",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GClassroomGuardianInvitations")]
+    public class GetGClassroomGuardianInvitationsCommand : ClassroomServiceAccountBase
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">The ID of the student whose guardian invitation is being requested.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The ID of the student whose guardian invitation is being requested.")]
+        public string StudentId { get; set; }
+
+        /// <summary>
+        /// <para type="description">The `id` field of the `GuardianInvitation` being requested.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The `id` field of the `GuardianInvitation` being requested.")]
+        public string InvitationId { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+
+            if (ShouldProcess("Classroom GuardianInvitations", "Get-GClassroomGuardianInvitations"))
+            {
+
+                WriteObject(userProfiles.guardianInvitations.Get(StudentId, InvitationId));
+            }
+
+        }
+    }
+    /// <summary>
+    /// <para type="synopsis">Returns a list of guardian invitations that the requesting user is permitted to view, filtered by the parameters provided. This method returns the following error codes: * `PERMISSION_DENIED` if a `student_id` is specified, and the requesting user is not permitted to view guardian invitations for that student, if `"-"` is specified as the `student_id` and the user is not a domain administrator, if guardians are not enabled for the domain in question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the literal string `me`). May also be returned if an invalid `page_token` or `state` is provided. * `NOT_FOUND` if a `student_id` is specified, and its format can be recognized, but Classroom has no record of that student.</para>
+    /// <para type="description">Returns a list of guardian invitations that the requesting user is permitted to view, filtered by the parameters provided. This method returns the following error codes: * `PERMISSION_DENIED` if a `student_id` is specified, and the requesting user is not permitted to view guardian invitations for that student, if `"-"` is specified as the `student_id` and the user is not a domain administrator, if guardians are not enabled for the domain in question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the literal string `me`). May also be returned if an invalid `page_token` or `state` is provided. * `NOT_FOUND` if a `student_id` is specified, and its format can be recognized, but Classroom has no record of that student.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>List-GClassroomGuardianInvitations -StudentId $SomeStudentIdString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/List-GClassroomGuardianInvitations">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet("Get2", "GClassroomGuardianInvitations",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/List-GClassroomGuardianInvitations")]
+    public class Get2GClassroomGuardianInvitationsCommand : ClassroomServiceAccountBase
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">The ID of the student whose guardian invitations are to be returned. The identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`, indicating the requesting user * the string literal `"-"`, indicating that results should be returned for all students that the requesting user is permitted to view guardian invitations.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The ID of the student whose guardian invitations are to be returned. The identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `\"me\"`, indicating the requesting user * the string literal `\"-\"`, indicating that results should be returned for all students that the requesting user is permitted to view guardian invitations.")]
+        public string StudentId { get; set; }
+
+        /// <summary>
+        /// <para type="description">If specified, only results with the specified `invited_email_address` will be returned.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "If specified, only results with the specified `invited_email_address` will be returned.")]
+        public string InvitedEmailAddress { get; set; }
+
+        /// <summary>
+        /// <para type="description">If specified, only results with the specified `state` values will be returned. Otherwise, results with a `state` of `PENDING` will be returned.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "If specified, only results with the specified `state` values will be returned. Otherwise, results with a `state` of `PENDING` will be returned.")]
+        public UserProfilesResource.GuardianInvitationsResource.ListRequest.StatesEnum? States { get; set; }
+
+        /// <summary>
+        /// <para type="description">Maximum number of items to return. Zero or unspecified indicates that the server may assign a maximum. The server may return fewer than the specified number of results.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Maximum number of items to return. Zero or unspecified indicates that the server may assign a maximum. The server may return fewer than the specified number of results.")]
+        public System.Nullable<int> PageSize { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+
+            if (ShouldProcess("Classroom GuardianInvitations", "List-GClassroomGuardianInvitations"))
+            {
+
+                var properties = new gClassroom.UserProfiles.GuardianInvitations.GuardianInvitationsListProperties()
+                {
+                    InvitedEmailAddress = this.InvitedEmailAddress,
+                    States = this.States,
+                    PageSize = this.PageSize
+                };
+
+
+                WriteObject(userProfiles.guardianInvitations.List(StudentId, properties));
+            }
+
+        }
+    }
+    /// <summary>
+    /// <para type="synopsis">Modifies a guardian invitation. Currently, the only valid modification is to change the `state` from `PENDING` to `COMPLETE`. This has the effect of withdrawing the invitation. This method returns the following error codes: * `PERMISSION_DENIED` if the current user does not have permission to manage guardians, if guardians are not enabled for the domain in question or for other access errors. * `FAILED_PRECONDITION` if the guardian link is not in the `PENDING` state. * `INVALID_ARGUMENT` if the format of the student ID provided cannot be recognized (it is not an email address, nor a `user_id` from this API), or if the passed `GuardianInvitation` has a `state` other than `COMPLETE`, or if it modifies fields other than `state`. * `NOT_FOUND` if the student ID provided is a valid student ID, but Classroom has no record of that student, or if the `id` field does not refer to a guardian invitation known to Classroom.</para>
+    /// <para type="description">Modifies a guardian invitation. Currently, the only valid modification is to change the `state` from `PENDING` to `COMPLETE`. This has the effect of withdrawing the invitation. This method returns the following error codes: * `PERMISSION_DENIED` if the current user does not have permission to manage guardians, if guardians are not enabled for the domain in question or for other access errors. * `FAILED_PRECONDITION` if the guardian link is not in the `PENDING` state. * `INVALID_ARGUMENT` if the format of the student ID provided cannot be recognized (it is not an email address, nor a `user_id` from this API), or if the passed `GuardianInvitation` has a `state` other than `COMPLETE`, or if it modifies fields other than `state`. * `NOT_FOUND` if the student ID provided is a valid student ID, but Classroom has no record of that student, or if the `id` field does not refer to a guardian invitation known to Classroom.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Set-GClassroomGuardianInvitations -StudentId $SomeStudentIdString -InvitationId $SomeInvitationIdString -GuardianInvitationBody $SomeGuardianInvitationObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Set-GClassroomGuardianInvitations">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet("Set", "GClassroomGuardianInvitations",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GClassroomGuardianInvitations")]
+    public class SetGClassroomGuardianInvitationsCommand : ClassroomServiceAccountBase
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">The ID of the student whose guardian invitation is to be modified.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The ID of the student whose guardian invitation is to be modified.")]
+        public string StudentId { get; set; }
+
+        /// <summary>
+        /// <para type="description">The `id` field of the `GuardianInvitation` to be modified.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The `id` field of the `GuardianInvitation` to be modified.")]
+        public string InvitationId { get; set; }
+
+        /// <summary>
+        /// <para type="description">An invitation to become the guardian of a specified user, sent to a specified email address.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipeline = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "An invitation to become the guardian of a specified user, sent to a specified email address.")]
+        public Google.Apis.Classroom.v1.Data.GuardianInvitation GuardianInvitationBody { get; set; }
+
+        /// <summary>
+        /// <para type="description">Mask that identifies which fields on the course to update. This field is required to do an update. The update will fail if invalid fields are specified. The following fields are valid: * `state` When set in a query parameter, this field should be specified as `updateMask=,,...`</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Mask that identifies which fields on the course to update. This field is required to do an update. The update will fail if invalid fields are specified. The following fields are valid: * `state` When set in a query parameter, this field should be specified as `updateMask=,,...`")]
+        public string UpdateMask { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+
+            if (ShouldProcess("Classroom GuardianInvitations", "Set-GClassroomGuardianInvitations"))
+            {
+
+                var properties = new gClassroom.UserProfiles.GuardianInvitations.GuardianInvitationsPatchProperties()
+                {
+                    UpdateMask = this.UpdateMask
+                };
+
+
+                WriteObject(userProfiles.guardianInvitations.Patch(GuardianInvitationBody, StudentId, InvitationId, properties));
+            }
+
+        }
+    }
+
+}
+
+namespace gShell.Cmdlets.Classroom.UserProfiles.Guardians
+{
+
+
+    /// <summary>
+    /// <para type="synopsis">Deletes a guardian. The guardian will no longer receive guardian notifications and the guardian will no longer be accessible via the API. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to manage guardians for the student identified by the `student_id`, if guardians are not enabled for the domain in question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API). * `NOT_FOUND` if Classroom cannot find any record of the given `student_id` or `guardian_id`, or if the guardian has already been disabled.</para>
+    /// <para type="description">Deletes a guardian. The guardian will no longer receive guardian notifications and the guardian will no longer be accessible via the API. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to manage guardians for the student identified by the `student_id`, if guardians are not enabled for the domain in question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API). * `NOT_FOUND` if Classroom cannot find any record of the given `student_id` or `guardian_id`, or if the guardian has already been disabled.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Remove-GClassroomGuardians -StudentId $SomeStudentIdString -GuardianId $SomeGuardianIdString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Remove-GClassroomGuardians">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet("Remove", "GClassroomGuardians",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GClassroomGuardians")]
+    public class RemoveGClassroomGuardiansCommand : ClassroomServiceAccountBase
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">The student whose guardian is to be deleted. One of the following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`, indicating the requesting user</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The student whose guardian is to be deleted. One of the following: * the numeric identifier for the user * the email address of the user * the string literal `\"me\"`, indicating the requesting user")]
+        public string StudentId { get; set; }
+
+        /// <summary>
+        /// <para type="description">The `id` field from a `Guardian`.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The `id` field from a `Guardian`.")]
+        public string GuardianId { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+
+            if (ShouldProcess("Classroom Guardians", "Remove-GClassroomGuardians"))
+            {
+
+                WriteObject(userProfiles.guardians.Delete(StudentId, GuardianId));
+            }
+
+        }
+    }
+    /// <summary>
+    /// <para type="synopsis">Returns a specific guardian. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to view guardian information for the student identified by the `student_id`, if guardians are not enabled for the domain in question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the literal string `me`). * `NOT_FOUND` if Classroom cannot find any record of the given student or `guardian_id`, or if the guardian has been disabled.</para>
+    /// <para type="description">Returns a specific guardian. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to view guardian information for the student identified by the `student_id`, if guardians are not enabled for the domain in question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the literal string `me`). * `NOT_FOUND` if Classroom cannot find any record of the given student or `guardian_id`, or if the guardian has been disabled.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Get-GClassroomGuardians -StudentId $SomeStudentIdString -GuardianId $SomeGuardianIdString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GClassroomGuardians">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsCommon.Get, "GClassroomGuardians",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GClassroomGuardians")]
+    public class GetGClassroomGuardiansCommand : ClassroomServiceAccountBase
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">The student whose guardian is being requested. One of the following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`, indicating the requesting user</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The student whose guardian is being requested. One of the following: * the numeric identifier for the user * the email address of the user * the string literal `\"me\"`, indicating the requesting user")]
+        public string StudentId { get; set; }
+
+        /// <summary>
+        /// <para type="description">The `id` field from a `Guardian`.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The `id` field from a `Guardian`.")]
+        public string GuardianId { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+
+            if (ShouldProcess("Classroom Guardians", "Get-GClassroomGuardians"))
+            {
+
+                WriteObject(userProfiles.guardians.Get(StudentId, GuardianId));
+            }
+
+        }
+    }
+    /// <summary>
+    /// <para type="synopsis">Returns a list of guardians that the requesting user is permitted to view, restricted to those that match the request. To list guardians for any student that the requesting user may view guardians for, use the literal character `-` for the student ID. This method returns the following error codes: * `PERMISSION_DENIED` if a `student_id` is specified, and the requesting user is not permitted to view guardian information for that student, if `"-"` is specified as the `student_id` and the user is not a domain administrator, if guardians are not enabled for the domain in question, if the `invited_email_address` filter is set by a user who is not a domain administrator, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the literal string `me`). May also be returned if an invalid `page_token` is provided. * `NOT_FOUND` if a `student_id` is specified, and its format can be recognized, but Classroom has no record of that student.</para>
+    /// <para type="description">Returns a list of guardians that the requesting user is permitted to view, restricted to those that match the request. To list guardians for any student that the requesting user may view guardians for, use the literal character `-` for the student ID. This method returns the following error codes: * `PERMISSION_DENIED` if a `student_id` is specified, and the requesting user is not permitted to view guardian information for that student, if `"-"` is specified as the `student_id` and the user is not a domain administrator, if guardians are not enabled for the domain in question, if the `invited_email_address` filter is set by a user who is not a domain administrator, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the literal string `me`). May also be returned if an invalid `page_token` is provided. * `NOT_FOUND` if a `student_id` is specified, and its format can be recognized, but Classroom has no record of that student.</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>List-GClassroomGuardians -StudentId $SomeStudentIdString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/List-GClassroomGuardians">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet("Get2", "GClassroomGuardians",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/List-GClassroomGuardians")]
+    public class Get2GClassroomGuardiansCommand : ClassroomServiceAccountBase
+    {
+        #region Properties
+
+
+        /// <summary>
+        /// <para type="description">Filter results by the student who the guardian is linked to. The identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`, indicating the requesting user * the string literal `"-"`, indicating that results should be returned for all students that the requesting user has access to view.</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Filter results by the student who the guardian is linked to. The identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `\"me\"`, indicating the requesting user * the string literal `\"-\"`, indicating that results should be returned for all students that the requesting user has access to view.")]
+        public string StudentId { get; set; }
+
+        /// <summary>
+        /// <para type="description">Filter results by the email address that the original invitation was sent to, resulting in this guardian link. This filter can only be used by domain administrators.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Filter results by the email address that the original invitation was sent to, resulting in this guardian link. This filter can only be used by domain administrators.")]
+        public string InvitedEmailAddress { get; set; }
+
+        /// <summary>
+        /// <para type="description">Maximum number of items to return. Zero or unspecified indicates that the server may assign a maximum. The server may return fewer than the specified number of results.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Maximum number of items to return. Zero or unspecified indicates that the server may assign a maximum. The server may return fewer than the specified number of results.")]
+        public System.Nullable<int> PageSize { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+
+            if (ShouldProcess("Classroom Guardians", "List-GClassroomGuardians"))
+            {
+
+                var properties = new gClassroom.UserProfiles.Guardians.GuardiansListProperties()
+                {
+                    InvitedEmailAddress = this.InvitedEmailAddress,
+                    PageSize = this.PageSize
+                };
+
+
+                WriteObject(userProfiles.guardians.List(StudentId, properties));
+            }
+
+        }
+    }
+
 }
