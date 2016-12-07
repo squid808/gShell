@@ -4207,8 +4207,6 @@ namespace gShell.Cmdlets.Classroom.Courses.CourseWork.StudentSubmissions
 
 namespace gShell.Cmdlets.Classroom.UserProfiles.GuardianInvitations
 {
-
-
     /// <summary>
     /// <para type="synopsis">Creates a guardian invitation, and sends an email to the guardian asking them to confirm that they are the student's guardian. Once the guardian accepts the invitation, their `state` will change to `COMPLETED` and they will start receiving guardian notifications. A `Guardian` resource will also be created to represent the active guardian. The request object must have the `student_id` and `invited_email_address` fields set. Failing to set these fields, or setting any other fields in the request, will result in an error. This method returns the following error codes: * `PERMISSION_DENIED` if the current user does not have permission to manage guardians, if the guardian in question has already rejected too many requests for that student, if guardians are not enabled for the domain in question, or for other access errors. * `RESOURCE_EXHAUSTED` if the student or guardian has exceeded the guardian link limit. * `INVALID_ARGUMENT` if the guardian email address is not valid (for example, if it is too long), or if the format of the student ID provided cannot be recognized (it is not an email address, nor a `user_id` from this API). This error will also be returned if read-only fields are set, or if the `state` field is set to to a value other than `PENDING`. * `NOT_FOUND` if the student ID provided is a valid student ID, but Classroom has no record of that student. * `ALREADY_EXISTS` if there is already a pending guardian invitation for the student and `invited_email_address` provided, or if the provided `invited_email_address` matches the Google account of an existing `Guardian` for this user.</para>
     /// <para type="description">Creates a guardian invitation, and sends an email to the guardian asking them to confirm that they are the student's guardian. Once the guardian accepts the invitation, their `state` will change to `COMPLETED` and they will start receiving guardian notifications. A `Guardian` resource will also be created to represent the active guardian. The request object must have the `student_id` and `invited_email_address` fields set. Failing to set these fields, or setting any other fields in the request, will result in an error. This method returns the following error codes: * `PERMISSION_DENIED` if the current user does not have permission to manage guardians, if the guardian in question has already rejected too many requests for that student, if guardians are not enabled for the domain in question, or for other access errors. * `RESOURCE_EXHAUSTED` if the student or guardian has exceeded the guardian link limit. * `INVALID_ARGUMENT` if the guardian email address is not valid (for example, if it is too long), or if the format of the student ID provided cannot be recognized (it is not an email address, nor a `user_id` from this API). This error will also be returned if read-only fields are set, or if the `state` field is set to to a value other than `PENDING`. * `NOT_FOUND` if the student ID provided is a valid student ID, but Classroom has no record of that student. * `ALREADY_EXISTS` if there is already a pending guardian invitation for the student and `invited_email_address` provided, or if the provided `invited_email_address` matches the Google account of an existing `Guardian` for this user.</para>
@@ -4216,20 +4214,19 @@ namespace gShell.Cmdlets.Classroom.UserProfiles.GuardianInvitations
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Create-GClassroomGuardianInvitations -StudentId $SomeStudentIdString -GuardianInvitationBody $SomeGuardianInvitationObj</code>
+    ///   <code>PS C:\>New-GClassroomGuardianInvitation -StudentId $SomeStudentIdString -GuardianInvitationBody $SomeGuardianInvitationObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Create-GClassroomGuardianInvitations">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GClassroomGuardianInvitation">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
-    [Cmdlet("New", "GClassroomGuardianInvitations",
+    [Cmdlet("New", "GClassroomGuardianInvitation",
     SupportsShouldProcess = true,
-    HelpUri = @"https://github.com/squid808/gShell/wiki/Create-GClassroomGuardianInvitations")]
-    public class NewGClassroomGuardianInvitationsCommand : ClassroomServiceAccountBase
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomGuardianInvitation")]
+    public class NewGClassroomGuardianInvitationCommand : ClassroomServiceAccountBase
     {
         #region Properties
-
 
         /// <summary>
         /// <para type="description">ID of the student (in standard format)</para>
@@ -4254,35 +4251,39 @@ namespace gShell.Cmdlets.Classroom.UserProfiles.GuardianInvitations
         protected override void ProcessRecord()
         {
 
-            if (ShouldProcess("Classroom GuardianInvitations", "Create-GClassroomGuardianInvitations"))
+            if (ShouldProcess("Classroom GuardianInvitations", "Create-GClassroomGuardianInvitation"))
             {
-
                 WriteObject(userProfiles.guardianInvitations.Create(GuardianInvitationBody, StudentId));
             }
-
         }
     }
+
     /// <summary>
-    /// <para type="synopsis">Returns a specific guardian invitation. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to view guardian invitations for the student identified by the `student_id`, if guardians are not enabled for the domain in question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the literal string `me`). * `NOT_FOUND` if Classroom cannot find any record of the given student or `invitation_id`. May also be returned if the student exists, but the requesting user does not have access to see that student.</para>
-    /// <para type="description">Returns a specific guardian invitation. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to view guardian invitations for the student identified by the `student_id`, if guardians are not enabled for the domain in question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the literal string `me`). * `NOT_FOUND` if Classroom cannot find any record of the given student or `invitation_id`. May also be returned if the student exists, but the requesting user does not have access to see that student.</para>
+    /// <para type="synopsis">Returns a specific guardian invitation, or a list of guardian invitations that the requesting user is permitted to view. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to view guardian invitations for the student identified by the `student_id`, if guardians are not enabled for the domain in question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the literal string `me`). * `NOT_FOUND` if Classroom cannot find any record of the given student or `invitation_id`. May also be returned if the student exists, but the requesting user does not have access to see that student.</para>
+    /// <para type="description">Returns a specific guardian invitation, or a list of guardian invitations that the requesting user is permitted to view. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to view guardian invitations for the student identified by the `student_id`, if guardians are not enabled for the domain in question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the literal string `me`). * `NOT_FOUND` if Classroom cannot find any record of the given student or `invitation_id`. May also be returned if the student exists, but the requesting user does not have access to see that student.</para>
     /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GClassroomGuardianInvitations -StudentId $SomeStudentIdString -InvitationId $SomeInvitationIdString</code>
+    ///   <code>PS C:\>Get-GClassroomGuardianInvitation -StudentId $SomeStudentIdString -InvitationId $SomeInvitationIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GClassroomGuardianInvitations">[Wiki page for this Cmdlet]</para>
+    /// <example>
+    ///   <code>PS C:\>Get-GClassroomGuardianInvitation -StudentId $SomeStudentIdString -All</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GClassroomGuardianInvitation">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
-    [Cmdlet(VerbsCommon.Get, "GClassroomGuardianInvitations",
+    [Cmdlet(VerbsCommon.Get, "GClassroomGuardianInvitation",
     SupportsShouldProcess = true,
-    HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GClassroomGuardianInvitations")]
-    public class GetGClassroomGuardianInvitationsCommand : ClassroomServiceAccountBase
+    DefaultParameterSetName = "one",
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GClassroomGuardianInvitation")]
+    public class GetGClassroomGuardianInvitationCommand : ClassroomServiceAccountBase
     {
         #region Properties
-
 
         /// <summary>
         /// <para type="description">The ID of the student whose guardian invitation is being requested.</para>
@@ -4298,58 +4299,17 @@ namespace gShell.Cmdlets.Classroom.UserProfiles.GuardianInvitations
         /// </summary>
         [Parameter(Position = 1,
         Mandatory = true,
+        ParameterSetName = "one",
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "The `id` field of the `GuardianInvitation` being requested.")]
         public string InvitationId { get; set; }
-        #endregion
-
-        protected override void ProcessRecord()
-        {
-
-            if (ShouldProcess("Classroom GuardianInvitations", "Get-GClassroomGuardianInvitations"))
-            {
-
-                WriteObject(userProfiles.guardianInvitations.Get(StudentId, InvitationId));
-            }
-
-        }
-    }
-    /// <summary>
-    /// <para type="synopsis">Returns a list of guardian invitations that the requesting user is permitted to view, filtered by the parameters provided. This method returns the following error codes: * `PERMISSION_DENIED` if a `student_id` is specified, and the requesting user is not permitted to view guardian invitations for that student, if `"-"` is specified as the `student_id` and the user is not a domain administrator, if guardians are not enabled for the domain in question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the literal string `me`). May also be returned if an invalid `page_token` or `state` is provided. * `NOT_FOUND` if a `student_id` is specified, and its format can be recognized, but Classroom has no record of that student.</para>
-    /// <para type="description">Returns a list of guardian invitations that the requesting user is permitted to view, filtered by the parameters provided. This method returns the following error codes: * `PERMISSION_DENIED` if a `student_id` is specified, and the requesting user is not permitted to view guardian invitations for that student, if `"-"` is specified as the `student_id` and the user is not a domain administrator, if guardians are not enabled for the domain in question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the literal string `me`). May also be returned if an invalid `page_token` or `state` is provided. * `NOT_FOUND` if a `student_id` is specified, and its format can be recognized, but Classroom has no record of that student.</para>
-    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
-    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
-    /// </description></item></list>
-    /// <example>
-    ///   <code>PS C:\>List-GClassroomGuardianInvitations -StudentId $SomeStudentIdString</code>
-    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
-    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
-    /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/List-GClassroomGuardianInvitations">[Wiki page for this Cmdlet]</para>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
-    /// </summary>
-    [Cmdlet("Get2", "GClassroomGuardianInvitations",
-    SupportsShouldProcess = true,
-    HelpUri = @"https://github.com/squid808/gShell/wiki/List-GClassroomGuardianInvitations")]
-    public class Get2GClassroomGuardianInvitationsCommand : ClassroomServiceAccountBase
-    {
-        #region Properties
-
-
-        /// <summary>
-        /// <para type="description">The ID of the student whose guardian invitations are to be returned. The identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`, indicating the requesting user * the string literal `"-"`, indicating that results should be returned for all students that the requesting user is permitted to view guardian invitations.</para>
-        /// </summary>
-        [Parameter(Position = 0,
-        Mandatory = true,
-        ValueFromPipelineByPropertyName = true,
-        HelpMessage = "The ID of the student whose guardian invitations are to be returned. The identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `\"me\"`, indicating the requesting user * the string literal `\"-\"`, indicating that results should be returned for all students that the requesting user is permitted to view guardian invitations.")]
-        public string StudentId { get; set; }
 
         /// <summary>
         /// <para type="description">If specified, only results with the specified `invited_email_address` will be returned.</para>
         /// </summary>
         [Parameter(Position = 1,
         Mandatory = false,
+        ParameterSetName = "list",
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "If specified, only results with the specified `invited_email_address` will be returned.")]
         public string InvitedEmailAddress { get; set; }
@@ -4359,6 +4319,7 @@ namespace gShell.Cmdlets.Classroom.UserProfiles.GuardianInvitations
         /// </summary>
         [Parameter(Position = 2,
         Mandatory = false,
+        ParameterSetName = "list",
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "If specified, only results with the specified `state` values will be returned. Otherwise, results with a `state` of `PENDING` will be returned.")]
         public UserProfilesResource.GuardianInvitationsResource.ListRequest.StatesEnum? States { get; set; }
@@ -4368,30 +4329,46 @@ namespace gShell.Cmdlets.Classroom.UserProfiles.GuardianInvitations
         /// </summary>
         [Parameter(Position = 3,
         Mandatory = false,
+        ParameterSetName = "list",
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "Maximum number of items to return. Zero or unspecified indicates that the server may assign a maximum. The server may return fewer than the specified number of results.")]
         public System.Nullable<int> PageSize { get; set; }
+
+        /// <summary>
+        /// <para type="description">A switch to list all results.</para>
+        /// </summary>
+        [Parameter(Position = 4,
+        ParameterSetName = "list",
+        Mandatory = false,
+        HelpMessage = "Indicates if you would like to get all members of all groups in the domain.")]
+        public SwitchParameter All { get; set; }
         #endregion
 
         protected override void ProcessRecord()
         {
 
-            if (ShouldProcess("Classroom GuardianInvitations", "List-GClassroomGuardianInvitations"))
+            if (ShouldProcess("Classroom GuardianInvitations", "Get-GClassroomGuardianInvitation"))
             {
-
-                var properties = new gClassroom.UserProfiles.GuardianInvitations.GuardianInvitationsListProperties()
+                if (ParameterSetName == "one")
                 {
-                    InvitedEmailAddress = this.InvitedEmailAddress,
-                    States = this.States,
-                    PageSize = this.PageSize
-                };
+                    WriteObject(userProfiles.guardianInvitations.Get(StudentId, InvitationId));
+                }
+                else
+                {
+                    var properties = new gClassroom.UserProfiles.GuardianInvitations.GuardianInvitationsListProperties()
+                    {
+                        InvitedEmailAddress = this.InvitedEmailAddress,
+                        States = this.States,
+                        PageSize = this.PageSize
+                    };
 
-
-                WriteObject(userProfiles.guardianInvitations.List(StudentId, properties));
+                    WriteObject(userProfiles.guardianInvitations.List(StudentId, properties));
+                }
             }
 
         }
     }
+
     /// <summary>
     /// <para type="synopsis">Modifies a guardian invitation. Currently, the only valid modification is to change the `state` from `PENDING` to `COMPLETE`. This has the effect of withdrawing the invitation. This method returns the following error codes: * `PERMISSION_DENIED` if the current user does not have permission to manage guardians, if guardians are not enabled for the domain in question or for other access errors. * `FAILED_PRECONDITION` if the guardian link is not in the `PENDING` state. * `INVALID_ARGUMENT` if the format of the student ID provided cannot be recognized (it is not an email address, nor a `user_id` from this API), or if the passed `GuardianInvitation` has a `state` other than `COMPLETE`, or if it modifies fields other than `state`. * `NOT_FOUND` if the student ID provided is a valid student ID, but Classroom has no record of that student, or if the `id` field does not refer to a guardian invitation known to Classroom.</para>
     /// <para type="description">Modifies a guardian invitation. Currently, the only valid modification is to change the `state` from `PENDING` to `COMPLETE`. This has the effect of withdrawing the invitation. This method returns the following error codes: * `PERMISSION_DENIED` if the current user does not have permission to manage guardians, if guardians are not enabled for the domain in question or for other access errors. * `FAILED_PRECONDITION` if the guardian link is not in the `PENDING` state. * `INVALID_ARGUMENT` if the format of the student ID provided cannot be recognized (it is not an email address, nor a `user_id` from this API), or if the passed `GuardianInvitation` has a `state` other than `COMPLETE`, or if it modifies fields other than `state`. * `NOT_FOUND` if the student ID provided is a valid student ID, but Classroom has no record of that student, or if the `id` field does not refer to a guardian invitation known to Classroom.</para>
@@ -4399,17 +4376,17 @@ namespace gShell.Cmdlets.Classroom.UserProfiles.GuardianInvitations
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GClassroomGuardianInvitations -StudentId $SomeStudentIdString -InvitationId $SomeInvitationIdString -GuardianInvitationBody $SomeGuardianInvitationObj</code>
+    ///   <code>PS C:\>Set-GClassroomGuardianInvitation -StudentId $SomeStudentIdString -InvitationId $SomeInvitationIdString -GuardianInvitationBody $SomeGuardianInvitationObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Set-GClassroomGuardianInvitations">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Set-GClassroomGuardianInvitation">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
-    [Cmdlet("Set", "GClassroomGuardianInvitations",
+    [Cmdlet("Set", "GClassroomGuardianInvitation",
     SupportsShouldProcess = true,
-    HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GClassroomGuardianInvitations")]
-    public class SetGClassroomGuardianInvitationsCommand : ClassroomServiceAccountBase
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GClassroomGuardianInvitation")]
+    public class SetGClassroomGuardianInvitationCommand : ClassroomServiceAccountBase
     {
         #region Properties
 
@@ -4455,7 +4432,7 @@ namespace gShell.Cmdlets.Classroom.UserProfiles.GuardianInvitations
         protected override void ProcessRecord()
         {
 
-            if (ShouldProcess("Classroom GuardianInvitations", "Set-GClassroomGuardianInvitations"))
+            if (ShouldProcess("Classroom GuardianInvitations", "Set-GClassroomGuardianInvitation"))
             {
 
                 var properties = new gClassroom.UserProfiles.GuardianInvitations.GuardianInvitationsPatchProperties()
@@ -4474,8 +4451,6 @@ namespace gShell.Cmdlets.Classroom.UserProfiles.GuardianInvitations
 
 namespace gShell.Cmdlets.Classroom.UserProfiles.Guardians
 {
-
-
     /// <summary>
     /// <para type="synopsis">Deletes a guardian. The guardian will no longer receive guardian notifications and the guardian will no longer be accessible via the API. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to manage guardians for the student identified by the `student_id`, if guardians are not enabled for the domain in question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API). * `NOT_FOUND` if Classroom cannot find any record of the given `student_id` or `guardian_id`, or if the guardian has already been disabled.</para>
     /// <para type="description">Deletes a guardian. The guardian will no longer receive guardian notifications and the guardian will no longer be accessible via the API. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to manage guardians for the student identified by the `student_id`, if guardians are not enabled for the domain in question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API). * `NOT_FOUND` if Classroom cannot find any record of the given `student_id` or `guardian_id`, or if the guardian has already been disabled.</para>
@@ -4483,20 +4458,19 @@ namespace gShell.Cmdlets.Classroom.UserProfiles.Guardians
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GClassroomGuardians -StudentId $SomeStudentIdString -GuardianId $SomeGuardianIdString</code>
+    ///   <code>PS C:\>Remove-GClassroomGuardian -StudentId $SomeStudentIdString -GuardianId $SomeGuardianIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Remove-GClassroomGuardians">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Remove-GClassroomGuardian">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
-    [Cmdlet("Remove", "GClassroomGuardians",
+    [Cmdlet("Remove", "GClassroomGuardian",
     SupportsShouldProcess = true,
-    HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GClassroomGuardians")]
-    public class RemoveGClassroomGuardiansCommand : ClassroomServiceAccountBase
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GClassroomGuardian")]
+    public class RemoveGClassroomGuardianCommand : ClassroomServiceAccountBase
     {
         #region Properties
-
 
         /// <summary>
         /// <para type="description">The student whose guardian is to be deleted. One of the following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`, indicating the requesting user</para>
@@ -4515,40 +4489,71 @@ namespace gShell.Cmdlets.Classroom.UserProfiles.Guardians
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "The `id` field from a `Guardian`.")]
         public string GuardianId { get; set; }
+
+        /// <summary>
+        /// <para type="description">A switch to run the cmdlet without prompting.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        HelpMessage = "A switch to run the cmdlet without prompting.")]
+        public SwitchParameter Force { get; set; }
         #endregion
 
         protected override void ProcessRecord()
         {
+            string toRemoveTarget = "Classroom Guardian";
 
-            if (ShouldProcess("Classroom Guardians", "Remove-GClassroomGuardians"))
-            {
+			if (ShouldProcess(toRemoveTarget))
+			{
 
-                WriteObject(userProfiles.guardians.Delete(StudentId, GuardianId));
-            }
+			    if (Force || ShouldContinue(toRemoveTarget + "will be removed.\nContinue?", "Confirm Removal"))
+			    {
+			        try
+			        {
+
+			            WriteObject(userProfiles.guardians.Delete(StudentId, GuardianId));
+			        }
+                    catch (Exception e)
+                    {
+                        WriteError(new ErrorRecord(e, e.GetBaseException().ToString(), ErrorCategory.InvalidData, toRemoveTarget));
+                    }
+			    }
+                else
+                {
+                    WriteError(new ErrorRecord(new Exception("Deletion not confirmed"),
+                        "", ErrorCategory.InvalidData, toRemoveTarget));
+                }
+			}
 
         }
     }
+
     /// <summary>
-    /// <para type="synopsis">Returns a specific guardian. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to view guardian information for the student identified by the `student_id`, if guardians are not enabled for the domain in question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the literal string `me`). * `NOT_FOUND` if Classroom cannot find any record of the given student or `guardian_id`, or if the guardian has been disabled.</para>
-    /// <para type="description">Returns a specific guardian. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to view guardian information for the student identified by the `student_id`, if guardians are not enabled for the domain in question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the literal string `me`). * `NOT_FOUND` if Classroom cannot find any record of the given student or `guardian_id`, or if the guardian has been disabled.</para>
+    /// <para type="synopsis">Returns a specific guardian, or a list of guardians that the requesting user is permitted to view, restricted to those that match the request. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to view guardian information for the student identified by the `student_id`, if guardians are not enabled for the domain in question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the literal string `me`). * `NOT_FOUND` if Classroom cannot find any record of the given student or `guardian_id`, or if the guardian has been disabled.</para>
+    /// <para type="description">Returns a specific guardian, or a list of guardians that the requesting user is permitted to view, restricted to those that match the request. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to view guardian information for the student identified by the `student_id`, if guardians are not enabled for the domain in question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the literal string `me`). * `NOT_FOUND` if Classroom cannot find any record of the given student or `guardian_id`, or if the guardian has been disabled.</para>
     /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GClassroomGuardians -StudentId $SomeStudentIdString -GuardianId $SomeGuardianIdString</code>
+    ///   <code>PS C:\>Get-GClassroomGuardian -StudentId $SomeStudentIdString -GuardianId $SomeGuardianIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GClassroomGuardians">[Wiki page for this Cmdlet]</para>
+    /// <example>
+    ///   <code>PS C:\>Get-GClassroomGuardian -StudentId $SomeStudentIdString -All</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GClassroomGuardian">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
-    [Cmdlet(VerbsCommon.Get, "GClassroomGuardians",
+    [Cmdlet(VerbsCommon.Get, "GClassroomGuardian",
     SupportsShouldProcess = true,
-    HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GClassroomGuardians")]
-    public class GetGClassroomGuardiansCommand : ClassroomServiceAccountBase
+    DefaultParameterSetName = "one",
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GClassroomGuardian")]
+    public class GetGClassroomGuardianCommand : ClassroomServiceAccountBase
     {
         #region Properties
-
 
         /// <summary>
         /// <para type="description">The student whose guardian is being requested. One of the following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`, indicating the requesting user</para>
@@ -4564,58 +4569,17 @@ namespace gShell.Cmdlets.Classroom.UserProfiles.Guardians
         /// </summary>
         [Parameter(Position = 1,
         Mandatory = true,
+        ParameterSetName = "one",
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "The `id` field from a `Guardian`.")]
         public string GuardianId { get; set; }
-        #endregion
-
-        protected override void ProcessRecord()
-        {
-
-            if (ShouldProcess("Classroom Guardians", "Get-GClassroomGuardians"))
-            {
-
-                WriteObject(userProfiles.guardians.Get(StudentId, GuardianId));
-            }
-
-        }
-    }
-    /// <summary>
-    /// <para type="synopsis">Returns a list of guardians that the requesting user is permitted to view, restricted to those that match the request. To list guardians for any student that the requesting user may view guardians for, use the literal character `-` for the student ID. This method returns the following error codes: * `PERMISSION_DENIED` if a `student_id` is specified, and the requesting user is not permitted to view guardian information for that student, if `"-"` is specified as the `student_id` and the user is not a domain administrator, if guardians are not enabled for the domain in question, if the `invited_email_address` filter is set by a user who is not a domain administrator, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the literal string `me`). May also be returned if an invalid `page_token` is provided. * `NOT_FOUND` if a `student_id` is specified, and its format can be recognized, but Classroom has no record of that student.</para>
-    /// <para type="description">Returns a list of guardians that the requesting user is permitted to view, restricted to those that match the request. To list guardians for any student that the requesting user may view guardians for, use the literal character `-` for the student ID. This method returns the following error codes: * `PERMISSION_DENIED` if a `student_id` is specified, and the requesting user is not permitted to view guardian information for that student, if `"-"` is specified as the `student_id` and the user is not a domain administrator, if guardians are not enabled for the domain in question, if the `invited_email_address` filter is set by a user who is not a domain administrator, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the literal string `me`). May also be returned if an invalid `page_token` is provided. * `NOT_FOUND` if a `student_id` is specified, and its format can be recognized, but Classroom has no record of that student.</para>
-    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
-    /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
-    /// </description></item></list>
-    /// <example>
-    ///   <code>PS C:\>List-GClassroomGuardians -StudentId $SomeStudentIdString</code>
-    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
-    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
-    /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/List-GClassroomGuardians">[Wiki page for this Cmdlet]</para>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
-    /// </summary>
-    [Cmdlet("Get2", "GClassroomGuardians",
-    SupportsShouldProcess = true,
-    HelpUri = @"https://github.com/squid808/gShell/wiki/List-GClassroomGuardians")]
-    public class Get2GClassroomGuardiansCommand : ClassroomServiceAccountBase
-    {
-        #region Properties
-
-
-        /// <summary>
-        /// <para type="description">Filter results by the student who the guardian is linked to. The identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`, indicating the requesting user * the string literal `"-"`, indicating that results should be returned for all students that the requesting user has access to view.</para>
-        /// </summary>
-        [Parameter(Position = 0,
-        Mandatory = true,
-        ValueFromPipelineByPropertyName = true,
-        HelpMessage = "Filter results by the student who the guardian is linked to. The identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `\"me\"`, indicating the requesting user * the string literal `\"-\"`, indicating that results should be returned for all students that the requesting user has access to view.")]
-        public string StudentId { get; set; }
 
         /// <summary>
         /// <para type="description">Filter results by the email address that the original invitation was sent to, resulting in this guardian link. This filter can only be used by domain administrators.</para>
         /// </summary>
         [Parameter(Position = 1,
         Mandatory = false,
+        ParameterSetName = "list",
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "Filter results by the email address that the original invitation was sent to, resulting in this guardian link. This filter can only be used by domain administrators.")]
         public string InvitedEmailAddress { get; set; }
@@ -4625,6 +4589,7 @@ namespace gShell.Cmdlets.Classroom.UserProfiles.Guardians
         /// </summary>
         [Parameter(Position = 2,
         Mandatory = false,
+        ParameterSetName = "list",
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "Maximum number of items to return. Zero or unspecified indicates that the server may assign a maximum. The server may return fewer than the specified number of results.")]
         public System.Nullable<int> PageSize { get; set; }
@@ -4633,20 +4598,24 @@ namespace gShell.Cmdlets.Classroom.UserProfiles.Guardians
         protected override void ProcessRecord()
         {
 
-            if (ShouldProcess("Classroom Guardians", "List-GClassroomGuardians"))
+            if (ShouldProcess("Classroom Guardians", "Get-GClassroomGuardian"))
             {
-
-                var properties = new gClassroom.UserProfiles.Guardians.GuardiansListProperties()
+                if (ParameterSetName == "one")
                 {
-                    InvitedEmailAddress = this.InvitedEmailAddress,
-                    PageSize = this.PageSize
-                };
+                    WriteObject(userProfiles.guardians.Get(StudentId, GuardianId));
+                }
+                else
+                {
+                    var properties = new gClassroom.UserProfiles.Guardians.GuardiansListProperties()
+                    {
+                        InvitedEmailAddress = this.InvitedEmailAddress,
+                        PageSize = this.PageSize
+                    };
 
-
-                WriteObject(userProfiles.guardians.List(StudentId, properties));
+                    WriteObject(userProfiles.guardians.List(StudentId, properties));
+                }
             }
 
         }
     }
-
 }
