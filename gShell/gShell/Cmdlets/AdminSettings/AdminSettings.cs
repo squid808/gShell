@@ -29,6 +29,8 @@ namespace gShell.Cmdlets.Adminsettings
 
         protected override void BeginProcessing()
         {
+            WriteWarning("The Admin Settings API is deprecated and is scheduled to be sunset on August 16, 2017. See the following URL for more information: https://developers.google.com/admin-sdk/admin-settings/");
+
             base.BeginProcessing();
 
             if (string.IsNullOrWhiteSpace(Domain)) Domain = GetDomainFromEmail(GAuthId);

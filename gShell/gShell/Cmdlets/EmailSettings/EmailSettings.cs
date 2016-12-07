@@ -51,6 +51,8 @@ namespace gShell.Cmdlets.Emailsettings
 
         protected override void BeginProcessing()
         {
+            WriteWarning("The Email Settings API is deprecated and will be turned off on July 7, 2017. Migrate to the Gmail API as soon as possible to avoid disruptions to your application. See the following URL for more information: https://developers.google.com/admin-sdk/email-settings/");
+
             base.BeginProcessing();
 
             if (string.IsNullOrWhiteSpace(Domain)) Domain = GetDomainFromEmail(GAuthId);
