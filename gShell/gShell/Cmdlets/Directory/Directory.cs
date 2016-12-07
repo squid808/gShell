@@ -6145,10 +6145,10 @@ namespace gShell.Cmdlets.Directory.GASchema
                 switch (ParameterSetName)
                 {
                     case "One":
-                        WriteObject((SchemaFieldCollection)schemas.Get(CustomerId, SchemaKey));
+                        WriteObject(schemas.Get(CustomerId, SchemaKey));
                         break;
                     case "List":
-                        WriteObject((SchemaFieldCollection)schemas.List(CustomerId).SchemasValue);
+                        WriteObject(schemas.List(CustomerId).SchemasValue);
                         break;
                 }
             }
@@ -6278,22 +6278,22 @@ namespace gShell.Cmdlets.Directory.GASchema
         [ValidateNotNullOrEmpty]
         public string SchemaKey { get; set; }
 
-        [Parameter(Position = 3,
-            Mandatory = true,
-            ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNullOrEmpty]
-        public SchemaFieldCollection FieldCollection { get; set; }
+        //[Parameter(Position = 3,
+        //    Mandatory = true,
+        //    ValueFromPipeline = true,
+        //    ValueFromPipelineByPropertyName = true)]
+        //[ValidateNotNullOrEmpty]
+        //public SchemaFieldCollection FieldCollection { get; set; }
 
-        ///// <summary>
-        ///// <para type="description">JSON template for Schema resource in Directory API.</para>
-        ///// </summary>
-        //[Parameter(Position = 2,
-        //Mandatory = false,
-        //ValueFromPipeline = true,
-        //ValueFromPipelineByPropertyName = true,
-        //HelpMessage = "JSON template for Schema resource in Directory API.")]
-        //public Google.Apis.admin.Directory.directory_v1.Data.Schema SchemaBody { get; set; }
+        /// <summary>
+        /// <para type="description">JSON template for Schema resource in Directory API.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipeline = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "JSON template for Schema resource in Directory API.")]
+        public Google.Apis.admin.Directory.directory_v1.Data.Schema SchemaBody { get; set; }
         #endregion
 
         protected override void ProcessRecord()
@@ -6302,7 +6302,7 @@ namespace gShell.Cmdlets.Directory.GASchema
 
             if (ShouldProcess(CustomerId, "Set-GASchema"))
             {
-                WriteObject(schemas.Patch((Data.Schema)FieldCollection, CustomerId, SchemaKey));
+                WriteObject(schemas.Patch(SchemaBody, CustomerId, SchemaKey));
             }
         }
     }
@@ -6340,22 +6340,22 @@ namespace gShell.Cmdlets.Directory.GASchema
 
         //Domain position = 1
 
-        [Parameter(Position = 2,
-            Mandatory = true,
-            ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNullOrEmpty]
-        public SchemaFieldCollection FieldCollection { get; set; }
-
-        ///// <summary>
-        ///// <para type="description">JSON template for Schema resource in Directory API.</para>
-        ///// </summary>
         //[Parameter(Position = 2,
-        //Mandatory = false,
-        //ValueFromPipeline = true,
-        //ValueFromPipelineByPropertyName = true,
-        //HelpMessage = "JSON template for Schema resource in Directory API.")]
-        //public Google.Apis.admin.Directory.directory_v1.Data.Schema SchemaBody { get; set; }
+        //    Mandatory = true,
+        //    ValueFromPipeline = true,
+        //    ValueFromPipelineByPropertyName = true)]
+        //[ValidateNotNullOrEmpty]
+        //public SchemaFieldCollection FieldCollection { get; set; }
+
+        /// <summary>
+        /// <para type="description">JSON template for Schema resource in Directory API.</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = false,
+        ValueFromPipeline = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "JSON template for Schema resource in Directory API.")]
+        public Google.Apis.admin.Directory.directory_v1.Data.Schema SchemaBody { get; set; }
         #endregion
 
         protected override void ProcessRecord()
@@ -6364,370 +6364,370 @@ namespace gShell.Cmdlets.Directory.GASchema
 
             if (ShouldProcess(CustomerId, "Add-GASchema"))
             {
-                WriteObject(schemas.Insert((Data.Schema)FieldCollection, CustomerId));
+                WriteObject(schemas.Insert(SchemaBody, CustomerId));
             }
         }
     }
 
-    //TODO: Phase out
-    [Cmdlet(VerbsCommon.New, "GASchemaField",
-          SupportsShouldProcess = true,
-          HelpUri = @"https://github.com/squid808/gShell/wiki/New-GASchemaField",
-          DefaultParameterSetName = "New")]
-    public class NewGASchemaFieldCommand : PSCmdlet
-    {
-        #region Properties
-        [Parameter(Position = 0,
-            ParameterSetName = "New",
-            Mandatory = true,
-            ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNullOrEmpty]
-        public string FieldName { get; set; }
+    ////TODO: Phase out
+    //[Cmdlet(VerbsCommon.New, "GASchemaField",
+    //      SupportsShouldProcess = true,
+    //      HelpUri = @"https://github.com/squid808/gShell/wiki/New-GASchemaField",
+    //      DefaultParameterSetName = "New")]
+    //public class NewGASchemaFieldCommand : PSCmdlet
+    //{
+    //    #region Properties
+    //    [Parameter(Position = 0,
+    //        ParameterSetName = "New",
+    //        Mandatory = true,
+    //        ValueFromPipelineByPropertyName = true)]
+    //    [ValidateNotNullOrEmpty]
+    //    public string FieldName { get; set; }
 
-        [Parameter(Position = 1,
-            ParameterSetName = "New",
-            Mandatory = true,
-            ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNullOrEmpty]
-        public SchemaField.SchemaFieldType FieldType { get; set; }
+    //    [Parameter(Position = 1,
+    //        ParameterSetName = "New",
+    //        Mandatory = true,
+    //        ValueFromPipelineByPropertyName = true)]
+    //    [ValidateNotNullOrEmpty]
+    //    public SchemaField.SchemaFieldType FieldType { get; set; }
 
-        [Parameter(Position = 2,
-            ParameterSetName = "New",
-            Mandatory = false,
-            ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNullOrEmpty]
-        public bool? Indexed { get; set; }
+    //    [Parameter(Position = 2,
+    //        ParameterSetName = "New",
+    //        Mandatory = false,
+    //        ValueFromPipelineByPropertyName = true)]
+    //    [ValidateNotNullOrEmpty]
+    //    public bool? Indexed { get; set; }
 
-        [Parameter(Position = 3,
-            ParameterSetName = "New",
-            Mandatory = false,
-            ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNullOrEmpty]
-        public bool? MultiValued { get; set; }
+    //    [Parameter(Position = 3,
+    //        ParameterSetName = "New",
+    //        Mandatory = false,
+    //        ValueFromPipelineByPropertyName = true)]
+    //    [ValidateNotNullOrEmpty]
+    //    public bool? MultiValued { get; set; }
 
-        [Parameter(Position = 4,
-            ParameterSetName = "New",
-            Mandatory = false,
-            ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNullOrEmpty]
-        public double? MinValue { get; set; }
+    //    [Parameter(Position = 4,
+    //        ParameterSetName = "New",
+    //        Mandatory = false,
+    //        ValueFromPipelineByPropertyName = true)]
+    //    [ValidateNotNullOrEmpty]
+    //    public double? MinValue { get; set; }
 
-        [Parameter(Position = 5,
-            ParameterSetName = "New",
-            Mandatory = false,
-            ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNullOrEmpty]
-        public double? MaxValue { get; set; }
+    //    [Parameter(Position = 5,
+    //        ParameterSetName = "New",
+    //        Mandatory = false,
+    //        ValueFromPipelineByPropertyName = true)]
+    //    [ValidateNotNullOrEmpty]
+    //    public double? MaxValue { get; set; }
 
-        [Parameter(Position = 6,
-            ParameterSetName = "New",
-            Mandatory = false,
-            ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNullOrEmpty]
-        public SchemaField.SchemaFieldReadAccessType? ReadAccessType { get; set; }
+    //    [Parameter(Position = 6,
+    //        ParameterSetName = "New",
+    //        Mandatory = false,
+    //        ValueFromPipelineByPropertyName = true)]
+    //    [ValidateNotNullOrEmpty]
+    //    public SchemaField.SchemaFieldReadAccessType? ReadAccessType { get; set; }
 
-        [Parameter(Position = 0,
-            ParameterSetName = "Google",
-            Mandatory = true,
-            ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNullOrEmpty]
-        public Data.SchemaFieldSpec SchemaFieldSpec { get; set; }
-        #endregion
+    //    [Parameter(Position = 0,
+    //        ParameterSetName = "Google",
+    //        Mandatory = true,
+    //        ValueFromPipeline = true,
+    //        ValueFromPipelineByPropertyName = true)]
+    //    [ValidateNotNullOrEmpty]
+    //    public Data.SchemaFieldSpec SchemaFieldSpec { get; set; }
+    //    #endregion
 
-        protected override void ProcessRecord()
-        {
-            switch (ParameterSetName)
-            {
-                case "New":
+    //    protected override void ProcessRecord()
+    //    {
+    //        switch (ParameterSetName)
+    //        {
+    //            case "New":
 
-                    SchemaField field = new SchemaField(FieldName, FieldType)
-                    {
-                        minValue = MinValue,
-                        maxValue = MaxValue,
-                        indexed = Indexed,
-                        multiValued = MultiValued,
-                        readAccessType = ReadAccessType
-                    };
+    //                SchemaField field = new SchemaField(FieldName, FieldType)
+    //                {
+    //                    minValue = MinValue,
+    //                    maxValue = MaxValue,
+    //                    indexed = Indexed,
+    //                    multiValued = MultiValued,
+    //                    readAccessType = ReadAccessType
+    //                };
 
-                    WriteObject(field);
-                    break;
+    //                WriteObject(field);
+    //                break;
 
-                case "Google":
-                    WriteObject((SchemaField)SchemaFieldSpec);
-                    break;
-            }
+    //            case "Google":
+    //                WriteObject((SchemaField)SchemaFieldSpec);
+    //                break;
+    //        }
 
-        }
-    }
+    //    }
+    //}
 
-    //TODO: Phase out
-    [Cmdlet(VerbsCommon.New, "GASchemaFieldCollection",
-          SupportsShouldProcess = true,
-          HelpUri = @"https://github.com/squid808/gShell/wiki/New-GASchemaFieldCollection",
-          DefaultParameterSetName = "New")]
-    public class NewGASchemaFieldCollectionCommand : PSCmdlet
-    {
-        #region Properties
-        [Parameter(Position = 0,
-            ParameterSetName = "New",
-            Mandatory = true,
-            ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNullOrEmpty]
-        public string SchemaName { get; set; }
+    ////TODO: Phase out
+    //[Cmdlet(VerbsCommon.New, "GASchemaFieldCollection",
+    //      SupportsShouldProcess = true,
+    //      HelpUri = @"https://github.com/squid808/gShell/wiki/New-GASchemaFieldCollection",
+    //      DefaultParameterSetName = "New")]
+    //public class NewGASchemaFieldCollectionCommand : PSCmdlet
+    //{
+    //    #region Properties
+    //    [Parameter(Position = 0,
+    //        ParameterSetName = "New",
+    //        Mandatory = true,
+    //        ValueFromPipelineByPropertyName = true)]
+    //    [ValidateNotNullOrEmpty]
+    //    public string SchemaName { get; set; }
 
-        [Parameter(Position = 1,
-            ParameterSetName = "New",
-            Mandatory = false,
-            ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNullOrEmpty]
-        public SchemaField Field { get; set; }
+    //    [Parameter(Position = 1,
+    //        ParameterSetName = "New",
+    //        Mandatory = false,
+    //        ValueFromPipeline = true,
+    //        ValueFromPipelineByPropertyName = true)]
+    //    [ValidateNotNullOrEmpty]
+    //    public SchemaField Field { get; set; }
 
-        [Parameter(Position = 0,
-            ParameterSetName = "Google",
-            Mandatory = false,
-            ValueFromPipeline = true,
-            ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNullOrEmpty]
-        public Data.Schema Schema { get; set; }
-        #endregion
+    //    [Parameter(Position = 0,
+    //        ParameterSetName = "Google",
+    //        Mandatory = false,
+    //        ValueFromPipeline = true,
+    //        ValueFromPipelineByPropertyName = true)]
+    //    [ValidateNotNullOrEmpty]
+    //    public Data.Schema Schema { get; set; }
+    //    #endregion
 
-        protected override void ProcessRecord()
-        {
-            if (Field != null)
-            {
-                WriteObject(new SchemaFieldCollection(SchemaName, Field));
-            }
-            else if (Schema != null)
-            {
-                WriteObject((SchemaFieldCollection)Schema);
-            }
-            else
-            {
-                WriteObject(new SchemaFieldCollection(SchemaName));
-            }
-        }
-    }
+    //    protected override void ProcessRecord()
+    //    {
+    //        if (Field != null)
+    //        {
+    //            WriteObject(new SchemaFieldCollection(SchemaName, Field));
+    //        }
+    //        else if (Schema != null)
+    //        {
+    //            WriteObject((SchemaFieldCollection)Schema);
+    //        }
+    //        else
+    //        {
+    //            WriteObject(new SchemaFieldCollection(SchemaName));
+    //        }
+    //    }
+    //}
+    //
+    ////TODO: Phase out
+    ///// <summary>
+    ///// A custom wrapper for a List<SchemaField> type.
+    ///// </summary>
+    //public class SchemaFieldCollection
+    //{
+    //    #region Properties
+    //    public string schemaName;
 
-    //TODO: Phase out
-    /// <summary>
-    /// A custom wrapper for a List<SchemaField> type.
-    /// </summary>
-    public class SchemaFieldCollection
-    {
-        #region Properties
-        public string schemaName;
+    //    public List<SchemaField> fields { get { return _fields; } }
 
-        public List<SchemaField> fields { get { return _fields; } }
+    //    private List<SchemaField> _fields = new List<SchemaField>();
+    //    #endregion
 
-        private List<SchemaField> _fields = new List<SchemaField>();
-        #endregion
+    //    #region Getters
+    //    public List<SchemaField> GetFields()
+    //    {
+    //        return _fields;
+    //    }
+    //    #endregion
 
-        #region Getters
-        public List<SchemaField> GetFields()
-        {
-            return _fields;
-        }
-        #endregion
+    //    #region Constructors
+    //    public SchemaFieldCollection() { }
 
-        #region Constructors
-        public SchemaFieldCollection() { }
+    //    public SchemaFieldCollection(string SchemaName)
+    //    {
+    //        schemaName = SchemaName;
+    //    }
 
-        public SchemaFieldCollection(string SchemaName)
-        {
-            schemaName = SchemaName;
-        }
+    //    public SchemaFieldCollection(string SchemaName, SchemaField field)
+    //    {
+    //        schemaName = SchemaName;
+    //        Add(field);
+    //    }
+    //    #endregion
 
-        public SchemaFieldCollection(string SchemaName, SchemaField field)
-        {
-            schemaName = SchemaName;
-            Add(field);
-        }
-        #endregion
+    //    #region Add
+    //    public void Add(SchemaField field)
+    //    {
+    //        _fields.Add(field);
+    //    }
+    //    #endregion
 
-        #region Add
-        public void Add(SchemaField field)
-        {
-            _fields.Add(field);
-        }
-        #endregion
+    //    #region AddRange
+    //    public void AddRange(IEnumerable<SchemaField> fList)
+    //    {
+    //        foreach (SchemaField field in fList)
+    //        {
+    //            _fields.Add(field);
+    //        }
+    //    }
+    //    #endregion
 
-        #region AddRange
-        public void AddRange(IEnumerable<SchemaField> fList)
-        {
-            foreach (SchemaField field in fList)
-            {
-                _fields.Add(field);
-            }
-        }
-        #endregion
+    //    #region OperatorPlusOverload
+    //    public static SchemaFieldCollection operator +(SchemaFieldCollection coll1, SchemaFieldCollection coll2)
+    //    {
+    //        coll1.AddRange(coll2.fields);
 
-        #region OperatorPlusOverload
-        public static SchemaFieldCollection operator +(SchemaFieldCollection coll1, SchemaFieldCollection coll2)
-        {
-            coll1.AddRange(coll2.fields);
+    //        return coll1;
+    //    }
 
-            return coll1;
-        }
+    //    public static SchemaFieldCollection operator +(SchemaFieldCollection coll1, SchemaField f2)
+    //    {
+    //        coll1.Add(f2);
 
-        public static SchemaFieldCollection operator +(SchemaFieldCollection coll1, SchemaField f2)
-        {
-            coll1.Add(f2);
+    //        return coll1;
+    //    }
+    //    #endregion
 
-            return coll1;
-        }
-        #endregion
+    //    #region RemoveAt
+    //    public void RemoveAt(int index)
+    //    {
+    //        if (index >= 0)
+    //        {
+    //            if (_fields.Count > index)
+    //            {
+    //                _fields.RemoveAt(index);
+    //            }
+    //        }
+    //    }
+    //    #endregion
 
-        #region RemoveAt
-        public void RemoveAt(int index)
-        {
-            if (index >= 0)
-            {
-                if (_fields.Count > index)
-                {
-                    _fields.RemoveAt(index);
-                }
-            }
-        }
-        #endregion
+    //    #region Clear
+    //    public void Clear()
+    //    {
+    //        _fields.Clear();
+    //    }
+    //    #endregion
 
-        #region Clear
-        public void Clear()
-        {
-            _fields.Clear();
-        }
-        #endregion
+    //    #region Explicit Conversion
 
-        #region Explicit Conversion
+    //    public static explicit operator SchemaFieldCollection(Data.Schema schema)
+    //    {
+    //        SchemaFieldCollection coll = new SchemaFieldCollection();
 
-        public static explicit operator SchemaFieldCollection(Data.Schema schema)
-        {
-            SchemaFieldCollection coll = new SchemaFieldCollection();
+    //        coll.schemaName = schema.SchemaName;
 
-            coll.schemaName = schema.SchemaName;
+    //        foreach (Data.SchemaFieldSpec spec in schema.Fields)
+    //        {
+    //            coll.Add((SchemaField)spec);
+    //        }
 
-            foreach (Data.SchemaFieldSpec spec in schema.Fields)
-            {
-                coll.Add((SchemaField)spec);
-            }
+    //        return coll;
+    //    }
 
-            return coll;
-        }
+    //    public static explicit operator Data.Schema(SchemaFieldCollection coll)
+    //    {
+    //        Data.Schema schema = new Data.Schema()
+    //        {
+    //            Fields = new List<Data.SchemaFieldSpec>()
+    //        };
 
-        public static explicit operator Data.Schema(SchemaFieldCollection coll)
-        {
-            Data.Schema schema = new Data.Schema()
-            {
-                Fields = new List<Data.SchemaFieldSpec>()
-            };
+    //        schema.SchemaName = coll.schemaName;
 
-            schema.SchemaName = coll.schemaName;
+    //        foreach (SchemaField field in coll.fields)
+    //        {
+    //            schema.Fields.Add((Data.SchemaFieldSpec)field);
+    //        }
 
-            foreach (SchemaField field in coll.fields)
-            {
-                schema.Fields.Add((Data.SchemaFieldSpec)field);
-            }
+    //        return schema;
+    //    }
+    //    #endregion
+    //}
 
-            return schema;
-        }
-        #endregion
-    }
+    ////TODO: Phase out
+    ///// <summary>
+    ///// A friendly version of Data.Schema, allowing for use of enums to restrict options.
+    ///// </summary>
+    //public class SchemaField
+    //{
+    //    public enum SchemaFieldType
+    //    {
+    //        STRING, INT64, BOOL, DOUBLE, EMAIL, PHONE, DATE
+    //    }
 
-    //TODO: Phase out
-    /// <summary>
-    /// A friendly version of Data.Schema, allowing for use of enums to restrict options.
-    /// </summary>
-    public class SchemaField
-    {
-        public enum SchemaFieldType
-        {
-            STRING, INT64, BOOL, DOUBLE, EMAIL, PHONE, DATE
-        }
+    //    public enum SchemaFieldReadAccessType
+    //    {
+    //        ALL_DOMAIN_USERS, ADMINS_AND_SELF
+    //    }
 
-        public enum SchemaFieldReadAccessType
-        {
-            ALL_DOMAIN_USERS, ADMINS_AND_SELF
-        }
+    //    #region Properties
+    //    public string fieldName;
+    //    public SchemaFieldType fieldType;
+    //    public bool? indexed;
+    //    public bool? multiValued;
+    //    public double? minValue;
+    //    public double? maxValue;
+    //    public SchemaFieldReadAccessType? readAccessType;
+    //    #endregion
 
-        #region Properties
-        public string fieldName;
-        public SchemaFieldType fieldType;
-        public bool? indexed;
-        public bool? multiValued;
-        public double? minValue;
-        public double? maxValue;
-        public SchemaFieldReadAccessType? readAccessType;
-        #endregion
+    //    public SchemaField(string FieldName, SchemaFieldType FieldType)
+    //    {
+    //        fieldName = FieldName;
+    //        fieldType = FieldType;
+    //    }
 
-        public SchemaField(string FieldName, SchemaFieldType FieldType)
-        {
-            fieldName = FieldName;
-            fieldType = FieldType;
-        }
+    //    #region Explicit Conversion
+    //    public static explicit operator SchemaField(Data.SchemaFieldSpec spec)
+    //    {
+    //        SchemaFieldType type = (SchemaFieldType)Enum.Parse(typeof(SchemaFieldType), (string)spec.FieldType, false);
 
-        #region Explicit Conversion
-        public static explicit operator SchemaField(Data.SchemaFieldSpec spec)
-        {
-            SchemaFieldType type = (SchemaFieldType)Enum.Parse(typeof(SchemaFieldType), (string)spec.FieldType, false);
+    //        SchemaField field = new SchemaField(spec.FieldName, type);
 
-            SchemaField field = new SchemaField(spec.FieldName, type);
+    //        if (spec.Indexed.HasValue)
+    //        {
+    //            field.indexed = spec.Indexed.Value;
+    //        }
 
-            if (spec.Indexed.HasValue)
-            {
-                field.indexed = spec.Indexed.Value;
-            }
+    //        if (spec.MultiValued.HasValue)
+    //        {
+    //            field.multiValued = spec.MultiValued.Value;
+    //        }
 
-            if (spec.MultiValued.HasValue)
-            {
-                field.multiValued = spec.MultiValued.Value;
-            }
+    //        if (spec.NumericIndexingSpec != null &&
+    //            spec.NumericIndexingSpec.MinValue.HasValue &&
+    //            spec.NumericIndexingSpec.MaxValue.HasValue)
+    //        {
+    //            if (spec.NumericIndexingSpec.MinValue.HasValue)
+    //            {
+    //                field.minValue = spec.NumericIndexingSpec.MinValue.Value;
+    //            }
 
-            if (spec.NumericIndexingSpec != null &&
-                spec.NumericIndexingSpec.MinValue.HasValue &&
-                spec.NumericIndexingSpec.MaxValue.HasValue)
-            {
-                if (spec.NumericIndexingSpec.MinValue.HasValue)
-                {
-                    field.minValue = spec.NumericIndexingSpec.MinValue.Value;
-                }
+    //            if (spec.NumericIndexingSpec.MaxValue.HasValue)
+    //            {
+    //                field.maxValue = spec.NumericIndexingSpec.MaxValue.Value;
+    //            }
+    //        }
 
-                if (spec.NumericIndexingSpec.MaxValue.HasValue)
-                {
-                    field.maxValue = spec.NumericIndexingSpec.MaxValue.Value;
-                }
-            }
+    //        if (!string.IsNullOrWhiteSpace(spec.ReadAccessType))
+    //        {
+    //            field.readAccessType = (SchemaFieldReadAccessType)Enum.Parse(typeof(SchemaFieldReadAccessType),
+    //                    spec.ReadAccessType, false);
+    //        }
 
-            if (!string.IsNullOrWhiteSpace(spec.ReadAccessType))
-            {
-                field.readAccessType = (SchemaFieldReadAccessType)Enum.Parse(typeof(SchemaFieldReadAccessType),
-                        spec.ReadAccessType, false);
-            }
+    //        return field;
+    //    }
 
-            return field;
-        }
+    //    public static explicit operator Data.SchemaFieldSpec(SchemaField field)
+    //    {
+    //        Data.SchemaFieldSpec spec = new Data.SchemaFieldSpec()
+    //        {
+    //            FieldName = field.fieldName,
+    //            FieldType = field.fieldType.ToString(),
+    //            Indexed = field.indexed,
+    //            MultiValued = field.multiValued,
+    //            ReadAccessType = field.readAccessType.ToString()
+    //        };
 
-        public static explicit operator Data.SchemaFieldSpec(SchemaField field)
-        {
-            Data.SchemaFieldSpec spec = new Data.SchemaFieldSpec()
-            {
-                FieldName = field.fieldName,
-                FieldType = field.fieldType.ToString(),
-                Indexed = field.indexed,
-                MultiValued = field.multiValued,
-                ReadAccessType = field.readAccessType.ToString()
-            };
+    //        spec.NumericIndexingSpec = new Data.SchemaFieldSpec.NumericIndexingSpecData()
+    //        {
+    //            MinValue = field.minValue,
+    //            MaxValue = field.maxValue
+    //        };
 
-            spec.NumericIndexingSpec = new Data.SchemaFieldSpec.NumericIndexingSpecData()
-            {
-                MinValue = field.minValue,
-                MaxValue = field.maxValue
-            };
-
-            return spec;
-        }
-        #endregion
-    }
+    //        return spec;
+    //    }
+    //    #endregion
+    //}
 
 
 }
@@ -9215,1025 +9215,1025 @@ namespace gShell.Cmdlets.Directory.GAUserProperty
         #endregion
     }
 
-    [Cmdlet(VerbsCommon.Get, "GAUserProperty",
-         SupportsShouldProcess = true,
-         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAUserProperty")]
-    public class GetGAUserPropertyCommand : GAUserPropertyBaseCommand
-    {
-        #region Properties
-
-        //UserName = 0
-
-        //Domain position = 1
-
-        [Parameter(Position = 2,
-           Mandatory = false,
-           HelpMessage = "The GShellUserObject to act upon. For example, the result of Get-GAUser",
-           ValueFromPipeline = true)]
-        public GShellUserObject GShellObject { get; set; }
-
-        [Parameter(Position = 3,
-           Mandatory = true,
-           HelpMessage = "The property type to retrieve for the user. Allowed values are: address, email, externalid, im, organization, phone, relation.",
-           ParameterSetName = "OneType")]
-        [Alias("Type")]
-        public GAUserPropertyType PropertyType { get; set; }
-
-        [Parameter(Position = 3,
-           Mandatory = true,
-           HelpMessage = "Get all property types for the given user as a Property Collection.",
-           ParameterSetName = "AllTypes")]
-        public SwitchParameter AllTypes { get; set; }
-
-        #endregion
-
-        protected override void ProcessRecord()
-        {
-            UserName = GetFullEmailAddress(UserName, GAuthId);
-
-            if (ShouldProcess(UserName, "Get-GAUserProperty"))
-            {
-                Data.User u = new Data.User();
-
-                if (null != GShellObject)
-                {
-                    u = GShellObject.userObject;
-                }
-                else if (!string.IsNullOrWhiteSpace(UserName))
-                {
-                    u = users.Get(UserName);
-                }
-                else
-                {
-                    WriteError(new ErrorRecord(new Exception(
-                    string.Format("No username or user object was provided.")),
-                        "", ErrorCategory.InvalidOperation, UserName));
-                }
-
-                switch (ParameterSetName)
-                {
-                    case "OneType":
-                        switch (PropertyType)
-                        {
-                            case GAUserPropertyType.address:
-                                WriteObject(GetAddressFromUser(u));
-                                break;
-                            case GAUserPropertyType.email:
-                                WriteObject(GetEmailFromUser(u));
-                                break;
-                            case GAUserPropertyType.externalid:
-                                WriteObject(GetExIdFromUser(u));
-                                break;
-                            case GAUserPropertyType.im:
-                                WriteObject(GetImFromUser(u));
-                                break;
-                            case GAUserPropertyType.organization:
-                                WriteObject(GetOrgFromUser(u));
-                                break;
-                            case GAUserPropertyType.phone:
-                                WriteObject(GetPhoneFromUser(u));
-                                break;
-                            case GAUserPropertyType.relation:
-                                WriteObject(GetRelationFromUser(u));
-                                break;
-                        }
-
-                        break;
-
-                    case "AllTypes":
-                        WriteObject(new GAUserPropertyCollection(u));
-                        break;
-                }
-            }
-        }
-    }
-
-    [Cmdlet(VerbsCommon.New, "GAUserProperty",
-          SupportsShouldProcess = true,
-          HelpUri = @"https://github.com/squid808/gShell/wiki/New-GAUserProperty")]
-    public class NewGAUserPropertyCommand : PSCmdlet, IDynamicParameters
-    {
-        #region Properties
-
-        [Parameter(Position = 0,
-            Mandatory = false,
-            HelpMessage = "The property type to create. Once you choose one type more properties will show up, PoSh 3+. Allowed values are: address, email, externalid, im, organization, phone, relation")]
-        public GAUserPropertyType PropertyType { get; set; }
-
-        private IUserContextProperties context;
-
-        #endregion
-
-        // Implement GetDynamicParameters to
-        // retrieve the dynamic parameter.
-        public object GetDynamicParameters()
-        {
-            switch (PropertyType)
-            {
-                case GAUserPropertyType.address:
-                    context = new UserAddressProperties();
-                    return context;
-
-                case GAUserPropertyType.email:
-                    context = new UserEmailProperties();
-                    return context;
-
-                case GAUserPropertyType.externalid:
-                    context = new UserExternalIdProperties();
-                    return context;
-
-                case GAUserPropertyType.im:
-                    context = new UserImProperties();
-                    return context;
-
-                case GAUserPropertyType.organization:
-                    context = new UserOrganizationProperties();
-                    return context;
-
-                case GAUserPropertyType.phone:
-                    context = new UserPhoneProperties();
-                    return context;
-
-                case GAUserPropertyType.relation:
-                    context = new UserRelationProperties();
-                    return context;
-
-                default:
-                    context = null;
-                    return context;
-            }
-        }
-
-        protected override void ProcessRecord()
-        {
-            switch (PropertyType)
-            {
-                case GAUserPropertyType.address:
-                    UserAddressProperties ap = context as UserAddressProperties;
-                    WriteObject(GetUserAddress(ap));
-                    break;
-
-                case GAUserPropertyType.email:
-                    UserEmailProperties emp = context as UserEmailProperties;
-                    WriteObject(GetUserEmail(emp));
-                    break;
-
-                case GAUserPropertyType.externalid:
-                    UserExternalIdProperties eip = context as UserExternalIdProperties;
-                    WriteObject(GetUserExternalId(eip));
-                    break;
-
-                case GAUserPropertyType.im:
-                    UserImProperties im = context as UserImProperties;
-                    WriteObject(GetUserIm(im));
-                    break;
-
-                case GAUserPropertyType.organization:
-                    UserOrganizationProperties op = context as UserOrganizationProperties;
-                    WriteObject(GetUserOrganization(op));
-                    break;
-
-                case GAUserPropertyType.phone:
-                    UserPhoneProperties pp = context as UserPhoneProperties;
-                    WriteObject(GetUserPhone(pp));
-                    break;
-
-                case GAUserPropertyType.relation:
-                    UserRelationProperties rp = context as UserRelationProperties;
-                    WriteObject(GetUserRelation(rp));
-                    break;
-            }
-        }
-
-
-        #region ConversionMethods
-
-        /// <summary>
-        /// Turn a set of UserAddressProperties in to a UserAddress.
-        /// </summary>
-        /// <param name="p"></param>
-        /// <returns></returns>
-        private Google.Apis.admin.Directory.directory_v1.Data.UserAddress GetUserAddress(UserAddressProperties p)
-        {
-            //GAUserPropertyAddress address = new GAUserPropertyAddress();
-            Google.Apis.admin.Directory.directory_v1.Data.UserAddress address = new Google.Apis.admin.Directory.directory_v1.Data.UserAddress();
-
-            address.Type = p.Type.ToString();
-
-            if (p.Type == GAUserAddressType.custom &&
-                !String.IsNullOrWhiteSpace(p.CustomType))
-            {
-                address.CustomType = p.CustomType;
-            }
-            else if (p.Type == GAUserAddressType.custom &&
-                String.IsNullOrWhiteSpace(p.CustomType))
-            {
-                WriteError(new ErrorRecord(new Exception(
-                "No CustomType; it cannot be empty if the Type is Custom."),
-                    "", ErrorCategory.InvalidData, p.CustomType));
-            }
-
-            if (p.SourceIsStructured.HasValue)
-            {
-                address.SourceIsStructured = p.SourceIsStructured.Value;
-            }
-
-            if (!String.IsNullOrWhiteSpace(p.Formatted))
-            {
-                address.Formatted = p.Formatted;
-            }
-
-            if (!String.IsNullOrWhiteSpace(p.PoBox))
-            {
-                address.PoBox = p.PoBox;
-            }
-
-            if (!String.IsNullOrWhiteSpace(p.ExtendedAddress))
-            {
-                address.ExtendedAddress = p.ExtendedAddress;
-            }
-
-            if (!String.IsNullOrWhiteSpace(p.StreetAddress))
-            {
-                address.StreetAddress = p.StreetAddress;
-            }
-
-            if (!String.IsNullOrWhiteSpace(p.Locality))
-            {
-                address.Locality = p.Locality;
-            }
-
-            if (!String.IsNullOrWhiteSpace(p.Region))
-            {
-                address.Region = p.Region;
-            }
-
-            if (!String.IsNullOrWhiteSpace(p.PostalCode))
-            {
-                address.PostalCode = p.PostalCode;
-            }
-
-            if (!String.IsNullOrWhiteSpace(p.Country))
-            {
-                address.Country = p.Country;
-            }
-
-            if (p.Primary.HasValue)
-            {
-                address.Primary = p.Primary.Value;
-            }
-
-            if (!String.IsNullOrWhiteSpace(p.CountryCode))
-            {
-                address.CountryCode = p.CountryCode;
-            }
-
-            return (address);
-        }
-
-        private Google.Apis.admin.Directory.directory_v1.Data.UserEmail GetUserEmail(UserEmailProperties p)
-        {
-            Google.Apis.admin.Directory.directory_v1.Data.UserEmail email = new Google.Apis.admin.Directory.directory_v1.Data.UserEmail();
-
-            email.Type = p.Type.ToString();
-
-            if (p.Type == GAUserEmailType.custom &&
-                !String.IsNullOrWhiteSpace(p.CustomType))
-            {
-                email.CustomType = p.CustomType;
-            }
-            else if (p.Type == GAUserEmailType.custom &&
-                String.IsNullOrWhiteSpace(p.CustomType))
-            {
-                WriteError(new ErrorRecord(new Exception(
-                "No CustomType; it cannot be empty if the Type is Custom."),
-                    "", ErrorCategory.InvalidData, p.CustomType));
-            }
-
-
-            if (!String.IsNullOrWhiteSpace(p.Address))
-            {
-                email.Address = p.Address;
-            }
-
-            if (p.Primary.HasValue)
-            {
-                email.Primary = p.Primary.Value;
-            }
-
-            return email;
-        }
-
-        private Google.Apis.admin.Directory.directory_v1.Data.UserExternalId GetUserExternalId(UserExternalIdProperties p)
-        {
-            Google.Apis.admin.Directory.directory_v1.Data.UserExternalId externalId = new Google.Apis.admin.Directory.directory_v1.Data.UserExternalId();
-
-            externalId.Type = p.Type.ToString();
-
-            if (p.Type == GAUserExternalIdType.custom &&
-                !String.IsNullOrWhiteSpace(p.CustomType))
-            {
-                externalId.CustomType = p.CustomType;
-            }
-            else if (p.Type == GAUserExternalIdType.custom &&
-                String.IsNullOrWhiteSpace(p.CustomType))
-            {
-                WriteError(new ErrorRecord(new Exception(
-                "No CustomType; it cannot be empty if the Type is Custom."),
-                    "", ErrorCategory.InvalidData, p.CustomType));
-            }
-
-            if (!String.IsNullOrWhiteSpace(p.Value))
-            {
-                externalId.Value = p.Value;
-            }
-
-            return externalId;
-        }
-
-        private Google.Apis.admin.Directory.directory_v1.Data.UserIm GetUserIm(UserImProperties p)
-        {
-            Google.Apis.admin.Directory.directory_v1.Data.UserIm im = new Google.Apis.admin.Directory.directory_v1.Data.UserIm();
-
-            im.Type = p.Type.ToString();
-
-            if (p.Type == GAUserIMType.custom &&
-                !String.IsNullOrWhiteSpace(p.CustomType))
-            {
-                im.CustomType = p.CustomType;
-            }
-            else if (p.Type == GAUserIMType.custom &&
-                String.IsNullOrWhiteSpace(p.CustomType))
-            {
-                WriteError(new ErrorRecord(new Exception(
-                "No CustomType; it cannot be empty if the Type is Custom."),
-                    "", ErrorCategory.InvalidData, p.CustomType));
-            }
-
-            im.Protocol = p.Protocol.ToString();
-
-            if (p.Protocol == GAUserImProtocol.custom_protocol &&
-                !String.IsNullOrWhiteSpace(p.CustomProtocol))
-            {
-                im.CustomProtocol = p.CustomProtocol;
-            }
-            else if (p.Protocol == GAUserImProtocol.custom_protocol &&
-                String.IsNullOrWhiteSpace(p.CustomProtocol))
-            {
-                WriteError(new ErrorRecord(new Exception(
-                "No CustomType; it cannot be empty if the Type is Custom."),
-                    "", ErrorCategory.InvalidData, p.CustomType));
-            }
-
-            if (p.Primary.HasValue)
-            {
-                im.Primary = p.Primary.Value;
-            }
-
-            if (!String.IsNullOrWhiteSpace(p.Im))
-            {
-                im.Im = p.Im;
-            }
-
-            return im;
-        }
-
-        private Google.Apis.admin.Directory.directory_v1.Data.UserOrganization GetUserOrganization(UserOrganizationProperties p)
-        {
-            Google.Apis.admin.Directory.directory_v1.Data.UserOrganization org = new Google.Apis.admin.Directory.directory_v1.Data.UserOrganization();
-
-            org.Type = p.Type.ToString();
-
-            if (p.Type == GAUserOrganizationType.custom &&
-                !String.IsNullOrWhiteSpace(p.CustomType))
-            {
-                org.CustomType = p.CustomType;
-            }
-            else if (p.Type == GAUserOrganizationType.custom &&
-                String.IsNullOrWhiteSpace(p.CustomType))
-            {
-                WriteError(new ErrorRecord(new Exception(
-                "No CustomType; it cannot be empty if the Type is Custom."),
-                    "", ErrorCategory.InvalidData, p.CustomType));
-            }
-
-            if (!String.IsNullOrWhiteSpace(p.CostCenter))
-            {
-                org.CostCenter = p.CostCenter;
-            }
-
-            if (!String.IsNullOrWhiteSpace(p.Department))
-            {
-                org.Department = p.Department;
-            }
-
-            if (!String.IsNullOrWhiteSpace(p.Description))
-            {
-                org.Description = p.Description;
-            }
-
-            if (!String.IsNullOrWhiteSpace(p.Domain))
-            {
-                org.Domain = p.Domain;
-            }
-
-            if (!String.IsNullOrWhiteSpace(p.Location))
-            {
-                org.Location = p.Location;
-            }
-
-            if (!String.IsNullOrWhiteSpace(p.Name))
-            {
-                org.Name = p.Name;
-            }
-
-            if (p.Primary.HasValue)
-            {
-                org.Primary = p.Primary.Value;
-            }
-
-            if (!String.IsNullOrWhiteSpace(p.Symbol))
-            {
-                org.Symbol = p.Symbol;
-            }
-
-            if (!String.IsNullOrWhiteSpace(p.Title))
-            {
-                org.Title = p.Title;
-            }
-
-            return org;
-        }
-
-        private Google.Apis.admin.Directory.directory_v1.Data.UserPhone GetUserPhone(UserPhoneProperties p)
-        {
-            Google.Apis.admin.Directory.directory_v1.Data.UserPhone phone = new Google.Apis.admin.Directory.directory_v1.Data.UserPhone();
-
-            phone.Type = p.Type.ToString();
-
-            if (p.Type == GAUserPhoneType.custom &&
-                !String.IsNullOrWhiteSpace(p.CustomType))
-            {
-                phone.CustomType = p.CustomType;
-            }
-            else if (p.Type == GAUserPhoneType.custom &&
-                String.IsNullOrWhiteSpace(p.CustomType))
-            {
-                WriteError(new ErrorRecord(new Exception(
-                "No CustomType; it cannot be empty if the Type is Custom."),
-                    "", ErrorCategory.InvalidData, p.CustomType));
-            }
-
-            if (!String.IsNullOrWhiteSpace(p.Value))
-            {
-                phone.Value = p.Value;
-            }
-
-            if (p.Primary.HasValue)
-            {
-                phone.Primary = p.Primary.Value;
-            }
-
-            return phone;
-        }
-
-        private Google.Apis.admin.Directory.directory_v1.Data.UserRelation GetUserRelation(UserRelationProperties p)
-        {
-            Google.Apis.admin.Directory.directory_v1.Data.UserRelation e = new Google.Apis.admin.Directory.directory_v1.Data.UserRelation();
-
-            e.Type = p.Type.ToString();
-
-            if (p.Type == GAUserRelationType.custom &&
-                !String.IsNullOrWhiteSpace(p.CustomType))
-            {
-                e.CustomType = p.CustomType;
-            }
-            else if (p.Type == GAUserRelationType.custom &&
-                String.IsNullOrWhiteSpace(p.CustomType))
-            {
-                WriteError(new ErrorRecord(new Exception(
-                "No CustomType; it cannot be empty if the Type is Custom."),
-                    "", ErrorCategory.InvalidData, p.CustomType));
-            }
-
-            if (!String.IsNullOrWhiteSpace(p.Value))
-            {
-                e.Value = p.Value;
-            }
-
-            return e;
-        }
-
-        //private UserCustomSchemaProperties GetUserCustomSchema(UserCustomSchemaProperties p)
-        //{
-        //    UserCustomSchemaProperties e = new UserCustomSchemaProperties();
-
-        //    //I have no idea what to do here right now. I'm open to ideas.
-
-        //    return e;
-        //}
-
-        #endregion
-    }
-
-
-    #region UserPropertyContextClasses
-    public interface IUserContextProperties { }
-
-    public class UserAddressProperties : IUserContextProperties
-    {
-        [Parameter(Position = 1,
-            Mandatory = true,
-            HelpMessage = "The address type. Allowed values are: custom, home, other, work")]
-        public GAUserAddressType Type { get; set; }
-
-        [Parameter(Position = 2,
-            HelpMessage = "If the address type is custom, this property contains the custom value.")]
-        public string CustomType { get; set; }
-
-        [Parameter(Position = 3,
-            HelpMessage = "Indicates if the user-supplied address was formatted. Formatted addresses are not currently supported.")]
-        public bool? SourceIsStructured { get; set; }
-
-        [Parameter(Position = 4,
-            HelpMessage = "A full and unstructured postal address.")]
-        public string Formatted { get; set; }
-
-        [Parameter(Position = 5,
-            HelpMessage = "The post office box, if present.")]
-        public string PoBox { get; set; }
-
-        [Parameter(Position = 6,
-            HelpMessage = "For extended addresses, such as an address that includes a sub-region.")]
-        public string ExtendedAddress { get; set; }
-
-        [Parameter(Position = 7,
-            HelpMessage = "The street address, such as 1600 Amphitheatre Parkway. Whitespace within the string is ignored; however, newlines are significant.")]
-        public string StreetAddress { get; set; }
-
-        [Parameter(Position = 8,
-            HelpMessage = "The town or city of the address.")]
-        public string Locality { get; set; }
-
-        [Parameter(Position = 9,
-            HelpMessage = "The abbreviated province or state.")]
-        public string Region { get; set; }
-
-        [Parameter(Position = 10,
-            HelpMessage = "The ZIP or postal code, if applicable.")]
-        public string PostalCode { get; set; }
-
-        [Parameter(Position = 11,
-            HelpMessage = "Country.")]
-        public string Country { get; set; }
-
-        [Parameter(Position = 12,
-            HelpMessage = "If this is the user's primary address. The addresses list may contain only one primary address.")]
-        public bool? Primary { get; set; }
-
-        [Parameter(Position = 13,
-            HelpMessage = "The country code. Uses the ISO 3166-1 standard.")]
-        public string CountryCode { get; set; }
-    }
-
-    public class UserEmailProperties : IUserContextProperties
-    {
-        [Parameter(Position = 1,
-            HelpMessage = "The user's email address. Also serves as the email ID. This value can be the user's primary email address or an alias.")]
-        public string Address { get; set; }
-
-        [Parameter(Position = 2,
-            HelpMessage = "If the value of type is custom, this property contains the custom type string.")]
-        public string CustomType { get; set; }
-
-        [Parameter(Position = 3,
-            HelpMessage = "Idicates if this is the user's primary email. Only one entry can be marked as primary.")]
-        public bool? Primary { get; set; }
-
-        [Parameter(Position = 4,
-            Mandatory = true,
-            HelpMessage = "The type of the email account. Valid values are: custom, home, other, work")]
-        public GAUserEmailType Type { get; set; }
-    }
-
-    public class UserExternalIdProperties : IUserContextProperties
-    {
-        [Parameter(Position = 1,
-            HelpMessage = "If the external ID type is custom, this property holds the custom type.")]
-        public string CustomType { get; set; }
-
-        [Parameter(Position = 2,
-            Mandatory = true,
-            HelpMessage = "The type of the ID. Allowed values are: account, custom, customer, network, organization")]
-        public GAUserExternalIdType Type { get; set; }
-
-        [Parameter(Position = 3,
-            HelpMessage = "The value of the ID.")]
-        public string Value { get; set; }
-    }
-
-    public class UserImProperties : IUserContextProperties
-    {
-        [Parameter(Position = 1,
-            HelpMessage = "If the protocol value is custom_protocol, this property holds the custom protocol's string.")]
-        public string CustomProtocol { get; set; }
-
-        [Parameter(Position = 2,
-            HelpMessage = "If the IM type is custom, this property holds the custom type string.")]
-        public string CustomType { get; set; }
-
-        [Parameter(Position = 3,
-            HelpMessage = "The user's IM network ID.")]
-        public string Im { get; set; }
-
-        [Parameter(Position = 4,
-            HelpMessage = "If this is the user's primary IM. Only one entry in the IM list can have a value of true.")]
-        public bool? Primary { get; set; }
-
-        [Parameter(Position = 5,
-            Mandatory = true,
-            HelpMessage = "An IM protocol identifies the IM network. The value can be a custom network or the standard network. The values are: custom_protocol: A custom IM network protocol, aim: AOL Instant Messenger protocol, gtalk: Google Talk protocol, icq: ICQ protocol, jabber: Jabber protocol, msn: MSN Messenger protocol, net_meeting: Net Meeting protocol, qq: QQ protocol, skype: Skype protocol, yahoo: Yahoo Messenger protocol")]
-        public GAUserImProtocol Protocol { get; set; }
-
-        [Parameter(Position = 6,
-            Mandatory = true,
-            HelpMessage = "The type must be one of these values: custom, home, other, work")]
-        public GAUserIMType Type { get; set; }
-    }
-
-    public class UserOrganizationProperties : IUserContextProperties
-    {
-        [Parameter(Position = 1,
-            HelpMessage = "The cost center of the user's organization.")]
-        public string CostCenter { get; set; }
-
-        [Parameter(Position = 2,
-            HelpMessage = "If the value of type is custom, this property contains the custom type.")]
-        public string CustomType { get; set; }
-
-        [Parameter(Position = 3,
-            HelpMessage = "Specifies the department within the organization, such as 'sales' or 'engineering'.")]
-        public string Department { get; set; }
-
-        [Parameter(Position = 4,
-            HelpMessage = "The description of the organization.")]
-        public string Description { get; set; }
-
-        [Parameter(Position = 5,
-            HelpMessage = "The domain the organization belongs to.")]
-        public string Domain { get; set; }
-
-        [Parameter(Position = 6,
-            HelpMessage = "The physical location of the organization. This does not need to be a fully qualified address.")]
-        public string Location { get; set; }
-
-        [Parameter(Position = 7,
-            HelpMessage = "The name of the organization.")]
-        public string Name { get; set; }
-
-        [Parameter(Position = 8,
-            HelpMessage = "Indicates if this is the user's primary organization. A user may only have one primary organization.")]
-        public bool? Primary { get; set; }
-
-        [Parameter(Position = 9,
-            HelpMessage = "Text string symbol of the organization. For example, the text symbol for Google is GOOG.")]
-        public string Symbol { get; set; }
-
-        [Parameter(Position = 10,
-            HelpMessage = "The user's title within the organization, for example 'member' or 'engineer'.")]
-        public string Title { get; set; }
-
-        [Parameter(Position = 11,
-            Mandatory = true,
-            HelpMessage = "The type of organization. Possible values are: unknown, school, work, domain_only, custom")]
-        public GAUserOrganizationType Type { get; set; }
-    }
-
-    public class UserPhoneProperties : IUserContextProperties
-    {
-        [Parameter(Position = 1,
-            HelpMessage = "A human-readable phone number. It may be in any telephone number format.")]
-        public string Value { get; set; }
-
-        [Parameter(Position = 2,
-            HelpMessage = "Indicates if this is the user's primary phone number. A user may only have one primary phone number.")]
-        public bool? Primary { get; set; }
-
-        [Parameter(Position = 3,
-            Mandatory = true,
-            HelpMessage = "The type of phone number. Allowed values are: custom, home, work, other, home_fax, work_fax, mobile, pager, other_fax, compain_main, assistant, car, radio, isdn, callback, telex, tty_tdd, work_mobile, work_pager, main, grand_central")]
-        public GAUserPhoneType Type { get; set; }
-
-        [Parameter(Position = 4,
-            HelpMessage = "If the value of type is custom, this property contains the custom type.")]
-        public string CustomType { get; set; }
-    }
-
-    public class UserRelationProperties : IUserContextProperties
-    {
-        [Parameter(Position = 1,
-            HelpMessage = "If the value of type is custom, this property contains the custom type.")]
-        public string CustomType { get; set; }
-
-        [Parameter(Position = 2,
-            Mandatory = true,
-            HelpMessage = "The type of relation. Possible values are: custom, spouse, child, mother, father, parent, brother, sister, friend, relative, domestic_partner, manager, assistant, referred_by, partner")]
-        public GAUserRelationType Type { get; set; }
-
-        [Parameter(Position = 3,
-            HelpMessage = "The name of the person the user is related to.")]
-        public string Value { get; set; }
-    }
-
-    //public class UserCustomSchemaProperties : IUserContextProperties
+    //[Cmdlet(VerbsCommon.Get, "GAUserProperty",
+    //     SupportsShouldProcess = true,
+    //     HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAUserProperty")]
+    //public class GetGAUserPropertyCommand : GAUserPropertyBaseCommand
+    //{
+    //    #region Properties
+
+    //    //UserName = 0
+
+    //    //Domain position = 1
+
+    //    [Parameter(Position = 2,
+    //       Mandatory = false,
+    //       HelpMessage = "The GShellUserObject to act upon. For example, the result of Get-GAUser",
+    //       ValueFromPipeline = true)]
+    //    public GShellUserObject GShellObject { get; set; }
+
+    //    [Parameter(Position = 3,
+    //       Mandatory = true,
+    //       HelpMessage = "The property type to retrieve for the user. Allowed values are: address, email, externalid, im, organization, phone, relation.",
+    //       ParameterSetName = "OneType")]
+    //    [Alias("Type")]
+    //    public GAUserPropertyType PropertyType { get; set; }
+
+    //    [Parameter(Position = 3,
+    //       Mandatory = true,
+    //       HelpMessage = "Get all property types for the given user as a Property Collection.",
+    //       ParameterSetName = "AllTypes")]
+    //    public SwitchParameter AllTypes { get; set; }
+
+    //    #endregion
+
+    //    protected override void ProcessRecord()
+    //    {
+    //        UserName = GetFullEmailAddress(UserName, GAuthId);
+
+    //        if (ShouldProcess(UserName, "Get-GAUserProperty"))
+    //        {
+    //            Data.User u = new Data.User();
+
+    //            if (null != GShellObject)
+    //            {
+    //                u = GShellObject.userObject;
+    //            }
+    //            else if (!string.IsNullOrWhiteSpace(UserName))
+    //            {
+    //                u = users.Get(UserName);
+    //            }
+    //            else
+    //            {
+    //                WriteError(new ErrorRecord(new Exception(
+    //                string.Format("No username or user object was provided.")),
+    //                    "", ErrorCategory.InvalidOperation, UserName));
+    //            }
+
+    //            switch (ParameterSetName)
+    //            {
+    //                case "OneType":
+    //                    switch (PropertyType)
+    //                    {
+    //                        case GAUserPropertyType.address:
+    //                            WriteObject(GetAddressFromUser(u));
+    //                            break;
+    //                        case GAUserPropertyType.email:
+    //                            WriteObject(GetEmailFromUser(u));
+    //                            break;
+    //                        case GAUserPropertyType.externalid:
+    //                            WriteObject(GetExIdFromUser(u));
+    //                            break;
+    //                        case GAUserPropertyType.im:
+    //                            WriteObject(GetImFromUser(u));
+    //                            break;
+    //                        case GAUserPropertyType.organization:
+    //                            WriteObject(GetOrgFromUser(u));
+    //                            break;
+    //                        case GAUserPropertyType.phone:
+    //                            WriteObject(GetPhoneFromUser(u));
+    //                            break;
+    //                        case GAUserPropertyType.relation:
+    //                            WriteObject(GetRelationFromUser(u));
+    //                            break;
+    //                    }
+
+    //                    break;
+
+    //                case "AllTypes":
+    //                    WriteObject(new GAUserPropertyCollection(u));
+    //                    break;
+    //            }
+    //        }
+    //    }
+    //}
+
+    //[Cmdlet(VerbsCommon.New, "GAUserProperty",
+    //      SupportsShouldProcess = true,
+    //      HelpUri = @"https://github.com/squid808/gShell/wiki/New-GAUserProperty")]
+    //public class NewGAUserPropertyCommand : PSCmdlet, IDynamicParameters
+    //{
+    //    #region Properties
+
+    //    [Parameter(Position = 0,
+    //        Mandatory = false,
+    //        HelpMessage = "The property type to create. Once you choose one type more properties will show up, PoSh 3+. Allowed values are: address, email, externalid, im, organization, phone, relation")]
+    //    public GAUserPropertyType PropertyType { get; set; }
+
+    //    private IUserContextProperties context;
+
+    //    #endregion
+
+    //    // Implement GetDynamicParameters to
+    //    // retrieve the dynamic parameter.
+    //    public object GetDynamicParameters()
+    //    {
+    //        switch (PropertyType)
+    //        {
+    //            case GAUserPropertyType.address:
+    //                context = new UserAddressProperties();
+    //                return context;
+
+    //            case GAUserPropertyType.email:
+    //                context = new UserEmailProperties();
+    //                return context;
+
+    //            case GAUserPropertyType.externalid:
+    //                context = new UserExternalIdProperties();
+    //                return context;
+
+    //            case GAUserPropertyType.im:
+    //                context = new UserImProperties();
+    //                return context;
+
+    //            case GAUserPropertyType.organization:
+    //                context = new UserOrganizationProperties();
+    //                return context;
+
+    //            case GAUserPropertyType.phone:
+    //                context = new UserPhoneProperties();
+    //                return context;
+
+    //            case GAUserPropertyType.relation:
+    //                context = new UserRelationProperties();
+    //                return context;
+
+    //            default:
+    //                context = null;
+    //                return context;
+    //        }
+    //    }
+
+    //    protected override void ProcessRecord()
+    //    {
+    //        switch (PropertyType)
+    //        {
+    //            case GAUserPropertyType.address:
+    //                UserAddressProperties ap = context as UserAddressProperties;
+    //                WriteObject(GetUserAddress(ap));
+    //                break;
+
+    //            case GAUserPropertyType.email:
+    //                UserEmailProperties emp = context as UserEmailProperties;
+    //                WriteObject(GetUserEmail(emp));
+    //                break;
+
+    //            case GAUserPropertyType.externalid:
+    //                UserExternalIdProperties eip = context as UserExternalIdProperties;
+    //                WriteObject(GetUserExternalId(eip));
+    //                break;
+
+    //            case GAUserPropertyType.im:
+    //                UserImProperties im = context as UserImProperties;
+    //                WriteObject(GetUserIm(im));
+    //                break;
+
+    //            case GAUserPropertyType.organization:
+    //                UserOrganizationProperties op = context as UserOrganizationProperties;
+    //                WriteObject(GetUserOrganization(op));
+    //                break;
+
+    //            case GAUserPropertyType.phone:
+    //                UserPhoneProperties pp = context as UserPhoneProperties;
+    //                WriteObject(GetUserPhone(pp));
+    //                break;
+
+    //            case GAUserPropertyType.relation:
+    //                UserRelationProperties rp = context as UserRelationProperties;
+    //                WriteObject(GetUserRelation(rp));
+    //                break;
+    //        }
+    //    }
+
+
+    //    #region ConversionMethods
+
+    //    /// <summary>
+    //    /// Turn a set of UserAddressProperties in to a UserAddress.
+    //    /// </summary>
+    //    /// <param name="p"></param>
+    //    /// <returns></returns>
+    //    private Google.Apis.admin.Directory.directory_v1.Data.UserAddress GetUserAddress(UserAddressProperties p)
+    //    {
+    //        //GAUserPropertyAddress address = new GAUserPropertyAddress();
+    //        Google.Apis.admin.Directory.directory_v1.Data.UserAddress address = new Google.Apis.admin.Directory.directory_v1.Data.UserAddress();
+
+    //        address.Type = p.Type.ToString();
+
+    //        if (p.Type == GAUserAddressType.custom &&
+    //            !String.IsNullOrWhiteSpace(p.CustomType))
+    //        {
+    //            address.CustomType = p.CustomType;
+    //        }
+    //        else if (p.Type == GAUserAddressType.custom &&
+    //            String.IsNullOrWhiteSpace(p.CustomType))
+    //        {
+    //            WriteError(new ErrorRecord(new Exception(
+    //            "No CustomType; it cannot be empty if the Type is Custom."),
+    //                "", ErrorCategory.InvalidData, p.CustomType));
+    //        }
+
+    //        if (p.SourceIsStructured.HasValue)
+    //        {
+    //            address.SourceIsStructured = p.SourceIsStructured.Value;
+    //        }
+
+    //        if (!String.IsNullOrWhiteSpace(p.Formatted))
+    //        {
+    //            address.Formatted = p.Formatted;
+    //        }
+
+    //        if (!String.IsNullOrWhiteSpace(p.PoBox))
+    //        {
+    //            address.PoBox = p.PoBox;
+    //        }
+
+    //        if (!String.IsNullOrWhiteSpace(p.ExtendedAddress))
+    //        {
+    //            address.ExtendedAddress = p.ExtendedAddress;
+    //        }
+
+    //        if (!String.IsNullOrWhiteSpace(p.StreetAddress))
+    //        {
+    //            address.StreetAddress = p.StreetAddress;
+    //        }
+
+    //        if (!String.IsNullOrWhiteSpace(p.Locality))
+    //        {
+    //            address.Locality = p.Locality;
+    //        }
+
+    //        if (!String.IsNullOrWhiteSpace(p.Region))
+    //        {
+    //            address.Region = p.Region;
+    //        }
+
+    //        if (!String.IsNullOrWhiteSpace(p.PostalCode))
+    //        {
+    //            address.PostalCode = p.PostalCode;
+    //        }
+
+    //        if (!String.IsNullOrWhiteSpace(p.Country))
+    //        {
+    //            address.Country = p.Country;
+    //        }
+
+    //        if (p.Primary.HasValue)
+    //        {
+    //            address.Primary = p.Primary.Value;
+    //        }
+
+    //        if (!String.IsNullOrWhiteSpace(p.CountryCode))
+    //        {
+    //            address.CountryCode = p.CountryCode;
+    //        }
+
+    //        return (address);
+    //    }
+
+    //    private Google.Apis.admin.Directory.directory_v1.Data.UserEmail GetUserEmail(UserEmailProperties p)
+    //    {
+    //        Google.Apis.admin.Directory.directory_v1.Data.UserEmail email = new Google.Apis.admin.Directory.directory_v1.Data.UserEmail();
+
+    //        email.Type = p.Type.ToString();
+
+    //        if (p.Type == GAUserEmailType.custom &&
+    //            !String.IsNullOrWhiteSpace(p.CustomType))
+    //        {
+    //            email.CustomType = p.CustomType;
+    //        }
+    //        else if (p.Type == GAUserEmailType.custom &&
+    //            String.IsNullOrWhiteSpace(p.CustomType))
+    //        {
+    //            WriteError(new ErrorRecord(new Exception(
+    //            "No CustomType; it cannot be empty if the Type is Custom."),
+    //                "", ErrorCategory.InvalidData, p.CustomType));
+    //        }
+
+
+    //        if (!String.IsNullOrWhiteSpace(p.Address))
+    //        {
+    //            email.Address = p.Address;
+    //        }
+
+    //        if (p.Primary.HasValue)
+    //        {
+    //            email.Primary = p.Primary.Value;
+    //        }
+
+    //        return email;
+    //    }
+
+    //    private Google.Apis.admin.Directory.directory_v1.Data.UserExternalId GetUserExternalId(UserExternalIdProperties p)
+    //    {
+    //        Google.Apis.admin.Directory.directory_v1.Data.UserExternalId externalId = new Google.Apis.admin.Directory.directory_v1.Data.UserExternalId();
+
+    //        externalId.Type = p.Type.ToString();
+
+    //        if (p.Type == GAUserExternalIdType.custom &&
+    //            !String.IsNullOrWhiteSpace(p.CustomType))
+    //        {
+    //            externalId.CustomType = p.CustomType;
+    //        }
+    //        else if (p.Type == GAUserExternalIdType.custom &&
+    //            String.IsNullOrWhiteSpace(p.CustomType))
+    //        {
+    //            WriteError(new ErrorRecord(new Exception(
+    //            "No CustomType; it cannot be empty if the Type is Custom."),
+    //                "", ErrorCategory.InvalidData, p.CustomType));
+    //        }
+
+    //        if (!String.IsNullOrWhiteSpace(p.Value))
+    //        {
+    //            externalId.Value = p.Value;
+    //        }
+
+    //        return externalId;
+    //    }
+
+    //    private Google.Apis.admin.Directory.directory_v1.Data.UserIm GetUserIm(UserImProperties p)
+    //    {
+    //        Google.Apis.admin.Directory.directory_v1.Data.UserIm im = new Google.Apis.admin.Directory.directory_v1.Data.UserIm();
+
+    //        im.Type = p.Type.ToString();
+
+    //        if (p.Type == GAUserIMType.custom &&
+    //            !String.IsNullOrWhiteSpace(p.CustomType))
+    //        {
+    //            im.CustomType = p.CustomType;
+    //        }
+    //        else if (p.Type == GAUserIMType.custom &&
+    //            String.IsNullOrWhiteSpace(p.CustomType))
+    //        {
+    //            WriteError(new ErrorRecord(new Exception(
+    //            "No CustomType; it cannot be empty if the Type is Custom."),
+    //                "", ErrorCategory.InvalidData, p.CustomType));
+    //        }
+
+    //        im.Protocol = p.Protocol.ToString();
+
+    //        if (p.Protocol == GAUserImProtocol.custom_protocol &&
+    //            !String.IsNullOrWhiteSpace(p.CustomProtocol))
+    //        {
+    //            im.CustomProtocol = p.CustomProtocol;
+    //        }
+    //        else if (p.Protocol == GAUserImProtocol.custom_protocol &&
+    //            String.IsNullOrWhiteSpace(p.CustomProtocol))
+    //        {
+    //            WriteError(new ErrorRecord(new Exception(
+    //            "No CustomType; it cannot be empty if the Type is Custom."),
+    //                "", ErrorCategory.InvalidData, p.CustomType));
+    //        }
+
+    //        if (p.Primary.HasValue)
+    //        {
+    //            im.Primary = p.Primary.Value;
+    //        }
+
+    //        if (!String.IsNullOrWhiteSpace(p.Im))
+    //        {
+    //            im.Im = p.Im;
+    //        }
+
+    //        return im;
+    //    }
+
+    //    private Google.Apis.admin.Directory.directory_v1.Data.UserOrganization GetUserOrganization(UserOrganizationProperties p)
+    //    {
+    //        Google.Apis.admin.Directory.directory_v1.Data.UserOrganization org = new Google.Apis.admin.Directory.directory_v1.Data.UserOrganization();
+
+    //        org.Type = p.Type.ToString();
+
+    //        if (p.Type == GAUserOrganizationType.custom &&
+    //            !String.IsNullOrWhiteSpace(p.CustomType))
+    //        {
+    //            org.CustomType = p.CustomType;
+    //        }
+    //        else if (p.Type == GAUserOrganizationType.custom &&
+    //            String.IsNullOrWhiteSpace(p.CustomType))
+    //        {
+    //            WriteError(new ErrorRecord(new Exception(
+    //            "No CustomType; it cannot be empty if the Type is Custom."),
+    //                "", ErrorCategory.InvalidData, p.CustomType));
+    //        }
+
+    //        if (!String.IsNullOrWhiteSpace(p.CostCenter))
+    //        {
+    //            org.CostCenter = p.CostCenter;
+    //        }
+
+    //        if (!String.IsNullOrWhiteSpace(p.Department))
+    //        {
+    //            org.Department = p.Department;
+    //        }
+
+    //        if (!String.IsNullOrWhiteSpace(p.Description))
+    //        {
+    //            org.Description = p.Description;
+    //        }
+
+    //        if (!String.IsNullOrWhiteSpace(p.Domain))
+    //        {
+    //            org.Domain = p.Domain;
+    //        }
+
+    //        if (!String.IsNullOrWhiteSpace(p.Location))
+    //        {
+    //            org.Location = p.Location;
+    //        }
+
+    //        if (!String.IsNullOrWhiteSpace(p.Name))
+    //        {
+    //            org.Name = p.Name;
+    //        }
+
+    //        if (p.Primary.HasValue)
+    //        {
+    //            org.Primary = p.Primary.Value;
+    //        }
+
+    //        if (!String.IsNullOrWhiteSpace(p.Symbol))
+    //        {
+    //            org.Symbol = p.Symbol;
+    //        }
+
+    //        if (!String.IsNullOrWhiteSpace(p.Title))
+    //        {
+    //            org.Title = p.Title;
+    //        }
+
+    //        return org;
+    //    }
+
+    //    private Google.Apis.admin.Directory.directory_v1.Data.UserPhone GetUserPhone(UserPhoneProperties p)
+    //    {
+    //        Google.Apis.admin.Directory.directory_v1.Data.UserPhone phone = new Google.Apis.admin.Directory.directory_v1.Data.UserPhone();
+
+    //        phone.Type = p.Type.ToString();
+
+    //        if (p.Type == GAUserPhoneType.custom &&
+    //            !String.IsNullOrWhiteSpace(p.CustomType))
+    //        {
+    //            phone.CustomType = p.CustomType;
+    //        }
+    //        else if (p.Type == GAUserPhoneType.custom &&
+    //            String.IsNullOrWhiteSpace(p.CustomType))
+    //        {
+    //            WriteError(new ErrorRecord(new Exception(
+    //            "No CustomType; it cannot be empty if the Type is Custom."),
+    //                "", ErrorCategory.InvalidData, p.CustomType));
+    //        }
+
+    //        if (!String.IsNullOrWhiteSpace(p.Value))
+    //        {
+    //            phone.Value = p.Value;
+    //        }
+
+    //        if (p.Primary.HasValue)
+    //        {
+    //            phone.Primary = p.Primary.Value;
+    //        }
+
+    //        return phone;
+    //    }
+
+    //    private Google.Apis.admin.Directory.directory_v1.Data.UserRelation GetUserRelation(UserRelationProperties p)
+    //    {
+    //        Google.Apis.admin.Directory.directory_v1.Data.UserRelation e = new Google.Apis.admin.Directory.directory_v1.Data.UserRelation();
+
+    //        e.Type = p.Type.ToString();
+
+    //        if (p.Type == GAUserRelationType.custom &&
+    //            !String.IsNullOrWhiteSpace(p.CustomType))
+    //        {
+    //            e.CustomType = p.CustomType;
+    //        }
+    //        else if (p.Type == GAUserRelationType.custom &&
+    //            String.IsNullOrWhiteSpace(p.CustomType))
+    //        {
+    //            WriteError(new ErrorRecord(new Exception(
+    //            "No CustomType; it cannot be empty if the Type is Custom."),
+    //                "", ErrorCategory.InvalidData, p.CustomType));
+    //        }
+
+    //        if (!String.IsNullOrWhiteSpace(p.Value))
+    //        {
+    //            e.Value = p.Value;
+    //        }
+
+    //        return e;
+    //    }
+
+    //    //private UserCustomSchemaProperties GetUserCustomSchema(UserCustomSchemaProperties p)
+    //    //{
+    //    //    UserCustomSchemaProperties e = new UserCustomSchemaProperties();
+
+    //    //    //I have no idea what to do here right now. I'm open to ideas.
+
+    //    //    return e;
+    //    //}
+
+    //    #endregion
+    //}
+
+
+    //#region UserPropertyContextClasses
+    //public interface IUserContextProperties { }
+
+    //public class UserAddressProperties : IUserContextProperties
+    //{
+    //    [Parameter(Position = 1,
+    //        Mandatory = true,
+    //        HelpMessage = "The address type. Allowed values are: custom, home, other, work")]
+    //    public GAUserAddressType Type { get; set; }
+
+    //    [Parameter(Position = 2,
+    //        HelpMessage = "If the address type is custom, this property contains the custom value.")]
+    //    public string CustomType { get; set; }
+
+    //    [Parameter(Position = 3,
+    //        HelpMessage = "Indicates if the user-supplied address was formatted. Formatted addresses are not currently supported.")]
+    //    public bool? SourceIsStructured { get; set; }
+
+    //    [Parameter(Position = 4,
+    //        HelpMessage = "A full and unstructured postal address.")]
+    //    public string Formatted { get; set; }
+
+    //    [Parameter(Position = 5,
+    //        HelpMessage = "The post office box, if present.")]
+    //    public string PoBox { get; set; }
+
+    //    [Parameter(Position = 6,
+    //        HelpMessage = "For extended addresses, such as an address that includes a sub-region.")]
+    //    public string ExtendedAddress { get; set; }
+
+    //    [Parameter(Position = 7,
+    //        HelpMessage = "The street address, such as 1600 Amphitheatre Parkway. Whitespace within the string is ignored; however, newlines are significant.")]
+    //    public string StreetAddress { get; set; }
+
+    //    [Parameter(Position = 8,
+    //        HelpMessage = "The town or city of the address.")]
+    //    public string Locality { get; set; }
+
+    //    [Parameter(Position = 9,
+    //        HelpMessage = "The abbreviated province or state.")]
+    //    public string Region { get; set; }
+
+    //    [Parameter(Position = 10,
+    //        HelpMessage = "The ZIP or postal code, if applicable.")]
+    //    public string PostalCode { get; set; }
+
+    //    [Parameter(Position = 11,
+    //        HelpMessage = "Country.")]
+    //    public string Country { get; set; }
+
+    //    [Parameter(Position = 12,
+    //        HelpMessage = "If this is the user's primary address. The addresses list may contain only one primary address.")]
+    //    public bool? Primary { get; set; }
+
+    //    [Parameter(Position = 13,
+    //        HelpMessage = "The country code. Uses the ISO 3166-1 standard.")]
+    //    public string CountryCode { get; set; }
+    //}
+
+    //public class UserEmailProperties : IUserContextProperties
+    //{
+    //    [Parameter(Position = 1,
+    //        HelpMessage = "The user's email address. Also serves as the email ID. This value can be the user's primary email address or an alias.")]
+    //    public string Address { get; set; }
+
+    //    [Parameter(Position = 2,
+    //        HelpMessage = "If the value of type is custom, this property contains the custom type string.")]
+    //    public string CustomType { get; set; }
+
+    //    [Parameter(Position = 3,
+    //        HelpMessage = "Idicates if this is the user's primary email. Only one entry can be marked as primary.")]
+    //    public bool? Primary { get; set; }
+
+    //    [Parameter(Position = 4,
+    //        Mandatory = true,
+    //        HelpMessage = "The type of the email account. Valid values are: custom, home, other, work")]
+    //    public GAUserEmailType Type { get; set; }
+    //}
+
+    //public class UserExternalIdProperties : IUserContextProperties
+    //{
+    //    [Parameter(Position = 1,
+    //        HelpMessage = "If the external ID type is custom, this property holds the custom type.")]
+    //    public string CustomType { get; set; }
+
+    //    [Parameter(Position = 2,
+    //        Mandatory = true,
+    //        HelpMessage = "The type of the ID. Allowed values are: account, custom, customer, network, organization")]
+    //    public GAUserExternalIdType Type { get; set; }
+
+    //    [Parameter(Position = 3,
+    //        HelpMessage = "The value of the ID.")]
+    //    public string Value { get; set; }
+    //}
+
+    //public class UserImProperties : IUserContextProperties
+    //{
+    //    [Parameter(Position = 1,
+    //        HelpMessage = "If the protocol value is custom_protocol, this property holds the custom protocol's string.")]
+    //    public string CustomProtocol { get; set; }
+
+    //    [Parameter(Position = 2,
+    //        HelpMessage = "If the IM type is custom, this property holds the custom type string.")]
+    //    public string CustomType { get; set; }
+
+    //    [Parameter(Position = 3,
+    //        HelpMessage = "The user's IM network ID.")]
+    //    public string Im { get; set; }
+
+    //    [Parameter(Position = 4,
+    //        HelpMessage = "If this is the user's primary IM. Only one entry in the IM list can have a value of true.")]
+    //    public bool? Primary { get; set; }
+
+    //    [Parameter(Position = 5,
+    //        Mandatory = true,
+    //        HelpMessage = "An IM protocol identifies the IM network. The value can be a custom network or the standard network. The values are: custom_protocol: A custom IM network protocol, aim: AOL Instant Messenger protocol, gtalk: Google Talk protocol, icq: ICQ protocol, jabber: Jabber protocol, msn: MSN Messenger protocol, net_meeting: Net Meeting protocol, qq: QQ protocol, skype: Skype protocol, yahoo: Yahoo Messenger protocol")]
+    //    public GAUserImProtocol Protocol { get; set; }
+
+    //    [Parameter(Position = 6,
+    //        Mandatory = true,
+    //        HelpMessage = "The type must be one of these values: custom, home, other, work")]
+    //    public GAUserIMType Type { get; set; }
+    //}
+
+    //public class UserOrganizationProperties : IUserContextProperties
+    //{
+    //    [Parameter(Position = 1,
+    //        HelpMessage = "The cost center of the user's organization.")]
+    //    public string CostCenter { get; set; }
+
+    //    [Parameter(Position = 2,
+    //        HelpMessage = "If the value of type is custom, this property contains the custom type.")]
+    //    public string CustomType { get; set; }
+
+    //    [Parameter(Position = 3,
+    //        HelpMessage = "Specifies the department within the organization, such as 'sales' or 'engineering'.")]
+    //    public string Department { get; set; }
+
+    //    [Parameter(Position = 4,
+    //        HelpMessage = "The description of the organization.")]
+    //    public string Description { get; set; }
+
+    //    [Parameter(Position = 5,
+    //        HelpMessage = "The domain the organization belongs to.")]
+    //    public string Domain { get; set; }
+
+    //    [Parameter(Position = 6,
+    //        HelpMessage = "The physical location of the organization. This does not need to be a fully qualified address.")]
+    //    public string Location { get; set; }
+
+    //    [Parameter(Position = 7,
+    //        HelpMessage = "The name of the organization.")]
+    //    public string Name { get; set; }
+
+    //    [Parameter(Position = 8,
+    //        HelpMessage = "Indicates if this is the user's primary organization. A user may only have one primary organization.")]
+    //    public bool? Primary { get; set; }
+
+    //    [Parameter(Position = 9,
+    //        HelpMessage = "Text string symbol of the organization. For example, the text symbol for Google is GOOG.")]
+    //    public string Symbol { get; set; }
+
+    //    [Parameter(Position = 10,
+    //        HelpMessage = "The user's title within the organization, for example 'member' or 'engineer'.")]
+    //    public string Title { get; set; }
+
+    //    [Parameter(Position = 11,
+    //        Mandatory = true,
+    //        HelpMessage = "The type of organization. Possible values are: unknown, school, work, domain_only, custom")]
+    //    public GAUserOrganizationType Type { get; set; }
+    //}
+
+    //public class UserPhoneProperties : IUserContextProperties
+    //{
+    //    [Parameter(Position = 1,
+    //        HelpMessage = "A human-readable phone number. It may be in any telephone number format.")]
+    //    public string Value { get; set; }
+
+    //    [Parameter(Position = 2,
+    //        HelpMessage = "Indicates if this is the user's primary phone number. A user may only have one primary phone number.")]
+    //    public bool? Primary { get; set; }
+
+    //    [Parameter(Position = 3,
+    //        Mandatory = true,
+    //        HelpMessage = "The type of phone number. Allowed values are: custom, home, work, other, home_fax, work_fax, mobile, pager, other_fax, compain_main, assistant, car, radio, isdn, callback, telex, tty_tdd, work_mobile, work_pager, main, grand_central")]
+    //    public GAUserPhoneType Type { get; set; }
+
+    //    [Parameter(Position = 4,
+    //        HelpMessage = "If the value of type is custom, this property contains the custom type.")]
+    //    public string CustomType { get; set; }
+    //}
+
+    //public class UserRelationProperties : IUserContextProperties
+    //{
+    //    [Parameter(Position = 1,
+    //        HelpMessage = "If the value of type is custom, this property contains the custom type.")]
+    //    public string CustomType { get; set; }
+
+    //    [Parameter(Position = 2,
+    //        Mandatory = true,
+    //        HelpMessage = "The type of relation. Possible values are: custom, spouse, child, mother, father, parent, brother, sister, friend, relative, domestic_partner, manager, assistant, referred_by, partner")]
+    //    public GAUserRelationType Type { get; set; }
+
+    //    [Parameter(Position = 3,
+    //        HelpMessage = "The name of the person the user is related to.")]
+    //    public string Value { get; set; }
+    //}
+
+    ////public class UserCustomSchemaProperties : IUserContextProperties
+    ////{
+
+    ////}
+    //#endregion
+
+    //[Cmdlet(VerbsCommon.New, "GAUserPropertyCollection",
+    //      SupportsShouldProcess = true,
+    //      HelpUri = @"https://github.com/squid808/gShell/wiki/New-GAUserPropertyCollection")]
+    //public class NewGAUserPropertyCollectionCommand : PSCmdlet
     //{
 
+    //    protected override void ProcessRecord()
+    //    {
+    //        WriteObject(new GAUserPropertyCollection());
+    //    }
+
     //}
-    #endregion
 
-    [Cmdlet(VerbsCommon.New, "GAUserPropertyCollection",
-          SupportsShouldProcess = true,
-          HelpUri = @"https://github.com/squid808/gShell/wiki/New-GAUserPropertyCollection")]
-    public class NewGAUserPropertyCollectionCommand : PSCmdlet
-    {
+    //[Cmdlet(VerbsCommon.Remove, "GAUserProperty",
+    //     SupportsShouldProcess = true,
+    //      HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAUserProperty")]
+    //public class RemoveGAUserProperty : GAUserPropertyBaseCommand
+    //{
+    //    #region Properties
 
-        protected override void ProcessRecord()
-        {
-            WriteObject(new GAUserPropertyCollection());
-        }
+    //    //UserName = 0
 
-    }
+    //    //Domain position = 1
 
-    [Cmdlet(VerbsCommon.Remove, "GAUserProperty",
-         SupportsShouldProcess = true,
-          HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GAUserProperty")]
-    public class RemoveGAUserProperty : GAUserPropertyBaseCommand
-    {
-        #region Properties
+    //    [Parameter(
+    //       Mandatory = false,
+    //       HelpMessage = "The GShellUserObject to act upon. For example, the result of Get-GAUser",
+    //       ValueFromPipeline = true)]
+    //    public GShellUserObject GShellObject { get; set; }
 
-        //UserName = 0
+    //    [Parameter(Position = 3,
+    //       Mandatory = false,
+    //       HelpMessage = "The property type to retrieve for the user. Allowed values are: address, email, externalid, im, organization, phone, relation.",
+    //       ParameterSetName = "ClearOneProperty")]
+    //    [Parameter(Position = 3,
+    //       Mandatory = false,
+    //       HelpMessage = "The property type to retrieve for the user. Allowed values are: address, email, externalid, im, organization, phone, relation.",
+    //       ParameterSetName = "ClearOneType")]
+    //    [Alias("Type")]
+    //    public GAUserPropertyType PropertyType { get; set; }
 
-        //Domain position = 1
+    //    [Parameter(Position = 4,
+    //       Mandatory = false,
+    //       HelpMessage = "The 0-based index number of the item you want to remove for the given Property Type. (The first item in the list is an index of 0.)",
+    //       ParameterSetName = "ClearOneProperty")]
+    //    public int Index { get; set; }
 
-        [Parameter(
-           Mandatory = false,
-           HelpMessage = "The GShellUserObject to act upon. For example, the result of Get-GAUser",
-           ValueFromPipeline = true)]
-        public GShellUserObject GShellObject { get; set; }
+    //    [Parameter(Position = 5,
+    //        Mandatory = false,
+    //        HelpMessage = "Clear the entire selected property type for the given user.",
+    //        ParameterSetName = "ClearOneType")]
+    //    public SwitchParameter ClearType { get; set; }
 
-        [Parameter(Position = 3,
-           Mandatory = false,
-           HelpMessage = "The property type to retrieve for the user. Allowed values are: address, email, externalid, im, organization, phone, relation.",
-           ParameterSetName = "ClearOneProperty")]
-        [Parameter(Position = 3,
-           Mandatory = false,
-           HelpMessage = "The property type to retrieve for the user. Allowed values are: address, email, externalid, im, organization, phone, relation.",
-           ParameterSetName = "ClearOneType")]
-        [Alias("Type")]
-        public GAUserPropertyType PropertyType { get; set; }
+    //    [Parameter(Position = 6,
+    //        Mandatory = false,
+    //        HelpMessage = "Clear all property types for the given user.",
+    //        ParameterSetName = "ClearAll")]
+    //    public SwitchParameter ClearAll { get; set; }
 
-        [Parameter(Position = 4,
-           Mandatory = false,
-           HelpMessage = "The 0-based index number of the item you want to remove for the given Property Type. (The first item in the list is an index of 0.)",
-           ParameterSetName = "ClearOneProperty")]
-        public int Index { get; set; }
+    //    [Parameter(Position = 7,
+    //        HelpMessage = "Force the action to complete without a prompt to continue.")]
+    //    public SwitchParameter Force { get; set; }
+    //    #endregion
 
-        [Parameter(Position = 5,
-            Mandatory = false,
-            HelpMessage = "Clear the entire selected property type for the given user.",
-            ParameterSetName = "ClearOneType")]
-        public SwitchParameter ClearType { get; set; }
+    //    protected override void ProcessRecord()
+    //    {
+    //        WriteWarning("At the time of release of this version there is a bug in the Google API preventing the deletion of User Properties. For more information, see https://code.google.com/a/google.com/p/apps-api-issues/issues/detail?id=3701 - if you would like this fixed please star the issue to bring it more to their attention. There is no guarantee your information will be deleted.");
 
-        [Parameter(Position = 6,
-            Mandatory = false,
-            HelpMessage = "Clear all property types for the given user.",
-            ParameterSetName = "ClearAll")]
-        public SwitchParameter ClearAll { get; set; }
+    //        if (ShouldProcess(UserName, "Get-GAUserProperty"))
+    //        {
+    //            if (Force || ShouldContinue((String.Format("One or more user property types of type {0} will be removed from {1}@{2}.\nContinue?",
+    //                PropertyType.ToString(), UserName, GAuthId)), "Confirm Google Apps User Property Removal"))
+    //            {
+    //                Data.User u = new Data.User();
 
-        [Parameter(Position = 7,
-            HelpMessage = "Force the action to complete without a prompt to continue.")]
-        public SwitchParameter Force { get; set; }
-        #endregion
+    //                if (null != GShellObject)
+    //                {
+    //                    u = GShellObject.userObject;
+    //                }
+    //                else if (!string.IsNullOrWhiteSpace(UserName))
+    //                {
+    //                    UserName = GetFullEmailAddress(UserName, GAuthId);
+    //                    u = users.Get(UserName);
+    //                }
+    //                else
+    //                {
+    //                    WriteError(new ErrorRecord(new Exception(
+    //                    string.Format("No username or user object was provided.")),
+    //                        "", ErrorCategory.InvalidOperation, UserName));
+    //                }
 
-        protected override void ProcessRecord()
-        {
-            WriteWarning("At the time of release of this version there is a bug in the Google API preventing the deletion of User Properties. For more information, see https://code.google.com/a/google.com/p/apps-api-issues/issues/detail?id=3701 - if you would like this fixed please star the issue to bring it more to their attention. There is no guarantee your information will be deleted.");
+    //                switch (ParameterSetName)
+    //                {
+    //                    case "ClearOneProperty":
+    //                        RemoveOneProperty(u);
+    //                        break;
 
-            if (ShouldProcess(UserName, "Get-GAUserProperty"))
-            {
-                if (Force || ShouldContinue((String.Format("One or more user property types of type {0} will be removed from {1}@{2}.\nContinue?",
-                    PropertyType.ToString(), UserName, GAuthId)), "Confirm Google Apps User Property Removal"))
-                {
-                    Data.User u = new Data.User();
+    //                    case "ClearOneType":
+    //                        ClearOneProperty(u);
+    //                        break;
 
-                    if (null != GShellObject)
-                    {
-                        u = GShellObject.userObject;
-                    }
-                    else if (!string.IsNullOrWhiteSpace(UserName))
-                    {
-                        UserName = GetFullEmailAddress(UserName, GAuthId);
-                        u = users.Get(UserName);
-                    }
-                    else
-                    {
-                        WriteError(new ErrorRecord(new Exception(
-                        string.Format("No username or user object was provided.")),
-                            "", ErrorCategory.InvalidOperation, UserName));
-                    }
+    //                    case "ClearAll":
+    //                        ClearAllProperties(u);
+    //                        break;
 
-                    switch (ParameterSetName)
-                    {
-                        case "ClearOneProperty":
-                            RemoveOneProperty(u);
-                            break;
+    //                }
+    //            }
+    //            else
+    //            {
+    //                WriteError(new ErrorRecord(new Exception("Removal of user property not confirmed"),
+    //                    "", ErrorCategory.InvalidData, UserName));
+    //            }
+    //        }
+    //    }
 
-                        case "ClearOneType":
-                            ClearOneProperty(u);
-                            break;
+    //    /// <summary>
+    //    /// Remove one property item from a property list of a User.
+    //    /// </summary>
+    //    /// <param name="u"></param>
+    //    public void RemoveOneProperty(Data.User u)
+    //    {
 
-                        case "ClearAll":
-                            ClearAllProperties(u);
-                            break;
+    //        Data.User userAcct = new Data.User();
 
-                    }
-                }
-                else
-                {
-                    WriteError(new ErrorRecord(new Exception("Removal of user property not confirmed"),
-                        "", ErrorCategory.InvalidData, UserName));
-                }
-            }
-        }
+    //        //pull it in to a collection in order to access the methods
+    //        GAUserPropertyCollection upc = new GAUserPropertyCollection(u);
 
-        /// <summary>
-        /// Remove one property item from a property list of a User.
-        /// </summary>
-        /// <param name="u"></param>
-        public void RemoveOneProperty(Data.User u)
-        {
+    //        //we don't need to worry about empty lists removing other information here since we're directly adding it to the user object
+    //        switch (PropertyType)
+    //        {
+    //            case GAUserPropertyType.address:
+    //                if (upc.addresses.Count > 1)
+    //                {
+    //                    upc.RemoveAt(PropertyType, Index);
+    //                    userAcct.Addresses = upc.GetAddresses();
+    //                }
+    //                else
+    //                {
+    //                    userAcct.Addresses = NullTokenProvider.NullToken;
+    //                }
+    //                break;
 
-            Data.User userAcct = new Data.User();
+    //            case GAUserPropertyType.email:
+    //                if (upc.emails.Count > 1)
+    //                {
+    //                    upc.RemoveAt(PropertyType, Index);
+    //                    userAcct.Emails = upc.GetEmails();
+    //                }
+    //                else
+    //                {
+    //                    userAcct.Emails = NullTokenProvider.NullToken;
+    //                }
+    //                break;
 
-            //pull it in to a collection in order to access the methods
-            GAUserPropertyCollection upc = new GAUserPropertyCollection(u);
+    //            case GAUserPropertyType.externalid:
+    //                if (upc.externalIds.Count > 1)
+    //                {
+    //                    upc.RemoveAt(PropertyType, Index);
+    //                    userAcct.ExternalIds = upc.GetExternalIds();
+    //                }
+    //                else
+    //                {
+    //                    userAcct.ExternalIds = NullTokenProvider.NullToken;
+    //                }
+    //                break;
 
-            //we don't need to worry about empty lists removing other information here since we're directly adding it to the user object
-            switch (PropertyType)
-            {
-                case GAUserPropertyType.address:
-                    if (upc.addresses.Count > 1)
-                    {
-                        upc.RemoveAt(PropertyType, Index);
-                        userAcct.Addresses = upc.GetAddresses();
-                    }
-                    else
-                    {
-                        userAcct.Addresses = NullTokenProvider.NullToken;
-                    }
-                    break;
+    //            case GAUserPropertyType.im:
+    //                if (upc.ims.Count > 1)
+    //                {
+    //                    upc.RemoveAt(PropertyType, Index);
+    //                    userAcct.Ims = upc.GetIms();
+    //                }
+    //                else
+    //                {
+    //                    userAcct.Ims = NullTokenProvider.NullToken;
+    //                }
+    //                break;
 
-                case GAUserPropertyType.email:
-                    if (upc.emails.Count > 1)
-                    {
-                        upc.RemoveAt(PropertyType, Index);
-                        userAcct.Emails = upc.GetEmails();
-                    }
-                    else
-                    {
-                        userAcct.Emails = NullTokenProvider.NullToken;
-                    }
-                    break;
+    //            case GAUserPropertyType.organization:
+    //                if (upc.organizations.Count > 1)
+    //                {
+    //                    upc.RemoveAt(PropertyType, Index);
+    //                    userAcct.Organizations = upc.GetOrganizations();
+    //                }
+    //                else
+    //                {
+    //                    userAcct.Organizations = NullTokenProvider.NullToken;
+    //                }
+    //                break;
 
-                case GAUserPropertyType.externalid:
-                    if (upc.externalIds.Count > 1)
-                    {
-                        upc.RemoveAt(PropertyType, Index);
-                        userAcct.ExternalIds = upc.GetExternalIds();
-                    }
-                    else
-                    {
-                        userAcct.ExternalIds = NullTokenProvider.NullToken;
-                    }
-                    break;
+    //            case GAUserPropertyType.phone:
+    //                if (upc.phones.Count > 1)
+    //                {
+    //                    upc.RemoveAt(PropertyType, Index);
+    //                    userAcct.Phones = upc.GetPhones();
+    //                }
+    //                else
+    //                {
+    //                    userAcct.Phones = NullTokenProvider.NullToken;
+    //                }
+    //                break;
 
-                case GAUserPropertyType.im:
-                    if (upc.ims.Count > 1)
-                    {
-                        upc.RemoveAt(PropertyType, Index);
-                        userAcct.Ims = upc.GetIms();
-                    }
-                    else
-                    {
-                        userAcct.Ims = NullTokenProvider.NullToken;
-                    }
-                    break;
+    //            case GAUserPropertyType.relation:
+    //                if (upc.relations.Count > 1)
+    //                {
+    //                    upc.RemoveAt(PropertyType, Index);
+    //                    userAcct.Relations = upc.GetRelations();
+    //                }
+    //                else
+    //                {
+    //                    userAcct.Relations = NullTokenProvider.NullToken;
+    //                }
+    //                break;
+    //        }
+    //        string UserKey = GetFullEmailAddress(u.PrimaryEmail, GAuthId);
+    //        users.Update(userAcct, UserKey);
+    //    }
 
-                case GAUserPropertyType.organization:
-                    if (upc.organizations.Count > 1)
-                    {
-                        upc.RemoveAt(PropertyType, Index);
-                        userAcct.Organizations = upc.GetOrganizations();
-                    }
-                    else
-                    {
-                        userAcct.Organizations = NullTokenProvider.NullToken;
-                    }
-                    break;
+    //    /// <summary>
+    //    /// Clear one property fully from a User account.
+    //    /// </summary>
+    //    /// <param name="u"></param>
+    //    public void ClearOneProperty(Data.User u)
+    //    {
+    //        Data.User userAcct = new Data.User();
 
-                case GAUserPropertyType.phone:
-                    if (upc.phones.Count > 1)
-                    {
-                        upc.RemoveAt(PropertyType, Index);
-                        userAcct.Phones = upc.GetPhones();
-                    }
-                    else
-                    {
-                        userAcct.Phones = NullTokenProvider.NullToken;
-                    }
-                    break;
+    //        //again, we're only directly setting one attribute and don't have to worry about the other collection information
+    //        switch (PropertyType)
+    //        {
+    //            case GAUserPropertyType.address:
+    //                userAcct.Addresses = NullTokenProvider.NullToken;
+    //                break;
 
-                case GAUserPropertyType.relation:
-                    if (upc.relations.Count > 1)
-                    {
-                        upc.RemoveAt(PropertyType, Index);
-                        userAcct.Relations = upc.GetRelations();
-                    }
-                    else
-                    {
-                        userAcct.Relations = NullTokenProvider.NullToken;
-                    }
-                    break;
-            }
-            string UserKey = GetFullEmailAddress(u.PrimaryEmail, GAuthId);
-            users.Update(userAcct, UserKey);
-        }
+    //            case GAUserPropertyType.email:
+    //                userAcct.Emails = NullTokenProvider.NullToken;
+    //                break;
 
-        /// <summary>
-        /// Clear one property fully from a User account.
-        /// </summary>
-        /// <param name="u"></param>
-        public void ClearOneProperty(Data.User u)
-        {
-            Data.User userAcct = new Data.User();
+    //            case GAUserPropertyType.externalid:
+    //                userAcct.ExternalIds = NullTokenProvider.NullToken;
+    //                break;
 
-            //again, we're only directly setting one attribute and don't have to worry about the other collection information
-            switch (PropertyType)
-            {
-                case GAUserPropertyType.address:
-                    userAcct.Addresses = NullTokenProvider.NullToken;
-                    break;
+    //            case GAUserPropertyType.im:
+    //                userAcct.Ims = NullTokenProvider.NullToken;
+    //                break;
 
-                case GAUserPropertyType.email:
-                    userAcct.Emails = NullTokenProvider.NullToken;
-                    break;
+    //            case GAUserPropertyType.organization:
+    //                userAcct.Organizations = NullTokenProvider.NullToken;
+    //                break;
 
-                case GAUserPropertyType.externalid:
-                    userAcct.ExternalIds = NullTokenProvider.NullToken;
-                    break;
+    //            case GAUserPropertyType.phone:
+    //                userAcct.Phones = NullTokenProvider.NullToken;
+    //                break;
 
-                case GAUserPropertyType.im:
-                    userAcct.Ims = NullTokenProvider.NullToken;
-                    break;
+    //            case GAUserPropertyType.relation:
+    //                userAcct.Relations = NullTokenProvider.NullToken;
+    //                break;
+    //        }
 
-                case GAUserPropertyType.organization:
-                    userAcct.Organizations = NullTokenProvider.NullToken;
-                    break;
+    //        string UserKey = GetFullEmailAddress(u.PrimaryEmail, GAuthId);
+    //        users.Patch(userAcct, UserKey);
 
-                case GAUserPropertyType.phone:
-                    userAcct.Phones = NullTokenProvider.NullToken;
-                    break;
+    //    }
 
-                case GAUserPropertyType.relation:
-                    userAcct.Relations = NullTokenProvider.NullToken;
-                    break;
-            }
+    //    /// <summary>
+    //    /// Clear all the properties from a user account.
+    //    /// </summary>
+    //    /// <param name="u"></param>
+    //    public void ClearAllProperties(Data.User u)
+    //    {
+    //        Data.User userAcct = new Data.User();
 
-            string UserKey = GetFullEmailAddress(u.PrimaryEmail, GAuthId);
-            users.Patch(userAcct, UserKey);
+    //        userAcct.Addresses = NullTokenProvider.NullToken;
+    //        userAcct.Emails = NullTokenProvider.NullToken;
+    //        userAcct.ExternalIds = NullTokenProvider.NullToken;
+    //        userAcct.Ims = NullTokenProvider.NullToken;
+    //        userAcct.Organizations = NullTokenProvider.NullToken;
+    //        userAcct.Phones = NullTokenProvider.NullToken;
+    //        userAcct.Relations = NullTokenProvider.NullToken;
 
-        }
-
-        /// <summary>
-        /// Clear all the properties from a user account.
-        /// </summary>
-        /// <param name="u"></param>
-        public void ClearAllProperties(Data.User u)
-        {
-            Data.User userAcct = new Data.User();
-
-            userAcct.Addresses = NullTokenProvider.NullToken;
-            userAcct.Emails = NullTokenProvider.NullToken;
-            userAcct.ExternalIds = NullTokenProvider.NullToken;
-            userAcct.Ims = NullTokenProvider.NullToken;
-            userAcct.Organizations = NullTokenProvider.NullToken;
-            userAcct.Phones = NullTokenProvider.NullToken;
-            userAcct.Relations = NullTokenProvider.NullToken;
-
-            string UserKey = GetFullEmailAddress(u.PrimaryEmail, GAuthId);
-            users.Patch(userAcct, UserKey);
-        }
-    }
+    //        string UserKey = GetFullEmailAddress(u.PrimaryEmail, GAuthId);
+    //        users.Patch(userAcct, UserKey);
+    //    }
+    //}
 }
 
 namespace gShell.Cmdlets.Directory.GAVerificationCode
