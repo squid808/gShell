@@ -423,8 +423,8 @@ namespace gShell.Cmdlets.Emailsettings.Filters
 namespace gShell.Cmdlets.Emailsettings.Forwarding
 {
     /// <summary>
-    /// <para type="synopsis"></para>
-    /// <para type="description"></para>
+    /// <para type="synopsis">Retrieve Google Mail forwarding settings</para>
+    /// <para type="description">Retrieve Google Mail forwarding settings</para>
     /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
@@ -462,8 +462,8 @@ namespace gShell.Cmdlets.Emailsettings.Forwarding
     }
 
     /// <summary>
-    /// <para type="synopsis"></para>
-    /// <para type="description"></para>
+    /// <para type="synopsis">Update Google Mail forwarding settings</para>
+    /// <para type="description">Update Google Mail forwarding settings</para>
     /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
