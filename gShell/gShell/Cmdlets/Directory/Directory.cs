@@ -2136,16 +2136,16 @@ namespace gShell.Cmdlets.Directory.GAAsp
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAAsps -UserKey $SomeUserKeyString -CodeId $SomeCodeIdSystemNullable<int></code>
+    ///   <code>PS C:\>Get-GAAsp -UserKey $SomeUserKeyString -CodeId $SomeCodeId</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GAAsps -UserKey $SomeUserKeyString -All</code>
+    ///   <code>PS C:\>Get-GAAsp -UserKey $SomeUserKeyString -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GAAsps">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GAAsp">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.Get, "GAAsp",
@@ -2212,7 +2212,7 @@ namespace gShell.Cmdlets.Directory.GAAsp
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GAAsps -UserKey $SomeUserKeyString -CodeId $SomeCodeIdSystemNullable<int></code>
+    ///   <code>PS C:\>Remove-GAAsp -UserKey $SomeUserKeyString -CodeId $SomeCodeId</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
