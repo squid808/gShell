@@ -22,17 +22,17 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Invoke-ScopeManager</code>
+    ///   <code>PS C:\>Invoke-GShellScopeManager</code>
     ///   <para>This example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Invoke-ScopeManager">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Invoke-GShellScopeManager">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
-    [Cmdlet(VerbsLifecycle.Invoke, "ScopeManager",
+    [Cmdlet(VerbsLifecycle.Invoke, "GShellScopeManager",
           SupportsShouldProcess = true,
-          HelpUri = @"https://github.com/squid808/gShell/wiki/Invoke-ScopeManager")]
-    public class InvokeScopeManager : ScopeHandlerBase
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Invoke-GShellScopeManager")]
+    public class InvokeGShellScopeManager : ScopeHandlerBase
     {
         #region Properties
         public static discovery_v1.DiscoveryService service;

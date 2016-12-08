@@ -3685,7 +3685,6 @@ namespace gShell.Cmdlets.Classroom.UserProfiles
     }
 }
 
-
 namespace gShell.Cmdlets.Classroom.Courses.CourseWork
 {
     /// <summary>

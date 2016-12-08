@@ -118,20 +118,20 @@ namespace gShell.Cmdlets.Utilities.OAuth2
         /// Api is derived from the class that inherits this. User is the domain's default user. Returns null if scopes
         /// already exist since they'll be pulled up during authentication anyways.
         /// </remarks>
-        public IEnumerable<string> EnsureScopesExist(string Domain, HashSet<string> forcedScopes = null)
+        public IEnumerable<string> EnsureScopesExist(string GAuthId, HashSet<string> forcedScopes = null)
         {
-            var OriginalDomain = Domain;
+            var OriginalDomain = GAuthId;
             //Since the domain could be null, see if we have a default ready or if the saved info contains this one
-            Domain = OAuth2Base.CheckDomain(Domain);
+            GAuthId = OAuth2Base.CheckDomain(GAuthId);
 
             string defaultUser = null;
 
-            if (Domain != null)
-                 defaultUser = OAuth2Base.infoConsumer.GetDefaultUser(Domain);
+            if (GAuthId != null)
+                 defaultUser = OAuth2Base.infoConsumer.GetDefaultUser(GAuthId);
 
             //if no domain is returned, none was provided or none was found as default.
-            if (string.IsNullOrWhiteSpace(Domain) || string.IsNullOrWhiteSpace(defaultUser) || 
-                !OAuth2Base.infoConsumer.TokenAndScopesExist(Domain, defaultUser, apiNameAndVersion))
+            if (string.IsNullOrWhiteSpace(GAuthId) || string.IsNullOrWhiteSpace(defaultUser) || 
+                !OAuth2Base.infoConsumer.TokenAndScopesExist(GAuthId, defaultUser, apiNameAndVersion))
             {
                 if (!string.IsNullOrWhiteSpace(OriginalDomain))
                     OriginalDomain = "is for domain (" + OriginalDomain + "), which ";
@@ -161,7 +161,7 @@ namespace gShell.Cmdlets.Utilities.OAuth2
             }
             else
             {
-                return OAuth2Base.infoConsumer.GetTokenInfo(Domain, defaultUser, apiNameAndVersion).scopes;
+                return OAuth2Base.infoConsumer.GetTokenInfo(GAuthId, defaultUser, apiNameAndVersion).scopes;
             }
 
             return null;

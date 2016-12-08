@@ -35,7 +35,7 @@ namespace gShell.Cmdlets.Utilities.OAuth2
         }
 
         /// <summary>
-        /// <para type="description">The domain against which this cmdlet should run.</para>
+        /// <para type="description">The GAuthId representing the gShell auth credentials this cmdlet should use to run.</para>
         /// </summary>
         [Parameter(Mandatory = false)]
         [ValidateNotNullOrEmpty]
