@@ -35,7 +35,7 @@ namespace gShell.Cmdlets.Emailsettings{
         public VacationResponder vacationResponder { get; set; }
         public WebClip webClip { get; set; }
 
-        HashSet<string> Scopes = new HashSet<string> {
+        protected HashSet<string> Scopes = new HashSet<string> {
             "https://apps-apis.google.com/a/feeds/emailsettings/2.0/",
         };
 

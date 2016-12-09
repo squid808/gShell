@@ -26,9 +26,20 @@ namespace gShell.Cmdlets.Sharedcontacts
 
         protected override void BeginProcessing()
         {
-            base.BeginProcessing();
+            var secrets = CheckForClientSecrets();
+            if (secrets != null)
+            {
+                System.Collections.Generic.IEnumerable<string> scopes = EnsureScopesExist(GAuthId, Scopes);
+                GAuthId = ServiceWrapperDictionary[mainBaseType].BuildService(Authenticate(scopes, secrets, GAuthId)).domain;
 
-            if (string.IsNullOrWhiteSpace(Domain)) Domain = GetDomainFromEmail(GAuthId);
+                GWriteProgress = new gWriteProgress(WriteProgress);
+            }
+            else
+            {
+                WriteError(new ErrorRecord(null, (new Exception(
+                    "Client Secrets must be set before running cmdlets. Run 'Get-Help "
+                    + "Set-gShellClientSecrets -online' for more information."))));
+            }
         }
     }
 

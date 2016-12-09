@@ -98,7 +98,7 @@ namespace gShell.Cmdlets.Adminsettings{
         public SsoSigningKey ssoSigningKey { get; set; }
 
         /// <summary>A collection of scopes for the Adminsettings api.</summary>
-        HashSet<string> Scopes = new HashSet<string> {
+        protected HashSet<string> Scopes = new HashSet<string> {
             "https://apps-apis.google.com/a/feeds/domain/",
         };
 

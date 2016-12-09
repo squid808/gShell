@@ -25,7 +25,7 @@ namespace gShell.Cmdlets.Sharedcontacts{
         public Contact contact { get; set; }
         public Photo photo { get; set; }
 
-        HashSet<string> Scopes = new HashSet<string> {
+        protected HashSet<string> Scopes = new HashSet<string> {
             "http://www.google.com/m8/feeds/contacts/",
         };
 

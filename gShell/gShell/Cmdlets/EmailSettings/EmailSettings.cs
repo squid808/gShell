@@ -53,9 +53,20 @@ namespace gShell.Cmdlets.Emailsettings
         {
             WriteWarning("The Email Settings API is deprecated and will be turned off on July 7, 2017. Migrate to the Gmail API as soon as possible to avoid disruptions to your application. See the following URL for more information: https://developers.google.com/admin-sdk/email-settings/");
 
-            base.BeginProcessing();
+            var secrets = CheckForClientSecrets();
+            if (secrets != null)
+            {
+                System.Collections.Generic.IEnumerable<string> scopes = EnsureScopesExist(GAuthId, Scopes);
+                GAuthId = ServiceWrapperDictionary[mainBaseType].BuildService(Authenticate(scopes, secrets, GAuthId)).domain;
 
-            if (string.IsNullOrWhiteSpace(Domain)) Domain = GetDomainFromEmail(GAuthId);
+                GWriteProgress = new gWriteProgress(WriteProgress);
+            }
+            else
+            {
+                WriteError(new ErrorRecord(null, (new Exception(
+                    "Client Secrets must be set before running cmdlets. Run 'Get-Help "
+                    + "Set-gShellClientSecrets -online' for more information."))));
+            }
         }
     }
 }
