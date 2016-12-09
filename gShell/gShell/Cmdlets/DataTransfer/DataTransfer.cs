@@ -52,7 +52,7 @@ namespace gShell.Cmdlets.DataTransfer
     /// Part of the gShell Project, relating to the Google DataTransfer API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GDataTransferApplicationDataObj</code>
+    ///   <code>PS C:\> New-GDataTransferApplicationDataObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -124,7 +124,7 @@ namespace gShell.Cmdlets.DataTransfer
     /// Part of the gShell Project, relating to the Google DataTransfer API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GDataTransferDataObj</code>
+    ///   <code>PS C:\> New-GDataTransferDataObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -224,7 +224,7 @@ namespace gShell.Cmdlets.DataTransfer
     /// Part of the gShell Project, relating to the Google DataTransfer API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GDataTransferApplicationObj</code>
+    ///   <code>PS C:\> New-GDataTransferApplicationObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -294,7 +294,7 @@ namespace gShell.Cmdlets.DataTransfer
     /// Part of the gShell Project, relating to the Google DataTransfer API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GDataTransferApplicationParamObj</code>
+    ///   <code>PS C:\> New-GDataTransferApplicationParamObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -354,12 +354,12 @@ namespace gShell.Cmdlets.DataTransfer.Applications
     /// Part of the gShell Project, relating to the Google DataTransfer API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GDataTransferApplication -ApplicationId $SomeApplicationId</code>
+    ///   <code>PS C:\> Get-GDataTransferApplication -ApplicationId $SomeApplicationId</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GDataTransferApplication -All</code>
+    ///   <code>PS C:\> Get-GDataTransferApplication -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -454,12 +454,12 @@ namespace gShell.Cmdlets.DataTransfer.Transfers
     /// Part of the gShell Project, relating to the Google DataTransfer API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GDataTransfer -DataTransferId $SomeDataTransferIdString</code>
+    ///   <code>PS C:\> Get-GDataTransfer -DataTransferId $SomeDataTransferIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GDataTransfer -All</code>
+    ///   <code>PS C:\> Get-GDataTransfer -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -578,7 +578,7 @@ namespace gShell.Cmdlets.DataTransfer.Transfers
     /// Part of the gShell Project, relating to the Google DataTransfer API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GDataTransfer -DataTransferBody $SomeDataTransferObj</code>
+    ///   <code>PS C:\> New-GDataTransfer -DataTransferBody $SomeDataTransferObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>

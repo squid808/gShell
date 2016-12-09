@@ -80,7 +80,7 @@ namespace gShell.Cmdlets.Emailsettings.Delegation
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GEmailSettingsDelegation -UserName $SomeUserNameString</code>
+    ///   <code>PS C:\> Get-GEmailSettingsDelegation -UserName $SomeUserNameString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -119,7 +119,7 @@ namespace gShell.Cmdlets.Emailsettings.Delegation
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GEmailSettingsDelegation -UserName $SomeUserNameString -Address $SomeAddressString</code>
+    ///   <code>PS C:\> New-GEmailSettingsDelegation -UserName $SomeUserNameString -Address $SomeAddressString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -172,7 +172,7 @@ namespace gShell.Cmdlets.Emailsettings.Delegation
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GEmailSettingsDelegation -UserName $SomeUserNameString -DelegateEmail $SomeDelegateEmailString</code>
+    ///   <code>PS C:\> Remove-GEmailSettingsDelegation -UserName $SomeUserNameString -DelegateEmail $SomeDelegateEmailString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -253,7 +253,7 @@ namespace gShell.Cmdlets.Emailsettings.Filters
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GEmailSettingsFilter -UserName $SomeUserNameString</code>
+    ///   <code>PS C:\> New-GEmailSettingsFilter -UserName $SomeUserNameString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -440,7 +440,7 @@ namespace gShell.Cmdlets.Emailsettings.Forwarding
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GEmailSettingsForwarding -UserName $SomeUserNameString</code>
+    ///   <code>PS C:\> Get-GEmailSettingsForwarding -UserName $SomeUserNameString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -479,7 +479,7 @@ namespace gShell.Cmdlets.Emailsettings.Forwarding
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GEmailSettingsForwarding -UserName $SomeUserNameString</code>
+    ///   <code>PS C:\> Set-GEmailSettingsForwarding -UserName $SomeUserNameString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -555,7 +555,7 @@ namespace gShell.Cmdlets.Emailsettings.General
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GEmailSettingsGeneral -UserName $SomeUserNameString</code>
+    ///   <code>PS C:\> Set-GEmailSettingsGeneral -UserName $SomeUserNameString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -655,7 +655,7 @@ namespace gShell.Cmdlets.Emailsettings.Imap
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GEmailSettingsImap -UserName $SomeUserNameString</code>
+    ///   <code>PS C:\> Get-GEmailSettingsImap -UserName $SomeUserNameString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -694,7 +694,7 @@ namespace gShell.Cmdlets.Emailsettings.Imap
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GEmailSettingsImap -UserName $SomeUserNameString</code>
+    ///   <code>PS C:\> Set-GEmailSettingsImap -UserName $SomeUserNameString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -750,7 +750,7 @@ namespace gShell.Cmdlets.Emailsettings.Label
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GEmailSettingsLabel -UserName $SomeUserNameString</code>
+    ///   <code>PS C:\> Get-GEmailSettingsLabel -UserName $SomeUserNameString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -789,7 +789,7 @@ namespace gShell.Cmdlets.Emailsettings.Label
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GEmailSettingsLabel -UserName $SomeUserNameString</code>
+    ///   <code>PS C:\> New-GEmailSettingsLabel -UserName $SomeUserNameString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -842,7 +842,7 @@ namespace gShell.Cmdlets.Emailsettings.Label
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GEmailSettingsLabel -UserName $SomeUserNameString</code>
+    ///   <code>PS C:\> Remove-GEmailSettingsLabel -UserName $SomeUserNameString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -923,12 +923,12 @@ namespace gShell.Cmdlets.Emailsettings.Language
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GEmailSettingsLanguage -UserName $SomeUserNameString -Language $SomeLanguageEnum</code>
+    ///   <code>PS C:\> Get-GEmailSettingsLanguage -UserName $SomeUserNameString -Language $SomeLanguageEnum</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GEmailSettingsLanguage -UserName $SomeUserNameString -LanguageAbbreviation $SomeLanguageAbbreviationEnum</code>
+    ///   <code>PS C:\> Get-GEmailSettingsLanguage -UserName $SomeUserNameString -LanguageAbbreviation $SomeLanguageAbbreviationEnum</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1142,7 +1142,7 @@ namespace gShell.Cmdlets.Emailsettings.Pop
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GEmailSettingsPop -UserName $SomeUserNameString</code>
+    ///   <code>PS C:\> Get-GEmailSettingsPop -UserName $SomeUserNameString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1181,7 +1181,7 @@ namespace gShell.Cmdlets.Emailsettings.Pop
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GEmailSettingsPop -UserName $SomeUserNameString -Enable $SomeEnableBool</code>
+    ///   <code>PS C:\> Get-GEmailSettingsPop -UserName $SomeUserNameString -Enable $SomeEnableBool</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1257,7 +1257,7 @@ namespace gShell.Cmdlets.Emailsettings.Signature
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GEmailSettingsSignature -UserName $SomeUserNameString</code>
+    ///   <code>PS C:\> Get-GEmailSettingsSignature -UserName $SomeUserNameString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1296,7 +1296,7 @@ namespace gShell.Cmdlets.Emailsettings.Signature
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GEmailSettingsSignature -UserName $SomeUserNameString -Signature $SomeSignatureString</code>
+    ///   <code>PS C:\> Set-GEmailSettingsSignature -UserName $SomeUserNameString -Signature $SomeSignatureString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1352,7 +1352,7 @@ namespace gShell.Cmdlets.Emailsettings.SendasAlias
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GEmailSettingsSendasAlias -UserName $SomeUserNameString</code>
+    ///   <code>PS C:\> Get-GEmailSettingsSendasAlias -UserName $SomeUserNameString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1391,7 +1391,7 @@ namespace gShell.Cmdlets.Emailsettings.SendasAlias
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GEmailSettingsSendasAlias -UserName $SomeUserNameString -Name $SomeNameString -Address $SomeAddressString</code>
+    ///   <code>PS C:\> New-GEmailSettingsSendasAlias -UserName $SomeUserNameString -Name $SomeNameString -Address $SomeAddressString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1477,7 +1477,7 @@ namespace gShell.Cmdlets.Emailsettings.VacationResponder
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GEmailSettingsVacationResponder -UserName $SomeUserNameString</code>
+    ///   <code>PS C:\> Get-GEmailSettingsVacationResponder -UserName $SomeUserNameString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1516,7 +1516,7 @@ namespace gShell.Cmdlets.Emailsettings.VacationResponder
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GEmailSettingsVacationResponder -UserName $SomeUserNameString -ContactsOnly $SomeContactsOnlyBool
+    ///   <code>PS C:\> Get-GEmailSettingsVacationResponder -UserName $SomeUserNameString -ContactsOnly $SomeContactsOnlyBool
     ///   -Enable $SomeEnableBool -EndDate $SomeEndDateTimeObject -Message $SomeMessageString -StartDate $SomeStartDateTimeObject -Subject $SomeSubjectString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
@@ -1632,7 +1632,7 @@ namespace gShell.Cmdlets.Emailsettings.WebClip
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GEmailSettingsWebClip -UserName $SomeUserNameString -Enable $SomeEnableBool</code>
+    ///   <code>PS C:\> Set-GEmailSettingsWebClip -UserName $SomeUserNameString -Enable $SomeEnableBool</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>

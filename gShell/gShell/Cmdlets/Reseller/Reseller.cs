@@ -17,7 +17,7 @@ namespace gShell.Cmdlets.Reseller
     /// Part of the gShell Project, relating to the Google Reseller API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GResellerCustomerObj</code>
+    ///   <code>PS C:\> New-GResellerCustomerObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -125,7 +125,7 @@ namespace gShell.Cmdlets.Reseller
     /// Part of the gShell Project, relating to the Google Reseller API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GResellerSubscriptionPlanDataObj</code>
+    ///   <code>PS C:\> New-GResellerSubscriptionPlanDataObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -193,7 +193,7 @@ namespace gShell.Cmdlets.Reseller
     /// Part of the gShell Project, relating to the Google Reseller API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GResellerSubscriptionObj</code>
+    ///   <code>PS C:\> New-GResellerSubscriptionObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -390,7 +390,7 @@ namespace gShell.Cmdlets.Reseller
     /// Part of the gShell Project, relating to the Google Reseller API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GResellerSubscriptionTransferInfoDataObj</code>
+    ///   <code>PS C:\> New-GResellerSubscriptionTransferInfoDataObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -447,7 +447,7 @@ namespace gShell.Cmdlets.Reseller
     /// Part of the gShell Project, relating to the Google Reseller API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GResellerRenewalSettingsObj</code>
+    ///   <code>PS C:\> New-GResellerRenewalSettingsObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -495,7 +495,7 @@ namespace gShell.Cmdlets.Reseller
     /// Part of the gShell Project, relating to the Google Reseller API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GResellerSubscriptionTrialSettingsDataObj</code>
+    ///   <code>PS C:\> New-GResellerSubscriptionTrialSettingsDataObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -553,7 +553,7 @@ namespace gShell.Cmdlets.Reseller
     /// Part of the gShell Project, relating to the Google Reseller API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GResellerSeatsObj</code>
+    ///   <code>PS C:\> New-GResellerSeatsObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -623,7 +623,7 @@ namespace gShell.Cmdlets.Reseller.Customers
     /// Part of the gShell Project, relating to the Google Reseller API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GResellerCustomer -CustomerId $SomeCustomerIdString</code>
+    ///   <code>PS C:\> Get-GResellerCustomer -CustomerId $SomeCustomerIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -666,7 +666,7 @@ namespace gShell.Cmdlets.Reseller.Customers
     /// Part of the gShell Project, relating to the Google Reseller API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GResellerCustomer -CustomerId $SomeCustomerIdString -CustomerBody $SomeCustomerObj</code>
+    ///   <code>PS C:\> Set-GResellerCustomer -CustomerId $SomeCustomerIdString -CustomerBody $SomeCustomerObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -898,7 +898,7 @@ namespace gShell.Cmdlets.Reseller.Customers
     /// Part of the gShell Project, relating to the Google Reseller API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GResellerCustomer -CustomerBody $SomeCustomerObj</code>
+    ///   <code>PS C:\> New-GResellerCustomer -CustomerBody $SomeCustomerObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1146,7 +1146,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
     /// Part of the gShell Project, relating to the Google Reseller API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Enable-GResellerSubscription -CustomerId $SomeCustomerIdString -SubscriptionId $SomeSubscriptionIdString</code>
+    ///   <code>PS C:\> Enable-GResellerSubscription -CustomerId $SomeCustomerIdString -SubscriptionId $SomeSubscriptionIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1197,7 +1197,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
     /// Part of the gShell Project, relating to the Google Reseller API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GResellerSubscriptionPlan -CustomerId $SomeCustomerIdString -SubscriptionId $SomeSubscriptionIdString -PlanName $SomePlanName -NumberOfSeats $SomeNumberOfSeatsInt -MaximumNumberOfSeats $SomeMaximumNumberOfSeatsInt -LicensedNumberOfSeats $SomeLicensedNumberOfSeatsInt</code>
+    ///   <code>PS C:\> Set-GResellerSubscriptionPlan -CustomerId $SomeCustomerIdString -SubscriptionId $SomeSubscriptionIdString -PlanName $SomePlanName -NumberOfSeats $SomeNumberOfSeatsInt -MaximumNumberOfSeats $SomeMaximumNumberOfSeatsInt -LicensedNumberOfSeats $SomeLicensedNumberOfSeatsInt</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1325,7 +1325,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
     /// Part of the gShell Project, relating to the Google Reseller API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GResellerSubscriptionRenewal -CustomerId $SomeCustomerIdString -SubscriptionId $SomeSubscriptionIdString -RenewalSettingsBody $SomeRenewalSettingsObj</code>
+    ///   <code>PS C:\> Set-GResellerSubscriptionRenewal -CustomerId $SomeCustomerIdString -SubscriptionId $SomeSubscriptionIdString -RenewalSettingsBody $SomeRenewalSettingsObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1398,7 +1398,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
     /// Part of the gShell Project, relating to the Google Reseller API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GResellerSubscriptionSeats -CustomerId $SomeCustomerIdString -SubscriptionId $SomeSubscriptionIdString -NumberOfSeats $SomeNumberOfSeatsInt -MaximumNumberOfSeats $SomeMaximumNumberOfSeatsInt</code>
+    ///   <code>PS C:\> Set-GResellerSubscriptionSeats -CustomerId $SomeCustomerIdString -SubscriptionId $SomeSubscriptionIdString -NumberOfSeats $SomeNumberOfSeatsInt -MaximumNumberOfSeats $SomeMaximumNumberOfSeatsInt</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1475,7 +1475,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
     /// Part of the gShell Project, relating to the Google Reseller API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GResellerSubscription -CustomerId $SomeCustomerIdString -SubscriptionId $SomeSubscriptionIdString -DeletionType Cancel</code>
+    ///   <code>PS C:\> Remove-GResellerSubscription -CustomerId $SomeCustomerIdString -SubscriptionId $SomeSubscriptionIdString -DeletionType Cancel</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1565,12 +1565,12 @@ namespace gShell.Cmdlets.Reseller.Subscription
     /// Part of the gShell Project, relating to the Google Reseller API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GResellerSubscription -CustomerId $SomeCustomerIdString -SubscriptionId $SomeSubscriptionIdString</code>
+    ///   <code>PS C:\> Get-GResellerSubscription -CustomerId $SomeCustomerIdString -SubscriptionId $SomeSubscriptionIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GResellerSubscription -CustomerAuthToken $SomeCustomerAuthTokenString</code>
+    ///   <code>PS C:\> Get-GResellerSubscription -CustomerAuthToken $SomeCustomerAuthTokenString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1682,7 +1682,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
     /// Part of the gShell Project, relating to the Google Reseller API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GResellerSubscription -CustomerId $SomeCustomerIdString -SubscriptionBody $SomeSubscriptionObj</code>
+    ///   <code>PS C:\> New-GResellerSubscription -CustomerId $SomeCustomerIdString -SubscriptionBody $SomeSubscriptionObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2054,7 +2054,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
     /// Part of the gShell Project, relating to the Google Reseller API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Suspend-GResellerSubscription -CustomerId $SomeCustomerIdString -SubscriptionId $SomeSubscriptionIdString</code>
+    ///   <code>PS C:\> Suspend-GResellerSubscription -CustomerId $SomeCustomerIdString -SubscriptionId $SomeSubscriptionIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>

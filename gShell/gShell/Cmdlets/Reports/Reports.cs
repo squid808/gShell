@@ -20,7 +20,7 @@ namespace gShell.Cmdlets.Reports
     /// Part of the gShell Project, relating to the Google Reports API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GRepChannelObj</code>
+    ///   <code>PS C:\> New-GRepChannelObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -149,7 +149,7 @@ namespace gShell.Cmdlets.Reports.GRepUserUsageReport
     /// Part of the gShell Project, relating to the Google Reports API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GRepUserUsageReport -UserKey $SomeUserKeyString -Date $SomeDateString</code>
+    ///   <code>PS C:\> Get-GRepUserUsageReport -UserKey $SomeUserKeyString -Date $SomeDateString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -269,7 +269,7 @@ namespace gShell.Cmdlets.Reports.GRepCustomerUsageReport
     /// Part of the gShell Project, relating to the Google Reports API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GRepCustomerUsageReport -Date $SomeDateString</code>
+    ///   <code>PS C:\> Get-GRepCustomerUsageReport -Date $SomeDateString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -373,7 +373,7 @@ namespace gShell.Cmdlets.Reports.GRepChannel
     /// Part of the gShell Project, relating to the Google Reports API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Stop-GRepChannel -ChannelBody $SomeChannelObj</code>
+    ///   <code>PS C:\> Stop-GRepChannel -ChannelBody $SomeChannelObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -458,7 +458,7 @@ namespace gShell.Cmdlets.Reports.GRepActivity
     /// Part of the gShell Project, relating to the Google Reports API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Watch-GRepActivity -UserKey $SomeUserKeyString -ApplicationName $SomeApplicationNameString -ChannelBody $SomeChannelObj</code>
+    ///   <code>PS C:\> Watch-GRepActivity -UserKey $SomeUserKeyString -ApplicationName $SomeApplicationNameString -ChannelBody $SomeChannelObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -639,7 +639,7 @@ namespace gShell.Cmdlets.Reports.GRepActivity
     /// Part of the gShell Project, relating to the Google Reports API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GRepActivity -UserKey $SomeUserKeyString -ApplicationName $SomeApplicationNameString</code>
+    ///   <code>PS C:\> Get-GRepActivity -UserKey $SomeUserKeyString -ApplicationName $SomeApplicationNameString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>

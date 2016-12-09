@@ -60,7 +60,7 @@ namespace gShell.Cmdlets.Adminsettings.DefaultLanguage
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAdminSettingsDefaultLanguage</code>
+    ///   <code>PS C:\> Get-GAdminSettingsDefaultLanguage</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -88,12 +88,12 @@ namespace gShell.Cmdlets.Adminsettings.DefaultLanguage
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GAdminSettingsDefaultLanguage -DefaultLanguage English_United_States</code>
+    ///   <code>PS C:\> Set-GAdminSettingsDefaultLanguage -DefaultLanguage English_United_States</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Set-GAdminSettingsDefaultLanguage -LanguageAbbreviation en_US</code>
+    ///   <code>PS C:\> Set-GAdminSettingsDefaultLanguage -LanguageAbbreviation en_US</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -158,7 +158,7 @@ namespace gShell.Cmdlets.Adminsettings.OrganizationName
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAdminSettingsOrganizationName</code>
+    ///   <code>PS C:\> Get-GAdminSettingsOrganizationName</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -186,7 +186,7 @@ namespace gShell.Cmdlets.Adminsettings.OrganizationName
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GAdminSettingsOrganizationName -OrganizationName $SomeOrganizationNameString</code>
+    ///   <code>PS C:\> Set-GAdminSettingsOrganizationName -OrganizationName $SomeOrganizationNameString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -233,7 +233,7 @@ namespace gShell.Cmdlets.Adminsettings.MaximumUsers
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAdminSettingsMaximumUsers</code>
+    ///   <code>PS C:\> Get-GAdminSettingsMaximumUsers</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -264,7 +264,7 @@ namespace gShell.Cmdlets.Adminsettings.CurrentUsers
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAdminSettingsCurrentUsers</code>
+    ///   <code>PS C:\> Get-GAdminSettingsCurrentUsers</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -295,7 +295,7 @@ namespace gShell.Cmdlets.Adminsettings.ProductVersion
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAdminSettingsProductVersion</code>
+    ///   <code>PS C:\> Get-GAdminSettingsProductVersion</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -326,7 +326,7 @@ namespace gShell.Cmdlets.Adminsettings.CustomerPin
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAdminSettingsCustomerPin</code>
+    ///   <code>PS C:\> Get-GAdminSettingsCustomerPin</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -357,7 +357,7 @@ namespace gShell.Cmdlets.Adminsettings.CreationTime
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAdminSettingsCreationTime</code>
+    ///   <code>PS C:\> Get-GAdminSettingsCreationTime</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -388,7 +388,7 @@ namespace gShell.Cmdlets.Adminsettings.CountryCode
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAdminSettingsCountryCode</code>
+    ///   <code>PS C:\> Get-GAdminSettingsCountryCode</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -419,7 +419,7 @@ namespace gShell.Cmdlets.Adminsettings.AdminSecondaryEmail
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAdminSettingsAdminSecondaryEmail</code>
+    ///   <code>PS C:\> Get-GAdminSettingsAdminSecondaryEmail</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -447,7 +447,7 @@ namespace gShell.Cmdlets.Adminsettings.AdminSecondaryEmail
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GAdminSettingsAdminSecondaryEmail -AdminSecondaryEmail $SomeSecondaryEmailString</code>
+    ///   <code>PS C:\> Set-GAdminSettingsAdminSecondaryEmail -AdminSecondaryEmail $SomeSecondaryEmailString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -496,7 +496,7 @@ namespace gShell.Cmdlets.Adminsettings.CustomLogo
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GAdminSettingsCustomLogo -Path $SomeFilePath</code>
+    ///   <code>PS C:\> Set-GAdminSettingsCustomLogo -Path $SomeFilePath</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -544,7 +544,7 @@ namespace gShell.Cmdlets.Adminsettings.MxVerificationRecords
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAdminSettingsMxVerificationRecords</code>
+    ///   <code>PS C:\> Get-GAdminSettingsMxVerificationRecords</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -572,7 +572,7 @@ namespace gShell.Cmdlets.Adminsettings.MxVerificationRecords
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GAdminSettingsMxVerificationRecords -Verified</code>
+    ///   <code>PS C:\> Set-GAdminSettingsMxVerificationRecords -Verified</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -624,7 +624,7 @@ namespace gShell.Cmdlets.Adminsettings.SsoSettings
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAdminSettingsSsoSettings</code>
+    ///   <code>PS C:\> Get-GAdminSettingsSsoSettings</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -652,7 +652,7 @@ namespace gShell.Cmdlets.Adminsettings.SsoSettings
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GAdminSettingsSsoSettings -SamlSignonUri $SomeSamlSignonUriString -SamlLogoutUri $SomeSamlLogoutUriString
+    ///   <code>PS C:\> Set-GAdminSettingsSsoSettings -SamlSignonUri $SomeSamlSignonUriString -SamlLogoutUri $SomeSamlLogoutUriString
     ///     -UseDomainSpecificIssuer $SomeUseDomainSpecificIssuerBool -ChangePasswordUri $SomeChangePasswordUriString -EnableSSO
     ///     $SomeEnableSSOBool -SsoWhitelist $SomeSsoWhitelistString -UseDomainSpecificIssuer $SomeUseDomainSpecificIssuerBool</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
@@ -757,7 +757,7 @@ namespace gShell.Cmdlets.Adminsettings.SsoSigningKey
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAdminSettingsSsoSigningKey</code>
+    ///   <code>PS C:\> Get-GAdminSettingsSsoSigningKey</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -785,7 +785,7 @@ namespace gShell.Cmdlets.Adminsettings.SsoSigningKey
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GAdminSettingsSsoSigningKey -SigningKey $SomeSigningKeyString</code>
+    ///   <code>PS C:\> Set-GAdminSettingsSsoSigningKey -SigningKey $SomeSigningKeyString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -832,7 +832,7 @@ namespace gShell.Cmdlets.Adminsettings.EmailGateway
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAdminSettingsEmailGateway</code>
+    ///   <code>PS C:\> Get-GAdminSettingsEmailGateway</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -860,7 +860,7 @@ namespace gShell.Cmdlets.Adminsettings.EmailGateway
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GAdminSettingsEmailGateway -SmartHost $SomeSmartHostString -SmtpMode SMTP</code>
+    ///   <code>PS C:\> Set-GAdminSettingsEmailGateway -SmartHost $SomeSmartHostString -SmtpMode SMTP</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -917,7 +917,7 @@ namespace gShell.Cmdlets.Adminsettings.EmailRouting
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GAdminSettingsEmailRouting -RouteDestination $SomeRouteDestinationString -RouteRewriteTo $SomeRouteRewriteToBool
+    ///   <code>PS C:\> Set-GAdminSettingsEmailRouting -RouteDestination $SomeRouteDestinationString -RouteRewriteTo $SomeRouteRewriteToBool
     ///     -RouteEnabled $SomeRouteEnabledBool -BounceNotifications $SomeBounceNotificationsBool -AccountHandling allAccounts</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>

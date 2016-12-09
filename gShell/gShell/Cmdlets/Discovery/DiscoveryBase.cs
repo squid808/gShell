@@ -54,7 +54,7 @@ namespace gShell.Cmdlets.Discovery
     /// Part of the gShell Project, relating to the Google Discovery API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GDiscoveryList</code>
+    ///   <code>PS C:\> Get-GDiscoveryList</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -115,7 +115,7 @@ namespace gShell.Cmdlets.Discovery
     /// Part of the gShell Project, relating to the Google Discovery API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GDiscoveryRestData -Api $SomeApiString -Version $SomeVersionString</code>
+    ///   <code>PS C:\> Get-GDiscoveryRestData -Api $SomeApiString -Version $SomeVersionString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>

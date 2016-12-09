@@ -22,7 +22,7 @@ namespace gShell.Cmdlets.Directory
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GAAliasObj</code>
+    ///   <code>PS C:\> New-GAAliasObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -89,7 +89,7 @@ namespace gShell.Cmdlets.Directory
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GACalendarResourceObj</code>
+    ///   <code>PS C:\> New-GACalendarResourceObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -186,7 +186,7 @@ namespace gShell.Cmdlets.Directory
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GACustomerObj</code>
+    ///   <code>PS C:\> New-GACustomerObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -293,7 +293,7 @@ namespace gShell.Cmdlets.Directory
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GADomainAliasObj</code>
+    ///   <code>PS C:\> New-GADomainAliasObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -370,7 +370,7 @@ namespace gShell.Cmdlets.Directory
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GADomainsObj</code>
+    ///   <code>PS C:\> New-GADomainsObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -457,7 +457,7 @@ namespace gShell.Cmdlets.Directory
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GACustomerPostalAddressObj</code>
+    ///   <code>PS C:\> New-GACustomerPostalAddressObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -584,7 +584,7 @@ namespace gShell.Cmdlets.Directory
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GARoleObj</code>
+    ///   <code>PS C:\> New-GARoleObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -682,7 +682,7 @@ namespace gShell.Cmdlets.Directory
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GARoleAssignmentObj</code>
+    ///   <code>PS C:\> New-GARoleAssignmentObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -769,7 +769,7 @@ namespace gShell.Cmdlets.Directory
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GASchemaObj</code>
+    ///   <code>PS C:\> New-GASchemaObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -837,7 +837,7 @@ namespace gShell.Cmdlets.Directory
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GASchemaFieldSpecObj</code>
+    ///   <code>PS C:\> New-GASchemaFieldSpecObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -944,7 +944,7 @@ namespace gShell.Cmdlets.Directory
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GAUserObj</code>
+    ///   <code>PS C:\> New-GAUserObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1312,7 +1312,7 @@ namespace gShell.Cmdlets.Directory
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GAUserAddressObj</code>
+    ///   <code>PS C:\> New-GAUserAddressObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1480,7 +1480,7 @@ namespace gShell.Cmdlets.Directory
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GAUserEmailObj</code>
+    ///   <code>PS C:\> New-GAUserEmailObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1558,7 +1558,7 @@ namespace gShell.Cmdlets.Directory
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GAUserExternalIdObj</code>
+    ///   <code>PS C:\> New-GAUserExternalIdObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1626,7 +1626,7 @@ namespace gShell.Cmdlets.Directory
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GAUserImObj</code>
+    ///   <code>PS C:\> New-GAUserImObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1724,7 +1724,7 @@ namespace gShell.Cmdlets.Directory
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GAUserNameObj</code>
+    ///   <code>PS C:\> New-GAUserNameObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1792,7 +1792,7 @@ namespace gShell.Cmdlets.Directory
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GAUserOrganizationObj</code>
+    ///   <code>PS C:\> New-GAUserOrganizationObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1940,7 +1940,7 @@ namespace gShell.Cmdlets.Directory
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GAUserPhoneObj</code>
+    ///   <code>PS C:\> New-GAUserPhoneObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2018,7 +2018,7 @@ namespace gShell.Cmdlets.Directory
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GAUserRelationObj</code>
+    ///   <code>PS C:\> New-GAUserRelationObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2086,7 +2086,7 @@ namespace gShell.Cmdlets.Directory
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GAUserWebsiteObj</code>
+    ///   <code>PS C:\> New-GAUserWebsiteObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2166,12 +2166,12 @@ namespace gShell.Cmdlets.Directory.GAAsp
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAAsp -UserKey $SomeUserKeyString -CodeId $SomeCodeId</code>
+    ///   <code>PS C:\> Get-GAAsp -UserKey $SomeUserKeyString -CodeId $SomeCodeId</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GAAsp -UserKey $SomeUserKeyString -All</code>
+    ///   <code>PS C:\> Get-GAAsp -UserKey $SomeUserKeyString -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2242,7 +2242,7 @@ namespace gShell.Cmdlets.Directory.GAAsp
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GAAsp -UserKey $SomeUserKeyString -CodeId $SomeCodeId</code>
+    ///   <code>PS C:\> Remove-GAAsp -UserKey $SomeUserKeyString -CodeId $SomeCodeId</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2325,7 +2325,7 @@ namespace gShell.Cmdlets.Directory.GAChannel
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Stop-GAChannel -Id $SomeIdString -ResourceId $SomeResourceIdString</code>
+    ///   <code>PS C:\> Stop-GAChannel -Id $SomeIdString -ResourceId $SomeResourceIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2409,12 +2409,12 @@ namespace gShell.Cmdlets.Directory.GAChromeosdevice
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAChromeosdevice -DeviceId $SomeDeviceIdString</code>
+    ///   <code>PS C:\> Get-GAChromeosdevice -DeviceId $SomeDeviceIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>List-GAChromeosdevice -All</code>
+    ///   <code>PS C:\> List-GAChromeosdevice -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2542,7 +2542,7 @@ namespace gShell.Cmdlets.Directory.GAChromeosdevice
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GAChromeosdevice -CustomerId $SomeCustomerIdString -DeviceId $SomeDeviceIdString -ChromeOsDeviceBody $SomeChromeOsDeviceObj</code>
+    ///   <code>PS C:\> Set-GAChromeosdevice -CustomerId $SomeCustomerIdString -DeviceId $SomeDeviceIdString -ChromeOsDeviceBody $SomeChromeOsDeviceObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2664,7 +2664,7 @@ namespace gShell.Cmdlets.Directory.GACustomer
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GACustomer -CustomerKey $SomeCustomerKeyString</code>
+    ///   <code>PS C:\> Get-GACustomer -CustomerKey $SomeCustomerKeyString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2704,7 +2704,7 @@ namespace gShell.Cmdlets.Directory.GACustomer
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GACustomers -CustomerKey $SomeCustomerKeyString -CustomerBody $SomeCustomerObj</code>
+    ///   <code>PS C:\> Set-GACustomers -CustomerKey $SomeCustomerKeyString -CustomerBody $SomeCustomerObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2758,7 +2758,7 @@ namespace gShell.Cmdlets.Directory.GADomainAlias
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GADomainAlias -Customer $SomeCustomerString -DomainAliasName $SomeDomainAliasNameString</code>
+    ///   <code>PS C:\> Remove-GADomainAlias -Customer $SomeCustomerString -DomainAliasName $SomeDomainAliasNameString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2838,12 +2838,12 @@ namespace gShell.Cmdlets.Directory.GADomainAlias
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GADomainAlias -Customer $SomeCustomerString -DomainAliasName $SomeDomainAliasNameString</code>
+    ///   <code>PS C:\> Get-GADomainAlias -Customer $SomeCustomerString -DomainAliasName $SomeDomainAliasNameString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GADomainAlias -Customer $SomeCustomerString</code>
+    ///   <code>PS C:\> Get-GADomainAlias -Customer $SomeCustomerString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2927,7 +2927,7 @@ namespace gShell.Cmdlets.Directory.GADomainAlias
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GADomainAlias -Customer $SomeCustomerString -DomainAliasBody $SomeDomainAliasObj</code>
+    ///   <code>PS C:\> New-GADomainAlias -Customer $SomeCustomerString -DomainAliasBody $SomeDomainAliasObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2982,7 +2982,7 @@ namespace gShell.Cmdlets.Directory.GADomain
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GADomain -Customer $SomeCustomerString -DomainName $SomeDomainNameString</code>
+    ///   <code>PS C:\> Remove-GADomain -Customer $SomeCustomerString -DomainName $SomeDomainNameString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3063,12 +3063,12 @@ namespace gShell.Cmdlets.Directory.GADomain
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GADomain -Customer $SomeCustomerString -DomainName $SomeDomainNameString</code>
+    ///   <code>PS C:\> Get-GADomain -Customer $SomeCustomerString -DomainName $SomeDomainNameString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GADomain -Customer $SomeCustomerString</code>
+    ///   <code>PS C:\> Get-GADomain -Customer $SomeCustomerString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3138,7 +3138,7 @@ namespace gShell.Cmdlets.Directory.GADomain
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GADomain -Customer $SomeCustomerString -DomainBody $SomeDomainObj</code>
+    ///   <code>PS C:\> New-GADomain -Customer $SomeCustomerString -DomainBody $SomeDomainObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3195,17 +3195,17 @@ namespace gShell.Cmdlets.Directory.GAGroup
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAGroup -Email $SomeGroupNameString</code>
+    ///   <code>PS C:\> Get-GAGroup -Email $SomeGroupNameString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GAGroup -All</code>
+    ///   <code>PS C:\> Get-GAGroup -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GAGroup -UserName $SomeUserNameString</code>
+    ///   <code>PS C:\> Get-GAGroup -UserName $SomeUserNameString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3348,7 +3348,7 @@ namespace gShell.Cmdlets.Directory.GAGroup
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GAGroup -GroupBody $SomeGroupObj</code>
+    ///   <code>PS C:\> New-GAGroup -GroupBody $SomeGroupObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3428,7 +3428,7 @@ namespace gShell.Cmdlets.Directory.GAGroup
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GAGroup -GroupKey $SomeGroupKeyString</code>
+    ///   <code>PS C:\> Remove-GAGroup -GroupKey $SomeGroupKeyString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3532,7 +3532,7 @@ namespace gShell.Cmdlets.Directory.GAGroup
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GAGroup -GroupKey $SomeGroupKeyString -GroupBody $SomeGroupObj</code>
+    ///   <code>PS C:\> Set-GAGroup -GroupKey $SomeGroupKeyString -GroupBody $SomeGroupObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3639,7 +3639,7 @@ namespace gShell.Cmdlets.Directory.GAGroupAlias
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GAUserAlias -GroupKey $SomeGroupKeyString -Alias $SomeAliasString</code>
+    ///   <code>PS C:\> Remove-GAUserAlias -GroupKey $SomeGroupKeyString -Alias $SomeAliasString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3718,7 +3718,7 @@ namespace gShell.Cmdlets.Directory.GAGroupAlias
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GAGroupAlias -GroupKey $SomeGroupKeyString -AliasBody $SomeAliasObj</code>
+    ///   <code>PS C:\> New-GAGroupAlias -GroupKey $SomeGroupKeyString -AliasBody $SomeAliasObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3769,7 +3769,7 @@ namespace gShell.Cmdlets.Directory.GAGroupAlias
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAGroupAlias -GroupKey $SomeGroupKeyString</code>
+    ///   <code>PS C:\> Get-GAGroupAlias -GroupKey $SomeGroupKeyString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3814,7 +3814,7 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Add-GAGroupMembers -GroupKey $SomeGroupKeyString -MemberBody $SomeMemberObj</code>
+    ///   <code>PS C:\> Add-GAGroupMembers -GroupKey $SomeGroupKeyString -MemberBody $SomeMemberObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3883,17 +3883,17 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAGroupMember -GroupName $SomeGroupNameString </code>
+    ///   <code>PS C:\> Get-GAGroupMember -GroupName $SomeGroupNameString </code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GAGroupMember -GroupName $SomeGroupNameString -UserName $SomeUserNameString</code>
+    ///   <code>PS C:\> Get-GAGroupMember -GroupName $SomeGroupNameString -UserName $SomeUserNameString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GAGroupMember -All</code>
+    ///   <code>PS C:\> Get-GAGroupMember -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -4174,7 +4174,7 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GAMembes -GroupName $SomeGroupNameString -MemberKey $SomeMemberKeyString</code>
+    ///   <code>PS C:\> Remove-GAMembes -GroupName $SomeGroupNameString -MemberKey $SomeMemberKeyString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -4260,7 +4260,7 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GAMembers -GroupKey $SomeGroupKeyString -MemberKey $SomeMemberKeyString -MemberBody $SomeMemberObj</code>
+    ///   <code>PS C:\> Set-GAMembers -GroupKey $SomeGroupKeyString -MemberKey $SomeMemberKeyString -MemberBody $SomeMemberObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -4336,12 +4336,12 @@ namespace gShell.Cmdlets.Directory.GAMobileDevice
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAMobiledevice -CustomerId $SomeCustomerIdString -ResourceId $SomeResourceIdString</code>
+    ///   <code>PS C:\> Get-GAMobiledevice -CustomerId $SomeCustomerIdString -ResourceId $SomeResourceIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GAMobiledevice -All</code>
+    ///   <code>PS C:\> Get-GAMobiledevice -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -4473,7 +4473,7 @@ namespace gShell.Cmdlets.Directory.GAMobileDevice
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GAMobiledevice -CustomerId $SomeCustomerIdString -ResourceId $SomeResourceIdString</code>
+    ///   <code>PS C:\> Remove-GAMobiledevice -CustomerId $SomeCustomerIdString -ResourceId $SomeResourceIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -4558,7 +4558,7 @@ namespace gShell.Cmdlets.Directory.GAMobileDevice
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Invoke-GAMobiledevice -CustomerId $SomeCustomerIdString -ResourceId $SomeResourceIdString -MobileDeviceActionBody $SomeMobileDeviceActionObj</code>
+    ///   <code>PS C:\> Invoke-GAMobiledevice -CustomerId $SomeCustomerIdString -ResourceId $SomeResourceIdString -MobileDeviceActionBody $SomeMobileDeviceActionObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -4632,12 +4632,12 @@ namespace gShell.Cmdlets.Directory.GANotification
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GANotification -Customer $SomeCustomerString -NotificationId $SomeNotificationIdString</code>
+    ///   <code>PS C:\> Get-GANotification -Customer $SomeCustomerString -NotificationId $SomeNotificationIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GANotifications -Customer $SomeCustomerString -All</code>
+    ///   <code>PS C:\> Get-GANotifications -Customer $SomeCustomerString -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -4734,7 +4734,7 @@ namespace gShell.Cmdlets.Directory.GANotification
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GANotification -Customer $SomeCustomerString -NotificationId $SomeNotificationIdString</code>
+    ///   <code>PS C:\> Remove-GANotification -Customer $SomeCustomerString -NotificationId $SomeNotificationIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -4815,7 +4815,7 @@ namespace gShell.Cmdlets.Directory.GANotification
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GANotification -Customer $SomeCustomerString -NotificationId $SomeNotificationIdString -NotificationBody $SomeNotificationObj</code>
+    ///   <code>PS C:\> Set-GANotification -Customer $SomeCustomerString -NotificationId $SomeNotificationIdString -NotificationBody $SomeNotificationObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -4885,12 +4885,12 @@ namespace gShell.Cmdlets.Directory.GAOrgUnit
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAOrgUnit -CustomerId $SomeCustomerIdString -OrgUnitPath @("some","strings")</code>
+    ///   <code>PS C:\> Get-GAOrgUnit -CustomerId $SomeCustomerIdString -OrgUnitPath @("some","strings")</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GAOrgUnit -CustomerId $SomeCustomerIdString -All</code>
+    ///   <code>PS C:\> Get-GAOrgUnit -CustomerId $SomeCustomerIdString -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -4981,7 +4981,7 @@ namespace gShell.Cmdlets.Directory.GAOrgUnit
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GAOrgUnit -CustomerId $SomeCustomerIdString -OrgUnitPath @("some","strings")</code>
+    ///   <code>PS C:\> Remove-GAOrgUnit -CustomerId $SomeCustomerIdString -OrgUnitPath @("some","strings")</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -5062,7 +5062,7 @@ namespace gShell.Cmdlets.Directory.GAOrgUnit
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GAOrgUnit -CustomerId $SomeCustomerIdString -OrgUnitPath $SomeOrgUnitPathString</code>
+    ///   <code>PS C:\> Set-GAOrgUnit -CustomerId $SomeCustomerIdString -OrgUnitPath $SomeOrgUnitPathString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -5177,7 +5177,7 @@ namespace gShell.Cmdlets.Directory.GAOrgUnit
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GAOrgUnit -CustomerId $SomeCustomerIdString</code>
+    ///   <code>PS C:\> New-GAOrgUnit -CustomerId $SomeCustomerIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -5270,7 +5270,7 @@ namespace gShell.Cmdlets.Directory.GAPrivilege
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAPrivilege -Customer $SomeCustomerString</code>
+    ///   <code>PS C:\> Get-GAPrivilege -Customer $SomeCustomerString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -5317,7 +5317,7 @@ namespace gShell.Cmdlets.Directory.GACalendar
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GACalendar -Customer $SomeCustomerString -CalendarResourceId $SomeCalendarResourceIdString</code>
+    ///   <code>PS C:\> Remove-GACalendar -Customer $SomeCustomerString -CalendarResourceId $SomeCalendarResourceIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -5397,12 +5397,12 @@ namespace gShell.Cmdlets.Directory.GACalendar
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GACalendar -CalendarResourceId $SomeCalendarResourceIdString</code>
+    ///   <code>PS C:\> Get-GACalendar -CalendarResourceId $SomeCalendarResourceIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GACalendar -All</code>
+    ///   <code>PS C:\> Get-GACalendar -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -5486,7 +5486,7 @@ namespace gShell.Cmdlets.Directory.GACalendar
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GACalendar -Customer $SomeCustomerString -CalendarResourceBody $SomeCalendarResourceObj</code>
+    ///   <code>PS C:\> New-GACalendar -Customer $SomeCustomerString -CalendarResourceBody $SomeCalendarResourceObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -5541,7 +5541,7 @@ namespace gShell.Cmdlets.Directory.GACalendar
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GACalendar -Customer $SomeCustomerString -CalendarResourceId $SomeCalendarResourceIdString -CalendarResourceBody $SomeCalendarResourceObj</code>
+    ///   <code>PS C:\> Set-GACalendar -Customer $SomeCustomerString -CalendarResourceId $SomeCalendarResourceIdString -CalendarResourceBody $SomeCalendarResourceObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -5606,7 +5606,7 @@ namespace gShell.Cmdlets.Directory.GARole
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GARole -Customer $SomeCustomerString -RoleId $SomeRoleIdString</code>
+    ///   <code>PS C:\> Remove-GARole -Customer $SomeCustomerString -RoleId $SomeRoleIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -5687,12 +5687,12 @@ namespace gShell.Cmdlets.Directory.GARole
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GARole -Customer $SomeCustomerString -RoleId $SomeRoleIdString</code>
+    ///   <code>PS C:\> Get-GARole -Customer $SomeCustomerString -RoleId $SomeRoleIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>List-GARole -Customer $SomeCustomerString -All</code>
+    ///   <code>PS C:\> List-GARole -Customer $SomeCustomerString -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -5776,7 +5776,7 @@ namespace gShell.Cmdlets.Directory.GARole
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GARole -Customer $SomeCustomerString -RoleBody $SomeRoleObj</code>
+    ///   <code>PS C:\> New-GARole -Customer $SomeCustomerString -RoleBody $SomeRoleObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -5830,7 +5830,7 @@ namespace gShell.Cmdlets.Directory.GARole
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GARole -Customer $SomeCustomerString -RoleId $SomeRoleIdString -RoleBody $SomeRoleObj</code>
+    ///   <code>PS C:\> Set-GARole -Customer $SomeCustomerString -RoleId $SomeRoleIdString -RoleBody $SomeRoleObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -5897,7 +5897,7 @@ namespace gShell.Cmdlets.Directory.GARoleAssignment
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GARoleAssignment -Customer $SomeCustomerString -RoleAssignmentId $SomeRoleAssignmentIdString</code>
+    ///   <code>PS C:\> Remove-GARoleAssignment -Customer $SomeCustomerString -RoleAssignmentId $SomeRoleAssignmentIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -5949,12 +5949,12 @@ namespace gShell.Cmdlets.Directory.GARoleAssignment
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GARoleAssignment -Customer $SomeCustomerString -RoleAssignmentId $SomeRoleAssignmentIdString</code>
+    ///   <code>PS C:\> Get-GARoleAssignment -Customer $SomeCustomerString -RoleAssignmentId $SomeRoleAssignmentIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GARoleAssignment -Customer $SomeCustomerString -All</code>
+    ///   <code>PS C:\> Get-GARoleAssignment -Customer $SomeCustomerString -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -6062,7 +6062,7 @@ namespace gShell.Cmdlets.Directory.GARoleAssignment
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GARoleAssignment -Customer $SomeCustomerString -RoleAssignmentBody $SomeRoleAssignmentObj</code>
+    ///   <code>PS C:\> New-GARoleAssignment -Customer $SomeCustomerString -RoleAssignmentBody $SomeRoleAssignmentObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -6119,12 +6119,12 @@ namespace gShell.Cmdlets.Directory.GASchema
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GASchema -CustomerId $SomeCustomerIdString -SchemaKey $SomeSchemaKeyString</code>
+    ///   <code>PS C:\> Get-GASchema -CustomerId $SomeCustomerIdString -SchemaKey $SomeSchemaKeyString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GASchema -CustomerId $SomeCustomerIdString -All</code>
+    ///   <code>PS C:\> Get-GASchema -CustomerId $SomeCustomerIdString -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -6196,7 +6196,7 @@ namespace gShell.Cmdlets.Directory.GASchema
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GASchema -CustomerId $SomeCustomerIdString -SchemaKey $SomeSchemaKeyString</code>
+    ///   <code>PS C:\> Remove-GASchema -CustomerId $SomeCustomerIdString -SchemaKey $SomeSchemaKeyString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -6278,7 +6278,7 @@ namespace gShell.Cmdlets.Directory.GASchema
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GASchema -CustomerId $SomeCustomerIdString -SchemaKey $SomeSchemaKeyString -SchemaBody $SomeSchemaObj</code>
+    ///   <code>PS C:\> Set-GASchema -CustomerId $SomeCustomerIdString -SchemaKey $SomeSchemaKeyString -SchemaBody $SomeSchemaObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -6348,7 +6348,7 @@ namespace gShell.Cmdlets.Directory.GASchema
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GASchema -CustomerId $SomeCustomerIdString -SchemaBody $SomeSchemaObj</code>
+    ///   <code>PS C:\> New-GASchema -CustomerId $SomeCustomerIdString -SchemaBody $SomeSchemaObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -6775,12 +6775,12 @@ namespace gShell.Cmdlets.Directory.GAToken
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAToken -UserKey $SomeUserKeyString -ClientId $SomeClientIdString</code>
+    ///   <code>PS C:\> Get-GAToken -UserKey $SomeUserKeyString -ClientId $SomeClientIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GAToken -UserKey $SomeUserKeyString -All</code>
+    ///   <code>PS C:\> Get-GAToken -UserKey $SomeUserKeyString -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -6852,7 +6852,7 @@ namespace gShell.Cmdlets.Directory.GAToken
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GAToken -UserKey $SomeUserKeyString -ClientId $SomeClientIdString</code>
+    ///   <code>PS C:\> Remove-GAToken -UserKey $SomeUserKeyString -ClientId $SomeClientIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -6941,12 +6941,12 @@ namespace gShell.Cmdlets.Directory.GAUser
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAUser -UserKey $SomeUserKeyString</code>
+    ///   <code>PS C:\> Get-GAUser -UserKey $SomeUserKeyString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GAUser -All</code>
+    ///   <code>PS C:\> Get-GAUser -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -7174,7 +7174,7 @@ namespace gShell.Cmdlets.Directory.GAUser
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GAUser -UserBody $SomeUserObj</code>
+    ///   <code>PS C:\> New-GAUser -UserBody $SomeUserObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -7435,7 +7435,7 @@ namespace gShell.Cmdlets.Directory.GAUser
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GAUser -UserKey $SomeUserKeyString</code>
+    ///   <code>PS C:\> Remove-GAUser -UserKey $SomeUserKeyString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -7537,7 +7537,7 @@ namespace gShell.Cmdlets.Directory.GAUser
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Restore-GAUser -UserKey $SomeUserKeyString -UserUndeleteBody $SomeUserUndeleteObj</code>
+    ///   <code>PS C:\> Restore-GAUser -UserKey $SomeUserKeyString -UserUndeleteBody $SomeUserUndeleteObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -7604,7 +7604,7 @@ namespace gShell.Cmdlets.Directory.GAUser
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GAUser -UserKey $SomeUserKeyString -UserBody $SomeUserObj</code>
+    ///   <code>PS C:\> Set-GAUser -UserKey $SomeUserKeyString -UserBody $SomeUserObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -7916,7 +7916,7 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAUserAlias -UserKey $SomeUserKeyString</code>
+    ///   <code>PS C:\> Get-GAUserAlias -UserKey $SomeUserKeyString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -8061,7 +8061,7 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GAUserAlias -UserKey $SomeUserKeyString -AliasBody $SomeAliasObj</code>
+    ///   <code>PS C:\> New-GAUserAlias -UserKey $SomeUserKeyString -AliasBody $SomeAliasObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -8120,7 +8120,7 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GAUserAlias -UserKey $SomeUserKeyString -Alias $SomeAliasString</code>
+    ///   <code>PS C:\> Remove-GAUserAlias -UserKey $SomeUserKeyString -Alias $SomeAliasString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -8213,7 +8213,7 @@ namespace gShell.Cmdlets.Directory.GAUserPhoto
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAUserPhoto -UserKey $SomeUserKeyString</code>
+    ///   <code>PS C:\> Get-GAUserPhoto -UserKey $SomeUserKeyString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -8293,7 +8293,7 @@ namespace gShell.Cmdlets.Directory.GAUserPhoto
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GAUserPhoto -UserKey $SomeUserKeyString</code>
+    ///   <code>PS C:\> Remove-GAUserPhoto -UserKey $SomeUserKeyString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -8365,7 +8365,7 @@ namespace gShell.Cmdlets.Directory.GAUserPhoto
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GAUserPhoto -UserKey $SomeUserKeyString -UserPhotoBody $SomeUserPhotoObj</code>
+    ///   <code>PS C:\> Set-GAUserPhoto -UserKey $SomeUserKeyString -UserPhotoBody $SomeUserPhotoObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -10282,7 +10282,7 @@ namespace gShell.Cmdlets.Directory.GAVerificationCode
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAVerificationCode -UserKey $SomeUserKeyString</code>
+    ///   <code>PS C:\> Get-GAVerificationCode -UserKey $SomeUserKeyString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -10326,7 +10326,7 @@ namespace gShell.Cmdlets.Directory.GAVerificationCode
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Revoke-GAVerificationCode -UserKey $SomeUserKeyString</code>
+    ///   <code>PS C:\> Revoke-GAVerificationCode -UserKey $SomeUserKeyString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -10396,7 +10396,7 @@ namespace gShell.Cmdlets.Directory.GAVerificationCode
     /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GAVerificationCode -UserKey $SomeUserKeyString</code>
+    ///   <code>PS C:\> New-GAVerificationCode -UserKey $SomeUserKeyString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>

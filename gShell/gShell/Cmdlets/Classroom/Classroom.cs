@@ -44,7 +44,7 @@ namespace gShell.Cmdlets.Classroom
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GClassroomMultipleChoiceSubmissionObj</code>
+    ///   <code>PS C:\> New-GClassroomMultipleChoiceSubmissionObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -93,7 +93,7 @@ namespace gShell.Cmdlets.Classroom
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GClassroomShortAnswerSubmissionObj</code>
+    ///   <code>PS C:\> New-GClassroomShortAnswerSubmissionObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -141,7 +141,7 @@ namespace gShell.Cmdlets.Classroom
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GClassroomAttachmentObj</code>
+    ///   <code>PS C:\> New-GClassroomAttachmentObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -219,7 +219,7 @@ namespace gShell.Cmdlets.Classroom
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GClassroomTimeOfDayObj</code>
+    ///   <code>PS C:\> New-GClassroomTimeOfDayObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -297,7 +297,7 @@ namespace gShell.Cmdlets.Classroom
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GClassroomUserProfileObj</code>
+    ///   <code>PS C:\> New-GClassroomUserProfileObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -385,7 +385,7 @@ namespace gShell.Cmdlets.Classroom
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GClassroomCourseMaterialSetObj</code>
+    ///   <code>PS C:\> New-GClassroomCourseMaterialSetObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -443,7 +443,7 @@ namespace gShell.Cmdlets.Classroom
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GClassroomAssignmentSubmissionObj</code>
+    ///   <code>PS C:\> New-GClassroomAssignmentSubmissionObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -491,7 +491,7 @@ namespace gShell.Cmdlets.Classroom
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GClassroomFormObj</code>
+    ///   <code>PS C:\> New-GClassroomFormObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -569,7 +569,7 @@ namespace gShell.Cmdlets.Classroom
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GClassroomGuardianObj</code>
+    ///   <code>PS C:\> New-GClassroomGuardianObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -647,7 +647,7 @@ namespace gShell.Cmdlets.Classroom
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GClassroomMaterialObj</code>
+    ///   <code>PS C:\> New-GClassroomMaterialObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -725,7 +725,7 @@ namespace gShell.Cmdlets.Classroom
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GClassroomYouTubeVideoObj</code>
+    ///   <code>PS C:\> New-GClassroomYouTubeVideoObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -803,7 +803,7 @@ namespace gShell.Cmdlets.Classroom
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GClassroomDriveFileObj</code>
+    ///   <code>PS C:\> New-GClassroomDriveFileObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -881,7 +881,7 @@ namespace gShell.Cmdlets.Classroom
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GClassroomLinkObj</code>
+    ///   <code>PS C:\> New-GClassroomLinkObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -949,7 +949,7 @@ namespace gShell.Cmdlets.Classroom
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GClassroomStudentObj</code>
+    ///   <code>PS C:\> New-GClassroomStudentObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1027,7 +1027,7 @@ namespace gShell.Cmdlets.Classroom
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GClassroomDateObj</code>
+    ///   <code>PS C:\> New-GClassroomDateObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1095,7 +1095,7 @@ namespace gShell.Cmdlets.Classroom
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GClassroomSharedDriveFileObj</code>
+    ///   <code>PS C:\> New-GClassroomSharedDriveFileObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1153,7 +1153,7 @@ namespace gShell.Cmdlets.Classroom
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GClassroomTeacherObj</code>
+    ///   <code>PS C:\> New-GClassroomTeacherObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1221,7 +1221,7 @@ namespace gShell.Cmdlets.Classroom
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GClassroomCourseMaterialObj</code>
+    ///   <code>PS C:\> New-GClassroomCourseMaterialObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1299,7 +1299,7 @@ namespace gShell.Cmdlets.Classroom
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GClassroomNameObj</code>
+    ///   <code>PS C:\> New-GClassroomNameObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1367,7 +1367,7 @@ namespace gShell.Cmdlets.Classroom
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GClassroomDriveFolderObj</code>
+    ///   <code>PS C:\> New-GClassroomDriveFolderObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1435,7 +1435,7 @@ namespace gShell.Cmdlets.Classroom
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GClassroomInvitationObj</code>
+    ///   <code>PS C:\> New-GClassroomInvitationObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1513,7 +1513,7 @@ namespace gShell.Cmdlets.Classroom
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GClassroomMultipleChoiceQuestionObj</code>
+    ///   <code>PS C:\> New-GClassroomMultipleChoiceQuestionObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1561,7 +1561,7 @@ namespace gShell.Cmdlets.Classroom
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GClassroomCourseWorkObj</code>
+    ///   <code>PS C:\> New-GClassroomCourseWorkObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1769,7 +1769,7 @@ namespace gShell.Cmdlets.Classroom
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GClassroomStudentSubmissionObj</code>
+    ///   <code>PS C:\> New-GClassroomStudentSubmissionObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1967,7 +1967,7 @@ namespace gShell.Cmdlets.Classroom
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GClassroomCourseObj</code>
+    ///   <code>PS C:\> New-GClassroomCourseObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2175,7 +2175,7 @@ namespace gShell.Cmdlets.Classroom
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GClassroomCourseAliasObj</code>
+    ///   <code>PS C:\> New-GClassroomCourseAliasObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2223,7 +2223,7 @@ namespace gShell.Cmdlets.Classroom
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GClassroomAssignmentObj</code>
+    ///   <code>PS C:\> New-GClassroomAssignmentObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2271,7 +2271,7 @@ namespace gShell.Cmdlets.Classroom
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GClassroomGlobalPermissionObj</code>
+    ///   <code>PS C:\> New-GClassroomGlobalPermissionObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2319,7 +2319,7 @@ namespace gShell.Cmdlets.Classroom
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GClassroomGuardianInvitationObj</code>
+    ///   <code>PS C:\> New-GClassroomGuardianInvitationObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2409,7 +2409,7 @@ namespace gShell.Cmdlets.Classroom.Courses
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GClassroomCourse -CourseBody $SomeCourseObj</code>
+    ///   <code>PS C:\> New-GClassroomCourse -CourseBody $SomeCourseObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2451,7 +2451,7 @@ namespace gShell.Cmdlets.Classroom.Courses
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GClassroomCourse -Id $SomeIdString</code>
+    ///   <code>PS C:\> Remove-GClassroomCourse -Id $SomeIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2523,12 +2523,12 @@ namespace gShell.Cmdlets.Classroom.Courses
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GClassroomCourse -Id $SomeIdString</code>
+    ///   <code>PS C:\> Get-GClassroomCourse -Id $SomeIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GClassroomCourse -All</code>
+    ///   <code>PS C:\> Get-GClassroomCourse -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2632,7 +2632,7 @@ namespace gShell.Cmdlets.Classroom.Courses
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GClassroomCourse -Id $SomeIdString -CourseBody $SomeCourseObj</code>
+    ///   <code>PS C:\> Set-GClassroomCourse -Id $SomeIdString -CourseBody $SomeCourseObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2706,7 +2706,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Aliases
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GClassroomAlias -CourseId $SomeCourseIdString -CourseAliasBody $SomeCourseAliasObj</code>
+    ///   <code>PS C:\> New-GClassroomAlias -CourseId $SomeCourseIdString -CourseAliasBody $SomeCourseAliasObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2761,7 +2761,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Aliases
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GClassroomAlias -CourseId $SomeCourseIdString -Alias $SomeAliasString</code>
+    ///   <code>PS C:\> Remove-GClassroomAlias -CourseId $SomeCourseIdString -Alias $SomeAliasString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2842,7 +2842,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Aliases
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GClassroomAlias -CourseId $SomeCourseIdString</code>
+    ///   <code>PS C:\> Get-GClassroomAlias -CourseId $SomeCourseIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2904,7 +2904,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Students
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GClassroomStudent -CourseId $SomeCourseIdString -StudentBody $SomeStudentObj</code>
+    ///   <code>PS C:\> New-GClassroomStudent -CourseId $SomeCourseIdString -StudentBody $SomeStudentObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2974,7 +2974,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Students
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GClassroomStudent -CourseId $SomeCourseIdString -UserId $SomeUserIdString</code>
+    ///   <code>PS C:\> Remove-GClassroomStudent -CourseId $SomeCourseIdString -UserId $SomeUserIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3057,12 +3057,12 @@ namespace gShell.Cmdlets.Classroom.Courses.Students
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GClassroomStudent -CourseId $SomeCourseIdString -UserId $SomeUserIdString</code>
+    ///   <code>PS C:\> Get-GClassroomStudent -CourseId $SomeCourseIdString -UserId $SomeUserIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GClassroomStudent -CourseId $SomeCourseIdString -All</code>
+    ///   <code>PS C:\> Get-GClassroomStudent -CourseId $SomeCourseIdString -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3154,7 +3154,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Teachers
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GClassroomTeacher -CourseId $SomeCourseIdString -TeacherBody $SomeTeacherObj</code>
+    ///   <code>PS C:\> New-GClassroomTeacher -CourseId $SomeCourseIdString -TeacherBody $SomeTeacherObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3207,7 +3207,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Teachers
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GClassroomTeacher -CourseId $SomeCourseIdString -UserId $SomeUserIdString</code>
+    ///   <code>PS C:\> Remove-GClassroomTeacher -CourseId $SomeCourseIdString -UserId $SomeUserIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3290,12 +3290,12 @@ namespace gShell.Cmdlets.Classroom.Courses.Teachers
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GClassroomTeacher -CourseId $SomeCourseIdString -UserId $SomeUserIdString</code>
+    ///   <code>PS C:\> Get-GClassroomTeacher -CourseId $SomeCourseIdString -UserId $SomeUserIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GClassroomTeacher -CourseId $SomeCourseIdString -All</code>
+    ///   <code>PS C:\> Get-GClassroomTeacher -CourseId $SomeCourseIdString -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3387,7 +3387,7 @@ namespace gShell.Cmdlets.Classroom.Invitations
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Approve-GClassroomInvitation -Id $SomeIdString</code>
+    ///   <code>PS C:\> Approve-GClassroomInvitation -Id $SomeIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3428,7 +3428,7 @@ namespace gShell.Cmdlets.Classroom.Invitations
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GClassroomInvitation -InvitationBody $SomeInvitationObj</code>
+    ///   <code>PS C:\> New-GClassroomInvitation -InvitationBody $SomeInvitationObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3470,7 +3470,7 @@ namespace gShell.Cmdlets.Classroom.Invitations
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GClassroomInvitation -Id $SomeIdString</code>
+    ///   <code>PS C:\> Remove-GClassroomInvitation -Id $SomeIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3540,12 +3540,12 @@ namespace gShell.Cmdlets.Classroom.Invitations
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GClassroomInvitation -Id $SomeIdString</code>
+    ///   <code>PS C:\> Get-GClassroomInvitation -Id $SomeIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GClassroomInvitation -All</code>
+    ///   <code>PS C:\> Get-GClassroomInvitation -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3648,7 +3648,7 @@ namespace gShell.Cmdlets.Classroom.UserProfiles
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GClassroomUserProfile -UserId $SomeUserIdString</code>
+    ///   <code>PS C:\> Get-GClassroomUserProfile -UserId $SomeUserIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3694,7 +3694,7 @@ namespace gShell.Cmdlets.Classroom.Courses.CourseWork
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GClassroomCourseWork -CourseId $SomeCourseIdString -CourseWorkBody $SomeCourseWorkObj</code>
+    ///   <code>PS C:\> New-GClassroomCourseWork -CourseId $SomeCourseIdString -CourseWorkBody $SomeCourseWorkObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3748,12 +3748,12 @@ namespace gShell.Cmdlets.Classroom.Courses.CourseWork
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GClassroomCourseWork -CourseId $SomeCourseIdString -Id $SomeIdString</code>
+    ///   <code>PS C:\> Get-GClassroomCourseWork -CourseId $SomeCourseIdString -Id $SomeIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GClassroomCourseWork -CourseId $SomeCourseIdString -All</code>
+    ///   <code>PS C:\> Get-GClassroomCourseWork -CourseId $SomeCourseIdString -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3862,12 +3862,12 @@ namespace gShell.Cmdlets.Classroom.Courses.CourseWork.StudentSubmissions
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GClassroomStudentSubmission -CourseId $SomeCourseIdString -CourseWorkId $SomeCourseWorkIdString -Id $SomeIdString</code>
+    ///   <code>PS C:\> Get-GClassroomStudentSubmission -CourseId $SomeCourseIdString -CourseWorkId $SomeCourseWorkIdString -Id $SomeIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GClassroomStudentSubmission -CourseId $SomeCourseIdString -CourseWorkId $SomeCourseWorkIdString -All</code>
+    ///   <code>PS C:\> Get-GClassroomStudentSubmission -CourseId $SomeCourseIdString -CourseWorkId $SomeCourseWorkIdString -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3983,7 +3983,7 @@ namespace gShell.Cmdlets.Classroom.Courses.CourseWork.StudentSubmissions
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GClassroomStudentSubmissionAttachment -CourseId $SomeCourseIdString -CourseWorkId $SomeCourseWorkIdString -Id $SomeIdString -AddAttachments $SomeAddAttachmentsObj</code>
+    ///   <code>PS C:\> Set-GClassroomStudentSubmissionAttachment -CourseId $SomeCourseIdString -CourseWorkId $SomeCourseWorkIdString -Id $SomeIdString -AddAttachments $SomeAddAttachmentsObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -4058,22 +4058,22 @@ namespace gShell.Cmdlets.Classroom.Courses.CourseWork.StudentSubmissions
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GClassroomStudentSubmission -CourseId $SomeCourseIdString -CourseWorkId $SomeCourseWorkIdString -Id $SomeIdString -StudentSubmissionBody $SomeStudentSubmissionObj</code>
+    ///   <code>PS C:\> Set-GClassroomStudentSubmission -CourseId $SomeCourseIdString -CourseWorkId $SomeCourseWorkIdString -Id $SomeIdString -StudentSubmissionBody $SomeStudentSubmissionObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Set-GClassroomStudentSubmission -CourseId $SomeCourseIdString -CourseWorkId $SomeCourseWorkIdString -Id $SomeIdString -Reclaim</code>
+    ///   <code>PS C:\> Set-GClassroomStudentSubmission -CourseId $SomeCourseIdString -CourseWorkId $SomeCourseWorkIdString -Id $SomeIdString -Reclaim</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Set-GClassroomStudentSubmission -CourseId $SomeCourseIdString -CourseWorkId $SomeCourseWorkIdString -Id $SomeIdString -Return</code>
+    ///   <code>PS C:\> Set-GClassroomStudentSubmission -CourseId $SomeCourseIdString -CourseWorkId $SomeCourseWorkIdString -Id $SomeIdString -Return</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Set-GClassroomStudentSubmission -CourseId $SomeCourseIdString -CourseWorkId $SomeCourseWorkIdString -Id $SomeIdString -TurnIn</code>
+    ///   <code>PS C:\> Set-GClassroomStudentSubmission -CourseId $SomeCourseIdString -CourseWorkId $SomeCourseWorkIdString -Id $SomeIdString -TurnIn</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -4213,7 +4213,7 @@ namespace gShell.Cmdlets.Classroom.UserProfiles.GuardianInvitations
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GClassroomGuardianInvitation -StudentId $SomeStudentIdString -GuardianInvitationBody $SomeGuardianInvitationObj</code>
+    ///   <code>PS C:\> New-GClassroomGuardianInvitation -StudentId $SomeStudentIdString -GuardianInvitationBody $SomeGuardianInvitationObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -4264,12 +4264,12 @@ namespace gShell.Cmdlets.Classroom.UserProfiles.GuardianInvitations
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GClassroomGuardianInvitation -StudentId $SomeStudentIdString -InvitationId $SomeInvitationIdString</code>
+    ///   <code>PS C:\> Get-GClassroomGuardianInvitation -StudentId $SomeStudentIdString -InvitationId $SomeInvitationIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GClassroomGuardianInvitation -StudentId $SomeStudentIdString -All</code>
+    ///   <code>PS C:\> Get-GClassroomGuardianInvitation -StudentId $SomeStudentIdString -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -4375,7 +4375,7 @@ namespace gShell.Cmdlets.Classroom.UserProfiles.GuardianInvitations
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GClassroomGuardianInvitation -StudentId $SomeStudentIdString -InvitationId $SomeInvitationIdString -GuardianInvitationBody $SomeGuardianInvitationObj</code>
+    ///   <code>PS C:\> Set-GClassroomGuardianInvitation -StudentId $SomeStudentIdString -InvitationId $SomeInvitationIdString -GuardianInvitationBody $SomeGuardianInvitationObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -4457,7 +4457,7 @@ namespace gShell.Cmdlets.Classroom.UserProfiles.Guardians
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GClassroomGuardian -StudentId $SomeStudentIdString -GuardianId $SomeGuardianIdString</code>
+    ///   <code>PS C:\> Remove-GClassroomGuardian -StudentId $SomeStudentIdString -GuardianId $SomeGuardianIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -4534,12 +4534,12 @@ namespace gShell.Cmdlets.Classroom.UserProfiles.Guardians
     /// Part of the gShell Project, relating to the Google Classroom API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GClassroomGuardian -StudentId $SomeStudentIdString -GuardianId $SomeGuardianIdString</code>
+    ///   <code>PS C:\> Get-GClassroomGuardian -StudentId $SomeStudentIdString -GuardianId $SomeGuardianIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GClassroomGuardian -StudentId $SomeStudentIdString -All</code>
+    ///   <code>PS C:\> Get-GClassroomGuardian -StudentId $SomeStudentIdString -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>

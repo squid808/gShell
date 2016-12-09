@@ -15,12 +15,12 @@ namespace gShell.Cmdlets.GroupsMigration
     /// Part of the gShell Project, relating to the Google GroupsMigration API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GGroupsMigration -GroupUniqueId $SomeGroupIdString</code>
+    ///   <code>PS C:\> New-GGroupsMigration -GroupUniqueId $SomeGroupIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>New-GGroupsMigration -GroupUniqueId $SomeGroupIdString -FilePath $SomeFilePath -UploadType media</code>
+    ///   <code>PS C:\> New-GGroupsMigration -GroupUniqueId $SomeGroupIdString -FilePath $SomeFilePath -UploadType media</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>

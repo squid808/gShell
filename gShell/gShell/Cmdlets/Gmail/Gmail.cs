@@ -20,7 +20,7 @@ namespace gShell.Cmdlets.Gmail
     /// Part of the gShell Project, relating to the Google Gmail API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GGmailMessagePartObj</code>
+    ///   <code>PS C:\> New-GGmailMessagePartObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -164,7 +164,7 @@ namespace gShell.Cmdlets.Gmail
     /// Part of the gShell Project, relating to the Google Gmail API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GGmailMessageObj</code>
+    ///   <code>PS C:\> New-GGmailMessageObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -293,7 +293,7 @@ namespace gShell.Cmdlets.Gmail.Users
     /// Part of the gShell Project, relating to the Google Gmail API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GGmailProfile -UserId $SomeUserIdString</code>
+    ///   <code>PS C:\> Get-GGmailProfile -UserId $SomeUserIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -334,7 +334,7 @@ namespace gShell.Cmdlets.Gmail.Users
     /// Part of the gShell Project, relating to the Google Gmail API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Watch-GGmail -UserId $SomeUserIdString -WatchRequestBody $SomeWatchRequestObj</code>
+    ///   <code>PS C:\> Watch-GGmail -UserId $SomeUserIdString -WatchRequestBody $SomeWatchRequestObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -385,7 +385,7 @@ namespace gShell.Cmdlets.Gmail.Users
     /// Part of the gShell Project, relating to the Google Gmail API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Stop-GGmail -UserId $SomeUserIdString</code>
+    ///   <code>PS C:\> Stop-GGmail -UserId $SomeUserIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -432,7 +432,7 @@ namespace gShell.Cmdlets.Gmail.Users.Drafts
     /// Part of the gShell Project, relating to the Google Gmail API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GGmailDraft -UserId $SomeUserIdString -DraftBody $SomeDraftObj</code>
+    ///   <code>PS C:\> New-GGmailDraft -UserId $SomeUserIdString -DraftBody $SomeDraftObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -490,7 +490,7 @@ namespace gShell.Cmdlets.Gmail.Users.Drafts
     /// Part of the gShell Project, relating to the Google Gmail API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GGmailDraft -UserId $SomeUserIdString -Id $SomeIdString</code>
+    ///   <code>PS C:\> Remove-GGmailDraft -UserId $SomeUserIdString -Id $SomeIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -571,12 +571,12 @@ namespace gShell.Cmdlets.Gmail.Users.Drafts
     /// Part of the gShell Project, relating to the Google Gmail API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GGmailDraft -UserId $SomeUserIdString -Id $SomeIdString</code>
+    ///   <code>PS C:\> Get-GGmailDraft -UserId $SomeUserIdString -Id $SomeIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GGmailDraft -UserId $SomeUserIdString -All</code>
+    ///   <code>PS C:\> Get-GGmailDraft -UserId $SomeUserIdString -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -689,7 +689,7 @@ namespace gShell.Cmdlets.Gmail.Users.Drafts
     /// Part of the gShell Project, relating to the Google Gmail API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GGmailDraft -UserId $SomeUserIdString -Id $SomeIdString -DraftBody $SomeDraftObj</code>
+    ///   <code>PS C:\> Set-GGmailDraft -UserId $SomeUserIdString -Id $SomeIdString -DraftBody $SomeDraftObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -756,7 +756,7 @@ namespace gShell.Cmdlets.Gmail.Users.Drafts
     /// Part of the gShell Project, relating to the Google Gmail API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Send-GGmailDraft -UserId $SomeUserIdString -DraftBody $SomeDraftObj</code>
+    ///   <code>PS C:\> Send-GGmailDraft -UserId $SomeUserIdString -DraftBody $SomeDraftObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -812,7 +812,7 @@ namespace gShell.Cmdlets.Gmail.Users.History
     /// Part of the gShell Project, relating to the Google Gmail API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GGmailHistory -UserId $SomeUserIdString</code>
+    ///   <code>PS C:\> Get-GGmailHistory -UserId $SomeUserIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -898,7 +898,7 @@ namespace gShell.Cmdlets.Gmail.Users.Labels
     /// Part of the gShell Project, relating to the Google Gmail API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GGmailLabel -UserId $SomeUserIdString -LabelBody $SomeLabelObj</code>
+    ///   <code>PS C:\> New-GGmailLabel -UserId $SomeUserIdString -LabelBody $SomeLabelObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -976,7 +976,7 @@ namespace gShell.Cmdlets.Gmail.Users.Labels
     /// Part of the gShell Project, relating to the Google Gmail API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GGmailLabel -UserId $SomeUserIdString -Id $SomeIdString</code>
+    ///   <code>PS C:\> Remove-GGmailLabel -UserId $SomeUserIdString -Id $SomeIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1057,12 +1057,12 @@ namespace gShell.Cmdlets.Gmail.Users.Labels
     /// Part of the gShell Project, relating to the Google Gmail API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GGmailLabel -UserId $SomeUserIdString -Id $SomeIdString</code>
+    ///   <code>PS C:\> Get-GGmailLabel -UserId $SomeUserIdString -Id $SomeIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GGmailLabel -UserId $SomeUserIdString -All</code>
+    ///   <code>PS C:\> Get-GGmailLabel -UserId $SomeUserIdString -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1131,7 +1131,7 @@ namespace gShell.Cmdlets.Gmail.Users.Labels
     /// Part of the gShell Project, relating to the Google Gmail API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GGmailLabel -UserId $SomeUserIdString -Id $SomeIdString -LabelBody $SomeLabelObj</code>
+    ///   <code>PS C:\> Set-GGmailLabel -UserId $SomeUserIdString -Id $SomeIdString -LabelBody $SomeLabelObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1225,12 +1225,12 @@ namespace gShell.Cmdlets.Gmail.Users.Messages
     /// Part of the gShell Project, relating to the Google Gmail API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GGmailMessage -UserId $SomeUserIdString -Id $SomeIdString</code>
+    ///   <code>PS C:\> Remove-GGmailMessage -UserId $SomeUserIdString -Id $SomeIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Remove-GGmailMessage -UserId $SomeUserIdString -BatchDeleteMessagesRequestBody $SomeBatchDeleteMessagesRequestObj</code>
+    ///   <code>PS C:\> Remove-GGmailMessage -UserId $SomeUserIdString -BatchDeleteMessagesRequestBody $SomeBatchDeleteMessagesRequestObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1335,12 +1335,12 @@ namespace gShell.Cmdlets.Gmail.Users.Messages
     /// Part of the gShell Project, relating to the Google Gmail API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GGmailMessage -UserId $SomeUserIdString -Id $SomeIdString</code>
+    ///   <code>PS C:\> Get-GGmailMessage -UserId $SomeUserIdString -Id $SomeIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GGmailMessage -UserId $SomeUserIdString -All</code>
+    ///   <code>PS C:\> Get-GGmailMessage -UserId $SomeUserIdString -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1488,7 +1488,7 @@ namespace gShell.Cmdlets.Gmail.Users.Messages
     /// Part of the gShell Project, relating to the Google Gmail API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GGmailMessage -UserId $SomeUserIdString -MessageBody $SomeMessageObj</code>
+    ///   <code>PS C:\> New-GGmailMessage -UserId $SomeUserIdString -MessageBody $SomeMessageObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1564,7 +1564,7 @@ namespace gShell.Cmdlets.Gmail.Users.Messages
     /// Part of the gShell Project, relating to the Google Gmail API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Send-GGmailMessage -UserId $SomeUserIdString -MessageBody $SomeMessageObj</code>
+    ///   <code>PS C:\> Send-GGmailMessage -UserId $SomeUserIdString -MessageBody $SomeMessageObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1616,17 +1616,17 @@ namespace gShell.Cmdlets.Gmail.Users.Messages
     /// Part of the gShell Project, relating to the Google Gmail API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GGmailMessage -UserId $SomeUserIdString -Id $SomeIdString -AddLabelIds $SomeAddLabelIds{ get; set; }</code>
+    ///   <code>PS C:\> Set-GGmailMessage -UserId $SomeUserIdString -Id $SomeIdString -AddLabelIds $SomeAddLabelIds{ get; set; }</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Set-GGmailMessage -UserId $SomeUserIdString -Id $SomeIdString -Trash</code>
+    ///   <code>PS C:\> Set-GGmailMessage -UserId $SomeUserIdString -Id $SomeIdString -Trash</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Set-GGmailMessage -UserId $SomeUserIdString -Id $SomeIdString -Untrash</code>
+    ///   <code>PS C:\> Set-GGmailMessage -UserId $SomeUserIdString -Id $SomeIdString -Untrash</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1741,7 +1741,7 @@ namespace gShell.Cmdlets.Gmail.Users.Messages
     /// Part of the gShell Project, relating to the Google Gmail API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Import-GGmailMessage -UserId $SomeUserIdString -MessageBody $SomeMessageObj</code>
+    ///   <code>PS C:\> Import-GGmailMessage -UserId $SomeUserIdString -MessageBody $SomeMessageObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1839,7 +1839,7 @@ namespace gShell.Cmdlets.Gmail.Users.Messages.Attachments
     /// Part of the gShell Project, relating to the Google Gmail API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GGmailAttachment -UserId $SomeUserIdString -MessageId $SomeMessageIdString -Id $SomeIdString</code>
+    ///   <code>PS C:\> Get-GGmailAttachment -UserId $SomeUserIdString -MessageId $SomeMessageIdString -Id $SomeIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1904,12 +1904,12 @@ namespace gShell.Cmdlets.Gmail.Users.Threads
     /// Part of the gShell Project, relating to the Google Gmail API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GGmailThread -UserId $SomeUserIdString -Id $SomeIdString</code>
+    ///   <code>PS C:\> Get-GGmailThread -UserId $SomeUserIdString -Id $SomeIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GGmailThread -UserId $SomeUserIdString -All</code>
+    ///   <code>PS C:\> Get-GGmailThread -UserId $SomeUserIdString -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2061,17 +2061,17 @@ namespace gShell.Cmdlets.Gmail.Users.Threads
     /// Part of the gShell Project, relating to the Google Gmail API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GGmailThread -UserId $SomeUserIdString -Id $SomeIdString -ModifyThreadRequestBody $SomeModifyThreadRequestObj</code>
+    ///   <code>PS C:\> Set-GGmailThread -UserId $SomeUserIdString -Id $SomeIdString -ModifyThreadRequestBody $SomeModifyThreadRequestObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Set-GGmailThread -UserId $SomeUserIdString -Id $SomeIdString -Trash</code>
+    ///   <code>PS C:\> Set-GGmailThread -UserId $SomeUserIdString -Id $SomeIdString -Trash</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Set-GGmailThread -UserId $SomeUserIdString -Id $SomeIdString -Untrash</code>
+    ///   <code>PS C:\> Set-GGmailThread -UserId $SomeUserIdString -Id $SomeIdString -Untrash</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2208,7 +2208,7 @@ namespace gShell.Cmdlets.Gmail.Users.Threads
     /// Part of the gShell Project, relating to the Google Gmail API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GGmailThread -UserId $SomeUserIdString -Id $SomeIdString</code>
+    ///   <code>PS C:\> Remove-GGmailThread -UserId $SomeUserIdString -Id $SomeIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
