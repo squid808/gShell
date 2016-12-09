@@ -2024,8 +2024,11 @@ namespace gShell.Cmdlets.Calendar.Acl
         public string CalendarId { get; set; }
 
 
+
+        /// <summary><para type="description">An AclRuleBody object</para></summary>
         [Parameter(Position = 2,
             Mandatory = false,
+            HelpMessage = "An AclRuleBody object",
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
         public AclRule AclRuleBody { get; set; }
@@ -2083,8 +2086,11 @@ namespace gShell.Cmdlets.Calendar.Acl
         public string RuleId { get; set; }
 
 
+
+        /// <summary><para type="description">An AclRuleBody object</para></summary>
         [Parameter(Position = 2,
             Mandatory = false,
+            HelpMessage = "A, AclRuleBody object",
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
         public AclRule AclRuleBody { get; set; }
@@ -2133,8 +2139,11 @@ namespace gShell.Cmdlets.Calendar.Acl
         public string CalendarId { get; set; }
 
 
+
+        /// <summary><para type="description">A ChannelBody object</para></summary>
         [Parameter(Position = 0,
             Mandatory = false,
+            HelpMessage = "A ChannelBody object",
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
         public Channel ChannelBody { get; set; }
@@ -2419,8 +2428,11 @@ namespace gShell.Cmdlets.Calendar.CalendarList
     {
         #region Properties
 
+
+        /// <summary><para type="description">A CalendarListEntryBody object</para></summary>
         [Parameter(Position = 1,
             Mandatory = false,
+            HelpMessage = "A CalendarListEntryBody object",
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
         public CalendarListEntry CalendarListEntryBody { get; set; }
@@ -2486,8 +2498,11 @@ namespace gShell.Cmdlets.Calendar.CalendarList
         public string CalendarId { get; set; }
 
 
+
+        /// <summary><para type="description">A CalendarListEntryBody object</para></summary>
         [Parameter(Position = 1,
             Mandatory = false,
+            HelpMessage = "A CalendarListEntryBody object",
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
         public CalendarListEntry CalendarListEntryBody { get; set; }
@@ -2541,8 +2556,11 @@ namespace gShell.Cmdlets.Calendar.CalendarList
     {
         #region Properties
 
+
+        /// <summary><para type="description">A ChannelBody object</para></summary>
         [Parameter(Position = 0,
             Mandatory = false,
+            HelpMessage = "A ChannelBody object",
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
         public Channel ChannelBody { get; set; }
@@ -2801,8 +2819,11 @@ namespace gShell.Cmdlets.Calendar.Calendars
     {
         #region Properties
 
+
+        /// <summary><para type="description">A CalendarBody object</para></summary>
         [Parameter(Position = 1,
             Mandatory = false,
+            HelpMessage = "A CalendarBody object",
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
         public Google.Apis.Calendar.v3.Data.Calendar CalendarBody { get; set; }
@@ -2851,8 +2872,11 @@ namespace gShell.Cmdlets.Calendar.Calendars
         public string CalendarId { get; set; }
 
 
+
+        /// <summary><para type="description">A CalendarBody object</para></summary>
         [Parameter(Position = 1,
             Mandatory = false,
+            HelpMessage = "A CalendarBody object",
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
         public Google.Apis.Calendar.v3.Data.Calendar CalendarBody { get; set; }
@@ -2893,8 +2917,11 @@ namespace gShell.Cmdlets.Calendar.Channels
     {
         #region Properties
 
+
+        /// <summary><para type="description">A ChannelBody object</para></summary>
         [Parameter(Position = 0,
             Mandatory = false,
+            HelpMessage = "A ChannelBody object",
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
         public Channel ChannelBody { get; set; }
@@ -3372,8 +3399,11 @@ namespace gShell.Cmdlets.Calendar.Events
         public string CalendarId { get; set; }
 
 
+
+        /// <summary><para type="description">A EventBody object</para></summary>
         [Parameter(Position = 2,
             Mandatory = false,
+            HelpMessage = "A EventBody object",
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
         public Event EventBody { get; set; }
@@ -3438,8 +3468,11 @@ namespace gShell.Cmdlets.Calendar.Events
         public string CalendarId { get; set; }
 
 
+
+        /// <summary><para type="description">A EventBody object</para></summary>
         [Parameter(Position = 2,
             Mandatory = false,
+            HelpMessage = "A EventBody object",
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
         public Event EventBody { get; set; }
@@ -3760,8 +3793,11 @@ namespace gShell.Cmdlets.Calendar.Events
         public string EventId { get; set; }
 
 
+
+        /// <summary><para type="description">A EventBody object</para></summary>
         [Parameter(Position = 2,
             Mandatory = false,
+            HelpMessage = "A EventBody object",
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
         public Event EventBody { get; set; }
@@ -3938,8 +3974,11 @@ namespace gShell.Cmdlets.Calendar.Events
             HelpMessage = "Event identifier.")]
         public string EventId { get; set; }
 
-
+        /// <summary>
+        /// <para type="description">An EventBody object.</para>
+        /// </summary>
         [Parameter(Position = 2,
+            HelpMessage = "An EventBody object.",
             Mandatory = false,
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
@@ -4041,8 +4080,11 @@ namespace gShell.Cmdlets.Calendar.Events
         public string CalendarId { get; set; }
 
 
+
+        /// <summary><para type="description">A ChannelBody object</para></summary>
         [Parameter(Position = 0,
             Mandatory = false,
+            HelpMessage = "A ChannelBody object",
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
         public Channel ChannelBody { get; set; }
@@ -4272,7 +4314,11 @@ namespace gShell.Cmdlets.Calendar.Freebusy
     {
         #region Properties
 
+        /// <summary>
+        /// <para type="description">A FreeBusyRequest object.</para>
+        /// </summary>
         [Parameter(Position = 0,
+            HelpMessage = "A FreeBusyRequest object.",
             Mandatory = false,
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
@@ -4399,8 +4445,11 @@ namespace gShell.Cmdlets.Calendar.Settings
     {
         #region Properties
 
+
+        /// <summary><para type="description">A ChannelBody object</para></summary>
         [Parameter(Position = 0,
             Mandatory = false,
+            HelpMessage = "A ChannelBody object",
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
         public Channel ChannelBody { get; set; }

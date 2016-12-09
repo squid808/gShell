@@ -960,10 +960,13 @@ namespace gShell.Cmdlets.Directory
         #region Properties
 
 
-
+        /// <summary>
+        /// An Addresses Object
+        /// </summary>
         [Parameter(Position = 0,
         Mandatory = false,
-        ValueFromPipelineByPropertyName = true)]
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "An Addresses Object")]
         public object Addresses { get; set; }
 
         /// <summary>
@@ -1020,22 +1023,31 @@ namespace gShell.Cmdlets.Directory
         HelpMessage = "CustomerId of User (Read-only)")]
         public string CustomerId { get; set; }
 
-
+        /// <summary>
+        /// A DeletionTime object
+        /// </summary>
         [Parameter(Position = 7,
         Mandatory = false,
-        ValueFromPipelineByPropertyName = true)]
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "A DeletionTime object")]
         public System.Nullable<System.DateTime> DeletionTime { get; set; }
 
-
+        /// <summary>
+        /// An Emails object
+        /// </summary>
         [Parameter(Position = 8,
         Mandatory = false,
-        ValueFromPipelineByPropertyName = true)]
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "An Emails object")]
         public object Emails { get; set; }
 
-
+        /// <summary>
+        /// An ExternalIds object
+        /// </summary>
         [Parameter(Position = 9,
         Mandatory = false,
-        ValueFromPipelineByPropertyName = true)]
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "An ExternalIds object")]
         public object ExternalIds { get; set; }
 
         /// <summary>
@@ -1056,10 +1068,13 @@ namespace gShell.Cmdlets.Directory
         HelpMessage = "Unique identifier of User (Read-only)")]
         public string Id { get; set; }
 
-
+        /// <summary>
+        /// An Ims object
+        /// </summary>
         [Parameter(Position = 12,
         Mandatory = false,
-        ValueFromPipelineByPropertyName = true)]
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "An Ims object")]
         public object Ims { get; set; }
 
         /// <summary>
@@ -1134,10 +1149,13 @@ namespace gShell.Cmdlets.Directory
         HelpMessage = "List of non editable aliases (Read-only)")]
         public System.Collections.Generic.IList<string> NonEditableAliases { get; set; }
 
-
+        /// <summary>
+        /// A Notes object
+        /// </summary>
         [Parameter(Position = 21,
         Mandatory = false,
-        ValueFromPipelineByPropertyName = true)]
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "A Notes object")]
         public object Notes { get; set; }
 
         /// <summary>
@@ -1149,10 +1167,13 @@ namespace gShell.Cmdlets.Directory
         HelpMessage = "OrgUnit of User")]
         public string OrgUnitPath { get; set; }
 
-
+        /// <summary>
+        /// An Organizations object
+        /// </summary>
         [Parameter(Position = 23,
         Mandatory = false,
-        ValueFromPipelineByPropertyName = true)]
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "An Organizations object")]
         public object Organizations { get; set; }
 
         /// <summary>
@@ -1164,10 +1185,13 @@ namespace gShell.Cmdlets.Directory
         HelpMessage = "User's password")]
         public string Password { get; set; }
 
-
+        /// <summary>
+        /// A Phones object
+        /// </summary>
         [Parameter(Position = 25,
         Mandatory = false,
-        ValueFromPipelineByPropertyName = true)]
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage="A Phones object")]
         public object Phones { get; set; }
 
         /// <summary>
@@ -1179,10 +1203,13 @@ namespace gShell.Cmdlets.Directory
         HelpMessage = "username of User")]
         public string PrimaryEmail { get; set; }
 
-
+        /// <summary>
+        /// A Relations object
+        /// </summary>
         [Parameter(Position = 27,
         Mandatory = false,
-        ValueFromPipelineByPropertyName = true)]
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "A Relations object")]
         public object Relations { get; set; }
 
         /// <summary>
@@ -1221,10 +1248,13 @@ namespace gShell.Cmdlets.Directory
         HelpMessage = "Photo Url of the user (Read-only)")]
         public string ThumbnailPhotoUrl { get; set; }
 
-
+        /// <summary>
+        /// A Websites object
+        /// </summary>
         [Parameter(Position = 32,
         Mandatory = false,
-        ValueFromPipelineByPropertyName = true)]
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "A Websites object")]
         #endregion
         public object Websites { get; set; }
 
@@ -2525,9 +2555,13 @@ namespace gShell.Cmdlets.Directory.GAChromeosdevice
     public class SetGAChromeosdeviceCommand : DirectoryBase
     {
         #region Properties
+        /// <summary>
+        /// The unique ID for the customer's Google account. As an account administrator, you can also use the my_customer alias to represent your account's customerId. The customerId is also returned as part of the Users resource.
+        /// </summary>
         [Parameter(Position = 0,
-            Mandatory = false, //can use 'my_customer'
-            ValueFromPipelineByPropertyName = true)]
+        Mandatory = false, //can use 'my_customer'
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The unique ID for the customer's Google account. As an account administrator, you can also use the my_customer alias to represent your account's customerId. The customerId is also returned as part of the Users resource.")]
         [ValidateNotNullOrEmpty]
         public string CustomerId { get; set; }
 
@@ -7595,7 +7629,18 @@ namespace gShell.Cmdlets.Directory.GAUser
             HelpMessage = "The username of the user to update.")]
         [ValidateNotNullOrEmpty]
         public string UserKey { get; set; }
-        
+
+        /// <summary>
+        /// <para type="description">JSON template for User object in Directory API.</para>
+        /// </summary>
+        [Parameter(Position = 1,
+            Mandatory = false,
+            ValueFromPipeline = true,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Body",
+            HelpMessage = "JSON template for User object in Directory API.")]
+        public Data.User UserBody { get; set; }
+
         /// <summary>
         /// <para type="description">First Name</para>
         /// </summary>
@@ -7712,31 +7757,20 @@ namespace gShell.Cmdlets.Directory.GAUser
             HelpMessage = "The full path of the parent organization associated with the user. If the parent organization is the top-level, it is represented as a forward slash (/).")]
         public string OrgUnitPath { get; set; }
 
-        /// <summary>
-        /// <para type="description">A supplied property collection to update the user with. Create with New/Get-GAUserPropertyCollection and update with New/Remove-GauserProperty</para>
-        /// </summary>
-        [Parameter(Position = 11,
-            ParameterSetName = "PasswordProvided",
-            HelpMessage = "A supplied property collection to update the user with. Create with New/Get-GAUserPropertyCollection and update with New/Remove-GauserProperty")]
-        [Parameter(Position = 11,
-            ParameterSetName = "PasswordGenerated",
-            HelpMessage = "A supplied property collection to update the user with. Create with New/Get-GAUserPropertyCollection and update with New/Remove-GauserProperty")]
-        [Parameter(Position = 11,
-            ParameterSetName = "SecureString",
-            HelpMessage = "A supplied property collection to update the user with. Create with New/Get-GAUserPropertyCollection and update with New/Remove-GauserProperty")]
-        public GAUserPropertyCollection PropertyCollection { get; set; }
-
-        /// <summary>
-        /// <para type="description">JSON template for User object in Directory API.</para>
-        /// </summary>
-        [Parameter(Position = 1,
-        Mandatory = false,
-        ValueFromPipeline = true,
-        ValueFromPipelineByPropertyName = true,
-        ParameterSetName = "Body",
-        HelpMessage = "JSON template for User object in Directory API.")]
-        public Data.User UserBody { get; set; }
-
+        ///// <summary>
+        ///// <para type="description">A supplied property collection to update the user with. Create with New/Get-GAUserPropertyCollection and update with New/Remove-GauserProperty</para>
+        ///// </summary>
+        //[Parameter(Position = 11,
+        //    ParameterSetName = "PasswordProvided",
+        //    HelpMessage = "A supplied property collection to update the user with. Create with New/Get-GAUserPropertyCollection and update with New/Remove-GauserProperty")]
+        //[Parameter(Position = 11,
+        //    ParameterSetName = "PasswordGenerated",
+        //    HelpMessage = "A supplied property collection to update the user with. Create with New/Get-GAUserPropertyCollection and update with New/Remove-GauserProperty")]
+        //[Parameter(Position = 11,
+        //    ParameterSetName = "SecureString",
+        //    HelpMessage = "A supplied property collection to update the user with. Create with New/Get-GAUserPropertyCollection and update with New/Remove-GauserProperty")]
+        //public GAUserPropertyCollection PropertyCollection { get; set; }
+        
         #endregion
 
         protected override void ProcessRecord()
@@ -7769,7 +7803,7 @@ namespace gShell.Cmdlets.Directory.GAUser
                 !Suspended.HasValue &&
                 !ChangePasswordAtNextLogin.HasValue &&
                 String.IsNullOrWhiteSpace(OrgUnitPath) &&
-                null == PropertyCollection &&
+                //null == PropertyCollection &&
                 null == SecureStringPassword)
             {
                 WriteError(new ErrorRecord(new Exception(
@@ -7825,30 +7859,30 @@ namespace gShell.Cmdlets.Directory.GAUser
             if (!string.IsNullOrWhiteSpace(OrgUnitPath))
                 userAcct.OrgUnitPath = OrgUnitPath;
 
-            if (null != PropertyCollection)
-            {
-                //here we don't check if it's an empty list since that may be on purpose - we check it that list had been updated.
-                if (PropertyCollection.IsUpdated(GAUserPropertyType.address))
-                    userAcct.Addresses = PropertyCollection.GetAddresses();
+            //if (null != PropertyCollection)
+            //{
+            //    //here we don't check if it's an empty list since that may be on purpose - we check it that list had been updated.
+            //    if (PropertyCollection.IsUpdated(GAUserPropertyType.address))
+            //        userAcct.Addresses = PropertyCollection.GetAddresses();
 
-                if (PropertyCollection.IsUpdated(GAUserPropertyType.email))
-                    userAcct.Emails = PropertyCollection.GetEmails();
+            //    if (PropertyCollection.IsUpdated(GAUserPropertyType.email))
+            //        userAcct.Emails = PropertyCollection.GetEmails();
 
-                if (PropertyCollection.IsUpdated(GAUserPropertyType.externalid))
-                    userAcct.ExternalIds = PropertyCollection.GetExternalIds();
+            //    if (PropertyCollection.IsUpdated(GAUserPropertyType.externalid))
+            //        userAcct.ExternalIds = PropertyCollection.GetExternalIds();
 
-                if (PropertyCollection.IsUpdated(GAUserPropertyType.im))
-                    userAcct.Ims = PropertyCollection.GetIms();
+            //    if (PropertyCollection.IsUpdated(GAUserPropertyType.im))
+            //        userAcct.Ims = PropertyCollection.GetIms();
 
-                if (PropertyCollection.IsUpdated(GAUserPropertyType.organization))
-                    userAcct.Organizations = PropertyCollection.GetOrganizations();
+            //    if (PropertyCollection.IsUpdated(GAUserPropertyType.organization))
+            //        userAcct.Organizations = PropertyCollection.GetOrganizations();
 
-                if (PropertyCollection.IsUpdated(GAUserPropertyType.phone))
-                    userAcct.Phones = PropertyCollection.GetPhones();
+            //    if (PropertyCollection.IsUpdated(GAUserPropertyType.phone))
+            //        userAcct.Phones = PropertyCollection.GetPhones();
 
-                if (PropertyCollection.IsUpdated(GAUserPropertyType.relation))
-                    userAcct.Relations = PropertyCollection.GetRelations();
-            }
+            //    if (PropertyCollection.IsUpdated(GAUserPropertyType.relation))
+            //        userAcct.Relations = PropertyCollection.GetRelations();
+            //}
 
             users.Patch(userAcct, UserKey);
         }
@@ -7917,7 +7951,10 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
             HelpMessage = "A switch to list all results")]
         public SwitchParameter All { get; set; }
 
-        [Parameter(
+        /// <summary>
+        /// Return the actual Google API Objects.
+        /// </summary>
+        [Parameter(HelpMessage = "Return the actual Google API Objects.",
             ParameterSetName = "AllUserAliases")]
         public SwitchParameter ReturnGoogleAPIObjects { get; set; }
 

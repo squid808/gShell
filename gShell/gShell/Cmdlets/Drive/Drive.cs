@@ -1728,6 +1728,11 @@ namespace gShell.Cmdlets.Drive.Changes
     /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Get-GDriveChange -PageToken $SomePageTokenString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GDriveChange">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
