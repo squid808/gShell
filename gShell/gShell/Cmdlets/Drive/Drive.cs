@@ -1045,7 +1045,7 @@ namespace gShell.Cmdlets.Drive
             Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "The full list of replies to the comment in chronological order.")]
-        public IList<Reply> Replies { get; set; }
+        public Reply[] Replies { get; set; }
 
         /// <summary>
         /// <para type="description">Whether the comment has been resolved by one of its replies.</para>
@@ -1331,7 +1331,7 @@ namespace gShell.Cmdlets.Drive
             Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "The owners of the file. Currently, only certain legacy files may have more than one owner.")]
-        public IList<User> Owners { get; set; }
+        public User[] Owners { get; set; }
 
         /// <summary>
         /// <para type="description">The IDs of the parent folders which contain the file.If not specified as part of a create request, the file will be placed directly in the My Drive folder. Update requests must use the addParents and removeParents parameters to modify the values.</para>
@@ -1342,7 +1342,7 @@ namespace gShell.Cmdlets.Drive
             HelpMessage =
                 "The IDs of the parent folders which contain the file.\nIf not specified as part of a create request, the file will be placed directly in the My Drive folder. Update requests must use the addParents and removeParents parameters to modify the values."
             )]
-        public IList<string> Parents { get; set; }
+        public string[] Parents { get; set; }
 
         /// <summary>
         /// <para type="description">The full list of permissions for the file. This is only available if the requesting user can share the file.</para>
@@ -1353,7 +1353,7 @@ namespace gShell.Cmdlets.Drive
             HelpMessage =
                 "The full list of permissions for the file. This is only available if the requesting user can share the file."
             )]
-        public IList<Permission> Permissions { get; set; }
+        public Permission[] Permissions { get; set; }
 
         /// <summary>
         /// <para type="description">A collection of arbitrary key-value pairs which are visible to all apps.Entries with null values are cleared in update and copy requests.</para>
@@ -1424,7 +1424,7 @@ namespace gShell.Cmdlets.Drive
             HelpMessage =
                 "The list of spaces which contain the file. The currently supported values are 'drive', 'appDataFolder' and 'photos'."
             )]
-        public IList<string> Spaces { get; set; }
+        public string[] Spaces { get; set; }
 
         /// <summary>
         /// <para type="description">Whether the user has starred the file.</para>

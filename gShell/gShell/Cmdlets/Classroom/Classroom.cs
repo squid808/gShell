@@ -347,7 +347,7 @@ namespace gShell.Cmdlets.Classroom
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "Global permissions of the user. Read-only.")]
-        public System.Collections.Generic.IList<GlobalPermission> Permissions { get; set; }
+        public GlobalPermission[] Permissions { get; set; }
 
         /// <summary>
         /// <para type="description">URL of user's profile photo. Read-only.</para>
@@ -408,7 +408,7 @@ namespace gShell.Cmdlets.Classroom
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "Materials attached to this set.")]
-        public System.Collections.Generic.IList<CourseMaterial> Materials { get; set; }
+        public CourseMaterial[] Materials { get; set; }
 
         /// <summary>
         /// <para type="description">Title for this set.</para>
@@ -466,7 +466,7 @@ namespace gShell.Cmdlets.Classroom
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "Attachments added by the student. Drive files that correspond to materials with a share mode of SUBMISSION_COPY may not exist yet if the student has not accessed the assignment in Classroom. Some attachment metadata is only populated if the requesting user has permission to access it. Identifier and alternate_link fields are available, but others (e.g. title) may not be.")]
-        public System.Collections.Generic.IList<Attachment> Attachments { get; set; }
+        public Attachment[] Attachments { get; set; }
         #endregion
 
          protected override void ProcessRecord()
@@ -1536,7 +1536,7 @@ namespace gShell.Cmdlets.Classroom
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "Possible choices.")]
-        public System.Collections.Generic.IList<string> Choices { get; set; }
+        public string[] Choices { get; set; }
         #endregion
 
          protected override void ProcessRecord()
@@ -1665,7 +1665,7 @@ namespace gShell.Cmdlets.Classroom
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "Additional materials. CourseWork must have no more than 20 material items.")]
-        public System.Collections.Generic.IList<Material> Materials { get; set; }
+        public Material[] Materials { get; set; }
 
         /// <summary>
         /// <para type="description">Maximum grade for this course work. If zero or unspecified, this assignment is considered ungraded. This must be a non-negative integer value.</para>
@@ -2008,7 +2008,7 @@ namespace gShell.Cmdlets.Classroom
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "Sets of materials that appear on the \"about\" page of this course. Read-only.")]
-        public System.Collections.Generic.IList<CourseMaterialSet> CourseMaterialSets { get; set; }
+        public CourseMaterialSet[] CourseMaterialSets { get; set; }
 
         /// <summary>
         /// <para type="description">State of the course. If unspecified, the default state is `PROVISIONED`.</para>
@@ -4032,7 +4032,7 @@ namespace gShell.Cmdlets.Classroom.Courses.CourseWork.StudentSubmissions
         Mandatory = true,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "Attachments to add. A student submission may not have more than 20 attachments. This may only contain link attachments.")]
-        public System.Collections.Generic.IList<Attachment> AddAttachments { get; set; }
+        public Attachment[] AddAttachments { get; set; }
         #endregion
 
         protected override void ProcessRecord()

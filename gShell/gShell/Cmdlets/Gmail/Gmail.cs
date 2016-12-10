@@ -213,7 +213,7 @@ namespace gShell.Cmdlets.Gmail
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "List of IDs of labels applied to this message.")]
-        public IList<string> LabelIds { get; set; }
+        public string[] LabelIds { get; set; }
 
         /// <summary>
         /// <para type="description">The parsed email structure in the message parts.</para>

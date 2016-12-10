@@ -401,7 +401,7 @@ namespace gShell.Cmdlets.Directory
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "List of domain alias objects. (Read-only)")]
-        public IList<Data.DomainAlias> DomainAliases { get; set; }
+        public Data.DomainAlias[] DomainAliases { get; set; }
 
         /// <summary>
         /// <para type="description">The domain name of the customer.</para>
@@ -652,7 +652,7 @@ namespace gShell.Cmdlets.Directory
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "The set of privileges that are granted to this role.")]
-        public IList<Data.Role.RolePrivilegesData> RolePrivileges { get; set; }
+        public Data.Role.RolePrivilegesData[] RolePrivileges { get; set; }
         #endregion
 
         protected override void ProcessRecord()
@@ -792,7 +792,7 @@ namespace gShell.Cmdlets.Directory
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "Fields of Schema")]
-        public IList<Data.SchemaFieldSpec> Fields { get; set; }
+        public Data.SchemaFieldSpec[] Fields { get; set; }
 
         /// <summary>
         /// <para type="description">Unique identifier of Schema (Read-only)</para>
@@ -985,7 +985,7 @@ namespace gShell.Cmdlets.Directory
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "List of aliases (Read-only)")]
-        public System.Collections.Generic.IList<string> Aliases { get; set; }
+        public string[] Aliases { get; set; }
 
         /// <summary>
         /// <para type="description">Boolean indicating if the user should change password in next login</para>
@@ -1147,7 +1147,7 @@ namespace gShell.Cmdlets.Directory
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "List of non editable aliases (Read-only)")]
-        public System.Collections.Generic.IList<string> NonEditableAliases { get; set; }
+        public string[] NonEditableAliases { get; set; }
 
         /// <summary>
         /// A Notes object
@@ -7129,7 +7129,8 @@ namespace gShell.Cmdlets.Directory.GAUser
 
                     if (ShouldProcess(UserKey, "Get-GAUser"))
                     {
-                        WriteObject(new GShellUserObject(users.Get(UserKey, properties)));
+                        var result = users.Get(UserKey, properties);
+                        WriteObject(new GShellUserObject(result));
                     }
                     break;
 

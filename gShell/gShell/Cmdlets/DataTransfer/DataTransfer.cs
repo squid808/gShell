@@ -85,7 +85,7 @@ namespace gShell.Cmdlets.DataTransfer
             HelpMessage =
                 "The transfer parameters for the application. These parameters are used to select the data which will get transfered in context of this application."
             )]
-        public IList<ApplicationTransferParam> ApplicationTransferParams { get; set; }
+        public ApplicationTransferParam[] ApplicationTransferParams { get; set; }
 
         /// <summary>
         /// <para type="description">Current status of transfer for this application. (Read-only)</para>
@@ -148,7 +148,7 @@ namespace gShell.Cmdlets.DataTransfer
             HelpMessage =
                 "List of per application data transfer resources. It contains data transfer details of the applications associated with this transfer resource. Note that this list is also used to specify the applications for which data transfer has to be done at the time of the transfer resource creation."
             )]
-        public IList<ApplicationDataTransfer> ApplicationDataTransfers { get; set; }
+        public ApplicationDataTransfer[] ApplicationDataTransfers { get; set; }
 
         /// <summary>
         /// <para type="description">The transfer's ID (Read-only).</para>
@@ -266,7 +266,7 @@ namespace gShell.Cmdlets.DataTransfer
             HelpMessage =
                 "The list of all possible transfer parameters for this application. These parameters can be used to select the data of the user in this application to be transfered."
             )]
-        public IList<ApplicationTransferParam> TransferParams { get; set; }
+        public ApplicationTransferParam[] TransferParams { get; set; }
 
         #endregion
 
@@ -325,7 +325,7 @@ namespace gShell.Cmdlets.DataTransfer
             Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "The value of the coressponding transfer parameter. eg: 'PRIVATE' or 'SHARED'")]
-        public IList<string> Value { get; set; }
+        public string[] Value { get; set; }
 
         #endregion
 

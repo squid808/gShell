@@ -432,7 +432,7 @@ namespace gShell.Cmdlets.Calendar
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "The default reminders that the authenticated user has for this calendar.")]
-        public System.Collections.Generic.IList<EventReminder> DefaultReminders { get; set; }
+        public EventReminder[] DefaultReminders { get; set; }
 
         /// <summary>
         /// <para type="description">Whether this calendar list entry has been deleted from the calendar list. Read-only. Optional. The default is False.</para>
@@ -603,7 +603,7 @@ namespace gShell.Cmdlets.Calendar
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "The list of notifications set for this calendar.")]
-        public System.Collections.Generic.IList<CalendarNotification> Notifications { get; set; }
+        public CalendarNotification[] Notifications { get; set; }
         #endregion
 
         protected override void ProcessRecord()
@@ -718,7 +718,7 @@ namespace gShell.Cmdlets.Calendar
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "File attachments for the event. Currently only Google Drive attachments are supported.\nIn order to modify attachments the supportsAttachments request parameter should be set to true.\nThere can be at most 25 attachments per event,")]
-        public System.Collections.Generic.IList<EventAttachment> Attachments { get; set; }
+        public EventAttachment[] Attachments { get; set; }
 
         /// <summary>
         /// <para type="description">The attendees of the event. See the Events with attendees guide for more information on scheduling events with other calendar users.</para>
@@ -727,7 +727,7 @@ namespace gShell.Cmdlets.Calendar
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "The attendees of the event. See the Events with attendees guide for more information on scheduling events with other calendar users.")]
-        public System.Collections.Generic.IList<EventAttendee> Attendees { get; set; }
+        public EventAttendee[] Attendees { get; set; }
 
         /// <summary>
         /// <para type="description">Whether attendees may have been omitted from the event's representation. When retrieving an event, this may be due to a restriction specified by the maxAttendee query parameter. When updating an event, this can be used to only update the participant's response. Optional. The default is False.</para>
@@ -925,7 +925,7 @@ namespace gShell.Cmdlets.Calendar
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "List of RRULE, EXRULE, RDATE and EXDATE lines for a recurring event, as specified in RFC5545. Note that DTSTART and DTEND lines are not allowed in this field; event start and end times are specified in the start and end fields. This field is omitted for single events or instances of recurring events.")]
-        public System.Collections.Generic.IList<string> Recurrence { get; set; }
+        public string[] Recurrence { get; set; }
 
         /// <summary>
         /// <para type="description">For an instance of a recurring event, this is the id of the recurring event to which this instance belongs. Immutable.</para>
@@ -1351,7 +1351,7 @@ namespace gShell.Cmdlets.Calendar
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "If the event doesn't use the default reminders, this lists the reminders specific to the event, or, if not set, indicates that no reminders are set for this event. The maximum number of override reminders is 5.")]
-        public System.Collections.Generic.IList<EventReminder> Overrides { get; set; }
+        public EventReminder[] Overrides { get; set; }
 
         /// <summary>
         /// <para type="description">Whether the default reminders of the calendar apply to the event.</para>

@@ -332,7 +332,7 @@ namespace gShell.Cmdlets.Reseller
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "Read-only field containing an enumerable of all the current suspension reasons for a subscription. It is possible for a subscription to have many concurrent, overlapping suspension reasons. A subscription's STATUS is SUSPENDED until all pending suspensions are removed. Possible options include:  \n- PENDING_TOS_ACCEPTANCE - The customer has not logged in and accepted the Google Apps Resold Terms of Services.  \n- RENEWAL_WITH_TYPE_CANCEL - The customer's commitment ended and their service was cancelled at the end of their term.  \n- RESELLER_INITIATED - A manual suspension invoked by a Reseller.  \n- TRIAL_ENDED - The customer's trial expired without a plan selected.  \n- OTHER - The customer is suspended for an internal Google reason (e.g. abuse or otherwise).")]
-        public System.Collections.Generic.IList<string> SuspensionReasons { get; set; }
+        public string[] SuspensionReasons { get; set; }
 
         /// <summary>
         /// <para type="description">Transfer related information for the subscription.</para>
