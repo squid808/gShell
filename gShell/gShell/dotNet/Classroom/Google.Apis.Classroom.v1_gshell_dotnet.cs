@@ -24,6 +24,7 @@
 //------------------------------------------------------------------------------
 
 using gShell.Cmdlets.Utilities.OAuth2;
+using gShell.dotNet;
 
 namespace gShell.Cmdlets.Classroom{
 
@@ -74,6 +75,7 @@ namespace gShell.Cmdlets.Classroom{
 
             ServiceWrapperDictionary[mainBaseType] = mainBase;
 
+
             courses = new Courses();
             invitations = new Invitations();
             userProfiles = new UserProfiles();
@@ -92,15 +94,19 @@ namespace gShell.Cmdlets.Classroom{
 
 
             /// <summary>Gets or sets the  subresource.</summary>
+
             public Aliases aliases{ get; set; }
 
             /// <summary>Gets or sets the  subresource.</summary>
-            public CourseWork courseWork { get; set; }
+
+            public CourseWork courseWork{ get; set; }
 
             /// <summary>Gets or sets the  subresource.</summary>
+
             public Students students{ get; set; }
 
             /// <summary>Gets or sets the  subresource.</summary>
+
             public Teachers teachers{ get; set; }
 
             /// <summary>Constructs a new Courses resource.</summary>
@@ -178,7 +184,7 @@ namespace gShell.Cmdlets.Classroom{
 
                 /// <summary>Gets or sets the  subresource.</summary>
 
-                public StudentSubmissions studentSubmissions { get; set; }
+                public StudentSubmissions studentSubmissions{ get; set; }
 
                 /// <summary>Constructs a new CourseWork resource.</summary>
                 public CourseWork()
@@ -205,7 +211,7 @@ namespace gShell.Cmdlets.Classroom{
                     /// <param name="CourseWorkId">Identifier of the course work.</param>
                     /// <param
                     /// name="Id">Identifier of the student submission.</param>
-                    public Google.Apis.Classroom.v1.Data.StudentSubmission Get(string CourseId, string CourseWorkId, string Id)
+                    public Google.Apis.Classroom.v1.Data.StudentSubmission Get (string CourseId, string CourseWorkId, string Id)
                     {
 
                         return mainBase.courses.courseWork.studentSubmissions.Get(CourseId, CourseWorkId, Id);
@@ -227,7 +233,7 @@ namespace gShell.Cmdlets.Classroom{
                     /// the string literal `"-"` to request student work for all course work in the specified course.</param>
                     /// <param name="properties">The optional properties for this method.</param>
 
-                    public List<Google.Apis.Classroom.v1.Data.ListStudentSubmissionsResponse> List(string CourseId, string CourseWorkId, gClassroom.Courses.CourseWork.StudentSubmissions.StudentSubmissionsListProperties properties = null)
+                    public List<Google.Apis.Classroom.v1.Data.ListStudentSubmissionsResponse> List(string CourseId, string CourseWorkId, gClassroom.Courses.CourseWork.StudentSubmissions.StudentSubmissionsListProperties properties= null)
                     {
 
                         properties = properties ?? new gClassroom.Courses.CourseWork.StudentSubmissions.StudentSubmissionsListProperties();
@@ -251,7 +257,7 @@ namespace gShell.Cmdlets.Classroom{
                     /// <param name="CourseWorkId">Identifier of the course work.</param>
                     /// <param
                     /// name="Id">Identifier of the student submission.</param>
-                    public Google.Apis.Classroom.v1.Data.StudentSubmission ModifyAttachments(Google.Apis.Classroom.v1.Data.ModifyAttachmentsRequest ModifyAttachmentsRequestBody, string CourseId, string CourseWorkId, string Id)
+                    public Google.Apis.Classroom.v1.Data.StudentSubmission ModifyAttachments (Google.Apis.Classroom.v1.Data.ModifyAttachmentsRequest ModifyAttachmentsRequestBody, string CourseId, string CourseWorkId, string Id)
                     {
 
                         return mainBase.courses.courseWork.studentSubmissions.ModifyAttachments(ModifyAttachmentsRequestBody, CourseId, CourseWorkId, Id);
@@ -275,7 +281,7 @@ namespace gShell.Cmdlets.Classroom{
                     /// <param
                     /// name="Id">Identifier of the student submission.</param>
                     /// <param name="properties">The optional properties for this method.</param>
-                    public Google.Apis.Classroom.v1.Data.StudentSubmission Patch(Google.Apis.Classroom.v1.Data.StudentSubmission StudentSubmissionBody, string CourseId, string CourseWorkId, string Id, gClassroom.Courses.CourseWork.StudentSubmissions.StudentSubmissionsPatchProperties properties = null)
+                    public Google.Apis.Classroom.v1.Data.StudentSubmission Patch (Google.Apis.Classroom.v1.Data.StudentSubmission StudentSubmissionBody, string CourseId, string CourseWorkId, string Id, gClassroom.Courses.CourseWork.StudentSubmissions.StudentSubmissionsPatchProperties properties= null)
                     {
 
                         properties = properties ?? new gClassroom.Courses.CourseWork.StudentSubmissions.StudentSubmissionsPatchProperties();
@@ -303,7 +309,7 @@ namespace gShell.Cmdlets.Classroom{
                     /// <param name="CourseWorkId">Identifier of the course work.</param>
                     /// <param
                     /// name="Id">Identifier of the student submission.</param>
-                    public Google.Apis.Classroom.v1.Data.Empty Reclaim(Google.Apis.Classroom.v1.Data.ReclaimStudentSubmissionRequest ReclaimStudentSubmissionRequestBody, string CourseId, string CourseWorkId, string Id)
+                    public Google.Apis.Classroom.v1.Data.Empty Reclaim (Google.Apis.Classroom.v1.Data.ReclaimStudentSubmissionRequest ReclaimStudentSubmissionRequestBody, string CourseId, string CourseWorkId, string Id)
                     {
 
                         return mainBase.courses.courseWork.studentSubmissions.Reclaim(ReclaimStudentSubmissionRequestBody, CourseId, CourseWorkId, Id);
@@ -328,7 +334,7 @@ namespace gShell.Cmdlets.Classroom{
                     /// <param name="CourseWorkId">Identifier of the course work.</param>
                     /// <param
                     /// name="Id">Identifier of the student submission.</param>
-                    public Google.Apis.Classroom.v1.Data.Empty ClassroomReturn(Google.Apis.Classroom.v1.Data.ReturnStudentSubmissionRequest ReturnStudentSubmissionRequestBody, string CourseId, string CourseWorkId, string Id)
+                    public Google.Apis.Classroom.v1.Data.Empty ClassroomReturn (Google.Apis.Classroom.v1.Data.ReturnStudentSubmissionRequest ReturnStudentSubmissionRequestBody, string CourseId, string CourseWorkId, string Id)
                     {
 
                         return mainBase.courses.courseWork.studentSubmissions.ClassroomReturn(ReturnStudentSubmissionRequestBody, CourseId, CourseWorkId, Id);
@@ -352,7 +358,7 @@ namespace gShell.Cmdlets.Classroom{
                     /// <param name="CourseWorkId">Identifier of the course work.</param>
                     /// <param
                     /// name="Id">Identifier of the student submission.</param>
-                    public Google.Apis.Classroom.v1.Data.Empty TurnIn(Google.Apis.Classroom.v1.Data.TurnInStudentSubmissionRequest TurnInStudentSubmissionRequestBody, string CourseId, string CourseWorkId, string Id)
+                    public Google.Apis.Classroom.v1.Data.Empty TurnIn (Google.Apis.Classroom.v1.Data.TurnInStudentSubmissionRequest TurnInStudentSubmissionRequestBody, string CourseId, string CourseWorkId, string Id)
                     {
 
                         return mainBase.courses.courseWork.studentSubmissions.TurnIn(TurnInStudentSubmissionRequestBody, CourseId, CourseWorkId, Id);
@@ -374,7 +380,7 @@ namespace gShell.Cmdlets.Classroom{
                 /// <param name="CourseWorkBody">The body of the request.</param>
                 /// <param name="CourseId">Identifier of the course. This identifier can be either the Classroom-assigned identifier or
                 /// an alias.</param>
-                public Google.Apis.Classroom.v1.Data.CourseWork Create(Google.Apis.Classroom.v1.Data.CourseWork CourseWorkBody, string CourseId)
+                public Google.Apis.Classroom.v1.Data.CourseWork Create (Google.Apis.Classroom.v1.Data.CourseWork CourseWorkBody, string CourseId)
                 {
 
                     return mainBase.courses.courseWork.Create(CourseWorkBody, CourseId);
@@ -389,7 +395,7 @@ namespace gShell.Cmdlets.Classroom{
                 /// <param name="CourseId">Identifier of the course. This identifier can be either the Classroom-assigned identifier or
                 /// an alias.</param>
                 /// <param name="Id">Identifier of the course work.</param>
-                public Google.Apis.Classroom.v1.Data.CourseWork Get(string CourseId, string Id)
+                public Google.Apis.Classroom.v1.Data.CourseWork Get (string CourseId, string Id)
                 {
 
                     return mainBase.courses.courseWork.Get(CourseId, Id);
@@ -406,7 +412,7 @@ namespace gShell.Cmdlets.Classroom{
                 /// an alias.</param>
                 /// <param name="properties">The optional properties for this method.</param>
 
-                public List<Google.Apis.Classroom.v1.Data.ListCourseWorkResponse> List(string CourseId, gClassroom.Courses.CourseWork.CourseWorkListProperties properties = null)
+                public List<Google.Apis.Classroom.v1.Data.ListCourseWorkResponse> List(string CourseId, gClassroom.Courses.CourseWork.CourseWorkListProperties properties= null)
                 {
 
                     properties = properties ?? new gClassroom.Courses.CourseWork.CourseWorkListProperties();
@@ -763,11 +769,11 @@ namespace gShell.Cmdlets.Classroom{
 
             /// <summary>Gets or sets the  subresource.</summary>
 
-            public GuardianInvitations guardianInvitations { get; set; }
+            public GuardianInvitations guardianInvitations{ get; set; }
 
             /// <summary>Gets or sets the  subresource.</summary>
 
-            public Guardians guardians { get; set; }
+            public Guardians guardians{ get; set; }
 
             /// <summary>Constructs a new UserProfiles resource.</summary>
             public UserProfiles()
@@ -805,7 +811,7 @@ namespace gShell.Cmdlets.Classroom{
                 /// Google account of an existing `Guardian` for this user.</summary>
                 /// <param name="GuardianInvitationBody">The body of the request.</param>
                 /// <param name="StudentId">ID of the student (in standard format)</param>
-                public Google.Apis.Classroom.v1.Data.GuardianInvitation Create(Google.Apis.Classroom.v1.Data.GuardianInvitation GuardianInvitationBody, string StudentId)
+                public Google.Apis.Classroom.v1.Data.GuardianInvitation Create (Google.Apis.Classroom.v1.Data.GuardianInvitation GuardianInvitationBody, string StudentId)
                 {
 
                     return mainBase.userProfiles.guardianInvitations.Create(GuardianInvitationBody, StudentId);
@@ -824,7 +830,7 @@ namespace gShell.Cmdlets.Classroom{
                 /// <param name="StudentId">The ID of the student whose guardian invitation is being requested.</param>
                 /// <param
                 /// name="InvitationId">The `id` field of the `GuardianInvitation` being requested.</param>
-                public Google.Apis.Classroom.v1.Data.GuardianInvitation Get(string StudentId, string InvitationId)
+                public Google.Apis.Classroom.v1.Data.GuardianInvitation Get (string StudentId, string InvitationId)
                 {
 
                     return mainBase.userProfiles.guardianInvitations.Get(StudentId, InvitationId);
@@ -847,7 +853,7 @@ namespace gShell.Cmdlets.Classroom{
                 /// all students that the requesting user is permitted to view guardian invitations.</param>
                 /// <param name="properties">The optional properties for this method.</param>
 
-                public List<Google.Apis.Classroom.v1.Data.ListGuardianInvitationsResponse> List(string StudentId, gClassroom.UserProfiles.GuardianInvitations.GuardianInvitationsListProperties properties = null)
+                public List<Google.Apis.Classroom.v1.Data.ListGuardianInvitationsResponse> List(string StudentId, gClassroom.UserProfiles.GuardianInvitations.GuardianInvitationsListProperties properties= null)
                 {
 
                     properties = properties ?? new gClassroom.UserProfiles.GuardianInvitations.GuardianInvitationsListProperties();
@@ -871,7 +877,7 @@ namespace gShell.Cmdlets.Classroom{
                 /// <param
                 /// name="InvitationId">The `id` field of the `GuardianInvitation` to be modified.</param>
                 /// <param name="properties">The optional properties for this method.</param>
-                public Google.Apis.Classroom.v1.Data.GuardianInvitation Patch(Google.Apis.Classroom.v1.Data.GuardianInvitation GuardianInvitationBody, string StudentId, string InvitationId, gClassroom.UserProfiles.GuardianInvitations.GuardianInvitationsPatchProperties properties = null)
+                public Google.Apis.Classroom.v1.Data.GuardianInvitation Patch (Google.Apis.Classroom.v1.Data.GuardianInvitation GuardianInvitationBody, string StudentId, string InvitationId, gClassroom.UserProfiles.GuardianInvitations.GuardianInvitationsPatchProperties properties= null)
                 {
 
                     properties = properties ?? new gClassroom.UserProfiles.GuardianInvitations.GuardianInvitationsPatchProperties();
@@ -903,7 +909,7 @@ namespace gShell.Cmdlets.Classroom{
                 /// for the user * the email address of the user * the string literal `"me"`, indicating the requesting
                 /// user</param>
                 /// <param name="GuardianId">The `id` field from a `Guardian`.</param>
-                public Google.Apis.Classroom.v1.Data.Empty Delete(string StudentId, string GuardianId)
+                public Google.Apis.Classroom.v1.Data.Empty Delete (string StudentId, string GuardianId)
                 {
 
                     return mainBase.userProfiles.guardians.Delete(StudentId, GuardianId);
@@ -922,7 +928,7 @@ namespace gShell.Cmdlets.Classroom{
                 /// identifier for the user * the email address of the user * the string literal `"me"`, indicating the requesting
                 /// user</param>
                 /// <param name="GuardianId">The `id` field from a `Guardian`.</param>
-                public Google.Apis.Classroom.v1.Data.Guardian Get(string StudentId, string GuardianId)
+                public Google.Apis.Classroom.v1.Data.Guardian Get (string StudentId, string GuardianId)
                 {
 
                     return mainBase.userProfiles.guardians.Get(StudentId, GuardianId);
@@ -948,7 +954,7 @@ namespace gShell.Cmdlets.Classroom{
                 /// students that the requesting user has access to view.</param>
                 /// <param name="properties">The optional properties for this method.</param>
 
-                public List<Google.Apis.Classroom.v1.Data.ListGuardiansResponse> List(string StudentId, gClassroom.UserProfiles.Guardians.GuardiansListProperties properties = null)
+                public List<Google.Apis.Classroom.v1.Data.ListGuardiansResponse> List(string StudentId, gClassroom.UserProfiles.Guardians.GuardiansListProperties properties= null)
                 {
 
                     properties = properties ?? new gClassroom.UserProfiles.Guardians.GuardiansListProperties();
@@ -1005,7 +1011,7 @@ namespace gShell.dotNet
         /// <param name="authInfo">The authenticated AuthInfo for this user and domain.</param>
         /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
 
-        protected override v1.ClassroomService CreateNewService(string domain, AuthenticatedUserInfo authInfo, string serviceAccountUser = null)
+        protected override v1.ClassroomService CreateNewService(string domain, AuthenticatedUserInfo authInfo, string gShellServiceAccount = null)
         {
             return new v1.ClassroomService(OAuth2Base.GetInitializer(domain, authInfo));
         }
@@ -1037,16 +1043,16 @@ namespace gShell.dotNet
         public class Courses
         {
             /// <summary>Gets or sets the aliases resource class.</summary>
-            public Aliases aliases { get; set; }
+            public Aliases aliases{ get; set; }
 
             /// <summary>Gets or sets the courseWork resource class.</summary>
-            public CourseWork courseWork { get; set; }
+            public CourseWork courseWork{ get; set; }
 
             /// <summary>Gets or sets the students resource class.</summary>
-            public Students students { get; set; }
+            public Students students{ get; set; }
 
             /// <summary>Gets or sets the teachers resource class.</summary>
-            public Teachers teachers { get; set; }
+            public Teachers teachers{ get; set; }
 
             public Courses()
             {
@@ -1066,7 +1072,7 @@ namespace gShell.dotNet
                 public string TeacherId = null;
 
                 /// <summary>Restricts returned courses to those in one of the specified states</summary>
-                public v1.CoursesResource.ListRequest.CourseStatesEnum? CourseStates = null;
+                public v1.CoursesResource.ListRequest.CourseStatesEnum?CourseStates = null;
 
                 /// <summary>Maximum number of items to return. Zero or unspecified indicates that the server may assign a maximum. The server may return fewer than the specified number of results.</summary>
                 public System.Nullable<int> PageSize = null;
@@ -1097,9 +1103,13 @@ namespace gShell.dotNet
             /// `id` and already exists.</summary>
             /// <param name="CourseBody">The body of the request.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Classroom.v1.Data.Course Create(Google.Apis.Classroom.v1.Data.Course CourseBody, string gShellServiceAccount = null)
+            public Google.Apis.Classroom.v1.Data.Course Create (Google.Apis.Classroom.v1.Data.Course CourseBody)
             {
-                return GetService(gShellServiceAccount).Courses.Create(CourseBody).Execute();
+                var request = GetService().Courses.Create(CourseBody);
+
+
+
+                return request.Execute();
             }
 
             /// <summary>Deletes a course. This method returns the following error codes: * `PERMISSION_DENIED` if the
@@ -1108,9 +1118,13 @@ namespace gShell.dotNet
             /// <param name="Id">Identifier of the course to delete. This identifier can be either the Classroom-assigned identifier
             /// or an alias.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Classroom.v1.Data.Empty Delete(string Id, string gShellServiceAccount = null)
+            public Google.Apis.Classroom.v1.Data.Empty Delete (string Id)
             {
-                return GetService(gShellServiceAccount).Courses.Delete(Id).Execute();
+                var request = GetService().Courses.Delete(Id);
+
+
+
+                return request.Execute();
             }
 
             /// <summary>Returns a course. This method returns the following error codes: * `PERMISSION_DENIED` if the
@@ -1119,9 +1133,13 @@ namespace gShell.dotNet
             /// <param name="Id">Identifier of the course to return. This identifier can be either the Classroom-assigned identifier
             /// or an alias.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Classroom.v1.Data.Course Get(string Id, string gShellServiceAccount = null)
+            public Google.Apis.Classroom.v1.Data.Course Get (string Id)
             {
-                return GetService(gShellServiceAccount).Courses.Get(Id).Execute();
+                var request = GetService().Courses.Get(Id);
+
+
+
+                return request.Execute();
             }
 
             /// <summary>Returns a list of courses that the requesting user is permitted to view, restricted to those
@@ -1131,11 +1149,11 @@ namespace gShell.dotNet
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public List<Google.Apis.Classroom.v1.Data.ListCoursesResponse> List(
-                CoursesListProperties properties = null, string gShellServiceAccount = null)
+                CoursesListProperties properties= null)
             {
                 var results = new List<Google.Apis.Classroom.v1.Data.ListCoursesResponse>();
 
-                v1.CoursesResource.ListRequest request = GetService(gShellServiceAccount).Courses.List();
+                v1.CoursesResource.ListRequest request = GetService().Courses.List();
 
                 if (properties != null)
                 {
@@ -1149,7 +1167,7 @@ namespace gShell.dotNet
                 if (null != properties.StartProgressBar)
                 {
                     properties.StartProgressBar("Gathering Courses",
-                        string.Format("-Collecting Courses 1 to {0}", "unknown"));
+                        string.Format("-Collecting Courses page 1"));
                 }
 
                 Google.Apis.Classroom.v1.Data.ListCoursesResponse pagedResult = request.Execute();
@@ -1167,9 +1185,8 @@ namespace gShell.dotNet
                         if (null != properties.UpdateProgressBar)
                         {
                             properties.UpdateProgressBar(5, 10, "Gathering Courses",
-                                    string.Format("-Collecting Courses {0} to {1}",
-                                        (results.Count + 1).ToString(),
-                                        "unknown"));
+                                    string.Format("-Collecting Courses page {0}",
+                                        (results.Count + 1).ToString()));
                         }
                         pagedResult = request.Execute();
                         results.Add(pagedResult);
@@ -1178,7 +1195,7 @@ namespace gShell.dotNet
                     if (null != properties.UpdateProgressBar)
                     {
                         properties.UpdateProgressBar(1, 2, "Gathering Courses",
-                                string.Format("-Returning {0} results.", results.Count.ToString()));
+                                string.Format("-Returning {0} pages.", results.Count.ToString()));
                     }
                 }
 
@@ -1195,9 +1212,15 @@ namespace gShell.dotNet
             /// or an alias.</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Classroom.v1.Data.Course Patch(Google.Apis.Classroom.v1.Data.Course CourseBody, string Id, CoursesPatchProperties properties = null, string gShellServiceAccount = null)
+            public Google.Apis.Classroom.v1.Data.Course Patch (Google.Apis.Classroom.v1.Data.Course CourseBody, string Id, CoursesPatchProperties properties= null)
             {
-                return GetService(gShellServiceAccount).Courses.Patch(CourseBody, Id).Execute();
+                var request = GetService().Courses.Patch(CourseBody, Id);
+
+                if (properties != null)    {
+                    request.UpdateMask = properties.UpdateMask;
+                }
+
+                return request.Execute();
             }
 
             /// <summary>Updates a course. This method returns the following error codes: * `PERMISSION_DENIED` if the
@@ -1208,258 +1231,146 @@ namespace gShell.dotNet
             /// <param name="Id">Identifier of the course to update. This identifier can be either the Classroom-assigned identifier
             /// or an alias.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Classroom.v1.Data.Course Update(Google.Apis.Classroom.v1.Data.Course CourseBody, string Id, string gShellServiceAccount = null)
+            public Google.Apis.Classroom.v1.Data.Course Update (Google.Apis.Classroom.v1.Data.Course CourseBody, string Id)
             {
-                return GetService(gShellServiceAccount).Courses.Update(CourseBody, Id).Execute();
+                var request = GetService().Courses.Update(CourseBody, Id);
+
+
+
+                return request.Execute();
             }
-            /// <summary>The "aliases" collection of methods.</summary>
-            public class Aliases
-            {
-
-                /// <summary>Optional parameters for the Aliases List method.</summary>
-                public class AliasesListProperties
+                /// <summary>The "aliases" collection of methods.</summary>
+                public class Aliases
                 {
-                    /// <summary>Maximum number of items to return. Zero or unspecified indicates that the server may assign a maximum. The server may return fewer than the specified number of results.</summary>
-                    public System.Nullable<int> PageSize = null;
 
-                    /// <summary>A delegate that is used to start a progress bar.</summary>
-                    public Action<string, string> StartProgressBar = null;
-
-                    /// <summary>A delegate that is used to update a progress bar.</summary>
-                    public Action<int, int, string, string> UpdateProgressBar = null;
-
-                    /// <summary>A counter for the total number of results to pull when iterating through paged results.</summary>
-                    public int TotalResults = 0;
-                }
-
-
-                /// <summary>Creates an alias for a course. This method returns the following error codes: *
-                /// `PERMISSION_DENIED` if the requesting user is not permitted to create the alias or for access
-                /// errors. * `NOT_FOUND` if the course does not exist. * `ALREADY_EXISTS` if the alias already
-                /// exists.</summary>
-                /// <param name="CourseAliasBody">The body of the request.</param>
-                /// <param name="CourseId">Identifier of the course to alias. This identifier can be either the Classroom-assigned
-                /// identifier or an alias.</param>
-                /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                public Google.Apis.Classroom.v1.Data.CourseAlias Create(Google.Apis.Classroom.v1.Data.CourseAlias CourseAliasBody, string CourseId, string gShellServiceAccount = null)
-                {
-                    return GetService(gShellServiceAccount).Courses.Aliases.Create(CourseAliasBody, CourseId).Execute();
-                }
-
-                /// <summary>Deletes an alias of a course. This method returns the following error codes: *
-                /// `PERMISSION_DENIED` if the requesting user is not permitted to remove the alias or for access
-                /// errors. * `NOT_FOUND` if the alias does not exist.</summary>
-                /// <param name="CourseId">Identifier of the course whose alias should be deleted. This identifier can be either the
-                /// Classroom-assigned identifier or an alias.</param>
-                /// <param name="Alias">Alias to delete. This may not be the
-                /// Classroom-assigned identifier.</param>
-                /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                public Google.Apis.Classroom.v1.Data.Empty Delete(string CourseId, string Alias, string gShellServiceAccount = null)
-                {
-                    return GetService(gShellServiceAccount).Courses.Aliases.Delete(CourseId, Alias).Execute();
-                }
-
-                /// <summary>Returns a list of aliases for a course. This method returns the following error codes:
-                /// * `PERMISSION_DENIED` if the requesting user is not permitted to access the course or for access
-                /// errors. * `NOT_FOUND` if the course does not exist.</summary>
-                /// <param name="CourseId">The identifier of the course. This identifier can be either the Classroom-assigned identifier
-                /// or an alias.</param>
-                /// <param name="properties">The optional properties for this method.</param>
-                /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                public List<Google.Apis.Classroom.v1.Data.ListCourseAliasesResponse> List(
-                    string CourseId, AliasesListProperties properties = null, string gShellServiceAccount = null)
-                {
-                    var results = new List<Google.Apis.Classroom.v1.Data.ListCourseAliasesResponse>();
-
-                    v1.CoursesResource.AliasesResource.ListRequest request = GetService(gShellServiceAccount).Courses.Aliases.List(CourseId);
-
-                    if (properties != null)
+                    /// <summary>Optional parameters for the Aliases List method.</summary>
+                    public class AliasesListProperties
                     {
-                        request.PageSize = properties.PageSize;
+                        /// <summary>Maximum number of items to return. Zero or unspecified indicates that the server may assign a maximum. The server may return fewer than the specified number of results.</summary>
+                        public System.Nullable<int> PageSize = null;
 
+                        /// <summary>A delegate that is used to start a progress bar.</summary>
+                        public Action<string, string> StartProgressBar = null;
+
+                        /// <summary>A delegate that is used to update a progress bar.</summary>
+                        public Action<int, int, string, string> UpdateProgressBar = null;
+
+                        /// <summary>A counter for the total number of results to pull when iterating through paged results.</summary>
+                        public int TotalResults = 0;
                     }
 
-                    if (null != properties.StartProgressBar)
+
+                    /// <summary>Creates an alias for a course. This method returns the following error codes: *
+                    /// `PERMISSION_DENIED` if the requesting user is not permitted to create the alias or for access
+                    /// errors. * `NOT_FOUND` if the course does not exist. * `ALREADY_EXISTS` if the alias already
+                    /// exists.</summary>
+                    /// <param name="CourseAliasBody">The body of the request.</param>
+                    /// <param name="CourseId">Identifier of the course to alias. This identifier can be either the Classroom-assigned
+                    /// identifier or an alias.</param>
+                    /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
+                    public Google.Apis.Classroom.v1.Data.CourseAlias Create (Google.Apis.Classroom.v1.Data.CourseAlias CourseAliasBody, string CourseId)
                     {
-                        properties.StartProgressBar("Gathering Aliases",
-                            string.Format("-Collecting Aliases 1 to {0}", "unknown"));
+                        var request = GetService().Courses.Aliases.Create(CourseAliasBody, CourseId);
+
+
+
+                        return request.Execute();
                     }
 
-                    Google.Apis.Classroom.v1.Data.ListCourseAliasesResponse pagedResult = request.Execute();
-
-                    if (pagedResult != null)
+                    /// <summary>Deletes an alias of a course. This method returns the following error codes: *
+                    /// `PERMISSION_DENIED` if the requesting user is not permitted to remove the alias or for access
+                    /// errors. * `NOT_FOUND` if the alias does not exist.</summary>
+                    /// <param name="CourseId">Identifier of the course whose alias should be deleted. This identifier can be either the
+                    /// Classroom-assigned identifier or an alias.</param>
+                    /// <param name="Alias">Alias to delete. This may not be the
+                    /// Classroom-assigned identifier.</param>
+                    /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
+                    public Google.Apis.Classroom.v1.Data.Empty Delete (string CourseId, string Alias)
                     {
-                        results.Add(pagedResult);
+                        var request = GetService().Courses.Aliases.Delete(CourseId, Alias);
 
-                        while (!string.IsNullOrWhiteSpace(pagedResult.NextPageToken) &&
-                            pagedResult.NextPageToken != request.PageToken &&
-                        (properties.TotalResults == 0 || results.Count < properties.TotalResults))
+
+
+                        return request.Execute();
+                    }
+
+                    /// <summary>Returns a list of aliases for a course. This method returns the following error codes:
+                    /// * `PERMISSION_DENIED` if the requesting user is not permitted to access the course or for access
+                    /// errors. * `NOT_FOUND` if the course does not exist.</summary>
+                    /// <param name="CourseId">The identifier of the course. This identifier can be either the Classroom-assigned identifier
+                    /// or an alias.</param>
+                    /// <param name="properties">The optional properties for this method.</param>
+                    /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
+                    public List<Google.Apis.Classroom.v1.Data.ListCourseAliasesResponse> List(
+                        string CourseId, AliasesListProperties properties= null)
+                    {
+                        var results = new List<Google.Apis.Classroom.v1.Data.ListCourseAliasesResponse>();
+
+                        v1.CoursesResource.AliasesResource.ListRequest request = GetService().Courses.Aliases.List(CourseId);
+
+                        if (properties != null)
                         {
-                            request.PageToken = pagedResult.NextPageToken;
+                            request.PageSize = properties.PageSize;
+
+                        }
+
+                        if (null != properties.StartProgressBar)
+                        {
+                            properties.StartProgressBar("Gathering Aliases",
+                                string.Format("-Collecting Aliases page 1"));
+                        }
+
+                        Google.Apis.Classroom.v1.Data.ListCourseAliasesResponse pagedResult = request.Execute();
+
+                        if (pagedResult != null)
+                        {
+                            results.Add(pagedResult);
+
+                            while (!string.IsNullOrWhiteSpace(pagedResult.NextPageToken) &&
+                                pagedResult.NextPageToken != request.PageToken &&
+                            (properties.TotalResults == 0 || results.Count < properties.TotalResults))
+                            {
+                                request.PageToken = pagedResult.NextPageToken;
+
+                                if (null != properties.UpdateProgressBar)
+                                {
+                                    properties.UpdateProgressBar(5, 10, "Gathering Aliases",
+                                            string.Format("-Collecting Aliases page {0}",
+                                                (results.Count + 1).ToString()));
+                                }
+                                pagedResult = request.Execute();
+                                results.Add(pagedResult);
+                            }
 
                             if (null != properties.UpdateProgressBar)
                             {
-                                properties.UpdateProgressBar(5, 10, "Gathering Aliases",
-                                        string.Format("-Collecting Aliases {0} to {1}",
-                                            (results.Count + 1).ToString(),
-                                            "unknown"));
+                                properties.UpdateProgressBar(1, 2, "Gathering Aliases",
+                                        string.Format("-Returning {0} pages.", results.Count.ToString()));
                             }
-                            pagedResult = request.Execute();
-                            results.Add(pagedResult);
                         }
 
-                        if (null != properties.UpdateProgressBar)
-                        {
-                            properties.UpdateProgressBar(1, 2, "Gathering Aliases",
-                                    string.Format("-Returning {0} results.", results.Count.ToString()));
-                        }
+                        return results;
                     }
 
-                    return results;
-                }
-
-            }    /// <summary>The "courseWork" collection of methods.</summary>
-            public class CourseWork
-            {
-                /// <summary>Gets or sets the studentSubmissions resource class.</summary>
-                public StudentSubmissions studentSubmissions { get; set; }
-
-                public CourseWork()
+                }    /// <summary>The "courseWork" collection of methods.</summary>
+                public class CourseWork
                 {
-                    studentSubmissions = new StudentSubmissions();
-                }
+                    /// <summary>Gets or sets the studentSubmissions resource class.</summary>
+                    public StudentSubmissions studentSubmissions{ get; set; }
 
-                /// <summary>Optional parameters for the CourseWork List method.</summary>
-                public class CourseWorkListProperties
-                {
-                    /// <summary>Restriction on the work status to return. Only courseWork that matches is returned. If unspecified, items with a work status of `PUBLISHED` is returned.</summary>
-                    public v1.CoursesResource.CourseWorkResource.ListRequest.CourseWorkStatesEnum? CourseWorkStates = null;
-
-                    /// <summary>Optional sort ordering for results. A comma-separated list of fields with an optional sort direction keyword. Supported fields are `updateTime` and `dueDate`. Supported direction keywords are `asc` and `desc`. If not specified, `updateTime desc` is the default behavior. Examples: `dueDate asc,updateTime desc`, `updateTime,dueDate desc`</summary>
-                    public string OrderBy = null;
-
-                    /// <summary>Maximum number of items to return. Zero or unspecified indicates that the server may assign a maximum. The server may return fewer than the specified number of results.</summary>
-                    public System.Nullable<int> PageSize = null;
-
-                    /// <summary>A delegate that is used to start a progress bar.</summary>
-                    public Action<string, string> StartProgressBar = null;
-
-                    /// <summary>A delegate that is used to update a progress bar.</summary>
-                    public Action<int, int, string, string> UpdateProgressBar = null;
-
-                    /// <summary>A counter for the total number of results to pull when iterating through paged results.</summary>
-                    public int TotalResults = 0;
-                }
-
-
-                /// <summary>Creates course work. The resulting course work (and corresponding student submissions)
-                /// are associated with the Developer Console project of the [OAuth client
-                /// ID](https://support.google.com/cloud/answer/6158849) used to make the request. Classroom API
-                /// requests to modify course work and student submissions must be made with an OAuth client ID from
-                /// the associated Developer Console project. This method returns the following error codes: *
-                /// `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course,
-                /// create course work in the requested course, or for access errors. * `INVALID_ARGUMENT` if the
-                /// request is malformed. * `NOT_FOUND` if the requested course does not exist.</summary>
-                /// <param name="CourseWorkBody">The body of the request.</param>
-                /// <param name="CourseId">Identifier of the course. This identifier can be either the Classroom-assigned identifier or
-                /// an alias.</param>
-                /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                public Google.Apis.Classroom.v1.Data.CourseWork Create(Google.Apis.Classroom.v1.Data.CourseWork CourseWorkBody, string CourseId, string gShellServiceAccount = null)
-                {
-                    return GetService(gShellServiceAccount).Courses.CourseWork.Create(CourseWorkBody, CourseId).Execute();
-                }
-
-                /// <summary>Returns course work. This method returns the following error codes: *
-                /// `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or
-                /// course work, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. *
-                /// `NOT_FOUND` if the requested course or course work does not exist.</summary>
-                /// <param name="CourseId">Identifier of the course. This identifier can be either the Classroom-assigned identifier or
-                /// an alias.</param>
-                /// <param name="Id">Identifier of the course work.</param>
-                /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                public Google.Apis.Classroom.v1.Data.CourseWork Get(string CourseId, string Id, string gShellServiceAccount = null)
-                {
-                    return GetService(gShellServiceAccount).Courses.CourseWork.Get(CourseId, Id).Execute();
-                }
-
-                /// <summary>Returns a list of course work that the requester is permitted to view. Course students
-                /// may only view `PUBLISHED` course work. Course teachers and domain administrators may view all
-                /// course work. This method returns the following error codes: * `PERMISSION_DENIED` if the
-                /// requesting user is not permitted to access the requested course or for access errors. *
-                /// `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course does not
-                /// exist.</summary>
-                /// <param name="CourseId">Identifier of the course. This identifier can be either the Classroom-assigned identifier or
-                /// an alias.</param>
-                /// <param name="properties">The optional properties for this method.</param>
-                /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                public List<Google.Apis.Classroom.v1.Data.ListCourseWorkResponse> List(
-                    string CourseId, CourseWorkListProperties properties = null, string gShellServiceAccount = null)
-                {
-                    var results = new List<Google.Apis.Classroom.v1.Data.ListCourseWorkResponse>();
-
-                    v1.CoursesResource.CourseWorkResource.ListRequest request = GetService(gShellServiceAccount).Courses.CourseWork.List(CourseId);
-
-                    if (properties != null)
+                    public CourseWork()
                     {
-                        request.CourseWorkStates = properties.CourseWorkStates;
-                        request.OrderBy = properties.OrderBy;
-                        request.PageSize = properties.PageSize;
-
+                        studentSubmissions = new StudentSubmissions();
                     }
 
-                    if (null != properties.StartProgressBar)
+                    /// <summary>Optional parameters for the CourseWork List method.</summary>
+                    public class CourseWorkListProperties
                     {
-                        properties.StartProgressBar("Gathering CourseWork",
-                            string.Format("-Collecting CourseWork 1 to {0}", "unknown"));
-                    }
+                        /// <summary>Restriction on the work status to return. Only courseWork that matches is returned. If unspecified, items with a work status of `PUBLISHED` is returned.</summary>
+                        public v1.CoursesResource.CourseWorkResource.ListRequest.CourseWorkStatesEnum?CourseWorkStates = null;
 
-                    Google.Apis.Classroom.v1.Data.ListCourseWorkResponse pagedResult = request.Execute();
-
-                    if (pagedResult != null)
-                    {
-                        results.Add(pagedResult);
-
-                        while (!string.IsNullOrWhiteSpace(pagedResult.NextPageToken) &&
-                            pagedResult.NextPageToken != request.PageToken &&
-                        (properties.TotalResults == 0 || results.Count < properties.TotalResults))
-                        {
-                            request.PageToken = pagedResult.NextPageToken;
-
-                            if (null != properties.UpdateProgressBar)
-                            {
-                                properties.UpdateProgressBar(5, 10, "Gathering CourseWork",
-                                        string.Format("-Collecting CourseWork {0} to {1}",
-                                            (results.Count + 1).ToString(),
-                                            "unknown"));
-                            }
-                            pagedResult = request.Execute();
-                            results.Add(pagedResult);
-                        }
-
-                        if (null != properties.UpdateProgressBar)
-                        {
-                            properties.UpdateProgressBar(1, 2, "Gathering CourseWork",
-                                    string.Format("-Returning {0} results.", results.Count.ToString()));
-                        }
-                    }
-
-                    return results;
-                }
-                /// <summary>The "studentSubmissions" collection of methods.</summary>
-                public class StudentSubmissions
-                {
-
-                    /// <summary>Optional parameters for the StudentSubmissions List method.</summary>
-                    public class StudentSubmissionsListProperties
-                    {
-                        /// <summary>Optional argument to restrict returned student work to those owned by the student with the specified identifier. The identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`, indicating the requesting user</summary>
-                        public string UserId = null;
-
-                        /// <summary>Requested submission states. If specified, returned student submissions match one of the specified submission states.</summary>
-                        public v1.CoursesResource.CourseWorkResource.StudentSubmissionsResource.ListRequest.StatesEnum? States = null;
-
-                        /// <summary>Requested lateness value. If specified, returned student submissions are restricted by the requested value. If unspecified, submissions are returned regardless of `late` value.</summary>
-                        public v1.CoursesResource.CourseWorkResource.StudentSubmissionsResource.ListRequest.LateEnum? Late = null;
+                        /// <summary>Optional sort ordering for results. A comma-separated list of fields with an optional sort direction keyword. Supported fields are `updateTime` and `dueDate`. Supported direction keywords are `asc` and `desc`. If not specified, `updateTime desc` is the default behavior. Examples: `dueDate asc,updateTime desc`, `updateTime,dueDate desc`</summary>
+                        public string OrderBy = null;
 
                         /// <summary>Maximum number of items to return. Zero or unspecified indicates that the server may assign a maximum. The server may return fewer than the specified number of results.</summary>
                         public System.Nullable<int> PageSize = null;
@@ -1474,66 +1385,77 @@ namespace gShell.dotNet
                         public int TotalResults = 0;
                     }
 
-                    /// <summary>Optional parameters for the StudentSubmissions Patch method.</summary>
-                    public class StudentSubmissionsPatchProperties
-                    {
-                        /// <summary>Mask that identifies which fields on the student submission to update. This field is required to do an update. The update fails if invalid fields are specified. The following fields may be specified by teachers: * `draft_grade` * `assigned_grade`</summary>
-                        public string UpdateMask = null;
-                    }
 
-
-                    /// <summary>Returns a student submission. * `PERMISSION_DENIED` if the requesting user is
-                    /// not permitted to access the requested course, course work, or student submission or for
-                    /// access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the
-                    /// requested course, course work, or student submission does not exist.</summary>
+                    /// <summary>Creates course work. The resulting course work (and corresponding student submissions)
+                    /// are associated with the Developer Console project of the [OAuth client
+                    /// ID](https://support.google.com/cloud/answer/6158849) used to make the request. Classroom API
+                    /// requests to modify course work and student submissions must be made with an OAuth client ID from
+                    /// the associated Developer Console project. This method returns the following error codes: *
+                    /// `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course,
+                    /// create course work in the requested course, or for access errors. * `INVALID_ARGUMENT` if the
+                    /// request is malformed. * `NOT_FOUND` if the requested course does not exist.</summary>
+                    /// <param name="CourseWorkBody">The body of the request.</param>
                     /// <param name="CourseId">Identifier of the course. This identifier can be either the Classroom-assigned identifier or
                     /// an alias.</param>
-                    /// <param name="CourseWorkId">Identifier of the course work.</param>
-                    /// <param
-                    /// name="Id">Identifier of the student submission.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Classroom.v1.Data.StudentSubmission Get(string CourseId, string CourseWorkId, string Id, string gShellServiceAccount = null)
+                    public Google.Apis.Classroom.v1.Data.CourseWork Create (Google.Apis.Classroom.v1.Data.CourseWork CourseWorkBody, string CourseId)
                     {
-                        return GetService(gShellServiceAccount).Courses.CourseWork.StudentSubmissions.Get(CourseId, CourseWorkId, Id).Execute();
+                        var request = GetService().Courses.CourseWork.Create(CourseWorkBody, CourseId);
+
+
+
+                        return request.Execute();
                     }
 
-                    /// <summary>Returns a list of student submissions that the requester is permitted to view,
-                    /// factoring in the OAuth scopes of the request. `-` may be specified as the
-                    /// `course_work_id` to include student submissions for multiple course work items. Course
-                    /// students may only view their own work. Course teachers and domain administrators may
-                    /// view all student submissions. This method returns the following error codes: *
-                    /// `PERMISSION_DENIED` if the requesting user is not permitted to access the requested
-                    /// course or course work, or for access errors. * `INVALID_ARGUMENT` if the request is
-                    /// malformed. * `NOT_FOUND` if the requested course does not exist.</summary>
+                    /// <summary>Returns course work. This method returns the following error codes: *
+                    /// `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or
+                    /// course work, or for access errors. * `INVALID_ARGUMENT` if the request is malformed. *
+                    /// `NOT_FOUND` if the requested course or course work does not exist.</summary>
                     /// <param name="CourseId">Identifier of the course. This identifier can be either the Classroom-assigned identifier or
                     /// an alias.</param>
-                    /// <param name="CourseWorkId">Identifer of the student work to request. This may be set to
-                    /// the string literal `"-"` to request student work for all course work in the specified course.</param>
+                    /// <param name="Id">Identifier of the course work.</param>
+                    /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
+                    public Google.Apis.Classroom.v1.Data.CourseWork Get (string CourseId, string Id)
+                    {
+                        var request = GetService().Courses.CourseWork.Get(CourseId, Id);
+
+
+
+                        return request.Execute();
+                    }
+
+                    /// <summary>Returns a list of course work that the requester is permitted to view. Course students
+                    /// may only view `PUBLISHED` course work. Course teachers and domain administrators may view all
+                    /// course work. This method returns the following error codes: * `PERMISSION_DENIED` if the
+                    /// requesting user is not permitted to access the requested course or for access errors. *
+                    /// `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course does not
+                    /// exist.</summary>
+                    /// <param name="CourseId">Identifier of the course. This identifier can be either the Classroom-assigned identifier or
+                    /// an alias.</param>
                     /// <param name="properties">The optional properties for this method.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public List<Google.Apis.Classroom.v1.Data.ListStudentSubmissionsResponse> List(
-                        string CourseId, string CourseWorkId, StudentSubmissionsListProperties properties = null, string gShellServiceAccount = null)
+                    public List<Google.Apis.Classroom.v1.Data.ListCourseWorkResponse> List(
+                        string CourseId, CourseWorkListProperties properties= null)
                     {
-                        var results = new List<Google.Apis.Classroom.v1.Data.ListStudentSubmissionsResponse>();
+                        var results = new List<Google.Apis.Classroom.v1.Data.ListCourseWorkResponse>();
 
-                        v1.CoursesResource.CourseWorkResource.StudentSubmissionsResource.ListRequest request = GetService(gShellServiceAccount).Courses.CourseWork.StudentSubmissions.List(CourseId, CourseWorkId);
+                        v1.CoursesResource.CourseWorkResource.ListRequest request = GetService().Courses.CourseWork.List(CourseId);
 
                         if (properties != null)
                         {
-                            request.UserId = properties.UserId;
-                            request.States = properties.States;
-                            request.Late = properties.Late;
+                            request.CourseWorkStates = properties.CourseWorkStates;
+                            request.OrderBy = properties.OrderBy;
                             request.PageSize = properties.PageSize;
 
                         }
 
                         if (null != properties.StartProgressBar)
                         {
-                            properties.StartProgressBar("Gathering StudentSubmissions",
-                                string.Format("-Collecting StudentSubmissions 1 to {0}", "unknown"));
+                            properties.StartProgressBar("Gathering CourseWork",
+                                string.Format("-Collecting CourseWork page 1"));
                         }
 
-                        Google.Apis.Classroom.v1.Data.ListStudentSubmissionsResponse pagedResult = request.Execute();
+                        Google.Apis.Classroom.v1.Data.ListCourseWorkResponse pagedResult = request.Execute();
 
                         if (pagedResult != null)
                         {
@@ -1547,10 +1469,9 @@ namespace gShell.dotNet
 
                                 if (null != properties.UpdateProgressBar)
                                 {
-                                    properties.UpdateProgressBar(5, 10, "Gathering StudentSubmissions",
-                                            string.Format("-Collecting StudentSubmissions {0} to {1}",
-                                                (results.Count + 1).ToString(),
-                                                "unknown"));
+                                    properties.UpdateProgressBar(5, 10, "Gathering CourseWork",
+                                            string.Format("-Collecting CourseWork page {0}",
+                                                (results.Count + 1).ToString()));
                                 }
                                 pagedResult = request.Execute();
                                 results.Add(pagedResult);
@@ -1558,390 +1479,559 @@ namespace gShell.dotNet
 
                             if (null != properties.UpdateProgressBar)
                             {
-                                properties.UpdateProgressBar(1, 2, "Gathering StudentSubmissions",
-                                        string.Format("-Returning {0} results.", results.Count.ToString()));
+                                properties.UpdateProgressBar(1, 2, "Gathering CourseWork",
+                                        string.Format("-Returning {0} pages.", results.Count.ToString()));
+                            }
+                        }
+
+                        return results;
+                    }
+                        /// <summary>The "studentSubmissions" collection of methods.</summary>
+                        public class StudentSubmissions
+                        {
+
+                            /// <summary>Optional parameters for the StudentSubmissions List method.</summary>
+                            public class StudentSubmissionsListProperties
+                            {
+                                /// <summary>Optional argument to restrict returned student work to those owned by the student with the specified identifier. The identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`, indicating the requesting user</summary>
+                                public string UserId = null;
+
+                                /// <summary>Requested submission states. If specified, returned student submissions match one of the specified submission states.</summary>
+                                public v1.CoursesResource.CourseWorkResource.StudentSubmissionsResource.ListRequest.StatesEnum?States = null;
+
+                                /// <summary>Requested lateness value. If specified, returned student submissions are restricted by the requested value. If unspecified, submissions are returned regardless of `late` value.</summary>
+                                public v1.CoursesResource.CourseWorkResource.StudentSubmissionsResource.ListRequest.LateEnum?Late = null;
+
+                                /// <summary>Maximum number of items to return. Zero or unspecified indicates that the server may assign a maximum. The server may return fewer than the specified number of results.</summary>
+                                public System.Nullable<int> PageSize = null;
+
+                                /// <summary>A delegate that is used to start a progress bar.</summary>
+                                public Action<string, string> StartProgressBar = null;
+
+                                /// <summary>A delegate that is used to update a progress bar.</summary>
+                                public Action<int, int, string, string> UpdateProgressBar = null;
+
+                                /// <summary>A counter for the total number of results to pull when iterating through paged results.</summary>
+                                public int TotalResults = 0;
+                            }
+
+                            /// <summary>Optional parameters for the StudentSubmissions Patch method.</summary>
+                            public class StudentSubmissionsPatchProperties
+                            {
+                                /// <summary>Mask that identifies which fields on the student submission to update. This field is required to do an update. The update fails if invalid fields are specified. The following fields may be specified by teachers: * `draft_grade` * `assigned_grade`</summary>
+                                public string UpdateMask = null;
+                            }
+
+
+                            /// <summary>Returns a student submission. * `PERMISSION_DENIED` if the requesting user is
+                            /// not permitted to access the requested course, course work, or student submission or for
+                            /// access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the
+                            /// requested course, course work, or student submission does not exist.</summary>
+                            /// <param name="CourseId">Identifier of the course. This identifier can be either the Classroom-assigned identifier or
+                            /// an alias.</param>
+                            /// <param name="CourseWorkId">Identifier of the course work.</param>
+                            /// <param
+                            /// name="Id">Identifier of the student submission.</param>
+                            /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
+                            public Google.Apis.Classroom.v1.Data.StudentSubmission Get (string CourseId, string CourseWorkId, string Id)
+                            {
+                                var request = GetService().Courses.CourseWork.StudentSubmissions.Get(CourseId, CourseWorkId, Id);
+
+
+
+                                return request.Execute();
+                            }
+
+                            /// <summary>Returns a list of student submissions that the requester is permitted to view,
+                            /// factoring in the OAuth scopes of the request. `-` may be specified as the
+                            /// `course_work_id` to include student submissions for multiple course work items. Course
+                            /// students may only view their own work. Course teachers and domain administrators may
+                            /// view all student submissions. This method returns the following error codes: *
+                            /// `PERMISSION_DENIED` if the requesting user is not permitted to access the requested
+                            /// course or course work, or for access errors. * `INVALID_ARGUMENT` if the request is
+                            /// malformed. * `NOT_FOUND` if the requested course does not exist.</summary>
+                            /// <param name="CourseId">Identifier of the course. This identifier can be either the Classroom-assigned identifier or
+                            /// an alias.</param>
+                            /// <param name="CourseWorkId">Identifer of the student work to request. This may be set to
+                            /// the string literal `"-"` to request student work for all course work in the specified course.</param>
+                            /// <param name="properties">The optional properties for this method.</param>
+                            /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
+                            public List<Google.Apis.Classroom.v1.Data.ListStudentSubmissionsResponse> List(
+                                string CourseId, string CourseWorkId, StudentSubmissionsListProperties properties= null)
+                            {
+                                var results = new List<Google.Apis.Classroom.v1.Data.ListStudentSubmissionsResponse>();
+
+                                v1.CoursesResource.CourseWorkResource.StudentSubmissionsResource.ListRequest request = GetService().Courses.CourseWork.StudentSubmissions.List(CourseId, CourseWorkId);
+
+                                if (properties != null)
+                                {
+                                    request.UserId = properties.UserId;
+                                    request.States = properties.States;
+                                    request.Late = properties.Late;
+                                    request.PageSize = properties.PageSize;
+
+                                }
+
+                                if (null != properties.StartProgressBar)
+                                {
+                                    properties.StartProgressBar("Gathering StudentSubmissions",
+                                        string.Format("-Collecting StudentSubmissions page 1"));
+                                }
+
+                                Google.Apis.Classroom.v1.Data.ListStudentSubmissionsResponse pagedResult = request.Execute();
+
+                                if (pagedResult != null)
+                                {
+                                    results.Add(pagedResult);
+
+                                    while (!string.IsNullOrWhiteSpace(pagedResult.NextPageToken) &&
+                                        pagedResult.NextPageToken != request.PageToken &&
+                                    (properties.TotalResults == 0 || results.Count < properties.TotalResults))
+                                    {
+                                        request.PageToken = pagedResult.NextPageToken;
+
+                                        if (null != properties.UpdateProgressBar)
+                                        {
+                                            properties.UpdateProgressBar(5, 10, "Gathering StudentSubmissions",
+                                                    string.Format("-Collecting StudentSubmissions page {0}",
+                                                        (results.Count + 1).ToString()));
+                                        }
+                                        pagedResult = request.Execute();
+                                        results.Add(pagedResult);
+                                    }
+
+                                    if (null != properties.UpdateProgressBar)
+                                    {
+                                        properties.UpdateProgressBar(1, 2, "Gathering StudentSubmissions",
+                                                string.Format("-Returning {0} pages.", results.Count.ToString()));
+                                    }
+                                }
+
+                                return results;
+                            }
+
+                            /// <summary>Modifies attachments of student submission. Attachments may only be added to
+                            /// student submissions whose type is `ASSIGNMENT`. This request must be made by the
+                            /// Developer Console project of the [OAuth client
+                            /// ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding
+                            /// course work item. This method returns the following error codes: * `PERMISSION_DENIED`
+                            /// if the requesting user is not permitted to access the requested course or course work,
+                            /// if the user is not permitted to modify attachments on the requested student submission,
+                            /// or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if
+                            /// the requested course, course work, or student submission does not exist.</summary>
+                            /// <param name="ModifyAttachmentsRequestBody">The body of the request.</param>
+                            /// <param name="CourseId">Identifier of the course. This identifier can be either the Classroom-assigned identifier or
+                            /// an alias.</param>
+                            /// <param name="CourseWorkId">Identifier of the course work.</param>
+                            /// <param
+                            /// name="Id">Identifier of the student submission.</param>
+                            /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
+                            public Google.Apis.Classroom.v1.Data.StudentSubmission ModifyAttachments (Google.Apis.Classroom.v1.Data.ModifyAttachmentsRequest ModifyAttachmentsRequestBody, string CourseId, string CourseWorkId, string Id)
+                            {
+                                var request = GetService().Courses.CourseWork.StudentSubmissions.ModifyAttachments(ModifyAttachmentsRequestBody, CourseId, CourseWorkId, Id);
+
+
+
+                                return request.Execute();
+                            }
+
+                            /// <summary>Updates one or more fields of a student submission. See
+                            /// google.classroom.v1.StudentSubmission for details of which fields may be updated and who
+                            /// may change them. This request must be made by the Developer Console project of the
+                            /// [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to create the
+                            /// corresponding course work item. This method returns the following error codes: *
+                            /// `PERMISSION_DENIED` if the requesting developer project did not create the corresponding
+                            /// course work, if the user is not permitted to make the requested modification to the
+                            /// student submission, or for access errors. * `INVALID_ARGUMENT` if the request is
+                            /// malformed. * `NOT_FOUND` if the requested course, course work, or student submission
+                            /// does not exist.</summary>
+                            /// <param name="StudentSubmissionBody">The body of the request.</param>
+                            /// <param name="CourseId">Identifier of the course. This identifier can be either the Classroom-assigned identifier or
+                            /// an alias.</param>
+                            /// <param name="CourseWorkId">Identifier of the course work.</param>
+                            /// <param
+                            /// name="Id">Identifier of the student submission.</param>
+                            /// <param name="properties">The optional properties for this method.</param>
+                            /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
+                            public Google.Apis.Classroom.v1.Data.StudentSubmission Patch (Google.Apis.Classroom.v1.Data.StudentSubmission StudentSubmissionBody, string CourseId, string CourseWorkId, string Id, StudentSubmissionsPatchProperties properties= null)
+                            {
+                                var request = GetService().Courses.CourseWork.StudentSubmissions.Patch(StudentSubmissionBody, CourseId, CourseWorkId, Id);
+
+                                if (properties != null)    {
+                                    request.UpdateMask = properties.UpdateMask;
+                                }
+
+                                return request.Execute();
+                            }
+
+                            /// <summary>Reclaims a student submission on behalf of the student that owns it. Reclaiming
+                            /// a student submission transfers ownership of attached Drive files to the student and
+                            /// update the submission state. Only the student that ownes the requested student
+                            /// submission may call this method, and only for a student submission that has been turned
+                            /// in. This request must be made by the Developer Console project of the [OAuth client
+                            /// ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding
+                            /// course work item. This method returns the following error codes: * `PERMISSION_DENIED`
+                            /// if the requesting user is not permitted to access the requested course or course work,
+                            /// unsubmit the requested student submission, or for access errors. * `FAILED_PRECONDITION`
+                            /// if the student submission has not been turned in. * `INVALID_ARGUMENT` if the request is
+                            /// malformed. * `NOT_FOUND` if the requested course, course work, or student submission
+                            /// does not exist.</summary>
+                            /// <param name="ReclaimStudentSubmissionRequestBody">The body of the request.</param>
+                            /// <param name="CourseId">Identifier of the course. This identifier can be either the Classroom-assigned identifier or
+                            /// an alias.</param>
+                            /// <param name="CourseWorkId">Identifier of the course work.</param>
+                            /// <param
+                            /// name="Id">Identifier of the student submission.</param>
+                            /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
+                            public Google.Apis.Classroom.v1.Data.Empty Reclaim (Google.Apis.Classroom.v1.Data.ReclaimStudentSubmissionRequest ReclaimStudentSubmissionRequestBody, string CourseId, string CourseWorkId, string Id)
+                            {
+                                var request = GetService().Courses.CourseWork.StudentSubmissions.Reclaim(ReclaimStudentSubmissionRequestBody, CourseId, CourseWorkId, Id);
+
+
+
+                                return request.Execute();
+                            }
+
+                            /// <summary>Returns a student submission. Returning a student submission transfers
+                            /// ownership of attached Drive files to the student and may also update the submission
+                            /// state. Unlike the Classroom application, returning a student submission does not set
+                            /// assignedGrade to the draftGrade value. Only a teacher of the course that contains the
+                            /// requested student submission may call this method. This request must be made by the
+                            /// Developer Console project of the [OAuth client
+                            /// ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding
+                            /// course work item. This method returns the following error codes: * `PERMISSION_DENIED`
+                            /// if the requesting user is not permitted to access the requested course or course work,
+                            /// return the requested student submission, or for access errors. * `INVALID_ARGUMENT` if
+                            /// the request is malformed. * `NOT_FOUND` if the requested course, course work, or student
+                            /// submission does not exist.</summary>
+                            /// <param name="ReturnStudentSubmissionRequestBody">The body of the request.</param>
+                            /// <param name="CourseId">Identifier of the course. This identifier can be either the Classroom-assigned identifier or
+                            /// an alias.</param>
+                            /// <param name="CourseWorkId">Identifier of the course work.</param>
+                            /// <param
+                            /// name="Id">Identifier of the student submission.</param>
+                            /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
+                            public Google.Apis.Classroom.v1.Data.Empty ClassroomReturn (Google.Apis.Classroom.v1.Data.ReturnStudentSubmissionRequest ReturnStudentSubmissionRequestBody, string CourseId, string CourseWorkId, string Id)
+                            {
+                                var request = GetService().Courses.CourseWork.StudentSubmissions.ClassroomReturn(ReturnStudentSubmissionRequestBody, CourseId, CourseWorkId, Id);
+
+
+
+                                return request.Execute();
+                            }
+
+                            /// <summary>Turns in a student submission. Turning in a student submission transfers
+                            /// ownership of attached Drive files to the teacher and may also update the submission
+                            /// state. This may only be called by the student that owns the specified student
+                            /// submission. This request must be made by the Developer Console project of the [OAuth
+                            /// client ID](https://support.google.com/cloud/answer/6158849) used to create the
+                            /// corresponding course work item. This method returns the following error codes: *
+                            /// `PERMISSION_DENIED` if the requesting user is not permitted to access the requested
+                            /// course or course work, turn in the requested student submission, or for access errors. *
+                            /// `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course,
+                            /// course work, or student submission does not exist.</summary>
+                            /// <param name="TurnInStudentSubmissionRequestBody">The body of the request.</param>
+                            /// <param name="CourseId">Identifier of the course. This identifier can be either the Classroom-assigned identifier or
+                            /// an alias.</param>
+                            /// <param name="CourseWorkId">Identifier of the course work.</param>
+                            /// <param
+                            /// name="Id">Identifier of the student submission.</param>
+                            /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
+                            public Google.Apis.Classroom.v1.Data.Empty TurnIn (Google.Apis.Classroom.v1.Data.TurnInStudentSubmissionRequest TurnInStudentSubmissionRequestBody, string CourseId, string CourseWorkId, string Id)
+                            {
+                                var request = GetService().Courses.CourseWork.StudentSubmissions.TurnIn(TurnInStudentSubmissionRequestBody, CourseId, CourseWorkId, Id);
+
+
+
+                                return request.Execute();
+                            }
+
+                        }
+                }    /// <summary>The "students" collection of methods.</summary>
+                public class Students
+                {
+
+                    /// <summary>Optional parameters for the Students Create method.</summary>
+                    public class StudentsCreateProperties
+                    {
+                        /// <summary>Enrollment code of the course to create the student in. This code is required if userId corresponds to the requesting user; it may be omitted if the requesting user has administrative permissions to create students for any user.</summary>
+                        public string EnrollmentCode = null;
+                    }
+
+                    /// <summary>Optional parameters for the Students List method.</summary>
+                    public class StudentsListProperties
+                    {
+                        /// <summary>Maximum number of items to return. Zero means no maximum. The server may return fewer than the specified number of results.</summary>
+                        public System.Nullable<int> PageSize = null;
+
+                        /// <summary>A delegate that is used to start a progress bar.</summary>
+                        public Action<string, string> StartProgressBar = null;
+
+                        /// <summary>A delegate that is used to update a progress bar.</summary>
+                        public Action<int, int, string, string> UpdateProgressBar = null;
+
+                        /// <summary>A counter for the total number of results to pull when iterating through paged results.</summary>
+                        public int TotalResults = 0;
+                    }
+
+
+                    /// <summary>Adds a user as a student of a course. This method returns the following error codes: *
+                    /// `PERMISSION_DENIED` if the requesting user is not permitted to create students in this course or
+                    /// for access errors. * `NOT_FOUND` if the requested course ID does not exist. *
+                    /// `FAILED_PRECONDITION` if the requested user's account is disabled, for the following request
+                    /// errors: * CourseMemberLimitReached * CourseNotModifiable * UserGroupsMembershipLimitReached *
+                    /// `ALREADY_EXISTS` if the user is already a student or teacher in the course.</summary>
+                    /// <param name="StudentBody">The body of the request.</param>
+                    /// <param name="CourseId">Identifier of the course to create the student in. This identifier can be either the
+                    /// Classroom-assigned identifier or an alias.</param>
+                    /// <param name="properties">The optional properties for this method.</param>
+                    /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
+                    public Google.Apis.Classroom.v1.Data.Student Create (Google.Apis.Classroom.v1.Data.Student StudentBody, string CourseId, StudentsCreateProperties properties= null)
+                    {
+                        var request = GetService().Courses.Students.Create(StudentBody, CourseId);
+
+                        if (properties != null)    {
+                            request.EnrollmentCode = properties.EnrollmentCode;
+                        }
+
+                        return request.Execute();
+                    }
+
+                    /// <summary>Deletes a student of a course. This method returns the following error codes: *
+                    /// `PERMISSION_DENIED` if the requesting user is not permitted to delete students of this course or
+                    /// for access errors. * `NOT_FOUND` if no student of this course has the requested ID or if the
+                    /// course does not exist.</summary>
+                    /// <param name="CourseId">Identifier of the course. This identifier can be either the Classroom-assigned identifier or
+                    /// an alias.</param>
+                    /// <param name="UserId">Identifier of the student to delete. The identifier can be one of the
+                    /// following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`,
+                    /// indicating the requesting user</param>
+                    /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
+                    public Google.Apis.Classroom.v1.Data.Empty Delete (string CourseId, string UserId)
+                    {
+                        var request = GetService().Courses.Students.Delete(CourseId, UserId);
+
+
+
+                        return request.Execute();
+                    }
+
+                    /// <summary>Returns a student of a course. This method returns the following error codes: *
+                    /// `PERMISSION_DENIED` if the requesting user is not permitted to view students of this course or
+                    /// for access errors. * `NOT_FOUND` if no student of this course has the requested ID or if the
+                    /// course does not exist.</summary>
+                    /// <param name="CourseId">Identifier of the course. This identifier can be either the Classroom-assigned identifier or
+                    /// an alias.</param>
+                    /// <param name="UserId">Identifier of the student to return. The identifier can be one of the
+                    /// following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`,
+                    /// indicating the requesting user</param>
+                    /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
+                    public Google.Apis.Classroom.v1.Data.Student Get (string CourseId, string UserId)
+                    {
+                        var request = GetService().Courses.Students.Get(CourseId, UserId);
+
+
+
+                        return request.Execute();
+                    }
+
+                    /// <summary>Returns a list of students of this course that the requester is permitted to view. This
+                    /// method returns the following error codes: * `NOT_FOUND` if the course does not exist. *
+                    /// `PERMISSION_DENIED` for access errors.</summary>
+                    /// <param name="CourseId">Identifier of the course. This identifier can be either the Classroom-assigned identifier or
+                    /// an alias.</param>
+                    /// <param name="properties">The optional properties for this method.</param>
+                    /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
+                    public List<Google.Apis.Classroom.v1.Data.ListStudentsResponse> List(
+                        string CourseId, StudentsListProperties properties= null)
+                    {
+                        var results = new List<Google.Apis.Classroom.v1.Data.ListStudentsResponse>();
+
+                        v1.CoursesResource.StudentsResource.ListRequest request = GetService().Courses.Students.List(CourseId);
+
+                        if (properties != null)
+                        {
+                            request.PageSize = properties.PageSize;
+
+                        }
+
+                        if (null != properties.StartProgressBar)
+                        {
+                            properties.StartProgressBar("Gathering Students",
+                                string.Format("-Collecting Students page 1"));
+                        }
+
+                        Google.Apis.Classroom.v1.Data.ListStudentsResponse pagedResult = request.Execute();
+
+                        if (pagedResult != null)
+                        {
+                            results.Add(pagedResult);
+
+                            while (!string.IsNullOrWhiteSpace(pagedResult.NextPageToken) &&
+                                pagedResult.NextPageToken != request.PageToken &&
+                            (properties.TotalResults == 0 || results.Count < properties.TotalResults))
+                            {
+                                request.PageToken = pagedResult.NextPageToken;
+
+                                if (null != properties.UpdateProgressBar)
+                                {
+                                    properties.UpdateProgressBar(5, 10, "Gathering Students",
+                                            string.Format("-Collecting Students page {0}",
+                                                (results.Count + 1).ToString()));
+                                }
+                                pagedResult = request.Execute();
+                                results.Add(pagedResult);
+                            }
+
+                            if (null != properties.UpdateProgressBar)
+                            {
+                                properties.UpdateProgressBar(1, 2, "Gathering Students",
+                                        string.Format("-Returning {0} pages.", results.Count.ToString()));
                             }
                         }
 
                         return results;
                     }
 
-                    /// <summary>Modifies attachments of student submission. Attachments may only be added to
-                    /// student submissions whose type is `ASSIGNMENT`. This request must be made by the
-                    /// Developer Console project of the [OAuth client
-                    /// ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding
-                    /// course work item. This method returns the following error codes: * `PERMISSION_DENIED`
-                    /// if the requesting user is not permitted to access the requested course or course work,
-                    /// if the user is not permitted to modify attachments on the requested student submission,
-                    /// or for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if
-                    /// the requested course, course work, or student submission does not exist.</summary>
-                    /// <param name="ModifyAttachmentsRequestBody">The body of the request.</param>
-                    /// <param name="CourseId">Identifier of the course. This identifier can be either the Classroom-assigned identifier or
-                    /// an alias.</param>
-                    /// <param name="CourseWorkId">Identifier of the course work.</param>
-                    /// <param
-                    /// name="Id">Identifier of the student submission.</param>
-                    /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Classroom.v1.Data.StudentSubmission ModifyAttachments(Google.Apis.Classroom.v1.Data.ModifyAttachmentsRequest ModifyAttachmentsRequestBody, string CourseId, string CourseWorkId, string Id, string gShellServiceAccount = null)
+                }    /// <summary>The "teachers" collection of methods.</summary>
+                public class Teachers
+                {
+
+                    /// <summary>Optional parameters for the Teachers List method.</summary>
+                    public class TeachersListProperties
                     {
-                        return GetService(gShellServiceAccount).Courses.CourseWork.StudentSubmissions.ModifyAttachments(ModifyAttachmentsRequestBody, CourseId, CourseWorkId, Id).Execute();
+                        /// <summary>Maximum number of items to return. Zero means no maximum. The server may return fewer than the specified number of results.</summary>
+                        public System.Nullable<int> PageSize = null;
+
+                        /// <summary>A delegate that is used to start a progress bar.</summary>
+                        public Action<string, string> StartProgressBar = null;
+
+                        /// <summary>A delegate that is used to update a progress bar.</summary>
+                        public Action<int, int, string, string> UpdateProgressBar = null;
+
+                        /// <summary>A counter for the total number of results to pull when iterating through paged results.</summary>
+                        public int TotalResults = 0;
                     }
 
-                    /// <summary>Updates one or more fields of a student submission. See
-                    /// google.classroom.v1.StudentSubmission for details of which fields may be updated and who
-                    /// may change them. This request must be made by the Developer Console project of the
-                    /// [OAuth client ID](https://support.google.com/cloud/answer/6158849) used to create the
-                    /// corresponding course work item. This method returns the following error codes: *
-                    /// `PERMISSION_DENIED` if the requesting developer project did not create the corresponding
-                    /// course work, if the user is not permitted to make the requested modification to the
-                    /// student submission, or for access errors. * `INVALID_ARGUMENT` if the request is
-                    /// malformed. * `NOT_FOUND` if the requested course, course work, or student submission
-                    /// does not exist.</summary>
-                    /// <param name="StudentSubmissionBody">The body of the request.</param>
+
+                    /// <summary>Creates a teacher of a course. This method returns the following error codes: *
+                    /// `PERMISSION_DENIED` if the requesting user is not permitted to create teachers in this course or
+                    /// for access errors. * `NOT_FOUND` if the requested course ID does not exist. *
+                    /// `FAILED_PRECONDITION` if the requested user's account is disabled, for the following request
+                    /// errors: * CourseMemberLimitReached * CourseNotModifiable * CourseTeacherLimitReached *
+                    /// UserGroupsMembershipLimitReached * `ALREADY_EXISTS` if the user is already a teacher or student
+                    /// in the course.</summary>
+                    /// <param name="TeacherBody">The body of the request.</param>
                     /// <param name="CourseId">Identifier of the course. This identifier can be either the Classroom-assigned identifier or
                     /// an alias.</param>
-                    /// <param name="CourseWorkId">Identifier of the course work.</param>
-                    /// <param
-                    /// name="Id">Identifier of the student submission.</param>
+                    /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
+                    public Google.Apis.Classroom.v1.Data.Teacher Create (Google.Apis.Classroom.v1.Data.Teacher TeacherBody, string CourseId)
+                    {
+                        var request = GetService().Courses.Teachers.Create(TeacherBody, CourseId);
+
+
+
+                        return request.Execute();
+                    }
+
+                    /// <summary>Deletes a teacher of a course. This method returns the following error codes: *
+                    /// `PERMISSION_DENIED` if the requesting user is not permitted to delete teachers of this course or
+                    /// for access errors. * `NOT_FOUND` if no teacher of this course has the requested ID or if the
+                    /// course does not exist. * `FAILED_PRECONDITION` if the requested ID belongs to the primary
+                    /// teacher of this course.</summary>
+                    /// <param name="CourseId">Identifier of the course. This identifier can be either the Classroom-assigned identifier or
+                    /// an alias.</param>
+                    /// <param name="UserId">Identifier of the teacher to delete. The identifier can be one of the
+                    /// following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`,
+                    /// indicating the requesting user</param>
+                    /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
+                    public Google.Apis.Classroom.v1.Data.Empty Delete (string CourseId, string UserId)
+                    {
+                        var request = GetService().Courses.Teachers.Delete(CourseId, UserId);
+
+
+
+                        return request.Execute();
+                    }
+
+                    /// <summary>Returns a teacher of a course. This method returns the following error codes: *
+                    /// `PERMISSION_DENIED` if the requesting user is not permitted to view teachers of this course or
+                    /// for access errors. * `NOT_FOUND` if no teacher of this course has the requested ID or if the
+                    /// course does not exist.</summary>
+                    /// <param name="CourseId">Identifier of the course. This identifier can be either the Classroom-assigned identifier or
+                    /// an alias.</param>
+                    /// <param name="UserId">Identifier of the teacher to return. The identifier can be one of the
+                    /// following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`,
+                    /// indicating the requesting user</param>
+                    /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
+                    public Google.Apis.Classroom.v1.Data.Teacher Get (string CourseId, string UserId)
+                    {
+                        var request = GetService().Courses.Teachers.Get(CourseId, UserId);
+
+
+
+                        return request.Execute();
+                    }
+
+                    /// <summary>Returns a list of teachers of this course that the requester is permitted to view. This
+                    /// method returns the following error codes: * `NOT_FOUND` if the course does not exist. *
+                    /// `PERMISSION_DENIED` for access errors.</summary>
+                    /// <param name="CourseId">Identifier of the course. This identifier can be either the Classroom-assigned identifier or
+                    /// an alias.</param>
                     /// <param name="properties">The optional properties for this method.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Classroom.v1.Data.StudentSubmission Patch(Google.Apis.Classroom.v1.Data.StudentSubmission StudentSubmissionBody, string CourseId, string CourseWorkId, string Id, StudentSubmissionsPatchProperties properties = null, string gShellServiceAccount = null)
+                    public List<Google.Apis.Classroom.v1.Data.ListTeachersResponse> List(
+                        string CourseId, TeachersListProperties properties= null)
                     {
-                        return GetService(gShellServiceAccount).Courses.CourseWork.StudentSubmissions.Patch(StudentSubmissionBody, CourseId, CourseWorkId, Id).Execute();
-                    }
+                        var results = new List<Google.Apis.Classroom.v1.Data.ListTeachersResponse>();
 
-                    /// <summary>Reclaims a student submission on behalf of the student that owns it. Reclaiming
-                    /// a student submission transfers ownership of attached Drive files to the student and
-                    /// update the submission state. Only the student that ownes the requested student
-                    /// submission may call this method, and only for a student submission that has been turned
-                    /// in. This request must be made by the Developer Console project of the [OAuth client
-                    /// ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding
-                    /// course work item. This method returns the following error codes: * `PERMISSION_DENIED`
-                    /// if the requesting user is not permitted to access the requested course or course work,
-                    /// unsubmit the requested student submission, or for access errors. * `FAILED_PRECONDITION`
-                    /// if the student submission has not been turned in. * `INVALID_ARGUMENT` if the request is
-                    /// malformed. * `NOT_FOUND` if the requested course, course work, or student submission
-                    /// does not exist.</summary>
-                    /// <param name="ReclaimStudentSubmissionRequestBody">The body of the request.</param>
-                    /// <param name="CourseId">Identifier of the course. This identifier can be either the Classroom-assigned identifier or
-                    /// an alias.</param>
-                    /// <param name="CourseWorkId">Identifier of the course work.</param>
-                    /// <param
-                    /// name="Id">Identifier of the student submission.</param>
-                    /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Classroom.v1.Data.Empty Reclaim(Google.Apis.Classroom.v1.Data.ReclaimStudentSubmissionRequest ReclaimStudentSubmissionRequestBody, string CourseId, string CourseWorkId, string Id, string gShellServiceAccount = null)
-                    {
-                        return GetService(gShellServiceAccount).Courses.CourseWork.StudentSubmissions.Reclaim(ReclaimStudentSubmissionRequestBody, CourseId, CourseWorkId, Id).Execute();
-                    }
+                        v1.CoursesResource.TeachersResource.ListRequest request = GetService().Courses.Teachers.List(CourseId);
 
-                    /// <summary>Returns a student submission. Returning a student submission transfers
-                    /// ownership of attached Drive files to the student and may also update the submission
-                    /// state. Unlike the Classroom application, returning a student submission does not set
-                    /// assignedGrade to the draftGrade value. Only a teacher of the course that contains the
-                    /// requested student submission may call this method. This request must be made by the
-                    /// Developer Console project of the [OAuth client
-                    /// ID](https://support.google.com/cloud/answer/6158849) used to create the corresponding
-                    /// course work item. This method returns the following error codes: * `PERMISSION_DENIED`
-                    /// if the requesting user is not permitted to access the requested course or course work,
-                    /// return the requested student submission, or for access errors. * `INVALID_ARGUMENT` if
-                    /// the request is malformed. * `NOT_FOUND` if the requested course, course work, or student
-                    /// submission does not exist.</summary>
-                    /// <param name="ReturnStudentSubmissionRequestBody">The body of the request.</param>
-                    /// <param name="CourseId">Identifier of the course. This identifier can be either the Classroom-assigned identifier or
-                    /// an alias.</param>
-                    /// <param name="CourseWorkId">Identifier of the course work.</param>
-                    /// <param
-                    /// name="Id">Identifier of the student submission.</param>
-                    /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Classroom.v1.Data.Empty ClassroomReturn(Google.Apis.Classroom.v1.Data.ReturnStudentSubmissionRequest ReturnStudentSubmissionRequestBody, string CourseId, string CourseWorkId, string Id, string gShellServiceAccount = null)
-                    {
-                        return GetService(gShellServiceAccount).Courses.CourseWork.StudentSubmissions.ClassroomReturn(ReturnStudentSubmissionRequestBody, CourseId, CourseWorkId, Id).Execute();
-                    }
-
-                    /// <summary>Turns in a student submission. Turning in a student submission transfers
-                    /// ownership of attached Drive files to the teacher and may also update the submission
-                    /// state. This may only be called by the student that owns the specified student
-                    /// submission. This request must be made by the Developer Console project of the [OAuth
-                    /// client ID](https://support.google.com/cloud/answer/6158849) used to create the
-                    /// corresponding course work item. This method returns the following error codes: *
-                    /// `PERMISSION_DENIED` if the requesting user is not permitted to access the requested
-                    /// course or course work, turn in the requested student submission, or for access errors. *
-                    /// `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the requested course,
-                    /// course work, or student submission does not exist.</summary>
-                    /// <param name="TurnInStudentSubmissionRequestBody">The body of the request.</param>
-                    /// <param name="CourseId">Identifier of the course. This identifier can be either the Classroom-assigned identifier or
-                    /// an alias.</param>
-                    /// <param name="CourseWorkId">Identifier of the course work.</param>
-                    /// <param
-                    /// name="Id">Identifier of the student submission.</param>
-                    /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Classroom.v1.Data.Empty TurnIn(Google.Apis.Classroom.v1.Data.TurnInStudentSubmissionRequest TurnInStudentSubmissionRequestBody, string CourseId, string CourseWorkId, string Id, string gShellServiceAccount = null)
-                    {
-                        return GetService(gShellServiceAccount).Courses.CourseWork.StudentSubmissions.TurnIn(TurnInStudentSubmissionRequestBody, CourseId, CourseWorkId, Id).Execute();
-                    }
-
-                }
-            }    /// <summary>The "students" collection of methods.</summary>
-            public class Students
-            {
-
-                /// <summary>Optional parameters for the Students Create method.</summary>
-                public class StudentsCreateProperties
-                {
-                    /// <summary>Enrollment code of the course to create the student in. This code is required if userId corresponds to the requesting user; it may be omitted if the requesting user has administrative permissions to create students for any user.</summary>
-                    public string EnrollmentCode = null;
-                }
-
-                /// <summary>Optional parameters for the Students List method.</summary>
-                public class StudentsListProperties
-                {
-                    /// <summary>Maximum number of items to return. Zero means no maximum. The server may return fewer than the specified number of results.</summary>
-                    public System.Nullable<int> PageSize = null;
-
-                    /// <summary>A delegate that is used to start a progress bar.</summary>
-                    public Action<string, string> StartProgressBar = null;
-
-                    /// <summary>A delegate that is used to update a progress bar.</summary>
-                    public Action<int, int, string, string> UpdateProgressBar = null;
-
-                    /// <summary>A counter for the total number of results to pull when iterating through paged results.</summary>
-                    public int TotalResults = 0;
-                }
-
-
-                /// <summary>Adds a user as a student of a course. This method returns the following error codes: *
-                /// `PERMISSION_DENIED` if the requesting user is not permitted to create students in this course or
-                /// for access errors. * `NOT_FOUND` if the requested course ID does not exist. *
-                /// `FAILED_PRECONDITION` if the requested user's account is disabled, for the following request
-                /// errors: * CourseMemberLimitReached * CourseNotModifiable * UserGroupsMembershipLimitReached *
-                /// `ALREADY_EXISTS` if the user is already a student or teacher in the course.</summary>
-                /// <param name="StudentBody">The body of the request.</param>
-                /// <param name="CourseId">Identifier of the course to create the student in. This identifier can be either the
-                /// Classroom-assigned identifier or an alias.</param>
-                /// <param name="properties">The optional properties for this method.</param>
-                /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                public Google.Apis.Classroom.v1.Data.Student Create(Google.Apis.Classroom.v1.Data.Student StudentBody, string CourseId, StudentsCreateProperties properties = null, string gShellServiceAccount = null)
-                {
-                    return GetService(gShellServiceAccount).Courses.Students.Create(StudentBody, CourseId).Execute();
-                }
-
-                /// <summary>Deletes a student of a course. This method returns the following error codes: *
-                /// `PERMISSION_DENIED` if the requesting user is not permitted to delete students of this course or
-                /// for access errors. * `NOT_FOUND` if no student of this course has the requested ID or if the
-                /// course does not exist.</summary>
-                /// <param name="CourseId">Identifier of the course. This identifier can be either the Classroom-assigned identifier or
-                /// an alias.</param>
-                /// <param name="UserId">Identifier of the student to delete. The identifier can be one of the
-                /// following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`,
-                /// indicating the requesting user</param>
-                /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                public Google.Apis.Classroom.v1.Data.Empty Delete(string CourseId, string UserId, string gShellServiceAccount = null)
-                {
-                    return GetService(gShellServiceAccount).Courses.Students.Delete(CourseId, UserId).Execute();
-                }
-
-                /// <summary>Returns a student of a course. This method returns the following error codes: *
-                /// `PERMISSION_DENIED` if the requesting user is not permitted to view students of this course or
-                /// for access errors. * `NOT_FOUND` if no student of this course has the requested ID or if the
-                /// course does not exist.</summary>
-                /// <param name="CourseId">Identifier of the course. This identifier can be either the Classroom-assigned identifier or
-                /// an alias.</param>
-                /// <param name="UserId">Identifier of the student to return. The identifier can be one of the
-                /// following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`,
-                /// indicating the requesting user</param>
-                /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                public Google.Apis.Classroom.v1.Data.Student Get(string CourseId, string UserId, string gShellServiceAccount = null)
-                {
-                    return GetService(gShellServiceAccount).Courses.Students.Get(CourseId, UserId).Execute();
-                }
-
-                /// <summary>Returns a list of students of this course that the requester is permitted to view. This
-                /// method returns the following error codes: * `NOT_FOUND` if the course does not exist. *
-                /// `PERMISSION_DENIED` for access errors.</summary>
-                /// <param name="CourseId">Identifier of the course. This identifier can be either the Classroom-assigned identifier or
-                /// an alias.</param>
-                /// <param name="properties">The optional properties for this method.</param>
-                /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                public List<Google.Apis.Classroom.v1.Data.ListStudentsResponse> List(
-                    string CourseId, StudentsListProperties properties = null, string gShellServiceAccount = null)
-                {
-                    var results = new List<Google.Apis.Classroom.v1.Data.ListStudentsResponse>();
-
-                    v1.CoursesResource.StudentsResource.ListRequest request = GetService(gShellServiceAccount).Courses.Students.List(CourseId);
-
-                    if (properties != null)
-                    {
-                        request.PageSize = properties.PageSize;
-
-                    }
-
-                    if (null != properties.StartProgressBar)
-                    {
-                        properties.StartProgressBar("Gathering Students",
-                            string.Format("-Collecting Students 1 to {0}", "unknown"));
-                    }
-
-                    Google.Apis.Classroom.v1.Data.ListStudentsResponse pagedResult = request.Execute();
-
-                    if (pagedResult != null)
-                    {
-                        results.Add(pagedResult);
-
-                        while (!string.IsNullOrWhiteSpace(pagedResult.NextPageToken) &&
-                            pagedResult.NextPageToken != request.PageToken &&
-                        (properties.TotalResults == 0 || results.Count < properties.TotalResults))
+                        if (properties != null)
                         {
-                            request.PageToken = pagedResult.NextPageToken;
+                            request.PageSize = properties.PageSize;
+
+                        }
+
+                        if (null != properties.StartProgressBar)
+                        {
+                            properties.StartProgressBar("Gathering Teachers",
+                                string.Format("-Collecting Teachers page 1"));
+                        }
+
+                        Google.Apis.Classroom.v1.Data.ListTeachersResponse pagedResult = request.Execute();
+
+                        if (pagedResult != null)
+                        {
+                            results.Add(pagedResult);
+
+                            while (!string.IsNullOrWhiteSpace(pagedResult.NextPageToken) &&
+                                pagedResult.NextPageToken != request.PageToken &&
+                            (properties.TotalResults == 0 || results.Count < properties.TotalResults))
+                            {
+                                request.PageToken = pagedResult.NextPageToken;
+
+                                if (null != properties.UpdateProgressBar)
+                                {
+                                    properties.UpdateProgressBar(5, 10, "Gathering Teachers",
+                                            string.Format("-Collecting Teachers page {0}",
+                                                (results.Count + 1).ToString()));
+                                }
+                                pagedResult = request.Execute();
+                                results.Add(pagedResult);
+                            }
 
                             if (null != properties.UpdateProgressBar)
                             {
-                                properties.UpdateProgressBar(5, 10, "Gathering Students",
-                                        string.Format("-Collecting Students {0} to {1}",
-                                            (results.Count + 1).ToString(),
-                                            "unknown"));
+                                properties.UpdateProgressBar(1, 2, "Gathering Teachers",
+                                        string.Format("-Returning {0} pages.", results.Count.ToString()));
                             }
-                            pagedResult = request.Execute();
-                            results.Add(pagedResult);
                         }
 
-                        if (null != properties.UpdateProgressBar)
-                        {
-                            properties.UpdateProgressBar(1, 2, "Gathering Students",
-                                    string.Format("-Returning {0} results.", results.Count.ToString()));
-                        }
+                        return results;
                     }
 
-                    return results;
                 }
-
-            }    /// <summary>The "teachers" collection of methods.</summary>
-            public class Teachers
-            {
-
-                /// <summary>Optional parameters for the Teachers List method.</summary>
-                public class TeachersListProperties
-                {
-                    /// <summary>Maximum number of items to return. Zero means no maximum. The server may return fewer than the specified number of results.</summary>
-                    public System.Nullable<int> PageSize = null;
-
-                    /// <summary>A delegate that is used to start a progress bar.</summary>
-                    public Action<string, string> StartProgressBar = null;
-
-                    /// <summary>A delegate that is used to update a progress bar.</summary>
-                    public Action<int, int, string, string> UpdateProgressBar = null;
-
-                    /// <summary>A counter for the total number of results to pull when iterating through paged results.</summary>
-                    public int TotalResults = 0;
-                }
-
-
-                /// <summary>Creates a teacher of a course. This method returns the following error codes: *
-                /// `PERMISSION_DENIED` if the requesting user is not permitted to create teachers in this course or
-                /// for access errors. * `NOT_FOUND` if the requested course ID does not exist. *
-                /// `FAILED_PRECONDITION` if the requested user's account is disabled, for the following request
-                /// errors: * CourseMemberLimitReached * CourseNotModifiable * CourseTeacherLimitReached *
-                /// UserGroupsMembershipLimitReached * `ALREADY_EXISTS` if the user is already a teacher or student
-                /// in the course.</summary>
-                /// <param name="TeacherBody">The body of the request.</param>
-                /// <param name="CourseId">Identifier of the course. This identifier can be either the Classroom-assigned identifier or
-                /// an alias.</param>
-                /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                public Google.Apis.Classroom.v1.Data.Teacher Create(Google.Apis.Classroom.v1.Data.Teacher TeacherBody, string CourseId, string gShellServiceAccount = null)
-                {
-                    return GetService(gShellServiceAccount).Courses.Teachers.Create(TeacherBody, CourseId).Execute();
-                }
-
-                /// <summary>Deletes a teacher of a course. This method returns the following error codes: *
-                /// `PERMISSION_DENIED` if the requesting user is not permitted to delete teachers of this course or
-                /// for access errors. * `NOT_FOUND` if no teacher of this course has the requested ID or if the
-                /// course does not exist. * `FAILED_PRECONDITION` if the requested ID belongs to the primary
-                /// teacher of this course.</summary>
-                /// <param name="CourseId">Identifier of the course. This identifier can be either the Classroom-assigned identifier or
-                /// an alias.</param>
-                /// <param name="UserId">Identifier of the teacher to delete. The identifier can be one of the
-                /// following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`,
-                /// indicating the requesting user</param>
-                /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                public Google.Apis.Classroom.v1.Data.Empty Delete(string CourseId, string UserId, string gShellServiceAccount = null)
-                {
-                    return GetService(gShellServiceAccount).Courses.Teachers.Delete(CourseId, UserId).Execute();
-                }
-
-                /// <summary>Returns a teacher of a course. This method returns the following error codes: *
-                /// `PERMISSION_DENIED` if the requesting user is not permitted to view teachers of this course or
-                /// for access errors. * `NOT_FOUND` if no teacher of this course has the requested ID or if the
-                /// course does not exist.</summary>
-                /// <param name="CourseId">Identifier of the course. This identifier can be either the Classroom-assigned identifier or
-                /// an alias.</param>
-                /// <param name="UserId">Identifier of the teacher to return. The identifier can be one of the
-                /// following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`,
-                /// indicating the requesting user</param>
-                /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                public Google.Apis.Classroom.v1.Data.Teacher Get(string CourseId, string UserId, string gShellServiceAccount = null)
-                {
-                    return GetService(gShellServiceAccount).Courses.Teachers.Get(CourseId, UserId).Execute();
-                }
-
-                /// <summary>Returns a list of teachers of this course that the requester is permitted to view. This
-                /// method returns the following error codes: * `NOT_FOUND` if the course does not exist. *
-                /// `PERMISSION_DENIED` for access errors.</summary>
-                /// <param name="CourseId">Identifier of the course. This identifier can be either the Classroom-assigned identifier or
-                /// an alias.</param>
-                /// <param name="properties">The optional properties for this method.</param>
-                /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                public List<Google.Apis.Classroom.v1.Data.ListTeachersResponse> List(
-                    string CourseId, TeachersListProperties properties = null, string gShellServiceAccount = null)
-                {
-                    var results = new List<Google.Apis.Classroom.v1.Data.ListTeachersResponse>();
-
-                    v1.CoursesResource.TeachersResource.ListRequest request = GetService(gShellServiceAccount).Courses.Teachers.List(CourseId);
-
-                    if (properties != null)
-                    {
-                        request.PageSize = properties.PageSize;
-
-                    }
-
-                    if (null != properties.StartProgressBar)
-                    {
-                        properties.StartProgressBar("Gathering Teachers",
-                            string.Format("-Collecting Teachers 1 to {0}", "unknown"));
-                    }
-
-                    Google.Apis.Classroom.v1.Data.ListTeachersResponse pagedResult = request.Execute();
-
-                    if (pagedResult != null)
-                    {
-                        results.Add(pagedResult);
-
-                        while (!string.IsNullOrWhiteSpace(pagedResult.NextPageToken) &&
-                            pagedResult.NextPageToken != request.PageToken &&
-                        (properties.TotalResults == 0 || results.Count < properties.TotalResults))
-                        {
-                            request.PageToken = pagedResult.NextPageToken;
-
-                            if (null != properties.UpdateProgressBar)
-                            {
-                                properties.UpdateProgressBar(5, 10, "Gathering Teachers",
-                                        string.Format("-Collecting Teachers {0} to {1}",
-                                            (results.Count + 1).ToString(),
-                                            "unknown"));
-                            }
-                            pagedResult = request.Execute();
-                            results.Add(pagedResult);
-                        }
-
-                        if (null != properties.UpdateProgressBar)
-                        {
-                            properties.UpdateProgressBar(1, 2, "Gathering Teachers",
-                                    string.Format("-Returning {0} results.", results.Count.ToString()));
-                        }
-                    }
-
-                    return results;
-                }
-
-            }
         }
 
         /// <summary>The "invitations" collection of methods.</summary>
@@ -1979,9 +2069,13 @@ namespace gShell.dotNet
             /// UserGroupsMembershipLimitReached * `NOT_FOUND` if no invitation exists with the requested ID.</summary>
             /// <param name="Id">Identifier of the invitation to accept.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Classroom.v1.Data.Empty Accept(string Id, string gShellServiceAccount = null)
+            public Google.Apis.Classroom.v1.Data.Empty Accept (string Id)
             {
-                return GetService(gShellServiceAccount).Invitations.Accept(Id).Execute();
+                var request = GetService().Invitations.Accept(Id);
+
+
+
+                return request.Execute();
             }
 
             /// <summary>Creates an invitation. Only one invitation for a user and course may exist at a time. Delete
@@ -1993,9 +2087,13 @@ namespace gShell.dotNet
             /// exists.</summary>
             /// <param name="InvitationBody">The body of the request.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Classroom.v1.Data.Invitation Create(Google.Apis.Classroom.v1.Data.Invitation InvitationBody, string gShellServiceAccount = null)
+            public Google.Apis.Classroom.v1.Data.Invitation Create (Google.Apis.Classroom.v1.Data.Invitation InvitationBody)
             {
-                return GetService(gShellServiceAccount).Invitations.Create(InvitationBody).Execute();
+                var request = GetService().Invitations.Create(InvitationBody);
+
+
+
+                return request.Execute();
             }
 
             /// <summary>Deletes an invitation. This method returns the following error codes: * `PERMISSION_DENIED` if
@@ -2003,9 +2101,13 @@ namespace gShell.dotNet
             /// `NOT_FOUND` if no invitation exists with the requested ID.</summary>
             /// <param name="Id">Identifier of the invitation to delete.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Classroom.v1.Data.Empty Delete(string Id, string gShellServiceAccount = null)
+            public Google.Apis.Classroom.v1.Data.Empty Delete (string Id)
             {
-                return GetService(gShellServiceAccount).Invitations.Delete(Id).Execute();
+                var request = GetService().Invitations.Delete(Id);
+
+
+
+                return request.Execute();
             }
 
             /// <summary>Returns an invitation. This method returns the following error codes: * `PERMISSION_DENIED` if
@@ -2013,9 +2115,13 @@ namespace gShell.dotNet
             /// `NOT_FOUND` if no invitation exists with the requested ID.</summary>
             /// <param name="Id">Identifier of the invitation to return.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Classroom.v1.Data.Invitation Get(string Id, string gShellServiceAccount = null)
+            public Google.Apis.Classroom.v1.Data.Invitation Get (string Id)
             {
-                return GetService(gShellServiceAccount).Invitations.Get(Id).Execute();
+                var request = GetService().Invitations.Get(Id);
+
+
+
+                return request.Execute();
             }
 
             /// <summary>Returns a list of invitations that the requesting user is permitted to view, restricted to
@@ -2025,11 +2131,11 @@ namespace gShell.dotNet
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public List<Google.Apis.Classroom.v1.Data.ListInvitationsResponse> List(
-                InvitationsListProperties properties = null, string gShellServiceAccount = null)
+                InvitationsListProperties properties= null)
             {
                 var results = new List<Google.Apis.Classroom.v1.Data.ListInvitationsResponse>();
 
-                v1.InvitationsResource.ListRequest request = GetService(gShellServiceAccount).Invitations.List();
+                v1.InvitationsResource.ListRequest request = GetService().Invitations.List();
 
                 if (properties != null)
                 {
@@ -2042,7 +2148,7 @@ namespace gShell.dotNet
                 if (null != properties.StartProgressBar)
                 {
                     properties.StartProgressBar("Gathering Invitations",
-                        string.Format("-Collecting Invitations 1 to {0}", "unknown"));
+                        string.Format("-Collecting Invitations page 1"));
                 }
 
                 Google.Apis.Classroom.v1.Data.ListInvitationsResponse pagedResult = request.Execute();
@@ -2060,9 +2166,8 @@ namespace gShell.dotNet
                         if (null != properties.UpdateProgressBar)
                         {
                             properties.UpdateProgressBar(5, 10, "Gathering Invitations",
-                                    string.Format("-Collecting Invitations {0} to {1}",
-                                        (results.Count + 1).ToString(),
-                                        "unknown"));
+                                    string.Format("-Collecting Invitations page {0}",
+                                        (results.Count + 1).ToString()));
                         }
                         pagedResult = request.Execute();
                         results.Add(pagedResult);
@@ -2071,7 +2176,7 @@ namespace gShell.dotNet
                     if (null != properties.UpdateProgressBar)
                     {
                         properties.UpdateProgressBar(1, 2, "Gathering Invitations",
-                                string.Format("-Returning {0} results.", results.Count.ToString()));
+                                string.Format("-Returning {0} pages.", results.Count.ToString()));
                     }
                 }
 
@@ -2084,10 +2189,10 @@ namespace gShell.dotNet
         public class UserProfiles
         {
             /// <summary>Gets or sets the guardianInvitations resource class.</summary>
-            public GuardianInvitations guardianInvitations { get; set; }
+            public GuardianInvitations guardianInvitations{ get; set; }
 
             /// <summary>Gets or sets the guardians resource class.</summary>
-            public Guardians guardians { get; set; }
+            public Guardians guardians{ get; set; }
 
             public UserProfiles()
             {
@@ -2105,309 +2210,333 @@ namespace gShell.dotNet
             /// identifier for the user * the email address of the user * the string literal `"me"`, indicating the requesting
             /// user</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Classroom.v1.Data.UserProfile Get(string UserId, string gShellServiceAccount = null)
+            public Google.Apis.Classroom.v1.Data.UserProfile Get (string UserId)
             {
-                return GetService(gShellServiceAccount).UserProfiles.Get(UserId).Execute();
+                var request = GetService().UserProfiles.Get(UserId);
+
+
+
+                return request.Execute();
             }
-            /// <summary>The "guardianInvitations" collection of methods.</summary>
-            public class GuardianInvitations
-            {
-
-                /// <summary>Optional parameters for the GuardianInvitations List method.</summary>
-                public class GuardianInvitationsListProperties
+                /// <summary>The "guardianInvitations" collection of methods.</summary>
+                public class GuardianInvitations
                 {
-                    /// <summary>If specified, only results with the specified `invited_email_address` will be returned.</summary>
-                    public string InvitedEmailAddress = null;
 
-                    /// <summary>If specified, only results with the specified `state` values will be returned. Otherwise, results with a `state` of `PENDING` will be returned.</summary>
-                    public v1.UserProfilesResource.GuardianInvitationsResource.ListRequest.StatesEnum? States = null;
-
-                    /// <summary>Maximum number of items to return. Zero or unspecified indicates that the server may assign a maximum. The server may return fewer than the specified number of results.</summary>
-                    public System.Nullable<int> PageSize = null;
-
-                    /// <summary>A delegate that is used to start a progress bar.</summary>
-                    public Action<string, string> StartProgressBar = null;
-
-                    /// <summary>A delegate that is used to update a progress bar.</summary>
-                    public Action<int, int, string, string> UpdateProgressBar = null;
-
-                    /// <summary>A counter for the total number of results to pull when iterating through paged results.</summary>
-                    public int TotalResults = 0;
-                }
-
-                /// <summary>Optional parameters for the GuardianInvitations Patch method.</summary>
-                public class GuardianInvitationsPatchProperties
-                {
-                    /// <summary>Mask that identifies which fields on the course to update. This field is required to do an update. The update will fail if invalid fields are specified. The following fields are valid: * `state` When set in a query parameter, this field should be specified as `updateMask=,,...`</summary>
-                    public string UpdateMask = null;
-                }
-
-
-                /// <summary>Creates a guardian invitation, and sends an email to the guardian asking them to
-                /// confirm that they are the student's guardian. Once the guardian accepts the invitation, their
-                /// `state` will change to `COMPLETED` and they will start receiving guardian notifications. A
-                /// `Guardian` resource will also be created to represent the active guardian. The request object
-                /// must have the `student_id` and `invited_email_address` fields set. Failing to set these fields,
-                /// or setting any other fields in the request, will result in an error. This method returns the
-                /// following error codes: * `PERMISSION_DENIED` if the current user does not have permission to
-                /// manage guardians, if the guardian in question has already rejected too many requests for that
-                /// student, if guardians are not enabled for the domain in question, or for other access errors. *
-                /// `RESOURCE_EXHAUSTED` if the student or guardian has exceeded the guardian link limit. *
-                /// `INVALID_ARGUMENT` if the guardian email address is not valid (for example, if it is too long),
-                /// or if the format of the student ID provided cannot be recognized (it is not an email address,
-                /// nor a `user_id` from this API). This error will also be returned if read-only fields are set, or
-                /// if the `state` field is set to to a value other than `PENDING`. * `NOT_FOUND` if the student ID
-                /// provided is a valid student ID, but Classroom has no record of that student. * `ALREADY_EXISTS`
-                /// if there is already a pending guardian invitation for the student and `invited_email_address`
-                /// provided, or if the provided `invited_email_address` matches the Google account of an existing
-                /// `Guardian` for this user.</summary>
-                /// <param name="GuardianInvitationBody">The body of the request.</param>
-                /// <param name="StudentId">ID of the student (in standard format)</param>
-                /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                public Google.Apis.Classroom.v1.Data.GuardianInvitation Create(Google.Apis.Classroom.v1.Data.GuardianInvitation GuardianInvitationBody, string StudentId, string gShellServiceAccount = null)
-                {
-                    return GetService(gShellServiceAccount).UserProfiles.GuardianInvitations.Create(GuardianInvitationBody, StudentId).Execute();
-                }
-
-                /// <summary>Returns a specific guardian invitation. This method returns the following error codes:
-                /// * `PERMISSION_DENIED` if the requesting user is not permitted to view guardian invitations for
-                /// the student identified by the `student_id`, if guardians are not enabled for the domain in
-                /// question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but
-                /// its format cannot be recognized (it is not an email address, nor a `student_id` from the API,
-                /// nor the literal string `me`). * `NOT_FOUND` if Classroom cannot find any record of the given
-                /// student or `invitation_id`. May also be returned if the student exists, but the requesting user
-                /// does not have access to see that student.</summary>
-                /// <param name="StudentId">The ID of the student whose guardian invitation is being requested.</param>
-                /// <param
-                /// name="InvitationId">The `id` field of the `GuardianInvitation` being requested.</param>
-                /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                public Google.Apis.Classroom.v1.Data.GuardianInvitation Get(string StudentId, string InvitationId, string gShellServiceAccount = null)
-                {
-                    return GetService(gShellServiceAccount).UserProfiles.GuardianInvitations.Get(StudentId, InvitationId).Execute();
-                }
-
-                /// <summary>Returns a list of guardian invitations that the requesting user is permitted to view,
-                /// filtered by the parameters provided. This method returns the following error codes: *
-                /// `PERMISSION_DENIED` if a `student_id` is specified, and the requesting user is not permitted to
-                /// view guardian invitations for that student, if `"-"` is specified as the `student_id` and the
-                /// user is not a domain administrator, if guardians are not enabled for the domain in question, or
-                /// for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format
-                /// cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the
-                /// literal string `me`). May also be returned if an invalid `page_token` or `state` is provided. *
-                /// `NOT_FOUND` if a `student_id` is specified, and its format can be recognized, but Classroom has
-                /// no record of that student.</summary>
-                /// <param name="StudentId">The ID of the student whose guardian invitations are to be returned. The identifier can be
-                /// one of the following: * the numeric identifier for the user * the email address of the user * the string literal
-                /// `"me"`, indicating the requesting user * the string literal `"-"`, indicating that results should be returned for
-                /// all students that the requesting user is permitted to view guardian invitations.</param>
-                /// <param name="properties">The optional properties for this method.</param>
-                /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                public List<Google.Apis.Classroom.v1.Data.ListGuardianInvitationsResponse> List(
-                    string StudentId, GuardianInvitationsListProperties properties = null, string gShellServiceAccount = null)
-                {
-                    var results = new List<Google.Apis.Classroom.v1.Data.ListGuardianInvitationsResponse>();
-
-                    v1.UserProfilesResource.GuardianInvitationsResource.ListRequest request = GetService(gShellServiceAccount).UserProfiles.GuardianInvitations.List(StudentId);
-
-                    if (properties != null)
+                    /// <summary>Optional parameters for the GuardianInvitations List method.</summary>
+                    public class GuardianInvitationsListProperties
                     {
-                        request.InvitedEmailAddress = properties.InvitedEmailAddress;
-                        request.States = properties.States;
-                        request.PageSize = properties.PageSize;
+                        /// <summary>If specified, only results with the specified `invited_email_address` will be returned.</summary>
+                        public string InvitedEmailAddress = null;
 
+                        /// <summary>If specified, only results with the specified `state` values will be returned. Otherwise, results with a `state` of `PENDING` will be returned.</summary>
+                        public v1.UserProfilesResource.GuardianInvitationsResource.ListRequest.StatesEnum?States = null;
+
+                        /// <summary>Maximum number of items to return. Zero or unspecified indicates that the server may assign a maximum. The server may return fewer than the specified number of results.</summary>
+                        public System.Nullable<int> PageSize = null;
+
+                        /// <summary>A delegate that is used to start a progress bar.</summary>
+                        public Action<string, string> StartProgressBar = null;
+
+                        /// <summary>A delegate that is used to update a progress bar.</summary>
+                        public Action<int, int, string, string> UpdateProgressBar = null;
+
+                        /// <summary>A counter for the total number of results to pull when iterating through paged results.</summary>
+                        public int TotalResults = 0;
                     }
 
-                    if (null != properties.StartProgressBar)
+                    /// <summary>Optional parameters for the GuardianInvitations Patch method.</summary>
+                    public class GuardianInvitationsPatchProperties
                     {
-                        properties.StartProgressBar("Gathering GuardianInvitations",
-                            string.Format("-Collecting GuardianInvitations 1 to {0}", "unknown"));
+                        /// <summary>Mask that identifies which fields on the course to update. This field is required to do an update. The update will fail if invalid fields are specified. The following fields are valid: * `state` When set in a query parameter, this field should be specified as `updateMask=,,...`</summary>
+                        public string UpdateMask = null;
                     }
 
-                    Google.Apis.Classroom.v1.Data.ListGuardianInvitationsResponse pagedResult = request.Execute();
 
-                    if (pagedResult != null)
+                    /// <summary>Creates a guardian invitation, and sends an email to the guardian asking them to
+                    /// confirm that they are the student's guardian. Once the guardian accepts the invitation, their
+                    /// `state` will change to `COMPLETED` and they will start receiving guardian notifications. A
+                    /// `Guardian` resource will also be created to represent the active guardian. The request object
+                    /// must have the `student_id` and `invited_email_address` fields set. Failing to set these fields,
+                    /// or setting any other fields in the request, will result in an error. This method returns the
+                    /// following error codes: * `PERMISSION_DENIED` if the current user does not have permission to
+                    /// manage guardians, if the guardian in question has already rejected too many requests for that
+                    /// student, if guardians are not enabled for the domain in question, or for other access errors. *
+                    /// `RESOURCE_EXHAUSTED` if the student or guardian has exceeded the guardian link limit. *
+                    /// `INVALID_ARGUMENT` if the guardian email address is not valid (for example, if it is too long),
+                    /// or if the format of the student ID provided cannot be recognized (it is not an email address,
+                    /// nor a `user_id` from this API). This error will also be returned if read-only fields are set, or
+                    /// if the `state` field is set to to a value other than `PENDING`. * `NOT_FOUND` if the student ID
+                    /// provided is a valid student ID, but Classroom has no record of that student. * `ALREADY_EXISTS`
+                    /// if there is already a pending guardian invitation for the student and `invited_email_address`
+                    /// provided, or if the provided `invited_email_address` matches the Google account of an existing
+                    /// `Guardian` for this user.</summary>
+                    /// <param name="GuardianInvitationBody">The body of the request.</param>
+                    /// <param name="StudentId">ID of the student (in standard format)</param>
+                    /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
+                    public Google.Apis.Classroom.v1.Data.GuardianInvitation Create (Google.Apis.Classroom.v1.Data.GuardianInvitation GuardianInvitationBody, string StudentId)
                     {
-                        results.Add(pagedResult);
+                        var request = GetService().UserProfiles.GuardianInvitations.Create(GuardianInvitationBody, StudentId);
 
-                        while (!string.IsNullOrWhiteSpace(pagedResult.NextPageToken) &&
-                            pagedResult.NextPageToken != request.PageToken &&
-                        (properties.TotalResults == 0 || results.Count < properties.TotalResults))
+
+
+                        return request.Execute();
+                    }
+
+                    /// <summary>Returns a specific guardian invitation. This method returns the following error codes:
+                    /// * `PERMISSION_DENIED` if the requesting user is not permitted to view guardian invitations for
+                    /// the student identified by the `student_id`, if guardians are not enabled for the domain in
+                    /// question, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but
+                    /// its format cannot be recognized (it is not an email address, nor a `student_id` from the API,
+                    /// nor the literal string `me`). * `NOT_FOUND` if Classroom cannot find any record of the given
+                    /// student or `invitation_id`. May also be returned if the student exists, but the requesting user
+                    /// does not have access to see that student.</summary>
+                    /// <param name="StudentId">The ID of the student whose guardian invitation is being requested.</param>
+                    /// <param
+                    /// name="InvitationId">The `id` field of the `GuardianInvitation` being requested.</param>
+                    /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
+                    public Google.Apis.Classroom.v1.Data.GuardianInvitation Get (string StudentId, string InvitationId)
+                    {
+                        var request = GetService().UserProfiles.GuardianInvitations.Get(StudentId, InvitationId);
+
+
+
+                        return request.Execute();
+                    }
+
+                    /// <summary>Returns a list of guardian invitations that the requesting user is permitted to view,
+                    /// filtered by the parameters provided. This method returns the following error codes: *
+                    /// `PERMISSION_DENIED` if a `student_id` is specified, and the requesting user is not permitted to
+                    /// view guardian invitations for that student, if `"-"` is specified as the `student_id` and the
+                    /// user is not a domain administrator, if guardians are not enabled for the domain in question, or
+                    /// for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format
+                    /// cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the
+                    /// literal string `me`). May also be returned if an invalid `page_token` or `state` is provided. *
+                    /// `NOT_FOUND` if a `student_id` is specified, and its format can be recognized, but Classroom has
+                    /// no record of that student.</summary>
+                    /// <param name="StudentId">The ID of the student whose guardian invitations are to be returned. The identifier can be
+                    /// one of the following: * the numeric identifier for the user * the email address of the user * the string literal
+                    /// `"me"`, indicating the requesting user * the string literal `"-"`, indicating that results should be returned for
+                    /// all students that the requesting user is permitted to view guardian invitations.</param>
+                    /// <param name="properties">The optional properties for this method.</param>
+                    /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
+                    public List<Google.Apis.Classroom.v1.Data.ListGuardianInvitationsResponse> List(
+                        string StudentId, GuardianInvitationsListProperties properties= null)
+                    {
+                        var results = new List<Google.Apis.Classroom.v1.Data.ListGuardianInvitationsResponse>();
+
+                        v1.UserProfilesResource.GuardianInvitationsResource.ListRequest request = GetService().UserProfiles.GuardianInvitations.List(StudentId);
+
+                        if (properties != null)
                         {
-                            request.PageToken = pagedResult.NextPageToken;
+                            request.InvitedEmailAddress = properties.InvitedEmailAddress;
+                            request.States = properties.States;
+                            request.PageSize = properties.PageSize;
+
+                        }
+
+                        if (null != properties.StartProgressBar)
+                        {
+                            properties.StartProgressBar("Gathering GuardianInvitations",
+                                string.Format("-Collecting GuardianInvitations page 1"));
+                        }
+
+                        Google.Apis.Classroom.v1.Data.ListGuardianInvitationsResponse pagedResult = request.Execute();
+
+                        if (pagedResult != null)
+                        {
+                            results.Add(pagedResult);
+
+                            while (!string.IsNullOrWhiteSpace(pagedResult.NextPageToken) &&
+                                pagedResult.NextPageToken != request.PageToken &&
+                            (properties.TotalResults == 0 || results.Count < properties.TotalResults))
+                            {
+                                request.PageToken = pagedResult.NextPageToken;
+
+                                if (null != properties.UpdateProgressBar)
+                                {
+                                    properties.UpdateProgressBar(5, 10, "Gathering GuardianInvitations",
+                                            string.Format("-Collecting GuardianInvitations page {0}",
+                                                (results.Count + 1).ToString()));
+                                }
+                                pagedResult = request.Execute();
+                                results.Add(pagedResult);
+                            }
 
                             if (null != properties.UpdateProgressBar)
                             {
-                                properties.UpdateProgressBar(5, 10, "Gathering GuardianInvitations",
-                                        string.Format("-Collecting GuardianInvitations {0} to {1}",
-                                            (results.Count + 1).ToString(),
-                                            "unknown"));
+                                properties.UpdateProgressBar(1, 2, "Gathering GuardianInvitations",
+                                        string.Format("-Returning {0} pages.", results.Count.ToString()));
                             }
-                            pagedResult = request.Execute();
+                        }
+
+                        return results;
+                    }
+
+                    /// <summary>Modifies a guardian invitation. Currently, the only valid modification is to change the
+                    /// `state` from `PENDING` to `COMPLETE`. This has the effect of withdrawing the invitation. This
+                    /// method returns the following error codes: * `PERMISSION_DENIED` if the current user does not
+                    /// have permission to manage guardians, if guardians are not enabled for the domain in question or
+                    /// for other access errors. * `FAILED_PRECONDITION` if the guardian link is not in the `PENDING`
+                    /// state. * `INVALID_ARGUMENT` if the format of the student ID provided cannot be recognized (it is
+                    /// not an email address, nor a `user_id` from this API), or if the passed `GuardianInvitation` has
+                    /// a `state` other than `COMPLETE`, or if it modifies fields other than `state`. * `NOT_FOUND` if
+                    /// the student ID provided is a valid student ID, but Classroom has no record of that student, or
+                    /// if the `id` field does not refer to a guardian invitation known to Classroom.</summary>
+                    /// <param name="GuardianInvitationBody">The body of the request.</param>
+                    /// <param name="StudentId">The ID of the student whose guardian invitation is to be modified.</param>
+                    /// <param
+                    /// name="InvitationId">The `id` field of the `GuardianInvitation` to be modified.</param>
+                    /// <param name="properties">The optional properties for this method.</param>
+                    /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
+                    public Google.Apis.Classroom.v1.Data.GuardianInvitation Patch (Google.Apis.Classroom.v1.Data.GuardianInvitation GuardianInvitationBody, string StudentId, string InvitationId, GuardianInvitationsPatchProperties properties= null)
+                    {
+                        var request = GetService().UserProfiles.GuardianInvitations.Patch(GuardianInvitationBody, StudentId, InvitationId);
+
+                        if (properties != null)    {
+                            request.UpdateMask = properties.UpdateMask;
+                        }
+
+                        return request.Execute();
+                    }
+
+                }    /// <summary>The "guardians" collection of methods.</summary>
+                public class Guardians
+                {
+
+                    /// <summary>Optional parameters for the Guardians List method.</summary>
+                    public class GuardiansListProperties
+                    {
+                        /// <summary>Filter results by the email address that the original invitation was sent to, resulting in this guardian link. This filter can only be used by domain administrators.</summary>
+                        public string InvitedEmailAddress = null;
+
+                        /// <summary>Maximum number of items to return. Zero or unspecified indicates that the server may assign a maximum. The server may return fewer than the specified number of results.</summary>
+                        public System.Nullable<int> PageSize = null;
+
+                        /// <summary>A delegate that is used to start a progress bar.</summary>
+                        public Action<string, string> StartProgressBar = null;
+
+                        /// <summary>A delegate that is used to update a progress bar.</summary>
+                        public Action<int, int, string, string> UpdateProgressBar = null;
+
+                        /// <summary>A counter for the total number of results to pull when iterating through paged results.</summary>
+                        public int TotalResults = 0;
+                    }
+
+
+                    /// <summary>Deletes a guardian. The guardian will no longer receive guardian notifications and the
+                    /// guardian will no longer be accessible via the API. This method returns the following error
+                    /// codes: * `PERMISSION_DENIED` if the requesting user is not permitted to manage guardians for the
+                    /// student identified by the `student_id`, if guardians are not enabled for the domain in question,
+                    /// or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format
+                    /// cannot be recognized (it is not an email address, nor a `student_id` from the API). *
+                    /// `NOT_FOUND` if Classroom cannot find any record of the given `student_id` or `guardian_id`, or
+                    /// if the guardian has already been disabled.</summary>
+                    /// <param name="StudentId">The student whose guardian is to be deleted. One of the following: * the numeric identifier
+                    /// for the user * the email address of the user * the string literal `"me"`, indicating the requesting
+                    /// user</param>
+                    /// <param name="GuardianId">The `id` field from a `Guardian`.</param>
+                    /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
+                    public Google.Apis.Classroom.v1.Data.Empty Delete (string StudentId, string GuardianId)
+                    {
+                        var request = GetService().UserProfiles.Guardians.Delete(StudentId, GuardianId);
+
+
+
+                        return request.Execute();
+                    }
+
+                    /// <summary>Returns a specific guardian. This method returns the following error codes: *
+                    /// `PERMISSION_DENIED` if the requesting user is not permitted to view guardian information for the
+                    /// student identified by the `student_id`, if guardians are not enabled for the domain in question,
+                    /// or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format
+                    /// cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the
+                    /// literal string `me`). * `NOT_FOUND` if Classroom cannot find any record of the given student or
+                    /// `guardian_id`, or if the guardian has been disabled.</summary>
+                    /// <param name="StudentId">The student whose guardian is being requested. One of the following: * the numeric
+                    /// identifier for the user * the email address of the user * the string literal `"me"`, indicating the requesting
+                    /// user</param>
+                    /// <param name="GuardianId">The `id` field from a `Guardian`.</param>
+                    /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
+                    public Google.Apis.Classroom.v1.Data.Guardian Get (string StudentId, string GuardianId)
+                    {
+                        var request = GetService().UserProfiles.Guardians.Get(StudentId, GuardianId);
+
+
+
+                        return request.Execute();
+                    }
+
+                    /// <summary>Returns a list of guardians that the requesting user is permitted to view, restricted
+                    /// to those that match the request. To list guardians for any student that the requesting user may
+                    /// view guardians for, use the literal character `-` for the student ID. This method returns the
+                    /// following error codes: * `PERMISSION_DENIED` if a `student_id` is specified, and the requesting
+                    /// user is not permitted to view guardian information for that student, if `"-"` is specified as
+                    /// the `student_id` and the user is not a domain administrator, if guardians are not enabled for
+                    /// the domain in question, if the `invited_email_address` filter is set by a user who is not a
+                    /// domain administrator, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is
+                    /// specified, but its format cannot be recognized (it is not an email address, nor a `student_id`
+                    /// from the API, nor the literal string `me`). May also be returned if an invalid `page_token` is
+                    /// provided. * `NOT_FOUND` if a `student_id` is specified, and its format can be recognized, but
+                    /// Classroom has no record of that student.</summary>
+                    /// <param name="StudentId">Filter results by the student who the guardian is linked to. The identifier can be one of
+                    /// the following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`,
+                    /// indicating the requesting user * the string literal `"-"`, indicating that results should be returned for all
+                    /// students that the requesting user has access to view.</param>
+                    /// <param name="properties">The optional properties for this method.</param>
+                    /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
+                    public List<Google.Apis.Classroom.v1.Data.ListGuardiansResponse> List(
+                        string StudentId, GuardiansListProperties properties= null)
+                    {
+                        var results = new List<Google.Apis.Classroom.v1.Data.ListGuardiansResponse>();
+
+                        v1.UserProfilesResource.GuardiansResource.ListRequest request = GetService().UserProfiles.Guardians.List(StudentId);
+
+                        if (properties != null)
+                        {
+                            request.InvitedEmailAddress = properties.InvitedEmailAddress;
+                            request.PageSize = properties.PageSize;
+
+                        }
+
+                        if (null != properties.StartProgressBar)
+                        {
+                            properties.StartProgressBar("Gathering Guardians",
+                                string.Format("-Collecting Guardians page 1"));
+                        }
+
+                        Google.Apis.Classroom.v1.Data.ListGuardiansResponse pagedResult = request.Execute();
+
+                        if (pagedResult != null)
+                        {
                             results.Add(pagedResult);
-                        }
 
-                        if (null != properties.UpdateProgressBar)
-                        {
-                            properties.UpdateProgressBar(1, 2, "Gathering GuardianInvitations",
-                                    string.Format("-Returning {0} results.", results.Count.ToString()));
-                        }
-                    }
+                            while (!string.IsNullOrWhiteSpace(pagedResult.NextPageToken) &&
+                                pagedResult.NextPageToken != request.PageToken &&
+                            (properties.TotalResults == 0 || results.Count < properties.TotalResults))
+                            {
+                                request.PageToken = pagedResult.NextPageToken;
 
-                    return results;
-                }
-
-                /// <summary>Modifies a guardian invitation. Currently, the only valid modification is to change the
-                /// `state` from `PENDING` to `COMPLETE`. This has the effect of withdrawing the invitation. This
-                /// method returns the following error codes: * `PERMISSION_DENIED` if the current user does not
-                /// have permission to manage guardians, if guardians are not enabled for the domain in question or
-                /// for other access errors. * `FAILED_PRECONDITION` if the guardian link is not in the `PENDING`
-                /// state. * `INVALID_ARGUMENT` if the format of the student ID provided cannot be recognized (it is
-                /// not an email address, nor a `user_id` from this API), or if the passed `GuardianInvitation` has
-                /// a `state` other than `COMPLETE`, or if it modifies fields other than `state`. * `NOT_FOUND` if
-                /// the student ID provided is a valid student ID, but Classroom has no record of that student, or
-                /// if the `id` field does not refer to a guardian invitation known to Classroom.</summary>
-                /// <param name="GuardianInvitationBody">The body of the request.</param>
-                /// <param name="StudentId">The ID of the student whose guardian invitation is to be modified.</param>
-                /// <param
-                /// name="InvitationId">The `id` field of the `GuardianInvitation` to be modified.</param>
-                /// <param name="properties">The optional properties for this method.</param>
-                /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                public Google.Apis.Classroom.v1.Data.GuardianInvitation Patch(Google.Apis.Classroom.v1.Data.GuardianInvitation GuardianInvitationBody, string StudentId, string InvitationId, GuardianInvitationsPatchProperties properties = null, string gShellServiceAccount = null)
-                {
-                    return GetService(gShellServiceAccount).UserProfiles.GuardianInvitations.Patch(GuardianInvitationBody, StudentId, InvitationId).Execute();
-                }
-
-            }    /// <summary>The "guardians" collection of methods.</summary>
-            public class Guardians
-            {
-
-                /// <summary>Optional parameters for the Guardians List method.</summary>
-                public class GuardiansListProperties
-                {
-                    /// <summary>Filter results by the email address that the original invitation was sent to, resulting in this guardian link. This filter can only be used by domain administrators.</summary>
-                    public string InvitedEmailAddress = null;
-
-                    /// <summary>Maximum number of items to return. Zero or unspecified indicates that the server may assign a maximum. The server may return fewer than the specified number of results.</summary>
-                    public System.Nullable<int> PageSize = null;
-
-                    /// <summary>A delegate that is used to start a progress bar.</summary>
-                    public Action<string, string> StartProgressBar = null;
-
-                    /// <summary>A delegate that is used to update a progress bar.</summary>
-                    public Action<int, int, string, string> UpdateProgressBar = null;
-
-                    /// <summary>A counter for the total number of results to pull when iterating through paged results.</summary>
-                    public int TotalResults = 0;
-                }
-
-
-                /// <summary>Deletes a guardian. The guardian will no longer receive guardian notifications and the
-                /// guardian will no longer be accessible via the API. This method returns the following error
-                /// codes: * `PERMISSION_DENIED` if the requesting user is not permitted to manage guardians for the
-                /// student identified by the `student_id`, if guardians are not enabled for the domain in question,
-                /// or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format
-                /// cannot be recognized (it is not an email address, nor a `student_id` from the API). *
-                /// `NOT_FOUND` if Classroom cannot find any record of the given `student_id` or `guardian_id`, or
-                /// if the guardian has already been disabled.</summary>
-                /// <param name="StudentId">The student whose guardian is to be deleted. One of the following: * the numeric identifier
-                /// for the user * the email address of the user * the string literal `"me"`, indicating the requesting
-                /// user</param>
-                /// <param name="GuardianId">The `id` field from a `Guardian`.</param>
-                /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                public Google.Apis.Classroom.v1.Data.Empty Delete(string StudentId, string GuardianId, string gShellServiceAccount = null)
-                {
-                    return GetService(gShellServiceAccount).UserProfiles.Guardians.Delete(StudentId, GuardianId).Execute();
-                }
-
-                /// <summary>Returns a specific guardian. This method returns the following error codes: *
-                /// `PERMISSION_DENIED` if the requesting user is not permitted to view guardian information for the
-                /// student identified by the `student_id`, if guardians are not enabled for the domain in question,
-                /// or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is specified, but its format
-                /// cannot be recognized (it is not an email address, nor a `student_id` from the API, nor the
-                /// literal string `me`). * `NOT_FOUND` if Classroom cannot find any record of the given student or
-                /// `guardian_id`, or if the guardian has been disabled.</summary>
-                /// <param name="StudentId">The student whose guardian is being requested. One of the following: * the numeric
-                /// identifier for the user * the email address of the user * the string literal `"me"`, indicating the requesting
-                /// user</param>
-                /// <param name="GuardianId">The `id` field from a `Guardian`.</param>
-                /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                public Google.Apis.Classroom.v1.Data.Guardian Get(string StudentId, string GuardianId, string gShellServiceAccount = null)
-                {
-                    return GetService(gShellServiceAccount).UserProfiles.Guardians.Get(StudentId, GuardianId).Execute();
-                }
-
-                /// <summary>Returns a list of guardians that the requesting user is permitted to view, restricted
-                /// to those that match the request. To list guardians for any student that the requesting user may
-                /// view guardians for, use the literal character `-` for the student ID. This method returns the
-                /// following error codes: * `PERMISSION_DENIED` if a `student_id` is specified, and the requesting
-                /// user is not permitted to view guardian information for that student, if `"-"` is specified as
-                /// the `student_id` and the user is not a domain administrator, if guardians are not enabled for
-                /// the domain in question, if the `invited_email_address` filter is set by a user who is not a
-                /// domain administrator, or for other access errors. * `INVALID_ARGUMENT` if a `student_id` is
-                /// specified, but its format cannot be recognized (it is not an email address, nor a `student_id`
-                /// from the API, nor the literal string `me`). May also be returned if an invalid `page_token` is
-                /// provided. * `NOT_FOUND` if a `student_id` is specified, and its format can be recognized, but
-                /// Classroom has no record of that student.</summary>
-                /// <param name="StudentId">Filter results by the student who the guardian is linked to. The identifier can be one of
-                /// the following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`,
-                /// indicating the requesting user * the string literal `"-"`, indicating that results should be returned for all
-                /// students that the requesting user has access to view.</param>
-                /// <param name="properties">The optional properties for this method.</param>
-                /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                public List<Google.Apis.Classroom.v1.Data.ListGuardiansResponse> List(
-                    string StudentId, GuardiansListProperties properties = null, string gShellServiceAccount = null)
-                {
-                    var results = new List<Google.Apis.Classroom.v1.Data.ListGuardiansResponse>();
-
-                    v1.UserProfilesResource.GuardiansResource.ListRequest request = GetService(gShellServiceAccount).UserProfiles.Guardians.List(StudentId);
-
-                    if (properties != null)
-                    {
-                        request.InvitedEmailAddress = properties.InvitedEmailAddress;
-                        request.PageSize = properties.PageSize;
-
-                    }
-
-                    if (null != properties.StartProgressBar)
-                    {
-                        properties.StartProgressBar("Gathering Guardians",
-                            string.Format("-Collecting Guardians 1 to {0}", "unknown"));
-                    }
-
-                    Google.Apis.Classroom.v1.Data.ListGuardiansResponse pagedResult = request.Execute();
-
-                    if (pagedResult != null)
-                    {
-                        results.Add(pagedResult);
-
-                        while (!string.IsNullOrWhiteSpace(pagedResult.NextPageToken) &&
-                            pagedResult.NextPageToken != request.PageToken &&
-                        (properties.TotalResults == 0 || results.Count < properties.TotalResults))
-                        {
-                            request.PageToken = pagedResult.NextPageToken;
+                                if (null != properties.UpdateProgressBar)
+                                {
+                                    properties.UpdateProgressBar(5, 10, "Gathering Guardians",
+                                            string.Format("-Collecting Guardians page {0}",
+                                                (results.Count + 1).ToString()));
+                                }
+                                pagedResult = request.Execute();
+                                results.Add(pagedResult);
+                            }
 
                             if (null != properties.UpdateProgressBar)
                             {
-                                properties.UpdateProgressBar(5, 10, "Gathering Guardians",
-                                        string.Format("-Collecting Guardians {0} to {1}",
-                                            (results.Count + 1).ToString(),
-                                            "unknown"));
+                                properties.UpdateProgressBar(1, 2, "Gathering Guardians",
+                                        string.Format("-Returning {0} pages.", results.Count.ToString()));
                             }
-                            pagedResult = request.Execute();
-                            results.Add(pagedResult);
                         }
 
-                        if (null != properties.UpdateProgressBar)
-                        {
-                            properties.UpdateProgressBar(1, 2, "Gathering Guardians",
-                                    string.Format("-Returning {0} results.", results.Count.ToString()));
-                        }
+                        return results;
                     }
 
-                    return results;
                 }
-
-            }
         }
 
     }

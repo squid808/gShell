@@ -426,11 +426,11 @@ namespace gShell.Cmdlets.DataTransfer.Applications
                 {
                     var properties = new gDataTransfer.Applications.ApplicationsListProperties
                     {
-                        maxResults = 500
+                        MaxResults = MaxResults = 500
                     };
 
-                    if (!string.IsNullOrWhiteSpace(CustomerId)) properties.customerId = CustomerId;
-                    if (MaxResults.HasValue) properties.totalResults = MaxResults.Value;
+                    if (!string.IsNullOrWhiteSpace(CustomerId)) properties.CustomerId = CustomerId;
+                    if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
 
                     if (ShouldProcess("DataTransfer Applicaiton", "Get-GDataTransferApplication"))
                     {
@@ -557,13 +557,13 @@ namespace gShell.Cmdlets.DataTransfer.Transfers
                 {
                     var properties = new gDataTransfer.Transfers.TransfersListProperties
                     {
-                        customerId = CustomerId,
-                        newOwnerUserId = NewOwnerUserId,
-                        oldOwnerUserId = OldOwnerUserId,
-                        status = Status
+                        CustomerId = CustomerId,
+                        NewOwnerUserId = NewOwnerUserId,
+                        OldOwnerUserId = OldOwnerUserId,
+                        Status = Status
                     };
 
-                    if (MaxResults.HasValue) properties.totalResults = MaxResults.Value;
+                    if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
 
                     WriteObject(transfers.List(properties).SelectMany(x => x.DataTransfers).ToList());
                 }

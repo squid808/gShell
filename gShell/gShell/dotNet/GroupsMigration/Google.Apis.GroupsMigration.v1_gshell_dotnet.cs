@@ -24,6 +24,7 @@
 //------------------------------------------------------------------------------
 
 using gShell.Cmdlets.Utilities.OAuth2;
+using gShell.dotNet;
 
 namespace gShell.Cmdlets.GroupsMigration{
 
@@ -67,6 +68,7 @@ namespace gShell.Cmdlets.GroupsMigration{
             mainBase = new gGroupsMigration();
 
             ServiceWrapperDictionary[mainBaseType] = mainBase;
+
 
             archive = new Archive();
         }
@@ -164,13 +166,21 @@ namespace gShell.dotNet
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public Google.Apis.GroupsMigration.v1.Data.Groups Insert (string GroupId)
             {
-                return GetService().Archive.Insert(GroupId).Execute();
+                var request = GetService().Archive.Insert(GroupId);
+
+
+
+                return request.Execute();
             }
 
 
             public void Insert (string groupId, System.IO.Stream stream, string contentType)
             {
-                GetService().Archive.Insert(groupId, stream, contentType).Upload();
+                var request = GetService().Archive.Insert(groupId, stream, contentType);
+
+
+
+                request.Upload();
             }
 
         }

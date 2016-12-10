@@ -24,6 +24,7 @@
 //------------------------------------------------------------------------------
 
 using gShell.Cmdlets.Utilities.OAuth2;
+using gShell.dotNet;
 
 namespace gShell.Cmdlets.Groupssettings{
 
@@ -67,6 +68,7 @@ namespace gShell.Cmdlets.Groupssettings{
             mainBase = new gGroupssettings();
 
             ServiceWrapperDictionary[mainBaseType] = mainBase;
+
 
             groups = new Groups();
         }
@@ -180,7 +182,11 @@ namespace gShell.dotNet
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public Google.Apis.Groupssettings.v1.Data.Groups Get (string GroupUniqueId)
             {
-                return GetService().Groups.Get(GroupUniqueId).Execute();
+                var request = GetService().Groups.Get(GroupUniqueId);
+
+
+
+                return request.Execute();
             }
 
             /// <summary>Updates an existing resource. This method supports patch semantics.</summary>
@@ -189,7 +195,11 @@ namespace gShell.dotNet
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public Google.Apis.Groupssettings.v1.Data.Groups Patch (Google.Apis.Groupssettings.v1.Data.Groups GroupsBody, string GroupUniqueId)
             {
-                return GetService().Groups.Patch(GroupsBody, GroupUniqueId).Execute();
+                var request = GetService().Groups.Patch(GroupsBody, GroupUniqueId);
+
+
+
+                return request.Execute();
             }
 
             /// <summary>Updates an existing resource.</summary>
@@ -198,7 +208,11 @@ namespace gShell.dotNet
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public Google.Apis.Groupssettings.v1.Data.Groups Update (Google.Apis.Groupssettings.v1.Data.Groups GroupsBody, string GroupUniqueId)
             {
-                return GetService().Groups.Update(GroupsBody, GroupUniqueId).Execute();
+                var request = GetService().Groups.Update(GroupsBody, GroupUniqueId);
+
+
+
+                return request.Execute();
             }
 
         }

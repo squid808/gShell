@@ -24,6 +24,7 @@
 //------------------------------------------------------------------------------
 
 using gShell.Cmdlets.Utilities.OAuth2;
+using gShell.dotNet;
 
 namespace gShell.Cmdlets.Reseller{
 
@@ -70,6 +71,7 @@ namespace gShell.Cmdlets.Reseller{
             mainBase = new gReseller();
 
             ServiceWrapperDictionary[mainBaseType] = mainBase;
+
 
             customers = new Customers();
             subscriptions = new Subscriptions();
@@ -348,7 +350,11 @@ namespace gShell.dotNet
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public Google.Apis.Reseller.v1.Data.Customer Get (string CustomerId)
             {
-                return GetService().Customers.Get(CustomerId).Execute();
+                var request = GetService().Customers.Get(CustomerId);
+
+
+
+                return request.Execute();
             }
 
             /// <summary>Creates a customer resource if one does not already exist.</summary>
@@ -357,7 +363,13 @@ namespace gShell.dotNet
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public Google.Apis.Reseller.v1.Data.Customer Insert (Google.Apis.Reseller.v1.Data.Customer CustomerBody, CustomersInsertProperties properties= null)
             {
-                return GetService().Customers.Insert(CustomerBody).Execute();
+                var request = GetService().Customers.Insert(CustomerBody);
+
+                if (properties != null)    {
+                    request.CustomerAuthToken = properties.CustomerAuthToken;
+                }
+
+                return request.Execute();
             }
 
             /// <summary>Update a customer resource if one it exists and is owned by the reseller. This method supports
@@ -367,7 +379,11 @@ namespace gShell.dotNet
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public Google.Apis.Reseller.v1.Data.Customer Patch (Google.Apis.Reseller.v1.Data.Customer CustomerBody, string CustomerId)
             {
-                return GetService().Customers.Patch(CustomerBody, CustomerId).Execute();
+                var request = GetService().Customers.Patch(CustomerBody, CustomerId);
+
+
+
+                return request.Execute();
             }
 
             /// <summary>Update a customer resource if one it exists and is owned by the reseller.</summary>
@@ -376,7 +392,11 @@ namespace gShell.dotNet
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public Google.Apis.Reseller.v1.Data.Customer Update (Google.Apis.Reseller.v1.Data.Customer CustomerBody, string CustomerId)
             {
-                return GetService().Customers.Update(CustomerBody, CustomerId).Execute();
+                var request = GetService().Customers.Update(CustomerBody, CustomerId);
+
+
+
+                return request.Execute();
             }
 
         }
@@ -405,7 +425,7 @@ namespace gShell.dotNet
                 public string CustomerNamePrefix = null;
 
                 /// <summary>Maximum number of results to return</summary>
-                public int MaxResults = 100;
+                public int? MaxResults = 100;
 
                 /// <summary>A delegate that is used to start a progress bar.</summary>
                 public Action<string, string> StartProgressBar = null;
@@ -425,7 +445,11 @@ namespace gShell.dotNet
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public Google.Apis.Reseller.v1.Data.Subscription Activate (string CustomerId, string SubscriptionId)
             {
-                return GetService().Subscriptions.Activate(CustomerId, SubscriptionId).Execute();
+                var request = GetService().Subscriptions.Activate(CustomerId, SubscriptionId);
+
+
+
+                return request.Execute();
             }
 
             /// <summary>Changes the plan of a subscription</summary>
@@ -436,7 +460,11 @@ namespace gShell.dotNet
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public Google.Apis.Reseller.v1.Data.Subscription ChangePlan (Google.Apis.Reseller.v1.Data.ChangePlanRequest ChangePlanRequestBody, string CustomerId, string SubscriptionId)
             {
-                return GetService().Subscriptions.ChangePlan(ChangePlanRequestBody, CustomerId, SubscriptionId).Execute();
+                var request = GetService().Subscriptions.ChangePlan(ChangePlanRequestBody, CustomerId, SubscriptionId);
+
+
+
+                return request.Execute();
             }
 
             /// <summary>Changes the renewal settings of a subscription</summary>
@@ -447,7 +475,11 @@ namespace gShell.dotNet
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public Google.Apis.Reseller.v1.Data.Subscription ChangeRenewalSettings (Google.Apis.Reseller.v1.Data.RenewalSettings RenewalSettingsBody, string CustomerId, string SubscriptionId)
             {
-                return GetService().Subscriptions.ChangeRenewalSettings(RenewalSettingsBody, CustomerId, SubscriptionId).Execute();
+                var request = GetService().Subscriptions.ChangeRenewalSettings(RenewalSettingsBody, CustomerId, SubscriptionId);
+
+
+
+                return request.Execute();
             }
 
             /// <summary>Changes the seats configuration of a subscription</summary>
@@ -458,7 +490,11 @@ namespace gShell.dotNet
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public Google.Apis.Reseller.v1.Data.Subscription ChangeSeats (Google.Apis.Reseller.v1.Data.Seats SeatsBody, string CustomerId, string SubscriptionId)
             {
-                return GetService().Subscriptions.ChangeSeats(SeatsBody, CustomerId, SubscriptionId).Execute();
+                var request = GetService().Subscriptions.ChangeSeats(SeatsBody, CustomerId, SubscriptionId);
+
+
+
+                return request.Execute();
             }
 
             /// <summary>Cancels/Downgrades a subscription.</summary>
@@ -470,7 +506,11 @@ namespace gShell.dotNet
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public void Delete (string CustomerId, string SubscriptionId, v1.SubscriptionsResource.DeleteRequest.DeletionTypeEnum DeletionType)
             {
-                GetService().Subscriptions.Delete(CustomerId, SubscriptionId, DeletionType).Execute();
+                var request = GetService().Subscriptions.Delete(CustomerId, SubscriptionId, DeletionType);
+
+
+
+                request.Execute();
             }
 
             /// <summary>Gets a subscription of the customer.</summary>
@@ -480,7 +520,11 @@ namespace gShell.dotNet
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public Google.Apis.Reseller.v1.Data.Subscription Get (string CustomerId, string SubscriptionId)
             {
-                return GetService().Subscriptions.Get(CustomerId, SubscriptionId).Execute();
+                var request = GetService().Subscriptions.Get(CustomerId, SubscriptionId);
+
+
+
+                return request.Execute();
             }
 
             /// <summary>Creates/Transfers a subscription for the customer.</summary>
@@ -490,7 +534,13 @@ namespace gShell.dotNet
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public Google.Apis.Reseller.v1.Data.Subscription Insert (Google.Apis.Reseller.v1.Data.Subscription SubscriptionBody, string CustomerId, SubscriptionsInsertProperties properties= null)
             {
-                return GetService().Subscriptions.Insert(SubscriptionBody, CustomerId).Execute();
+                var request = GetService().Subscriptions.Insert(SubscriptionBody, CustomerId);
+
+                if (properties != null)    {
+                    request.CustomerAuthToken = properties.CustomerAuthToken;
+                }
+
+                return request.Execute();
             }
 
             /// <summary>Lists subscriptions of a reseller, optionally filtered by a customer name prefix.</summary>
@@ -515,7 +565,7 @@ namespace gShell.dotNet
                 if (null != properties.StartProgressBar)
                 {
                     properties.StartProgressBar("Gathering Subscriptions",
-                        string.Format("-Collecting Subscriptions 1 to {0}", request.MaxResults.ToString()));
+                        string.Format("-Collecting Subscriptions page 1"));
                 }
 
                 Google.Apis.Reseller.v1.Data.Subscriptions pagedResult = request.Execute();
@@ -533,9 +583,8 @@ namespace gShell.dotNet
                         if (null != properties.UpdateProgressBar)
                         {
                             properties.UpdateProgressBar(5, 10, "Gathering Subscriptions",
-                                    string.Format("-Collecting Subscriptions {0} to {1}",
-                                        (results.Count + 1).ToString(),
-                                        (results.Count + request.MaxResults).ToString()));
+                                    string.Format("-Collecting Subscriptions page {0}",
+                                        (results.Count + 1).ToString()));
                         }
                         pagedResult = request.Execute();
                         results.Add(pagedResult);
@@ -544,7 +593,7 @@ namespace gShell.dotNet
                     if (null != properties.UpdateProgressBar)
                     {
                         properties.UpdateProgressBar(1, 2, "Gathering Subscriptions",
-                                string.Format("-Returning {0} results.", results.Count.ToString()));
+                                string.Format("-Returning {0} pages.", results.Count.ToString()));
                     }
                 }
 
@@ -558,7 +607,11 @@ namespace gShell.dotNet
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public Google.Apis.Reseller.v1.Data.Subscription StartPaidService (string CustomerId, string SubscriptionId)
             {
-                return GetService().Subscriptions.StartPaidService(CustomerId, SubscriptionId).Execute();
+                var request = GetService().Subscriptions.StartPaidService(CustomerId, SubscriptionId);
+
+
+
+                return request.Execute();
             }
 
             /// <summary>Suspends an active subscription</summary>
@@ -568,7 +621,11 @@ namespace gShell.dotNet
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public Google.Apis.Reseller.v1.Data.Subscription Suspend (string CustomerId, string SubscriptionId)
             {
-                return GetService().Subscriptions.Suspend(CustomerId, SubscriptionId).Execute();
+                var request = GetService().Subscriptions.Suspend(CustomerId, SubscriptionId);
+
+
+
+                return request.Execute();
             }
 
         }

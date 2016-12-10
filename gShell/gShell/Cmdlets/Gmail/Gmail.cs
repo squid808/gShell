@@ -797,7 +797,7 @@ namespace gShell.Cmdlets.Gmail.Users.Drafts
 
             if (ShouldProcess("Gmail User", "Send-GGmailDraft"))
             {
-                WriteObject(users.drafts.Send(body, TargetUserEmail));
+                WriteObject(users.drafts.Send(body, UserId));
             }
         }
     }

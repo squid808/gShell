@@ -4061,6 +4061,7 @@ namespace Google.Apis.Calendar.v3
 
             /// <summary>Maximum number of events returned on one result page. By default the value is 250 events. The
             /// page size can never be larger than 2500 events. Optional.</summary>
+            /// [default: 250]
             /// [minimum: 1]
             [Google.Apis.Util.RequestParameterAttribute("maxResults", Google.Apis.Util.RequestParameterType.Query)]
             public virtual System.Nullable<int> MaxResults { get; set; }
@@ -4226,7 +4227,7 @@ namespace Google.Apis.Calendar.v3
                         Name = "maxResults",
                         IsRequired = false,
                         ParameterType = "query",
-                        DefaultValue = null,
+                        DefaultValue = "250",
                         Pattern = null,
                     });
                 RequestParameters.Add(
@@ -4884,6 +4885,7 @@ namespace Google.Apis.Calendar.v3
 
             /// <summary>Maximum number of events returned on one result page. By default the value is 250 events. The
             /// page size can never be larger than 2500 events. Optional.</summary>
+            /// [default: 250]
             /// [minimum: 1]
             [Google.Apis.Util.RequestParameterAttribute("maxResults", Google.Apis.Util.RequestParameterType.Query)]
             public virtual System.Nullable<int> MaxResults { get; set; }
@@ -5055,7 +5057,7 @@ namespace Google.Apis.Calendar.v3
                         Name = "maxResults",
                         IsRequired = false,
                         ParameterType = "query",
-                        DefaultValue = null,
+                        DefaultValue = "250",
                         Pattern = null,
                     });
                 RequestParameters.Add(

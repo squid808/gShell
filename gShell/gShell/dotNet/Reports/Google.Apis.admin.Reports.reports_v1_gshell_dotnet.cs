@@ -24,6 +24,7 @@
 //------------------------------------------------------------------------------
 
 using gShell.Cmdlets.Utilities.OAuth2;
+using gShell.dotNet;
 
 namespace gShell.Cmdlets.Reports{
 
@@ -76,6 +77,7 @@ namespace gShell.Cmdlets.Reports{
             mainBase = new gReports();
 
             ServiceWrapperDictionary[mainBaseType] = mainBase;
+
 
             activities = new Activities();
             channels = new Channels();
@@ -298,7 +300,7 @@ namespace gShell.dotNet
                 public string Filters = null;
 
                 /// <summary>Number of activity records to be shown in each page.</summary>
-                public int MaxResults = 1000;
+                public int? MaxResults = 1000;
 
                 /// <summary>Return events which occured at or after this time.</summary>
                 public string StartTime = null;
@@ -332,7 +334,7 @@ namespace gShell.dotNet
                 public string Filters = null;
 
                 /// <summary>Number of activity records to be shown in each page.</summary>
-                public int MaxResults = 1000;
+                public int? MaxResults = 1000;
 
                 /// <summary>Return events which occured at or after this time.</summary>
                 public string StartTime = null;
@@ -368,7 +370,7 @@ namespace gShell.dotNet
                 if (null != properties.StartProgressBar)
                 {
                     properties.StartProgressBar("Gathering Activities",
-                        string.Format("-Collecting Activities 1 to {0}", request.MaxResults.ToString()));
+                        string.Format("-Collecting Activities page 1"));
                 }
 
                 Google.Apis.admin.Reports.reports_v1.Data.Activities pagedResult = request.Execute();
@@ -386,9 +388,8 @@ namespace gShell.dotNet
                         if (null != properties.UpdateProgressBar)
                         {
                             properties.UpdateProgressBar(5, 10, "Gathering Activities",
-                                    string.Format("-Collecting Activities {0} to {1}",
-                                        (results.Count + 1).ToString(),
-                                        (results.Count + request.MaxResults).ToString()));
+                                    string.Format("-Collecting Activities page {0}",
+                                        (results.Count + 1).ToString()));
                         }
                         pagedResult = request.Execute();
                         results.Add(pagedResult);
@@ -397,7 +398,7 @@ namespace gShell.dotNet
                     if (null != properties.UpdateProgressBar)
                     {
                         properties.UpdateProgressBar(1, 2, "Gathering Activities",
-                                string.Format("-Returning {0} results.", results.Count.ToString()));
+                                string.Format("-Returning {0} pages.", results.Count.ToString()));
                     }
                 }
 
@@ -414,7 +415,19 @@ namespace gShell.dotNet
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public Google.Apis.admin.Reports.reports_v1.Data.Channel Watch (Google.Apis.admin.Reports.reports_v1.Data.Channel ChannelBody, string UserKey, string ApplicationName, ActivitiesWatchProperties properties= null)
             {
-                return GetService().Activities.Watch(ChannelBody, UserKey, ApplicationName).Execute();
+                var request = GetService().Activities.Watch(ChannelBody, UserKey, ApplicationName);
+
+                if (properties != null)    {
+                    request.ActorIpAddress = properties.ActorIpAddress;
+                    request.CustomerId = properties.CustomerId;
+                    request.EndTime = properties.EndTime;
+                    request.EventName = properties.EventName;
+                    request.Filters = properties.Filters;
+                    request.MaxResults = properties.MaxResults;
+                    request.StartTime = properties.StartTime;
+                }
+
+                return request.Execute();
             }
 
         }
@@ -431,7 +444,11 @@ namespace gShell.dotNet
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public void Stop (Google.Apis.admin.Reports.reports_v1.Data.Channel ChannelBody)
             {
-                GetService().Channels.Stop(ChannelBody).Execute();
+                var request = GetService().Channels.Stop(ChannelBody);
+
+
+
+                request.Execute();
             }
 
         }
@@ -482,7 +499,7 @@ namespace gShell.dotNet
                 if (null != properties.StartProgressBar)
                 {
                     properties.StartProgressBar("Gathering CustomerUsageReports",
-                        string.Format("-Collecting CustomerUsageReports 1 to {0}", "unknown"));
+                        string.Format("-Collecting CustomerUsageReports page 1"));
                 }
 
                 Google.Apis.admin.Reports.reports_v1.Data.UsageReports pagedResult = request.Execute();
@@ -500,9 +517,8 @@ namespace gShell.dotNet
                         if (null != properties.UpdateProgressBar)
                         {
                             properties.UpdateProgressBar(5, 10, "Gathering CustomerUsageReports",
-                                    string.Format("-Collecting CustomerUsageReports {0} to {1}",
-                                        (results.Count + 1).ToString(),
-                                        "unknown"));
+                                    string.Format("-Collecting CustomerUsageReports page {0}",
+                                        (results.Count + 1).ToString()));
                         }
                         pagedResult = request.Execute();
                         results.Add(pagedResult);
@@ -511,7 +527,7 @@ namespace gShell.dotNet
                     if (null != properties.UpdateProgressBar)
                     {
                         properties.UpdateProgressBar(1, 2, "Gathering CustomerUsageReports",
-                                string.Format("-Returning {0} results.", results.Count.ToString()));
+                                string.Format("-Returning {0} pages.", results.Count.ToString()));
                     }
                 }
 
@@ -534,7 +550,7 @@ namespace gShell.dotNet
                 public string Filters = null;
 
                 /// <summary>Maximum number of results to return. Maximum allowed is 1000</summary>
-                public int MaxResults = 1000;
+                public int? MaxResults = 1000;
 
                 /// <summary>Represents the application name, parameter name pairs to fetch in csv as app_name1:param_name1, app_name2:param_name2.</summary>
                 public string Parameters = null;
@@ -577,7 +593,7 @@ namespace gShell.dotNet
                 if (null != properties.StartProgressBar)
                 {
                     properties.StartProgressBar("Gathering UserUsageReport",
-                        string.Format("-Collecting UserUsageReport 1 to {0}", request.MaxResults.ToString()));
+                        string.Format("-Collecting UserUsageReport page 1"));
                 }
 
                 Google.Apis.admin.Reports.reports_v1.Data.UsageReports pagedResult = request.Execute();
@@ -595,9 +611,8 @@ namespace gShell.dotNet
                         if (null != properties.UpdateProgressBar)
                         {
                             properties.UpdateProgressBar(5, 10, "Gathering UserUsageReport",
-                                    string.Format("-Collecting UserUsageReport {0} to {1}",
-                                        (results.Count + 1).ToString(),
-                                        (results.Count + request.MaxResults).ToString()));
+                                    string.Format("-Collecting UserUsageReport page {0}",
+                                        (results.Count + 1).ToString()));
                         }
                         pagedResult = request.Execute();
                         results.Add(pagedResult);
@@ -606,7 +621,7 @@ namespace gShell.dotNet
                     if (null != properties.UpdateProgressBar)
                     {
                         properties.UpdateProgressBar(1, 2, "Gathering UserUsageReport",
-                                string.Format("-Returning {0} results.", results.Count.ToString()));
+                                string.Format("-Returning {0} pages.", results.Count.ToString()));
                     }
                 }
 

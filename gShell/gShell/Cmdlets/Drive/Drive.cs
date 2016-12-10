@@ -2644,9 +2644,7 @@ namespace gShell.Cmdlets.Drive.Files
         {
             if (ShouldProcess("Drive Files", "Export-GDriveFile"))
             {
-                var properties = new gDrive.Files.FilesExportProperties();
-
-                files.Export(FileId, MimeType, DownloadPath, properties);
+                files.Export(FileId, MimeType, DownloadPath);
             }
         }
     }
@@ -3720,7 +3718,7 @@ namespace gShell.Cmdlets.Drive.Revisions
                 }
                 else
                 {
-                    WriteObject(revisions.List(FileId).Revisions);
+                    WriteObject(revisions.List(FileId).SelectMany(x => x.Revisions).ToList());
                 }
             }
         }

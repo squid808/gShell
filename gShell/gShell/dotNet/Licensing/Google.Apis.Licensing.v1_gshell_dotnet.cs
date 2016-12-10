@@ -24,6 +24,7 @@
 //------------------------------------------------------------------------------
 
 using gShell.Cmdlets.Utilities.OAuth2;
+using gShell.dotNet;
 
 namespace gShell.Cmdlets.Licensing{
 
@@ -67,6 +68,7 @@ namespace gShell.Cmdlets.Licensing{
             mainBase = new gLicensing();
 
             ServiceWrapperDictionary[mainBaseType] = mainBase;
+
 
             licenseAssignments = new LicenseAssignments();
         }
@@ -243,7 +245,7 @@ namespace gShell.dotNet
             public class LicenseAssignmentsListForProductProperties
             {
                 /// <summary>Maximum number of campaigns to return at one time. Must be positive. Optional. Default value is 100.</summary>
-                public int MaxResults = 1000;
+                public int? MaxResults = 1000;
 
                 /// <summary>A delegate that is used to start a progress bar.</summary>
                 public Action<string, string> StartProgressBar = null;
@@ -259,7 +261,7 @@ namespace gShell.dotNet
             public class LicenseAssignmentsListForProductAndSkuProperties
             {
                 /// <summary>Maximum number of campaigns to return at one time. Must be positive. Optional. Default value is 100.</summary>
-                public int MaxResults = 1000;
+                public int? MaxResults = 1000;
 
                 /// <summary>A delegate that is used to start a progress bar.</summary>
                 public Action<string, string> StartProgressBar = null;
@@ -280,7 +282,11 @@ namespace gShell.dotNet
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public void Delete (string ProductId, string SkuId, string UserId)
             {
-                GetService().LicenseAssignments.Delete(ProductId, SkuId, UserId).Execute();
+                var request = GetService().LicenseAssignments.Delete(ProductId, SkuId, UserId);
+
+
+
+                request.Execute();
             }
 
             /// <summary>Get license assignment of a particular product and sku for a user</summary>
@@ -291,7 +297,11 @@ namespace gShell.dotNet
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public Google.Apis.Licensing.v1.Data.LicenseAssignment Get (string ProductId, string SkuId, string UserId)
             {
-                return GetService().LicenseAssignments.Get(ProductId, SkuId, UserId).Execute();
+                var request = GetService().LicenseAssignments.Get(ProductId, SkuId, UserId);
+
+
+
+                return request.Execute();
             }
 
             /// <summary>Assign License.</summary>
@@ -301,7 +311,11 @@ namespace gShell.dotNet
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public Google.Apis.Licensing.v1.Data.LicenseAssignment Insert (Google.Apis.Licensing.v1.Data.LicenseAssignmentInsert LicenseAssignmentInsertBody, string ProductId, string SkuId)
             {
-                return GetService().LicenseAssignments.Insert(LicenseAssignmentInsertBody, ProductId, SkuId).Execute();
+                var request = GetService().LicenseAssignments.Insert(LicenseAssignmentInsertBody, ProductId, SkuId);
+
+
+
+                return request.Execute();
             }
 
             /// <summary>List license assignments for given product of the customer.</summary>
@@ -326,7 +340,7 @@ namespace gShell.dotNet
                 if (null != properties.StartProgressBar)
                 {
                     properties.StartProgressBar("Gathering LicenseAssignments",
-                        string.Format("-Collecting LicenseAssignments 1 to {0}", request.MaxResults.ToString()));
+                        string.Format("-Collecting LicenseAssignments page 1"));
                 }
 
                 Google.Apis.Licensing.v1.Data.LicenseAssignmentList pagedResult = request.Execute();
@@ -344,9 +358,8 @@ namespace gShell.dotNet
                         if (null != properties.UpdateProgressBar)
                         {
                             properties.UpdateProgressBar(5, 10, "Gathering LicenseAssignments",
-                                    string.Format("-Collecting LicenseAssignments {0} to {1}",
-                                        (results.Count + 1).ToString(),
-                                        (results.Count + request.MaxResults).ToString()));
+                                    string.Format("-Collecting LicenseAssignments page {0}",
+                                        (results.Count + 1).ToString()));
                         }
                         pagedResult = request.Execute();
                         results.Add(pagedResult);
@@ -355,7 +368,7 @@ namespace gShell.dotNet
                     if (null != properties.UpdateProgressBar)
                     {
                         properties.UpdateProgressBar(1, 2, "Gathering LicenseAssignments",
-                                string.Format("-Returning {0} results.", results.Count.ToString()));
+                                string.Format("-Returning {0} pages.", results.Count.ToString()));
                     }
                 }
 
@@ -385,7 +398,7 @@ namespace gShell.dotNet
                 if (null != properties.StartProgressBar)
                 {
                     properties.StartProgressBar("Gathering LicenseAssignments",
-                        string.Format("-Collecting LicenseAssignments 1 to {0}", request.MaxResults.ToString()));
+                        string.Format("-Collecting LicenseAssignments page 1"));
                 }
 
                 Google.Apis.Licensing.v1.Data.LicenseAssignmentList pagedResult = request.Execute();
@@ -403,9 +416,8 @@ namespace gShell.dotNet
                         if (null != properties.UpdateProgressBar)
                         {
                             properties.UpdateProgressBar(5, 10, "Gathering LicenseAssignments",
-                                    string.Format("-Collecting LicenseAssignments {0} to {1}",
-                                        (results.Count + 1).ToString(),
-                                        (results.Count + request.MaxResults).ToString()));
+                                    string.Format("-Collecting LicenseAssignments page {0}",
+                                        (results.Count + 1).ToString()));
                         }
                         pagedResult = request.Execute();
                         results.Add(pagedResult);
@@ -414,7 +426,7 @@ namespace gShell.dotNet
                     if (null != properties.UpdateProgressBar)
                     {
                         properties.UpdateProgressBar(1, 2, "Gathering LicenseAssignments",
-                                string.Format("-Returning {0} results.", results.Count.ToString()));
+                                string.Format("-Returning {0} pages.", results.Count.ToString()));
                     }
                 }
 
@@ -430,7 +442,11 @@ namespace gShell.dotNet
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public Google.Apis.Licensing.v1.Data.LicenseAssignment Patch (Google.Apis.Licensing.v1.Data.LicenseAssignment LicenseAssignmentBody, string ProductId, string SkuId, string UserId)
             {
-                return GetService().LicenseAssignments.Patch(LicenseAssignmentBody, ProductId, SkuId, UserId).Execute();
+                var request = GetService().LicenseAssignments.Patch(LicenseAssignmentBody, ProductId, SkuId, UserId);
+
+
+
+                return request.Execute();
             }
 
             /// <summary>Assign License.</summary>
@@ -442,7 +458,11 @@ namespace gShell.dotNet
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public Google.Apis.Licensing.v1.Data.LicenseAssignment Update (Google.Apis.Licensing.v1.Data.LicenseAssignment LicenseAssignmentBody, string ProductId, string SkuId, string UserId)
             {
-                return GetService().LicenseAssignments.Update(LicenseAssignmentBody, ProductId, SkuId, UserId).Execute();
+                var request = GetService().LicenseAssignments.Update(LicenseAssignmentBody, ProductId, SkuId, UserId);
+
+
+
+                return request.Execute();
             }
 
         }

@@ -23,6 +23,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using gShell.Cmdlets.Utilities.OAuth2;
+using gShell.dotNet;
+
 namespace gShell.Cmdlets.Drive{
 
     using System;
@@ -37,12 +40,11 @@ namespace gShell.Cmdlets.Drive{
     using gShell.dotNet.Utilities;
     using gShell.dotNet.Utilities.OAuth2;
     using gDrive = gShell.dotNet.Drive;
-    using gShell.Cmdlets.Utilities.OAuth2;
 
     /// <summary>
     /// A PowerShell-ready wrapper for the Drive api, as well as the resources and methods therein.
     /// </summary>
-    public abstract class DriveBase : ServiceAccountCmdletBase
+    public abstract class DriveBase : AuthenticatedCmdletBase
     {
 
         #region Properties
@@ -88,6 +90,7 @@ namespace gShell.Cmdlets.Drive{
 
             ServiceWrapperDictionary[mainBaseType] = mainBase;
 
+
             about = new About();
             changes = new Changes();
             channels = new Channels();
@@ -116,7 +119,7 @@ namespace gShell.Cmdlets.Drive{
             public Google.Apis.Drive.v3.Data.About Get ()
             {
 
-                return mainBase.about.Get(gShellServiceAccount);
+                return mainBase.about.Get();
             }
 
 
@@ -138,7 +141,7 @@ namespace gShell.Cmdlets.Drive{
             public Google.Apis.Drive.v3.Data.StartPageToken GetStartPageToken ()
             {
 
-                return mainBase.changes.GetStartPageToken(gShellServiceAccount);
+                return mainBase.changes.GetStartPageToken();
             }
 
 
@@ -153,7 +156,7 @@ namespace gShell.Cmdlets.Drive{
 
                 properties = properties ?? new gDrive.Changes.ChangesListProperties();
 
-                return mainBase.changes.List(PageToken, properties, gShellServiceAccount);
+                return mainBase.changes.List(PageToken, properties);
             }
 
 
@@ -169,7 +172,7 @@ namespace gShell.Cmdlets.Drive{
 
                 properties = properties ?? new gDrive.Changes.ChangesWatchProperties();
 
-                return mainBase.changes.Watch(ChannelBody, PageToken, properties, gShellServiceAccount);
+                return mainBase.changes.Watch(ChannelBody, PageToken, properties);
             }
 
 
@@ -192,7 +195,7 @@ namespace gShell.Cmdlets.Drive{
             public void Stop (Google.Apis.Drive.v3.Data.Channel ChannelBody)
             {
 
-                mainBase.channels.Stop(ChannelBody, gShellServiceAccount);
+                mainBase.channels.Stop(ChannelBody);
             }
 
 
@@ -216,7 +219,7 @@ namespace gShell.Cmdlets.Drive{
             public Google.Apis.Drive.v3.Data.Comment Create (Google.Apis.Drive.v3.Data.Comment CommentBody, string FileId)
             {
 
-                return mainBase.comments.Create(CommentBody, FileId, gShellServiceAccount);
+                return mainBase.comments.Create(CommentBody, FileId);
             }
 
 
@@ -227,7 +230,7 @@ namespace gShell.Cmdlets.Drive{
             public void Delete (string FileId, string CommentId)
             {
 
-                mainBase.comments.Delete(FileId, CommentId, gShellServiceAccount);
+                mainBase.comments.Delete(FileId, CommentId);
             }
 
 
@@ -241,7 +244,7 @@ namespace gShell.Cmdlets.Drive{
 
                 properties = properties ?? new gDrive.Comments.CommentsGetProperties();
 
-                return mainBase.comments.Get(FileId, CommentId, properties, gShellServiceAccount);
+                return mainBase.comments.Get(FileId, CommentId, properties);
             }
 
 
@@ -256,7 +259,7 @@ namespace gShell.Cmdlets.Drive{
                 properties = properties ?? new gDrive.Comments.CommentsListProperties();
 
 
-                return mainBase.comments.List(FileId, properties, gShellServiceAccount);
+                return mainBase.comments.List(FileId, properties);
             }
 
             /// <summary>Updates a comment with patch semantics.</summary>
@@ -266,7 +269,7 @@ namespace gShell.Cmdlets.Drive{
             public Google.Apis.Drive.v3.Data.Comment Update (Google.Apis.Drive.v3.Data.Comment CommentBody, string FileId, string CommentId)
             {
 
-                return mainBase.comments.Update(CommentBody, FileId, CommentId, gShellServiceAccount);
+                return mainBase.comments.Update(CommentBody, FileId, CommentId);
             }
 
 
@@ -293,7 +296,7 @@ namespace gShell.Cmdlets.Drive{
 
                 properties = properties ?? new gDrive.Files.FilesCopyProperties();
 
-                return mainBase.files.Copy(FileBody, FileId, properties, gShellServiceAccount);
+                return mainBase.files.Copy(FileBody, FileId, properties);
             }
 
 
@@ -306,7 +309,7 @@ namespace gShell.Cmdlets.Drive{
 
                 properties = properties ?? new gDrive.Files.FilesCreateProperties();
 
-                return mainBase.files.Create(FileBody, properties, gShellServiceAccount);
+                return mainBase.files.Create(FileBody, properties);
             }
 
 
@@ -316,7 +319,7 @@ namespace gShell.Cmdlets.Drive{
 
                 properties = properties ?? new gDrive.Files.FilesCreateProperties();
 
-                mainBase.files.Create(FileBody, stream, contentType, properties, gShellServiceAccount);
+                mainBase.files.Create(FileBody, stream, contentType, properties);
             }
 
             /// <summary>Permanently deletes a file owned by the user without moving it to the trash. If the target is a
@@ -325,7 +328,7 @@ namespace gShell.Cmdlets.Drive{
             public void Delete (string FileId)
             {
 
-                mainBase.files.Delete(FileId, gShellServiceAccount);
+                mainBase.files.Delete(FileId);
             }
 
 
@@ -334,7 +337,7 @@ namespace gShell.Cmdlets.Drive{
             public void EmptyTrash ()
             {
 
-                mainBase.files.EmptyTrash(gShellServiceAccount);
+                mainBase.files.EmptyTrash();
             }
 
 
@@ -343,13 +346,10 @@ namespace gShell.Cmdlets.Drive{
             /// <param name="FileId">The ID of the file.</param>
             /// <param name="MimeType">The MIME type of the format
             /// requested for this export.</param>
-            public void Export (string FileId, string MimeType, string DownloadPath, gDrive.Files.FilesExportProperties properties = null)
+            public void Export (string FileId, string MimeType, string DownloadPath)
             {
-                properties = properties ?? new gShell.dotNet.Drive.Files.FilesExportProperties();
-                properties.StartProgressBar = StartProgressBar;
-                properties.UpdateProgressBar = UpdateProgressBar;
 
-                mainBase.files.Export(FileId, MimeType, DownloadPath, gShellServiceAccount, properties);
+                mainBase.files.Export(FileId, MimeType, DownloadPath);
             }
 
 
@@ -361,7 +361,7 @@ namespace gShell.Cmdlets.Drive{
 
                 properties = properties ?? new gDrive.Files.FilesGenerateIdsProperties();
 
-                return mainBase.files.GenerateIds(properties, gShellServiceAccount);
+                return mainBase.files.GenerateIds(properties);
             }
 
 
@@ -374,7 +374,7 @@ namespace gShell.Cmdlets.Drive{
 
                 properties = properties ?? new gDrive.Files.FilesGetProperties();
 
-                return mainBase.files.Get(FileId, properties, gShellServiceAccount);
+                return mainBase.files.Get(FileId, properties);
             }
 
 
@@ -387,7 +387,8 @@ namespace gShell.Cmdlets.Drive{
 
                 properties = properties ?? new gDrive.Files.FilesListProperties();
 
-                return mainBase.files.List(properties, gShellServiceAccount);
+
+                return mainBase.files.List(properties);
             }
 
             /// <summary>Updates a file's metadata and/or content with patch semantics.</summary>
@@ -399,7 +400,7 @@ namespace gShell.Cmdlets.Drive{
 
                 properties = properties ?? new gDrive.Files.FilesUpdateProperties();
 
-                return mainBase.files.Update(FileBody, FileId, properties, gShellServiceAccount);
+                return mainBase.files.Update(FileBody, FileId, properties);
             }
 
 
@@ -409,7 +410,7 @@ namespace gShell.Cmdlets.Drive{
 
                 properties = properties ?? new gDrive.Files.FilesUpdateProperties();
 
-                mainBase.files.Update(FileBody, fileId, stream, contentType, properties, gShellServiceAccount);
+                mainBase.files.Update(FileBody, fileId, stream, contentType, properties);
             }
 
             /// <summary>Subscribes to changes to a file</summary>
@@ -421,7 +422,7 @@ namespace gShell.Cmdlets.Drive{
 
                 properties = properties ?? new gDrive.Files.FilesWatchProperties();
 
-                return mainBase.files.Watch(ChannelBody, FileId, properties, gShellServiceAccount);
+                return mainBase.files.Watch(ChannelBody, FileId, properties);
             }
 
 
@@ -448,7 +449,7 @@ namespace gShell.Cmdlets.Drive{
 
                 properties = properties ?? new gDrive.Permissions.PermissionsCreateProperties();
 
-                return mainBase.permissions.Create(PermissionBody, FileId, properties, gShellServiceAccount);
+                return mainBase.permissions.Create(PermissionBody, FileId, properties);
             }
 
 
@@ -460,7 +461,7 @@ namespace gShell.Cmdlets.Drive{
             public void Delete (string FileId, string PermissionId)
             {
 
-                mainBase.permissions.Delete(FileId, PermissionId, gShellServiceAccount);
+                mainBase.permissions.Delete(FileId, PermissionId);
             }
 
 
@@ -472,7 +473,7 @@ namespace gShell.Cmdlets.Drive{
             public Google.Apis.Drive.v3.Data.Permission Get (string FileId, string PermissionId)
             {
 
-                return mainBase.permissions.Get(FileId, PermissionId, gShellServiceAccount);
+                return mainBase.permissions.Get(FileId, PermissionId);
             }
 
 
@@ -482,7 +483,7 @@ namespace gShell.Cmdlets.Drive{
             public Google.Apis.Drive.v3.Data.PermissionList List (string FileId)
             {
 
-                return mainBase.permissions.List(FileId, gShellServiceAccount);
+                return mainBase.permissions.List(FileId);
             }
 
 
@@ -498,7 +499,7 @@ namespace gShell.Cmdlets.Drive{
 
                 properties = properties ?? new gDrive.Permissions.PermissionsUpdateProperties();
 
-                return mainBase.permissions.Update(PermissionBody, FileId, PermissionId, properties, gShellServiceAccount);
+                return mainBase.permissions.Update(PermissionBody, FileId, PermissionId, properties);
             }
 
 
@@ -523,7 +524,7 @@ namespace gShell.Cmdlets.Drive{
             public Google.Apis.Drive.v3.Data.Reply Create (Google.Apis.Drive.v3.Data.Reply ReplyBody, string FileId, string CommentId)
             {
 
-                return mainBase.replies.Create(ReplyBody, FileId, CommentId, gShellServiceAccount);
+                return mainBase.replies.Create(ReplyBody, FileId, CommentId);
             }
 
 
@@ -536,7 +537,7 @@ namespace gShell.Cmdlets.Drive{
             public void Delete (string FileId, string CommentId, string ReplyId)
             {
 
-                mainBase.replies.Delete(FileId, CommentId, ReplyId, gShellServiceAccount);
+                mainBase.replies.Delete(FileId, CommentId, ReplyId);
             }
 
 
@@ -552,7 +553,7 @@ namespace gShell.Cmdlets.Drive{
 
                 properties = properties ?? new gDrive.Replies.RepliesGetProperties();
 
-                return mainBase.replies.Get(FileId, CommentId, ReplyId, properties, gShellServiceAccount);
+                return mainBase.replies.Get(FileId, CommentId, ReplyId, properties);
             }
 
 
@@ -568,7 +569,7 @@ namespace gShell.Cmdlets.Drive{
                 properties = properties ?? new gDrive.Replies.RepliesListProperties();
 
 
-                return mainBase.replies.List(FileId, CommentId, properties, gShellServiceAccount);
+                return mainBase.replies.List(FileId, CommentId, properties);
             }
 
             /// <summary>Updates a reply with patch semantics.</summary>
@@ -580,7 +581,7 @@ namespace gShell.Cmdlets.Drive{
             public Google.Apis.Drive.v3.Data.Reply Update (Google.Apis.Drive.v3.Data.Reply ReplyBody, string FileId, string CommentId, string ReplyId)
             {
 
-                return mainBase.replies.Update(ReplyBody, FileId, CommentId, ReplyId, gShellServiceAccount);
+                return mainBase.replies.Update(ReplyBody, FileId, CommentId, ReplyId);
             }
 
 
@@ -606,7 +607,7 @@ namespace gShell.Cmdlets.Drive{
             public void Delete (string FileId, string RevisionId)
             {
 
-                mainBase.revisions.Delete(FileId, RevisionId, gShellServiceAccount);
+                mainBase.revisions.Delete(FileId, RevisionId);
             }
 
 
@@ -621,20 +622,23 @@ namespace gShell.Cmdlets.Drive{
 
                 properties = properties ?? new gDrive.Revisions.RevisionsGetProperties();
 
-                return mainBase.revisions.Get(FileId, RevisionId, properties, gShellServiceAccount);
+                return mainBase.revisions.Get(FileId, RevisionId, properties);
             }
 
 
 
             /// <summary>Lists a file's revisions.</summary>
             /// <param name="FileId">The ID of the file.</param>
-            public Google.Apis.Drive.v3.Data.RevisionList List (string FileId)
+            /// <param name="properties">The optional properties for this method.</param>
+
+            public List<Google.Apis.Drive.v3.Data.RevisionList> List(string FileId, gDrive.Revisions.RevisionsListProperties properties= null)
             {
 
-                return mainBase.revisions.List(FileId, gShellServiceAccount);
+                properties = properties ?? new gDrive.Revisions.RevisionsListProperties();
+
+
+                return mainBase.revisions.List(FileId, properties);
             }
-
-
 
             /// <summary>Updates a revision with patch semantics.</summary>
             /// <param name="RevisionBody">The body of the request.</param>
@@ -644,7 +648,7 @@ namespace gShell.Cmdlets.Drive{
             public Google.Apis.Drive.v3.Data.Revision Update (Google.Apis.Drive.v3.Data.Revision RevisionBody, string FileId, string RevisionId)
             {
 
-                return mainBase.revisions.Update(RevisionBody, FileId, RevisionId, gShellServiceAccount);
+                return mainBase.revisions.Update(RevisionBody, FileId, RevisionId);
             }
 
 
@@ -682,7 +686,7 @@ namespace gShell.dotNet
 
         protected override v3.DriveService CreateNewService(string domain, AuthenticatedUserInfo authInfo, string gShellServiceAccount = null)
         {
-            return new v3.DriveService(OAuth2Base.GetInitializer(domain, authInfo, gShellServiceAccount));
+            return new v3.DriveService(OAuth2Base.GetInitializer(domain, authInfo));
         }
 
         /// <summary>Returns the api name and version in {name}:{version} format.</summary>
@@ -737,9 +741,13 @@ namespace gShell.dotNet
 
             /// <summary>Gets information about the user, the user's Drive, and system capabilities.</summary>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Drive.v3.Data.About Get (string gShellServiceAccount = null)
+            public Google.Apis.Drive.v3.Data.About Get ()
             {
-                return GetService(gShellServiceAccount).About.Get().Execute();
+                var request = GetService().About.Get();
+
+
+
+                return request.Execute();
             }
 
         }
@@ -783,9 +791,13 @@ namespace gShell.dotNet
 
             /// <summary>Gets the starting pageToken for listing future changes.</summary>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Drive.v3.Data.StartPageToken GetStartPageToken (string gShellServiceAccount = null)
+            public Google.Apis.Drive.v3.Data.StartPageToken GetStartPageToken ()
             {
-                return GetService(gShellServiceAccount).Changes.GetStartPageToken().Execute();
+                var request = GetService().Changes.GetStartPageToken();
+
+
+
+                return request.Execute();
             }
 
             /// <summary>Lists changes for a user.</summary>
@@ -794,9 +806,18 @@ namespace gShell.dotNet
             /// method.</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Drive.v3.Data.ChangeList List (string PageToken, ChangesListProperties properties= null, string gShellServiceAccount = null)
+            public Google.Apis.Drive.v3.Data.ChangeList List (string PageToken, ChangesListProperties properties= null)
             {
-                return GetService(gShellServiceAccount).Changes.List(PageToken).Execute();
+                var request = GetService().Changes.List(PageToken);
+
+                if (properties != null)    {
+                    request.IncludeRemoved = properties.IncludeRemoved;
+                    request.PageSize = properties.PageSize;
+                    request.RestrictToMyDrive = properties.RestrictToMyDrive;
+                    request.Spaces = properties.Spaces;
+                }
+
+                return request.Execute();
             }
 
             /// <summary>Subscribes to changes for a user.</summary>
@@ -806,9 +827,18 @@ namespace gShell.dotNet
             /// method.</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Drive.v3.Data.Channel Watch (Google.Apis.Drive.v3.Data.Channel ChannelBody, string PageToken, ChangesWatchProperties properties= null, string gShellServiceAccount = null)
+            public Google.Apis.Drive.v3.Data.Channel Watch (Google.Apis.Drive.v3.Data.Channel ChannelBody, string PageToken, ChangesWatchProperties properties= null)
             {
-                return GetService(gShellServiceAccount).Changes.Watch(ChannelBody, PageToken).Execute();
+                var request = GetService().Changes.Watch(ChannelBody, PageToken);
+
+                if (properties != null)    {
+                    request.IncludeRemoved = properties.IncludeRemoved;
+                    request.PageSize = properties.PageSize;
+                    request.RestrictToMyDrive = properties.RestrictToMyDrive;
+                    request.Spaces = properties.Spaces;
+                }
+
+                return request.Execute();
             }
 
         }
@@ -823,9 +853,13 @@ namespace gShell.dotNet
             /// <summary>Stop watching resources through this channel</summary>
             /// <param name="ChannelBody">The body of the request.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void Stop (Google.Apis.Drive.v3.Data.Channel ChannelBody, string gShellServiceAccount = null)
+            public void Stop (Google.Apis.Drive.v3.Data.Channel ChannelBody)
             {
-                GetService(gShellServiceAccount).Channels.Stop(ChannelBody).Execute();
+                var request = GetService().Channels.Stop(ChannelBody);
+
+
+
+                request.Execute();
             }
 
         }
@@ -868,18 +902,26 @@ namespace gShell.dotNet
             /// <param name="CommentBody">The body of the request.</param>
             /// <param name="FileId">The ID of the file.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Drive.v3.Data.Comment Create (Google.Apis.Drive.v3.Data.Comment CommentBody, string FileId, string gShellServiceAccount = null)
+            public Google.Apis.Drive.v3.Data.Comment Create (Google.Apis.Drive.v3.Data.Comment CommentBody, string FileId)
             {
-                return GetService(gShellServiceAccount).Comments.Create(CommentBody, FileId).Execute();
+                var request = GetService().Comments.Create(CommentBody, FileId);
+
+
+
+                return request.Execute();
             }
 
             /// <summary>Deletes a comment.</summary>
             /// <param name="FileId">The ID of the file.</param>
             /// <param name="CommentId">The ID of the comment.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void Delete (string FileId, string CommentId, string gShellServiceAccount = null)
+            public void Delete (string FileId, string CommentId)
             {
-                GetService(gShellServiceAccount).Comments.Delete(FileId, CommentId).Execute();
+                var request = GetService().Comments.Delete(FileId, CommentId);
+
+
+
+                request.Execute();
             }
 
             /// <summary>Gets a comment by ID.</summary>
@@ -887,9 +929,15 @@ namespace gShell.dotNet
             /// <param name="CommentId">The ID of the comment.</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Drive.v3.Data.Comment Get (string FileId, string CommentId, CommentsGetProperties properties= null, string gShellServiceAccount = null)
+            public Google.Apis.Drive.v3.Data.Comment Get (string FileId, string CommentId, CommentsGetProperties properties= null)
             {
-                return GetService(gShellServiceAccount).Comments.Get(FileId, CommentId).Execute();
+                var request = GetService().Comments.Get(FileId, CommentId);
+
+                if (properties != null)    {
+                    request.IncludeDeleted = properties.IncludeDeleted;
+                }
+
+                return request.Execute();
             }
 
             /// <summary>Lists a file's comments.</summary>
@@ -897,11 +945,11 @@ namespace gShell.dotNet
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public List<Google.Apis.Drive.v3.Data.CommentList> List(
-                string FileId, CommentsListProperties properties= null, string gShellServiceAccount = null)
+                string FileId, CommentsListProperties properties= null)
             {
                 var results = new List<Google.Apis.Drive.v3.Data.CommentList>();
 
-                v3.CommentsResource.ListRequest request = GetService(gShellServiceAccount).Comments.List(FileId);
+                v3.CommentsResource.ListRequest request = GetService().Comments.List(FileId);
 
                 if (properties != null)
                 {
@@ -914,7 +962,7 @@ namespace gShell.dotNet
                 if (null != properties.StartProgressBar)
                 {
                     properties.StartProgressBar("Gathering Comments",
-                        string.Format("-Collecting Comments 1 to {0}", "unknown"));
+                        string.Format("-Collecting Comments page 1"));
                 }
 
                 Google.Apis.Drive.v3.Data.CommentList pagedResult = request.Execute();
@@ -932,9 +980,8 @@ namespace gShell.dotNet
                         if (null != properties.UpdateProgressBar)
                         {
                             properties.UpdateProgressBar(5, 10, "Gathering Comments",
-                                    string.Format("-Collecting Comments {0} to {1}",
-                                        (results.Count + 1).ToString(),
-                                        "unknown"));
+                                    string.Format("-Collecting Comments page {0}",
+                                        (results.Count + 1).ToString()));
                         }
                         pagedResult = request.Execute();
                         results.Add(pagedResult);
@@ -943,7 +990,7 @@ namespace gShell.dotNet
                     if (null != properties.UpdateProgressBar)
                     {
                         properties.UpdateProgressBar(1, 2, "Gathering Comments",
-                                string.Format("-Returning {0} results.", results.Count.ToString()));
+                                string.Format("-Returning {0} pages.", results.Count.ToString()));
                     }
                 }
 
@@ -955,9 +1002,13 @@ namespace gShell.dotNet
             /// <param name="FileId">The ID of the file.</param>
             /// <param name="CommentId">The ID of the comment.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Drive.v3.Data.Comment Update (Google.Apis.Drive.v3.Data.Comment CommentBody, string FileId, string CommentId, string gShellServiceAccount = null)
+            public Google.Apis.Drive.v3.Data.Comment Update (Google.Apis.Drive.v3.Data.Comment CommentBody, string FileId, string CommentId)
             {
-                return GetService(gShellServiceAccount).Comments.Update(CommentBody, FileId, CommentId).Execute();
+                var request = GetService().Comments.Update(CommentBody, FileId, CommentId);
+
+
+
+                return request.Execute();
             }
 
         }
@@ -993,16 +1044,6 @@ namespace gShell.dotNet
 
                 /// <summary>Whether to use the uploaded content as indexable text.</summary>
                 public System.Nullable<bool> UseContentAsIndexableText = null;
-            }
-
-            /// <summary>Optional parameters for the Files GenerateIds method.</summary>
-            public class FilesExportProperties
-            {
-                /// <summary>A delegate that is used to start a progress bar.</summary>
-                public Action<string, string> StartProgressBar = null;
-
-                /// <summary>A delegate that is used to update a progress bar.</summary>
-                public Action<int, int, string, string> UpdateProgressBar = null;
             }
 
             /// <summary>Optional parameters for the Files GenerateIds method.</summary>
@@ -1082,40 +1123,74 @@ namespace gShell.dotNet
             /// <param name="FileId">The ID of the file.</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Drive.v3.Data.File Copy (Google.Apis.Drive.v3.Data.File FileBody, string FileId, FilesCopyProperties properties= null, string gShellServiceAccount = null)
+            public Google.Apis.Drive.v3.Data.File Copy (Google.Apis.Drive.v3.Data.File FileBody, string FileId, FilesCopyProperties properties= null)
             {
-                return GetService(gShellServiceAccount).Files.Copy(FileBody, FileId).Execute();
+                var request = GetService().Files.Copy(FileBody, FileId);
+
+                if (properties != null)    {
+                    request.IgnoreDefaultVisibility = properties.IgnoreDefaultVisibility;
+                    request.KeepRevisionForever = properties.KeepRevisionForever;
+                    request.OcrLanguage = properties.OcrLanguage;
+                }
+
+                return request.Execute();
             }
 
             /// <summary>Creates a new file.</summary>
             /// <param name="FileBody">The body of the request.</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Drive.v3.Data.File Create (Google.Apis.Drive.v3.Data.File FileBody, FilesCreateProperties properties= null, string gShellServiceAccount = null)
+            public Google.Apis.Drive.v3.Data.File Create (Google.Apis.Drive.v3.Data.File FileBody, FilesCreateProperties properties= null)
             {
-                return GetService(gShellServiceAccount).Files.Create(FileBody).Execute();
+                var request = GetService().Files.Create(FileBody);
+
+                if (properties != null)    {
+                    request.IgnoreDefaultVisibility = properties.IgnoreDefaultVisibility;
+                    request.KeepRevisionForever = properties.KeepRevisionForever;
+                    request.OcrLanguage = properties.OcrLanguage;
+                    request.UseContentAsIndexableText = properties.UseContentAsIndexableText;
+                }
+
+                return request.Execute();
             }
 
 
-            public void Create (Google.Apis.Drive.v3.Data.File FileBody, System.IO.Stream stream, string contentType, FilesCreateProperties properties= null, string gShellServiceAccount = null)
+            public void Create (Google.Apis.Drive.v3.Data.File FileBody, System.IO.Stream stream, string contentType, FilesCreateProperties properties= null)
             {
-                GetService(gShellServiceAccount).Files.Create(FileBody, stream, contentType).Upload();
+                var request = GetService().Files.Create(FileBody, stream, contentType);
+
+                if (properties != null)    {
+                    request.IgnoreDefaultVisibility = properties.IgnoreDefaultVisibility;
+                    request.KeepRevisionForever = properties.KeepRevisionForever;
+                    request.OcrLanguage = properties.OcrLanguage;
+                    request.UseContentAsIndexableText = properties.UseContentAsIndexableText;
+                }
+
+                request.Upload();
             }
 
             /// <summary>Permanently deletes a file owned by the user without moving it to the trash. If the target is a
             /// folder, all descendants owned by the user are also deleted.</summary>
             /// <param name="FileId">The ID of the file.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void Delete (string FileId, string gShellServiceAccount = null)
+            public void Delete (string FileId)
             {
-                GetService(gShellServiceAccount).Files.Delete(FileId).Execute();
+                var request = GetService().Files.Delete(FileId);
+
+
+
+                request.Execute();
             }
 
             /// <summary>Permanently deletes all of the user's trashed files.</summary>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void EmptyTrash (string gShellServiceAccount = null)
+            public void EmptyTrash ()
             {
-                GetService(gShellServiceAccount).Files.EmptyTrash().Execute();
+                var request = GetService().Files.EmptyTrash();
+
+
+
+                request.Execute();
             }
 
             /// <summary>Exports a Google Doc to the requested MIME type and returns the exported content.</summary>
@@ -1123,63 +1198,56 @@ namespace gShell.dotNet
             /// <param name="MimeType">The MIME type of the format
             /// requested for this export.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void Export(string FileId, string MimeType, string DownloadPath, string gShellServiceAccount = null, FilesExportProperties properties = null)
+            public void Export(string FileId, string MimeType, string DownloadPath)
             {
-                //properties.UpdateProgressBar(5, 10, "Gathering Users",
-                    //string.Format("-Collecting Users {0} to {1}",
-                    //    (results.Count + 1).ToString(),
-                    //    (results.Count + request.MaxResults).ToString()));
-
-                GetService(gShellServiceAccount).Files.Export(FileId, MimeType).Execute();
+                var request = GetService().Files.Export(FileId, MimeType);
+                
                 using (var fileStream = new System.IO.FileStream(
                     DownloadPath, System.IO.FileMode.Create, System.IO.FileAccess.Write))
                 {
-                    if (null != properties.StartProgressBar)
-                    {
-                        properties.StartProgressBar("Downloading file",
-                            string.Format("-Downloading file "));
-                    }
-
-                    // Add a handler which will be notified on progress changes.
-                    // It will notify on each chunk download and when the
-                    // download is completed or failed.
-                    var request = GetService(gShellServiceAccount).Files.Export(FileId, MimeType);
-                    //request.MediaDownloader.ProgressChanged += Download_ProgressChanged;
                     request.Download(fileStream);
                 }
             }
 
-            //static void Download_ProgressChanged(Google.Apis.Download.IDownloadProgress progress)
-            //{
-            //    Console.WriteLine(progress.Status + " " + progress.BytesDownloaded);
-            //}
-
             /// <summary>Generates a set of file IDs which can be provided in create requests.</summary>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Drive.v3.Data.GeneratedIds GenerateIds (FilesGenerateIdsProperties properties= null, string gShellServiceAccount = null)
+            public Google.Apis.Drive.v3.Data.GeneratedIds GenerateIds (FilesGenerateIdsProperties properties= null)
             {
-                return GetService(gShellServiceAccount).Files.GenerateIds().Execute();
+                var request = GetService().Files.GenerateIds();
+
+                if (properties != null)    {
+                    request.Count = properties.Count;
+                    request.Space = properties.Space;
+                }
+
+                return request.Execute();
             }
 
             /// <summary>Gets a file's metadata or content by ID.</summary>
             /// <param name="FileId">The ID of the file.</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Drive.v3.Data.File Get (string FileId, FilesGetProperties properties= null, string gShellServiceAccount = null)
+            public Google.Apis.Drive.v3.Data.File Get (string FileId, FilesGetProperties properties= null)
             {
-                return GetService(gShellServiceAccount).Files.Get(FileId).Execute();
+                var request = GetService().Files.Get(FileId);
+
+                if (properties != null)    {
+                    request.AcknowledgeAbuse = properties.AcknowledgeAbuse;
+                }
+
+                return request.Execute();
             }
 
             /// <summary>Lists or searches files.</summary>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public List<Google.Apis.Drive.v3.Data.FileList> List(
-                FilesListProperties properties= null, string gShellServiceAccount = null)
+                FilesListProperties properties= null)
             {
                 var results = new List<Google.Apis.Drive.v3.Data.FileList>();
 
-                v3.FilesResource.ListRequest request = GetService(gShellServiceAccount).Files.List();
+                v3.FilesResource.ListRequest request = GetService().Files.List();
 
                 if (properties != null)
                 {
@@ -1188,14 +1256,13 @@ namespace gShell.dotNet
                     request.PageSize = properties.PageSize;
                     request.Q = properties.Q;
                     request.Spaces = properties.Spaces;
-                }
 
-                if (!properties.PageSize.HasValue) properties.PageSize = 100; //default value
+                }
 
                 if (null != properties.StartProgressBar)
                 {
                     properties.StartProgressBar("Gathering Files",
-                        string.Format("-Collecting Files 1 to {0}", "unknown"));
+                        string.Format("-Collecting Files page 1"));
                 }
 
                 Google.Apis.Drive.v3.Data.FileList pagedResult = request.Execute();
@@ -1206,16 +1273,15 @@ namespace gShell.dotNet
 
                     while (!string.IsNullOrWhiteSpace(pagedResult.NextPageToken) &&
                         pagedResult.NextPageToken != request.PageToken &&
-                    (properties.TotalResults == 0 || results.Count * properties.PageSize.Value < properties.TotalResults))
+                    (properties.TotalResults == 0 || results.Count < properties.TotalResults))
                     {
                         request.PageToken = pagedResult.NextPageToken;
 
                         if (null != properties.UpdateProgressBar)
                         {
                             properties.UpdateProgressBar(5, 10, "Gathering Files",
-                                    string.Format("-Collecting Files {0} to {1}",
-                                        (results.Count + 1).ToString(),
-                                        "unknown"));
+                                    string.Format("-Collecting Files page {0}",
+                                        (results.Count + 1).ToString()));
                         }
                         pagedResult = request.Execute();
                         results.Add(pagedResult);
@@ -1224,7 +1290,7 @@ namespace gShell.dotNet
                     if (null != properties.UpdateProgressBar)
                     {
                         properties.UpdateProgressBar(1, 2, "Gathering Files",
-                                string.Format("-Returning {0} results.", results.Count.ToString()));
+                                string.Format("-Returning {0} pages.", results.Count.ToString()));
                     }
                 }
 
@@ -1236,15 +1302,35 @@ namespace gShell.dotNet
             /// <param name="FileId">The ID of the file.</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Drive.v3.Data.File Update (Google.Apis.Drive.v3.Data.File FileBody, string FileId, FilesUpdateProperties properties= null, string gShellServiceAccount = null)
+            public Google.Apis.Drive.v3.Data.File Update (Google.Apis.Drive.v3.Data.File FileBody, string FileId, FilesUpdateProperties properties= null)
             {
-                return GetService(gShellServiceAccount).Files.Update(FileBody, FileId).Execute();
+                var request = GetService().Files.Update(FileBody, FileId);
+
+                if (properties != null)    {
+                    request.AddParents = properties.AddParents;
+                    request.KeepRevisionForever = properties.KeepRevisionForever;
+                    request.OcrLanguage = properties.OcrLanguage;
+                    request.RemoveParents = properties.RemoveParents;
+                    request.UseContentAsIndexableText = properties.UseContentAsIndexableText;
+                }
+
+                return request.Execute();
             }
 
 
-            public void Update (Google.Apis.Drive.v3.Data.File FileBody, string fileId, System.IO.Stream stream, string contentType, FilesUpdateProperties properties= null, string gShellServiceAccount = null)
+            public void Update (Google.Apis.Drive.v3.Data.File FileBody, string fileId, System.IO.Stream stream, string contentType, FilesUpdateProperties properties= null)
             {
-                GetService(gShellServiceAccount).Files.Update(FileBody, fileId, stream, contentType).Upload();
+                var request = GetService().Files.Update(FileBody, fileId, stream, contentType);
+
+                if (properties != null)    {
+                    request.AddParents = properties.AddParents;
+                    request.KeepRevisionForever = properties.KeepRevisionForever;
+                    request.OcrLanguage = properties.OcrLanguage;
+                    request.RemoveParents = properties.RemoveParents;
+                    request.UseContentAsIndexableText = properties.UseContentAsIndexableText;
+                }
+
+                request.Upload();
             }
 
             /// <summary>Subscribes to changes to a file</summary>
@@ -1252,9 +1338,15 @@ namespace gShell.dotNet
             /// <param name="FileId">The ID of the file.</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Drive.v3.Data.Channel Watch (Google.Apis.Drive.v3.Data.Channel ChannelBody, string FileId, FilesWatchProperties properties= null, string gShellServiceAccount = null)
+            public Google.Apis.Drive.v3.Data.Channel Watch (Google.Apis.Drive.v3.Data.Channel ChannelBody, string FileId, FilesWatchProperties properties= null)
             {
-                return GetService(gShellServiceAccount).Files.Watch(ChannelBody, FileId).Execute();
+                var request = GetService().Files.Watch(ChannelBody, FileId);
+
+                if (properties != null)    {
+                    request.AcknowledgeAbuse = properties.AcknowledgeAbuse;
+                }
+
+                return request.Execute();
             }
 
         }
@@ -1279,6 +1371,9 @@ namespace gShell.dotNet
             /// <summary>Optional parameters for the Permissions Update method.</summary>
             public class PermissionsUpdateProperties
             {
+                /// <summary>Whether to remove the expiration date.</summary>
+                public System.Nullable<bool> RemoveExpiration = null;
+
                 /// <summary>Whether to transfer ownership to the specified user and downgrade the current owner to a writer. This parameter is required as an acknowledgement of the side effect.</summary>
                 public System.Nullable<bool> TransferOwnership = null;
             }
@@ -1289,9 +1384,17 @@ namespace gShell.dotNet
             /// <param name="FileId">The ID of the file.</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Drive.v3.Data.Permission Create (Google.Apis.Drive.v3.Data.Permission PermissionBody, string FileId, PermissionsCreateProperties properties= null, string gShellServiceAccount = null)
+            public Google.Apis.Drive.v3.Data.Permission Create (Google.Apis.Drive.v3.Data.Permission PermissionBody, string FileId, PermissionsCreateProperties properties= null)
             {
-                return GetService(gShellServiceAccount).Permissions.Create(PermissionBody, FileId).Execute();
+                var request = GetService().Permissions.Create(PermissionBody, FileId);
+
+                if (properties != null)    {
+                    request.EmailMessage = properties.EmailMessage;
+                    request.SendNotificationEmail = properties.SendNotificationEmail;
+                    request.TransferOwnership = properties.TransferOwnership;
+                }
+
+                return request.Execute();
             }
 
             /// <summary>Deletes a permission.</summary>
@@ -1299,9 +1402,13 @@ namespace gShell.dotNet
             /// <param name="PermissionId">The ID of the
             /// permission.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void Delete (string FileId, string PermissionId, string gShellServiceAccount = null)
+            public void Delete (string FileId, string PermissionId)
             {
-                GetService(gShellServiceAccount).Permissions.Delete(FileId, PermissionId).Execute();
+                var request = GetService().Permissions.Delete(FileId, PermissionId);
+
+
+
+                request.Execute();
             }
 
             /// <summary>Gets a permission by ID.</summary>
@@ -1309,17 +1416,25 @@ namespace gShell.dotNet
             /// <param name="PermissionId">The ID of the
             /// permission.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Drive.v3.Data.Permission Get (string FileId, string PermissionId, string gShellServiceAccount = null)
+            public Google.Apis.Drive.v3.Data.Permission Get (string FileId, string PermissionId)
             {
-                return GetService(gShellServiceAccount).Permissions.Get(FileId, PermissionId).Execute();
+                var request = GetService().Permissions.Get(FileId, PermissionId);
+
+
+
+                return request.Execute();
             }
 
             /// <summary>Lists a file's permissions.</summary>
             /// <param name="FileId">The ID of the file.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Drive.v3.Data.PermissionList List (string FileId, string gShellServiceAccount = null)
+            public Google.Apis.Drive.v3.Data.PermissionList List (string FileId)
             {
-                return GetService(gShellServiceAccount).Permissions.List(FileId).Execute();
+                var request = GetService().Permissions.List(FileId);
+
+
+
+                return request.Execute();
             }
 
             /// <summary>Updates a permission with patch semantics.</summary>
@@ -1329,9 +1444,16 @@ namespace gShell.dotNet
             /// permission.</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Drive.v3.Data.Permission Update (Google.Apis.Drive.v3.Data.Permission PermissionBody, string FileId, string PermissionId, PermissionsUpdateProperties properties= null, string gShellServiceAccount = null)
+            public Google.Apis.Drive.v3.Data.Permission Update (Google.Apis.Drive.v3.Data.Permission PermissionBody, string FileId, string PermissionId, PermissionsUpdateProperties properties= null)
             {
-                return GetService(gShellServiceAccount).Permissions.Update(PermissionBody, FileId, PermissionId).Execute();
+                var request = GetService().Permissions.Update(PermissionBody, FileId, PermissionId);
+
+                if (properties != null)    {
+                    request.RemoveExpiration = properties.RemoveExpiration;
+                    request.TransferOwnership = properties.TransferOwnership;
+                }
+
+                return request.Execute();
             }
 
         }
@@ -1372,9 +1494,13 @@ namespace gShell.dotNet
             /// <param name="FileId">The ID of the file.</param>
             /// <param name="CommentId">The ID of the comment.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Drive.v3.Data.Reply Create (Google.Apis.Drive.v3.Data.Reply ReplyBody, string FileId, string CommentId, string gShellServiceAccount = null)
+            public Google.Apis.Drive.v3.Data.Reply Create (Google.Apis.Drive.v3.Data.Reply ReplyBody, string FileId, string CommentId)
             {
-                return GetService(gShellServiceAccount).Replies.Create(ReplyBody, FileId, CommentId).Execute();
+                var request = GetService().Replies.Create(ReplyBody, FileId, CommentId);
+
+
+
+                return request.Execute();
             }
 
             /// <summary>Deletes a reply.</summary>
@@ -1383,9 +1509,13 @@ namespace gShell.dotNet
             /// comment.</param>
             /// <param name="ReplyId">The ID of the reply.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void Delete (string FileId, string CommentId, string ReplyId, string gShellServiceAccount = null)
+            public void Delete (string FileId, string CommentId, string ReplyId)
             {
-                GetService(gShellServiceAccount).Replies.Delete(FileId, CommentId, ReplyId).Execute();
+                var request = GetService().Replies.Delete(FileId, CommentId, ReplyId);
+
+
+
+                request.Execute();
             }
 
             /// <summary>Gets a reply by ID.</summary>
@@ -1395,9 +1525,15 @@ namespace gShell.dotNet
             /// <param name="ReplyId">The ID of the reply.</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Drive.v3.Data.Reply Get (string FileId, string CommentId, string ReplyId, RepliesGetProperties properties= null, string gShellServiceAccount = null)
+            public Google.Apis.Drive.v3.Data.Reply Get (string FileId, string CommentId, string ReplyId, RepliesGetProperties properties= null)
             {
-                return GetService(gShellServiceAccount).Replies.Get(FileId, CommentId, ReplyId).Execute();
+                var request = GetService().Replies.Get(FileId, CommentId, ReplyId);
+
+                if (properties != null)    {
+                    request.IncludeDeleted = properties.IncludeDeleted;
+                }
+
+                return request.Execute();
             }
 
             /// <summary>Lists a comment's replies.</summary>
@@ -1406,11 +1542,11 @@ namespace gShell.dotNet
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public List<Google.Apis.Drive.v3.Data.ReplyList> List(
-                string FileId, string CommentId, RepliesListProperties properties= null, string gShellServiceAccount = null)
+                string FileId, string CommentId, RepliesListProperties properties= null)
             {
                 var results = new List<Google.Apis.Drive.v3.Data.ReplyList>();
 
-                v3.RepliesResource.ListRequest request = GetService(gShellServiceAccount).Replies.List(FileId, CommentId);
+                v3.RepliesResource.ListRequest request = GetService().Replies.List(FileId, CommentId);
 
                 if (properties != null)
                 {
@@ -1422,7 +1558,7 @@ namespace gShell.dotNet
                 if (null != properties.StartProgressBar)
                 {
                     properties.StartProgressBar("Gathering Replies",
-                        string.Format("-Collecting Replies 1 to {0}", "unknown"));
+                        string.Format("-Collecting Replies page 1"));
                 }
 
                 Google.Apis.Drive.v3.Data.ReplyList pagedResult = request.Execute();
@@ -1440,9 +1576,8 @@ namespace gShell.dotNet
                         if (null != properties.UpdateProgressBar)
                         {
                             properties.UpdateProgressBar(5, 10, "Gathering Replies",
-                                    string.Format("-Collecting Replies {0} to {1}",
-                                        (results.Count + 1).ToString(),
-                                        "unknown"));
+                                    string.Format("-Collecting Replies page {0}",
+                                        (results.Count + 1).ToString()));
                         }
                         pagedResult = request.Execute();
                         results.Add(pagedResult);
@@ -1451,7 +1586,7 @@ namespace gShell.dotNet
                     if (null != properties.UpdateProgressBar)
                     {
                         properties.UpdateProgressBar(1, 2, "Gathering Replies",
-                                string.Format("-Returning {0} results.", results.Count.ToString()));
+                                string.Format("-Returning {0} pages.", results.Count.ToString()));
                     }
                 }
 
@@ -1465,9 +1600,13 @@ namespace gShell.dotNet
             /// comment.</param>
             /// <param name="ReplyId">The ID of the reply.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Drive.v3.Data.Reply Update (Google.Apis.Drive.v3.Data.Reply ReplyBody, string FileId, string CommentId, string ReplyId, string gShellServiceAccount = null)
+            public Google.Apis.Drive.v3.Data.Reply Update (Google.Apis.Drive.v3.Data.Reply ReplyBody, string FileId, string CommentId, string ReplyId)
             {
-                return GetService(gShellServiceAccount).Replies.Update(ReplyBody, FileId, CommentId, ReplyId).Execute();
+                var request = GetService().Replies.Update(ReplyBody, FileId, CommentId, ReplyId);
+
+
+
+                return request.Execute();
             }
 
         }
@@ -1483,6 +1622,22 @@ namespace gShell.dotNet
                 public System.Nullable<bool> AcknowledgeAbuse = null;
             }
 
+            /// <summary>Optional parameters for the Revisions List method.</summary>
+            public class RevisionsListProperties
+            {
+                /// <summary>The maximum number of revisions to return per page.</summary>
+                public System.Nullable<int> PageSize = null;
+
+                /// <summary>A delegate that is used to start a progress bar.</summary>
+                public Action<string, string> StartProgressBar = null;
+
+                /// <summary>A delegate that is used to update a progress bar.</summary>
+                public Action<int, int, string, string> UpdateProgressBar = null;
+
+                /// <summary>A counter for the total number of results to pull when iterating through paged results.</summary>
+                public int TotalResults = 0;
+            }
+
 
             /// <summary>Permanently deletes a revision. This method is only applicable to files with binary content in
             /// Drive.</summary>
@@ -1490,9 +1645,13 @@ namespace gShell.dotNet
             /// <param name="RevisionId">The ID of the
             /// revision.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void Delete (string FileId, string RevisionId, string gShellServiceAccount = null)
+            public void Delete (string FileId, string RevisionId)
             {
-                GetService(gShellServiceAccount).Revisions.Delete(FileId, RevisionId).Execute();
+                var request = GetService().Revisions.Delete(FileId, RevisionId);
+
+
+
+                request.Execute();
             }
 
             /// <summary>Gets a revision's metadata or content by ID.</summary>
@@ -1501,17 +1660,70 @@ namespace gShell.dotNet
             /// revision.</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Drive.v3.Data.Revision Get (string FileId, string RevisionId, RevisionsGetProperties properties= null, string gShellServiceAccount = null)
+            public Google.Apis.Drive.v3.Data.Revision Get (string FileId, string RevisionId, RevisionsGetProperties properties= null)
             {
-                return GetService(gShellServiceAccount).Revisions.Get(FileId, RevisionId).Execute();
+                var request = GetService().Revisions.Get(FileId, RevisionId);
+
+                if (properties != null)    {
+                    request.AcknowledgeAbuse = properties.AcknowledgeAbuse;
+                }
+
+                return request.Execute();
             }
 
             /// <summary>Lists a file's revisions.</summary>
             /// <param name="FileId">The ID of the file.</param>
+            /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Drive.v3.Data.RevisionList List (string FileId, string gShellServiceAccount = null)
+            public List<Google.Apis.Drive.v3.Data.RevisionList> List(
+                string FileId, RevisionsListProperties properties= null)
             {
-                return GetService(gShellServiceAccount).Revisions.List(FileId).Execute();
+                var results = new List<Google.Apis.Drive.v3.Data.RevisionList>();
+
+                v3.RevisionsResource.ListRequest request = GetService().Revisions.List(FileId);
+
+                if (properties != null)
+                {
+                    request.PageSize = properties.PageSize;
+
+                }
+
+                if (null != properties.StartProgressBar)
+                {
+                    properties.StartProgressBar("Gathering Revisions",
+                        string.Format("-Collecting Revisions page 1"));
+                }
+
+                Google.Apis.Drive.v3.Data.RevisionList pagedResult = request.Execute();
+
+                if (pagedResult != null)
+                {
+                    results.Add(pagedResult);
+
+                    while (!string.IsNullOrWhiteSpace(pagedResult.NextPageToken) &&
+                        pagedResult.NextPageToken != request.PageToken &&
+                    (properties.TotalResults == 0 || results.Count < properties.TotalResults))
+                    {
+                        request.PageToken = pagedResult.NextPageToken;
+
+                        if (null != properties.UpdateProgressBar)
+                        {
+                            properties.UpdateProgressBar(5, 10, "Gathering Revisions",
+                                    string.Format("-Collecting Revisions page {0}",
+                                        (results.Count + 1).ToString()));
+                        }
+                        pagedResult = request.Execute();
+                        results.Add(pagedResult);
+                    }
+
+                    if (null != properties.UpdateProgressBar)
+                    {
+                        properties.UpdateProgressBar(1, 2, "Gathering Revisions",
+                                string.Format("-Returning {0} pages.", results.Count.ToString()));
+                    }
+                }
+
+                return results;
             }
 
             /// <summary>Updates a revision with patch semantics.</summary>
@@ -1520,9 +1732,13 @@ namespace gShell.dotNet
             /// <param name="RevisionId">The ID of the
             /// revision.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Drive.v3.Data.Revision Update (Google.Apis.Drive.v3.Data.Revision RevisionBody, string FileId, string RevisionId, string gShellServiceAccount = null)
+            public Google.Apis.Drive.v3.Data.Revision Update (Google.Apis.Drive.v3.Data.Revision RevisionBody, string FileId, string RevisionId)
             {
-                return GetService(gShellServiceAccount).Revisions.Update(RevisionBody, FileId, RevisionId).Execute();
+                var request = GetService().Revisions.Update(RevisionBody, FileId, RevisionId);
+
+
+
+                return request.Execute();
             }
 
         }

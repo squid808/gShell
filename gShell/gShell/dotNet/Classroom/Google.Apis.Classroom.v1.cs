@@ -44,7 +44,7 @@
  */
 
 namespace Google.Apis.Classroom.v1.Data
-{
+{    
 
     /// <summary>Additional details for assignments.</summary>
     public class Assignment : Google.Apis.Requests.IDirectResponseSchema
@@ -52,11 +52,11 @@ namespace Google.Apis.Classroom.v1.Data
         /// <summary>Drive folder where attachments from student submissions are placed. This is only populated for
         /// course teachers.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("studentWorkFolder")]
-        public virtual DriveFolder StudentWorkFolder { get; set; }
+        public virtual DriveFolder StudentWorkFolder { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>Student work for an assignment.</summary>
     public class AssignmentSubmission : Google.Apis.Requests.IDirectResponseSchema
@@ -66,11 +66,11 @@ namespace Google.Apis.Classroom.v1.Data
         /// attachment metadata is only populated if the requesting user has permission to access it. Identifier and
         /// alternate_link fields are available, but others (e.g. title) may not be.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("attachments")]
-        public virtual System.Collections.Generic.IList<Attachment> Attachments { get; set; }
+        public virtual System.Collections.Generic.IList<Attachment> Attachments { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>Attachment added to student assignment work. When creating attachments, only the Link field may be
     /// specified.</summary>
@@ -78,80 +78,80 @@ namespace Google.Apis.Classroom.v1.Data
     {
         /// <summary>Google Drive file attachment.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("driveFile")]
-        public virtual DriveFile DriveFile { get; set; }
+        public virtual DriveFile DriveFile { get; set; } 
 
         /// <summary>Google Forms attachment.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("form")]
-        public virtual Form Form { get; set; }
+        public virtual Form Form { get; set; } 
 
         /// <summary>Link attachment.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("link")]
-        public virtual Link Link { get; set; }
+        public virtual Link Link { get; set; } 
 
         /// <summary>Youtube video attachment.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("youTubeVideo")]
-        public virtual YouTubeVideo YouTubeVideo { get; set; }
+        public virtual YouTubeVideo YouTubeVideo { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>A Course in Classroom.</summary>
     public class Course : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>Absolute link to this course in the Classroom web UI. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("alternateLink")]
-        public virtual string AlternateLink { get; set; }
+        public virtual string AlternateLink { get; set; } 
 
         /// <summary>The email address of a Google group containing all members of the course. This group does not
         /// accept email and can only be used for permissions. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("courseGroupEmail")]
-        public virtual string CourseGroupEmail { get; set; }
+        public virtual string CourseGroupEmail { get; set; } 
 
         /// <summary>Sets of materials that appear on the "about" page of this course. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("courseMaterialSets")]
-        public virtual System.Collections.Generic.IList<CourseMaterialSet> CourseMaterialSets { get; set; }
+        public virtual System.Collections.Generic.IList<CourseMaterialSet> CourseMaterialSets { get; set; } 
 
         /// <summary>State of the course. If unspecified, the default state is `PROVISIONED`.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("courseState")]
-        public virtual string CourseState { get; set; }
+        public virtual string CourseState { get; set; } 
 
         /// <summary>Creation time of the course. Specifying this field in a course update mask results in an error.
         /// Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("creationTime")]
-        public virtual string CreationTime { get; set; }
+        public virtual string CreationTime { get; set; } 
 
         /// <summary>Optional description. For example, "We'll be learning about the structure of living creatures from
         /// a combination of textbooks, guest lectures, and lab work. Expect to be excited!" If set, this field must be
         /// a valid UTF-8 string and no longer than 30,000 characters.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("description")]
-        public virtual string Description { get; set; }
+        public virtual string Description { get; set; } 
 
         /// <summary>Optional heading for the description. For example, "Welcome to 10th Grade Biology." If set, this
         /// field must be a valid UTF-8 string and no longer than 3600 characters.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("descriptionHeading")]
-        public virtual string DescriptionHeading { get; set; }
+        public virtual string DescriptionHeading { get; set; } 
 
         /// <summary>Enrollment code to use when joining this course. Specifying this field in a course update mask
         /// results in an error. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("enrollmentCode")]
-        public virtual string EnrollmentCode { get; set; }
+        public virtual string EnrollmentCode { get; set; } 
 
         /// <summary>Whether or not guardian notifications are enabled for this course. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("guardiansEnabled")]
-        public virtual System.Nullable<bool> GuardiansEnabled { get; set; }
+        public virtual System.Nullable<bool> GuardiansEnabled { get; set; } 
 
         /// <summary>Identifier for this course assigned by Classroom. When creating a course, you may optionally set
         /// this identifier to an alias string in the request to create a corresponding alias. The `id` is still
         /// assigned by Classroom and cannot be updated after the course is created. Specifying this field in a course
         /// update mask results in an error.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("id")]
-        public virtual string Id { get; set; }
+        public virtual string Id { get; set; } 
 
         /// <summary>Name of the course. For example, "10th Grade Biology". The name is required. It must be between 1
         /// and 750 characters and a valid UTF-8 string.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("name")]
-        public virtual string Name { get; set; }
+        public virtual string Name { get; set; } 
 
         /// <summary>The identifier of the owner of a course. When specified as a parameter of a create course request,
         /// this field is required. The identifier can be one of the following: * the numeric identifier for the user *
@@ -159,36 +159,36 @@ namespace Google.Apis.Classroom.v1.Data
         /// in a create request. Specifying this field in a course update mask results in an `INVALID_ARGUMENT`
         /// error.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("ownerId")]
-        public virtual string OwnerId { get; set; }
+        public virtual string OwnerId { get; set; } 
 
         /// <summary>Optional room location. For example, "301". If set, this field must be a valid UTF-8 string and no
         /// longer than 650 characters.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("room")]
-        public virtual string Room { get; set; }
+        public virtual string Room { get; set; } 
 
         /// <summary>Section of the course. For example, "Period 2". If set, this field must be a valid UTF-8 string and
         /// no longer than 2800 characters.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("section")]
-        public virtual string Section { get; set; }
+        public virtual string Section { get; set; } 
 
         /// <summary>Information about a Drive Folder that is shared with all teachers of the course. This field will
         /// only be set for teachers of the course and domain administrators. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("teacherFolder")]
-        public virtual DriveFolder TeacherFolder { get; set; }
+        public virtual DriveFolder TeacherFolder { get; set; } 
 
         /// <summary>The email address of a Google group containing all teachers of the course. This group does not
         /// accept email and can only be used for permissions. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("teacherGroupEmail")]
-        public virtual string TeacherGroupEmail { get; set; }
+        public virtual string TeacherGroupEmail { get; set; } 
 
         /// <summary>Time of the most recent update to this course. Specifying this field in a course update mask
         /// results in an error. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("updateTime")]
-        public virtual string UpdateTime { get; set; }
+        public virtual string UpdateTime { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>Alternative identifier for a course. An alias uniquely identifies a course. It must be unique within
     /// one of the following scopes: * domain: A domain-scoped alias is visible to all users within the alias creator's
@@ -204,34 +204,34 @@ namespace Google.Apis.Classroom.v1.Data
         /// domain-scoped alias. Example: `d:math_101` * `p:` indicates a project-scoped alias. Example: `p:abc123` This
         /// field has a maximum length of 256 characters.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("alias")]
-        public virtual string Alias { get; set; }
+        public virtual string Alias { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>A material attached to a course as part of a material set.</summary>
     public class CourseMaterial : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>Google Drive file attachment.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("driveFile")]
-        public virtual DriveFile DriveFile { get; set; }
+        public virtual DriveFile DriveFile { get; set; } 
 
         /// <summary>Google Forms attachment.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("form")]
-        public virtual Form Form { get; set; }
+        public virtual Form Form { get; set; } 
 
         /// <summary>Link atatchment.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("link")]
-        public virtual Link Link { get; set; }
+        public virtual Link Link { get; set; } 
 
         /// <summary>Youtube video attachment.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("youTubeVideo")]
-        public virtual YouTubeVideo YouTubeVideo { get; set; }
+        public virtual YouTubeVideo YouTubeVideo { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>A set of materials that appears on the "About" page of the course. These materials might include a
     /// syllabus, schedule, or other background information relating to the course as a whole.</summary>
@@ -239,15 +239,15 @@ namespace Google.Apis.Classroom.v1.Data
     {
         /// <summary>Materials attached to this set.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("materials")]
-        public virtual System.Collections.Generic.IList<CourseMaterial> Materials { get; set; }
+        public virtual System.Collections.Generic.IList<CourseMaterial> Materials { get; set; } 
 
         /// <summary>Title for this set.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("title")]
-        public virtual string Title { get; set; }
+        public virtual string Title { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>Course work created by a teacher for students of the course.</summary>
     public class CourseWork : Google.Apis.Requests.IDirectResponseSchema
@@ -255,84 +255,84 @@ namespace Google.Apis.Classroom.v1.Data
         /// <summary>Absolute link to this course work in the Classroom web UI. This is only populated if `state` is
         /// `PUBLISHED`. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("alternateLink")]
-        public virtual string AlternateLink { get; set; }
+        public virtual string AlternateLink { get; set; } 
 
         /// <summary>Assignment details. This is populated only when `work_type` is `ASSIGNMENT`.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("assignment")]
-        public virtual Assignment Assignment { get; set; }
+        public virtual Assignment Assignment { get; set; } 
 
         /// <summary>Whether this course work item is associated with the Developer Console project making the request.
         /// See google.classroom.Work.CreateCourseWork for more details. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("associatedWithDeveloper")]
-        public virtual System.Nullable<bool> AssociatedWithDeveloper { get; set; }
+        public virtual System.Nullable<bool> AssociatedWithDeveloper { get; set; } 
 
         /// <summary>Identifier of the course. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("courseId")]
-        public virtual string CourseId { get; set; }
+        public virtual string CourseId { get; set; } 
 
         /// <summary>Timestamp when this course work was created. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("creationTime")]
-        public virtual string CreationTime { get; set; }
+        public virtual string CreationTime { get; set; } 
 
         /// <summary>Optional description of this course work. If set, the description must be a valid UTF-8 string
         /// containing no more than 30,000 characters.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("description")]
-        public virtual string Description { get; set; }
+        public virtual string Description { get; set; } 
 
         /// <summary>Optional date, in UTC, that submissions for this this course work are due. This must be specified
         /// if `due_time` is specified.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("dueDate")]
-        public virtual Date DueDate { get; set; }
+        public virtual Date DueDate { get; set; } 
 
         /// <summary>Optional time of day, in UTC, that submissions for this this course work are due. This must be
         /// specified if `due_date` is specified.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("dueTime")]
-        public virtual TimeOfDay DueTime { get; set; }
+        public virtual TimeOfDay DueTime { get; set; } 
 
         /// <summary>Classroom-assigned identifier of this course work, unique per course. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("id")]
-        public virtual string Id { get; set; }
+        public virtual string Id { get; set; } 
 
         /// <summary>Additional materials. CourseWork must have no more than 20 material items.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("materials")]
-        public virtual System.Collections.Generic.IList<Material> Materials { get; set; }
+        public virtual System.Collections.Generic.IList<Material> Materials { get; set; } 
 
         /// <summary>Maximum grade for this course work. If zero or unspecified, this assignment is considered ungraded.
         /// This must be a non-negative integer value.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("maxPoints")]
-        public virtual System.Nullable<double> MaxPoints { get; set; }
+        public virtual System.Nullable<double> MaxPoints { get; set; } 
 
         /// <summary>Multiple choice question details. This is populated only when `work_type` is
         /// `MULTIPLE_CHOICE_QUESTION`.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("multipleChoiceQuestion")]
-        public virtual MultipleChoiceQuestion MultipleChoiceQuestion { get; set; }
+        public virtual MultipleChoiceQuestion MultipleChoiceQuestion { get; set; } 
 
         /// <summary>Status of this course work. If unspecified, the default state is `DRAFT`.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("state")]
-        public virtual string State { get; set; }
+        public virtual string State { get; set; } 
 
         /// <summary>Setting to determine when students are allowed to modify submissions. If unspecified, the default
         /// value is `MODIFIABLE_UNTIL_TURNED_IN`.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("submissionModificationMode")]
-        public virtual string SubmissionModificationMode { get; set; }
+        public virtual string SubmissionModificationMode { get; set; } 
 
         /// <summary>Title of this course work. The title must be a valid UTF-8 string containing between 1 and 3000
         /// characters.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("title")]
-        public virtual string Title { get; set; }
+        public virtual string Title { get; set; } 
 
         /// <summary>Timestamp of the most recent change to this course work. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("updateTime")]
-        public virtual string UpdateTime { get; set; }
+        public virtual string UpdateTime { get; set; } 
 
         /// <summary>Type of this course work. The type is set when the course work is created and cannot be changed.
         /// When creating course work, this must be `ASSIGNMENT`.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("workType")]
-        public virtual string WorkType { get; set; }
+        public virtual string WorkType { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>Represents a whole calendar date, e.g. date of birth. The time of day and time zone are either
     /// specified elsewhere or are not significant. The date is relative to the Proleptic Gregorian Calendar. The day
@@ -344,61 +344,61 @@ namespace Google.Apis.Classroom.v1.Data
         /// <summary>Day of month. Must be from 1 to 31 and valid for the year and month, or 0 if specifying a
         /// year/month where the day is not significant.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("day")]
-        public virtual System.Nullable<int> Day { get; set; }
+        public virtual System.Nullable<int> Day { get; set; } 
 
         /// <summary>Month of year. Must be from 1 to 12.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("month")]
-        public virtual System.Nullable<int> Month { get; set; }
+        public virtual System.Nullable<int> Month { get; set; } 
 
         /// <summary>Year of date. Must be from 1 to 9999, or 0 if specifying a date without a year.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("year")]
-        public virtual System.Nullable<int> Year { get; set; }
+        public virtual System.Nullable<int> Year { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>Representation of a Google Drive file.</summary>
     public class DriveFile : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>URL that can be used to access the Drive item. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("alternateLink")]
-        public virtual string AlternateLink { get; set; }
+        public virtual string AlternateLink { get; set; } 
 
         /// <summary>Drive API resource ID.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("id")]
-        public virtual string Id { get; set; }
+        public virtual string Id { get; set; } 
 
         /// <summary>URL of a thumbnail image of the Drive item. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("thumbnailUrl")]
-        public virtual string ThumbnailUrl { get; set; }
+        public virtual string ThumbnailUrl { get; set; } 
 
         /// <summary>Title of the Drive item. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("title")]
-        public virtual string Title { get; set; }
+        public virtual string Title { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>Representation of a Google Drive folder.</summary>
     public class DriveFolder : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>URL that can be used to access the Drive folder. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("alternateLink")]
-        public virtual string AlternateLink { get; set; }
+        public virtual string AlternateLink { get; set; } 
 
         /// <summary>Drive API resource ID.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("id")]
-        public virtual string Id { get; set; }
+        public virtual string Id { get; set; } 
 
         /// <summary>Title of the Drive folder. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("title")]
-        public virtual string Title { get; set; }
+        public virtual string Title { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A
     /// typical example is to use it as the request or the response type of an API method. For instance: service Foo {
@@ -408,42 +408,42 @@ namespace Google.Apis.Classroom.v1.Data
     {
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>Google Forms item.</summary>
     public class Form : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>URL of the form.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("formUrl")]
-        public virtual string FormUrl { get; set; }
+        public virtual string FormUrl { get; set; } 
 
         /// <summary>URL of the form responses document. Only set if respsonses have been recorded and only when the
         /// requesting user is an editor of the form. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("responseUrl")]
-        public virtual string ResponseUrl { get; set; }
+        public virtual string ResponseUrl { get; set; } 
 
         /// <summary>URL of a thumbnail image of the Form. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("thumbnailUrl")]
-        public virtual string ThumbnailUrl { get; set; }
+        public virtual string ThumbnailUrl { get; set; } 
 
         /// <summary>Title of the Form. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("title")]
-        public virtual string Title { get; set; }
+        public virtual string Title { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>Global user permission description.</summary>
     public class GlobalPermission : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>Permission value.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("permission")]
-        public virtual string Permission { get; set; }
+        public virtual string Permission { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>Association between a student and a guardian of that student. The guardian may receive information
     /// about the student's course work.</summary>
@@ -451,193 +451,193 @@ namespace Google.Apis.Classroom.v1.Data
     {
         /// <summary>Identifier for the guardian.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("guardianId")]
-        public virtual string GuardianId { get; set; }
+        public virtual string GuardianId { get; set; } 
 
         /// <summary>User profile for the guardian.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("guardianProfile")]
-        public virtual UserProfile GuardianProfile { get; set; }
+        public virtual UserProfile GuardianProfile { get; set; } 
 
         /// <summary>The email address to which the initial guardian invitation was sent. This field is only visible to
         /// domain administrators.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("invitedEmailAddress")]
-        public virtual string InvitedEmailAddress { get; set; }
+        public virtual string InvitedEmailAddress { get; set; } 
 
         /// <summary>Identifier for the student to whom the guardian relationship applies.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("studentId")]
-        public virtual string StudentId { get; set; }
+        public virtual string StudentId { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>An invitation to become the guardian of a specified user, sent to a specified email address.</summary>
     public class GuardianInvitation : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>The time that this invitation was created. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("creationTime")]
-        public virtual string CreationTime { get; set; }
+        public virtual string CreationTime { get; set; } 
 
         /// <summary>Unique identifier for this invitation. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("invitationId")]
-        public virtual string InvitationId { get; set; }
+        public virtual string InvitationId { get; set; } 
 
         /// <summary>Email address that the invitation was sent to. This field is only visible to domain
         /// administrators.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("invitedEmailAddress")]
-        public virtual string InvitedEmailAddress { get; set; }
+        public virtual string InvitedEmailAddress { get; set; } 
 
         /// <summary>The state that this invitation is in.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("state")]
-        public virtual string State { get; set; }
+        public virtual string State { get; set; } 
 
         /// <summary>ID of the student (in standard format)</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("studentId")]
-        public virtual string StudentId { get; set; }
+        public virtual string StudentId { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>An invitation to join a course.</summary>
     public class Invitation : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>Identifier of the course to invite the user to.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("courseId")]
-        public virtual string CourseId { get; set; }
+        public virtual string CourseId { get; set; } 
 
         /// <summary>Identifier assigned by Classroom. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("id")]
-        public virtual string Id { get; set; }
+        public virtual string Id { get; set; } 
 
         /// <summary>Role to invite the user to have. Must not be `COURSE_ROLE_UNSPECIFIED`.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("role")]
-        public virtual string Role { get; set; }
+        public virtual string Role { get; set; } 
 
         /// <summary>Identifier of the invited user. When specified as a parameter of a request, this identifier can be
         /// set to one of the following: * the numeric identifier for the user * the email address of the user * the
         /// string literal `"me"`, indicating the requesting user</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("userId")]
-        public virtual string UserId { get; set; }
+        public virtual string UserId { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>URL item.</summary>
     public class Link : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>URL of a thumbnail image of the target URL. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("thumbnailUrl")]
-        public virtual string ThumbnailUrl { get; set; }
+        public virtual string ThumbnailUrl { get; set; } 
 
         /// <summary>Title of the target of the URL. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("title")]
-        public virtual string Title { get; set; }
+        public virtual string Title { get; set; } 
 
         /// <summary>URL to link to. This must be a valid UTF-8 string containing between 1 and 2024
         /// characters.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("url")]
-        public virtual string Url { get; set; }
+        public virtual string Url { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>Response when listing course aliases.</summary>
     public class ListCourseAliasesResponse : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>The course aliases.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("aliases")]
-        public virtual System.Collections.Generic.IList<CourseAlias> Aliases { get; set; }
+        public virtual System.Collections.Generic.IList<CourseAlias> Aliases { get; set; } 
 
         /// <summary>Token identifying the next page of results to return. If empty, no further results are
         /// available.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("nextPageToken")]
-        public virtual string NextPageToken { get; set; }
+        public virtual string NextPageToken { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>Response when listing course work.</summary>
     public class ListCourseWorkResponse : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>Course work items that match the request.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("courseWork")]
-        public virtual System.Collections.Generic.IList<CourseWork> CourseWork { get; set; }
+        public virtual System.Collections.Generic.IList<CourseWork> CourseWork { get; set; } 
 
         /// <summary>Token identifying the next page of results to return. If empty, no further results are
         /// available.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("nextPageToken")]
-        public virtual string NextPageToken { get; set; }
+        public virtual string NextPageToken { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>Response when listing courses.</summary>
     public class ListCoursesResponse : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>Courses that match the list request.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("courses")]
-        public virtual System.Collections.Generic.IList<Course> Courses { get; set; }
+        public virtual System.Collections.Generic.IList<Course> Courses { get; set; } 
 
         /// <summary>Token identifying the next page of results to return. If empty, no further results are
         /// available.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("nextPageToken")]
-        public virtual string NextPageToken { get; set; }
+        public virtual string NextPageToken { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>Response when listing guardian invitations.</summary>
     public class ListGuardianInvitationsResponse : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>Guardian invitations that matched the list request.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("guardianInvitations")]
-        public virtual System.Collections.Generic.IList<GuardianInvitation> GuardianInvitations { get; set; }
+        public virtual System.Collections.Generic.IList<GuardianInvitation> GuardianInvitations { get; set; } 
 
         /// <summary>Token identifying the next page of results to return. If empty, no further results are
         /// available.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("nextPageToken")]
-        public virtual string NextPageToken { get; set; }
+        public virtual string NextPageToken { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>Response when listing guardians.</summary>
     public class ListGuardiansResponse : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>Guardians on this page of results that met the criteria specified in the request.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("guardians")]
-        public virtual System.Collections.Generic.IList<Guardian> Guardians { get; set; }
+        public virtual System.Collections.Generic.IList<Guardian> Guardians { get; set; } 
 
         /// <summary>Token identifying the next page of results to return. If empty, no further results are
         /// available.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("nextPageToken")]
-        public virtual string NextPageToken { get; set; }
+        public virtual string NextPageToken { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>Response when listing invitations.</summary>
     public class ListInvitationsResponse : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>Invitations that match the list request.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("invitations")]
-        public virtual System.Collections.Generic.IList<Invitation> Invitations { get; set; }
+        public virtual System.Collections.Generic.IList<Invitation> Invitations { get; set; } 
 
         /// <summary>Token identifying the next page of results to return. If empty, no further results are
         /// available.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("nextPageToken")]
-        public virtual string NextPageToken { get; set; }
+        public virtual string NextPageToken { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>Response when listing student submissions.</summary>
     public class ListStudentSubmissionsResponse : Google.Apis.Requests.IDirectResponseSchema
@@ -645,15 +645,15 @@ namespace Google.Apis.Classroom.v1.Data
         /// <summary>Token identifying the next page of results to return. If empty, no further results are
         /// available.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("nextPageToken")]
-        public virtual string NextPageToken { get; set; }
+        public virtual string NextPageToken { get; set; } 
 
         /// <summary>Student work that matches the request.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("studentSubmissions")]
-        public virtual System.Collections.Generic.IList<StudentSubmission> StudentSubmissions { get; set; }
+        public virtual System.Collections.Generic.IList<StudentSubmission> StudentSubmissions { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>Response when listing students.</summary>
     public class ListStudentsResponse : Google.Apis.Requests.IDirectResponseSchema
@@ -661,15 +661,15 @@ namespace Google.Apis.Classroom.v1.Data
         /// <summary>Token identifying the next page of results to return. If empty, no further results are
         /// available.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("nextPageToken")]
-        public virtual string NextPageToken { get; set; }
+        public virtual string NextPageToken { get; set; } 
 
         /// <summary>Students who match the list request.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("students")]
-        public virtual System.Collections.Generic.IList<Student> Students { get; set; }
+        public virtual System.Collections.Generic.IList<Student> Students { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>Response when listing teachers.</summary>
     public class ListTeachersResponse : Google.Apis.Requests.IDirectResponseSchema
@@ -677,15 +677,15 @@ namespace Google.Apis.Classroom.v1.Data
         /// <summary>Token identifying the next page of results to return. If empty, no further results are
         /// available.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("nextPageToken")]
-        public virtual string NextPageToken { get; set; }
+        public virtual string NextPageToken { get; set; } 
 
         /// <summary>Teachers who match the list request.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("teachers")]
-        public virtual System.Collections.Generic.IList<Teacher> Teachers { get; set; }
+        public virtual System.Collections.Generic.IList<Teacher> Teachers { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>Material attached to course work. When creating attachments, only the Link field may be
     /// specified.</summary>
@@ -693,23 +693,23 @@ namespace Google.Apis.Classroom.v1.Data
     {
         /// <summary>Google Drive file material.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("driveFile")]
-        public virtual SharedDriveFile DriveFile { get; set; }
+        public virtual SharedDriveFile DriveFile { get; set; } 
 
         /// <summary>Google Forms material.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("form")]
-        public virtual Form Form { get; set; }
+        public virtual Form Form { get; set; } 
 
         /// <summary>Link material.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("link")]
-        public virtual Link Link { get; set; }
+        public virtual Link Link { get; set; } 
 
         /// <summary>YouTube video material.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("youtubeVideo")]
-        public virtual YouTubeVideo YoutubeVideo { get; set; }
+        public virtual YouTubeVideo YoutubeVideo { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>Request to modify the attachments of a student submission.</summary>
     public class ModifyAttachmentsRequest : Google.Apis.Requests.IDirectResponseSchema
@@ -717,118 +717,118 @@ namespace Google.Apis.Classroom.v1.Data
         /// <summary>Attachments to add. A student submission may not have more than 20 attachments. This may only
         /// contain link attachments.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("addAttachments")]
-        public virtual System.Collections.Generic.IList<Attachment> AddAttachments { get; set; }
+        public virtual System.Collections.Generic.IList<Attachment> AddAttachments { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>Additional details for multiple-choice questions.</summary>
     public class MultipleChoiceQuestion : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>Possible choices.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("choices")]
-        public virtual System.Collections.Generic.IList<string> Choices { get; set; }
+        public virtual System.Collections.Generic.IList<string> Choices { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>Student work for a multiple-choice question.</summary>
     public class MultipleChoiceSubmission : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>Student's select choice.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("answer")]
-        public virtual string Answer { get; set; }
+        public virtual string Answer { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>Details of the user's name.</summary>
     public class Name : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>The user's last name. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("familyName")]
-        public virtual string FamilyName { get; set; }
+        public virtual string FamilyName { get; set; } 
 
         /// <summary>The user's full name formed by concatenating the first and last name values. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("fullName")]
-        public virtual string FullName { get; set; }
+        public virtual string FullName { get; set; } 
 
         /// <summary>The user's first name. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("givenName")]
-        public virtual string GivenName { get; set; }
+        public virtual string GivenName { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>Request to reclaim a student submission.</summary>
     public class ReclaimStudentSubmissionRequest : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>Request to return a student submission.</summary>
     public class ReturnStudentSubmissionRequest : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>Drive file that is used as material for course work.</summary>
     public class SharedDriveFile : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>Drive file details.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("driveFile")]
-        public virtual DriveFile DriveFile { get; set; }
+        public virtual DriveFile DriveFile { get; set; } 
 
         /// <summary>Mechanism by which students access the Drive item.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("shareMode")]
-        public virtual string ShareMode { get; set; }
+        public virtual string ShareMode { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>Student work for a short answer question.</summary>
     public class ShortAnswerSubmission : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>Student response to a short-answer question.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("answer")]
-        public virtual string Answer { get; set; }
+        public virtual string Answer { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>Student in a course.</summary>
     public class Student : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>Identifier of the course. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("courseId")]
-        public virtual string CourseId { get; set; }
+        public virtual string CourseId { get; set; } 
 
         /// <summary>Global user information for the student. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("profile")]
-        public virtual UserProfile Profile { get; set; }
+        public virtual UserProfile Profile { get; set; } 
 
         /// <summary>Information about a Drive Folder for this student's work in this course. Only visible to the
         /// student and domain administrators. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("studentWorkFolder")]
-        public virtual DriveFolder StudentWorkFolder { get; set; }
+        public virtual DriveFolder StudentWorkFolder { get; set; } 
 
         /// <summary>Identifier of the user. When specified as a parameter of a request, this identifier can be one of
         /// the following: * the numeric identifier for the user * the email address of the user * the string literal
         /// `"me"`, indicating the requesting user</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("userId")]
-        public virtual string UserId { get; set; }
+        public virtual string UserId { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>Student submission for course work. StudentSubmission items are generated when a CourseWork item is
     /// created. StudentSubmissions that have never been accessed (i.e. with `state` = NEW) may not have a creation time
@@ -837,98 +837,98 @@ namespace Google.Apis.Classroom.v1.Data
     {
         /// <summary>Absolute link to the submission in the Classroom web UI. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("alternateLink")]
-        public virtual string AlternateLink { get; set; }
+        public virtual string AlternateLink { get; set; } 
 
         /// <summary>Optional grade. If unset, no grade was set. This must be a non-negative integer value. This may be
         /// modified only by course teachers.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("assignedGrade")]
-        public virtual System.Nullable<double> AssignedGrade { get; set; }
+        public virtual System.Nullable<double> AssignedGrade { get; set; } 
 
         /// <summary>Submission content when course_work_type is ASSIGNMENT .</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("assignmentSubmission")]
-        public virtual AssignmentSubmission AssignmentSubmission { get; set; }
+        public virtual AssignmentSubmission AssignmentSubmission { get; set; } 
 
         /// <summary>Whether this student submission is associated with the Developer Console project making the
         /// request. See google.classroom.Work.CreateCourseWork for more details. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("associatedWithDeveloper")]
-        public virtual System.Nullable<bool> AssociatedWithDeveloper { get; set; }
+        public virtual System.Nullable<bool> AssociatedWithDeveloper { get; set; } 
 
         /// <summary>Identifier of the course. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("courseId")]
-        public virtual string CourseId { get; set; }
+        public virtual string CourseId { get; set; } 
 
         /// <summary>Identifier for the course work this corresponds to. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("courseWorkId")]
-        public virtual string CourseWorkId { get; set; }
+        public virtual string CourseWorkId { get; set; } 
 
         /// <summary>Type of course work this submission is for. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("courseWorkType")]
-        public virtual string CourseWorkType { get; set; }
+        public virtual string CourseWorkType { get; set; } 
 
         /// <summary>Creation time of this submission. This may be unset if the student has not accessed this item.
         /// Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("creationTime")]
-        public virtual string CreationTime { get; set; }
+        public virtual string CreationTime { get; set; } 
 
         /// <summary>Optional pending grade. If unset, no grade was set. This must be a non-negative integer value. This
         /// is only visible to and modifiable by course teachers.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("draftGrade")]
-        public virtual System.Nullable<double> DraftGrade { get; set; }
+        public virtual System.Nullable<double> DraftGrade { get; set; } 
 
         /// <summary>Classroom-assigned Identifier for the student submission. This is unique among submissions for the
         /// relevant course work. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("id")]
-        public virtual string Id { get; set; }
+        public virtual string Id { get; set; } 
 
         /// <summary>Whether this submission is late. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("late")]
-        public virtual System.Nullable<bool> Late { get; set; }
+        public virtual System.Nullable<bool> Late { get; set; } 
 
         /// <summary>Submission content when course_work_type is MULTIPLE_CHOICE_QUESTION.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("multipleChoiceSubmission")]
-        public virtual MultipleChoiceSubmission MultipleChoiceSubmission { get; set; }
+        public virtual MultipleChoiceSubmission MultipleChoiceSubmission { get; set; } 
 
         /// <summary>Submission content when course_work_type is SHORT_ANSWER_QUESTION.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("shortAnswerSubmission")]
-        public virtual ShortAnswerSubmission ShortAnswerSubmission { get; set; }
+        public virtual ShortAnswerSubmission ShortAnswerSubmission { get; set; } 
 
         /// <summary>State of this submission. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("state")]
-        public virtual string State { get; set; }
+        public virtual string State { get; set; } 
 
         /// <summary>Last update time of this submission. This may be unset if the student has not accessed this item.
         /// Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("updateTime")]
-        public virtual string UpdateTime { get; set; }
+        public virtual string UpdateTime { get; set; } 
 
         /// <summary>Identifier for the student that owns this submission. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("userId")]
-        public virtual string UserId { get; set; }
+        public virtual string UserId { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>Teacher of a course.</summary>
     public class Teacher : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>Identifier of the course. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("courseId")]
-        public virtual string CourseId { get; set; }
+        public virtual string CourseId { get; set; } 
 
         /// <summary>Global user information for the teacher. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("profile")]
-        public virtual UserProfile Profile { get; set; }
+        public virtual UserProfile Profile { get; set; } 
 
         /// <summary>Identifier of the user. When specified as a parameter of a request, this identifier can be one of
         /// the following: * the numeric identifier for the user * the email address of the user * the string literal
         /// `"me"`, indicating the requesting user</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("userId")]
-        public virtual string UserId { get; set; }
+        public virtual string UserId { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>Represents a time of day. The date and time zone are either not significant or are specified elsewhere.
     /// An API may chose to allow leap seconds. Related types are google.type.Date and
@@ -938,77 +938,77 @@ namespace Google.Apis.Classroom.v1.Data
         /// <summary>Hours of day in 24 hour format. Should be from 0 to 23. An API may choose to allow the value
         /// "24:00:00" for scenarios like business closing time.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("hours")]
-        public virtual System.Nullable<int> Hours { get; set; }
+        public virtual System.Nullable<int> Hours { get; set; } 
 
         /// <summary>Minutes of hour of day. Must be from 0 to 59.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("minutes")]
-        public virtual System.Nullable<int> Minutes { get; set; }
+        public virtual System.Nullable<int> Minutes { get; set; } 
 
         /// <summary>Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("nanos")]
-        public virtual System.Nullable<int> Nanos { get; set; }
+        public virtual System.Nullable<int> Nanos { get; set; } 
 
         /// <summary>Seconds of minutes of the time. Must normally be from 0 to 59. An API may allow the value 60 if it
         /// allows leap-seconds.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("seconds")]
-        public virtual System.Nullable<int> Seconds { get; set; }
+        public virtual System.Nullable<int> Seconds { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>Request to turn in a student submission.</summary>
     public class TurnInStudentSubmissionRequest : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>Global information for a user.</summary>
     public class UserProfile : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>Email address of the user. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("emailAddress")]
-        public virtual string EmailAddress { get; set; }
+        public virtual string EmailAddress { get; set; } 
 
         /// <summary>Identifier of the user. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("id")]
-        public virtual string Id { get; set; }
+        public virtual string Id { get; set; } 
 
         /// <summary>Name of the user. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("name")]
-        public virtual Name Name { get; set; }
+        public virtual Name Name { get; set; } 
 
         /// <summary>Global permissions of the user. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("permissions")]
-        public virtual System.Collections.Generic.IList<GlobalPermission> Permissions { get; set; }
+        public virtual System.Collections.Generic.IList<GlobalPermission> Permissions { get; set; } 
 
         /// <summary>URL of user's profile photo. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("photoUrl")]
-        public virtual string PhotoUrl { get; set; }
+        public virtual string PhotoUrl { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
-    }
+    }    
 
     /// <summary>YouTube video item.</summary>
     public class YouTubeVideo : Google.Apis.Requests.IDirectResponseSchema
     {
         /// <summary>URL that can be used to view the YouTube video. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("alternateLink")]
-        public virtual string AlternateLink { get; set; }
+        public virtual string AlternateLink { get; set; } 
 
         /// <summary>YouTube API resource ID.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("id")]
-        public virtual string Id { get; set; }
+        public virtual string Id { get; set; } 
 
         /// <summary>URL of a thumbnail image of the YouTube video. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("thumbnailUrl")]
-        public virtual string ThumbnailUrl { get; set; }
+        public virtual string ThumbnailUrl { get; set; } 
 
         /// <summary>Title of the YouTube video. Read-only.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("title")]
-        public virtual string Title { get; set; }
+        public virtual string Title { get; set; } 
 
         /// <summary>The ETag of the item.</summary>
         public virtual string ETag { get; set; }
@@ -1029,7 +1029,7 @@ namespace Google.Apis.Classroom.v1
 
         /// <summary>Constructs a new service.</summary>
         public ClassroomService() :
-            this(new Google.Apis.Services.BaseClientService.Initializer()) { }
+            this(new Google.Apis.Services.BaseClientService.Initializer()) {}
 
         /// <summary>Constructs a new service.</summary>
         /// <param name="initializer">The service initializer.</param>
