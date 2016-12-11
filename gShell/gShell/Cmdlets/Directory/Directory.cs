@@ -3892,16 +3892,11 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <example>
-    ///   <code>PS C:\> Get-GAGroupMember -All</code>
-    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
-    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
-    /// </example>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GAGroupMember">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.Get, "GAGroupMember",
-          DefaultParameterSetName = "OneGroup",
+          DefaultParameterSetName = "Group",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAGroupMember")]
     public class GetGAGroupMemberCommand : DirectoryBase
@@ -3912,7 +3907,6 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
         /// <para type="description">Email or immutable Id of the group</para>
         /// </summary>
         [Parameter(Position = 0,
-            ParameterSetName = "OneGroup",
             Mandatory = true,
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true,
@@ -3923,38 +3917,32 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
         /// <summary>
         /// <para type="description">Email or immutable Id of the member</para>
         /// </summary>
-        [Parameter(Position = 2,
-            ParameterSetName = "OneGroup",
+        [Parameter(Position = 1,
+            ParameterSetName = "User",
             HelpMessage = "The username of the user whose membership information you'd like to retrieve.")]
         public string UserName { get; set; }
 
         /// <summary>
-        /// <para type="description">A switch to list all results.</para>
-        /// </summary>
-        [Parameter(Position = 3,
-            ParameterSetName = "AllGroups",
-            Mandatory = true,
-            HelpMessage = "Indicates if you would like to get all members of all groups in the domain.")]
-        public SwitchParameter All { get; set; }
-
-        /// <summary>
         /// <para type="description">Include members in the results.</para>
         /// </summary>
-        [Parameter(Position = 4,
+        [Parameter(Position = 1,
+            ParameterSetName = "Group",
             HelpMessage = "Include members in the results.")]
         public SwitchParameter Members { get; set; }
 
         /// <summary>
         /// <para type="description">Include managers in the results.</para>
         /// </summary>
-        [Parameter(Position = 5,
+        [Parameter(Position = 2,
+            ParameterSetName = "Group",
             HelpMessage = "Include managers in the results.")]
         public SwitchParameter Managers { get; set; }
 
         /// <summary>
         /// <para type="description">Include owners in the results.</para>
         /// </summary>
-        [Parameter(Position = 6,
+        [Parameter(Position = 3,
+            ParameterSetName = "Group",
             HelpMessage = "Include owners in the results.")]
         public SwitchParameter Owners { get; set; }
 
@@ -3962,38 +3950,23 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
 
         protected override void ProcessRecord()
         {
-            if (!string.IsNullOrWhiteSpace(UserName))
+            if (ShouldProcess(GroupName, "Get-GAGroupMember"))
             {
-                if (ShouldProcess(GroupName, "Get-GAGroupMember"))
+                if (ParameterSetName == "User")
                 {
                     GroupName = GetFullEmailAddress(GroupName, GAuthId);
                     UserName = GetFullEmailAddress(UserName, GAuthId);
                     WriteObject(members.Get(GroupName, UserName));
                 }
-            }
-            else
-            {
-                switch (ParameterSetName)
+                else
                 {
-                    case "OneGroup":
-                        if (ShouldProcess(GroupName, "Get-GAGroupMember"))
-                        {
-                            var properties = new dotNet.Directory.Members.MembersListProperties()
-                            {
-                                Roles = DetermineRoles()
-                            };
+                    var properties = new dotNet.Directory.Members.MembersListProperties()
+                    {
+                        Roles = DetermineRoles()
+                    };
 
-                            GroupName = GetFullEmailAddress(GroupName, GAuthId);
-                            WriteObject(members.List(GroupName, properties).SelectMany(x => x.MembersValue).ToList());
-                        }
-                        break;
-
-                    case "AllGroups":
-                        if (ShouldProcess("All Groups and Members", "Get-GAGroupMember"))
-                        {
-                            WriteObject(GetAllGroupsAndMembers());
-                        }
-                        break;
+                    GroupName = GetFullEmailAddress(GroupName, GAuthId);
+                    WriteObject(members.List(GroupName, properties).SelectMany(x => x.MembersValue).ToList());
                 }
             }
         }
@@ -4041,26 +4014,6 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
             }
 
             return roles;
-        }
-
-        /// <summary>
-        /// Gets a list of all members from all groups. Calls for cached list of all groups.
-        /// </summary>
-        private GAMultiGroupMembersList GetAllGroupsAndMembers()
-        {
-            List<Data.Group> allGroups = groups.List().SelectMany(x => x.GroupsValue).ToList();
-
-            GAMultiGroupMembersList multiList = new GAMultiGroupMembersList();
-
-            foreach (Data.Group group in allGroups)
-            {
-                GroupName = GetFullEmailAddress(GroupName, GAuthId);
-                List<Data.Member> membersList = members.List(GroupName).SelectMany(x => x.MembersValue).ToList();
-
-                multiList.Add(group.Email, membersList);
-            }
-
-            return (multiList);
         }
     }
 
