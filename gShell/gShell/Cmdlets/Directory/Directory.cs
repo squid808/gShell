@@ -2402,6 +2402,10 @@ namespace gShell.Cmdlets.Directory.GAChannel
 
 namespace gShell.Cmdlets.Directory.GAChromeosdevice
 {
+    public enum ChromeOsActionActionEnum { deprovision, disable, reenable}
+
+    public enum ChromeOsActionDeprovisionReasonEnum { same_model_replacement, different_model_replacement, retiring_device }
+
     /// <summary>
     /// <para type="synopsis">Retrieve Chrome OS Device(s)</para>
     /// <para type="description">Retrieve Chrome OS Device(s)</para>
@@ -2651,6 +2655,81 @@ namespace gShell.Cmdlets.Directory.GAChromeosdevice
 
                 chromeosdevices.Patch(body, CustomerId, DeviceId, properties);
             }
+        }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Take action on Chrome OS Device</para>
+    /// <para type="description">Take action on Chrome OS Device</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Invoke-GAChromeosdevice -CustomerId $SomeCustomerIdString -ResourceId $SomeResourceIdString -ChromeOsDeviceActionBody $SomeChromeOsDeviceActionObj</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Invoke-GAChromeosdevice">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet(VerbsLifecycle.Invoke, "GAChromeosdevice",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Invoke-GAChromeosdevice")]
+    public class InvokeGAChromeosdeviceCommand : DirectoryBase
+    {
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">Immutable id of the Google Apps account</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Immutable id of the Google Apps account")]
+        public string CustomerId { get; set; }
+
+        /// <summary>
+        /// <para type="description">Immutable id of Chrome OS Device</para>
+        /// </summary>
+        [Parameter(Position = 1,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Immutable id of Chrome OS Device")]
+        public string ResourceId { get; set; }
+
+        //// <summary>
+        /// <para type="description">Action to be taken on the ChromeOs Device</para>
+        /// </summary>
+        [Parameter(Position = 2,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Action to be taken on the ChromeOs Device")]
+        public ChromeOsActionActionEnum Action { get; set; }
+
+        /// <summary>
+        /// <para type="description">Only used when the action is deprovision.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Only used when the action is deprovision.")]
+        public ChromeOsActionDeprovisionReasonEnum? DeprovisionReason { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+            var body = new Google.Apis.admin.Directory.directory_v1.Data.ChromeOsDeviceAction()
+            {
+                Action = this.Action.ToString()
+            };
+
+            if (DeprovisionReason.HasValue) body.DeprovisionReason = this.DeprovisionReason.ToString();
+
+            if (ShouldProcess("Directory Chromeosdevices", "Invoke-GAChromeosdevice"))
+            {
+                chromeosdevices.Action(body, CustomerId, ResourceId);
+            }
+
         }
     }
 }
