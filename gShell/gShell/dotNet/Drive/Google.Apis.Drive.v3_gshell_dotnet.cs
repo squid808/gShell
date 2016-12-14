@@ -44,7 +44,7 @@ namespace gShell.Cmdlets.Drive{
     /// <summary>
     /// A PowerShell-ready wrapper for the Drive api, as well as the resources and methods therein.
     /// </summary>
-    public abstract class DriveBase : AuthenticatedCmdletBase
+    public abstract class DriveBase : ServiceAccountCmdletBase
     {
 
         #region Properties

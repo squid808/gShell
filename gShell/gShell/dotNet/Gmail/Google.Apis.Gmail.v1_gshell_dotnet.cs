@@ -44,7 +44,7 @@ namespace gShell.Cmdlets.Gmail{
     /// <summary>
     /// A PowerShell-ready wrapper for the Gmail api, as well as the resources and methods therein.
     /// </summary>
-    public abstract class GmailBase : AuthenticatedCmdletBase
+    public abstract class GmailBase : ServiceAccountCmdletBase
     {
 
         #region Properties

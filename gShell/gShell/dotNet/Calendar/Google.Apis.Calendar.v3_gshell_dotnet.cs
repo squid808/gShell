@@ -44,7 +44,7 @@ namespace gShell.Cmdlets.Calendar{
     /// <summary>
     /// A PowerShell-ready wrapper for the Calendar api, as well as the resources and methods therein.
     /// </summary>
-    public abstract class CalendarBase : AuthenticatedCmdletBase
+    public abstract class CalendarBase : ServiceAccountCmdletBase
     {
 
         #region Properties
