@@ -7524,6 +7524,62 @@ namespace gShell.Cmdlets.Directory.GAUser
             }
         }
     }
+
+    /// <summary>
+    /// <para type="synopsis">change admin status of a user</para>
+    /// <para type="description">change admin status of a user</para>
+    /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
+    /// Part of the gShell Project, relating to the Google Directory API; see Related Links or use the -Online parameter.
+    /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\>Set-GAUserAdmin -UserKey $SomeUserKeyString -Status $SomeStatusBool </code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Set-GAUserAdmin">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
+    /// </summary>
+    [Cmdlet("Set", "GAUserAdmin",
+    SupportsShouldProcess = true,
+    HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAUserAdmin")]
+    public class SetGAUserAdminCommand : DirectoryBase
+    {
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">Email or immutable Id of the user as admin</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Email or immutable Id of the user as admin")]
+        public string UserKey { get; set; }
+
+        /// <summary>
+        /// <para type="description">Boolean indicating new admin status of the user</para>
+        /// </summary>
+        [Parameter(Position = 0,
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "Boolean indicating new admin status of the user")]
+        public bool Status { get; set; }
+        #endregion
+
+        protected override void ProcessRecord()
+        {
+
+            if (ShouldProcess("Directory Users", "Set-GAUserAdmin"))
+            {
+                var body = new Google.Apis.admin.Directory.directory_v1.Data.UserMakeAdmin()
+                {
+                    Status = this.Status
+                };
+
+                users.MakeAdmin(body, UserKey);
+            }
+
+        }
+    }
 }
 
 //TODO: Refactor List to evaluate ReturnGoogleAPIObjects
