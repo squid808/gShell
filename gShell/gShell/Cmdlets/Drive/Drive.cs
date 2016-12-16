@@ -1686,7 +1686,7 @@ namespace gShell.Cmdlets.Drive.About
         {
             if (ShouldProcess("Drive About", "Get-GDriveAbout"))
             {
-                WriteObject(about.Get());
+                WriteObject(about.Get(StandardQueryParams:StandardQueryParams));
             }
         }
     }
@@ -1717,7 +1717,7 @@ namespace gShell.Cmdlets.Drive.Changes
         {
             if (ShouldProcess("Drive Changes", "Get-GDriveChangeStartPageToken"))
             {
-                WriteObject(changes.GetStartPageToken());
+                WriteObject(changes.GetStartPageToken(StandardQueryParams:StandardQueryParams));
             }
         }
     }
@@ -1811,7 +1811,7 @@ namespace gShell.Cmdlets.Drive.Changes
                 };
 
 
-                WriteObject(changes.List(PageToken, properties).Changes);
+                WriteObject(changes.List(PageToken, properties, StandardQueryParams: StandardQueryParams).Changes);
             }
         }
     }
@@ -1915,7 +1915,7 @@ namespace gShell.Cmdlets.Drive.Changes
                 };
 
 
-                WriteObject(changes.Watch(ChannelBody, PageToken, properties));
+                WriteObject(changes.Watch(ChannelBody, PageToken, properties, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -1960,7 +1960,7 @@ namespace gShell.Cmdlets.Drive.Channels
         {
             if (ShouldProcess("Drive Channels", "Stop-GDriveChannel"))
             {
-                channels.Stop(ChannelBody);
+                channels.Stop(ChannelBody, StandardQueryParams: StandardQueryParams);
             }
         }
     }
@@ -2014,7 +2014,7 @@ namespace gShell.Cmdlets.Drive.Comments
         {
             if (ShouldProcess("Drive Comments", "New-GDriveComment"))
             {
-                WriteObject(comments.Create(CommentBody, FileId));
+                WriteObject(comments.Create(CommentBody, FileId, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2084,8 +2084,8 @@ namespace gShell.Cmdlets.Drive.Comments
 					try
 					{
 						WriteDebug("Attempting to remove " + toRemoveTarget + "...");
-							
-						comments.Delete(FileId, CommentId);
+
+                        comments.Delete(FileId, CommentId, StandardQueryParams: StandardQueryParams);
 							
 						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
 					}
@@ -2200,7 +2200,7 @@ namespace gShell.Cmdlets.Drive.Comments
                         IncludeDeleted = IncludeDeleted
                     };
 
-                    WriteObject(comments.Get(FileId, CommentId, properties));
+                    WriteObject(comments.Get(FileId, CommentId, properties, StandardQueryParams: StandardQueryParams));
                 }
                 else
                 {
@@ -2211,7 +2211,7 @@ namespace gShell.Cmdlets.Drive.Comments
                         StartModifiedTime = StartModifiedTime
                     };
 
-                    WriteObject(comments.List(FileId, properties).SelectMany(x => x.Comments).ToList());
+                    WriteObject(comments.List(FileId, properties, StandardQueryParams: StandardQueryParams).SelectMany(x => x.Comments).ToList());
                 }
             }
         }
@@ -2272,7 +2272,7 @@ namespace gShell.Cmdlets.Drive.Comments
         {
             if (ShouldProcess("Drive Comments", "Update-GDriveComment"))
             {
-                WriteObject(comments.Update(CommentBody, FileId, CommentId));
+                WriteObject(comments.Update(CommentBody, FileId, CommentId, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2365,7 +2365,7 @@ namespace gShell.Cmdlets.Drive.Files
                 };
 
 
-                WriteObject(files.Copy(FileBody, FileId, properties));
+                WriteObject(files.Copy(FileBody, FileId, properties, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2456,7 +2456,7 @@ namespace gShell.Cmdlets.Drive.Files
                 };
 
 
-                WriteObject(files.Create(FileBody, properties));
+                WriteObject(files.Create(FileBody, properties, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2512,8 +2512,8 @@ namespace gShell.Cmdlets.Drive.Files
 					try
 					{
 						WriteDebug("Attempting to remove " + toRemoveTarget + "...");
-							
-						files.Delete(FileId);
+
+                        files.Delete(FileId, StandardQueryParams: StandardQueryParams);
 							
 						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
 					}
@@ -2572,7 +2572,7 @@ namespace gShell.Cmdlets.Drive.Files
 					{
 						WriteDebug("Attempting to remove " + toRemoveTarget + "...");
 
-                        files.EmptyTrash();
+                        files.EmptyTrash(StandardQueryParams:StandardQueryParams);
 							
 						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
 					}
@@ -2644,7 +2644,7 @@ namespace gShell.Cmdlets.Drive.Files
         {
             if (ShouldProcess("Drive Files", "Export-GDriveFile"))
             {
-                files.Export(FileId, MimeType, DownloadPath);
+                files.Export(FileId, MimeType, DownloadPath, StandardQueryParams: StandardQueryParams);
             }
         }
     }
@@ -2703,7 +2703,7 @@ namespace gShell.Cmdlets.Drive.Files
 
                 if (Space.HasValue) properties.Space = Space.Value.ToString();
 
-                WriteObject(files.GenerateIds(properties));
+                WriteObject(files.GenerateIds(properties, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2844,7 +2844,7 @@ namespace gShell.Cmdlets.Drive.Files
                         AcknowledgeAbuse = AcknowledgeAbuse
                     };
 
-                    WriteObject(files.Get(FileId, properties));
+                    WriteObject(files.Get(FileId, properties, StandardQueryParams: StandardQueryParams));
                 }
                 else
                 {
@@ -2859,7 +2859,7 @@ namespace gShell.Cmdlets.Drive.Files
 
                     if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
 
-                    WriteObject(files.List(properties).SelectMany(x => x.Files).ToList());
+                    WriteObject(files.List(properties, StandardQueryParams: StandardQueryParams).SelectMany(x => x.Files).ToList());
                 }
             }
         }
@@ -2968,7 +2968,7 @@ namespace gShell.Cmdlets.Drive.Files
                 };
 
 
-                WriteObject(files.Update(FileBody, FileId, properties));
+                WriteObject(files.Update(FileBody, FileId, properties, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -3036,7 +3036,7 @@ namespace gShell.Cmdlets.Drive.Files
                 };
 
 
-                WriteObject(files.Watch(ChannelBody, FileId, properties));
+                WriteObject(files.Watch(ChannelBody, FileId, properties, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -3131,7 +3131,7 @@ namespace gShell.Cmdlets.Drive.Permissions
                 };
 
 
-                WriteObject(permissions.Create(PermissionBody, FileId, properties));
+                WriteObject(permissions.Create(PermissionBody, FileId, properties, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -3196,8 +3196,8 @@ namespace gShell.Cmdlets.Drive.Permissions
 					try
 					{
 						WriteDebug("Attempting to remove " + toRemoveTarget + "...");
-							
-						permissions.Delete(FileId, PermissionId);
+
+                        permissions.Delete(FileId, PermissionId, StandardQueryParams: StandardQueryParams);
 							
 						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
 					}
@@ -3278,11 +3278,11 @@ namespace gShell.Cmdlets.Drive.Permissions
             {
                 if (ParameterSetName == "one")
                 {
-                    WriteObject(permissions.Get(FileId, PermissionId));
+                    WriteObject(permissions.Get(FileId, PermissionId, StandardQueryParams: StandardQueryParams));
                 }
                 else
                 {
-                    WriteObject(permissions.List(FileId).Permissions);
+                    WriteObject(permissions.List(FileId, StandardQueryParams: StandardQueryParams).Permissions);
                 }
             }
         }
@@ -3346,7 +3346,7 @@ namespace gShell.Cmdlets.Drive.Replies
         {
             if (ShouldProcess("Drive Replies", "New-GDriveReply"))
             {
-                WriteObject(replies.Create(ReplyBody, FileId, CommentId));
+                WriteObject(replies.Create(ReplyBody, FileId, CommentId, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -3420,8 +3420,8 @@ namespace gShell.Cmdlets.Drive.Replies
 					try
 					{
 						WriteDebug("Attempting to remove " + toRemoveTarget + "...");
-							
-						replies.Delete(FileId, CommentId, ReplyId);
+
+                        replies.Delete(FileId, CommentId, ReplyId, StandardQueryParams: StandardQueryParams);
 							
 						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
 					}
@@ -3536,7 +3536,7 @@ namespace gShell.Cmdlets.Drive.Replies
                         IncludeDeleted = IncludeDeleted
                     };
 
-                    WriteObject(replies.Get(FileId, CommentId, ReplyId, properties));
+                    WriteObject(replies.Get(FileId, CommentId, ReplyId, properties, StandardQueryParams: StandardQueryParams));
                 }
                 else
                 {
@@ -3546,7 +3546,7 @@ namespace gShell.Cmdlets.Drive.Replies
                         PageSize = PageSize
                     };
 
-                    WriteObject(replies.List(FileId, CommentId, properties).SelectMany(x => x.Replies).ToList());
+                    WriteObject(replies.List(FileId, CommentId, properties, StandardQueryParams: StandardQueryParams).SelectMany(x => x.Replies).ToList());
                 }
             }
         }
@@ -3616,7 +3616,7 @@ namespace gShell.Cmdlets.Drive.Revisions
 					{
 						WriteDebug("Attempting to remove " + toRemoveTarget + "...");
 
-                        revisions.Delete(FileId, RevisionId);
+                        revisions.Delete(FileId, RevisionId, StandardQueryParams: StandardQueryParams);
 							
 						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
 					}
@@ -3714,11 +3714,11 @@ namespace gShell.Cmdlets.Drive.Revisions
                         AcknowledgeAbuse = AcknowledgeAbuse
                     };
 
-                    WriteObject(revisions.Get(FileId, RevisionId, properties));
+                    WriteObject(revisions.Get(FileId, RevisionId, properties, StandardQueryParams: StandardQueryParams));
                 }
                 else
                 {
-                    WriteObject(revisions.List(FileId).SelectMany(x => x.Revisions).ToList());
+                    WriteObject(revisions.List(FileId, StandardQueryParams: StandardQueryParams).SelectMany(x => x.Revisions).ToList());
                 }
             }
         }

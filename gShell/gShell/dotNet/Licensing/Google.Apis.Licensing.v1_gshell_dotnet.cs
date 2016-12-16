@@ -44,7 +44,7 @@ namespace gShell.Cmdlets.Licensing{
     /// <summary>
     /// A PowerShell-ready wrapper for the Licensing api, as well as the resources and methods therein.
     /// </summary>
-    public abstract class LicensingBase : AuthenticatedCmdletBase
+    public abstract class LicensingBase : StandardParamsCmdletBase
     {
 
         #region Properties
@@ -92,10 +92,10 @@ namespace gShell.Cmdlets.Licensing{
             /// <param name="SkuId">Name for sku</param>
             /// <param
             /// name="UserId">email id or unique Id of the user</param>
-            public void Delete (string ProductId, string SkuId, string UserId)
+            public void Delete (string ProductId, string SkuId, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                mainBase.licenseAssignments.Delete(ProductId, SkuId, UserId);
+                mainBase.licenseAssignments.Delete(ProductId, SkuId, UserId, StandardQueryParams);
             }
 
 
@@ -105,10 +105,10 @@ namespace gShell.Cmdlets.Licensing{
             /// <param name="SkuId">Name for sku</param>
             /// <param
             /// name="UserId">email id or unique Id of the user</param>
-            public Google.Apis.Licensing.v1.Data.LicenseAssignment Get (string ProductId, string SkuId, string UserId)
+            public Google.Apis.Licensing.v1.Data.LicenseAssignment Get (string ProductId, string SkuId, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.licenseAssignments.Get(ProductId, SkuId, UserId);
+                return mainBase.licenseAssignments.Get(ProductId, SkuId, UserId, StandardQueryParams);
             }
 
 
@@ -117,10 +117,10 @@ namespace gShell.Cmdlets.Licensing{
             /// <param name="LicenseAssignmentInsertBody">The body of the request.</param>
             /// <param name="ProductId">Name for product</param>
             /// <param name="SkuId">Name for sku</param>
-            public Google.Apis.Licensing.v1.Data.LicenseAssignment Insert (Google.Apis.Licensing.v1.Data.LicenseAssignmentInsert LicenseAssignmentInsertBody, string ProductId, string SkuId)
+            public Google.Apis.Licensing.v1.Data.LicenseAssignment Insert (Google.Apis.Licensing.v1.Data.LicenseAssignmentInsert LicenseAssignmentInsertBody, string ProductId, string SkuId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.licenseAssignments.Insert(LicenseAssignmentInsertBody, ProductId, SkuId);
+                return mainBase.licenseAssignments.Insert(LicenseAssignmentInsertBody, ProductId, SkuId, StandardQueryParams);
             }
 
 
@@ -131,7 +131,7 @@ namespace gShell.Cmdlets.Licensing{
             /// for whom licenseassignments are queried</param>
             /// <param name="properties">The optional properties for this method.</param>
 
-            public List<Google.Apis.Licensing.v1.Data.LicenseAssignmentList> ListForProduct(string ProductId, string CustomerId, gLicensing.LicenseAssignments.LicenseAssignmentsListForProductProperties properties= null)
+            public List<Google.Apis.Licensing.v1.Data.LicenseAssignmentList> ListForProduct(string ProductId, string CustomerId, gLicensing.LicenseAssignments.LicenseAssignmentsListForProductProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
                 properties = properties ?? new gLicensing.LicenseAssignments.LicenseAssignmentsListForProductProperties();
@@ -148,7 +148,7 @@ namespace gShell.Cmdlets.Licensing{
             /// name="CustomerId">CustomerId represents the customer for whom licenseassignments are queried</param>
             /// <param name="properties">The optional properties for this method.</param>
 
-            public List<Google.Apis.Licensing.v1.Data.LicenseAssignmentList> ListForProductAndSku(string ProductId, string SkuId, string CustomerId, gLicensing.LicenseAssignments.LicenseAssignmentsListForProductAndSkuProperties properties= null)
+            public List<Google.Apis.Licensing.v1.Data.LicenseAssignmentList> ListForProductAndSku(string ProductId, string SkuId, string CustomerId, gLicensing.LicenseAssignments.LicenseAssignmentsListForProductAndSkuProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
                 properties = properties ?? new gLicensing.LicenseAssignments.LicenseAssignmentsListForProductAndSkuProperties();
@@ -164,10 +164,10 @@ namespace gShell.Cmdlets.Licensing{
             /// <param name="SkuId">Name for sku for which license would be
             /// revoked</param>
             /// <param name="UserId">email id or unique Id of the user</param>
-            public Google.Apis.Licensing.v1.Data.LicenseAssignment Patch (Google.Apis.Licensing.v1.Data.LicenseAssignment LicenseAssignmentBody, string ProductId, string SkuId, string UserId)
+            public Google.Apis.Licensing.v1.Data.LicenseAssignment Patch (Google.Apis.Licensing.v1.Data.LicenseAssignment LicenseAssignmentBody, string ProductId, string SkuId, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.licenseAssignments.Patch(LicenseAssignmentBody, ProductId, SkuId, UserId);
+                return mainBase.licenseAssignments.Patch(LicenseAssignmentBody, ProductId, SkuId, UserId, StandardQueryParams);
             }
 
 
@@ -178,10 +178,10 @@ namespace gShell.Cmdlets.Licensing{
             /// <param name="SkuId">Name for sku for which license would be
             /// revoked</param>
             /// <param name="UserId">email id or unique Id of the user</param>
-            public Google.Apis.Licensing.v1.Data.LicenseAssignment Update (Google.Apis.Licensing.v1.Data.LicenseAssignment LicenseAssignmentBody, string ProductId, string SkuId, string UserId)
+            public Google.Apis.Licensing.v1.Data.LicenseAssignment Update (Google.Apis.Licensing.v1.Data.LicenseAssignment LicenseAssignmentBody, string ProductId, string SkuId, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.licenseAssignments.Update(LicenseAssignmentBody, ProductId, SkuId, UserId);
+                return mainBase.licenseAssignments.Update(LicenseAssignmentBody, ProductId, SkuId, UserId, StandardQueryParams);
             }
 
 
@@ -280,9 +280,15 @@ namespace gShell.dotNet
             /// <param
             /// name="UserId">email id or unique Id of the user</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void Delete (string ProductId, string SkuId, string UserId)
+            public void Delete (string ProductId, string SkuId, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var request = GetService().LicenseAssignments.Delete(ProductId, SkuId, UserId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
 
 
 
@@ -295,9 +301,15 @@ namespace gShell.dotNet
             /// <param
             /// name="UserId">email id or unique Id of the user</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Licensing.v1.Data.LicenseAssignment Get (string ProductId, string SkuId, string UserId)
+            public Google.Apis.Licensing.v1.Data.LicenseAssignment Get (string ProductId, string SkuId, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var request = GetService().LicenseAssignments.Get(ProductId, SkuId, UserId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
 
 
 
@@ -309,9 +321,15 @@ namespace gShell.dotNet
             /// <param name="ProductId">Name for product</param>
             /// <param name="SkuId">Name for sku</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Licensing.v1.Data.LicenseAssignment Insert (Google.Apis.Licensing.v1.Data.LicenseAssignmentInsert LicenseAssignmentInsertBody, string ProductId, string SkuId)
+            public Google.Apis.Licensing.v1.Data.LicenseAssignment Insert (Google.Apis.Licensing.v1.Data.LicenseAssignmentInsert LicenseAssignmentInsertBody, string ProductId, string SkuId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var request = GetService().LicenseAssignments.Insert(LicenseAssignmentInsertBody, ProductId, SkuId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
 
 
 
@@ -325,11 +343,17 @@ namespace gShell.dotNet
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public List<Google.Apis.Licensing.v1.Data.LicenseAssignmentList> ListForProduct(
-                string ProductId, string CustomerId, LicenseAssignmentsListForProductProperties properties= null)
+                string ProductId, string CustomerId, LicenseAssignmentsListForProductProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var results = new List<Google.Apis.Licensing.v1.Data.LicenseAssignmentList>();
 
                 v1.LicenseAssignmentsResource.ListForProductRequest request = GetService().LicenseAssignments.ListForProduct(ProductId, CustomerId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
 
                 if (properties != null)
                 {
@@ -383,11 +407,17 @@ namespace gShell.dotNet
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public List<Google.Apis.Licensing.v1.Data.LicenseAssignmentList> ListForProductAndSku(
-                string ProductId, string SkuId, string CustomerId, LicenseAssignmentsListForProductAndSkuProperties properties= null)
+                string ProductId, string SkuId, string CustomerId, LicenseAssignmentsListForProductAndSkuProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var results = new List<Google.Apis.Licensing.v1.Data.LicenseAssignmentList>();
 
                 v1.LicenseAssignmentsResource.ListForProductAndSkuRequest request = GetService().LicenseAssignments.ListForProductAndSku(ProductId, SkuId, CustomerId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
 
                 if (properties != null)
                 {
@@ -440,9 +470,15 @@ namespace gShell.dotNet
             /// revoked</param>
             /// <param name="UserId">email id or unique Id of the user</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Licensing.v1.Data.LicenseAssignment Patch (Google.Apis.Licensing.v1.Data.LicenseAssignment LicenseAssignmentBody, string ProductId, string SkuId, string UserId)
+            public Google.Apis.Licensing.v1.Data.LicenseAssignment Patch (Google.Apis.Licensing.v1.Data.LicenseAssignment LicenseAssignmentBody, string ProductId, string SkuId, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var request = GetService().LicenseAssignments.Patch(LicenseAssignmentBody, ProductId, SkuId, UserId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
 
 
 
@@ -456,9 +492,15 @@ namespace gShell.dotNet
             /// revoked</param>
             /// <param name="UserId">email id or unique Id of the user</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Licensing.v1.Data.LicenseAssignment Update (Google.Apis.Licensing.v1.Data.LicenseAssignment LicenseAssignmentBody, string ProductId, string SkuId, string UserId)
+            public Google.Apis.Licensing.v1.Data.LicenseAssignment Update (Google.Apis.Licensing.v1.Data.LicenseAssignment LicenseAssignmentBody, string ProductId, string SkuId, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var request = GetService().LicenseAssignments.Update(LicenseAssignmentBody, ProductId, SkuId, UserId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
 
 
 

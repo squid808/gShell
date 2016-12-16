@@ -40,10 +40,6 @@ namespace gShell.Cmdlets.DataTransfer
         pending
     }
 
-    /// <summary>A base class which provides support for service account integration and schema objects.</summary>
-    public abstract class DataTransferServiceAccountBase : DataTransferBase
-    {    }
-
     /// <summary>
     /// <para type="synopsis">Creates a new DataTransfer API ApplicationDataTransfer object.</para>
     /// <para type="description">This provides a Cmdlet-Based approach to creating a ApplicationDataTransfer object which may be required as a parameter for some other Cmdlets in the DataTransfer API category.</para>
@@ -369,7 +365,7 @@ namespace gShell.Cmdlets.DataTransfer.Applications
     [Cmdlet(VerbsCommon.Get, "GDataTransferApplication",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GDataTransferApplication")]
-    public class GetGDataTransferApplicationCommand : DataTransferServiceAccountBase
+    public class GetGDataTransferApplicationCommand : DataTransferBase
     {
         #region Properties
 
@@ -420,7 +416,7 @@ namespace gShell.Cmdlets.DataTransfer.Applications
             {
                 if (ParameterSetName == "One")
                 {
-                    WriteObject(applications.Get(ApplicationId));
+                    WriteObject(applications.Get(ApplicationId, StandardQueryParams: StandardQueryParams));
                 }
                 else
                 {
@@ -435,7 +431,7 @@ namespace gShell.Cmdlets.DataTransfer.Applications
                     if (ShouldProcess("DataTransfer Applicaiton", "Get-GDataTransferApplication"))
                     {
                         List<Application> results =
-                            applications.List(properties).SelectMany(x => x.Applications).ToList();
+                            applications.List(properties, StandardQueryParams: StandardQueryParams).SelectMany(x => x.Applications).ToList();
 
                         WriteObject(results);
                     }
@@ -469,7 +465,7 @@ namespace gShell.Cmdlets.DataTransfer.Transfers
     [Cmdlet(VerbsCommon.Get, "GDataTransfer",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GDataTransfer")]
-    public class GetGDataTransferCommand : DataTransferServiceAccountBase
+    public class GetGDataTransferCommand : DataTransferBase
     {
         #region Properties
 
@@ -551,7 +547,7 @@ namespace gShell.Cmdlets.DataTransfer.Transfers
             {
                 if (ParameterSetName == "One")
                 {
-                    WriteObject(transfers.Get(DataTransferId));
+                    WriteObject(transfers.Get(DataTransferId, StandardQueryParams: StandardQueryParams));
                 }
                 else
                 {
@@ -565,7 +561,7 @@ namespace gShell.Cmdlets.DataTransfer.Transfers
 
                     if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
 
-                    WriteObject(transfers.List(properties).SelectMany(x => x.DataTransfers).ToList());
+                    WriteObject(transfers.List(properties, StandardQueryParams: StandardQueryParams).SelectMany(x => x.DataTransfers).ToList());
                 }
             }
         }
@@ -588,7 +584,7 @@ namespace gShell.Cmdlets.DataTransfer.Transfers
     [Cmdlet(VerbsCommon.New, "GDataTransfer",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/New-GDataTransfer")]
-    public class NewGDataTransferCommand : DataTransferServiceAccountBase
+    public class NewGDataTransferCommand : DataTransferBase
     {
         #region Properties
 
@@ -608,7 +604,7 @@ namespace gShell.Cmdlets.DataTransfer.Transfers
         {
             if (ShouldProcess("DataTransfer Transfers", "Insert-GDataTransfer"))
             {
-                WriteObject(transfers.Insert(DataTransferBody));
+                WriteObject(transfers.Insert(DataTransferBody, StandardQueryParams: StandardQueryParams));
             }
         }
     }

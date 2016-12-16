@@ -1119,7 +1119,7 @@ namespace gShell.Cmdlets.Gmail.Users
         {
             if (ShouldProcess("Gmail Users", "Get-GGmailProfile"))
             {
-                WriteObject(users.GetProfile(UserId));
+                WriteObject(users.GetProfile(UserId, StandardQueryParams:StandardQueryParams));
             }
         }
     }
@@ -1169,7 +1169,7 @@ namespace gShell.Cmdlets.Gmail.Users
         {
             if (ShouldProcess("Gmail Users", "Watch-GGmail"))
             {
-                WriteObject(users.Watch(WatchRequestBody, UserId));
+                WriteObject(users.Watch(WatchRequestBody, UserId, StandardQueryParams:StandardQueryParams));
             }
 
         }
@@ -1213,7 +1213,7 @@ namespace gShell.Cmdlets.Gmail.Users
             if (ShouldProcess("Gmail Users", "Stop-GGmail"))
             {
 
-                users.Stop(UserId);
+                users.Stop(UserId, StandardQueryParams:StandardQueryParams);
             }
 
         }
@@ -1275,7 +1275,7 @@ namespace gShell.Cmdlets.Gmail.Users.Drafts
 
             if (ShouldProcess("Gmail User", "New-GGmailDraft"))
             {
-                WriteObject(users.drafts.Create(body, UserId));
+                WriteObject(users.drafts.Create(body, UserId, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -1343,7 +1343,7 @@ namespace gShell.Cmdlets.Gmail.Users.Drafts
 					{
 						WriteDebug("Attempting to remove " + toRemoveTarget + "...");
 
-                        users.drafts.Delete(UserId, Id);
+                        users.drafts.Delete(UserId, Id, StandardQueryParams: StandardQueryParams);
 							
 						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
 					}
@@ -1464,7 +1464,7 @@ namespace gShell.Cmdlets.Gmail.Users.Drafts
 
                     if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
 
-                    WriteObject(users.drafts.List(UserId, properties).SelectMany(x => x.Drafts).ToList());
+                    WriteObject(users.drafts.List(UserId, properties, StandardQueryParams: StandardQueryParams).SelectMany(x => x.Drafts).ToList());
                 }
                 else
                 {
@@ -1473,7 +1473,7 @@ namespace gShell.Cmdlets.Gmail.Users.Drafts
                         Format = this.Format
                     };
 
-                    WriteObject(users.drafts.Get(UserId, Id, properties));
+                    WriteObject(users.drafts.Get(UserId, Id, properties, StandardQueryParams: StandardQueryParams));
                 }
             }
         }
@@ -1541,7 +1541,7 @@ namespace gShell.Cmdlets.Gmail.Users.Drafts
 
             if (ShouldProcess("Gmail User", "Set-GGmailDraft"))
             {
-                WriteObject(users.drafts.Update(body, UserId, Id));
+                WriteObject(users.drafts.Update(body, UserId, Id, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -1594,7 +1594,7 @@ namespace gShell.Cmdlets.Gmail.Users.Drafts
 
             if (ShouldProcess("Gmail User", "Send-GGmailDraft"))
             {
-                WriteObject(users.drafts.Send(body, UserId));
+                WriteObject(users.drafts.Send(body, UserId, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -1676,7 +1676,7 @@ namespace gShell.Cmdlets.Gmail.Users.History
 
             if (ShouldProcess("Gmail User History", "Get-GGmailHistory"))
             {
-                WriteObject(users.history.List(UserId, properties).SelectMany(x => x.History).ToList());
+                WriteObject(users.history.List(UserId, properties, StandardQueryParams: StandardQueryParams).SelectMany(x => x.History).ToList());
             }
         }
     }
@@ -1761,7 +1761,7 @@ namespace gShell.Cmdlets.Gmail.Users.Labels
 
             if (ShouldProcess("Gmail User Label", "New-GGmailLabel"))
             {
-                WriteObject(users.labels.Create(body, UserId));
+                WriteObject(users.labels.Create(body, UserId, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -1829,7 +1829,7 @@ namespace gShell.Cmdlets.Gmail.Users.Labels
 					{
 						WriteDebug("Attempting to remove " + toRemoveTarget + "...");
 
-                        users.labels.Delete(UserId, Id);
+                        users.labels.Delete(UserId, Id, StandardQueryParams: StandardQueryParams);
 							
 						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
 					}
@@ -1911,11 +1911,11 @@ namespace gShell.Cmdlets.Gmail.Users.Labels
             {
                 if (ParameterSetName == "list")
                 {
-                    WriteObject(users.labels.List(UserId).Labels);
+                    WriteObject(users.labels.List(UserId, StandardQueryParams: StandardQueryParams).Labels);
                 }
                 else
                 {
-                    WriteObject(users.labels.Get(UserId, Id));
+                    WriteObject(users.labels.Get(UserId, Id, StandardQueryParams: StandardQueryParams));
                 }
             }
         }
@@ -2006,7 +2006,7 @@ namespace gShell.Cmdlets.Gmail.Users.Labels
 
             if (ShouldProcess("Gmail User Label", "Set-GGmailLabel"))
             {
-                WriteObject(users.labels.Patch(body, UserId, Id));
+                WriteObject(users.labels.Patch(body, UserId, Id, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2098,7 +2098,7 @@ namespace gShell.Cmdlets.Gmail.Users.Messages
 
                         if (ParameterSetName == "one")
                         {
-                            users.messages.Delete(UserId, Id);
+                            users.messages.Delete(UserId, Id, StandardQueryParams: StandardQueryParams);
                         }
                         else
                         {
@@ -2106,7 +2106,7 @@ namespace gShell.Cmdlets.Gmail.Users.Messages
 
                             if (this.BatchDeleteIds != null) body.Ids = BatchDeleteIds;
 
-                            users.messages.BatchDelete(body, UserId);
+                            users.messages.BatchDelete(body, UserId, StandardQueryParams: StandardQueryParams);
                         }
 							
 						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
@@ -2262,7 +2262,7 @@ namespace gShell.Cmdlets.Gmail.Users.Messages
                     
                     if (this.LabelIds != null) properties.LabelIds = this.LabelIds;
                     if (MaxResults.HasValue) properties.TotalResults = this.MaxResults.Value;
-                    WriteObject(users.messages.List(UserId, properties).SelectMany(x => x.Messages).ToList());
+                    WriteObject(users.messages.List(UserId, properties, StandardQueryParams: StandardQueryParams).SelectMany(x => x.Messages).ToList());
                 }
                 else
                 {
@@ -2272,7 +2272,7 @@ namespace gShell.Cmdlets.Gmail.Users.Messages
                     };
 
                     if (this.MetadataHeaders != null) properties.MetadataHeaders = this.MetadataHeaders;
-                    WriteObject(users.messages.Get(UserId, Id, properties));
+                    WriteObject(users.messages.Get(UserId, Id, properties, StandardQueryParams: StandardQueryParams));
                 }
             }
         }
@@ -2349,7 +2349,7 @@ namespace gShell.Cmdlets.Gmail.Users.Messages
 
             if (ShouldProcess("Gmail User Message", "New-GGmailMessage"))
             {
-                WriteObject(users.messages.Insert(MessageBody, UserId, properties));
+                WriteObject(users.messages.Insert(MessageBody, UserId, properties, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2401,7 +2401,7 @@ namespace gShell.Cmdlets.Gmail.Users.Messages
         {
             if (ShouldProcess("Gmail User Message", "Send-GGmailMessage"))
             {
-                WriteObject(users.messages.Send(Message, UserId));
+                WriteObject(users.messages.Send(Message, UserId, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2516,15 +2516,15 @@ namespace gShell.Cmdlets.Gmail.Users.Messages
                         if (this.AddLabelIds != null) body.AddLabelIds = this.AddLabelIds;
                         if (this.RemoveLabelIds != null) body.RemoveLabelIds = this.RemoveLabelIds;
 
-                        WriteObject(users.messages.Modify(body, UserId, Id));
+                        WriteObject(users.messages.Modify(body, UserId, Id, StandardQueryParams: StandardQueryParams));
                         break;
 
                     case "trash":
-                        WriteObject(users.messages.Trash(UserId, Id));
+                        WriteObject(users.messages.Trash(UserId, Id, StandardQueryParams: StandardQueryParams));
                         break;
 
                     case "untrash":
-                        WriteObject(users.messages.Untrash(UserId, Id));
+                        WriteObject(users.messages.Untrash(UserId, Id, StandardQueryParams: StandardQueryParams));
                         break;
                 }
             }
@@ -2621,7 +2621,7 @@ namespace gShell.Cmdlets.Gmail.Users.Messages
                     ProcessForCalendar = this.ProcessForCalendar
                 };
 
-                WriteObject(users.messages.Import(MessageBody, UserId, properties));
+                WriteObject(users.messages.Import(MessageBody, UserId, properties, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2686,7 +2686,7 @@ namespace gShell.Cmdlets.Gmail.Users.Messages.Attachments
         {
             if (ShouldProcess("Gmail User", "Get-GGmailAttachments"))
             {
-                WriteObject(users.messages.attachments.Get(UserId, MessageId, Id));
+                WriteObject(users.messages.attachments.Get(UserId, MessageId, Id, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2832,7 +2832,7 @@ namespace gShell.Cmdlets.Gmail.Users.Threads
                     if (this.LabelIds != null) properties.LabelIds = this.LabelIds;
 
                     if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
-                    WriteObject(users.threads.List(UserId, properties).SelectMany(x => x.Threads).ToList());
+                    WriteObject(users.threads.List(UserId, properties, StandardQueryParams: StandardQueryParams).SelectMany(x => x.Threads).ToList());
 
                 }
                 else
@@ -2845,7 +2845,7 @@ namespace gShell.Cmdlets.Gmail.Users.Threads
 
                     if (this.MetadataHeaders != null) properties.MetadataHeaders = this.MetadataHeaders;
 
-                    WriteObject(users.threads.Get(UserId, Id, properties));
+                    WriteObject(users.threads.Get(UserId, Id, properties, StandardQueryParams: StandardQueryParams));
                 }
             }
         }
@@ -2983,15 +2983,15 @@ namespace gShell.Cmdlets.Gmail.Users.Threads
 
                         if (this.AddLabelIds != null) body.AddLabelIds = this.AddLabelIds;
                         if (this.RemoveLabelIds != null) body.RemoveLabelIds = this.RemoveLabelIds;
-                        WriteObject(users.threads.Modify(body, UserId, Id));
+                        WriteObject(users.threads.Modify(body, UserId, Id, StandardQueryParams: StandardQueryParams));
                         break;
 
                     case "trash":
-                        WriteObject(users.threads.Trash(UserId, Id));
+                        WriteObject(users.threads.Trash(UserId, Id, StandardQueryParams: StandardQueryParams));
                         break;
 
                     case "untrash":
-                        WriteObject(users.threads.Untrash(UserId, Id));
+                        WriteObject(users.threads.Untrash(UserId, Id, StandardQueryParams: StandardQueryParams));
                         break;
                 }
             }
@@ -3059,7 +3059,7 @@ namespace gShell.Cmdlets.Gmail.Users.Threads
                     {
                         WriteDebug("Attempting to remove " + toRemoveTarget + "...");
 
-                        users.threads.Delete(UserId, Id);
+                        users.threads.Delete(UserId, Id, StandardQueryParams: StandardQueryParams);
 
                         WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
                     }
@@ -3186,10 +3186,10 @@ namespace gShell.Cmdlets.Gmail.Users.Settings
                 }
 
                 var results = new GGmailSettingsResult();
-                if (AutoForwarding) results.AutoForwarding = (users.settings.GetAutoForwarding(UserId));
-                if (Imap) results.ImapSettings = (users.settings.GetImap(UserId));
-                if (Pop) results.PopSettings = (users.settings.GetPop(UserId));
-                if (Vacation) results.VacationSettings = (users.settings.GetVacation(UserId));
+                if (AutoForwarding) results.AutoForwarding = (users.settings.GetAutoForwarding(UserId, StandardQueryParams: StandardQueryParams));
+                if (Imap) results.ImapSettings = (users.settings.GetImap(UserId, StandardQueryParams: StandardQueryParams));
+                if (Pop) results.PopSettings = (users.settings.GetPop(UserId, StandardQueryParams: StandardQueryParams));
+                if (Vacation) results.VacationSettings = (users.settings.GetVacation(UserId, StandardQueryParams: StandardQueryParams));
 
                 WriteObject(results);
             }
@@ -3291,10 +3291,10 @@ namespace gShell.Cmdlets.Gmail.Users.Settings
 
                 var results = new GGmailSettingsResult();
 
-                if (AutoForwardingBody != null) results.AutoForwarding = users.settings.UpdateAutoForwarding(AutoForwardingBody, UserId);
-                if (ImapBody != null) results.ImapSettings = users.settings.UpdateImap(ImapBody, UserId);
-                if (PopBody != null) results.PopSettings = users.settings.UpdatePop(PopBody, UserId);
-                if (VacationBody != null) results.VacationSettings = users.settings.UpdateVacation(VacationBody, UserId);
+                if (AutoForwardingBody != null) results.AutoForwarding = users.settings.UpdateAutoForwarding(AutoForwardingBody, UserId, StandardQueryParams: StandardQueryParams);
+                if (ImapBody != null) results.ImapSettings = users.settings.UpdateImap(ImapBody, UserId, StandardQueryParams: StandardQueryParams);
+                if (PopBody != null) results.PopSettings = users.settings.UpdatePop(PopBody, UserId, StandardQueryParams: StandardQueryParams);
+                if (VacationBody != null) results.VacationSettings = users.settings.UpdateVacation(VacationBody, UserId, StandardQueryParams: StandardQueryParams);
 
                 WriteObject(results);
             }
@@ -3351,7 +3351,7 @@ namespace gShell.Cmdlets.Gmail.Users.Settings.Filters
             if (ShouldProcess("Gmail Filters", "New-GGmailFilter"))
             {
 
-                WriteObject(users.settings.filters.Create(FilterBody, UserId));
+                WriteObject(users.settings.filters.Create(FilterBody, UserId, StandardQueryParams: StandardQueryParams));
             }
 
         }
@@ -3418,7 +3418,7 @@ namespace gShell.Cmdlets.Gmail.Users.Settings.Filters
                     {
                         WriteDebug("Attempting to remove " + toRemoveTarget + "...");
 
-                        users.settings.filters.Delete(UserId, Id);
+                        users.settings.filters.Delete(UserId, Id, StandardQueryParams: StandardQueryParams);
 
                         WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
                     }
@@ -3499,11 +3499,11 @@ namespace gShell.Cmdlets.Gmail.Users.Settings.Filters
             {
                 if (ParameterSetName == "One")
                 {
-                    WriteObject(users.settings.filters.Get(UserId, Id));
+                    WriteObject(users.settings.filters.Get(UserId, Id, StandardQueryParams: StandardQueryParams));
                 }
                 else
                 {
-                    WriteObject(users.settings.filters.List(UserId));
+                    WriteObject(users.settings.filters.List(UserId, StandardQueryParams: StandardQueryParams));
                 }
             }
 
@@ -3575,7 +3575,7 @@ namespace gShell.Cmdlets.Gmail.Users.Settings.ForwardingAddresses
 
             if (ShouldProcess("Gmail ForwardingAddresses", "New-GGmailForwardingAddress"))
             {
-                WriteObject(users.settings.forwardingAddresses.Create(ForwardingAddressBody, UserId));
+                WriteObject(users.settings.forwardingAddresses.Create(ForwardingAddressBody, UserId, StandardQueryParams: StandardQueryParams));
             }
 
         }
@@ -3642,7 +3642,7 @@ namespace gShell.Cmdlets.Gmail.Users.Settings.ForwardingAddresses
                     {
                         WriteDebug("Attempting to remove " + toRemoveTarget + "...");
 
-                        users.settings.forwardingAddresses.Delete(UserId, ForwardingEmail);
+                        users.settings.forwardingAddresses.Delete(UserId, ForwardingEmail, StandardQueryParams: StandardQueryParams);
 
                         WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
                     }
@@ -3724,11 +3724,11 @@ namespace gShell.Cmdlets.Gmail.Users.Settings.ForwardingAddresses
             {
                 if (ParameterSetName == "One")
                 {
-                    WriteObject(users.settings.forwardingAddresses.Get(UserId, ForwardingEmail));
+                    WriteObject(users.settings.forwardingAddresses.Get(UserId, ForwardingEmail, StandardQueryParams: StandardQueryParams));
                 }
                 else
                 {
-                    WriteObject(users.settings.forwardingAddresses.List(UserId));
+                    WriteObject(users.settings.forwardingAddresses.List(UserId, StandardQueryParams: StandardQueryParams));
                 }
                 
             }
@@ -3785,7 +3785,7 @@ namespace gShell.Cmdlets.Gmail.Users.Settings.SendAs
         {
             if (ShouldProcess("Gmail SendAs", "New-GGmailSendAs"))
             {
-                WriteObject(users.settings.sendAs.Create(SendAsBody, UserId));
+                WriteObject(users.settings.sendAs.Create(SendAsBody, UserId, StandardQueryParams: StandardQueryParams));
             }
 
         }
@@ -3852,7 +3852,7 @@ namespace gShell.Cmdlets.Gmail.Users.Settings.SendAs
                     {
                         WriteDebug("Attempting to remove " + toRemoveTarget + "...");
 
-                        users.settings.sendAs.Delete(UserId, SendAsEmail);
+                        users.settings.sendAs.Delete(UserId, SendAsEmail, StandardQueryParams: StandardQueryParams);
 
                         WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
                     }
@@ -3933,11 +3933,11 @@ namespace gShell.Cmdlets.Gmail.Users.Settings.SendAs
             {
                 if (ParameterSetName == "One")
                 {
-                    WriteObject(users.settings.sendAs.Get(UserId, SendAsEmail));
+                    WriteObject(users.settings.sendAs.Get(UserId, SendAsEmail, StandardQueryParams: StandardQueryParams));
                 }
                 else
                 {
-                    WriteObject(users.settings.sendAs.List(UserId));
+                    WriteObject(users.settings.sendAs.List(UserId, StandardQueryParams: StandardQueryParams));
                 }
             }
 
@@ -3998,7 +3998,7 @@ namespace gShell.Cmdlets.Gmail.Users.Settings.SendAs
         {
             if (ShouldProcess("Gmail SendAs", "Set-GGmailSendAs"))
             {
-                WriteObject(users.settings.sendAs.Patch(SendAsBody, UserId, SendAsEmail));
+                WriteObject(users.settings.sendAs.Patch(SendAsBody, UserId, SendAsEmail, StandardQueryParams: StandardQueryParams));
             }
 
         }
@@ -4048,7 +4048,7 @@ namespace gShell.Cmdlets.Gmail.Users.Settings.SendAs
         {
             if (ShouldProcess("Gmail SendAs", "Send-GGmailSendAsVerification"))
             {
-                users.settings.sendAs.Verify(UserId, SendAsEmail);
+                users.settings.sendAs.Verify(UserId, SendAsEmail, StandardQueryParams: StandardQueryParams);
             }
         }
     }

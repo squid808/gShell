@@ -134,18 +134,18 @@ namespace gShell.Cmdlets.Gmail{
                 /// <param name="DraftBody">The body of the request.</param>
                 /// <param name="UserId">The user's email address. The special value me can be used to indicate the authenticated
                 /// user.</param>
-                public Google.Apis.Gmail.v1.Data.Draft Create (Google.Apis.Gmail.v1.Data.Draft DraftBody, string UserId)
+                public Google.Apis.Gmail.v1.Data.Draft Create (Google.Apis.Gmail.v1.Data.Draft DraftBody, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    return mainBase.users.drafts.Create(DraftBody, UserId);
+                    return mainBase.users.drafts.Create(DraftBody, UserId, StandardQueryParams);
                 }
 
 
                 /// <summary>3</summary>
-                public void Create (Google.Apis.Gmail.v1.Data.Draft DraftBody, string userId, System.IO.Stream stream, string contentType)
+                public void Create (Google.Apis.Gmail.v1.Data.Draft DraftBody, string userId, System.IO.Stream stream, string contentType, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    mainBase.users.drafts.Create(DraftBody, userId, stream, contentType);
+                    mainBase.users.drafts.Create(DraftBody, userId, stream, contentType, StandardQueryParams);
                 }
 
                 /// <summary>Immediately and permanently deletes the specified draft. Does not simply trash
@@ -153,10 +153,10 @@ namespace gShell.Cmdlets.Gmail{
                 /// <param name="UserId">The user's email address. The special value me can be used to indicate the authenticated
                 /// user.</param>
                 /// <param name="Id">The ID of the draft to delete.</param>
-                public void Delete (string UserId, string Id)
+                public void Delete (string UserId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    mainBase.users.drafts.Delete(UserId, Id);
+                    mainBase.users.drafts.Delete(UserId, Id, StandardQueryParams);
                 }
 
 
@@ -166,12 +166,12 @@ namespace gShell.Cmdlets.Gmail{
                 /// user.</param>
                 /// <param name="Id">The ID of the draft to retrieve.</param>
                 /// <param name="properties">The optional properties for this method.</param>
-                public Google.Apis.Gmail.v1.Data.Draft Get (string UserId, string Id, gGmail.Users.Drafts.DraftsGetProperties properties= null)
+                public Google.Apis.Gmail.v1.Data.Draft Get (string UserId, string Id, gGmail.Users.Drafts.DraftsGetProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
                     properties = properties ?? new gGmail.Users.Drafts.DraftsGetProperties();
 
-                    return mainBase.users.drafts.Get(UserId, Id, properties);
+                    return mainBase.users.drafts.Get(UserId, Id, properties, StandardQueryParams);
                 }
 
 
@@ -181,7 +181,7 @@ namespace gShell.Cmdlets.Gmail{
                 /// user.</param>
                 /// <param name="properties">The optional properties for this method.</param>
 
-                public List<Google.Apis.Gmail.v1.Data.ListDraftsResponse> List(string UserId, gGmail.Users.Drafts.DraftsListProperties properties= null)
+                public List<Google.Apis.Gmail.v1.Data.ListDraftsResponse> List(string UserId, gGmail.Users.Drafts.DraftsListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
                     properties = properties ?? new gGmail.Users.Drafts.DraftsListProperties();
@@ -196,18 +196,18 @@ namespace gShell.Cmdlets.Gmail{
                 /// <param name="DraftBody">The body of the request.</param>
                 /// <param name="UserId">The user's email address. The special value me can be used to indicate the authenticated
                 /// user.</param>
-                public Google.Apis.Gmail.v1.Data.Message Send (Google.Apis.Gmail.v1.Data.Draft DraftBody, string UserId)
+                public Google.Apis.Gmail.v1.Data.Message Send (Google.Apis.Gmail.v1.Data.Draft DraftBody, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    return mainBase.users.drafts.Send(DraftBody, UserId);
+                    return mainBase.users.drafts.Send(DraftBody, UserId, StandardQueryParams);
                 }
 
 
                 /// <summary>3</summary>
-                public void Send (Google.Apis.Gmail.v1.Data.Draft DraftBody, string userId, System.IO.Stream stream, string contentType)
+                public void Send (Google.Apis.Gmail.v1.Data.Draft DraftBody, string userId, System.IO.Stream stream, string contentType, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    mainBase.users.drafts.Send(DraftBody, userId, stream, contentType);
+                    mainBase.users.drafts.Send(DraftBody, userId, stream, contentType, StandardQueryParams);
                 }
 
                 /// <summary>Replaces a draft's content.</summary>
@@ -215,18 +215,18 @@ namespace gShell.Cmdlets.Gmail{
                 /// <param name="UserId">The user's email address. The special value me can be used to indicate the authenticated
                 /// user.</param>
                 /// <param name="Id">The ID of the draft to update.</param>
-                public Google.Apis.Gmail.v1.Data.Draft Update (Google.Apis.Gmail.v1.Data.Draft DraftBody, string UserId, string Id)
+                public Google.Apis.Gmail.v1.Data.Draft Update (Google.Apis.Gmail.v1.Data.Draft DraftBody, string UserId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    return mainBase.users.drafts.Update(DraftBody, UserId, Id);
+                    return mainBase.users.drafts.Update(DraftBody, UserId, Id, StandardQueryParams);
                 }
 
 
                 /// <summary>3</summary>
-                public void Update (Google.Apis.Gmail.v1.Data.Draft DraftBody, string userId, string id, System.IO.Stream stream, string contentType)
+                public void Update (Google.Apis.Gmail.v1.Data.Draft DraftBody, string userId, string id, System.IO.Stream stream, string contentType, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    mainBase.users.drafts.Update(DraftBody, userId, id, stream, contentType);
+                    mainBase.users.drafts.Update(DraftBody, userId, id, stream, contentType, StandardQueryParams);
                 }
             }
             #endregion
@@ -245,7 +245,7 @@ namespace gShell.Cmdlets.Gmail{
                 /// user.</param>
                 /// <param name="properties">The optional properties for this method.</param>
 
-                public List<Google.Apis.Gmail.v1.Data.ListHistoryResponse> List(string UserId, gGmail.Users.History.HistoryListProperties properties= null)
+                public List<Google.Apis.Gmail.v1.Data.ListHistoryResponse> List(string UserId, gGmail.Users.History.HistoryListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
                     properties = properties ?? new gGmail.Users.History.HistoryListProperties();
@@ -269,10 +269,10 @@ namespace gShell.Cmdlets.Gmail{
                 /// <param name="LabelBody">The body of the request.</param>
                 /// <param name="UserId">The user's email address. The special value me can be used to indicate the authenticated
                 /// user.</param>
-                public Google.Apis.Gmail.v1.Data.Label Create (Google.Apis.Gmail.v1.Data.Label LabelBody, string UserId)
+                public Google.Apis.Gmail.v1.Data.Label Create (Google.Apis.Gmail.v1.Data.Label LabelBody, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    return mainBase.users.labels.Create(LabelBody, UserId);
+                    return mainBase.users.labels.Create(LabelBody, UserId, StandardQueryParams);
                 }
 
 
@@ -282,10 +282,10 @@ namespace gShell.Cmdlets.Gmail{
                 /// <param name="UserId">The user's email address. The special value me can be used to indicate the authenticated
                 /// user.</param>
                 /// <param name="Id">The ID of the label to delete.</param>
-                public void Delete (string UserId, string Id)
+                public void Delete (string UserId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    mainBase.users.labels.Delete(UserId, Id);
+                    mainBase.users.labels.Delete(UserId, Id, StandardQueryParams);
                 }
 
 
@@ -294,10 +294,10 @@ namespace gShell.Cmdlets.Gmail{
                 /// <param name="UserId">The user's email address. The special value me can be used to indicate the authenticated
                 /// user.</param>
                 /// <param name="Id">The ID of the label to retrieve.</param>
-                public Google.Apis.Gmail.v1.Data.Label Get (string UserId, string Id)
+                public Google.Apis.Gmail.v1.Data.Label Get (string UserId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    return mainBase.users.labels.Get(UserId, Id);
+                    return mainBase.users.labels.Get(UserId, Id, StandardQueryParams);
                 }
 
 
@@ -305,10 +305,10 @@ namespace gShell.Cmdlets.Gmail{
                 /// <summary>Lists all labels in the user's mailbox.</summary>
                 /// <param name="UserId">The user's email address. The special value me can be used to indicate the authenticated
                 /// user.</param>
-                public Google.Apis.Gmail.v1.Data.ListLabelsResponse List (string UserId)
+                public Google.Apis.Gmail.v1.Data.ListLabelsResponse List (string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    return mainBase.users.labels.List(UserId);
+                    return mainBase.users.labels.List(UserId, StandardQueryParams);
                 }
 
 
@@ -318,10 +318,10 @@ namespace gShell.Cmdlets.Gmail{
                 /// <param name="UserId">The user's email address. The special value me can be used to indicate the authenticated
                 /// user.</param>
                 /// <param name="Id">The ID of the label to update.</param>
-                public Google.Apis.Gmail.v1.Data.Label Patch (Google.Apis.Gmail.v1.Data.Label LabelBody, string UserId, string Id)
+                public Google.Apis.Gmail.v1.Data.Label Patch (Google.Apis.Gmail.v1.Data.Label LabelBody, string UserId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    return mainBase.users.labels.Patch(LabelBody, UserId, Id);
+                    return mainBase.users.labels.Patch(LabelBody, UserId, Id, StandardQueryParams);
                 }
 
 
@@ -331,10 +331,10 @@ namespace gShell.Cmdlets.Gmail{
                 /// <param name="UserId">The user's email address. The special value me can be used to indicate the authenticated
                 /// user.</param>
                 /// <param name="Id">The ID of the label to update.</param>
-                public Google.Apis.Gmail.v1.Data.Label Update (Google.Apis.Gmail.v1.Data.Label LabelBody, string UserId, string Id)
+                public Google.Apis.Gmail.v1.Data.Label Update (Google.Apis.Gmail.v1.Data.Label LabelBody, string UserId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    return mainBase.users.labels.Update(LabelBody, UserId, Id);
+                    return mainBase.users.labels.Update(LabelBody, UserId, Id, StandardQueryParams);
                 }
 
 
@@ -373,10 +373,10 @@ namespace gShell.Cmdlets.Gmail{
                     /// <param name="MessageId">The ID of the message containing the attachment.</param>
                     ///
                     /// <param name="Id">The ID of the attachment.</param>
-                    public Google.Apis.Gmail.v1.Data.MessagePartBody Get (string UserId, string MessageId, string Id)
+                    public Google.Apis.Gmail.v1.Data.MessagePartBody Get (string UserId, string MessageId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
 
-                        return mainBase.users.messages.attachments.Get(UserId, MessageId, Id);
+                        return mainBase.users.messages.attachments.Get(UserId, MessageId, Id, StandardQueryParams);
                     }
 
 
@@ -389,10 +389,10 @@ namespace gShell.Cmdlets.Gmail{
                 /// <param name="BatchDeleteMessagesRequestBody">The body of the request.</param>
                 /// <param name="UserId">The user's email address. The special value me can be used to indicate the authenticated
                 /// user.</param>
-                public void BatchDelete (Google.Apis.Gmail.v1.Data.BatchDeleteMessagesRequest BatchDeleteMessagesRequestBody, string UserId)
+                public void BatchDelete (Google.Apis.Gmail.v1.Data.BatchDeleteMessagesRequest BatchDeleteMessagesRequestBody, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    mainBase.users.messages.BatchDelete(BatchDeleteMessagesRequestBody, UserId);
+                    mainBase.users.messages.BatchDelete(BatchDeleteMessagesRequestBody, UserId, StandardQueryParams);
                 }
 
 
@@ -401,10 +401,10 @@ namespace gShell.Cmdlets.Gmail{
                 /// <param name="BatchModifyMessagesRequestBody">The body of the request.</param>
                 /// <param name="UserId">The user's email address. The special value me can be used to indicate the authenticated
                 /// user.</param>
-                public void BatchModify (Google.Apis.Gmail.v1.Data.BatchModifyMessagesRequest BatchModifyMessagesRequestBody, string UserId)
+                public void BatchModify (Google.Apis.Gmail.v1.Data.BatchModifyMessagesRequest BatchModifyMessagesRequestBody, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    mainBase.users.messages.BatchModify(BatchModifyMessagesRequestBody, UserId);
+                    mainBase.users.messages.BatchModify(BatchModifyMessagesRequestBody, UserId, StandardQueryParams);
                 }
 
 
@@ -414,10 +414,10 @@ namespace gShell.Cmdlets.Gmail{
                 /// <param name="UserId">The user's email address. The special value me can be used to indicate the authenticated
                 /// user.</param>
                 /// <param name="Id">The ID of the message to delete.</param>
-                public void Delete (string UserId, string Id)
+                public void Delete (string UserId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    mainBase.users.messages.Delete(UserId, Id);
+                    mainBase.users.messages.Delete(UserId, Id, StandardQueryParams);
                 }
 
 
@@ -427,12 +427,12 @@ namespace gShell.Cmdlets.Gmail{
                 /// user.</param>
                 /// <param name="Id">The ID of the message to retrieve.</param>
                 /// <param name="properties">The optional properties for this method.</param>
-                public Google.Apis.Gmail.v1.Data.Message Get (string UserId, string Id, gGmail.Users.Messages.MessagesGetProperties properties= null)
+                public Google.Apis.Gmail.v1.Data.Message Get (string UserId, string Id, gGmail.Users.Messages.MessagesGetProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
                     properties = properties ?? new gGmail.Users.Messages.MessagesGetProperties();
 
-                    return mainBase.users.messages.Get(UserId, Id, properties);
+                    return mainBase.users.messages.Get(UserId, Id, properties, StandardQueryParams);
                 }
 
 
@@ -443,22 +443,22 @@ namespace gShell.Cmdlets.Gmail{
                 /// <param name="UserId">The user's email address. The special value me can be used to indicate the authenticated
                 /// user.</param>
                 /// <param name="properties">The optional properties for this method.</param>
-                public Google.Apis.Gmail.v1.Data.Message Import (Google.Apis.Gmail.v1.Data.Message MessageBody, string UserId, gGmail.Users.Messages.MessagesImportProperties properties= null)
+                public Google.Apis.Gmail.v1.Data.Message Import (Google.Apis.Gmail.v1.Data.Message MessageBody, string UserId, gGmail.Users.Messages.MessagesImportProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
                     properties = properties ?? new gGmail.Users.Messages.MessagesImportProperties();
 
-                    return mainBase.users.messages.Import(MessageBody, UserId, properties);
+                    return mainBase.users.messages.Import(MessageBody, UserId, properties, StandardQueryParams);
                 }
 
 
                 /// <summary>3</summary>
-                public void Import (Google.Apis.Gmail.v1.Data.Message MessageBody, string userId, System.IO.Stream stream, string contentType, gGmail.Users.Messages.MessagesImportUploadProperties properties= null)
+                public void Import (Google.Apis.Gmail.v1.Data.Message MessageBody, string userId, System.IO.Stream stream, string contentType, gGmail.Users.Messages.MessagesImportUploadProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
                     properties = properties ?? new gGmail.Users.Messages.MessagesImportUploadProperties();
 
-                    mainBase.users.messages.Import(MessageBody, userId, stream, contentType, properties);
+                    mainBase.users.messages.Import(MessageBody, userId, stream, contentType, properties, StandardQueryParams);
                 }
 
                 /// <summary>Directly inserts a message into only this user's mailbox similar to IMAP APPEND, bypassing
@@ -467,22 +467,22 @@ namespace gShell.Cmdlets.Gmail{
                 /// <param name="UserId">The user's email address. The special value me can be used to indicate the authenticated
                 /// user.</param>
                 /// <param name="properties">The optional properties for this method.</param>
-                public Google.Apis.Gmail.v1.Data.Message Insert (Google.Apis.Gmail.v1.Data.Message MessageBody, string UserId, gGmail.Users.Messages.MessagesInsertProperties properties= null)
+                public Google.Apis.Gmail.v1.Data.Message Insert (Google.Apis.Gmail.v1.Data.Message MessageBody, string UserId, gGmail.Users.Messages.MessagesInsertProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
                     properties = properties ?? new gGmail.Users.Messages.MessagesInsertProperties();
 
-                    return mainBase.users.messages.Insert(MessageBody, UserId, properties);
+                    return mainBase.users.messages.Insert(MessageBody, UserId, properties, StandardQueryParams);
                 }
 
 
                 /// <summary>3</summary>
-                public void Insert (Google.Apis.Gmail.v1.Data.Message MessageBody, string userId, System.IO.Stream stream, string contentType, gGmail.Users.Messages.MessagesInsertUploadProperties properties= null)
+                public void Insert (Google.Apis.Gmail.v1.Data.Message MessageBody, string userId, System.IO.Stream stream, string contentType, gGmail.Users.Messages.MessagesInsertUploadProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
                     properties = properties ?? new gGmail.Users.Messages.MessagesInsertUploadProperties();
 
-                    mainBase.users.messages.Insert(MessageBody, userId, stream, contentType, properties);
+                    mainBase.users.messages.Insert(MessageBody, userId, stream, contentType, properties, StandardQueryParams);
                 }
 
                 /// <summary>Lists the messages in the user's mailbox.</summary>
@@ -490,7 +490,7 @@ namespace gShell.Cmdlets.Gmail{
                 /// user.</param>
                 /// <param name="properties">The optional properties for this method.</param>
 
-                public List<Google.Apis.Gmail.v1.Data.ListMessagesResponse> List(string UserId, gGmail.Users.Messages.MessagesListProperties properties= null)
+                public List<Google.Apis.Gmail.v1.Data.ListMessagesResponse> List(string UserId, gGmail.Users.Messages.MessagesListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
                     properties = properties ?? new gGmail.Users.Messages.MessagesListProperties();
@@ -505,10 +505,10 @@ namespace gShell.Cmdlets.Gmail{
                 /// <param name="UserId">The user's email address. The special value me can be used to indicate the authenticated
                 /// user.</param>
                 /// <param name="Id">The ID of the message to modify.</param>
-                public Google.Apis.Gmail.v1.Data.Message Modify (Google.Apis.Gmail.v1.Data.ModifyMessageRequest ModifyMessageRequestBody, string UserId, string Id)
+                public Google.Apis.Gmail.v1.Data.Message Modify (Google.Apis.Gmail.v1.Data.ModifyMessageRequest ModifyMessageRequestBody, string UserId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    return mainBase.users.messages.Modify(ModifyMessageRequestBody, UserId, Id);
+                    return mainBase.users.messages.Modify(ModifyMessageRequestBody, UserId, Id, StandardQueryParams);
                 }
 
 
@@ -517,28 +517,28 @@ namespace gShell.Cmdlets.Gmail{
                 /// <param name="MessageBody">The body of the request.</param>
                 /// <param name="UserId">The user's email address. The special value me can be used to indicate the authenticated
                 /// user.</param>
-                public Google.Apis.Gmail.v1.Data.Message Send (Google.Apis.Gmail.v1.Data.Message MessageBody, string UserId)
+                public Google.Apis.Gmail.v1.Data.Message Send (Google.Apis.Gmail.v1.Data.Message MessageBody, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    return mainBase.users.messages.Send(MessageBody, UserId);
+                    return mainBase.users.messages.Send(MessageBody, UserId, StandardQueryParams);
                 }
 
 
                 /// <summary>3</summary>
-                public void Send (Google.Apis.Gmail.v1.Data.Message MessageBody, string userId, System.IO.Stream stream, string contentType)
+                public void Send (Google.Apis.Gmail.v1.Data.Message MessageBody, string userId, System.IO.Stream stream, string contentType, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    mainBase.users.messages.Send(MessageBody, userId, stream, contentType);
+                    mainBase.users.messages.Send(MessageBody, userId, stream, contentType, StandardQueryParams);
                 }
 
                 /// <summary>Moves the specified message to the trash.</summary>
                 /// <param name="UserId">The user's email address. The special value me can be used to indicate the authenticated
                 /// user.</param>
                 /// <param name="Id">The ID of the message to Trash.</param>
-                public Google.Apis.Gmail.v1.Data.Message Trash (string UserId, string Id)
+                public Google.Apis.Gmail.v1.Data.Message Trash (string UserId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    return mainBase.users.messages.Trash(UserId, Id);
+                    return mainBase.users.messages.Trash(UserId, Id, StandardQueryParams);
                 }
 
 
@@ -547,10 +547,10 @@ namespace gShell.Cmdlets.Gmail{
                 /// <param name="UserId">The user's email address. The special value me can be used to indicate the authenticated
                 /// user.</param>
                 /// <param name="Id">The ID of the message to remove from Trash.</param>
-                public Google.Apis.Gmail.v1.Data.Message Untrash (string UserId, string Id)
+                public Google.Apis.Gmail.v1.Data.Message Untrash (string UserId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    return mainBase.users.messages.Untrash(UserId, Id);
+                    return mainBase.users.messages.Untrash(UserId, Id, StandardQueryParams);
                 }
 
 
@@ -597,10 +597,10 @@ namespace gShell.Cmdlets.Gmail{
                     /// <param name="FilterBody">The body of the request.</param>
                     /// <param name="UserId">User's email address. The special value "me" can be used to indicate the authenticated
                     /// user.</param>
-                    public Google.Apis.Gmail.v1.Data.Filter Create (Google.Apis.Gmail.v1.Data.Filter FilterBody, string UserId)
+                    public Google.Apis.Gmail.v1.Data.Filter Create (Google.Apis.Gmail.v1.Data.Filter FilterBody, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
 
-                        return mainBase.users.settings.filters.Create(FilterBody, UserId);
+                        return mainBase.users.settings.filters.Create(FilterBody, UserId, StandardQueryParams);
                     }
 
 
@@ -609,10 +609,10 @@ namespace gShell.Cmdlets.Gmail{
                     /// <param name="UserId">User's email address. The special value "me" can be used to indicate the authenticated
                     /// user.</param>
                     /// <param name="Id">The ID of the filter to be deleted.</param>
-                    public void Delete (string UserId, string Id)
+                    public void Delete (string UserId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
 
-                        mainBase.users.settings.filters.Delete(UserId, Id);
+                        mainBase.users.settings.filters.Delete(UserId, Id, StandardQueryParams);
                     }
 
 
@@ -621,10 +621,10 @@ namespace gShell.Cmdlets.Gmail{
                     /// <param name="UserId">User's email address. The special value "me" can be used to indicate the authenticated
                     /// user.</param>
                     /// <param name="Id">The ID of the filter to be fetched.</param>
-                    public Google.Apis.Gmail.v1.Data.Filter Get (string UserId, string Id)
+                    public Google.Apis.Gmail.v1.Data.Filter Get (string UserId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
 
-                        return mainBase.users.settings.filters.Get(UserId, Id);
+                        return mainBase.users.settings.filters.Get(UserId, Id, StandardQueryParams);
                     }
 
 
@@ -632,10 +632,10 @@ namespace gShell.Cmdlets.Gmail{
                     /// <summary>Lists the message filters of a Gmail user.</summary>
                     /// <param name="UserId">User's email address. The special value "me" can be used to indicate the authenticated
                     /// user.</param>
-                    public Google.Apis.Gmail.v1.Data.ListFiltersResponse List (string UserId)
+                    public Google.Apis.Gmail.v1.Data.ListFiltersResponse List (string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
 
-                        return mainBase.users.settings.filters.List(UserId);
+                        return mainBase.users.settings.filters.List(UserId, StandardQueryParams);
                     }
 
 
@@ -656,10 +656,10 @@ namespace gShell.Cmdlets.Gmail{
                     /// <param name="ForwardingAddressBody">The body of the request.</param>
                     /// <param name="UserId">User's email address. The special value "me" can be used to indicate the authenticated
                     /// user.</param>
-                    public Google.Apis.Gmail.v1.Data.ForwardingAddress Create (Google.Apis.Gmail.v1.Data.ForwardingAddress ForwardingAddressBody, string UserId)
+                    public Google.Apis.Gmail.v1.Data.ForwardingAddress Create (Google.Apis.Gmail.v1.Data.ForwardingAddress ForwardingAddressBody, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
 
-                        return mainBase.users.settings.forwardingAddresses.Create(ForwardingAddressBody, UserId);
+                        return mainBase.users.settings.forwardingAddresses.Create(ForwardingAddressBody, UserId, StandardQueryParams);
                     }
 
 
@@ -669,10 +669,10 @@ namespace gShell.Cmdlets.Gmail{
                     /// <param name="UserId">User's email address. The special value "me" can be used to indicate the authenticated
                     /// user.</param>
                     /// <param name="ForwardingEmail">The forwarding address to be deleted.</param>
-                    public void Delete (string UserId, string ForwardingEmail)
+                    public void Delete (string UserId, string ForwardingEmail, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
 
-                        mainBase.users.settings.forwardingAddresses.Delete(UserId, ForwardingEmail);
+                        mainBase.users.settings.forwardingAddresses.Delete(UserId, ForwardingEmail, StandardQueryParams);
                     }
 
 
@@ -681,10 +681,10 @@ namespace gShell.Cmdlets.Gmail{
                     /// <param name="UserId">User's email address. The special value "me" can be used to indicate the authenticated
                     /// user.</param>
                     /// <param name="ForwardingEmail">The forwarding address to be retrieved.</param>
-                    public Google.Apis.Gmail.v1.Data.ForwardingAddress Get (string UserId, string ForwardingEmail)
+                    public Google.Apis.Gmail.v1.Data.ForwardingAddress Get (string UserId, string ForwardingEmail, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
 
-                        return mainBase.users.settings.forwardingAddresses.Get(UserId, ForwardingEmail);
+                        return mainBase.users.settings.forwardingAddresses.Get(UserId, ForwardingEmail, StandardQueryParams);
                     }
 
 
@@ -692,10 +692,10 @@ namespace gShell.Cmdlets.Gmail{
                     /// <summary>Lists the forwarding addresses for the specified account.</summary>
                     /// <param name="UserId">User's email address. The special value "me" can be used to indicate the authenticated
                     /// user.</param>
-                    public Google.Apis.Gmail.v1.Data.ListForwardingAddressesResponse List (string UserId)
+                    public Google.Apis.Gmail.v1.Data.ListForwardingAddressesResponse List (string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
 
-                        return mainBase.users.settings.forwardingAddresses.List(UserId);
+                        return mainBase.users.settings.forwardingAddresses.List(UserId, StandardQueryParams);
                     }
 
 
@@ -719,10 +719,10 @@ namespace gShell.Cmdlets.Gmail{
                     /// <param name="SendAsBody">The body of the request.</param>
                     /// <param name="UserId">User's email address. The special value "me" can be used to indicate the authenticated
                     /// user.</param>
-                    public Google.Apis.Gmail.v1.Data.SendAs Create (Google.Apis.Gmail.v1.Data.SendAs SendAsBody, string UserId)
+                    public Google.Apis.Gmail.v1.Data.SendAs Create (Google.Apis.Gmail.v1.Data.SendAs SendAsBody, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
 
-                        return mainBase.users.settings.sendAs.Create(SendAsBody, UserId);
+                        return mainBase.users.settings.sendAs.Create(SendAsBody, UserId, StandardQueryParams);
                     }
 
 
@@ -732,10 +732,10 @@ namespace gShell.Cmdlets.Gmail{
                     /// <param name="UserId">User's email address. The special value "me" can be used to indicate the authenticated
                     /// user.</param>
                     /// <param name="SendAsEmail">The send-as alias to be deleted.</param>
-                    public void Delete (string UserId, string SendAsEmail)
+                    public void Delete (string UserId, string SendAsEmail, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
 
-                        mainBase.users.settings.sendAs.Delete(UserId, SendAsEmail);
+                        mainBase.users.settings.sendAs.Delete(UserId, SendAsEmail, StandardQueryParams);
                     }
 
 
@@ -745,10 +745,10 @@ namespace gShell.Cmdlets.Gmail{
                     /// <param name="UserId">User's email address. The special value "me" can be used to indicate the authenticated
                     /// user.</param>
                     /// <param name="SendAsEmail">The send-as alias to be retrieved.</param>
-                    public Google.Apis.Gmail.v1.Data.SendAs Get (string UserId, string SendAsEmail)
+                    public Google.Apis.Gmail.v1.Data.SendAs Get (string UserId, string SendAsEmail, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
 
-                        return mainBase.users.settings.sendAs.Get(UserId, SendAsEmail);
+                        return mainBase.users.settings.sendAs.Get(UserId, SendAsEmail, StandardQueryParams);
                     }
 
 
@@ -757,10 +757,10 @@ namespace gShell.Cmdlets.Gmail{
                     /// send-as address associated with the account as well as any custom "from" aliases.</summary>
                     /// <param name="UserId">User's email address. The special value "me" can be used to indicate the authenticated
                     /// user.</param>
-                    public Google.Apis.Gmail.v1.Data.ListSendAsResponse List (string UserId)
+                    public Google.Apis.Gmail.v1.Data.ListSendAsResponse List (string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
 
-                        return mainBase.users.settings.sendAs.List(UserId);
+                        return mainBase.users.settings.sendAs.List(UserId, StandardQueryParams);
                     }
 
 
@@ -771,10 +771,10 @@ namespace gShell.Cmdlets.Gmail{
                     /// <param name="UserId">User's email address. The special value "me" can be used to indicate the authenticated
                     /// user.</param>
                     /// <param name="SendAsEmail">The send-as alias to be updated.</param>
-                    public Google.Apis.Gmail.v1.Data.SendAs Patch (Google.Apis.Gmail.v1.Data.SendAs SendAsBody, string UserId, string SendAsEmail)
+                    public Google.Apis.Gmail.v1.Data.SendAs Patch (Google.Apis.Gmail.v1.Data.SendAs SendAsBody, string UserId, string SendAsEmail, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
 
-                        return mainBase.users.settings.sendAs.Patch(SendAsBody, UserId, SendAsEmail);
+                        return mainBase.users.settings.sendAs.Patch(SendAsBody, UserId, SendAsEmail, StandardQueryParams);
                     }
 
 
@@ -785,10 +785,10 @@ namespace gShell.Cmdlets.Gmail{
                     /// <param name="UserId">User's email address. The special value "me" can be used to indicate the authenticated
                     /// user.</param>
                     /// <param name="SendAsEmail">The send-as alias to be updated.</param>
-                    public Google.Apis.Gmail.v1.Data.SendAs Update (Google.Apis.Gmail.v1.Data.SendAs SendAsBody, string UserId, string SendAsEmail)
+                    public Google.Apis.Gmail.v1.Data.SendAs Update (Google.Apis.Gmail.v1.Data.SendAs SendAsBody, string UserId, string SendAsEmail, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
 
-                        return mainBase.users.settings.sendAs.Update(SendAsBody, UserId, SendAsEmail);
+                        return mainBase.users.settings.sendAs.Update(SendAsBody, UserId, SendAsEmail, StandardQueryParams);
                     }
 
 
@@ -798,10 +798,10 @@ namespace gShell.Cmdlets.Gmail{
                     /// <param name="UserId">User's email address. The special value "me" can be used to indicate the authenticated
                     /// user.</param>
                     /// <param name="SendAsEmail">The send-as alias to be verified.</param>
-                    public void Verify (string UserId, string SendAsEmail)
+                    public void Verify (string UserId, string SendAsEmail, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
 
-                        mainBase.users.settings.sendAs.Verify(UserId, SendAsEmail);
+                        mainBase.users.settings.sendAs.Verify(UserId, SendAsEmail, StandardQueryParams);
                     }
 
 
@@ -812,10 +812,10 @@ namespace gShell.Cmdlets.Gmail{
                 /// <summary>Gets the auto-forwarding setting for the specified account.</summary>
                 /// <param name="UserId">User's email address. The special value "me" can be used to indicate the authenticated
                 /// user.</param>
-                public Google.Apis.Gmail.v1.Data.AutoForwarding GetAutoForwarding (string UserId)
+                public Google.Apis.Gmail.v1.Data.AutoForwarding GetAutoForwarding (string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    return mainBase.users.settings.GetAutoForwarding(UserId);
+                    return mainBase.users.settings.GetAutoForwarding(UserId, StandardQueryParams);
                 }
 
 
@@ -823,10 +823,10 @@ namespace gShell.Cmdlets.Gmail{
                 /// <summary>Gets IMAP settings.</summary>
                 /// <param name="UserId">User's email address. The special value "me" can be used to indicate the authenticated
                 /// user.</param>
-                public Google.Apis.Gmail.v1.Data.ImapSettings GetImap (string UserId)
+                public Google.Apis.Gmail.v1.Data.ImapSettings GetImap (string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    return mainBase.users.settings.GetImap(UserId);
+                    return mainBase.users.settings.GetImap(UserId, StandardQueryParams);
                 }
 
 
@@ -834,10 +834,10 @@ namespace gShell.Cmdlets.Gmail{
                 /// <summary>Gets POP settings.</summary>
                 /// <param name="UserId">User's email address. The special value "me" can be used to indicate the authenticated
                 /// user.</param>
-                public Google.Apis.Gmail.v1.Data.PopSettings GetPop (string UserId)
+                public Google.Apis.Gmail.v1.Data.PopSettings GetPop (string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    return mainBase.users.settings.GetPop(UserId);
+                    return mainBase.users.settings.GetPop(UserId, StandardQueryParams);
                 }
 
 
@@ -845,10 +845,10 @@ namespace gShell.Cmdlets.Gmail{
                 /// <summary>Gets vacation responder settings.</summary>
                 /// <param name="UserId">User's email address. The special value "me" can be used to indicate the authenticated
                 /// user.</param>
-                public Google.Apis.Gmail.v1.Data.VacationSettings GetVacation (string UserId)
+                public Google.Apis.Gmail.v1.Data.VacationSettings GetVacation (string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    return mainBase.users.settings.GetVacation(UserId);
+                    return mainBase.users.settings.GetVacation(UserId, StandardQueryParams);
                 }
 
 
@@ -858,10 +858,10 @@ namespace gShell.Cmdlets.Gmail{
                 /// <param name="AutoForwardingBody">The body of the request.</param>
                 /// <param name="UserId">User's email address. The special value "me" can be used to indicate the authenticated
                 /// user.</param>
-                public Google.Apis.Gmail.v1.Data.AutoForwarding UpdateAutoForwarding (Google.Apis.Gmail.v1.Data.AutoForwarding AutoForwardingBody, string UserId)
+                public Google.Apis.Gmail.v1.Data.AutoForwarding UpdateAutoForwarding (Google.Apis.Gmail.v1.Data.AutoForwarding AutoForwardingBody, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    return mainBase.users.settings.UpdateAutoForwarding(AutoForwardingBody, UserId);
+                    return mainBase.users.settings.UpdateAutoForwarding(AutoForwardingBody, UserId, StandardQueryParams);
                 }
 
 
@@ -870,10 +870,10 @@ namespace gShell.Cmdlets.Gmail{
                 /// <param name="ImapSettingsBody">The body of the request.</param>
                 /// <param name="UserId">User's email address. The special value "me" can be used to indicate the authenticated
                 /// user.</param>
-                public Google.Apis.Gmail.v1.Data.ImapSettings UpdateImap (Google.Apis.Gmail.v1.Data.ImapSettings ImapSettingsBody, string UserId)
+                public Google.Apis.Gmail.v1.Data.ImapSettings UpdateImap (Google.Apis.Gmail.v1.Data.ImapSettings ImapSettingsBody, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    return mainBase.users.settings.UpdateImap(ImapSettingsBody, UserId);
+                    return mainBase.users.settings.UpdateImap(ImapSettingsBody, UserId, StandardQueryParams);
                 }
 
 
@@ -882,10 +882,10 @@ namespace gShell.Cmdlets.Gmail{
                 /// <param name="PopSettingsBody">The body of the request.</param>
                 /// <param name="UserId">User's email address. The special value "me" can be used to indicate the authenticated
                 /// user.</param>
-                public Google.Apis.Gmail.v1.Data.PopSettings UpdatePop (Google.Apis.Gmail.v1.Data.PopSettings PopSettingsBody, string UserId)
+                public Google.Apis.Gmail.v1.Data.PopSettings UpdatePop (Google.Apis.Gmail.v1.Data.PopSettings PopSettingsBody, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    return mainBase.users.settings.UpdatePop(PopSettingsBody, UserId);
+                    return mainBase.users.settings.UpdatePop(PopSettingsBody, UserId, StandardQueryParams);
                 }
 
 
@@ -894,10 +894,10 @@ namespace gShell.Cmdlets.Gmail{
                 /// <param name="VacationSettingsBody">The body of the request.</param>
                 /// <param name="UserId">User's email address. The special value "me" can be used to indicate the authenticated
                 /// user.</param>
-                public Google.Apis.Gmail.v1.Data.VacationSettings UpdateVacation (Google.Apis.Gmail.v1.Data.VacationSettings VacationSettingsBody, string UserId)
+                public Google.Apis.Gmail.v1.Data.VacationSettings UpdateVacation (Google.Apis.Gmail.v1.Data.VacationSettings VacationSettingsBody, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    return mainBase.users.settings.UpdateVacation(VacationSettingsBody, UserId);
+                    return mainBase.users.settings.UpdateVacation(VacationSettingsBody, UserId, StandardQueryParams);
                 }
 
 
@@ -917,10 +917,10 @@ namespace gShell.Cmdlets.Gmail{
                 /// <param name="UserId">The user's email address. The special value me can be used to indicate the authenticated
                 /// user.</param>
                 /// <param name="Id">ID of the Thread to delete.</param>
-                public void Delete (string UserId, string Id)
+                public void Delete (string UserId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    mainBase.users.threads.Delete(UserId, Id);
+                    mainBase.users.threads.Delete(UserId, Id, StandardQueryParams);
                 }
 
 
@@ -930,12 +930,12 @@ namespace gShell.Cmdlets.Gmail{
                 /// user.</param>
                 /// <param name="Id">The ID of the thread to retrieve.</param>
                 /// <param name="properties">The optional properties for this method.</param>
-                public Google.Apis.Gmail.v1.Data.Thread Get (string UserId, string Id, gGmail.Users.Threads.ThreadsGetProperties properties= null)
+                public Google.Apis.Gmail.v1.Data.Thread Get (string UserId, string Id, gGmail.Users.Threads.ThreadsGetProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
                     properties = properties ?? new gGmail.Users.Threads.ThreadsGetProperties();
 
-                    return mainBase.users.threads.Get(UserId, Id, properties);
+                    return mainBase.users.threads.Get(UserId, Id, properties, StandardQueryParams);
                 }
 
 
@@ -945,7 +945,7 @@ namespace gShell.Cmdlets.Gmail{
                 /// user.</param>
                 /// <param name="properties">The optional properties for this method.</param>
 
-                public List<Google.Apis.Gmail.v1.Data.ListThreadsResponse> List(string UserId, gGmail.Users.Threads.ThreadsListProperties properties= null)
+                public List<Google.Apis.Gmail.v1.Data.ListThreadsResponse> List(string UserId, gGmail.Users.Threads.ThreadsListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
                     properties = properties ?? new gGmail.Users.Threads.ThreadsListProperties();
@@ -961,10 +961,10 @@ namespace gShell.Cmdlets.Gmail{
                 /// <param name="UserId">The user's email address. The special value me can be used to indicate the authenticated
                 /// user.</param>
                 /// <param name="Id">The ID of the thread to modify.</param>
-                public Google.Apis.Gmail.v1.Data.Thread Modify (Google.Apis.Gmail.v1.Data.ModifyThreadRequest ModifyThreadRequestBody, string UserId, string Id)
+                public Google.Apis.Gmail.v1.Data.Thread Modify (Google.Apis.Gmail.v1.Data.ModifyThreadRequest ModifyThreadRequestBody, string UserId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    return mainBase.users.threads.Modify(ModifyThreadRequestBody, UserId, Id);
+                    return mainBase.users.threads.Modify(ModifyThreadRequestBody, UserId, Id, StandardQueryParams);
                 }
 
 
@@ -973,10 +973,10 @@ namespace gShell.Cmdlets.Gmail{
                 /// <param name="UserId">The user's email address. The special value me can be used to indicate the authenticated
                 /// user.</param>
                 /// <param name="Id">The ID of the thread to Trash.</param>
-                public Google.Apis.Gmail.v1.Data.Thread Trash (string UserId, string Id)
+                public Google.Apis.Gmail.v1.Data.Thread Trash (string UserId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    return mainBase.users.threads.Trash(UserId, Id);
+                    return mainBase.users.threads.Trash(UserId, Id, StandardQueryParams);
                 }
 
 
@@ -985,10 +985,10 @@ namespace gShell.Cmdlets.Gmail{
                 /// <param name="UserId">The user's email address. The special value me can be used to indicate the authenticated
                 /// user.</param>
                 /// <param name="Id">The ID of the thread to remove from Trash.</param>
-                public Google.Apis.Gmail.v1.Data.Thread Untrash (string UserId, string Id)
+                public Google.Apis.Gmail.v1.Data.Thread Untrash (string UserId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    return mainBase.users.threads.Untrash(UserId, Id);
+                    return mainBase.users.threads.Untrash(UserId, Id, StandardQueryParams);
                 }
 
 
@@ -999,10 +999,10 @@ namespace gShell.Cmdlets.Gmail{
             /// <summary>Gets the current user's Gmail profile.</summary>
             /// <param name="UserId">The user's email address. The special value me can be used to indicate the authenticated
             /// user.</param>
-            public Google.Apis.Gmail.v1.Data.Profile GetProfile (string UserId)
+            public Google.Apis.Gmail.v1.Data.Profile GetProfile (string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.users.GetProfile(UserId);
+                return mainBase.users.GetProfile(UserId, StandardQueryParams);
             }
 
 
@@ -1010,10 +1010,10 @@ namespace gShell.Cmdlets.Gmail{
             /// <summary>Stop receiving push notifications for the given user mailbox.</summary>
             /// <param name="UserId">The user's email address. The special value me can be used to indicate the authenticated
             /// user.</param>
-            public void Stop (string UserId)
+            public void Stop (string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                mainBase.users.Stop(UserId);
+                mainBase.users.Stop(UserId, StandardQueryParams);
             }
 
 
@@ -1022,10 +1022,10 @@ namespace gShell.Cmdlets.Gmail{
             /// <param name="WatchRequestBody">The body of the request.</param>
             /// <param name="UserId">The user's email address. The special value me can be used to indicate the authenticated
             /// user.</param>
-            public Google.Apis.Gmail.v1.Data.WatchResponse Watch (Google.Apis.Gmail.v1.Data.WatchRequest WatchRequestBody, string UserId)
+            public Google.Apis.Gmail.v1.Data.WatchResponse Watch (Google.Apis.Gmail.v1.Data.WatchRequest WatchRequestBody, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.users.Watch(WatchRequestBody, UserId);
+                return mainBase.users.Watch(WatchRequestBody, UserId, StandardQueryParams);
             }
 
 
@@ -1119,9 +1119,16 @@ namespace gShell.dotNet
             /// <param name="UserId">The user's email address. The special value me can be used to indicate the authenticated
             /// user.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Gmail.v1.Data.Profile GetProfile (string UserId)
+            public Google.Apis.Gmail.v1.Data.Profile GetProfile (string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var request = GetService().Users.GetProfile(UserId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
+
 
 
 
@@ -1132,9 +1139,16 @@ namespace gShell.dotNet
             /// <param name="UserId">The user's email address. The special value me can be used to indicate the authenticated
             /// user.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void Stop (string UserId)
+            public void Stop (string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var request = GetService().Users.Stop(UserId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
+
 
 
 
@@ -1146,9 +1160,16 @@ namespace gShell.dotNet
             /// <param name="UserId">The user's email address. The special value me can be used to indicate the authenticated
             /// user.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Gmail.v1.Data.WatchResponse Watch (Google.Apis.Gmail.v1.Data.WatchRequest WatchRequestBody, string UserId)
+            public Google.Apis.Gmail.v1.Data.WatchResponse Watch (Google.Apis.Gmail.v1.Data.WatchRequest WatchRequestBody, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var request = GetService().Users.Watch(WatchRequestBody, UserId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
+
 
 
 
@@ -1193,9 +1214,16 @@ namespace gShell.dotNet
                     /// <param name="UserId">The user's email address. The special value me can be used to indicate the authenticated
                     /// user.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Gmail.v1.Data.Draft Create (Google.Apis.Gmail.v1.Data.Draft DraftBody, string UserId)
+                    public Google.Apis.Gmail.v1.Data.Draft Create (Google.Apis.Gmail.v1.Data.Draft DraftBody, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Drafts.Create(DraftBody, UserId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            request.UserIp = StandardQueryParams.userIp;
+                        }
+
 
 
 
@@ -1203,7 +1231,7 @@ namespace gShell.dotNet
                     }
 
 
-                    public void Create (Google.Apis.Gmail.v1.Data.Draft DraftBody, string userId, System.IO.Stream stream, string contentType)
+                    public void Create (Google.Apis.Gmail.v1.Data.Draft DraftBody, string userId, System.IO.Stream stream, string contentType, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Drafts.Create(DraftBody, userId, stream, contentType);
 
@@ -1218,9 +1246,16 @@ namespace gShell.dotNet
                     /// user.</param>
                     /// <param name="Id">The ID of the draft to delete.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public void Delete (string UserId, string Id)
+                    public void Delete (string UserId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Drafts.Delete(UserId, Id);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            request.UserIp = StandardQueryParams.userIp;
+                        }
+
 
 
 
@@ -1233,9 +1268,16 @@ namespace gShell.dotNet
                     /// <param name="Id">The ID of the draft to retrieve.</param>
                     /// <param name="properties">The optional properties for this method.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Gmail.v1.Data.Draft Get (string UserId, string Id, DraftsGetProperties properties= null)
+                    public Google.Apis.Gmail.v1.Data.Draft Get (string UserId, string Id, DraftsGetProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Drafts.Get(UserId, Id);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            request.UserIp = StandardQueryParams.userIp;
+                        }
+
 
                         if (properties != null)    {
                             request.Format = properties.Format;
@@ -1250,11 +1292,17 @@ namespace gShell.dotNet
                     /// <param name="properties">The optional properties for this method.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
                     public List<Google.Apis.Gmail.v1.Data.ListDraftsResponse> List(
-                        string UserId, DraftsListProperties properties= null)
+                        string UserId, DraftsListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var results = new List<Google.Apis.Gmail.v1.Data.ListDraftsResponse>();
 
                         v1.UsersResource.DraftsResource.ListRequest request = GetService().Users.Drafts.List(UserId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            request.UserIp = StandardQueryParams.userIp;
+                        }
 
                         if (properties != null)
                         {
@@ -1308,9 +1356,16 @@ namespace gShell.dotNet
                     /// <param name="UserId">The user's email address. The special value me can be used to indicate the authenticated
                     /// user.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Gmail.v1.Data.Message Send (Google.Apis.Gmail.v1.Data.Draft DraftBody, string UserId)
+                    public Google.Apis.Gmail.v1.Data.Message Send (Google.Apis.Gmail.v1.Data.Draft DraftBody, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Drafts.Send(DraftBody, UserId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            request.UserIp = StandardQueryParams.userIp;
+                        }
+
 
 
 
@@ -1318,7 +1373,7 @@ namespace gShell.dotNet
                     }
 
 
-                    public void Send (Google.Apis.Gmail.v1.Data.Draft DraftBody, string userId, System.IO.Stream stream, string contentType)
+                    public void Send (Google.Apis.Gmail.v1.Data.Draft DraftBody, string userId, System.IO.Stream stream, string contentType, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Drafts.Send(DraftBody, userId, stream, contentType);
 
@@ -1333,9 +1388,16 @@ namespace gShell.dotNet
                     /// user.</param>
                     /// <param name="Id">The ID of the draft to update.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Gmail.v1.Data.Draft Update (Google.Apis.Gmail.v1.Data.Draft DraftBody, string UserId, string Id)
+                    public Google.Apis.Gmail.v1.Data.Draft Update (Google.Apis.Gmail.v1.Data.Draft DraftBody, string UserId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Drafts.Update(DraftBody, UserId, Id);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            request.UserIp = StandardQueryParams.userIp;
+                        }
+
 
 
 
@@ -1343,7 +1405,7 @@ namespace gShell.dotNet
                     }
 
 
-                    public void Update (Google.Apis.Gmail.v1.Data.Draft DraftBody, string userId, string id, System.IO.Stream stream, string contentType)
+                    public void Update (Google.Apis.Gmail.v1.Data.Draft DraftBody, string userId, string id, System.IO.Stream stream, string contentType, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Drafts.Update(DraftBody, userId, id, stream, contentType);
 
@@ -1386,11 +1448,17 @@ namespace gShell.dotNet
                     /// <param name="properties">The optional properties for this method.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
                     public List<Google.Apis.Gmail.v1.Data.ListHistoryResponse> List(
-                        string UserId, HistoryListProperties properties= null)
+                        string UserId, HistoryListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var results = new List<Google.Apis.Gmail.v1.Data.ListHistoryResponse>();
 
                         v1.UsersResource.HistoryResource.ListRequest request = GetService().Users.History.List(UserId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            request.UserIp = StandardQueryParams.userIp;
+                        }
 
                         if (properties != null)
                         {
@@ -1450,9 +1518,16 @@ namespace gShell.dotNet
                     /// <param name="UserId">The user's email address. The special value me can be used to indicate the authenticated
                     /// user.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Gmail.v1.Data.Label Create (Google.Apis.Gmail.v1.Data.Label LabelBody, string UserId)
+                    public Google.Apis.Gmail.v1.Data.Label Create (Google.Apis.Gmail.v1.Data.Label LabelBody, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Labels.Create(LabelBody, UserId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            request.UserIp = StandardQueryParams.userIp;
+                        }
+
 
 
 
@@ -1465,9 +1540,16 @@ namespace gShell.dotNet
                     /// user.</param>
                     /// <param name="Id">The ID of the label to delete.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public void Delete (string UserId, string Id)
+                    public void Delete (string UserId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Labels.Delete(UserId, Id);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            request.UserIp = StandardQueryParams.userIp;
+                        }
+
 
 
 
@@ -1479,9 +1561,16 @@ namespace gShell.dotNet
                     /// user.</param>
                     /// <param name="Id">The ID of the label to retrieve.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Gmail.v1.Data.Label Get (string UserId, string Id)
+                    public Google.Apis.Gmail.v1.Data.Label Get (string UserId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Labels.Get(UserId, Id);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            request.UserIp = StandardQueryParams.userIp;
+                        }
+
 
 
 
@@ -1492,9 +1581,16 @@ namespace gShell.dotNet
                     /// <param name="UserId">The user's email address. The special value me can be used to indicate the authenticated
                     /// user.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Gmail.v1.Data.ListLabelsResponse List (string UserId)
+                    public Google.Apis.Gmail.v1.Data.ListLabelsResponse List (string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Labels.List(UserId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            request.UserIp = StandardQueryParams.userIp;
+                        }
+
 
 
 
@@ -1507,9 +1603,16 @@ namespace gShell.dotNet
                     /// user.</param>
                     /// <param name="Id">The ID of the label to update.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Gmail.v1.Data.Label Patch (Google.Apis.Gmail.v1.Data.Label LabelBody, string UserId, string Id)
+                    public Google.Apis.Gmail.v1.Data.Label Patch (Google.Apis.Gmail.v1.Data.Label LabelBody, string UserId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Labels.Patch(LabelBody, UserId, Id);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            request.UserIp = StandardQueryParams.userIp;
+                        }
+
 
 
 
@@ -1522,9 +1625,16 @@ namespace gShell.dotNet
                     /// user.</param>
                     /// <param name="Id">The ID of the label to update.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Gmail.v1.Data.Label Update (Google.Apis.Gmail.v1.Data.Label LabelBody, string UserId, string Id)
+                    public Google.Apis.Gmail.v1.Data.Label Update (Google.Apis.Gmail.v1.Data.Label LabelBody, string UserId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Labels.Update(LabelBody, UserId, Id);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            request.UserIp = StandardQueryParams.userIp;
+                        }
+
 
 
 
@@ -1636,9 +1746,16 @@ namespace gShell.dotNet
                     /// <param name="UserId">The user's email address. The special value me can be used to indicate the authenticated
                     /// user.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public void BatchDelete (Google.Apis.Gmail.v1.Data.BatchDeleteMessagesRequest BatchDeleteMessagesRequestBody, string UserId)
+                    public void BatchDelete (Google.Apis.Gmail.v1.Data.BatchDeleteMessagesRequest BatchDeleteMessagesRequestBody, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Messages.BatchDelete(BatchDeleteMessagesRequestBody, UserId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            request.UserIp = StandardQueryParams.userIp;
+                        }
+
 
 
 
@@ -1650,9 +1767,16 @@ namespace gShell.dotNet
                     /// <param name="UserId">The user's email address. The special value me can be used to indicate the authenticated
                     /// user.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public void BatchModify (Google.Apis.Gmail.v1.Data.BatchModifyMessagesRequest BatchModifyMessagesRequestBody, string UserId)
+                    public void BatchModify (Google.Apis.Gmail.v1.Data.BatchModifyMessagesRequest BatchModifyMessagesRequestBody, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Messages.BatchModify(BatchModifyMessagesRequestBody, UserId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            request.UserIp = StandardQueryParams.userIp;
+                        }
+
 
 
 
@@ -1665,9 +1789,16 @@ namespace gShell.dotNet
                     /// user.</param>
                     /// <param name="Id">The ID of the message to delete.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public void Delete (string UserId, string Id)
+                    public void Delete (string UserId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Messages.Delete(UserId, Id);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            request.UserIp = StandardQueryParams.userIp;
+                        }
+
 
 
 
@@ -1680,9 +1811,16 @@ namespace gShell.dotNet
                     /// <param name="Id">The ID of the message to retrieve.</param>
                     /// <param name="properties">The optional properties for this method.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Gmail.v1.Data.Message Get (string UserId, string Id, MessagesGetProperties properties= null)
+                    public Google.Apis.Gmail.v1.Data.Message Get (string UserId, string Id, MessagesGetProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Messages.Get(UserId, Id);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            request.UserIp = StandardQueryParams.userIp;
+                        }
+
 
                         if (properties != null)    {
                             request.Format = properties.Format;
@@ -1699,9 +1837,16 @@ namespace gShell.dotNet
                     /// user.</param>
                     /// <param name="properties">The optional properties for this method.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Gmail.v1.Data.Message Import (Google.Apis.Gmail.v1.Data.Message MessageBody, string UserId, MessagesImportProperties properties= null)
+                    public Google.Apis.Gmail.v1.Data.Message Import (Google.Apis.Gmail.v1.Data.Message MessageBody, string UserId, MessagesImportProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Messages.Import(MessageBody, UserId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            request.UserIp = StandardQueryParams.userIp;
+                        }
+
 
                         if (properties != null)    {
                             request.Deleted = properties.Deleted;
@@ -1714,7 +1859,7 @@ namespace gShell.dotNet
                     }
 
 
-                    public void Import (Google.Apis.Gmail.v1.Data.Message MessageBody, string userId, System.IO.Stream stream, string contentType, MessagesImportUploadProperties properties= null)
+                    public void Import (Google.Apis.Gmail.v1.Data.Message MessageBody, string userId, System.IO.Stream stream, string contentType, MessagesImportUploadProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Messages.Import(MessageBody, userId, stream, contentType);
 
@@ -1735,9 +1880,16 @@ namespace gShell.dotNet
                     /// user.</param>
                     /// <param name="properties">The optional properties for this method.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Gmail.v1.Data.Message Insert (Google.Apis.Gmail.v1.Data.Message MessageBody, string UserId, MessagesInsertProperties properties= null)
+                    public Google.Apis.Gmail.v1.Data.Message Insert (Google.Apis.Gmail.v1.Data.Message MessageBody, string UserId, MessagesInsertProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Messages.Insert(MessageBody, UserId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            request.UserIp = StandardQueryParams.userIp;
+                        }
+
 
                         if (properties != null)    {
                             request.Deleted = properties.Deleted;
@@ -1748,7 +1900,7 @@ namespace gShell.dotNet
                     }
 
 
-                    public void Insert(Google.Apis.Gmail.v1.Data.Message MessageBody, string userId, System.IO.Stream stream, string contentType, MessagesInsertUploadProperties properties = null)
+                    public void Insert (Google.Apis.Gmail.v1.Data.Message MessageBody, string userId, System.IO.Stream stream, string contentType, MessagesInsertUploadProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Messages.Insert(MessageBody, userId, stream, contentType);
 
@@ -1766,11 +1918,17 @@ namespace gShell.dotNet
                     /// <param name="properties">The optional properties for this method.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
                     public List<Google.Apis.Gmail.v1.Data.ListMessagesResponse> List(
-                        string UserId, MessagesListProperties properties= null)
+                        string UserId, MessagesListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var results = new List<Google.Apis.Gmail.v1.Data.ListMessagesResponse>();
 
                         v1.UsersResource.MessagesResource.ListRequest request = GetService().Users.Messages.List(UserId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            request.UserIp = StandardQueryParams.userIp;
+                        }
 
                         if (properties != null)
                         {
@@ -1825,9 +1983,16 @@ namespace gShell.dotNet
                     /// user.</param>
                     /// <param name="Id">The ID of the message to modify.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Gmail.v1.Data.Message Modify (Google.Apis.Gmail.v1.Data.ModifyMessageRequest ModifyMessageRequestBody, string UserId, string Id)
+                    public Google.Apis.Gmail.v1.Data.Message Modify (Google.Apis.Gmail.v1.Data.ModifyMessageRequest ModifyMessageRequestBody, string UserId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Messages.Modify(ModifyMessageRequestBody, UserId, Id);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            request.UserIp = StandardQueryParams.userIp;
+                        }
+
 
 
 
@@ -1839,9 +2004,16 @@ namespace gShell.dotNet
                     /// <param name="UserId">The user's email address. The special value me can be used to indicate the authenticated
                     /// user.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Gmail.v1.Data.Message Send (Google.Apis.Gmail.v1.Data.Message MessageBody, string UserId)
+                    public Google.Apis.Gmail.v1.Data.Message Send (Google.Apis.Gmail.v1.Data.Message MessageBody, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Messages.Send(MessageBody, UserId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            request.UserIp = StandardQueryParams.userIp;
+                        }
+
 
 
 
@@ -1849,7 +2021,7 @@ namespace gShell.dotNet
                     }
 
 
-                    public void Send (Google.Apis.Gmail.v1.Data.Message MessageBody, string userId, System.IO.Stream stream, string contentType)
+                    public void Send (Google.Apis.Gmail.v1.Data.Message MessageBody, string userId, System.IO.Stream stream, string contentType, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Messages.Send(MessageBody, userId, stream, contentType);
 
@@ -1863,9 +2035,16 @@ namespace gShell.dotNet
                     /// user.</param>
                     /// <param name="Id">The ID of the message to Trash.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Gmail.v1.Data.Message Trash (string UserId, string Id)
+                    public Google.Apis.Gmail.v1.Data.Message Trash (string UserId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Messages.Trash(UserId, Id);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            request.UserIp = StandardQueryParams.userIp;
+                        }
+
 
 
 
@@ -1877,9 +2056,16 @@ namespace gShell.dotNet
                     /// user.</param>
                     /// <param name="Id">The ID of the message to remove from Trash.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Gmail.v1.Data.Message Untrash (string UserId, string Id)
+                    public Google.Apis.Gmail.v1.Data.Message Untrash (string UserId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Messages.Untrash(UserId, Id);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            request.UserIp = StandardQueryParams.userIp;
+                        }
+
 
 
 
@@ -1899,9 +2085,16 @@ namespace gShell.dotNet
                             ///
                             /// <param name="Id">The ID of the attachment.</param>
                             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                            public Google.Apis.Gmail.v1.Data.MessagePartBody Get (string UserId, string MessageId, string Id)
+                            public Google.Apis.Gmail.v1.Data.MessagePartBody Get (string UserId, string MessageId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                             {
                                 var request = GetService().Users.Messages.Attachments.Get(UserId, MessageId, Id);
+
+                                if (StandardQueryParams != null) {
+                                    request.Fields = StandardQueryParams.fields;
+                                    request.QuotaUser = StandardQueryParams.quotaUser;
+                                    request.UserIp = StandardQueryParams.userIp;
+                                }
+
 
 
 
@@ -1935,9 +2128,16 @@ namespace gShell.dotNet
                     /// <param name="UserId">User's email address. The special value "me" can be used to indicate the authenticated
                     /// user.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Gmail.v1.Data.AutoForwarding GetAutoForwarding (string UserId)
+                    public Google.Apis.Gmail.v1.Data.AutoForwarding GetAutoForwarding (string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Settings.GetAutoForwarding(UserId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            request.UserIp = StandardQueryParams.userIp;
+                        }
+
 
 
 
@@ -1948,9 +2148,16 @@ namespace gShell.dotNet
                     /// <param name="UserId">User's email address. The special value "me" can be used to indicate the authenticated
                     /// user.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Gmail.v1.Data.ImapSettings GetImap (string UserId)
+                    public Google.Apis.Gmail.v1.Data.ImapSettings GetImap (string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Settings.GetImap(UserId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            request.UserIp = StandardQueryParams.userIp;
+                        }
+
 
 
 
@@ -1961,9 +2168,16 @@ namespace gShell.dotNet
                     /// <param name="UserId">User's email address. The special value "me" can be used to indicate the authenticated
                     /// user.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Gmail.v1.Data.PopSettings GetPop (string UserId)
+                    public Google.Apis.Gmail.v1.Data.PopSettings GetPop (string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Settings.GetPop(UserId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            request.UserIp = StandardQueryParams.userIp;
+                        }
+
 
 
 
@@ -1974,9 +2188,16 @@ namespace gShell.dotNet
                     /// <param name="UserId">User's email address. The special value "me" can be used to indicate the authenticated
                     /// user.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Gmail.v1.Data.VacationSettings GetVacation (string UserId)
+                    public Google.Apis.Gmail.v1.Data.VacationSettings GetVacation (string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Settings.GetVacation(UserId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            request.UserIp = StandardQueryParams.userIp;
+                        }
+
 
 
 
@@ -1989,9 +2210,16 @@ namespace gShell.dotNet
                     /// <param name="UserId">User's email address. The special value "me" can be used to indicate the authenticated
                     /// user.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Gmail.v1.Data.AutoForwarding UpdateAutoForwarding (Google.Apis.Gmail.v1.Data.AutoForwarding AutoForwardingBody, string UserId)
+                    public Google.Apis.Gmail.v1.Data.AutoForwarding UpdateAutoForwarding (Google.Apis.Gmail.v1.Data.AutoForwarding AutoForwardingBody, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Settings.UpdateAutoForwarding(AutoForwardingBody, UserId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            request.UserIp = StandardQueryParams.userIp;
+                        }
+
 
 
 
@@ -2003,9 +2231,16 @@ namespace gShell.dotNet
                     /// <param name="UserId">User's email address. The special value "me" can be used to indicate the authenticated
                     /// user.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Gmail.v1.Data.ImapSettings UpdateImap (Google.Apis.Gmail.v1.Data.ImapSettings ImapSettingsBody, string UserId)
+                    public Google.Apis.Gmail.v1.Data.ImapSettings UpdateImap (Google.Apis.Gmail.v1.Data.ImapSettings ImapSettingsBody, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Settings.UpdateImap(ImapSettingsBody, UserId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            request.UserIp = StandardQueryParams.userIp;
+                        }
+
 
 
 
@@ -2017,9 +2252,16 @@ namespace gShell.dotNet
                     /// <param name="UserId">User's email address. The special value "me" can be used to indicate the authenticated
                     /// user.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Gmail.v1.Data.PopSettings UpdatePop (Google.Apis.Gmail.v1.Data.PopSettings PopSettingsBody, string UserId)
+                    public Google.Apis.Gmail.v1.Data.PopSettings UpdatePop (Google.Apis.Gmail.v1.Data.PopSettings PopSettingsBody, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Settings.UpdatePop(PopSettingsBody, UserId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            request.UserIp = StandardQueryParams.userIp;
+                        }
+
 
 
 
@@ -2031,9 +2273,16 @@ namespace gShell.dotNet
                     /// <param name="UserId">User's email address. The special value "me" can be used to indicate the authenticated
                     /// user.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Gmail.v1.Data.VacationSettings UpdateVacation (Google.Apis.Gmail.v1.Data.VacationSettings VacationSettingsBody, string UserId)
+                    public Google.Apis.Gmail.v1.Data.VacationSettings UpdateVacation (Google.Apis.Gmail.v1.Data.VacationSettings VacationSettingsBody, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Settings.UpdateVacation(VacationSettingsBody, UserId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            request.UserIp = StandardQueryParams.userIp;
+                        }
+
 
 
 
@@ -2051,9 +2300,16 @@ namespace gShell.dotNet
                             /// <param name="UserId">User's email address. The special value "me" can be used to indicate the authenticated
                             /// user.</param>
                             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                            public Google.Apis.Gmail.v1.Data.Filter Create (Google.Apis.Gmail.v1.Data.Filter FilterBody, string UserId)
+                            public Google.Apis.Gmail.v1.Data.Filter Create (Google.Apis.Gmail.v1.Data.Filter FilterBody, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                             {
                                 var request = GetService().Users.Settings.Filters.Create(FilterBody, UserId);
+
+                                if (StandardQueryParams != null) {
+                                    request.Fields = StandardQueryParams.fields;
+                                    request.QuotaUser = StandardQueryParams.quotaUser;
+                                    request.UserIp = StandardQueryParams.userIp;
+                                }
+
 
 
 
@@ -2065,9 +2321,16 @@ namespace gShell.dotNet
                             /// user.</param>
                             /// <param name="Id">The ID of the filter to be deleted.</param>
                             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                            public void Delete (string UserId, string Id)
+                            public void Delete (string UserId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                             {
                                 var request = GetService().Users.Settings.Filters.Delete(UserId, Id);
+
+                                if (StandardQueryParams != null) {
+                                    request.Fields = StandardQueryParams.fields;
+                                    request.QuotaUser = StandardQueryParams.quotaUser;
+                                    request.UserIp = StandardQueryParams.userIp;
+                                }
+
 
 
 
@@ -2079,9 +2342,16 @@ namespace gShell.dotNet
                             /// user.</param>
                             /// <param name="Id">The ID of the filter to be fetched.</param>
                             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                            public Google.Apis.Gmail.v1.Data.Filter Get (string UserId, string Id)
+                            public Google.Apis.Gmail.v1.Data.Filter Get (string UserId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                             {
                                 var request = GetService().Users.Settings.Filters.Get(UserId, Id);
+
+                                if (StandardQueryParams != null) {
+                                    request.Fields = StandardQueryParams.fields;
+                                    request.QuotaUser = StandardQueryParams.quotaUser;
+                                    request.UserIp = StandardQueryParams.userIp;
+                                }
+
 
 
 
@@ -2092,9 +2362,16 @@ namespace gShell.dotNet
                             /// <param name="UserId">User's email address. The special value "me" can be used to indicate the authenticated
                             /// user.</param>
                             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                            public Google.Apis.Gmail.v1.Data.ListFiltersResponse List (string UserId)
+                            public Google.Apis.Gmail.v1.Data.ListFiltersResponse List (string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                             {
                                 var request = GetService().Users.Settings.Filters.List(UserId);
+
+                                if (StandardQueryParams != null) {
+                                    request.Fields = StandardQueryParams.fields;
+                                    request.QuotaUser = StandardQueryParams.quotaUser;
+                                    request.UserIp = StandardQueryParams.userIp;
+                                }
+
 
 
 
@@ -2116,9 +2393,16 @@ namespace gShell.dotNet
                             /// <param name="UserId">User's email address. The special value "me" can be used to indicate the authenticated
                             /// user.</param>
                             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                            public Google.Apis.Gmail.v1.Data.ForwardingAddress Create (Google.Apis.Gmail.v1.Data.ForwardingAddress ForwardingAddressBody, string UserId)
+                            public Google.Apis.Gmail.v1.Data.ForwardingAddress Create (Google.Apis.Gmail.v1.Data.ForwardingAddress ForwardingAddressBody, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                             {
                                 var request = GetService().Users.Settings.ForwardingAddresses.Create(ForwardingAddressBody, UserId);
+
+                                if (StandardQueryParams != null) {
+                                    request.Fields = StandardQueryParams.fields;
+                                    request.QuotaUser = StandardQueryParams.quotaUser;
+                                    request.UserIp = StandardQueryParams.userIp;
+                                }
+
 
 
 
@@ -2131,9 +2415,16 @@ namespace gShell.dotNet
                             /// user.</param>
                             /// <param name="ForwardingEmail">The forwarding address to be deleted.</param>
                             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                            public void Delete (string UserId, string ForwardingEmail)
+                            public void Delete (string UserId, string ForwardingEmail, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                             {
                                 var request = GetService().Users.Settings.ForwardingAddresses.Delete(UserId, ForwardingEmail);
+
+                                if (StandardQueryParams != null) {
+                                    request.Fields = StandardQueryParams.fields;
+                                    request.QuotaUser = StandardQueryParams.quotaUser;
+                                    request.UserIp = StandardQueryParams.userIp;
+                                }
+
 
 
 
@@ -2145,9 +2436,16 @@ namespace gShell.dotNet
                             /// user.</param>
                             /// <param name="ForwardingEmail">The forwarding address to be retrieved.</param>
                             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                            public Google.Apis.Gmail.v1.Data.ForwardingAddress Get (string UserId, string ForwardingEmail)
+                            public Google.Apis.Gmail.v1.Data.ForwardingAddress Get (string UserId, string ForwardingEmail, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                             {
                                 var request = GetService().Users.Settings.ForwardingAddresses.Get(UserId, ForwardingEmail);
+
+                                if (StandardQueryParams != null) {
+                                    request.Fields = StandardQueryParams.fields;
+                                    request.QuotaUser = StandardQueryParams.quotaUser;
+                                    request.UserIp = StandardQueryParams.userIp;
+                                }
+
 
 
 
@@ -2158,9 +2456,16 @@ namespace gShell.dotNet
                             /// <param name="UserId">User's email address. The special value "me" can be used to indicate the authenticated
                             /// user.</param>
                             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                            public Google.Apis.Gmail.v1.Data.ListForwardingAddressesResponse List (string UserId)
+                            public Google.Apis.Gmail.v1.Data.ListForwardingAddressesResponse List (string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                             {
                                 var request = GetService().Users.Settings.ForwardingAddresses.List(UserId);
+
+                                if (StandardQueryParams != null) {
+                                    request.Fields = StandardQueryParams.fields;
+                                    request.QuotaUser = StandardQueryParams.quotaUser;
+                                    request.UserIp = StandardQueryParams.userIp;
+                                }
+
 
 
 
@@ -2185,9 +2490,16 @@ namespace gShell.dotNet
                             /// <param name="UserId">User's email address. The special value "me" can be used to indicate the authenticated
                             /// user.</param>
                             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                            public Google.Apis.Gmail.v1.Data.SendAs Create (Google.Apis.Gmail.v1.Data.SendAs SendAsBody, string UserId)
+                            public Google.Apis.Gmail.v1.Data.SendAs Create (Google.Apis.Gmail.v1.Data.SendAs SendAsBody, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                             {
                                 var request = GetService().Users.Settings.SendAs.Create(SendAsBody, UserId);
+
+                                if (StandardQueryParams != null) {
+                                    request.Fields = StandardQueryParams.fields;
+                                    request.QuotaUser = StandardQueryParams.quotaUser;
+                                    request.UserIp = StandardQueryParams.userIp;
+                                }
+
 
 
 
@@ -2200,9 +2512,16 @@ namespace gShell.dotNet
                             /// user.</param>
                             /// <param name="SendAsEmail">The send-as alias to be deleted.</param>
                             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                            public void Delete (string UserId, string SendAsEmail)
+                            public void Delete (string UserId, string SendAsEmail, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                             {
                                 var request = GetService().Users.Settings.SendAs.Delete(UserId, SendAsEmail);
+
+                                if (StandardQueryParams != null) {
+                                    request.Fields = StandardQueryParams.fields;
+                                    request.QuotaUser = StandardQueryParams.quotaUser;
+                                    request.UserIp = StandardQueryParams.userIp;
+                                }
+
 
 
 
@@ -2215,9 +2534,16 @@ namespace gShell.dotNet
                             /// user.</param>
                             /// <param name="SendAsEmail">The send-as alias to be retrieved.</param>
                             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                            public Google.Apis.Gmail.v1.Data.SendAs Get (string UserId, string SendAsEmail)
+                            public Google.Apis.Gmail.v1.Data.SendAs Get (string UserId, string SendAsEmail, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                             {
                                 var request = GetService().Users.Settings.SendAs.Get(UserId, SendAsEmail);
+
+                                if (StandardQueryParams != null) {
+                                    request.Fields = StandardQueryParams.fields;
+                                    request.QuotaUser = StandardQueryParams.quotaUser;
+                                    request.UserIp = StandardQueryParams.userIp;
+                                }
+
 
 
 
@@ -2230,9 +2556,16 @@ namespace gShell.dotNet
                             /// <param name="UserId">User's email address. The special value "me" can be used to indicate the authenticated
                             /// user.</param>
                             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                            public Google.Apis.Gmail.v1.Data.ListSendAsResponse List (string UserId)
+                            public Google.Apis.Gmail.v1.Data.ListSendAsResponse List (string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                             {
                                 var request = GetService().Users.Settings.SendAs.List(UserId);
+
+                                if (StandardQueryParams != null) {
+                                    request.Fields = StandardQueryParams.fields;
+                                    request.QuotaUser = StandardQueryParams.quotaUser;
+                                    request.UserIp = StandardQueryParams.userIp;
+                                }
+
 
 
 
@@ -2246,9 +2579,16 @@ namespace gShell.dotNet
                             /// user.</param>
                             /// <param name="SendAsEmail">The send-as alias to be updated.</param>
                             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                            public Google.Apis.Gmail.v1.Data.SendAs Patch (Google.Apis.Gmail.v1.Data.SendAs SendAsBody, string UserId, string SendAsEmail)
+                            public Google.Apis.Gmail.v1.Data.SendAs Patch (Google.Apis.Gmail.v1.Data.SendAs SendAsBody, string UserId, string SendAsEmail, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                             {
                                 var request = GetService().Users.Settings.SendAs.Patch(SendAsBody, UserId, SendAsEmail);
+
+                                if (StandardQueryParams != null) {
+                                    request.Fields = StandardQueryParams.fields;
+                                    request.QuotaUser = StandardQueryParams.quotaUser;
+                                    request.UserIp = StandardQueryParams.userIp;
+                                }
+
 
 
 
@@ -2262,9 +2602,16 @@ namespace gShell.dotNet
                             /// user.</param>
                             /// <param name="SendAsEmail">The send-as alias to be updated.</param>
                             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                            public Google.Apis.Gmail.v1.Data.SendAs Update (Google.Apis.Gmail.v1.Data.SendAs SendAsBody, string UserId, string SendAsEmail)
+                            public Google.Apis.Gmail.v1.Data.SendAs Update (Google.Apis.Gmail.v1.Data.SendAs SendAsBody, string UserId, string SendAsEmail, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                             {
                                 var request = GetService().Users.Settings.SendAs.Update(SendAsBody, UserId, SendAsEmail);
+
+                                if (StandardQueryParams != null) {
+                                    request.Fields = StandardQueryParams.fields;
+                                    request.QuotaUser = StandardQueryParams.quotaUser;
+                                    request.UserIp = StandardQueryParams.userIp;
+                                }
+
 
 
 
@@ -2277,9 +2624,16 @@ namespace gShell.dotNet
                             /// user.</param>
                             /// <param name="SendAsEmail">The send-as alias to be verified.</param>
                             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                            public void Verify (string UserId, string SendAsEmail)
+                            public void Verify (string UserId, string SendAsEmail, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                             {
                                 var request = GetService().Users.Settings.SendAs.Verify(UserId, SendAsEmail);
+
+                                if (StandardQueryParams != null) {
+                                    request.Fields = StandardQueryParams.fields;
+                                    request.QuotaUser = StandardQueryParams.quotaUser;
+                                    request.UserIp = StandardQueryParams.userIp;
+                                }
+
 
 
 
@@ -2333,9 +2687,16 @@ namespace gShell.dotNet
                     /// user.</param>
                     /// <param name="Id">ID of the Thread to delete.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public void Delete (string UserId, string Id)
+                    public void Delete (string UserId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Threads.Delete(UserId, Id);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            request.UserIp = StandardQueryParams.userIp;
+                        }
+
 
 
 
@@ -2348,9 +2709,16 @@ namespace gShell.dotNet
                     /// <param name="Id">The ID of the thread to retrieve.</param>
                     /// <param name="properties">The optional properties for this method.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Gmail.v1.Data.Thread Get (string UserId, string Id, ThreadsGetProperties properties= null)
+                    public Google.Apis.Gmail.v1.Data.Thread Get (string UserId, string Id, ThreadsGetProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Threads.Get(UserId, Id);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            request.UserIp = StandardQueryParams.userIp;
+                        }
+
 
                         if (properties != null)    {
                             request.Format = properties.Format;
@@ -2366,11 +2734,17 @@ namespace gShell.dotNet
                     /// <param name="properties">The optional properties for this method.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
                     public List<Google.Apis.Gmail.v1.Data.ListThreadsResponse> List(
-                        string UserId, ThreadsListProperties properties= null)
+                        string UserId, ThreadsListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var results = new List<Google.Apis.Gmail.v1.Data.ListThreadsResponse>();
 
                         v1.UsersResource.ThreadsResource.ListRequest request = GetService().Users.Threads.List(UserId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            request.UserIp = StandardQueryParams.userIp;
+                        }
 
                         if (properties != null)
                         {
@@ -2426,9 +2800,16 @@ namespace gShell.dotNet
                     /// user.</param>
                     /// <param name="Id">The ID of the thread to modify.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Gmail.v1.Data.Thread Modify (Google.Apis.Gmail.v1.Data.ModifyThreadRequest ModifyThreadRequestBody, string UserId, string Id)
+                    public Google.Apis.Gmail.v1.Data.Thread Modify (Google.Apis.Gmail.v1.Data.ModifyThreadRequest ModifyThreadRequestBody, string UserId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Threads.Modify(ModifyThreadRequestBody, UserId, Id);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            request.UserIp = StandardQueryParams.userIp;
+                        }
+
 
 
 
@@ -2440,9 +2821,16 @@ namespace gShell.dotNet
                     /// user.</param>
                     /// <param name="Id">The ID of the thread to Trash.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Gmail.v1.Data.Thread Trash (string UserId, string Id)
+                    public Google.Apis.Gmail.v1.Data.Thread Trash (string UserId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Threads.Trash(UserId, Id);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            request.UserIp = StandardQueryParams.userIp;
+                        }
+
 
 
 
@@ -2454,9 +2842,16 @@ namespace gShell.dotNet
                     /// user.</param>
                     /// <param name="Id">The ID of the thread to remove from Trash.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Gmail.v1.Data.Thread Untrash (string UserId, string Id)
+                    public Google.Apis.Gmail.v1.Data.Thread Untrash (string UserId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Users.Threads.Untrash(UserId, Id);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            request.UserIp = StandardQueryParams.userIp;
+                        }
+
 
 
 

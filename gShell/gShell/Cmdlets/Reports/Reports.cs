@@ -254,7 +254,7 @@ namespace gShell.Cmdlets.Reports.GRepUserUsageReport
                 //Allow for the use of 'all'
                 string _userKey = (UserKey == "all") ? "all" : GetFullEmailAddress(UserKey, GAuthId);
 
-                WriteObject(userUsageReport.Get(_userKey, _datestring, properties));
+                WriteObject(userUsageReport.Get(_userKey, _datestring, properties, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -358,7 +358,7 @@ namespace gShell.Cmdlets.Reports.GRepCustomerUsageReport
 
                 if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
 
-                WriteObject(customerUsageReports.Get(_datestring, properties));
+                WriteObject(customerUsageReports.Get(_datestring, properties, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -431,7 +431,7 @@ namespace gShell.Cmdlets.Reports.GRepChannel
                         {
                             Id = Id,
                             ResourceId = ResourceId
-                        });
+                        }, StandardQueryParams: StandardQueryParams);
                         WriteVerbose("Channel Resource stopped without error.");
                     }
                     catch (Exception e)
@@ -622,11 +622,11 @@ namespace gShell.Cmdlets.Reports.GRepActivity
                         body.Params__ = new Dictionary<string, string>();
                         body.Params__["ttl"] = Ttl;
                     }
-                    WriteObject(activities.Watch(body, GetFullEmailAddress(UserKey, GAuthId), ApplicationName.ToString()));
+                    WriteObject(activities.Watch(body, GetFullEmailAddress(UserKey, GAuthId), ApplicationName.ToString(), StandardQueryParams: StandardQueryParams));
                 }
                 else
                 {
-                    WriteObject(activities.Watch(ChannelBody, GetFullEmailAddress(UserKey, GAuthId), ApplicationName.ToString()));
+                    WriteObject(activities.Watch(ChannelBody, GetFullEmailAddress(UserKey, GAuthId), ApplicationName.ToString(), StandardQueryParams: StandardQueryParams));
                 }
             }
         }
@@ -798,7 +798,7 @@ namespace gShell.Cmdlets.Reports.GRepActivity
                 //Allow for the use of 'all'
                 string _userKey = (UserKey == "all") ? "all" : GetFullEmailAddress(UserKey, GAuthId);
 
-                WriteObject(activities.List(_userKey, ApplicationName.ToString(), properties).SelectMany(x => x.Items).ToList());
+                WriteObject(activities.List(_userKey, ApplicationName.ToString(), properties, StandardQueryParams: StandardQueryParams).SelectMany(x => x.Items).ToList());
             }
         }
     }

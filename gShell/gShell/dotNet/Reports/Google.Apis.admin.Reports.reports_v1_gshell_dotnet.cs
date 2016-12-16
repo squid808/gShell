@@ -44,7 +44,7 @@ namespace gShell.Cmdlets.Reports{
     /// <summary>
     /// A PowerShell-ready wrapper for the Reports api, as well as the resources and methods therein.
     /// </summary>
-    public abstract class ReportsBase : AuthenticatedCmdletBase
+    public abstract class ReportsBase : StandardParamsCmdletBase
     {
 
         #region Properties
@@ -106,7 +106,7 @@ namespace gShell.Cmdlets.Reports{
             /// name="ApplicationName">Application name for which the events are to be retrieved.</param>
             /// <param name="properties">The optional properties for this method.</param>
 
-            public List<Google.Apis.admin.Reports.reports_v1.Data.Activities> List(string UserKey, string ApplicationName, gReports.Activities.ActivitiesListProperties properties= null)
+            public List<Google.Apis.admin.Reports.reports_v1.Data.Activities> List(string UserKey, string ApplicationName, gReports.Activities.ActivitiesListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
                 properties = properties ?? new gReports.Activities.ActivitiesListProperties();
@@ -123,12 +123,12 @@ namespace gShell.Cmdlets.Reports{
             /// <param
             /// name="ApplicationName">Application name for which the events are to be retrieved.</param>
             /// <param name="properties">The optional properties for this method.</param>
-            public Google.Apis.admin.Reports.reports_v1.Data.Channel Watch (Google.Apis.admin.Reports.reports_v1.Data.Channel ChannelBody, string UserKey, string ApplicationName, gReports.Activities.ActivitiesWatchProperties properties= null)
+            public Google.Apis.admin.Reports.reports_v1.Data.Channel Watch (Google.Apis.admin.Reports.reports_v1.Data.Channel ChannelBody, string UserKey, string ApplicationName, gReports.Activities.ActivitiesWatchProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
                 properties = properties ?? new gReports.Activities.ActivitiesWatchProperties();
 
-                return mainBase.activities.Watch(ChannelBody, UserKey, ApplicationName, properties);
+                return mainBase.activities.Watch(ChannelBody, UserKey, ApplicationName, properties, StandardQueryParams);
             }
 
 
@@ -148,10 +148,10 @@ namespace gShell.Cmdlets.Reports{
 
             /// <summary>Stop watching resources through this channel</summary>
             /// <param name="ChannelBody">The body of the request.</param>
-            public void Stop (Google.Apis.admin.Reports.reports_v1.Data.Channel ChannelBody)
+            public void Stop (Google.Apis.admin.Reports.reports_v1.Data.Channel ChannelBody, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                mainBase.channels.Stop(ChannelBody);
+                mainBase.channels.Stop(ChannelBody, StandardQueryParams);
             }
 
 
@@ -174,7 +174,7 @@ namespace gShell.Cmdlets.Reports{
             /// <param name="Date">Represents the date in yyyy-mm-dd format for which the data is to be fetched.</param>
             /// <param name="properties">The optional properties for this method.</param>
 
-            public List<Google.Apis.admin.Reports.reports_v1.Data.UsageReports> Get(string Date, gReports.CustomerUsageReports.CustomerUsageReportsGetProperties properties= null)
+            public List<Google.Apis.admin.Reports.reports_v1.Data.UsageReports> Get(string Date, gReports.CustomerUsageReports.CustomerUsageReportsGetProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
                 properties = properties ?? new gReports.CustomerUsageReports.CustomerUsageReportsGetProperties();
@@ -204,7 +204,7 @@ namespace gShell.Cmdlets.Reports{
             /// fetched.</param>
             /// <param name="properties">The optional properties for this method.</param>
 
-            public List<Google.Apis.admin.Reports.reports_v1.Data.UsageReports> Get(string UserKey, string Date, gReports.UserUsageReport.UserUsageReportGetProperties properties= null)
+            public List<Google.Apis.admin.Reports.reports_v1.Data.UsageReports> Get(string UserKey, string Date, gReports.UserUsageReport.UserUsageReportGetProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
                 properties = properties ?? new gReports.UserUsageReport.UserUsageReportGetProperties();
@@ -349,11 +349,17 @@ namespace gShell.dotNet
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public List<Google.Apis.admin.Reports.reports_v1.Data.Activities> List(
-                string UserKey, string ApplicationName, ActivitiesListProperties properties= null)
+                string UserKey, string ApplicationName, ActivitiesListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var results = new List<Google.Apis.admin.Reports.reports_v1.Data.Activities>();
 
                 reports_v1.ActivitiesResource.ListRequest request = GetService().Activities.List(UserKey, ApplicationName);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
 
                 if (properties != null)
                 {
@@ -413,9 +419,15 @@ namespace gShell.dotNet
             /// name="ApplicationName">Application name for which the events are to be retrieved.</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Reports.reports_v1.Data.Channel Watch (Google.Apis.admin.Reports.reports_v1.Data.Channel ChannelBody, string UserKey, string ApplicationName, ActivitiesWatchProperties properties= null)
+            public Google.Apis.admin.Reports.reports_v1.Data.Channel Watch (Google.Apis.admin.Reports.reports_v1.Data.Channel ChannelBody, string UserKey, string ApplicationName, ActivitiesWatchProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var request = GetService().Activities.Watch(ChannelBody, UserKey, ApplicationName);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
 
                 if (properties != null)    {
                     request.ActorIpAddress = properties.ActorIpAddress;
@@ -442,9 +454,15 @@ namespace gShell.dotNet
             /// <summary>Stop watching resources through this channel</summary>
             /// <param name="ChannelBody">The body of the request.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void Stop (Google.Apis.admin.Reports.reports_v1.Data.Channel ChannelBody)
+            public void Stop (Google.Apis.admin.Reports.reports_v1.Data.Channel ChannelBody, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var request = GetService().Channels.Stop(ChannelBody);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
 
 
 
@@ -483,11 +501,17 @@ namespace gShell.dotNet
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public List<Google.Apis.admin.Reports.reports_v1.Data.UsageReports> Get(
-                string Date, CustomerUsageReportsGetProperties properties= null)
+                string Date, CustomerUsageReportsGetProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var results = new List<Google.Apis.admin.Reports.reports_v1.Data.UsageReports>();
 
                 reports_v1.CustomerUsageReportsResource.GetRequest request = GetService().CustomerUsageReports.Get(Date);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
 
                 if (properties != null)
                 {
@@ -575,11 +599,17 @@ namespace gShell.dotNet
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public List<Google.Apis.admin.Reports.reports_v1.Data.UsageReports> Get(
-                string UserKey, string Date, UserUsageReportGetProperties properties= null)
+                string UserKey, string Date, UserUsageReportGetProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var results = new List<Google.Apis.admin.Reports.reports_v1.Data.UsageReports>();
 
                 reports_v1.UserUsageReportResource.GetRequest request = GetService().UserUsageReport.Get(UserKey, Date);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
 
                 if (properties != null)
                 {

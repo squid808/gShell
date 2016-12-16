@@ -145,7 +145,7 @@ namespace gShell.Cmdlets.Licensing
             {
                 if (ParameterSetName == "one")
                 {
-                    WriteObject(licenseAssignments.Get(ProductId, SkuId, UserId));
+                    WriteObject(licenseAssignments.Get(ProductId, SkuId, UserId, StandardQueryParams: StandardQueryParams));
                 }
                 else if (ParameterSetName == "product")
                 {
@@ -156,7 +156,7 @@ namespace gShell.Cmdlets.Licensing
 
                     if (MaxResults.HasValue) { properties.TotalResults = this.MaxResults.Value; }
 
-                    WriteObject(licenseAssignments.ListForProduct(ProductId, CustomerId, properties));
+                    WriteObject(licenseAssignments.ListForProduct(ProductId, CustomerId, properties, StandardQueryParams: StandardQueryParams));
                 }
                 else
                 {
@@ -167,7 +167,7 @@ namespace gShell.Cmdlets.Licensing
 
                     if (MaxResults.HasValue) { properties.TotalResults = this.MaxResults.Value; }
 
-                    WriteObject(licenseAssignments.ListForProductAndSku(ProductId, SkuId, CustomerId, properties));
+                    WriteObject(licenseAssignments.ListForProductAndSku(ProductId, SkuId, CustomerId, properties, StandardQueryParams: StandardQueryParams));
                 }
             }
         }
@@ -271,7 +271,7 @@ namespace gShell.Cmdlets.Licensing
 
             if (ShouldProcess("Licensing", "Set-GLicenseAssignment"))
             {
-                WriteObject(licenseAssignments.Patch(body, ProductId, SkuId, UserId));
+                WriteObject(licenseAssignments.Patch(body, ProductId, SkuId, UserId, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -334,7 +334,7 @@ namespace gShell.Cmdlets.Licensing
 
             if (ShouldProcess("Licensing", "New-GLicenseAssignment"))
             {
-                WriteObject(licenseAssignments.Insert(body, ProductId, SkuId));
+                WriteObject(licenseAssignments.Insert(body, ProductId, SkuId, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -409,7 +409,7 @@ namespace gShell.Cmdlets.Licensing
 					{
 						WriteDebug("Attempting to remove " + toRemoveTarget + "...");
 
-                        licenseAssignments.Delete(ProductId, SkuId, UserId);
+                        licenseAssignments.Delete(ProductId, SkuId, UserId, StandardQueryParams: StandardQueryParams);
 							
 						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
 					}

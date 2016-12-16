@@ -19,6 +19,13 @@ namespace gShell.Cmdlets.Discovery
         protected Apis apis = new Apis();
 
         protected override string apiNameAndVersion { get { return gdiscovery.apiNameAndVersion; } }
+
+        /// <summary>
+        /// <para type="description">A Standard Query Parameters Object.</para>
+        /// </summary>
+        [Parameter(Mandatory = false)]
+        [ValidateNotNullOrEmpty]
+        public StandardQueryParameters StandardQueryParams { get; set; }
         #endregion
 
         #region PowerShell Methods
@@ -104,7 +111,7 @@ namespace gShell.Cmdlets.Discovery
                     properties.preferred = true;
                 }
 
-                WriteObject(gdiscovery.apis.List(properties).Items);
+                WriteObject(gdiscovery.apis.List(properties, StandardQueryParams: StandardQueryParams).Items);
             }
         }
     }
@@ -155,7 +162,7 @@ namespace gShell.Cmdlets.Discovery
         {
             if (ShouldProcess("Report Activity", "Get-GRepActivity"))
             {
-                WriteObject(gdiscovery.apis.RestData(Api, Version));
+                WriteObject(gdiscovery.apis.RestData(Api, Version, StandardQueryParams: StandardQueryParams));
             }
         }
     }

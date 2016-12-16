@@ -44,7 +44,7 @@ namespace gShell.Cmdlets.Classroom{
     /// <summary>
     /// A PowerShell-ready wrapper for the Classroom api, as well as the resources and methods therein.
     /// </summary>
-    public abstract class ClassroomBase : AuthenticatedCmdletBase
+    public abstract class ClassroomBase : StandardParamsCmdletBase
     {
 
         #region Properties
@@ -135,10 +135,10 @@ namespace gShell.Cmdlets.Classroom{
                 /// <param name="CourseAliasBody">The body of the request.</param>
                 /// <param name="CourseId">Identifier of the course to alias. This identifier can be either the Classroom-assigned
                 /// identifier or an alias.</param>
-                public Google.Apis.Classroom.v1.Data.CourseAlias Create (Google.Apis.Classroom.v1.Data.CourseAlias CourseAliasBody, string CourseId)
+                public Google.Apis.Classroom.v1.Data.CourseAlias Create (Google.Apis.Classroom.v1.Data.CourseAlias CourseAliasBody, string CourseId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    return mainBase.courses.aliases.Create(CourseAliasBody, CourseId);
+                    return mainBase.courses.aliases.Create(CourseAliasBody, CourseId, StandardQueryParams);
                 }
 
 
@@ -150,10 +150,10 @@ namespace gShell.Cmdlets.Classroom{
                 /// Classroom-assigned identifier or an alias.</param>
                 /// <param name="Alias">Alias to delete. This may not be the
                 /// Classroom-assigned identifier.</param>
-                public Google.Apis.Classroom.v1.Data.Empty Delete (string CourseId, string Alias)
+                public Google.Apis.Classroom.v1.Data.Empty Delete (string CourseId, string Alias, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    return mainBase.courses.aliases.Delete(CourseId, Alias);
+                    return mainBase.courses.aliases.Delete(CourseId, Alias, StandardQueryParams);
                 }
 
 
@@ -165,7 +165,7 @@ namespace gShell.Cmdlets.Classroom{
                 /// or an alias.</param>
                 /// <param name="properties">The optional properties for this method.</param>
 
-                public List<Google.Apis.Classroom.v1.Data.ListCourseAliasesResponse> List(string CourseId, gClassroom.Courses.Aliases.AliasesListProperties properties= null)
+                public List<Google.Apis.Classroom.v1.Data.ListCourseAliasesResponse> List(string CourseId, gClassroom.Courses.Aliases.AliasesListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
                     properties = properties ?? new gClassroom.Courses.Aliases.AliasesListProperties();
@@ -211,10 +211,10 @@ namespace gShell.Cmdlets.Classroom{
                     /// <param name="CourseWorkId">Identifier of the course work.</param>
                     /// <param
                     /// name="Id">Identifier of the student submission.</param>
-                    public Google.Apis.Classroom.v1.Data.StudentSubmission Get (string CourseId, string CourseWorkId, string Id)
+                    public Google.Apis.Classroom.v1.Data.StudentSubmission Get (string CourseId, string CourseWorkId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
 
-                        return mainBase.courses.courseWork.studentSubmissions.Get(CourseId, CourseWorkId, Id);
+                        return mainBase.courses.courseWork.studentSubmissions.Get(CourseId, CourseWorkId, Id, StandardQueryParams);
                     }
 
 
@@ -233,7 +233,7 @@ namespace gShell.Cmdlets.Classroom{
                     /// the string literal `"-"` to request student work for all course work in the specified course.</param>
                     /// <param name="properties">The optional properties for this method.</param>
 
-                    public List<Google.Apis.Classroom.v1.Data.ListStudentSubmissionsResponse> List(string CourseId, string CourseWorkId, gClassroom.Courses.CourseWork.StudentSubmissions.StudentSubmissionsListProperties properties= null)
+                    public List<Google.Apis.Classroom.v1.Data.ListStudentSubmissionsResponse> List(string CourseId, string CourseWorkId, gClassroom.Courses.CourseWork.StudentSubmissions.StudentSubmissionsListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
 
                         properties = properties ?? new gClassroom.Courses.CourseWork.StudentSubmissions.StudentSubmissionsListProperties();
@@ -257,10 +257,10 @@ namespace gShell.Cmdlets.Classroom{
                     /// <param name="CourseWorkId">Identifier of the course work.</param>
                     /// <param
                     /// name="Id">Identifier of the student submission.</param>
-                    public Google.Apis.Classroom.v1.Data.StudentSubmission ModifyAttachments (Google.Apis.Classroom.v1.Data.ModifyAttachmentsRequest ModifyAttachmentsRequestBody, string CourseId, string CourseWorkId, string Id)
+                    public Google.Apis.Classroom.v1.Data.StudentSubmission ModifyAttachments (Google.Apis.Classroom.v1.Data.ModifyAttachmentsRequest ModifyAttachmentsRequestBody, string CourseId, string CourseWorkId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
 
-                        return mainBase.courses.courseWork.studentSubmissions.ModifyAttachments(ModifyAttachmentsRequestBody, CourseId, CourseWorkId, Id);
+                        return mainBase.courses.courseWork.studentSubmissions.ModifyAttachments(ModifyAttachmentsRequestBody, CourseId, CourseWorkId, Id, StandardQueryParams);
                     }
 
 
@@ -281,12 +281,12 @@ namespace gShell.Cmdlets.Classroom{
                     /// <param
                     /// name="Id">Identifier of the student submission.</param>
                     /// <param name="properties">The optional properties for this method.</param>
-                    public Google.Apis.Classroom.v1.Data.StudentSubmission Patch (Google.Apis.Classroom.v1.Data.StudentSubmission StudentSubmissionBody, string CourseId, string CourseWorkId, string Id, gClassroom.Courses.CourseWork.StudentSubmissions.StudentSubmissionsPatchProperties properties= null)
+                    public Google.Apis.Classroom.v1.Data.StudentSubmission Patch (Google.Apis.Classroom.v1.Data.StudentSubmission StudentSubmissionBody, string CourseId, string CourseWorkId, string Id, gClassroom.Courses.CourseWork.StudentSubmissions.StudentSubmissionsPatchProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
 
                         properties = properties ?? new gClassroom.Courses.CourseWork.StudentSubmissions.StudentSubmissionsPatchProperties();
 
-                        return mainBase.courses.courseWork.studentSubmissions.Patch(StudentSubmissionBody, CourseId, CourseWorkId, Id, properties);
+                        return mainBase.courses.courseWork.studentSubmissions.Patch(StudentSubmissionBody, CourseId, CourseWorkId, Id, properties, StandardQueryParams);
                     }
 
 
@@ -309,10 +309,10 @@ namespace gShell.Cmdlets.Classroom{
                     /// <param name="CourseWorkId">Identifier of the course work.</param>
                     /// <param
                     /// name="Id">Identifier of the student submission.</param>
-                    public Google.Apis.Classroom.v1.Data.Empty Reclaim (Google.Apis.Classroom.v1.Data.ReclaimStudentSubmissionRequest ReclaimStudentSubmissionRequestBody, string CourseId, string CourseWorkId, string Id)
+                    public Google.Apis.Classroom.v1.Data.Empty Reclaim (Google.Apis.Classroom.v1.Data.ReclaimStudentSubmissionRequest ReclaimStudentSubmissionRequestBody, string CourseId, string CourseWorkId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
 
-                        return mainBase.courses.courseWork.studentSubmissions.Reclaim(ReclaimStudentSubmissionRequestBody, CourseId, CourseWorkId, Id);
+                        return mainBase.courses.courseWork.studentSubmissions.Reclaim(ReclaimStudentSubmissionRequestBody, CourseId, CourseWorkId, Id, StandardQueryParams);
                     }
 
 
@@ -334,10 +334,10 @@ namespace gShell.Cmdlets.Classroom{
                     /// <param name="CourseWorkId">Identifier of the course work.</param>
                     /// <param
                     /// name="Id">Identifier of the student submission.</param>
-                    public Google.Apis.Classroom.v1.Data.Empty ClassroomReturn (Google.Apis.Classroom.v1.Data.ReturnStudentSubmissionRequest ReturnStudentSubmissionRequestBody, string CourseId, string CourseWorkId, string Id)
+                    public Google.Apis.Classroom.v1.Data.Empty ClassroomReturn (Google.Apis.Classroom.v1.Data.ReturnStudentSubmissionRequest ReturnStudentSubmissionRequestBody, string CourseId, string CourseWorkId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
 
-                        return mainBase.courses.courseWork.studentSubmissions.ClassroomReturn(ReturnStudentSubmissionRequestBody, CourseId, CourseWorkId, Id);
+                        return mainBase.courses.courseWork.studentSubmissions.ClassroomReturn(ReturnStudentSubmissionRequestBody, CourseId, CourseWorkId, Id, StandardQueryParams);
                     }
 
 
@@ -358,10 +358,10 @@ namespace gShell.Cmdlets.Classroom{
                     /// <param name="CourseWorkId">Identifier of the course work.</param>
                     /// <param
                     /// name="Id">Identifier of the student submission.</param>
-                    public Google.Apis.Classroom.v1.Data.Empty TurnIn (Google.Apis.Classroom.v1.Data.TurnInStudentSubmissionRequest TurnInStudentSubmissionRequestBody, string CourseId, string CourseWorkId, string Id)
+                    public Google.Apis.Classroom.v1.Data.Empty TurnIn (Google.Apis.Classroom.v1.Data.TurnInStudentSubmissionRequest TurnInStudentSubmissionRequestBody, string CourseId, string CourseWorkId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
 
-                        return mainBase.courses.courseWork.studentSubmissions.TurnIn(TurnInStudentSubmissionRequestBody, CourseId, CourseWorkId, Id);
+                        return mainBase.courses.courseWork.studentSubmissions.TurnIn(TurnInStudentSubmissionRequestBody, CourseId, CourseWorkId, Id, StandardQueryParams);
                     }
 
 
@@ -380,10 +380,10 @@ namespace gShell.Cmdlets.Classroom{
                 /// <param name="CourseWorkBody">The body of the request.</param>
                 /// <param name="CourseId">Identifier of the course. This identifier can be either the Classroom-assigned identifier or
                 /// an alias.</param>
-                public Google.Apis.Classroom.v1.Data.CourseWork Create (Google.Apis.Classroom.v1.Data.CourseWork CourseWorkBody, string CourseId)
+                public Google.Apis.Classroom.v1.Data.CourseWork Create (Google.Apis.Classroom.v1.Data.CourseWork CourseWorkBody, string CourseId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    return mainBase.courses.courseWork.Create(CourseWorkBody, CourseId);
+                    return mainBase.courses.courseWork.Create(CourseWorkBody, CourseId, StandardQueryParams);
                 }
 
 
@@ -395,10 +395,10 @@ namespace gShell.Cmdlets.Classroom{
                 /// <param name="CourseId">Identifier of the course. This identifier can be either the Classroom-assigned identifier or
                 /// an alias.</param>
                 /// <param name="Id">Identifier of the course work.</param>
-                public Google.Apis.Classroom.v1.Data.CourseWork Get (string CourseId, string Id)
+                public Google.Apis.Classroom.v1.Data.CourseWork Get (string CourseId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    return mainBase.courses.courseWork.Get(CourseId, Id);
+                    return mainBase.courses.courseWork.Get(CourseId, Id, StandardQueryParams);
                 }
 
 
@@ -412,7 +412,7 @@ namespace gShell.Cmdlets.Classroom{
                 /// an alias.</param>
                 /// <param name="properties">The optional properties for this method.</param>
 
-                public List<Google.Apis.Classroom.v1.Data.ListCourseWorkResponse> List(string CourseId, gClassroom.Courses.CourseWork.CourseWorkListProperties properties= null)
+                public List<Google.Apis.Classroom.v1.Data.ListCourseWorkResponse> List(string CourseId, gClassroom.Courses.CourseWork.CourseWorkListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
                     properties = properties ?? new gClassroom.Courses.CourseWork.CourseWorkListProperties();
@@ -441,12 +441,12 @@ namespace gShell.Cmdlets.Classroom{
                 /// <param name="CourseId">Identifier of the course to create the student in. This identifier can be either the
                 /// Classroom-assigned identifier or an alias.</param>
                 /// <param name="properties">The optional properties for this method.</param>
-                public Google.Apis.Classroom.v1.Data.Student Create (Google.Apis.Classroom.v1.Data.Student StudentBody, string CourseId, gClassroom.Courses.Students.StudentsCreateProperties properties= null)
+                public Google.Apis.Classroom.v1.Data.Student Create (Google.Apis.Classroom.v1.Data.Student StudentBody, string CourseId, gClassroom.Courses.Students.StudentsCreateProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
                     properties = properties ?? new gClassroom.Courses.Students.StudentsCreateProperties();
 
-                    return mainBase.courses.students.Create(StudentBody, CourseId, properties);
+                    return mainBase.courses.students.Create(StudentBody, CourseId, properties, StandardQueryParams);
                 }
 
 
@@ -460,10 +460,10 @@ namespace gShell.Cmdlets.Classroom{
                 /// <param name="UserId">Identifier of the student to delete. The identifier can be one of the
                 /// following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`,
                 /// indicating the requesting user</param>
-                public Google.Apis.Classroom.v1.Data.Empty Delete (string CourseId, string UserId)
+                public Google.Apis.Classroom.v1.Data.Empty Delete (string CourseId, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    return mainBase.courses.students.Delete(CourseId, UserId);
+                    return mainBase.courses.students.Delete(CourseId, UserId, StandardQueryParams);
                 }
 
 
@@ -477,10 +477,10 @@ namespace gShell.Cmdlets.Classroom{
                 /// <param name="UserId">Identifier of the student to return. The identifier can be one of the
                 /// following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`,
                 /// indicating the requesting user</param>
-                public Google.Apis.Classroom.v1.Data.Student Get (string CourseId, string UserId)
+                public Google.Apis.Classroom.v1.Data.Student Get (string CourseId, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    return mainBase.courses.students.Get(CourseId, UserId);
+                    return mainBase.courses.students.Get(CourseId, UserId, StandardQueryParams);
                 }
 
 
@@ -492,7 +492,7 @@ namespace gShell.Cmdlets.Classroom{
                 /// an alias.</param>
                 /// <param name="properties">The optional properties for this method.</param>
 
-                public List<Google.Apis.Classroom.v1.Data.ListStudentsResponse> List(string CourseId, gClassroom.Courses.Students.StudentsListProperties properties= null)
+                public List<Google.Apis.Classroom.v1.Data.ListStudentsResponse> List(string CourseId, gClassroom.Courses.Students.StudentsListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
                     properties = properties ?? new gClassroom.Courses.Students.StudentsListProperties();
@@ -521,10 +521,10 @@ namespace gShell.Cmdlets.Classroom{
                 /// <param name="TeacherBody">The body of the request.</param>
                 /// <param name="CourseId">Identifier of the course. This identifier can be either the Classroom-assigned identifier or
                 /// an alias.</param>
-                public Google.Apis.Classroom.v1.Data.Teacher Create (Google.Apis.Classroom.v1.Data.Teacher TeacherBody, string CourseId)
+                public Google.Apis.Classroom.v1.Data.Teacher Create (Google.Apis.Classroom.v1.Data.Teacher TeacherBody, string CourseId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    return mainBase.courses.teachers.Create(TeacherBody, CourseId);
+                    return mainBase.courses.teachers.Create(TeacherBody, CourseId, StandardQueryParams);
                 }
 
 
@@ -539,10 +539,10 @@ namespace gShell.Cmdlets.Classroom{
                 /// <param name="UserId">Identifier of the teacher to delete. The identifier can be one of the
                 /// following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`,
                 /// indicating the requesting user</param>
-                public Google.Apis.Classroom.v1.Data.Empty Delete (string CourseId, string UserId)
+                public Google.Apis.Classroom.v1.Data.Empty Delete (string CourseId, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    return mainBase.courses.teachers.Delete(CourseId, UserId);
+                    return mainBase.courses.teachers.Delete(CourseId, UserId, StandardQueryParams);
                 }
 
 
@@ -556,10 +556,10 @@ namespace gShell.Cmdlets.Classroom{
                 /// <param name="UserId">Identifier of the teacher to return. The identifier can be one of the
                 /// following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`,
                 /// indicating the requesting user</param>
-                public Google.Apis.Classroom.v1.Data.Teacher Get (string CourseId, string UserId)
+                public Google.Apis.Classroom.v1.Data.Teacher Get (string CourseId, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    return mainBase.courses.teachers.Get(CourseId, UserId);
+                    return mainBase.courses.teachers.Get(CourseId, UserId, StandardQueryParams);
                 }
 
 
@@ -571,7 +571,7 @@ namespace gShell.Cmdlets.Classroom{
                 /// an alias.</param>
                 /// <param name="properties">The optional properties for this method.</param>
 
-                public List<Google.Apis.Classroom.v1.Data.ListTeachersResponse> List(string CourseId, gClassroom.Courses.Teachers.TeachersListProperties properties= null)
+                public List<Google.Apis.Classroom.v1.Data.ListTeachersResponse> List(string CourseId, gClassroom.Courses.Teachers.TeachersListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
                     properties = properties ?? new gClassroom.Courses.Teachers.TeachersListProperties();
@@ -590,10 +590,10 @@ namespace gShell.Cmdlets.Classroom{
             /// request errors: * UserGroupsMembershipLimitReached * `ALREADY_EXISTS` if an alias was specified in the
             /// `id` and already exists.</summary>
             /// <param name="CourseBody">The body of the request.</param>
-            public Google.Apis.Classroom.v1.Data.Course Create (Google.Apis.Classroom.v1.Data.Course CourseBody)
+            public Google.Apis.Classroom.v1.Data.Course Create (Google.Apis.Classroom.v1.Data.Course CourseBody, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.courses.Create(CourseBody);
+                return mainBase.courses.Create(CourseBody, StandardQueryParams);
             }
 
 
@@ -603,10 +603,10 @@ namespace gShell.Cmdlets.Classroom{
             /// no course exists with the requested ID.</summary>
             /// <param name="Id">Identifier of the course to delete. This identifier can be either the Classroom-assigned identifier
             /// or an alias.</param>
-            public Google.Apis.Classroom.v1.Data.Empty Delete (string Id)
+            public Google.Apis.Classroom.v1.Data.Empty Delete (string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.courses.Delete(Id);
+                return mainBase.courses.Delete(Id, StandardQueryParams);
             }
 
 
@@ -616,10 +616,10 @@ namespace gShell.Cmdlets.Classroom{
             /// no course exists with the requested ID.</summary>
             /// <param name="Id">Identifier of the course to return. This identifier can be either the Classroom-assigned identifier
             /// or an alias.</param>
-            public Google.Apis.Classroom.v1.Data.Course Get (string Id)
+            public Google.Apis.Classroom.v1.Data.Course Get (string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.courses.Get(Id);
+                return mainBase.courses.Get(Id, StandardQueryParams);
             }
 
 
@@ -630,7 +630,7 @@ namespace gShell.Cmdlets.Classroom{
             /// the query arguments do not exist.</summary>
             /// <param name="properties">The optional properties for this method.</param>
 
-            public List<Google.Apis.Classroom.v1.Data.ListCoursesResponse> List(gClassroom.Courses.CoursesListProperties properties= null)
+            public List<Google.Apis.Classroom.v1.Data.ListCoursesResponse> List(gClassroom.Courses.CoursesListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
                 properties = properties ?? new gClassroom.Courses.CoursesListProperties();
@@ -648,12 +648,12 @@ namespace gShell.Cmdlets.Classroom{
             /// <param name="Id">Identifier of the course to update. This identifier can be either the Classroom-assigned identifier
             /// or an alias.</param>
             /// <param name="properties">The optional properties for this method.</param>
-            public Google.Apis.Classroom.v1.Data.Course Patch (Google.Apis.Classroom.v1.Data.Course CourseBody, string Id, gClassroom.Courses.CoursesPatchProperties properties= null)
+            public Google.Apis.Classroom.v1.Data.Course Patch (Google.Apis.Classroom.v1.Data.Course CourseBody, string Id, gClassroom.Courses.CoursesPatchProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
                 properties = properties ?? new gClassroom.Courses.CoursesPatchProperties();
 
-                return mainBase.courses.Patch(CourseBody, Id, properties);
+                return mainBase.courses.Patch(CourseBody, Id, properties, StandardQueryParams);
             }
 
 
@@ -665,10 +665,10 @@ namespace gShell.Cmdlets.Classroom{
             /// <param name="CourseBody">The body of the request.</param>
             /// <param name="Id">Identifier of the course to update. This identifier can be either the Classroom-assigned identifier
             /// or an alias.</param>
-            public Google.Apis.Classroom.v1.Data.Course Update (Google.Apis.Classroom.v1.Data.Course CourseBody, string Id)
+            public Google.Apis.Classroom.v1.Data.Course Update (Google.Apis.Classroom.v1.Data.Course CourseBody, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.courses.Update(CourseBody, Id);
+                return mainBase.courses.Update(CourseBody, Id, StandardQueryParams);
             }
 
 
@@ -693,10 +693,10 @@ namespace gShell.Cmdlets.Classroom{
             /// errors: * CourseMemberLimitReached * CourseNotModifiable * CourseTeacherLimitReached *
             /// UserGroupsMembershipLimitReached * `NOT_FOUND` if no invitation exists with the requested ID.</summary>
             /// <param name="Id">Identifier of the invitation to accept.</param>
-            public Google.Apis.Classroom.v1.Data.Empty Accept (string Id)
+            public Google.Apis.Classroom.v1.Data.Empty Accept (string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.invitations.Accept(Id);
+                return mainBase.invitations.Accept(Id, StandardQueryParams);
             }
 
 
@@ -709,10 +709,10 @@ namespace gShell.Cmdlets.Classroom{
             /// permissions. * `ALREADY_EXISTS` if an invitation for the specified user and course already
             /// exists.</summary>
             /// <param name="InvitationBody">The body of the request.</param>
-            public Google.Apis.Classroom.v1.Data.Invitation Create (Google.Apis.Classroom.v1.Data.Invitation InvitationBody)
+            public Google.Apis.Classroom.v1.Data.Invitation Create (Google.Apis.Classroom.v1.Data.Invitation InvitationBody, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.invitations.Create(InvitationBody);
+                return mainBase.invitations.Create(InvitationBody, StandardQueryParams);
             }
 
 
@@ -721,10 +721,10 @@ namespace gShell.Cmdlets.Classroom{
             /// the requesting user is not permitted to delete the requested invitation or for access errors. *
             /// `NOT_FOUND` if no invitation exists with the requested ID.</summary>
             /// <param name="Id">Identifier of the invitation to delete.</param>
-            public Google.Apis.Classroom.v1.Data.Empty Delete (string Id)
+            public Google.Apis.Classroom.v1.Data.Empty Delete (string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.invitations.Delete(Id);
+                return mainBase.invitations.Delete(Id, StandardQueryParams);
             }
 
 
@@ -733,10 +733,10 @@ namespace gShell.Cmdlets.Classroom{
             /// the requesting user is not permitted to view the requested invitation or for access errors. *
             /// `NOT_FOUND` if no invitation exists with the requested ID.</summary>
             /// <param name="Id">Identifier of the invitation to return.</param>
-            public Google.Apis.Classroom.v1.Data.Invitation Get (string Id)
+            public Google.Apis.Classroom.v1.Data.Invitation Get (string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.invitations.Get(Id);
+                return mainBase.invitations.Get(Id, StandardQueryParams);
             }
 
 
@@ -747,7 +747,7 @@ namespace gShell.Cmdlets.Classroom{
             /// access errors.</summary>
             /// <param name="properties">The optional properties for this method.</param>
 
-            public List<Google.Apis.Classroom.v1.Data.ListInvitationsResponse> List(gClassroom.Invitations.InvitationsListProperties properties= null)
+            public List<Google.Apis.Classroom.v1.Data.ListInvitationsResponse> List(gClassroom.Invitations.InvitationsListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
                 properties = properties ?? new gClassroom.Invitations.InvitationsListProperties();
@@ -811,10 +811,10 @@ namespace gShell.Cmdlets.Classroom{
                 /// Google account of an existing `Guardian` for this user.</summary>
                 /// <param name="GuardianInvitationBody">The body of the request.</param>
                 /// <param name="StudentId">ID of the student (in standard format)</param>
-                public Google.Apis.Classroom.v1.Data.GuardianInvitation Create (Google.Apis.Classroom.v1.Data.GuardianInvitation GuardianInvitationBody, string StudentId)
+                public Google.Apis.Classroom.v1.Data.GuardianInvitation Create (Google.Apis.Classroom.v1.Data.GuardianInvitation GuardianInvitationBody, string StudentId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    return mainBase.userProfiles.guardianInvitations.Create(GuardianInvitationBody, StudentId);
+                    return mainBase.userProfiles.guardianInvitations.Create(GuardianInvitationBody, StudentId, StandardQueryParams);
                 }
 
 
@@ -830,10 +830,10 @@ namespace gShell.Cmdlets.Classroom{
                 /// <param name="StudentId">The ID of the student whose guardian invitation is being requested.</param>
                 /// <param
                 /// name="InvitationId">The `id` field of the `GuardianInvitation` being requested.</param>
-                public Google.Apis.Classroom.v1.Data.GuardianInvitation Get (string StudentId, string InvitationId)
+                public Google.Apis.Classroom.v1.Data.GuardianInvitation Get (string StudentId, string InvitationId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    return mainBase.userProfiles.guardianInvitations.Get(StudentId, InvitationId);
+                    return mainBase.userProfiles.guardianInvitations.Get(StudentId, InvitationId, StandardQueryParams);
                 }
 
 
@@ -853,7 +853,7 @@ namespace gShell.Cmdlets.Classroom{
                 /// all students that the requesting user is permitted to view guardian invitations.</param>
                 /// <param name="properties">The optional properties for this method.</param>
 
-                public List<Google.Apis.Classroom.v1.Data.ListGuardianInvitationsResponse> List(string StudentId, gClassroom.UserProfiles.GuardianInvitations.GuardianInvitationsListProperties properties= null)
+                public List<Google.Apis.Classroom.v1.Data.ListGuardianInvitationsResponse> List(string StudentId, gClassroom.UserProfiles.GuardianInvitations.GuardianInvitationsListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
                     properties = properties ?? new gClassroom.UserProfiles.GuardianInvitations.GuardianInvitationsListProperties();
@@ -877,12 +877,12 @@ namespace gShell.Cmdlets.Classroom{
                 /// <param
                 /// name="InvitationId">The `id` field of the `GuardianInvitation` to be modified.</param>
                 /// <param name="properties">The optional properties for this method.</param>
-                public Google.Apis.Classroom.v1.Data.GuardianInvitation Patch (Google.Apis.Classroom.v1.Data.GuardianInvitation GuardianInvitationBody, string StudentId, string InvitationId, gClassroom.UserProfiles.GuardianInvitations.GuardianInvitationsPatchProperties properties= null)
+                public Google.Apis.Classroom.v1.Data.GuardianInvitation Patch (Google.Apis.Classroom.v1.Data.GuardianInvitation GuardianInvitationBody, string StudentId, string InvitationId, gClassroom.UserProfiles.GuardianInvitations.GuardianInvitationsPatchProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
                     properties = properties ?? new gClassroom.UserProfiles.GuardianInvitations.GuardianInvitationsPatchProperties();
 
-                    return mainBase.userProfiles.guardianInvitations.Patch(GuardianInvitationBody, StudentId, InvitationId, properties);
+                    return mainBase.userProfiles.guardianInvitations.Patch(GuardianInvitationBody, StudentId, InvitationId, properties, StandardQueryParams);
                 }
 
 
@@ -909,10 +909,10 @@ namespace gShell.Cmdlets.Classroom{
                 /// for the user * the email address of the user * the string literal `"me"`, indicating the requesting
                 /// user</param>
                 /// <param name="GuardianId">The `id` field from a `Guardian`.</param>
-                public Google.Apis.Classroom.v1.Data.Empty Delete (string StudentId, string GuardianId)
+                public Google.Apis.Classroom.v1.Data.Empty Delete (string StudentId, string GuardianId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    return mainBase.userProfiles.guardians.Delete(StudentId, GuardianId);
+                    return mainBase.userProfiles.guardians.Delete(StudentId, GuardianId, StandardQueryParams);
                 }
 
 
@@ -928,10 +928,10 @@ namespace gShell.Cmdlets.Classroom{
                 /// identifier for the user * the email address of the user * the string literal `"me"`, indicating the requesting
                 /// user</param>
                 /// <param name="GuardianId">The `id` field from a `Guardian`.</param>
-                public Google.Apis.Classroom.v1.Data.Guardian Get (string StudentId, string GuardianId)
+                public Google.Apis.Classroom.v1.Data.Guardian Get (string StudentId, string GuardianId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
-                    return mainBase.userProfiles.guardians.Get(StudentId, GuardianId);
+                    return mainBase.userProfiles.guardians.Get(StudentId, GuardianId, StandardQueryParams);
                 }
 
 
@@ -954,7 +954,7 @@ namespace gShell.Cmdlets.Classroom{
                 /// students that the requesting user has access to view.</param>
                 /// <param name="properties">The optional properties for this method.</param>
 
-                public List<Google.Apis.Classroom.v1.Data.ListGuardiansResponse> List(string StudentId, gClassroom.UserProfiles.Guardians.GuardiansListProperties properties= null)
+                public List<Google.Apis.Classroom.v1.Data.ListGuardiansResponse> List(string StudentId, gClassroom.UserProfiles.Guardians.GuardiansListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                 {
 
                     properties = properties ?? new gClassroom.UserProfiles.Guardians.GuardiansListProperties();
@@ -972,10 +972,10 @@ namespace gShell.Cmdlets.Classroom{
             /// <param name="UserId">Identifier of the profile to return. The identifier can be one of the following: * the numeric
             /// identifier for the user * the email address of the user * the string literal `"me"`, indicating the requesting
             /// user</param>
-            public Google.Apis.Classroom.v1.Data.UserProfile Get (string UserId)
+            public Google.Apis.Classroom.v1.Data.UserProfile Get (string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.userProfiles.Get(UserId);
+                return mainBase.userProfiles.Get(UserId, StandardQueryParams);
             }
 
 
@@ -1103,9 +1103,15 @@ namespace gShell.dotNet
             /// `id` and already exists.</summary>
             /// <param name="CourseBody">The body of the request.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Classroom.v1.Data.Course Create (Google.Apis.Classroom.v1.Data.Course CourseBody)
+            public Google.Apis.Classroom.v1.Data.Course Create (Google.Apis.Classroom.v1.Data.Course CourseBody, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var request = GetService().Courses.Create(CourseBody);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    //request.UserIp = StandardQueryParams.userIp;
+                }
 
 
 
@@ -1118,9 +1124,15 @@ namespace gShell.dotNet
             /// <param name="Id">Identifier of the course to delete. This identifier can be either the Classroom-assigned identifier
             /// or an alias.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Classroom.v1.Data.Empty Delete (string Id)
+            public Google.Apis.Classroom.v1.Data.Empty Delete (string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var request = GetService().Courses.Delete(Id);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    //request.UserIp = StandardQueryParams.userIp;
+                }
 
 
 
@@ -1133,9 +1145,15 @@ namespace gShell.dotNet
             /// <param name="Id">Identifier of the course to return. This identifier can be either the Classroom-assigned identifier
             /// or an alias.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Classroom.v1.Data.Course Get (string Id)
+            public Google.Apis.Classroom.v1.Data.Course Get (string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var request = GetService().Courses.Get(Id);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    //request.UserIp = StandardQueryParams.userIp;
+                }
 
 
 
@@ -1149,11 +1167,17 @@ namespace gShell.dotNet
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public List<Google.Apis.Classroom.v1.Data.ListCoursesResponse> List(
-                CoursesListProperties properties= null)
+                CoursesListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var results = new List<Google.Apis.Classroom.v1.Data.ListCoursesResponse>();
 
                 v1.CoursesResource.ListRequest request = GetService().Courses.List();
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    //request.UserIp = StandardQueryParams.userIp;
+                }
 
                 if (properties != null)
                 {
@@ -1212,9 +1236,15 @@ namespace gShell.dotNet
             /// or an alias.</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Classroom.v1.Data.Course Patch (Google.Apis.Classroom.v1.Data.Course CourseBody, string Id, CoursesPatchProperties properties= null)
+            public Google.Apis.Classroom.v1.Data.Course Patch (Google.Apis.Classroom.v1.Data.Course CourseBody, string Id, CoursesPatchProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var request = GetService().Courses.Patch(CourseBody, Id);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    //request.UserIp = StandardQueryParams.userIp;
+                }
 
                 if (properties != null)    {
                     request.UpdateMask = properties.UpdateMask;
@@ -1231,9 +1261,15 @@ namespace gShell.dotNet
             /// <param name="Id">Identifier of the course to update. This identifier can be either the Classroom-assigned identifier
             /// or an alias.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Classroom.v1.Data.Course Update (Google.Apis.Classroom.v1.Data.Course CourseBody, string Id)
+            public Google.Apis.Classroom.v1.Data.Course Update (Google.Apis.Classroom.v1.Data.Course CourseBody, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var request = GetService().Courses.Update(CourseBody, Id);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    //request.UserIp = StandardQueryParams.userIp;
+                }
 
 
 
@@ -1268,9 +1304,15 @@ namespace gShell.dotNet
                     /// <param name="CourseId">Identifier of the course to alias. This identifier can be either the Classroom-assigned
                     /// identifier or an alias.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Classroom.v1.Data.CourseAlias Create (Google.Apis.Classroom.v1.Data.CourseAlias CourseAliasBody, string CourseId)
+                    public Google.Apis.Classroom.v1.Data.CourseAlias Create (Google.Apis.Classroom.v1.Data.CourseAlias CourseAliasBody, string CourseId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Courses.Aliases.Create(CourseAliasBody, CourseId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            //request.UserIp = StandardQueryParams.userIp;
+                        }
 
 
 
@@ -1285,9 +1327,15 @@ namespace gShell.dotNet
                     /// <param name="Alias">Alias to delete. This may not be the
                     /// Classroom-assigned identifier.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Classroom.v1.Data.Empty Delete (string CourseId, string Alias)
+                    public Google.Apis.Classroom.v1.Data.Empty Delete (string CourseId, string Alias, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Courses.Aliases.Delete(CourseId, Alias);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            //request.UserIp = StandardQueryParams.userIp;
+                        }
 
 
 
@@ -1302,11 +1350,17 @@ namespace gShell.dotNet
                     /// <param name="properties">The optional properties for this method.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
                     public List<Google.Apis.Classroom.v1.Data.ListCourseAliasesResponse> List(
-                        string CourseId, AliasesListProperties properties= null)
+                        string CourseId, AliasesListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var results = new List<Google.Apis.Classroom.v1.Data.ListCourseAliasesResponse>();
 
                         v1.CoursesResource.AliasesResource.ListRequest request = GetService().Courses.Aliases.List(CourseId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            //request.UserIp = StandardQueryParams.userIp;
+                        }
 
                         if (properties != null)
                         {
@@ -1398,9 +1452,15 @@ namespace gShell.dotNet
                     /// <param name="CourseId">Identifier of the course. This identifier can be either the Classroom-assigned identifier or
                     /// an alias.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Classroom.v1.Data.CourseWork Create (Google.Apis.Classroom.v1.Data.CourseWork CourseWorkBody, string CourseId)
+                    public Google.Apis.Classroom.v1.Data.CourseWork Create (Google.Apis.Classroom.v1.Data.CourseWork CourseWorkBody, string CourseId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Courses.CourseWork.Create(CourseWorkBody, CourseId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            //request.UserIp = StandardQueryParams.userIp;
+                        }
 
 
 
@@ -1415,9 +1475,15 @@ namespace gShell.dotNet
                     /// an alias.</param>
                     /// <param name="Id">Identifier of the course work.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Classroom.v1.Data.CourseWork Get (string CourseId, string Id)
+                    public Google.Apis.Classroom.v1.Data.CourseWork Get (string CourseId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Courses.CourseWork.Get(CourseId, Id);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            //request.UserIp = StandardQueryParams.userIp;
+                        }
 
 
 
@@ -1435,11 +1501,17 @@ namespace gShell.dotNet
                     /// <param name="properties">The optional properties for this method.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
                     public List<Google.Apis.Classroom.v1.Data.ListCourseWorkResponse> List(
-                        string CourseId, CourseWorkListProperties properties= null)
+                        string CourseId, CourseWorkListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var results = new List<Google.Apis.Classroom.v1.Data.ListCourseWorkResponse>();
 
                         v1.CoursesResource.CourseWorkResource.ListRequest request = GetService().Courses.CourseWork.List(CourseId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            //request.UserIp = StandardQueryParams.userIp;
+                        }
 
                         if (properties != null)
                         {
@@ -1533,9 +1605,15 @@ namespace gShell.dotNet
                             /// <param
                             /// name="Id">Identifier of the student submission.</param>
                             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                            public Google.Apis.Classroom.v1.Data.StudentSubmission Get (string CourseId, string CourseWorkId, string Id)
+                            public Google.Apis.Classroom.v1.Data.StudentSubmission Get (string CourseId, string CourseWorkId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                             {
                                 var request = GetService().Courses.CourseWork.StudentSubmissions.Get(CourseId, CourseWorkId, Id);
+
+                                if (StandardQueryParams != null) {
+                                    request.Fields = StandardQueryParams.fields;
+                                    request.QuotaUser = StandardQueryParams.quotaUser;
+                                    //request.UserIp = StandardQueryParams.userIp;
+                                }
 
 
 
@@ -1557,11 +1635,17 @@ namespace gShell.dotNet
                             /// <param name="properties">The optional properties for this method.</param>
                             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
                             public List<Google.Apis.Classroom.v1.Data.ListStudentSubmissionsResponse> List(
-                                string CourseId, string CourseWorkId, StudentSubmissionsListProperties properties= null)
+                                string CourseId, string CourseWorkId, StudentSubmissionsListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                             {
                                 var results = new List<Google.Apis.Classroom.v1.Data.ListStudentSubmissionsResponse>();
 
                                 v1.CoursesResource.CourseWorkResource.StudentSubmissionsResource.ListRequest request = GetService().Courses.CourseWork.StudentSubmissions.List(CourseId, CourseWorkId);
+
+                                if (StandardQueryParams != null) {
+                                    request.Fields = StandardQueryParams.fields;
+                                    request.QuotaUser = StandardQueryParams.quotaUser;
+                                    //request.UserIp = StandardQueryParams.userIp;
+                                }
 
                                 if (properties != null)
                                 {
@@ -1626,9 +1710,15 @@ namespace gShell.dotNet
                             /// <param
                             /// name="Id">Identifier of the student submission.</param>
                             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                            public Google.Apis.Classroom.v1.Data.StudentSubmission ModifyAttachments (Google.Apis.Classroom.v1.Data.ModifyAttachmentsRequest ModifyAttachmentsRequestBody, string CourseId, string CourseWorkId, string Id)
+                            public Google.Apis.Classroom.v1.Data.StudentSubmission ModifyAttachments (Google.Apis.Classroom.v1.Data.ModifyAttachmentsRequest ModifyAttachmentsRequestBody, string CourseId, string CourseWorkId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                             {
                                 var request = GetService().Courses.CourseWork.StudentSubmissions.ModifyAttachments(ModifyAttachmentsRequestBody, CourseId, CourseWorkId, Id);
+
+                                if (StandardQueryParams != null) {
+                                    request.Fields = StandardQueryParams.fields;
+                                    request.QuotaUser = StandardQueryParams.quotaUser;
+                                    //request.UserIp = StandardQueryParams.userIp;
+                                }
 
 
 
@@ -1653,9 +1743,15 @@ namespace gShell.dotNet
                             /// name="Id">Identifier of the student submission.</param>
                             /// <param name="properties">The optional properties for this method.</param>
                             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                            public Google.Apis.Classroom.v1.Data.StudentSubmission Patch (Google.Apis.Classroom.v1.Data.StudentSubmission StudentSubmissionBody, string CourseId, string CourseWorkId, string Id, StudentSubmissionsPatchProperties properties= null)
+                            public Google.Apis.Classroom.v1.Data.StudentSubmission Patch (Google.Apis.Classroom.v1.Data.StudentSubmission StudentSubmissionBody, string CourseId, string CourseWorkId, string Id, StudentSubmissionsPatchProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                             {
                                 var request = GetService().Courses.CourseWork.StudentSubmissions.Patch(StudentSubmissionBody, CourseId, CourseWorkId, Id);
+
+                                if (StandardQueryParams != null) {
+                                    request.Fields = StandardQueryParams.fields;
+                                    request.QuotaUser = StandardQueryParams.quotaUser;
+                                    //request.UserIp = StandardQueryParams.userIp;
+                                }
 
                                 if (properties != null)    {
                                     request.UpdateMask = properties.UpdateMask;
@@ -1683,9 +1779,15 @@ namespace gShell.dotNet
                             /// <param
                             /// name="Id">Identifier of the student submission.</param>
                             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                            public Google.Apis.Classroom.v1.Data.Empty Reclaim (Google.Apis.Classroom.v1.Data.ReclaimStudentSubmissionRequest ReclaimStudentSubmissionRequestBody, string CourseId, string CourseWorkId, string Id)
+                            public Google.Apis.Classroom.v1.Data.Empty Reclaim (Google.Apis.Classroom.v1.Data.ReclaimStudentSubmissionRequest ReclaimStudentSubmissionRequestBody, string CourseId, string CourseWorkId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                             {
                                 var request = GetService().Courses.CourseWork.StudentSubmissions.Reclaim(ReclaimStudentSubmissionRequestBody, CourseId, CourseWorkId, Id);
+
+                                if (StandardQueryParams != null) {
+                                    request.Fields = StandardQueryParams.fields;
+                                    request.QuotaUser = StandardQueryParams.quotaUser;
+                                    //request.UserIp = StandardQueryParams.userIp;
+                                }
 
 
 
@@ -1711,9 +1813,15 @@ namespace gShell.dotNet
                             /// <param
                             /// name="Id">Identifier of the student submission.</param>
                             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                            public Google.Apis.Classroom.v1.Data.Empty ClassroomReturn (Google.Apis.Classroom.v1.Data.ReturnStudentSubmissionRequest ReturnStudentSubmissionRequestBody, string CourseId, string CourseWorkId, string Id)
+                            public Google.Apis.Classroom.v1.Data.Empty ClassroomReturn (Google.Apis.Classroom.v1.Data.ReturnStudentSubmissionRequest ReturnStudentSubmissionRequestBody, string CourseId, string CourseWorkId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                             {
                                 var request = GetService().Courses.CourseWork.StudentSubmissions.ClassroomReturn(ReturnStudentSubmissionRequestBody, CourseId, CourseWorkId, Id);
+
+                                if (StandardQueryParams != null) {
+                                    request.Fields = StandardQueryParams.fields;
+                                    request.QuotaUser = StandardQueryParams.quotaUser;
+                                    //request.UserIp = StandardQueryParams.userIp;
+                                }
 
 
 
@@ -1737,9 +1845,15 @@ namespace gShell.dotNet
                             /// <param
                             /// name="Id">Identifier of the student submission.</param>
                             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                            public Google.Apis.Classroom.v1.Data.Empty TurnIn (Google.Apis.Classroom.v1.Data.TurnInStudentSubmissionRequest TurnInStudentSubmissionRequestBody, string CourseId, string CourseWorkId, string Id)
+                            public Google.Apis.Classroom.v1.Data.Empty TurnIn (Google.Apis.Classroom.v1.Data.TurnInStudentSubmissionRequest TurnInStudentSubmissionRequestBody, string CourseId, string CourseWorkId, string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                             {
                                 var request = GetService().Courses.CourseWork.StudentSubmissions.TurnIn(TurnInStudentSubmissionRequestBody, CourseId, CourseWorkId, Id);
+
+                                if (StandardQueryParams != null) {
+                                    request.Fields = StandardQueryParams.fields;
+                                    request.QuotaUser = StandardQueryParams.quotaUser;
+                                    //request.UserIp = StandardQueryParams.userIp;
+                                }
 
 
 
@@ -1786,9 +1900,15 @@ namespace gShell.dotNet
                     /// Classroom-assigned identifier or an alias.</param>
                     /// <param name="properties">The optional properties for this method.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Classroom.v1.Data.Student Create (Google.Apis.Classroom.v1.Data.Student StudentBody, string CourseId, StudentsCreateProperties properties= null)
+                    public Google.Apis.Classroom.v1.Data.Student Create (Google.Apis.Classroom.v1.Data.Student StudentBody, string CourseId, StudentsCreateProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Courses.Students.Create(StudentBody, CourseId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            //request.UserIp = StandardQueryParams.userIp;
+                        }
 
                         if (properties != null)    {
                             request.EnrollmentCode = properties.EnrollmentCode;
@@ -1807,9 +1927,15 @@ namespace gShell.dotNet
                     /// following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`,
                     /// indicating the requesting user</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Classroom.v1.Data.Empty Delete (string CourseId, string UserId)
+                    public Google.Apis.Classroom.v1.Data.Empty Delete (string CourseId, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Courses.Students.Delete(CourseId, UserId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            //request.UserIp = StandardQueryParams.userIp;
+                        }
 
 
 
@@ -1826,9 +1952,15 @@ namespace gShell.dotNet
                     /// following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`,
                     /// indicating the requesting user</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Classroom.v1.Data.Student Get (string CourseId, string UserId)
+                    public Google.Apis.Classroom.v1.Data.Student Get (string CourseId, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Courses.Students.Get(CourseId, UserId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            //request.UserIp = StandardQueryParams.userIp;
+                        }
 
 
 
@@ -1843,11 +1975,17 @@ namespace gShell.dotNet
                     /// <param name="properties">The optional properties for this method.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
                     public List<Google.Apis.Classroom.v1.Data.ListStudentsResponse> List(
-                        string CourseId, StudentsListProperties properties= null)
+                        string CourseId, StudentsListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var results = new List<Google.Apis.Classroom.v1.Data.ListStudentsResponse>();
 
                         v1.CoursesResource.StudentsResource.ListRequest request = GetService().Courses.Students.List(CourseId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            //request.UserIp = StandardQueryParams.userIp;
+                        }
 
                         if (properties != null)
                         {
@@ -1925,9 +2063,15 @@ namespace gShell.dotNet
                     /// <param name="CourseId">Identifier of the course. This identifier can be either the Classroom-assigned identifier or
                     /// an alias.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Classroom.v1.Data.Teacher Create (Google.Apis.Classroom.v1.Data.Teacher TeacherBody, string CourseId)
+                    public Google.Apis.Classroom.v1.Data.Teacher Create (Google.Apis.Classroom.v1.Data.Teacher TeacherBody, string CourseId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Courses.Teachers.Create(TeacherBody, CourseId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            //request.UserIp = StandardQueryParams.userIp;
+                        }
 
 
 
@@ -1945,9 +2089,15 @@ namespace gShell.dotNet
                     /// following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`,
                     /// indicating the requesting user</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Classroom.v1.Data.Empty Delete (string CourseId, string UserId)
+                    public Google.Apis.Classroom.v1.Data.Empty Delete (string CourseId, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Courses.Teachers.Delete(CourseId, UserId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            //request.UserIp = StandardQueryParams.userIp;
+                        }
 
 
 
@@ -1964,9 +2114,15 @@ namespace gShell.dotNet
                     /// following: * the numeric identifier for the user * the email address of the user * the string literal `"me"`,
                     /// indicating the requesting user</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Classroom.v1.Data.Teacher Get (string CourseId, string UserId)
+                    public Google.Apis.Classroom.v1.Data.Teacher Get (string CourseId, string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().Courses.Teachers.Get(CourseId, UserId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            //request.UserIp = StandardQueryParams.userIp;
+                        }
 
 
 
@@ -1981,11 +2137,17 @@ namespace gShell.dotNet
                     /// <param name="properties">The optional properties for this method.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
                     public List<Google.Apis.Classroom.v1.Data.ListTeachersResponse> List(
-                        string CourseId, TeachersListProperties properties= null)
+                        string CourseId, TeachersListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var results = new List<Google.Apis.Classroom.v1.Data.ListTeachersResponse>();
 
                         v1.CoursesResource.TeachersResource.ListRequest request = GetService().Courses.Teachers.List(CourseId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            //request.UserIp = StandardQueryParams.userIp;
+                        }
 
                         if (properties != null)
                         {
@@ -2069,9 +2231,15 @@ namespace gShell.dotNet
             /// UserGroupsMembershipLimitReached * `NOT_FOUND` if no invitation exists with the requested ID.</summary>
             /// <param name="Id">Identifier of the invitation to accept.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Classroom.v1.Data.Empty Accept (string Id)
+            public Google.Apis.Classroom.v1.Data.Empty Accept (string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var request = GetService().Invitations.Accept(Id);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    //request.UserIp = StandardQueryParams.userIp;
+                }
 
 
 
@@ -2087,9 +2255,15 @@ namespace gShell.dotNet
             /// exists.</summary>
             /// <param name="InvitationBody">The body of the request.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Classroom.v1.Data.Invitation Create (Google.Apis.Classroom.v1.Data.Invitation InvitationBody)
+            public Google.Apis.Classroom.v1.Data.Invitation Create (Google.Apis.Classroom.v1.Data.Invitation InvitationBody, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var request = GetService().Invitations.Create(InvitationBody);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    //request.UserIp = StandardQueryParams.userIp;
+                }
 
 
 
@@ -2101,9 +2275,15 @@ namespace gShell.dotNet
             /// `NOT_FOUND` if no invitation exists with the requested ID.</summary>
             /// <param name="Id">Identifier of the invitation to delete.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Classroom.v1.Data.Empty Delete (string Id)
+            public Google.Apis.Classroom.v1.Data.Empty Delete (string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var request = GetService().Invitations.Delete(Id);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    //request.UserIp = StandardQueryParams.userIp;
+                }
 
 
 
@@ -2115,9 +2295,15 @@ namespace gShell.dotNet
             /// `NOT_FOUND` if no invitation exists with the requested ID.</summary>
             /// <param name="Id">Identifier of the invitation to return.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Classroom.v1.Data.Invitation Get (string Id)
+            public Google.Apis.Classroom.v1.Data.Invitation Get (string Id, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var request = GetService().Invitations.Get(Id);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    //request.UserIp = StandardQueryParams.userIp;
+                }
 
 
 
@@ -2131,11 +2317,17 @@ namespace gShell.dotNet
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public List<Google.Apis.Classroom.v1.Data.ListInvitationsResponse> List(
-                InvitationsListProperties properties= null)
+                InvitationsListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var results = new List<Google.Apis.Classroom.v1.Data.ListInvitationsResponse>();
 
                 v1.InvitationsResource.ListRequest request = GetService().Invitations.List();
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    //request.UserIp = StandardQueryParams.userIp;
+                }
 
                 if (properties != null)
                 {
@@ -2210,9 +2402,15 @@ namespace gShell.dotNet
             /// identifier for the user * the email address of the user * the string literal `"me"`, indicating the requesting
             /// user</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Classroom.v1.Data.UserProfile Get (string UserId)
+            public Google.Apis.Classroom.v1.Data.UserProfile Get (string UserId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var request = GetService().UserProfiles.Get(UserId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    //request.UserIp = StandardQueryParams.userIp;
+                }
 
 
 
@@ -2273,9 +2471,15 @@ namespace gShell.dotNet
                     /// <param name="GuardianInvitationBody">The body of the request.</param>
                     /// <param name="StudentId">ID of the student (in standard format)</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Classroom.v1.Data.GuardianInvitation Create (Google.Apis.Classroom.v1.Data.GuardianInvitation GuardianInvitationBody, string StudentId)
+                    public Google.Apis.Classroom.v1.Data.GuardianInvitation Create (Google.Apis.Classroom.v1.Data.GuardianInvitation GuardianInvitationBody, string StudentId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().UserProfiles.GuardianInvitations.Create(GuardianInvitationBody, StudentId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            //request.UserIp = StandardQueryParams.userIp;
+                        }
 
 
 
@@ -2294,9 +2498,15 @@ namespace gShell.dotNet
                     /// <param
                     /// name="InvitationId">The `id` field of the `GuardianInvitation` being requested.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Classroom.v1.Data.GuardianInvitation Get (string StudentId, string InvitationId)
+                    public Google.Apis.Classroom.v1.Data.GuardianInvitation Get (string StudentId, string InvitationId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().UserProfiles.GuardianInvitations.Get(StudentId, InvitationId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            //request.UserIp = StandardQueryParams.userIp;
+                        }
 
 
 
@@ -2320,11 +2530,17 @@ namespace gShell.dotNet
                     /// <param name="properties">The optional properties for this method.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
                     public List<Google.Apis.Classroom.v1.Data.ListGuardianInvitationsResponse> List(
-                        string StudentId, GuardianInvitationsListProperties properties= null)
+                        string StudentId, GuardianInvitationsListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var results = new List<Google.Apis.Classroom.v1.Data.ListGuardianInvitationsResponse>();
 
                         v1.UserProfilesResource.GuardianInvitationsResource.ListRequest request = GetService().UserProfiles.GuardianInvitations.List(StudentId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            //request.UserIp = StandardQueryParams.userIp;
+                        }
 
                         if (properties != null)
                         {
@@ -2388,9 +2604,15 @@ namespace gShell.dotNet
                     /// name="InvitationId">The `id` field of the `GuardianInvitation` to be modified.</param>
                     /// <param name="properties">The optional properties for this method.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Classroom.v1.Data.GuardianInvitation Patch (Google.Apis.Classroom.v1.Data.GuardianInvitation GuardianInvitationBody, string StudentId, string InvitationId, GuardianInvitationsPatchProperties properties= null)
+                    public Google.Apis.Classroom.v1.Data.GuardianInvitation Patch (Google.Apis.Classroom.v1.Data.GuardianInvitation GuardianInvitationBody, string StudentId, string InvitationId, GuardianInvitationsPatchProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().UserProfiles.GuardianInvitations.Patch(GuardianInvitationBody, StudentId, InvitationId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            //request.UserIp = StandardQueryParams.userIp;
+                        }
 
                         if (properties != null)    {
                             request.UpdateMask = properties.UpdateMask;
@@ -2436,9 +2658,15 @@ namespace gShell.dotNet
                     /// user</param>
                     /// <param name="GuardianId">The `id` field from a `Guardian`.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Classroom.v1.Data.Empty Delete (string StudentId, string GuardianId)
+                    public Google.Apis.Classroom.v1.Data.Empty Delete (string StudentId, string GuardianId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().UserProfiles.Guardians.Delete(StudentId, GuardianId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            //request.UserIp = StandardQueryParams.userIp;
+                        }
 
 
 
@@ -2457,9 +2685,15 @@ namespace gShell.dotNet
                     /// user</param>
                     /// <param name="GuardianId">The `id` field from a `Guardian`.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-                    public Google.Apis.Classroom.v1.Data.Guardian Get (string StudentId, string GuardianId)
+                    public Google.Apis.Classroom.v1.Data.Guardian Get (string StudentId, string GuardianId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var request = GetService().UserProfiles.Guardians.Get(StudentId, GuardianId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            //request.UserIp = StandardQueryParams.userIp;
+                        }
 
 
 
@@ -2485,11 +2719,17 @@ namespace gShell.dotNet
                     /// <param name="properties">The optional properties for this method.</param>
                     /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
                     public List<Google.Apis.Classroom.v1.Data.ListGuardiansResponse> List(
-                        string StudentId, GuardiansListProperties properties= null)
+                        string StudentId, GuardiansListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
                     {
                         var results = new List<Google.Apis.Classroom.v1.Data.ListGuardiansResponse>();
 
                         v1.UserProfilesResource.GuardiansResource.ListRequest request = GetService().UserProfiles.Guardians.List(StudentId);
+
+                        if (StandardQueryParams != null) {
+                            request.Fields = StandardQueryParams.fields;
+                            request.QuotaUser = StandardQueryParams.quotaUser;
+                            //request.UserIp = StandardQueryParams.userIp;
+                        }
 
                         if (properties != null)
                         {

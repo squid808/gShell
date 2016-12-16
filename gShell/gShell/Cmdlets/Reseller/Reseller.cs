@@ -654,7 +654,7 @@ namespace gShell.Cmdlets.Reseller.Customers
         {
             if (ShouldProcess("Reseller Customer", "Get-GResellerCustomer"))
             {
-                WriteObject(customers.Get(CustomerId));
+                WriteObject(customers.Get(CustomerId, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -887,7 +887,7 @@ namespace gShell.Cmdlets.Reseller.Customers
             
 
             if (ShouldProcess("Reseller Customer", "Set-GResellerCustomer"))
-                WriteObject(customers.Patch(body, CustomerId));
+                WriteObject(customers.Patch(body, CustomerId, StandardQueryParams: StandardQueryParams));
         }
     }
 
@@ -1132,7 +1132,7 @@ namespace gShell.Cmdlets.Reseller.Customers
             if (!string.IsNullOrWhiteSpace(CustomerAuthToken)) properties.CustomerAuthToken = this.CustomerAuthToken;
 
             if (ShouldProcess("Reseller Customer", "New-GResellerCustomer"))
-                WriteObject(customers.Insert(body, properties));
+                WriteObject(customers.Insert(body, properties, StandardQueryParams: StandardQueryParams));
         }
     }
 }
@@ -1185,7 +1185,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
         {
             if (ShouldProcess("Reseller Subscription", "Enable-GResellerSubscription"))
             {
-                WriteObject(subscriptions.Activate(CustomerId, SubscriptionId));
+                WriteObject(subscriptions.Activate(CustomerId, SubscriptionId, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -1313,7 +1313,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
 
             if (ShouldProcess("Reseller Subscription Plan", "Set-GResellerSubscriptionPlan"))
             {
-                WriteObject(subscriptions.ChangePlan(body, CustomerId, SubscriptionId));
+                WriteObject(subscriptions.ChangePlan(body, CustomerId, SubscriptionId, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -1386,7 +1386,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
 
             if (ShouldProcess("Reseller Subscription Renewal", "Set-GResellerSubscriptionRenewal"))
             {
-                WriteObject(subscriptions.ChangeRenewalSettings(body, CustomerId, SubscriptionId));
+                WriteObject(subscriptions.ChangeRenewalSettings(body, CustomerId, SubscriptionId, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -1463,7 +1463,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
 
             if (ShouldProcess("Reseller Subscription Seats", "Set-GResellerSubscriptionSeats"))
             {
-                WriteObject(subscriptions.ChangeSeats(body, CustomerId, SubscriptionId));
+                WriteObject(subscriptions.ChangeSeats(body, CustomerId, SubscriptionId, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -1540,7 +1540,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
 					{
 						WriteDebug("Attempting to remove " + toRemoveTarget + "...");
 
-                        subscriptions.Delete(CustomerId, SubscriptionId, DeletionType);
+                        subscriptions.Delete(CustomerId, SubscriptionId, DeletionType, StandardQueryParams: StandardQueryParams);
 							
 						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
 					}
@@ -1652,7 +1652,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
             {
                 if (ShouldProcess("Reseller Subscription", "Get-GResellerSubscription"))
                 {
-                    WriteObject(subscriptions.Get(CustomerId, SubscriptionId));
+                    WriteObject(subscriptions.Get(CustomerId, SubscriptionId, StandardQueryParams: StandardQueryParams));
                 }
             }
             else
@@ -1669,7 +1669,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
 
                 if (ShouldProcess("Reseller Subscription", "Get-GResellerSubscription"))
                 {
-                    WriteObject(subscriptions.List(properties).SelectMany(x => x.SubscriptionsValue).ToList());
+                    WriteObject(subscriptions.List(properties, StandardQueryParams: StandardQueryParams).SelectMany(x => x.SubscriptionsValue).ToList());
                 }
             }
         }
@@ -1990,7 +1990,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
 
             if (ShouldProcess("Reseller Subscription", "New-GResellerSubscription"))
             {
-                WriteObject(subscriptions.Insert(body, TargetCustomerId, properties));
+                WriteObject(subscriptions.Insert(body, TargetCustomerId, properties, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2042,7 +2042,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
         {
             if (ShouldProcess("Reseller Subscription Paid Service", "Start-GResellerSubscriptionPaidService"))
             {
-                WriteObject(subscriptions.StartPaidService(CustomerId, SubscriptionId));
+                WriteObject(subscriptions.StartPaidService(CustomerId, SubscriptionId, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2094,7 +2094,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
         {
             if (ShouldProcess("Reseller Subscription", "Suspend-GResellerSubscription"))
             {
-                WriteObject(subscriptions.Suspend(CustomerId, SubscriptionId));
+                WriteObject(subscriptions.Suspend(CustomerId, SubscriptionId, StandardQueryParams: StandardQueryParams));
             }
         }
     }

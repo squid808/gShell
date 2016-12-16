@@ -141,8 +141,10 @@
     <Compile Include="Cmdlets\Reports\Reports.cs" />
     <Compile Include="Cmdlets\Reseller\Reseller.cs" />
     <Compile Include="Cmdlets\SharedContacts\SharedContacts.cs" />
+    <Compile Include="Cmdlets\Utilities\NewGShellStandardQueryParameters.cs" />
     <Compile Include="Cmdlets\Utilities\JsonKeyModel.cs" />
     <Compile Include="Cmdlets\Utilities\OAuth2\AuthenticatedCmdletBase.cs" />
+    <Compile Include="Cmdlets\Utilities\OAuth2\StandardParamsCmdletBase.cs" />
     <Compile Include="Cmdlets\Utilities\OAuth2\ServiceAccountCmdletBase.cs" />
     <Compile Include="dotNet\Adminsettings\Google.Apis.admin.Adminsettings.adminsettings_v1.cs" />
     <Compile Include="dotNet\Adminsettings\Google.Apis.admin.Adminsettings.adminsettings_v1_gshell_dotnet.cs" />
@@ -192,6 +194,7 @@
     <Compile Include="dotNet\Utilities\OAuth2\DataStores\OAuth2JsonDataStore.cs" />
     <Compile Include="dotNet\Utilities\OAuth2\DataStores\OAuth2BinDataStore.cs" />
     <Compile Include="dotNet\Utilities\OAuth2\ServiceAccount.cs" />
+    <Compile Include="dotNet\Utilities\OAuth2\StandardQueryParameters.cs" />
     <Compile Include="dotNet\Utilities\SavedFile.cs" />
     <Compile Include="Cmdlets\Utilities\ScopeManager\ScopeManager.cs" />
     <Compile Include="dotNet\Utilities\Settings\gShellSettings.cs" />

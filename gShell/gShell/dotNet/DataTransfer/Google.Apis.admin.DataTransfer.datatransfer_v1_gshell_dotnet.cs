@@ -44,7 +44,7 @@ namespace gShell.Cmdlets.DataTransfer{
     /// <summary>
     /// A PowerShell-ready wrapper for the DataTransfer api, as well as the resources and methods therein.
     /// </summary>
-    public abstract class DataTransferBase : AuthenticatedCmdletBase
+    public abstract class DataTransferBase : StandardParamsCmdletBase
     {
 
         #region Properties
@@ -93,10 +93,10 @@ namespace gShell.Cmdlets.DataTransfer{
 
             /// <summary>Retrieves information about an application for the given application ID.</summary>
             /// <param name="ApplicationId">ID of the application resource to be retrieved.</param>
-            public Google.Apis.admin.DataTransfer.datatransfer_v1.Data.Application Get (long ApplicationId)
+            public Google.Apis.admin.DataTransfer.datatransfer_v1.Data.Application Get (long ApplicationId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.applications.Get(ApplicationId);
+                return mainBase.applications.Get(ApplicationId, StandardQueryParams);
             }
 
 
@@ -104,7 +104,7 @@ namespace gShell.Cmdlets.DataTransfer{
             /// <summary>Lists the applications available for data transfer for a customer.</summary>
             /// <param name="properties">The optional properties for this method.</param>
 
-            public List<Google.Apis.admin.DataTransfer.datatransfer_v1.Data.ApplicationsListResponse> List(gDataTransfer.Applications.ApplicationsListProperties properties= null)
+            public List<Google.Apis.admin.DataTransfer.datatransfer_v1.Data.ApplicationsListResponse> List(gDataTransfer.Applications.ApplicationsListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
                 properties = properties ?? new gDataTransfer.Applications.ApplicationsListProperties();
@@ -130,20 +130,20 @@ namespace gShell.Cmdlets.DataTransfer{
             /// <summary>Retrieves a data transfer request by its resource ID.</summary>
             /// <param name="DataTransferId">ID of the resource to be retrieved. This is returned in the response from the insert
             /// method.</param>
-            public Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer Get (string DataTransferId)
+            public Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer Get (string DataTransferId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.transfers.Get(DataTransferId);
+                return mainBase.transfers.Get(DataTransferId, StandardQueryParams);
             }
 
 
 
             /// <summary>Inserts a data transfer request.</summary>
             /// <param name="DataTransferBody">The body of the request.</param>
-            public Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer Insert (Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer DataTransferBody)
+            public Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer Insert (Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer DataTransferBody, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.transfers.Insert(DataTransferBody);
+                return mainBase.transfers.Insert(DataTransferBody, StandardQueryParams);
             }
 
 
@@ -151,7 +151,7 @@ namespace gShell.Cmdlets.DataTransfer{
             /// <summary>Lists the transfers for a customer by source user, destination user, or status.</summary>
             /// <param name="properties">The optional properties for this method.</param>
 
-            public List<Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfersListResponse> List(gDataTransfer.Transfers.TransfersListProperties properties= null)
+            public List<Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfersListResponse> List(gDataTransfer.Transfers.TransfersListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
                 properties = properties ?? new gDataTransfer.Transfers.TransfersListProperties();
@@ -243,9 +243,15 @@ namespace gShell.dotNet
             /// <summary>Retrieves information about an application for the given application ID.</summary>
             /// <param name="ApplicationId">ID of the application resource to be retrieved.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.DataTransfer.datatransfer_v1.Data.Application Get (long ApplicationId)
+            public Google.Apis.admin.DataTransfer.datatransfer_v1.Data.Application Get (long ApplicationId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var request = GetService().Applications.Get(ApplicationId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
 
 
 
@@ -256,11 +262,17 @@ namespace gShell.dotNet
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public List<Google.Apis.admin.DataTransfer.datatransfer_v1.Data.ApplicationsListResponse> List(
-                ApplicationsListProperties properties= null)
+                ApplicationsListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var results = new List<Google.Apis.admin.DataTransfer.datatransfer_v1.Data.ApplicationsListResponse>();
 
                 datatransfer_v1.ApplicationsResource.ListRequest request = GetService().Applications.List();
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
 
                 if (properties != null)
                 {
@@ -346,9 +358,15 @@ namespace gShell.dotNet
             /// <param name="DataTransferId">ID of the resource to be retrieved. This is returned in the response from the insert
             /// method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer Get (string DataTransferId)
+            public Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer Get (string DataTransferId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var request = GetService().Transfers.Get(DataTransferId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
 
 
 
@@ -358,9 +376,15 @@ namespace gShell.dotNet
             /// <summary>Inserts a data transfer request.</summary>
             /// <param name="DataTransferBody">The body of the request.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer Insert (Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer DataTransferBody)
+            public Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer Insert (Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfer DataTransferBody, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var request = GetService().Transfers.Insert(DataTransferBody);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
 
 
 
@@ -371,11 +395,17 @@ namespace gShell.dotNet
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public List<Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfersListResponse> List(
-                TransfersListProperties properties= null)
+                TransfersListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var results = new List<Google.Apis.admin.DataTransfer.datatransfer_v1.Data.DataTransfersListResponse>();
 
                 datatransfer_v1.TransfersResource.ListRequest request = GetService().Transfers.List();
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
 
                 if (properties != null)
                 {

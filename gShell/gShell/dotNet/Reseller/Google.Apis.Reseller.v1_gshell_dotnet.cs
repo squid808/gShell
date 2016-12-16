@@ -44,7 +44,7 @@ namespace gShell.Cmdlets.Reseller{
     /// <summary>
     /// A PowerShell-ready wrapper for the Reseller api, as well as the resources and methods therein.
     /// </summary>
-    public abstract class ResellerBase : AuthenticatedCmdletBase
+    public abstract class ResellerBase : StandardParamsCmdletBase
     {
 
         #region Properties
@@ -93,10 +93,10 @@ namespace gShell.Cmdlets.Reseller{
 
             /// <summary>Gets a customer resource if one exists and is owned by the reseller.</summary>
             /// <param name="CustomerId">Id of the Customer</param>
-            public Google.Apis.Reseller.v1.Data.Customer Get (string CustomerId)
+            public Google.Apis.Reseller.v1.Data.Customer Get (string CustomerId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.customers.Get(CustomerId);
+                return mainBase.customers.Get(CustomerId, StandardQueryParams);
             }
 
 
@@ -104,12 +104,12 @@ namespace gShell.Cmdlets.Reseller{
             /// <summary>Creates a customer resource if one does not already exist.</summary>
             /// <param name="CustomerBody">The body of the request.</param>
             /// <param name="properties">The optional properties for this method.</param>
-            public Google.Apis.Reseller.v1.Data.Customer Insert (Google.Apis.Reseller.v1.Data.Customer CustomerBody, gReseller.Customers.CustomersInsertProperties properties= null)
+            public Google.Apis.Reseller.v1.Data.Customer Insert (Google.Apis.Reseller.v1.Data.Customer CustomerBody, gReseller.Customers.CustomersInsertProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
                 properties = properties ?? new gReseller.Customers.CustomersInsertProperties();
 
-                return mainBase.customers.Insert(CustomerBody, properties);
+                return mainBase.customers.Insert(CustomerBody, properties, StandardQueryParams);
             }
 
 
@@ -118,10 +118,10 @@ namespace gShell.Cmdlets.Reseller{
             /// patch semantics.</summary>
             /// <param name="CustomerBody">The body of the request.</param>
             /// <param name="CustomerId">Id of the Customer</param>
-            public Google.Apis.Reseller.v1.Data.Customer Patch (Google.Apis.Reseller.v1.Data.Customer CustomerBody, string CustomerId)
+            public Google.Apis.Reseller.v1.Data.Customer Patch (Google.Apis.Reseller.v1.Data.Customer CustomerBody, string CustomerId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.customers.Patch(CustomerBody, CustomerId);
+                return mainBase.customers.Patch(CustomerBody, CustomerId, StandardQueryParams);
             }
 
 
@@ -129,10 +129,10 @@ namespace gShell.Cmdlets.Reseller{
             /// <summary>Update a customer resource if one it exists and is owned by the reseller.</summary>
             /// <param name="CustomerBody">The body of the request.</param>
             /// <param name="CustomerId">Id of the Customer</param>
-            public Google.Apis.Reseller.v1.Data.Customer Update (Google.Apis.Reseller.v1.Data.Customer CustomerBody, string CustomerId)
+            public Google.Apis.Reseller.v1.Data.Customer Update (Google.Apis.Reseller.v1.Data.Customer CustomerBody, string CustomerId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.customers.Update(CustomerBody, CustomerId);
+                return mainBase.customers.Update(CustomerBody, CustomerId, StandardQueryParams);
             }
 
 
@@ -154,10 +154,10 @@ namespace gShell.Cmdlets.Reseller{
             /// <param name="CustomerId">Id of the Customer</param>
             /// <param name="SubscriptionId">Id of the subscription,
             /// which is unique for a customer</param>
-            public Google.Apis.Reseller.v1.Data.Subscription Activate (string CustomerId, string SubscriptionId)
+            public Google.Apis.Reseller.v1.Data.Subscription Activate (string CustomerId, string SubscriptionId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.subscriptions.Activate(CustomerId, SubscriptionId);
+                return mainBase.subscriptions.Activate(CustomerId, SubscriptionId, StandardQueryParams);
             }
 
 
@@ -167,10 +167,10 @@ namespace gShell.Cmdlets.Reseller{
             /// <param name="CustomerId">Id of the Customer</param>
             /// <param name="SubscriptionId">Id of the subscription,
             /// which is unique for a customer</param>
-            public Google.Apis.Reseller.v1.Data.Subscription ChangePlan (Google.Apis.Reseller.v1.Data.ChangePlanRequest ChangePlanRequestBody, string CustomerId, string SubscriptionId)
+            public Google.Apis.Reseller.v1.Data.Subscription ChangePlan (Google.Apis.Reseller.v1.Data.ChangePlanRequest ChangePlanRequestBody, string CustomerId, string SubscriptionId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.subscriptions.ChangePlan(ChangePlanRequestBody, CustomerId, SubscriptionId);
+                return mainBase.subscriptions.ChangePlan(ChangePlanRequestBody, CustomerId, SubscriptionId, StandardQueryParams);
             }
 
 
@@ -180,10 +180,10 @@ namespace gShell.Cmdlets.Reseller{
             /// <param name="CustomerId">Id of the Customer</param>
             /// <param name="SubscriptionId">Id of the subscription,
             /// which is unique for a customer</param>
-            public Google.Apis.Reseller.v1.Data.Subscription ChangeRenewalSettings (Google.Apis.Reseller.v1.Data.RenewalSettings RenewalSettingsBody, string CustomerId, string SubscriptionId)
+            public Google.Apis.Reseller.v1.Data.Subscription ChangeRenewalSettings (Google.Apis.Reseller.v1.Data.RenewalSettings RenewalSettingsBody, string CustomerId, string SubscriptionId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.subscriptions.ChangeRenewalSettings(RenewalSettingsBody, CustomerId, SubscriptionId);
+                return mainBase.subscriptions.ChangeRenewalSettings(RenewalSettingsBody, CustomerId, SubscriptionId, StandardQueryParams);
             }
 
 
@@ -193,10 +193,10 @@ namespace gShell.Cmdlets.Reseller{
             /// <param name="CustomerId">Id of the Customer</param>
             /// <param name="SubscriptionId">Id of the subscription,
             /// which is unique for a customer</param>
-            public Google.Apis.Reseller.v1.Data.Subscription ChangeSeats (Google.Apis.Reseller.v1.Data.Seats SeatsBody, string CustomerId, string SubscriptionId)
+            public Google.Apis.Reseller.v1.Data.Subscription ChangeSeats (Google.Apis.Reseller.v1.Data.Seats SeatsBody, string CustomerId, string SubscriptionId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.subscriptions.ChangeSeats(SeatsBody, CustomerId, SubscriptionId);
+                return mainBase.subscriptions.ChangeSeats(SeatsBody, CustomerId, SubscriptionId, StandardQueryParams);
             }
 
 
@@ -207,10 +207,10 @@ namespace gShell.Cmdlets.Reseller{
             /// which is unique for a customer</param>
             /// <param name="DeletionType">Whether the subscription is to be fully
             /// cancelled or downgraded</param>
-            public void Delete (string CustomerId, string SubscriptionId, v1.SubscriptionsResource.DeleteRequest.DeletionTypeEnum DeletionType)
+            public void Delete (string CustomerId, string SubscriptionId, v1.SubscriptionsResource.DeleteRequest.DeletionTypeEnum DeletionType, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                mainBase.subscriptions.Delete(CustomerId, SubscriptionId, DeletionType);
+                mainBase.subscriptions.Delete(CustomerId, SubscriptionId, DeletionType, StandardQueryParams);
             }
 
 
@@ -219,10 +219,10 @@ namespace gShell.Cmdlets.Reseller{
             /// <param name="CustomerId">Id of the Customer</param>
             /// <param name="SubscriptionId">Id of the subscription,
             /// which is unique for a customer</param>
-            public Google.Apis.Reseller.v1.Data.Subscription Get (string CustomerId, string SubscriptionId)
+            public Google.Apis.Reseller.v1.Data.Subscription Get (string CustomerId, string SubscriptionId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.subscriptions.Get(CustomerId, SubscriptionId);
+                return mainBase.subscriptions.Get(CustomerId, SubscriptionId, StandardQueryParams);
             }
 
 
@@ -231,12 +231,12 @@ namespace gShell.Cmdlets.Reseller{
             /// <param name="SubscriptionBody">The body of the request.</param>
             /// <param name="CustomerId">Id of the Customer</param>
             /// <param name="properties">The optional properties for this method.</param>
-            public Google.Apis.Reseller.v1.Data.Subscription Insert (Google.Apis.Reseller.v1.Data.Subscription SubscriptionBody, string CustomerId, gReseller.Subscriptions.SubscriptionsInsertProperties properties= null)
+            public Google.Apis.Reseller.v1.Data.Subscription Insert (Google.Apis.Reseller.v1.Data.Subscription SubscriptionBody, string CustomerId, gReseller.Subscriptions.SubscriptionsInsertProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
                 properties = properties ?? new gReseller.Subscriptions.SubscriptionsInsertProperties();
 
-                return mainBase.subscriptions.Insert(SubscriptionBody, CustomerId, properties);
+                return mainBase.subscriptions.Insert(SubscriptionBody, CustomerId, properties, StandardQueryParams);
             }
 
 
@@ -244,7 +244,7 @@ namespace gShell.Cmdlets.Reseller{
             /// <summary>Lists subscriptions of a reseller, optionally filtered by a customer name prefix.</summary>
             /// <param name="properties">The optional properties for this method.</param>
 
-            public List<Google.Apis.Reseller.v1.Data.Subscriptions> List(gReseller.Subscriptions.SubscriptionsListProperties properties= null)
+            public List<Google.Apis.Reseller.v1.Data.Subscriptions> List(gReseller.Subscriptions.SubscriptionsListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
                 properties = properties ?? new gReseller.Subscriptions.SubscriptionsListProperties();
@@ -258,10 +258,10 @@ namespace gShell.Cmdlets.Reseller{
             /// <param name="CustomerId">Id of the Customer</param>
             /// <param name="SubscriptionId">Id of the subscription,
             /// which is unique for a customer</param>
-            public Google.Apis.Reseller.v1.Data.Subscription StartPaidService (string CustomerId, string SubscriptionId)
+            public Google.Apis.Reseller.v1.Data.Subscription StartPaidService (string CustomerId, string SubscriptionId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.subscriptions.StartPaidService(CustomerId, SubscriptionId);
+                return mainBase.subscriptions.StartPaidService(CustomerId, SubscriptionId, StandardQueryParams);
             }
 
 
@@ -270,10 +270,10 @@ namespace gShell.Cmdlets.Reseller{
             /// <param name="CustomerId">Id of the Customer</param>
             /// <param name="SubscriptionId">Id of the subscription,
             /// which is unique for a customer</param>
-            public Google.Apis.Reseller.v1.Data.Subscription Suspend (string CustomerId, string SubscriptionId)
+            public Google.Apis.Reseller.v1.Data.Subscription Suspend (string CustomerId, string SubscriptionId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.subscriptions.Suspend(CustomerId, SubscriptionId);
+                return mainBase.subscriptions.Suspend(CustomerId, SubscriptionId, StandardQueryParams);
             }
 
 
@@ -348,9 +348,15 @@ namespace gShell.dotNet
             /// <summary>Gets a customer resource if one exists and is owned by the reseller.</summary>
             /// <param name="CustomerId">Id of the Customer</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Reseller.v1.Data.Customer Get (string CustomerId)
+            public Google.Apis.Reseller.v1.Data.Customer Get (string CustomerId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var request = GetService().Customers.Get(CustomerId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
 
 
 
@@ -361,9 +367,15 @@ namespace gShell.dotNet
             /// <param name="CustomerBody">The body of the request.</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Reseller.v1.Data.Customer Insert (Google.Apis.Reseller.v1.Data.Customer CustomerBody, CustomersInsertProperties properties= null)
+            public Google.Apis.Reseller.v1.Data.Customer Insert (Google.Apis.Reseller.v1.Data.Customer CustomerBody, CustomersInsertProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var request = GetService().Customers.Insert(CustomerBody);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
 
                 if (properties != null)    {
                     request.CustomerAuthToken = properties.CustomerAuthToken;
@@ -377,9 +389,15 @@ namespace gShell.dotNet
             /// <param name="CustomerBody">The body of the request.</param>
             /// <param name="CustomerId">Id of the Customer</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Reseller.v1.Data.Customer Patch (Google.Apis.Reseller.v1.Data.Customer CustomerBody, string CustomerId)
+            public Google.Apis.Reseller.v1.Data.Customer Patch (Google.Apis.Reseller.v1.Data.Customer CustomerBody, string CustomerId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var request = GetService().Customers.Patch(CustomerBody, CustomerId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
 
 
 
@@ -390,9 +408,15 @@ namespace gShell.dotNet
             /// <param name="CustomerBody">The body of the request.</param>
             /// <param name="CustomerId">Id of the Customer</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Reseller.v1.Data.Customer Update (Google.Apis.Reseller.v1.Data.Customer CustomerBody, string CustomerId)
+            public Google.Apis.Reseller.v1.Data.Customer Update (Google.Apis.Reseller.v1.Data.Customer CustomerBody, string CustomerId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var request = GetService().Customers.Update(CustomerBody, CustomerId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
 
 
 
@@ -443,9 +467,15 @@ namespace gShell.dotNet
             /// <param name="SubscriptionId">Id of the subscription,
             /// which is unique for a customer</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Reseller.v1.Data.Subscription Activate (string CustomerId, string SubscriptionId)
+            public Google.Apis.Reseller.v1.Data.Subscription Activate (string CustomerId, string SubscriptionId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var request = GetService().Subscriptions.Activate(CustomerId, SubscriptionId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
 
 
 
@@ -458,9 +488,15 @@ namespace gShell.dotNet
             /// <param name="SubscriptionId">Id of the subscription,
             /// which is unique for a customer</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Reseller.v1.Data.Subscription ChangePlan (Google.Apis.Reseller.v1.Data.ChangePlanRequest ChangePlanRequestBody, string CustomerId, string SubscriptionId)
+            public Google.Apis.Reseller.v1.Data.Subscription ChangePlan (Google.Apis.Reseller.v1.Data.ChangePlanRequest ChangePlanRequestBody, string CustomerId, string SubscriptionId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var request = GetService().Subscriptions.ChangePlan(ChangePlanRequestBody, CustomerId, SubscriptionId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
 
 
 
@@ -473,9 +509,15 @@ namespace gShell.dotNet
             /// <param name="SubscriptionId">Id of the subscription,
             /// which is unique for a customer</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Reseller.v1.Data.Subscription ChangeRenewalSettings (Google.Apis.Reseller.v1.Data.RenewalSettings RenewalSettingsBody, string CustomerId, string SubscriptionId)
+            public Google.Apis.Reseller.v1.Data.Subscription ChangeRenewalSettings (Google.Apis.Reseller.v1.Data.RenewalSettings RenewalSettingsBody, string CustomerId, string SubscriptionId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var request = GetService().Subscriptions.ChangeRenewalSettings(RenewalSettingsBody, CustomerId, SubscriptionId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
 
 
 
@@ -488,9 +530,15 @@ namespace gShell.dotNet
             /// <param name="SubscriptionId">Id of the subscription,
             /// which is unique for a customer</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Reseller.v1.Data.Subscription ChangeSeats (Google.Apis.Reseller.v1.Data.Seats SeatsBody, string CustomerId, string SubscriptionId)
+            public Google.Apis.Reseller.v1.Data.Subscription ChangeSeats (Google.Apis.Reseller.v1.Data.Seats SeatsBody, string CustomerId, string SubscriptionId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var request = GetService().Subscriptions.ChangeSeats(SeatsBody, CustomerId, SubscriptionId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
 
 
 
@@ -504,9 +552,15 @@ namespace gShell.dotNet
             /// <param name="DeletionType">Whether the subscription is to be fully
             /// cancelled or downgraded</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void Delete (string CustomerId, string SubscriptionId, v1.SubscriptionsResource.DeleteRequest.DeletionTypeEnum DeletionType)
+            public void Delete (string CustomerId, string SubscriptionId, v1.SubscriptionsResource.DeleteRequest.DeletionTypeEnum DeletionType, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var request = GetService().Subscriptions.Delete(CustomerId, SubscriptionId, DeletionType);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
 
 
 
@@ -518,9 +572,15 @@ namespace gShell.dotNet
             /// <param name="SubscriptionId">Id of the subscription,
             /// which is unique for a customer</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Reseller.v1.Data.Subscription Get (string CustomerId, string SubscriptionId)
+            public Google.Apis.Reseller.v1.Data.Subscription Get (string CustomerId, string SubscriptionId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var request = GetService().Subscriptions.Get(CustomerId, SubscriptionId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
 
 
 
@@ -532,9 +592,15 @@ namespace gShell.dotNet
             /// <param name="CustomerId">Id of the Customer</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Reseller.v1.Data.Subscription Insert (Google.Apis.Reseller.v1.Data.Subscription SubscriptionBody, string CustomerId, SubscriptionsInsertProperties properties= null)
+            public Google.Apis.Reseller.v1.Data.Subscription Insert (Google.Apis.Reseller.v1.Data.Subscription SubscriptionBody, string CustomerId, SubscriptionsInsertProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var request = GetService().Subscriptions.Insert(SubscriptionBody, CustomerId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
 
                 if (properties != null)    {
                     request.CustomerAuthToken = properties.CustomerAuthToken;
@@ -547,11 +613,17 @@ namespace gShell.dotNet
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public List<Google.Apis.Reseller.v1.Data.Subscriptions> List(
-                SubscriptionsListProperties properties= null)
+                SubscriptionsListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var results = new List<Google.Apis.Reseller.v1.Data.Subscriptions>();
 
                 v1.SubscriptionsResource.ListRequest request = GetService().Subscriptions.List();
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
 
                 if (properties != null)
                 {
@@ -605,9 +677,15 @@ namespace gShell.dotNet
             /// <param name="SubscriptionId">Id of the subscription,
             /// which is unique for a customer</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Reseller.v1.Data.Subscription StartPaidService (string CustomerId, string SubscriptionId)
+            public Google.Apis.Reseller.v1.Data.Subscription StartPaidService (string CustomerId, string SubscriptionId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var request = GetService().Subscriptions.StartPaidService(CustomerId, SubscriptionId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
 
 
 
@@ -619,9 +697,15 @@ namespace gShell.dotNet
             /// <param name="SubscriptionId">Id of the subscription,
             /// which is unique for a customer</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Reseller.v1.Data.Subscription Suspend (string CustomerId, string SubscriptionId)
+            public Google.Apis.Reseller.v1.Data.Subscription Suspend (string CustomerId, string SubscriptionId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var request = GetService().Subscriptions.Suspend(CustomerId, SubscriptionId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
 
 
 

@@ -33,9 +33,6 @@ using gClassroom = gShell.dotNet.Classroom;
 
 namespace gShell.Cmdlets.Classroom
 {
-    /// <summary>A base class which provides support for service account integration and schema objects.</summary>
-    public abstract class ClassroomServiceAccountBase : ClassroomBase { }
-
     /// <summary>
     /// <para type="synopsis">Creates a new Classroom API MultipleChoiceSubmission object.</para>
     /// <para type="description">This provides a Cmdlet-Based approach to creating a MultipleChoiceSubmission object which may be required as a parameter for some other Cmdlets in the Classroom API category.</para>
@@ -2419,7 +2416,7 @@ namespace gShell.Cmdlets.Classroom.Courses
     [Cmdlet(VerbsCommon.New, "GClassroomCourse",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomCourse")]
-    public class NewGClassroomCourseCommand : ClassroomServiceAccountBase
+    public class NewGClassroomCourseCommand : ClassroomBase
     {
         #region Properties
 
@@ -2439,7 +2436,7 @@ namespace gShell.Cmdlets.Classroom.Courses
         {
             if (ShouldProcess("Classroom Courses", "New-GClassroomCourse"))
             {
-                WriteObject(courses.Create(CourseBody));
+                WriteObject(courses.Create(CourseBody, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2461,7 +2458,7 @@ namespace gShell.Cmdlets.Classroom.Courses
     [Cmdlet(VerbsCommon.Remove, "GClassroomCourse",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GClassroomCourse")]
-    public class RemoveGClassroomCourseCommand : ClassroomServiceAccountBase
+    public class RemoveGClassroomCourseCommand : ClassroomBase
     {
         #region Properties
 
@@ -2498,7 +2495,7 @@ namespace gShell.Cmdlets.Classroom.Courses
                     {
                         WriteDebug("Attempting to remove " + toRemoveTarget + "...");
 
-                        WriteObject(courses.Delete(Id));
+                        WriteObject(courses.Delete(Id, StandardQueryParams: StandardQueryParams));
 
                         WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
                     }
@@ -2539,7 +2536,7 @@ namespace gShell.Cmdlets.Classroom.Courses
         SupportsShouldProcess = true,
         DefaultParameterSetName = "one",
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GClassroomCourse")]
-    public class GetGClassroomCourseCommand : ClassroomServiceAccountBase
+    public class GetGClassroomCourseCommand : ClassroomBase
     {
         #region Properties
 
@@ -2608,7 +2605,7 @@ namespace gShell.Cmdlets.Classroom.Courses
             {
                 if (ParameterSetName == "one")
                 {
-                    WriteObject(courses.Get(Id));
+                    WriteObject(courses.Get(Id, StandardQueryParams: StandardQueryParams));
                 }
                 else
                 {
@@ -2619,7 +2616,7 @@ namespace gShell.Cmdlets.Classroom.Courses
                         PageSize = PageSize
                     };
 
-                    WriteObject(courses.List(properties).SelectMany(x => x.Courses).ToList());
+                    WriteObject(courses.List(properties, StandardQueryParams: StandardQueryParams).SelectMany(x => x.Courses).ToList());
                 }
             }
         }
@@ -2642,7 +2639,7 @@ namespace gShell.Cmdlets.Classroom.Courses
     [Cmdlet(VerbsCommon.Set, "GClassroomCourse",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GClassroomCourse")]
-    public class SetGClassroomCourseCommand : ClassroomServiceAccountBase
+    public class SetGClassroomCourseCommand : ClassroomBase
     {
         #region Properties
 
@@ -2689,8 +2686,7 @@ namespace gShell.Cmdlets.Classroom.Courses
                     UpdateMask = UpdateMask
                 };
 
-
-                WriteObject(courses.Patch(CourseBody, Id, properties));
+                WriteObject(courses.Patch(CourseBody, Id, properties, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2716,7 +2712,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Aliases
     [Cmdlet(VerbsCommon.New, "GClassroomAlias",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomAlias")]
-    public class NewGClassroomAliasCommand : ClassroomServiceAccountBase
+    public class NewGClassroomAliasCommand : ClassroomBase
     {
         #region Properties
 
@@ -2749,7 +2745,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Aliases
         {
             if (ShouldProcess("Classroom Aliases", "New-GClassroomAlias"))
             {
-                WriteObject(courses.aliases.Create(CourseAliasBody, CourseId));
+                WriteObject(courses.aliases.Create(CourseAliasBody, CourseId, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2771,7 +2767,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Aliases
     [Cmdlet(VerbsCommon.Remove, "GClassroomAlias",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GClassroomAlias")]
-    public class RemoveGClassroomAliasCommand : ClassroomServiceAccountBase
+    public class RemoveGClassroomAliasCommand : ClassroomBase
     {
         #region Properties
 
@@ -2817,7 +2813,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Aliases
                     {
                         WriteDebug("Attempting to remove " + toRemoveTarget + "...");
 
-                        WriteObject(courses.aliases.Delete(CourseId, Alias));
+                        WriteObject(courses.aliases.Delete(CourseId, Alias, StandardQueryParams: StandardQueryParams));
 
                         WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
                     }
@@ -2852,7 +2848,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Aliases
     [Cmdlet(VerbsCommon.Get, "GClassroomAlias",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GClassroomAlias")]
-    public class GetGClassroomAliasCommand : ClassroomServiceAccountBase
+    public class GetGClassroomAliasCommand : ClassroomBase
     {
         #region Properties
 
@@ -2889,7 +2885,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Aliases
                     PageSize = PageSize
                 };
 
-                WriteObject(courses.aliases.List(CourseId, properties).SelectMany(x => x.Aliases).ToList());
+                WriteObject(courses.aliases.List(CourseId, properties, StandardQueryParams: StandardQueryParams).SelectMany(x => x.Aliases).ToList());
             }
         }
     }
@@ -2914,7 +2910,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Students
     [Cmdlet(VerbsCommon.New, "GClassroomStudent",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomStudent")]
-    public class NewGClassroomStudentCommand : ClassroomServiceAccountBase
+    public class NewGClassroomStudentCommand : ClassroomBase
     {
         #region Properties
 
@@ -2962,7 +2958,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Students
                 };
 
 
-                WriteObject(courses.students.Create(StudentBody, CourseId, properties));
+                WriteObject(courses.students.Create(StudentBody, CourseId, properties, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2984,7 +2980,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Students
     [Cmdlet(VerbsCommon.Remove, "GClassroomStudent",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GClassroomStudent")]
-    public class RemoveGClassroomStudentCommand : ClassroomServiceAccountBase
+    public class RemoveGClassroomStudentCommand : ClassroomBase
     {
         #region Properties
 
@@ -3032,7 +3028,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Students
                     {
                         WriteDebug("Attempting to remove " + toRemoveTarget + "...");
 
-                        WriteObject(courses.students.Delete(CourseId, UserId));
+                        WriteObject(courses.students.Delete(CourseId, UserId, StandardQueryParams: StandardQueryParams));
 
                         WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
                     }
@@ -3073,7 +3069,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Students
         SupportsShouldProcess = true,
         DefaultParameterSetName = "one",
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GClassroomStudent")]
-    public class GetGClassroomStudentCommand : ClassroomServiceAccountBase
+    public class GetGClassroomStudentCommand : ClassroomBase
     {
         #region Properties
 
@@ -3129,7 +3125,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Students
             {
                 if (ParameterSetName == "one")
                 {
-                    WriteObject(courses.students.Get(CourseId, UserId));
+                    WriteObject(courses.students.Get(CourseId, UserId, StandardQueryParams: StandardQueryParams));
                 }
                 else
                 {
@@ -3138,7 +3134,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Students
                         PageSize = PageSize
                     };
 
-                    WriteObject(courses.students.List(CourseId, properties).SelectMany(x => x.Students).ToList());
+                    WriteObject(courses.students.List(CourseId, properties, StandardQueryParams: StandardQueryParams).SelectMany(x => x.Students).ToList());
                 }
             }
         }
@@ -3164,7 +3160,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Teachers
     [Cmdlet(VerbsCommon.New, "GClassroomTeacher",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomTeacher")]
-    public class NewGClassroomTeacherCommand : ClassroomServiceAccountBase
+    public class NewGClassroomTeacherCommand : ClassroomBase
     {
         #region Properties
 
@@ -3195,7 +3191,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Teachers
         {
             if (ShouldProcess("Classroom Teachers", "New-GClassroomTeacher"))
             {
-                WriteObject(courses.teachers.Create(TeacherBody, CourseId));
+                WriteObject(courses.teachers.Create(TeacherBody, CourseId, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -3217,7 +3213,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Teachers
     [Cmdlet(VerbsCommon.Remove, "GClassroomTeacher",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GClassroomTeacher")]
-    public class RemoveGClassroomTeacherCommand : ClassroomServiceAccountBase
+    public class RemoveGClassroomTeacherCommand : ClassroomBase
     {
         #region Properties
 
@@ -3265,7 +3261,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Teachers
                     {
                         WriteDebug("Attempting to remove " + toRemoveTarget + "...");
 
-                        WriteObject(courses.teachers.Delete(CourseId, UserId));
+                        WriteObject(courses.teachers.Delete(CourseId, UserId, StandardQueryParams: StandardQueryParams));
 
                         WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
                     }
@@ -3306,7 +3302,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Teachers
         SupportsShouldProcess = true,
         DefaultParameterSetName = "one",
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GClassroomTeacher")]
-    public class GetGClassroomTeacherCommand : ClassroomServiceAccountBase
+    public class GetGClassroomTeacherCommand : ClassroomBase
     {
         #region Properties
 
@@ -3362,7 +3358,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Teachers
             {
                 if (ParameterSetName == "one")
                 {
-                    WriteObject(courses.teachers.Get(CourseId, UserId));
+                    WriteObject(courses.teachers.Get(CourseId, UserId, StandardQueryParams: StandardQueryParams));
                 }
                 else
                 {
@@ -3371,7 +3367,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Teachers
                         PageSize = PageSize
                     };
 
-                    WriteObject(courses.teachers.List(CourseId, properties).SelectMany(x => x.Teachers).ToList());
+                    WriteObject(courses.teachers.List(CourseId, properties, StandardQueryParams: StandardQueryParams).SelectMany(x => x.Teachers).ToList());
                 }
             }
         }
@@ -3397,7 +3393,7 @@ namespace gShell.Cmdlets.Classroom.Invitations
     [Cmdlet(VerbsLifecycle.Approve, "GClassroomInvitation",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Approve-GClassroomInvitation")]
-    public class ApproveGClassroomInvitationCommand : ClassroomServiceAccountBase
+    public class ApproveGClassroomInvitationCommand : ClassroomBase
     {
         #region Properties
 
@@ -3416,7 +3412,7 @@ namespace gShell.Cmdlets.Classroom.Invitations
         {
             if (ShouldProcess("Classroom Invitations", "Approve-GClassroomInvitation"))
             {
-                WriteObject(invitations.Accept(Id));
+                WriteObject(invitations.Accept(Id, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -3438,7 +3434,7 @@ namespace gShell.Cmdlets.Classroom.Invitations
     [Cmdlet(VerbsCommon.New, "GClassroomInvitation",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomInvitation")]
-    public class NewGClassroomInvitationCommand : ClassroomServiceAccountBase
+    public class NewGClassroomInvitationCommand : ClassroomBase
     {
         #region Properties
 
@@ -3458,7 +3454,7 @@ namespace gShell.Cmdlets.Classroom.Invitations
         {
             if (ShouldProcess("Classroom Invitations", "New-GClassroomInvitation"))
             {
-                WriteObject(invitations.Create(InvitationBody));
+                WriteObject(invitations.Create(InvitationBody, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -3480,7 +3476,7 @@ namespace gShell.Cmdlets.Classroom.Invitations
     [Cmdlet(VerbsCommon.Remove, "GClassroomInvitation",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GClassroomInvitation")]
-    public class RemoveGClassroomInvitationCommand : ClassroomServiceAccountBase
+    public class RemoveGClassroomInvitationCommand : ClassroomBase
     {
         #region Properties
 
@@ -3515,7 +3511,7 @@ namespace gShell.Cmdlets.Classroom.Invitations
                     {
                         WriteDebug("Attempting to remove " + toRemoveTarget + "...");
 
-                        WriteObject(invitations.Delete(Id));
+                        WriteObject(invitations.Delete(Id, StandardQueryParams: StandardQueryParams));
 
                         WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
                     }
@@ -3556,7 +3552,7 @@ namespace gShell.Cmdlets.Classroom.Invitations
         SupportsShouldProcess = true,
         DefaultParameterSetName = "one",
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GClassroomInvitation")]
-    public class GetGClassroomInvitationCommand : ClassroomServiceAccountBase
+    public class GetGClassroomInvitationCommand : ClassroomBase
     {
         #region Properties
 
@@ -3632,7 +3628,7 @@ namespace gShell.Cmdlets.Classroom.Invitations
                         PageSize = PageSize
                     };
 
-                    WriteObject(invitations.List(properties).SelectMany(x => x.Invitations).ToList());
+                    WriteObject(invitations.List(properties, StandardQueryParams: StandardQueryParams).SelectMany(x => x.Invitations).ToList());
                 }
             }
         }
@@ -3658,7 +3654,7 @@ namespace gShell.Cmdlets.Classroom.UserProfiles
     [Cmdlet(VerbsCommon.Get, "GClassroomUserProfile",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GClassroomUserProfile")]
-    public class GetGClassroomUserProfileCommand : ClassroomServiceAccountBase
+    public class GetGClassroomUserProfileCommand : ClassroomBase
     {
         #region Properties
 
@@ -3679,7 +3675,7 @@ namespace gShell.Cmdlets.Classroom.UserProfiles
         {
             if (ShouldProcess("Classroom UserProfiles", "Get-GClassroomUserProfile"))
             {
-                WriteObject(userProfiles.Get(UserId));
+                WriteObject(userProfiles.Get(UserId, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -3704,7 +3700,7 @@ namespace gShell.Cmdlets.Classroom.Courses.CourseWork
     [Cmdlet("New", "GClassroomCourseWork",
     SupportsShouldProcess = true,
     HelpUri = @"https://github.com/squid808/gShell/wiki/Create-GClassroomCourseWork")]
-    public class NewGClassroomCourseWorkCommand : ClassroomServiceAccountBase
+    public class NewGClassroomCourseWorkCommand : ClassroomBase
     {
         #region Properties
 
@@ -3735,7 +3731,7 @@ namespace gShell.Cmdlets.Classroom.Courses.CourseWork
             if (ShouldProcess("Classroom CourseWork", "New-GClassroomCourseWork"))
             {
 
-                WriteObject(courses.courseWork.Create(CourseWorkBody, CourseId));
+                WriteObject(courses.courseWork.Create(CourseWorkBody, CourseId, StandardQueryParams: StandardQueryParams));
             }
 
         }
@@ -3764,7 +3760,7 @@ namespace gShell.Cmdlets.Classroom.Courses.CourseWork
     SupportsShouldProcess = true,
     DefaultParameterSetName = "one",
     HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GClassroomCourseWork")]
-    public class GetGClassroomCourseWorkCommand : ClassroomServiceAccountBase
+    public class GetGClassroomCourseWorkCommand : ClassroomBase
     {
         #region Properties
 
@@ -3845,7 +3841,7 @@ namespace gShell.Cmdlets.Classroom.Courses.CourseWork
                     };
 
 
-                    WriteObject(courses.courseWork.List(CourseId, properties));
+                    WriteObject(courses.courseWork.List(CourseId, properties, StandardQueryParams: StandardQueryParams));
                 }
             }
         }
@@ -3878,7 +3874,7 @@ namespace gShell.Cmdlets.Classroom.Courses.CourseWork.StudentSubmissions
     SupportsShouldProcess = true,
     DefaultParameterSetName = "one",
     HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GClassroomStudentSubmission")]
-    public class GetGClassroomStudentSubmissionCommand : ClassroomServiceAccountBase
+    public class GetGClassroomStudentSubmissionCommand : ClassroomBase
     {
         #region Properties
 
@@ -3969,7 +3965,7 @@ namespace gShell.Cmdlets.Classroom.Courses.CourseWork.StudentSubmissions
                         PageSize = this.PageSize
                     };
 
-                    WriteObject(courses.courseWork.studentSubmissions.List(CourseId, CourseWorkId, properties));
+                    WriteObject(courses.courseWork.studentSubmissions.List(CourseId, CourseWorkId, properties, StandardQueryParams: StandardQueryParams));
                 }
             }
 
@@ -3993,7 +3989,7 @@ namespace gShell.Cmdlets.Classroom.Courses.CourseWork.StudentSubmissions
     [Cmdlet("Set", "GClassroomStudentSubmissionAttachment",
     SupportsShouldProcess = true,
     HelpUri = @"https://github.com/squid808/gShell/wiki/ModifyAttachments-GClassroomStudentSubmission")]
-    public class SetGClassroomStudentSubmissionAttachmentCommand : ClassroomServiceAccountBase
+    public class SetGClassroomStudentSubmissionAttachmentCommand : ClassroomBase
     {
         #region Properties
 
@@ -4045,7 +4041,7 @@ namespace gShell.Cmdlets.Classroom.Courses.CourseWork.StudentSubmissions
                         AddAttachments = this.AddAttachments
                     };
 
-                WriteObject(courses.courseWork.studentSubmissions.ModifyAttachments(ModifyAttachmentsRequestBody, CourseId, CourseWorkId, Id));
+                WriteObject(courses.courseWork.studentSubmissions.ModifyAttachments(ModifyAttachmentsRequestBody, CourseId, CourseWorkId, Id, StandardQueryParams: StandardQueryParams));
             }
 
         }
@@ -4084,7 +4080,7 @@ namespace gShell.Cmdlets.Classroom.Courses.CourseWork.StudentSubmissions
     SupportsShouldProcess = true,
     DefaultParameterSetName = "update",
     HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GClassroomStudentSubmission")]
-    public class SetGClassroomStudentSubmissionCommand : ClassroomServiceAccountBase
+    public class SetGClassroomStudentSubmissionCommand : ClassroomBase
     {
         #region Properties
 
@@ -4175,17 +4171,17 @@ namespace gShell.Cmdlets.Classroom.Courses.CourseWork.StudentSubmissions
                 if (ParameterSetName == "reclaim")
                 {
                     var body = new Google.Apis.Classroom.v1.Data.ReclaimStudentSubmissionRequest();
-                    WriteObject(courses.courseWork.studentSubmissions.Reclaim(body, CourseId, CourseWorkId, Id));
+                    WriteObject(courses.courseWork.studentSubmissions.Reclaim(body, CourseId, CourseWorkId, Id, StandardQueryParams: StandardQueryParams));
                 }
                 else if (ParameterSetName == "return")
                 {
                     var body = new Google.Apis.Classroom.v1.Data.ReturnStudentSubmissionRequest();
-                    WriteObject(courses.courseWork.studentSubmissions.ClassroomReturn(body, CourseId, CourseWorkId, Id));
+                    WriteObject(courses.courseWork.studentSubmissions.ClassroomReturn(body, CourseId, CourseWorkId, Id, StandardQueryParams: StandardQueryParams));
                 }
                 else if (ParameterSetName == "turnIn")
                 {
                     var body = new Google.Apis.Classroom.v1.Data.TurnInStudentSubmissionRequest();
-                    WriteObject(courses.courseWork.studentSubmissions.TurnIn(body, CourseId, CourseWorkId, Id));
+                    WriteObject(courses.courseWork.studentSubmissions.TurnIn(body, CourseId, CourseWorkId, Id, StandardQueryParams: StandardQueryParams));
                 }
                 else
                 {
@@ -4196,7 +4192,7 @@ namespace gShell.Cmdlets.Classroom.Courses.CourseWork.StudentSubmissions
                     };
 
                     WriteObject(courses.courseWork.studentSubmissions.Patch(StudentSubmissionBody, CourseId,
-                        CourseWorkId, Id, properties));
+                        CourseWorkId, Id, properties, StandardQueryParams: StandardQueryParams));
                 }
             }
 
@@ -4223,7 +4219,7 @@ namespace gShell.Cmdlets.Classroom.UserProfiles.GuardianInvitations
     [Cmdlet("New", "GClassroomGuardianInvitation",
     SupportsShouldProcess = true,
     HelpUri = @"https://github.com/squid808/gShell/wiki/New-GClassroomGuardianInvitation")]
-    public class NewGClassroomGuardianInvitationCommand : ClassroomServiceAccountBase
+    public class NewGClassroomGuardianInvitationCommand : ClassroomBase
     {
         #region Properties
 
@@ -4252,7 +4248,7 @@ namespace gShell.Cmdlets.Classroom.UserProfiles.GuardianInvitations
 
             if (ShouldProcess("Classroom GuardianInvitations", "Create-GClassroomGuardianInvitation"))
             {
-                WriteObject(userProfiles.guardianInvitations.Create(GuardianInvitationBody, StudentId));
+                WriteObject(userProfiles.guardianInvitations.Create(GuardianInvitationBody, StudentId, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -4280,7 +4276,7 @@ namespace gShell.Cmdlets.Classroom.UserProfiles.GuardianInvitations
     SupportsShouldProcess = true,
     DefaultParameterSetName = "one",
     HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GClassroomGuardianInvitation")]
-    public class GetGClassroomGuardianInvitationCommand : ClassroomServiceAccountBase
+    public class GetGClassroomGuardianInvitationCommand : ClassroomBase
     {
         #region Properties
 
@@ -4350,7 +4346,7 @@ namespace gShell.Cmdlets.Classroom.UserProfiles.GuardianInvitations
             {
                 if (ParameterSetName == "one")
                 {
-                    WriteObject(userProfiles.guardianInvitations.Get(StudentId, InvitationId));
+                    WriteObject(userProfiles.guardianInvitations.Get(StudentId, InvitationId, StandardQueryParams: StandardQueryParams));
                 }
                 else
                 {
@@ -4361,7 +4357,7 @@ namespace gShell.Cmdlets.Classroom.UserProfiles.GuardianInvitations
                         PageSize = this.PageSize
                     };
 
-                    WriteObject(userProfiles.guardianInvitations.List(StudentId, properties));
+                    WriteObject(userProfiles.guardianInvitations.List(StudentId, properties, StandardQueryParams: StandardQueryParams));
                 }
             }
 
@@ -4385,7 +4381,7 @@ namespace gShell.Cmdlets.Classroom.UserProfiles.GuardianInvitations
     [Cmdlet("Set", "GClassroomGuardianInvitation",
     SupportsShouldProcess = true,
     HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GClassroomGuardianInvitation")]
-    public class SetGClassroomGuardianInvitationCommand : ClassroomServiceAccountBase
+    public class SetGClassroomGuardianInvitationCommand : ClassroomBase
     {
         #region Properties
 
@@ -4440,7 +4436,7 @@ namespace gShell.Cmdlets.Classroom.UserProfiles.GuardianInvitations
                 };
 
 
-                WriteObject(userProfiles.guardianInvitations.Patch(GuardianInvitationBody, StudentId, InvitationId, properties));
+                WriteObject(userProfiles.guardianInvitations.Patch(GuardianInvitationBody, StudentId, InvitationId, properties, StandardQueryParams: StandardQueryParams));
             }
 
         }
@@ -4467,7 +4463,7 @@ namespace gShell.Cmdlets.Classroom.UserProfiles.Guardians
     [Cmdlet("Remove", "GClassroomGuardian",
     SupportsShouldProcess = true,
     HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GClassroomGuardian")]
-    public class RemoveGClassroomGuardianCommand : ClassroomServiceAccountBase
+    public class RemoveGClassroomGuardianCommand : ClassroomBase
     {
         #region Properties
 
@@ -4510,7 +4506,7 @@ namespace gShell.Cmdlets.Classroom.UserProfiles.Guardians
 			        try
 			        {
 
-			            WriteObject(userProfiles.guardians.Delete(StudentId, GuardianId));
+                        WriteObject(userProfiles.guardians.Delete(StudentId, GuardianId, StandardQueryParams: StandardQueryParams));
 			        }
                     catch (Exception e)
                     {
@@ -4550,7 +4546,7 @@ namespace gShell.Cmdlets.Classroom.UserProfiles.Guardians
     SupportsShouldProcess = true,
     DefaultParameterSetName = "one",
     HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GClassroomGuardian")]
-    public class GetGClassroomGuardianCommand : ClassroomServiceAccountBase
+    public class GetGClassroomGuardianCommand : ClassroomBase
     {
         #region Properties
 
@@ -4601,7 +4597,7 @@ namespace gShell.Cmdlets.Classroom.UserProfiles.Guardians
             {
                 if (ParameterSetName == "one")
                 {
-                    WriteObject(userProfiles.guardians.Get(StudentId, GuardianId));
+                    WriteObject(userProfiles.guardians.Get(StudentId, GuardianId, StandardQueryParams: StandardQueryParams));
                 }
                 else
                 {

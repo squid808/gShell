@@ -8,7 +8,7 @@ using gShell.dotNet.Utilities.OAuth2;
 
 namespace gShell.Cmdlets.Utilities.OAuth2
 {
-    public abstract class ServiceAccountCmdletBase : AuthenticatedCmdletBase
+    public abstract class ServiceAccountCmdletBase : StandardParamsCmdletBase
     {
         /// <summary>Gets or sets the email account the gShell Service Account should impersonate.</summary>
         protected static string gShellServiceAccount { get; set; }
