@@ -293,7 +293,7 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
                 while (!isReadOnlyChosen)
                 {
                     PrintPretty(string.Format("\nWould you like to view all {0} scopes [a], "+
-                        "the {1} read-only scopes [r] or {2} read-write scopes [w]?",
+                        "the {1} read-only scopes [r] or {2} all other scopes [o]?",
                         possibleScopes.Count.ToString(), readOnlyScopes.Count.ToString(), 
                         actionOnlyScopes.Count.ToString()), "Green");
 
@@ -314,7 +314,7 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
                             useReadOnlyScopes = true;
                             isReadOnlyChosen = true;
                             break;
-                        case "w":
+                        case "o":
                             useReadOnlyScopes = false;
                             isReadOnlyChosen = true;
                             break;
