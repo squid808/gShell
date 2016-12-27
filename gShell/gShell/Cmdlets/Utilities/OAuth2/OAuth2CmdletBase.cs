@@ -206,8 +206,8 @@ namespace gShell.Cmdlets.Utilities.OAuth2
                 if (domain != null) user = OAuth2Base.CheckUser(domain, user);
             }
 
-            //now find out if that domain has a parent domain
-            if (!string.IsNullOrWhiteSpace(domain) &&
+            //now find out if that domain has a parent domain if we don't have a user provided even by default
+            if (!string.IsNullOrWhiteSpace(domain) && string.IsNullOrWhiteSpace(user) &&
                 !string.IsNullOrWhiteSpace(OAuth2Base.infoConsumer.GetDomain(domain).parentDomain))
             {
                 var domainParent = OAuth2Base.infoConsumer.GetDomainMainParent(domain);
