@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 
 using Google.Apis.Auth.OAuth2;
@@ -88,10 +89,8 @@ namespace gShell.dotNet.Utilities.OAuth2
             {
                 return info.domains[Domain];
             }
-            else
-            {
-                return null;
-            }
+            
+            return null;
         }
 
         /// <summary>Return all Domains.</summary>
@@ -134,7 +133,103 @@ namespace gShell.dotNet.Utilities.OAuth2
 
             dataStore.SaveInfo(info);
         }
+        #endregion
 
+        #region Domain Hierarchy
+
+        /// <summary>Returns the top-most parent domain for the provided domain.</summary>
+        public string GetDomainMainParent(string Domain)
+        {
+            string parent = info.domains[Domain].parentDomain;
+
+            if (!string.IsNullOrWhiteSpace(parent))
+            {
+                return GetDomainMainParent(parent);
+            }
+            else
+            {
+                return Domain;
+            }
+        }
+
+        /// <summary>Get the domain's parent domain.</summary>
+        public string GetDomainParent(string Domain)
+        {
+            return info.domains[Domain].parentDomain;
+        }
+
+        /// <summary>Set the domain's parent domain.</summary>
+        public void SetDomainParent(string Domain, string ParentDomain)
+        {
+            info.domains[Domain].parentDomain = ParentDomain;
+            dataStore.SaveInfo(info);
+        }
+
+        /// <summary>Check if a domain has a parent domain.</summary>
+        public bool DomainParentExists(string Domain)
+        {
+            return string.IsNullOrWhiteSpace(info.domains[Domain].parentDomain);
+        }
+
+        /// <summary>Removes the parent domain from a domain.</summary>
+        public void RemoveDomainParent(string Domain)
+        {
+            info.domains[Domain].parentDomain = null;
+            dataStore.SaveInfo(info);
+        }
+
+        /// <summary>Get the child domains for a domain.</summary>
+        public string[] GetDomainChildren(string Domain)
+        {
+            return info.domains[Domain].childDomains;
+        }
+
+        /// <summary></summary>
+        public void SetDomainChildren(string Domain, string[] DomainChildren)
+        {
+            if (DomainChildrenExist(Domain))
+            {
+                List<string> current = info.domains[Domain].childDomains.ToList();
+                info.domains[Domain].childDomains = current.Union(DomainChildren).ToArray();
+                dataStore.SaveInfo(info);
+            }
+            else
+            {
+                info.domains[Domain].childDomains = DomainChildren;
+                dataStore.SaveInfo(info);
+            }
+        }
+
+        /// <summary>Check if the domain has child domains.</summary>
+        public bool DomainChildrenExist(string Domain)
+        {
+            return info.domains[Domain].childDomains != null && info.domains[Domain].childDomains.Length > 0;
+        }
+
+        /// <summary>Remove all child domains.</summary>
+        public void RemoveDomainChildren(string Domain)
+        {
+            info.domains[Domain].childDomains = null;
+            dataStore.SaveInfo(info);
+        }
+
+        /// <summary>Remove the provided child domains.</summary>
+        public void RemoveDomainChildren(string Domain, string[] DomainChildrenToRemove)
+        {
+            var children = info.domains[Domain].childDomains;
+
+            var results = children.Except(DomainChildrenToRemove).ToArray();
+
+            if (results.Length > 0)
+            {
+                info.domains[Domain].childDomains = results;
+                dataStore.SaveInfo(info);
+            }
+            else
+            {
+                RemoveDomainChildren(Domain);
+            }
+        }
         #endregion
 
         #region DefaultDomain
