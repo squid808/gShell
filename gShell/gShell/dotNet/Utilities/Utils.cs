@@ -16,6 +16,8 @@ namespace gShell.dotNet.Utilities
 
             if (!userName.Contains("@"))
             {
+                if (string.IsNullOrWhiteSpace(domain)) return null;
+
                 userName += "@" + domain;
             }
 

@@ -252,7 +252,7 @@ namespace gShell.Cmdlets.Reports.GRepUserUsageReport
                 if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
 
                 //Allow for the use of 'all'
-                string _userKey = (UserKey == "all") ? "all" : GetFullEmailAddress(UserKey, GAuthId);
+                string _userKey = (UserKey == "all") ? "all" : GetFullEmailAddress(UserKey, authUserInfo);
 
                 WriteObject(userUsageReport.Get(_userKey, _datestring, properties, StandardQueryParams: StandardQueryParams));
             }
@@ -622,11 +622,11 @@ namespace gShell.Cmdlets.Reports.GRepActivity
                         body.Params__ = new Dictionary<string, string>();
                         body.Params__["ttl"] = Ttl;
                     }
-                    WriteObject(activities.Watch(body, GetFullEmailAddress(UserKey, GAuthId), ApplicationName.ToString(), StandardQueryParams: StandardQueryParams));
+                    WriteObject(activities.Watch(body, GetFullEmailAddress(UserKey, authUserInfo), ApplicationName.ToString(), StandardQueryParams: StandardQueryParams));
                 }
                 else
                 {
-                    WriteObject(activities.Watch(ChannelBody, GetFullEmailAddress(UserKey, GAuthId), ApplicationName.ToString(), StandardQueryParams: StandardQueryParams));
+                    WriteObject(activities.Watch(ChannelBody, GetFullEmailAddress(UserKey, authUserInfo), ApplicationName.ToString(), StandardQueryParams: StandardQueryParams));
                 }
             }
         }
@@ -796,7 +796,7 @@ namespace gShell.Cmdlets.Reports.GRepActivity
                     properties.TotalResults = MaxResults.Value;
 
                 //Allow for the use of 'all'
-                string _userKey = (UserKey == "all") ? "all" : GetFullEmailAddress(UserKey, GAuthId);
+                string _userKey = (UserKey == "all") ? "all" : GetFullEmailAddress(UserKey, authUserInfo);
 
                 WriteObject(activities.List(_userKey, ApplicationName.ToString(), properties, StandardQueryParams: StandardQueryParams).SelectMany(x => x.Items).ToList());
             }

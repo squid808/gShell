@@ -10,7 +10,7 @@ namespace gShell.Cmdlets.Utilities
     {
         protected override void BeginProcessing() { }
 
-        protected override AuthenticatedUserInfo Authenticate(IEnumerable<string> Scopes, ClientSecrets Secrets, string Domain=null) { return null; }
+        protected override AuthenticatedUserInfo Authenticate(AuthenticatedUserInfo AuthUserInfo, ClientSecrets Secrets) { return null; }
 
         protected override string apiNameAndVersion { get { return "gShellUtils"; } }
     }

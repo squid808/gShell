@@ -34,8 +34,8 @@ namespace gShell.Cmdlets.Adminsettings
             var secrets = CheckForClientSecrets();
             if (secrets != null)
             {
-                System.Collections.Generic.IEnumerable<string> scopes = EnsureScopesExist(GAuthId, Scopes);
-                GAuthId = ServiceWrapperDictionary[mainBaseType].BuildService(Authenticate(scopes, secrets, GAuthId)).domain;
+                var scopeAuthObj = EnsureScopesExist(GAuthId, Scopes);
+                ServiceWrapperDictionary[mainBaseType].BuildService(Authenticate(scopeAuthObj, secrets));
 
                 GWriteProgress = new gWriteProgress(WriteProgress);
             }

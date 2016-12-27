@@ -31,22 +31,21 @@ namespace gShell.Cmdlets.Utilities.OAuth2
             if (secrets != null)
             {
                 //TODO: figure out the correct ordering of these requests, and add the service account email to the build service
-                IEnumerable<string> scopes = EnsureScopesExist(GAuthId);
+                authUserInfo = EnsureScopesExist(GAuthId);
                 //need the gauthID first anyways to ensure that they have permissions, and to look up the service account
-                GAuthId = ServiceWrapperDictionary[mainBaseType].BuildService(Authenticate(scopes, secrets, GAuthId)).domain;
+                ServiceWrapperDictionary[mainBaseType].BuildService(Authenticate(authUserInfo, secrets));
 
                 if (!string.IsNullOrWhiteSpace(TargetUserEmail))
                 {
-                    if (!OAuth2Base.infoConsumer.ServiceAccountExists(GAuthId))
+                    if (!OAuth2Base.infoConsumer.ServiceAccountExists(authUserInfo.domain))
                     {
-                        WriteWarning("No service account was found for domain " + GAuthId + ". Please set a service" +
+                        WriteWarning("No service account was found for domain " + authUserInfo.domain + ". Please set a service" +
                             " account with Set-GShellServiceAccount, or see https://github.com/squid808/gShell/wiki/Service-Accounts" +
                             " for more information.");
                     }
 
-                    gShellServiceAccount = GetFullEmailAddress(TargetUserEmail, GAuthId);
-
-                    GAuthId = ServiceWrapperDictionary[mainBaseType].BuildService(Authenticate(scopes, secrets, GAuthId),TargetUserEmail).domain;
+                    gShellServiceAccount = GetFullEmailAddress(TargetUserEmail, authUserInfo.domain);
+                    ServiceWrapperDictionary[mainBaseType].BuildService(Authenticate(authUserInfo, secrets), TargetUserEmail);
                 }
 
                 GWriteProgress = new gWriteProgress(WriteProgress);

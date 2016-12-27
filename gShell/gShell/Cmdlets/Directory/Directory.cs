@@ -2217,7 +2217,7 @@ namespace gShell.Cmdlets.Directory.GAAsp
 
         protected override void ProcessRecord()
         {
-            UserKey = GetFullEmailAddress(UserKey, GAuthId);
+            UserKey = GetFullEmailAddress(UserKey, authUserInfo);
 
             if (ShouldProcess("Directory Asps", "Get-GAAsp"))
             {
@@ -2285,7 +2285,7 @@ namespace gShell.Cmdlets.Directory.GAAsp
 
         protected override void ProcessRecord()
         {
-            UserKey = GetFullEmailAddress(UserKey, GAuthId);
+            UserKey = GetFullEmailAddress(UserKey, authUserInfo);
 
             if (ShouldProcess("Directory Asps", "Remove-GAAsp"))
             {
@@ -3377,7 +3377,7 @@ namespace gShell.Cmdlets.Directory.GAGroup
 
                         var properties = new dotNet.Directory.Groups.GroupsListProperties()
                         {
-                            UserKey = GetFullEmailAddress(UserName, GAuthId)
+                            UserKey = GetFullEmailAddress(UserName, authUserInfo)
                         };
 
                         if (!string.IsNullOrWhiteSpace(this.Customer)) properties.Customer = this.Customer;
@@ -3389,7 +3389,7 @@ namespace gShell.Cmdlets.Directory.GAGroup
                     }
                     break;
                 case "OneGroup":
-                    GroupKey = GetFullEmailAddress(GroupKey, GAuthId);
+                    GroupKey = GetFullEmailAddress(GroupKey, authUserInfo);
 
                     if (ShouldProcess(GroupKey, "Get-GAGroup"))
                     {
@@ -3482,7 +3482,7 @@ namespace gShell.Cmdlets.Directory.GAGroup
         {
             Data.Group groupAcct = new Data.Group();
 
-            groupAcct.Email = GetFullEmailAddress(Email, GAuthId);
+            groupAcct.Email = GetFullEmailAddress(Email, authUserInfo);
 
             if (!string.IsNullOrWhiteSpace(Name))
             {
@@ -3573,7 +3573,7 @@ namespace gShell.Cmdlets.Directory.GAGroup
                         {
                             case "Email":
                                 fullEmail = GroupName;
-                                fullEmail = GetFullEmailAddress(fullEmail, GAuthId);
+                                fullEmail = GetFullEmailAddress(fullEmail, authUserInfo);
                                 break;
 
                             case "GAGroupObject":
@@ -3684,7 +3684,7 @@ namespace gShell.Cmdlets.Directory.GAGroup
 
                 if (!String.IsNullOrWhiteSpace(NewEmailAddress))
                 {
-                    string _newEmail = GetFullEmailAddress(NewEmailAddress, GAuthId);
+                    string _newEmail = GetFullEmailAddress(NewEmailAddress, authUserInfo);
                     groupAcct.Email = _newEmail;
                 }
 
@@ -3693,7 +3693,7 @@ namespace gShell.Cmdlets.Directory.GAGroup
                     groupAcct.Name = NewName;
                 }
 
-                GroupName = GetFullEmailAddress(GroupName, GAuthId);
+                GroupName = GetFullEmailAddress(GroupName, authUserInfo);
                 WriteObject(groups.Patch(groupAcct, GroupName, StandardQueryParams: StandardQueryParams));
             }
         }
@@ -3931,13 +3931,13 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
 
         protected override void ProcessRecord()
         {
-            GroupName = GetFullEmailAddress(GroupName, GAuthId);
+            GroupName = GetFullEmailAddress(GroupName, authUserInfo);
 
             if (ShouldProcess(GroupName, "Add-GAGroupMember"))
             {
                 Data.Member member = new Data.Member
                 {
-                    Email = GetFullEmailAddress(Email, GAuthId),
+                    Email = GetFullEmailAddress(Email, authUserInfo),
                     Role = this.Role.ToString()
                 };
 
@@ -4024,8 +4024,8 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
             {
                 if (ParameterSetName == "User")
                 {
-                    GroupName = GetFullEmailAddress(GroupName, GAuthId);
-                    UserName = GetFullEmailAddress(UserName, GAuthId);
+                    GroupName = GetFullEmailAddress(GroupName, authUserInfo);
+                    UserName = GetFullEmailAddress(UserName, authUserInfo);
                     WriteObject(members.Get(GroupName, UserName, StandardQueryParams: StandardQueryParams));
                 }
                 else
@@ -4035,7 +4035,7 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
                         Roles = DetermineRoles()
                     };
 
-                    GroupName = GetFullEmailAddress(GroupName, GAuthId);
+                    GroupName = GetFullEmailAddress(GroupName, authUserInfo);
                     WriteObject(members.List(GroupName, properties, StandardQueryParams: StandardQueryParams).SelectMany(x => x.MembersValue).ToList());
                 }
             }
@@ -4243,7 +4243,7 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
 
         protected override void ProcessRecord()
         {
-            GroupName = GetFullEmailAddress(GroupName, GAuthId);
+            GroupName = GetFullEmailAddress(GroupName, authUserInfo);
 
             if (ShouldProcess(GroupName, "Remove-GAGroupMember"))
             {
@@ -4252,7 +4252,7 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
                 {
                     try
                     {
-                        UserName = GetFullEmailAddress(UserName, GAuthId);
+                        UserName = GetFullEmailAddress(UserName, authUserInfo);
 
                         WriteDebug(string.Format("Attempting to remove member {0} from group {1}...",
                             UserName, GroupName));
@@ -4340,8 +4340,8 @@ namespace gShell.Cmdlets.Directory.GAGroupMember
                     Role = this.Role.ToString()
                 };
 
-                GroupName = GetFullEmailAddress(GroupName, GAuthId);
-                UserName = GetFullEmailAddress(UserName, GAuthId);
+                GroupName = GetFullEmailAddress(GroupName, authUserInfo);
+                UserName = GetFullEmailAddress(UserName, authUserInfo);
 
                 WriteObject(members.Update(member, GroupName, UserName, StandardQueryParams: StandardQueryParams));
             }
@@ -6480,7 +6480,7 @@ namespace gShell.Cmdlets.Directory.GAToken
 
         protected override void ProcessRecord()
         {
-            UserKey = GetFullEmailAddress(UserKey, GAuthId);
+            UserKey = GetFullEmailAddress(UserKey, authUserInfo);
 
             if (ShouldProcess(UserKey, "Get-GAToken"))
             {
@@ -6550,7 +6550,7 @@ namespace gShell.Cmdlets.Directory.GAToken
 
         protected override void ProcessRecord()
         {
-            UserKey = GetFullEmailAddress(UserKey, GAuthId);
+            UserKey = GetFullEmailAddress(UserKey, authUserInfo);
 
             if (ShouldProcess(ClientId, "Remove-GAToken"))
             {
@@ -6770,7 +6770,7 @@ namespace gShell.Cmdlets.Directory.GAUser
             {
                 case "OneUser":
 
-                    UserKey = GetFullEmailAddress(UserKey, GAuthId);
+                    UserKey = GetFullEmailAddress(UserKey, authUserInfo);
 
                     var properties = new dotNet.Directory.Users.UsersGetProperties()
                     {
@@ -7030,7 +7030,7 @@ namespace gShell.Cmdlets.Directory.GAUser
 
             userAcct.Name.FamilyName = FamilyName;
 
-            userAcct.PrimaryEmail = GetFullEmailAddress(UserName, GAuthId);
+            userAcct.PrimaryEmail = GetFullEmailAddress(UserName, authUserInfo);
 
             switch (ParameterSetName)
             {
@@ -7160,7 +7160,7 @@ namespace gShell.Cmdlets.Directory.GAUser
                                 break;
                         }
 
-                        users.Delete(GetFullEmailAddress(fullEmail, GAuthId), StandardQueryParams: StandardQueryParams);
+                        users.Delete(GetFullEmailAddress(fullEmail, authUserInfo), StandardQueryParams: StandardQueryParams);
 
                         WriteVerbose(string.Format("Removal of {0}@{1} completed without error.",
                             UserKey, GAuthId));
@@ -7420,7 +7420,7 @@ namespace gShell.Cmdlets.Directory.GAUser
 
         protected override void ProcessRecord()
         {
-            UserKey = GetFullEmailAddress(UserKey, GAuthId);
+            UserKey = GetFullEmailAddress(UserKey, authUserInfo);
 
             if (ShouldProcess(UserKey, "Set-GAUser"))
             {
@@ -7473,7 +7473,7 @@ namespace gShell.Cmdlets.Directory.GAUser
 
             if (!String.IsNullOrWhiteSpace(NewUserName))
             {
-                NewUserName = GetFullEmailAddress(NewUserName, GAuthId);
+                NewUserName = GetFullEmailAddress(NewUserName, authUserInfo);
                 userAcct.PrimaryEmail = NewUserName;
             }
 
@@ -7641,7 +7641,7 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
             switch (ParameterSetName)
             {
                 case "OneUser":
-                    UserKey = GetFullEmailAddress(UserKey, GAuthId);
+                    UserKey = GetFullEmailAddress(UserKey, authUserInfo);
 
                     if (ShouldProcess(UserKey, "Get-GAUserAlias"))
                     {
@@ -7770,13 +7770,13 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
 
         protected override void ProcessRecord()
         {
-            UserName = GetFullEmailAddress(UserName, GAuthId);
+            UserName = GetFullEmailAddress(UserName, authUserInfo);
 
             if (ShouldProcess(UserName, "New-GAUserAlias"))
             {
                 Data.Alias aliasBody = new Data.Alias()
                 {
-                    AliasValue = GetFullEmailAddress(Alias, GAuthId)
+                    AliasValue = GetFullEmailAddress(Alias, authUserInfo)
                 };
 
                 WriteObject(users.aliases.Insert(aliasBody, UserName, StandardQueryParams: StandardQueryParams));
@@ -7838,7 +7838,7 @@ namespace gShell.Cmdlets.Directory.GAUserAlias
 
         protected override void ProcessRecord()
         {
-            UserAliasName = GetFullEmailAddress(UserAliasName, GAuthId);
+            UserAliasName = GetFullEmailAddress(UserAliasName, authUserInfo);
 
             if (ShouldProcess(UserAliasName, "Remove-GAUserAlias"))
             {
@@ -7930,7 +7930,7 @@ namespace gShell.Cmdlets.Directory.GAUserPhoto
 
         protected override void ProcessRecord()
         {
-            UserKey = GetFullEmailAddress(UserKey, GAuthId);
+            UserKey = GetFullEmailAddress(UserKey, authUserInfo);
 
             if (ShouldProcess(UserKey, "Get-GAUserPhoto"))
             {
@@ -8000,7 +8000,7 @@ namespace gShell.Cmdlets.Directory.GAUserPhoto
 
         protected override void ProcessRecord()
         {
-            UserKey = GetFullEmailAddress(UserKey, GAuthId);
+            UserKey = GetFullEmailAddress(UserKey, authUserInfo);
 
             if (ShouldProcess(UserKey, "Remove-GAUserPhoto"))
             {
@@ -8103,7 +8103,7 @@ namespace gShell.Cmdlets.Directory.GAUserPhoto
 
         protected override void ProcessRecord()
         {
-            UserKey = GetFullEmailAddress(UserKey, GAuthId);
+            UserKey = GetFullEmailAddress(UserKey, authUserInfo);
 
             if (ShouldProcess(UserKey, "Set-GAUserPhoto"))
             {
@@ -8956,7 +8956,7 @@ namespace gShell.Cmdlets.Directory.GAVerificationCode
 
         protected override void ProcessRecord()
         {
-            UserKey = GetFullEmailAddress(UserKey, GAuthId);
+            UserKey = GetFullEmailAddress(UserKey, authUserInfo);
 
             if (ShouldProcess(UserKey, "Get-GAVerificationCode"))
             {
@@ -9070,7 +9070,7 @@ namespace gShell.Cmdlets.Directory.GAVerificationCode
 
         protected override void ProcessRecord()
         {
-            UserKey = GetFullEmailAddress(UserKey, GAuthId);
+            UserKey = GetFullEmailAddress(UserKey, authUserInfo);
 
             if (ShouldProcess(UserKey, "New-GAVerificationCode"))
             {

@@ -49,16 +49,16 @@ namespace gShell.Cmdlets.Utilities.OAuth2
             var secrets = CheckForClientSecrets();
             if (secrets != null)
             {
-                IEnumerable<string> scopes = EnsureScopesExist(GAuthId);
-                GAuthId = ServiceWrapperDictionary[mainBaseType].BuildService(Authenticate(scopes, secrets, GAuthId)).domain;
+                authUserInfo = EnsureScopesExist(GAuthId);
+                ServiceWrapperDictionary[mainBaseType].BuildService(Authenticate(authUserInfo, secrets));
 
                 GWriteProgress = new gWriteProgress(WriteProgress);
             }
             else
             {
-                WriteError(new ErrorRecord(null, (new Exception(
+                WriteError(new ErrorRecord(new Exception(
                     "Client Secrets must be set before running cmdlets. Run 'Get-Help "
-                    + "Set-gShellClientSecrets -online' for more information."))));
+                    + "Set-gShellClientSecrets -online' for more information."), "", ErrorCategory.AuthenticationError, null));
             }
         }
 
@@ -68,9 +68,11 @@ namespace gShell.Cmdlets.Utilities.OAuth2
         /// <param name="Secrets">The client secrets.`</param>
         /// <param name="Domain">The domain for which this authentication is intended.</param>
         /// <returns>The AuthenticatedUserInfo for the authenticated user.</returns>
-        protected override AuthenticatedUserInfo Authenticate(IEnumerable<string> Scopes, ClientSecrets Secrets, string Domain = null)
+        protected override AuthenticatedUserInfo Authenticate(AuthenticatedUserInfo authUserInfo, ClientSecrets Secrets)
         {
-            return ServiceWrapperDictionary[mainBaseType].Authenticate(apiNameAndVersion, Scopes, Secrets, Domain);
+            authUserInfo.apiNameAndVersion = apiNameAndVersion;
+
+            return ServiceWrapperDictionary[mainBaseType].Authenticate(authUserInfo, Secrets);
         }
         #endregion
     }

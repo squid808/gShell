@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Management.Automation;
 using System.Reflection;
 
@@ -10,6 +11,7 @@ using Google.Apis.Util;
 using gShell.Cmdlets.Utilities.ScopeHandler;
 using gShell.dotNet.Utilities.OAuth2;
 using gShell.dotNet.Utilities;
+using Google.Apis.admin.Directory.directory_v1.Data;
 
 namespace gShell.Cmdlets.Utilities.OAuth2
 {
@@ -35,7 +37,8 @@ namespace gShell.Cmdlets.Utilities.OAuth2
 
         protected abstract string apiNameAndVersion { get; }
 
-        //protected static AuthenticationInfo authInfo { get; set; }
+        /// <summary>A copy of the OAuth2Base authUserInfo, able to be overwritten or discarded after each use.</summary>
+        protected AuthenticatedUserInfo authUserInfo { get; set; }
 
         #endregion
 
@@ -110,37 +113,134 @@ namespace gShell.Cmdlets.Utilities.OAuth2
         protected override abstract void BeginProcessing();
 
         /// <summary>Load token and scope information for API call, and authenticate if necessary.</summary>
-        protected abstract AuthenticatedUserInfo Authenticate(IEnumerable<string> Scopes, ClientSecrets Secrets,
-            string Domain=null);
+        protected abstract AuthenticatedUserInfo Authenticate(AuthenticatedUserInfo authUserInfo, ClientSecrets Secrets);
 
         /// <summary>Determines if the user needs to be prompted to select the scopes.</summary>
         /// <remarks>
         /// Api is derived from the class that inherits this. User is the domain's default user. Returns null if scopes
         /// already exist since they'll be pulled up during authentication anyways.
         /// </remarks>
-        public IEnumerable<string> EnsureScopesExist(string GAuthId, HashSet<string> forcedScopes = null)
+        public AuthenticatedUserInfo EnsureScopesExist(string GAuthId, HashSet<string> forcedScopes = null)
         {
-            var OriginalDomain = GAuthId;
-            //Since the domain could be null, see if we have a default ready or if the saved info contains this one
-            GAuthId = OAuth2Base.CheckDomain(GAuthId);
+            var results = new AuthenticatedUserInfo();
 
-            string defaultUser = null;
+            string domain = null;
+            string user = null;
 
-            if (GAuthId != null)
-                 defaultUser = OAuth2Base.infoConsumer.GetDefaultUser(GAuthId);
+            bool gauthProvided = false;
+
+            if (!string.IsNullOrWhiteSpace(GAuthId))
+            {
+                gauthProvided = true;
+
+                if (GAuthId.Contains("@")) //user probably specified a full email address
+                {
+                    string gauthUser = GetUserFromEmail(GAuthId);
+                    results.originalUser = gauthUser;
+
+                    string gauthDomain = GetDomainFromEmail(GAuthId);
+                    results.originalDomain = gauthDomain;
+
+                    if (OAuth2Base.infoConsumer.DomainExists(gauthDomain))
+                    {
+                        domain = gauthDomain;
+
+                        if (OAuth2Base.infoConsumer.UserExists(gauthDomain, gauthUser))
+                        {
+                            user = gauthUser; //else leave null - make them auth for that user since they specified it
+                        }
+                    }
+                }
+                else //either just a domain, or a user
+                {
+                    //check if it is a domain
+                    if (OAuth2Base.infoConsumer.DomainExists(GAuthId))
+                    {
+                        domain = GAuthId;
+                        results.originalDomain = GAuthId;
+                        user = OAuth2Base.infoConsumer.GetDefaultUser(GAuthId); //could be null
+                    }
+                    else //not a domain that is saved
+                    {
+                        //try the default domain's users first, as a matter of best practice
+                        string defaultDomain = OAuth2Base.infoConsumer.GetDefaultDomain();
+
+                        if (!string.IsNullOrWhiteSpace(defaultDomain))
+                        {
+                            var users = OAuth2Base.infoConsumer.GetAllUsers(defaultDomain);
+
+                            if (users.Select(x => x.userName).Contains(GAuthId))
+                            {
+                                domain = defaultDomain;
+                                user = GAuthId;
+                                results.originalUser = GAuthId;
+                            }
+                            else //check other domains, if any
+                            {
+                                var domains = OAuth2Base.infoConsumer.GetAllDomains();
+
+                                foreach (var domainObj in domains)
+                                {
+                                    users = OAuth2Base.infoConsumer.GetAllUsers(domainObj.domain);
+
+                                    if (users.Select(x => x.userName).Contains(GAuthId))
+                                    {
+                                        domain = domainObj.domain;
+                                        user = GAuthId;
+                                        results.originalUser = GAuthId;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            //****************//
+
+            if (string.IsNullOrWhiteSpace(domain) && !gauthProvided)
+            {
+                //If the domain or user are missing, see if we can fill it in using the defaults
+                domain = OAuth2Base.CheckDomain(domain);
+                if (domain != null) user = OAuth2Base.CheckUser(domain, user);
+            }
+
+            //now find out if that domain has a parent domain
+            if (!string.IsNullOrWhiteSpace(domain) &&
+                !string.IsNullOrWhiteSpace(OAuth2Base.infoConsumer.GetDomain(domain).parentDomain))
+            {
+                var domainParent = OAuth2Base.infoConsumer.GetDomainMainParent(domain);
+                if (domainParent != domain)
+                {
+                    domain = domainParent;
+                    user = OAuth2Base.infoConsumer.GetDefaultUser(domain);
+                }
+            }
+
+            //****************//
+
+            WriteWarning("OrigDomain: " + results.originalDomain);
+            WriteWarning("AuthUser: " + user);
+            WriteWarning("AuthDomain: " + domain);
+
+            results.userName = user;
+            results.domain = domain;
 
             //if no domain is returned, none was provided or none was found as default.
-            if (string.IsNullOrWhiteSpace(GAuthId) || string.IsNullOrWhiteSpace(defaultUser) || 
-                !OAuth2Base.infoConsumer.TokenAndScopesExist(GAuthId, defaultUser, apiNameAndVersion))
+            if (string.IsNullOrWhiteSpace(domain) || string.IsNullOrWhiteSpace(user) || 
+                !OAuth2Base.infoConsumer.TokenAndScopesExist(domain, user, apiNameAndVersion))
             {
-                if (!string.IsNullOrWhiteSpace(OriginalDomain))
-                    OriginalDomain = "is for domain (" + OriginalDomain + "), which ";
-                else 
-                    OriginalDomain = null;
+                string domainText = null;
+
+                if (!string.IsNullOrWhiteSpace(domain))
+                {
+                    domainText = "is for domain (" + domain + "), which ";
+                }
 
                 WriteWarning(string.Format("The Cmdlet you've just started {0}doesn't"
                     + " seem to have any saved authentication for this API ({1}). In order to continue you'll need to"
-                    + " choose which permissions gShell can use for this API.", OriginalDomain, apiNameAndVersion));
+                    + " choose which permissions gShell can use for this API.", domainText, apiNameAndVersion));
 
                 string chooseApiNowScript = "Read-Host '\nWould you like to choose your API scopes now? y or n'";
                 Collection<PSObject> chooseApiNowResults = this.InvokeCommand.InvokeScript(chooseApiNowScript);
@@ -149,10 +249,12 @@ namespace gShell.Cmdlets.Utilities.OAuth2
                 {
                     ScopeHandlerBase scopeBase = new ScopeHandlerBase(this);
 
-                    return scopeBase.ChooseScopes(
+                    results.scopes = scopeBase.ChooseScopes(
                         apiNameAndVersion.Split(':')[0],
                         apiNameAndVersion.Split(':')[1],
                         forcedScopes);
+
+                    return results;
                 }
                 else
                 {
@@ -161,10 +263,11 @@ namespace gShell.Cmdlets.Utilities.OAuth2
             }
             else
             {
-                return OAuth2Base.infoConsumer.GetTokenInfo(GAuthId, defaultUser, apiNameAndVersion).scopes;
+                results.scopes = OAuth2Base.infoConsumer.GetTokenInfo(domain, user, apiNameAndVersion).scopes;
+                return results;
             }
 
-            return null;
+            return results;
         }
 
         /// <summary>Returns the default client secrets or null if they're missing or incomplete.</summary>
@@ -287,6 +390,39 @@ namespace gShell.Cmdlets.Utilities.OAuth2
             {
                 var data = md5Hasher.ComputeHash(System.Text.Encoding.UTF8.GetBytes(s));
                 return BitConverter.ToString(data, 0).Replace("-", string.Empty);
+            }
+        }
+
+        /// <summary>Get a full email address, if not already provided.</summary>
+        protected string GetFullEmailAddress(string account, AuthenticatedUserInfo authInfo)
+        {
+            if (string.IsNullOrWhiteSpace(account)) return null;
+
+            //assume an address already containing the @ symbol is already a full email address
+            if (account.Contains("@"))
+            {
+                return account;
+            }
+            else
+            {
+                var domain = string.Empty;
+
+                //we don't have a domain. first try the originally provided domain
+                if (!string.IsNullOrWhiteSpace(authInfo.originalDomain))
+                {
+                    domain = authInfo.originalDomain;
+                }
+                else if (!string.IsNullOrWhiteSpace(authInfo.domain))
+                {
+                    domain = authInfo.domain;
+                }
+                else
+                {
+                    domain = OAuth2Base.CheckDomain();
+                }
+
+                //will return null if acct or domain is blank
+                return Utils.GetFullEmailAddress(account, domain);
             }
         }
 

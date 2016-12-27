@@ -532,13 +532,17 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
 
         public AuthenticatedUserInfo ChooseScopesAndAuthenticate(string api, string version, ClientSecrets secrets)
         {
-            IEnumerable<string> scopes = ChooseScopes(api, version);
+            var info = new AuthenticatedUserInfo()
+            {
+                apiNameAndVersion = api + ":" + version,
+                scopes = ChooseScopes(api, version)
+            };
 
             string script = "Read-Host '\nYou will now authenticate for this API. Press any key to continue'";
             Collection<PSObject> results = invokablePSInstance.InvokeCommand.InvokeScript(script);
 
             //Now, authenticate.
-            AuthenticatedUserInfo info = OAuth2Base.GetAuthTokenFlow(api + ":" + version, scopes, secrets, force:true);
+            info = OAuth2Base.GetAuthTokenFlow(info, secrets, force: true);
 
             PrintPretty(string.Format("{0}:{1} has been authenticated and saved.", api, version), "green");
 
@@ -573,9 +577,13 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
                         break;
                 }
 
-                scopes = CheckForRequiredScope(scopes);
+                var authUserInfo = new AuthenticatedUserInfo()
+                {
+                    apiNameAndVersion = api + ":" + version,
+                    scopes = CheckForRequiredScope(scopes)
+                };
 
-                AuthenticatedUserInfo info = OAuth2Base.GetAuthTokenFlow(api + ":" + version, scopes, secrets, force:true);
+                AuthenticatedUserInfo info = OAuth2Base.GetAuthTokenFlow(authUserInfo, secrets, force: true);
 
                 return info;
             }

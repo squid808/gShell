@@ -223,6 +223,41 @@ namespace gShell.Cmdlets.Utilities.gShellDomain
             HelpMessage = "The user in the domain that should be used as the default user.")]
         [ValidateNotNullOrEmpty]
         public string DefaultUser { get; set; }
+
+        /// <summary>
+        /// <para type="description">This domain's parent domain, if this domain is not a primary domain. Use an empty string to remove the parent domain.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+            Mandatory = false,
+            HelpMessage = "This domain's parent domain, if this domain is not a primary domain. Use an empty string to remove the parent domain.")]
+        [ValidateNotNull]
+        public string ParentDomain { get; set; }
+
+        /// <summary>
+        /// <para type="description">Remove this domain's parent domain, if one exists.</para>
+        /// </summary>
+        [Parameter(Position = 4,
+            Mandatory = false,
+            HelpMessage = "Remove this domain's parent domain, if one exists.")]
+        public SwitchParameter RemoveParentDomain { get; set; }
+
+        /// <summary>
+        /// <para type="description">Child domains of this domain to add, if not already present.</para>
+        /// </summary>
+        [Parameter(Position = 5,
+            Mandatory = false,
+            HelpMessage = "Child domains of this domain to add, if not already present.")]
+        [ValidateNotNullOrEmpty]
+        public string[] ChildDomainsToAdd { get; set; }
+        
+        /// <summary>
+        /// <para type="description">Child domains of this domain to remove, if present.</para>
+        /// </summary>
+        [Parameter(Position = 6,
+            Mandatory = false,
+            HelpMessage = "Child domains of this domain to remove, if present.")]
+        [ValidateNotNullOrEmpty]
+        public string[] ChildDomainsToRemove { get; set; }
         #endregion
 
         protected override void ProcessRecord()
@@ -240,6 +275,62 @@ namespace gShell.Cmdlets.Utilities.gShellDomain
                     if (!string.IsNullOrWhiteSpace(DefaultUser))
                     {
                         OAuth2Base.infoConsumer.SetDefaultUser(Domain, DefaultUser);
+                    }
+                }
+            }
+
+            if (RemoveParentDomain || ParentDomain != null)
+            {
+                if (RemoveParentDomain || string.IsNullOrWhiteSpace(ParentDomain))
+                {
+                    string previous = OAuth2Base.infoConsumer.GetDomainParent(Domain);
+                    OAuth2Base.infoConsumer.RemoveDomainParent(Domain);
+
+                    if (OAuth2Base.infoConsumer.DomainExists(previous))
+                    {
+                        OAuth2Base.infoConsumer.RemoveDomainChildren(previous, new string[]{Domain});
+                    }
+                }
+                else
+                {
+                    OAuth2Base.infoConsumer.SetDomainParent(Domain, ParentDomain);
+                    if (!OAuth2Base.infoConsumer.DomainExists(ParentDomain))
+                    {
+                        OAuth2Base.infoConsumer.SetDomain(new OAuth2Domain() { domain = ParentDomain });
+                    }
+
+                    OAuth2Base.infoConsumer.SetDomainChildren(ParentDomain, new string[]{Domain});
+                }
+            }
+
+            if (ChildDomainsToAdd != null && ChildDomainsToAdd.Length > 0)
+            {
+                if (!OAuth2Base.infoConsumer.DomainExists(Domain))
+                {
+                    OAuth2Base.infoConsumer.SetDomain(new OAuth2Domain() { domain = Domain });
+                }
+                OAuth2Base.infoConsumer.SetDomainChildren(Domain, ChildDomainsToAdd);
+
+                foreach (var child in ChildDomainsToAdd)
+                {
+                    if (!OAuth2Base.infoConsumer.DomainExists(child))
+                    {
+                        OAuth2Base.infoConsumer.SetDomain(new OAuth2Domain() { domain = child });
+                    }
+
+                    OAuth2Base.infoConsumer.SetDomainParent(child, Domain);
+                }
+            }
+
+            if (ChildDomainsToRemove != null && ChildDomainsToRemove.Length > 0)
+            {
+                OAuth2Base.infoConsumer.RemoveDomainChildren(Domain, ChildDomainsToRemove);
+
+                foreach (var child in ChildDomainsToRemove)
+                {
+                    if (OAuth2Base.infoConsumer.DomainExists(child))
+                    {
+                        OAuth2Base.infoConsumer.RemoveDomainParent(child);
                     }
                 }
             }

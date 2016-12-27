@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using gShell.Cmdlets.Utilities.OAuth2;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using gShell.dotNet.Utilities.OAuth2;
@@ -94,9 +95,9 @@ namespace gShell.dotNet
         /// Authenticates the given domain and creates a service for it, if necessary. 
         /// The process of authenticating will update the default and current domains.
         /// </summary>
-        public AuthenticatedUserInfo Authenticate(string ApiNameAndVersion, IEnumerable<string> scopes, ClientSecrets secrets, string domain=null)
+        public AuthenticatedUserInfo Authenticate(AuthenticatedUserInfo authUserInfo, ClientSecrets secrets)
         {
-            return OAuth2Base.Authenticate(ApiNameAndVersion, scopes, secrets, domain);
+            return OAuth2Base.Authenticate(authUserInfo, secrets);
         }
         #endregion
 
