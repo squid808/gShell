@@ -10,18 +10,18 @@ namespace gShell.Cmdlets.Utilities.GShellServiceAccount
     /// Part of the gShell Project, relating to the Google Reports API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\> New-GShellStandardQueryParameters</code>
+    ///   <code>PS C:\> New-GShellStandardQueryParametersObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GShellStandardQueryParameters">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/New-GShellStandardQueryParametersObj">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
-    [Cmdlet(VerbsCommon.New, "GShellStandardQueryParameters",
+    [Cmdlet(VerbsCommon.New, "GShellStandardQueryParametersObj",
     SupportsShouldProcess = true,
-        HelpUri = @"https://github.com/squid808/gShell/wiki/New-GShellStandardQueryParameters")]
+    HelpUri = @"https://github.com/squid808/gShell/wiki/New-GShellStandardQueryParametersObj")]
     [OutputType(typeof(Google.Apis.admin.Reports.reports_v1.Data.Channel))]
-    public class NewGShellStandardQueryParametersCommand : PSCmdlet
+    public class NewGShellStandardQueryParametersObjCommand : PSCmdlet
     {
         #region Properties
 
