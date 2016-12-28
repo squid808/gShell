@@ -1,3 +1,5 @@
+using gShell.Cmdlets.Utilities.OAuth2;
+
 namespace gShell.Cmdlets.Emailsettings{
 
     using System;
@@ -13,13 +15,10 @@ namespace gShell.Cmdlets.Emailsettings{
     using gShell.dotNet.Utilities.OAuth2;
     using gEmailsettings = gShell.dotNet.Emailsettings;
 
-    public abstract class EmailsettingsBase : OAuth2CmdletBase
+    public abstract class EmailsettingsBase : AuthenticatedCmdletBase
     {
 
         #region Properties
-        [Parameter(Mandatory = false)]
-        [ValidateNotNullOrEmpty]
-        public string Domain { get; set; }
 
         protected static gEmailsettings mainBase { get; set; }
 
@@ -36,13 +35,14 @@ namespace gShell.Cmdlets.Emailsettings{
         public VacationResponder vacationResponder { get; set; }
         public WebClip webClip { get; set; }
 
-        protected override string apiNameAndVersion { get { return mainBase.apiNameAndVersion; } }
-
-        protected static string gShellServiceAccount { get; set; }
-
-        HashSet<string> Scopes = new HashSet<string> {
+        protected HashSet<string> Scopes = new HashSet<string> {
             "https://apps-apis.google.com/a/feeds/emailsettings/2.0/",
         };
+
+        /// <summary>
+        /// Required to be able to store and retrieve the mainBase from the ServiceWrapperDictionary
+        /// </summary>
+        protected override Type mainBaseType { get { return typeof(gEmailsettings); } }
 
         #endregion
 
@@ -50,6 +50,8 @@ namespace gShell.Cmdlets.Emailsettings{
         public EmailsettingsBase()
         {
             mainBase = new gEmailsettings();
+
+            ServiceWrapperDictionary[mainBaseType] = mainBase;
 
             delegation = new Delegation();
             filters = new Filters();
@@ -63,43 +65,6 @@ namespace gShell.Cmdlets.Emailsettings{
             signature = new Signature();
             vacationResponder = new VacationResponder();
             webClip = new WebClip();
-        }
-        #endregion
-
-        #region PowerShell Methods
-        protected override void BeginProcessing()
-        {
-            var secrets = CheckForClientSecrets();
-            if (secrets != null)
-            {
-                IEnumerable<string> scopes = EnsureScopesExist(Domain, Scopes);
-                Domain = mainBase.BuildService(Authenticate(scopes, secrets, Domain), gShellServiceAccount).domain;
-
-                GWriteProgress = new gWriteProgress(WriteProgress);
-            }
-            else
-            {
-                WriteError(new ErrorRecord(null, (new Exception(
-                    "Client Secrets must be set before running cmdlets. Run 'Get-Help "
-                    + "Set-gShellClientSecrets -online' for more information."))));
-            }
-        }
-
-        protected override void EndProcessing()
-        {
-            gShellServiceAccount = string.Empty;
-        }
-
-        protected override void StopProcessing()
-        {
-            gShellServiceAccount = string.Empty;
-        }
-        #endregion
-
-        #region Authentication & Processing
-        protected override AuthenticatedUserInfo Authenticate(IEnumerable<string> Scopes, ClientSecrets Secrets, string Domain = null)
-        {
-            return mainBase.Authenticate(apiNameAndVersion, Scopes, Secrets, Domain);
         }
         #endregion
 
@@ -126,7 +91,7 @@ namespace gShell.Cmdlets.Emailsettings{
              delegateEmail)
             {
 
-                mainBase.delegation.Delete(domain, userKey, delegateEmail, gShellServiceAccount);
+                mainBase.delegation.Delete(domain, userKey, delegateEmail);
             }
 
 
@@ -140,7 +105,7 @@ namespace gShell.Cmdlets.Emailsettings{
              userKey)
             {
 
-                return mainBase.delegation.Get(domain, userKey, gShellServiceAccount);
+                return mainBase.delegation.Get(domain, userKey);
             }
 
 
@@ -154,7 +119,7 @@ namespace gShell.Cmdlets.Emailsettings{
              userKey)
             {
 
-                return mainBase.delegation.Insert(body, domain, userKey, gShellServiceAccount);
+                return mainBase.delegation.Insert(body, domain, userKey);
             }
 
 
@@ -180,7 +145,7 @@ namespace gShell.Cmdlets.Emailsettings{
              userKey)
             {
 
-                return mainBase.filters.Insert(body, domain, userKey, gShellServiceAccount);
+                return mainBase.filters.Insert(body, domain, userKey);
             }
 
 
@@ -206,7 +171,7 @@ namespace gShell.Cmdlets.Emailsettings{
              userKey)
             {
 
-                return mainBase.forwarding.Get(domain, userKey, gShellServiceAccount);
+                return mainBase.forwarding.Get(domain, userKey);
             }
 
 
@@ -220,7 +185,7 @@ namespace gShell.Cmdlets.Emailsettings{
              userKey)
             {
 
-                return mainBase.forwarding.Update(body, domain, userKey, gShellServiceAccount);
+                return mainBase.forwarding.Update(body, domain, userKey);
             }
 
 
@@ -246,7 +211,7 @@ namespace gShell.Cmdlets.Emailsettings{
              userKey)
             {
 
-                return mainBase.general.Update(body, domain, userKey, gShellServiceAccount);
+                return mainBase.general.Update(body, domain, userKey);
             }
 
 
@@ -272,7 +237,7 @@ namespace gShell.Cmdlets.Emailsettings{
              userKey)
             {
 
-                return mainBase.imap.Get(domain, userKey, gShellServiceAccount);
+                return mainBase.imap.Get(domain, userKey);
             }
 
 
@@ -286,7 +251,7 @@ namespace gShell.Cmdlets.Emailsettings{
              userKey)
             {
 
-                return mainBase.imap.Update(body, domain, userKey, gShellServiceAccount);
+                return mainBase.imap.Update(body, domain, userKey);
             }
 
 
@@ -314,7 +279,7 @@ namespace gShell.Cmdlets.Emailsettings{
              labelName)
             {
 
-                mainBase.labels.Delete(domain, userKey, labelName, gShellServiceAccount);
+                mainBase.labels.Delete(domain, userKey, labelName);
             }
 
 
@@ -328,7 +293,7 @@ namespace gShell.Cmdlets.Emailsettings{
              userKey)
             {
 
-                return mainBase.labels.Get(domain, userKey, gShellServiceAccount);
+                return mainBase.labels.Get(domain, userKey);
             }
 
 
@@ -342,7 +307,7 @@ namespace gShell.Cmdlets.Emailsettings{
              userKey)
             {
 
-                return mainBase.labels.Insert(body, domain, userKey, gShellServiceAccount);
+                return mainBase.labels.Insert(body, domain, userKey);
             }
 
 
@@ -368,7 +333,7 @@ namespace gShell.Cmdlets.Emailsettings{
              userKey)
             {
 
-                return mainBase.language.Update(body, domain, userKey, gShellServiceAccount);
+                return mainBase.language.Update(body, domain, userKey);
             }
 
 
@@ -394,7 +359,7 @@ namespace gShell.Cmdlets.Emailsettings{
              userKey)
             {
 
-                return mainBase.pop.Get(domain, userKey, gShellServiceAccount);
+                return mainBase.pop.Get(domain, userKey);
             }
 
 
@@ -408,7 +373,7 @@ namespace gShell.Cmdlets.Emailsettings{
              userKey)
             {
 
-                return mainBase.pop.Update(body, domain, userKey, gShellServiceAccount);
+                return mainBase.pop.Update(body, domain, userKey);
             }
 
 
@@ -434,7 +399,7 @@ namespace gShell.Cmdlets.Emailsettings{
              userKey)
             {
 
-                return mainBase.sendasAliases.Get(domain, userKey, gShellServiceAccount);
+                return mainBase.sendasAliases.Get(domain, userKey);
             }
 
 
@@ -448,7 +413,7 @@ namespace gShell.Cmdlets.Emailsettings{
              userKey)
             {
 
-                return mainBase.sendasAliases.Insert(body, domain, userKey, gShellServiceAccount);
+                return mainBase.sendasAliases.Insert(body, domain, userKey);
             }
 
 
@@ -474,7 +439,7 @@ namespace gShell.Cmdlets.Emailsettings{
              userKey)
             {
 
-                return mainBase.signature.Get(domain, userKey, gShellServiceAccount);
+                return mainBase.signature.Get(domain, userKey);
             }
 
 
@@ -488,7 +453,7 @@ namespace gShell.Cmdlets.Emailsettings{
              userKey)
             {
 
-                return mainBase.signature.Update(body, domain, userKey, gShellServiceAccount);
+                return mainBase.signature.Update(body, domain, userKey);
             }
 
 
@@ -514,7 +479,7 @@ namespace gShell.Cmdlets.Emailsettings{
              userKey)
             {
 
-                return mainBase.vacationResponder.Get(domain, userKey, gShellServiceAccount);
+                return mainBase.vacationResponder.Get(domain, userKey);
             }
 
 
@@ -528,7 +493,7 @@ namespace gShell.Cmdlets.Emailsettings{
              userKey)
             {
 
-                return mainBase.vacationResponder.Update(body, domain, userKey, gShellServiceAccount);
+                return mainBase.vacationResponder.Update(body, domain, userKey);
             }
 
 
@@ -554,7 +519,7 @@ namespace gShell.Cmdlets.Emailsettings{
              userKey)
             {
 
-                return mainBase.webClip.Update(body, domain, userKey, gShellServiceAccount);
+                return mainBase.webClip.Update(body, domain, userKey);
             }
 
 
@@ -579,7 +544,7 @@ namespace gShell.dotNet
     using emailsettings_v1 = Google.Apis.admin.Emailsettings.emailsettings_v1;
     using Data = Google.Apis.admin.Emailsettings.emailsettings_v1.Data;
 
-    public class Emailsettings : ServiceWrapper<emailsettings_v1.EmailsettingsService>
+    public class Emailsettings : ServiceWrapper<emailsettings_v1.EmailsettingsService>, IServiceWrapper<Google.Apis.Services.IClientService>
     {
 
         protected override bool worksWithGmail { get { return false; } }
@@ -637,27 +602,27 @@ namespace gShell.dotNet
 
              userKey, string
 
-             delegateEmail, string gShellServiceAccount = null)
+             delegateEmail)
             {
-                GetService(gShellServiceAccount).Delegation.Delete(domain, userKey, delegateEmail).Execute();
+                GetService().Delegation.Delete(domain, userKey, delegateEmail).Execute();
             }
 
             public Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Delegates Get (string
 
              domain, string
 
-             userKey, string gShellServiceAccount = null)
+             userKey)
             {
-                return GetService(gShellServiceAccount).Delegation.Get(domain, userKey).Execute();
+                return GetService().Delegation.Get(domain, userKey).Execute();
             }
 
             public Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Delegate Insert (Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Delegate body, string
 
              domain, string
 
-             userKey, string gShellServiceAccount = null)
+             userKey)
             {
-                return GetService(gShellServiceAccount).Delegation.Insert(body, domain, userKey).Execute();
+                return GetService().Delegation.Insert(body, domain, userKey).Execute();
             }
 
         }
@@ -674,9 +639,9 @@ namespace gShell.dotNet
 
              domain, string
 
-             userKey, string gShellServiceAccount = null)
+             userKey)
             {
-                return GetService(gShellServiceAccount).Filters.Insert(body, domain, userKey).Execute();
+                return GetService().Filters.Insert(body, domain, userKey).Execute();
             }
 
         }
@@ -693,18 +658,18 @@ namespace gShell.dotNet
 
              domain, string
 
-             userKey, string gShellServiceAccount = null)
+             userKey)
             {
-                return GetService(gShellServiceAccount).Forwarding.Get(domain, userKey).Execute();
+                return GetService().Forwarding.Get(domain, userKey).Execute();
             }
 
             public Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Forwarding Update (Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Forwarding body, string
 
              domain, string
 
-             userKey, string gShellServiceAccount = null)
+             userKey)
             {
-                return GetService(gShellServiceAccount).Forwarding.Update(body, domain, userKey).Execute();
+                return GetService().Forwarding.Update(body, domain, userKey).Execute();
             }
 
         }
@@ -721,9 +686,9 @@ namespace gShell.dotNet
 
              domain, string
 
-             userKey, string gShellServiceAccount = null)
+             userKey)
             {
-                return GetService(gShellServiceAccount).General.Update(body, domain, userKey).Execute();
+                return GetService().General.Update(body, domain, userKey).Execute();
             }
 
         }
@@ -740,18 +705,18 @@ namespace gShell.dotNet
 
              domain, string
 
-             userKey, string gShellServiceAccount = null)
+             userKey)
             {
-                return GetService(gShellServiceAccount).Imap.Get(domain, userKey).Execute();
+                return GetService().Imap.Get(domain, userKey).Execute();
             }
 
             public Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Imap Update (Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Imap body, string
 
              domain, string
 
-             userKey, string gShellServiceAccount = null)
+             userKey)
             {
-                return GetService(gShellServiceAccount).Imap.Update(body, domain, userKey).Execute();
+                return GetService().Imap.Update(body, domain, userKey).Execute();
             }
 
         }
@@ -770,27 +735,27 @@ namespace gShell.dotNet
 
              userKey, string
 
-             labelName, string gShellServiceAccount = null)
+             labelName)
             {
-                GetService(gShellServiceAccount).Labels.Delete(domain, userKey, labelName).Execute();
+                GetService().Labels.Delete(domain, userKey, labelName).Execute();
             }
 
             public Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Labels Get (string
 
              domain, string
 
-             userKey, string gShellServiceAccount = null)
+             userKey)
             {
-                return GetService(gShellServiceAccount).Labels.Get(domain, userKey).Execute();
+                return GetService().Labels.Get(domain, userKey).Execute();
             }
 
             public Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Label Insert (Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Label body, string
 
              domain, string
 
-             userKey, string gShellServiceAccount = null)
+             userKey)
             {
-                return GetService(gShellServiceAccount).Labels.Insert(body, domain, userKey).Execute();
+                return GetService().Labels.Insert(body, domain, userKey).Execute();
             }
 
         }
@@ -807,9 +772,9 @@ namespace gShell.dotNet
 
              domain, string
 
-             userKey, string gShellServiceAccount = null)
+             userKey)
             {
-                return GetService(gShellServiceAccount).Language.Update(body, domain, userKey).Execute();
+                return GetService().Language.Update(body, domain, userKey).Execute();
             }
 
         }
@@ -826,18 +791,18 @@ namespace gShell.dotNet
 
              domain, string
 
-             userKey, string gShellServiceAccount = null)
+             userKey)
             {
-                return GetService(gShellServiceAccount).Pop.Get(domain, userKey).Execute();
+                return GetService().Pop.Get(domain, userKey).Execute();
             }
 
             public Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Pop Update (Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Pop body, string
 
              domain, string
 
-             userKey, string gShellServiceAccount = null)
+             userKey)
             {
-                return GetService(gShellServiceAccount).Pop.Update(body, domain, userKey).Execute();
+                return GetService().Pop.Update(body, domain, userKey).Execute();
             }
 
         }
@@ -854,18 +819,18 @@ namespace gShell.dotNet
 
              domain, string
 
-             userKey, string gShellServiceAccount = null)
+             userKey)
             {
-                return GetService(gShellServiceAccount).SendasAliases.Get(domain, userKey).Execute();
+                return GetService().SendasAliases.Get(domain, userKey).Execute();
             }
 
             public Google.Apis.admin.Emailsettings.emailsettings_v1.Data.SendasAlias Insert (Google.Apis.admin.Emailsettings.emailsettings_v1.Data.SendasAlias body, string
 
              domain, string
 
-             userKey, string gShellServiceAccount = null)
+             userKey)
             {
-                return GetService(gShellServiceAccount).SendasAliases.Insert(body, domain, userKey).Execute();
+                return GetService().SendasAliases.Insert(body, domain, userKey).Execute();
             }
 
         }
@@ -882,18 +847,18 @@ namespace gShell.dotNet
 
              domain, string
 
-             userKey, string gShellServiceAccount = null)
+             userKey)
             {
-                return GetService(gShellServiceAccount).Signature.Get(domain, userKey).Execute();
+                return GetService().Signature.Get(domain, userKey).Execute();
             }
 
             public Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Signature Update (Google.Apis.admin.Emailsettings.emailsettings_v1.Data.Signature body, string
 
              domain, string
 
-             userKey, string gShellServiceAccount = null)
+             userKey)
             {
-                return GetService(gShellServiceAccount).Signature.Update(body, domain, userKey).Execute();
+                return GetService().Signature.Update(body, domain, userKey).Execute();
             }
 
         }
@@ -910,18 +875,18 @@ namespace gShell.dotNet
 
              domain, string
 
-             userKey, string gShellServiceAccount = null)
+             userKey)
             {
-                return GetService(gShellServiceAccount).VacationResponder.Get(domain, userKey).Execute();
+                return GetService().VacationResponder.Get(domain, userKey).Execute();
             }
 
             public Google.Apis.admin.Emailsettings.emailsettings_v1.Data.VacationResponder Update (Google.Apis.admin.Emailsettings.emailsettings_v1.Data.VacationResponder body, string
 
              domain, string
 
-             userKey, string gShellServiceAccount = null)
+             userKey)
             {
-                return GetService(gShellServiceAccount).VacationResponder.Update(body, domain, userKey).Execute();
+                return GetService().VacationResponder.Update(body, domain, userKey).Execute();
             }
 
         }
@@ -938,9 +903,9 @@ namespace gShell.dotNet
 
              domain, string
 
-             userKey, string gShellServiceAccount = null)
+             userKey)
             {
-                return GetService(gShellServiceAccount).WebClip.Update(body, domain, userKey).Execute();
+                return GetService().WebClip.Update(body, domain, userKey).Execute();
             }
 
         }

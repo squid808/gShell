@@ -23,6 +23,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using gShell.Cmdlets.Utilities.OAuth2;
+using gShell.dotNet;
+
 namespace gShell.Cmdlets.Calendar{
 
     using System;
@@ -41,17 +44,10 @@ namespace gShell.Cmdlets.Calendar{
     /// <summary>
     /// A PowerShell-ready wrapper for the Calendar api, as well as the resources and methods therein.
     /// </summary>
-    public abstract class CalendarBase : OAuth2CmdletBase
+    public abstract class CalendarBase : StandardParamsCmdletBase
     {
 
         #region Properties
-
-        /// <summary>
-        /// <para type="description">The domain against which this cmdlet should run.</para>
-        /// </summary>
-        [Parameter(Mandatory = false)]
-        [ValidateNotNullOrEmpty]
-        public string Domain { get; set; }
 
         /// <summary>The gShell dotNet class wrapper base.</summary>
         protected static gCalendar mainBase { get; set; }
@@ -81,17 +77,19 @@ namespace gShell.Cmdlets.Calendar{
         /// <summary>An instance of the Settings gShell dotNet resource.</summary>
         public Settings settings { get; set; }
 
-        /// <summary>Returns the api name and version in {name}:{version} format.</summary>
-        protected override string apiNameAndVersion { get { return mainBase.apiNameAndVersion; } }
-
-        /// <summary>Gets or sets the email account the gShell Service Account should impersonate.</summary>
-        protected static string gShellServiceAccount { get; set; }
+        /// <summary>
+        /// Required to be able to store and retrieve the mainBase from the ServiceWrapperDictionary
+        /// </summary>
+        protected override Type mainBaseType { get { return typeof(gCalendar); } }
         #endregion
 
         #region Constructors
         protected CalendarBase()
         {
             mainBase = new gCalendar();
+
+            ServiceWrapperDictionary[mainBaseType] = mainBase;
+
 
             acl = new Acl();
             calendarList = new CalendarList();
@@ -101,57 +99,6 @@ namespace gShell.Cmdlets.Calendar{
             events = new Events();
             freebusy = new Freebusy();
             settings = new Settings();
-        }
-        #endregion
-
-        #region PowerShell Methods
-        /// <summary>The gShell base implementation of the PowerShell BeginProcessing method.</summary>
-        /// <remarks>If a service account needs to be identified, it should be in a child class that overrides
-        /// and calls this method.</remarks>
-        protected override void BeginProcessing()
-        {
-            var secrets = CheckForClientSecrets();
-            if (secrets != null)
-            {
-                IEnumerable<string> scopes = EnsureScopesExist(Domain);
-                Domain = mainBase.BuildService(Authenticate(scopes, secrets, Domain), gShellServiceAccount).domain;
-
-                GWriteProgress = new gWriteProgress(WriteProgress);
-            }
-            else
-            {
-                WriteError(new ErrorRecord(null, (new Exception(
-                    "Client Secrets must be set before running cmdlets. Run 'Get-Help "
-                    + "Set-gShellClientSecrets -online' for more information."))));
-            }
-        }
-
-        /// <summary>The gShell base implementation of the PowerShell EndProcessing method.</summary>
-        /// <remarks>We need to reset the service account after every Cmdlet call to prevent the next
-        /// Cmdlet from inheriting it as well.</remarks>
-        protected override void EndProcessing()
-        {
-            gShellServiceAccount = string.Empty;
-        }
-
-        /// <summary>The gShell base implementation of the PowerShell StopProcessing method.</summary>
-        /// <remarks>We need to reset the service account after every Cmdlet call to prevent the next
-        /// Cmdlet from inheriting it as well.</remarks>
-        protected override void StopProcessing()
-        {
-            gShellServiceAccount = string.Empty;
-        }
-        #endregion
-
-        #region Authentication & Processing
-        /// <summary>Ensure the user, domain and client secret combination work with an authenticated user.</summary>
-        /// <param name="Scopes">The scopes that need to be passed through to the user authentication to Google.</param>
-        /// <param name="Secrets">The client secrets.`</param>
-        /// <param name="Domain">The domain for which this authentication is intended.</param>
-        /// <returns>The AuthenticatedUserInfo for the authenticated user.</returns>
-        protected override AuthenticatedUserInfo Authenticate(IEnumerable<string> Scopes, ClientSecrets Secrets, string Domain = null)
-        {
-            return mainBase.Authenticate(apiNameAndVersion, Scopes, Secrets, Domain);
         }
         #endregion
 
@@ -173,10 +120,10 @@ namespace gShell.Cmdlets.Calendar{
             /// want to access the primary calendar of the currently logged in user, use the "primary" keyword.</param>
             ///
             /// <param name="RuleId">ACL rule identifier.</param>
-            public void Delete (string CalendarId, string RuleId)
+            public void Delete (string CalendarId, string RuleId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                mainBase.acl.Delete(CalendarId, RuleId, gShellServiceAccount);
+                mainBase.acl.Delete(CalendarId, RuleId, StandardQueryParams);
             }
 
 
@@ -186,10 +133,10 @@ namespace gShell.Cmdlets.Calendar{
             /// want to access the primary calendar of the currently logged in user, use the "primary" keyword.</param>
             ///
             /// <param name="RuleId">ACL rule identifier.</param>
-            public Google.Apis.Calendar.v3.Data.AclRule Get (string CalendarId, string RuleId)
+            public Google.Apis.Calendar.v3.Data.AclRule Get (string CalendarId, string RuleId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.acl.Get(CalendarId, RuleId, gShellServiceAccount);
+                return mainBase.acl.Get(CalendarId, RuleId, StandardQueryParams);
             }
 
 
@@ -198,10 +145,10 @@ namespace gShell.Cmdlets.Calendar{
             /// <param name="AclRuleBody">The body of the request.</param>
             /// <param name="CalendarId">Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you
             /// want to access the primary calendar of the currently logged in user, use the "primary" keyword.</param>
-            public Google.Apis.Calendar.v3.Data.AclRule Insert (Google.Apis.Calendar.v3.Data.AclRule AclRuleBody, string CalendarId)
+            public Google.Apis.Calendar.v3.Data.AclRule Insert (Google.Apis.Calendar.v3.Data.AclRule AclRuleBody, string CalendarId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.acl.Insert(AclRuleBody, CalendarId, gShellServiceAccount);
+                return mainBase.acl.Insert(AclRuleBody, CalendarId, StandardQueryParams);
             }
 
 
@@ -211,14 +158,14 @@ namespace gShell.Cmdlets.Calendar{
             /// want to access the primary calendar of the currently logged in user, use the "primary" keyword.</param>
             /// <param name="properties">The optional properties for this method.</param>
 
-            public List<Google.Apis.Calendar.v3.Data.Acl> List(string CalendarId, gCalendar.Acl.AclListProperties properties= null)
+            public List<Google.Apis.Calendar.v3.Data.Acl> List(string CalendarId, gCalendar.Acl.AclListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
                 properties = properties ?? new gCalendar.Acl.AclListProperties();
                 properties.StartProgressBar = StartProgressBar;
                 properties.UpdateProgressBar = UpdateProgressBar;
 
-                return mainBase.acl.List(CalendarId, properties, gShellServiceAccount);
+                return mainBase.acl.List(CalendarId, properties);
             }
 
             /// <summary>Updates an access control rule. This method supports patch semantics.</summary>
@@ -227,10 +174,10 @@ namespace gShell.Cmdlets.Calendar{
             /// want to access the primary calendar of the currently logged in user, use the "primary" keyword.</param>
             ///
             /// <param name="RuleId">ACL rule identifier.</param>
-            public Google.Apis.Calendar.v3.Data.AclRule Patch (Google.Apis.Calendar.v3.Data.AclRule AclRuleBody, string CalendarId, string RuleId)
+            public Google.Apis.Calendar.v3.Data.AclRule Patch (Google.Apis.Calendar.v3.Data.AclRule AclRuleBody, string CalendarId, string RuleId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.acl.Patch(AclRuleBody, CalendarId, RuleId, gShellServiceAccount);
+                return mainBase.acl.Patch(AclRuleBody, CalendarId, RuleId, StandardQueryParams);
             }
 
 
@@ -241,10 +188,10 @@ namespace gShell.Cmdlets.Calendar{
             /// want to access the primary calendar of the currently logged in user, use the "primary" keyword.</param>
             ///
             /// <param name="RuleId">ACL rule identifier.</param>
-            public Google.Apis.Calendar.v3.Data.AclRule Update (Google.Apis.Calendar.v3.Data.AclRule AclRuleBody, string CalendarId, string RuleId)
+            public Google.Apis.Calendar.v3.Data.AclRule Update (Google.Apis.Calendar.v3.Data.AclRule AclRuleBody, string CalendarId, string RuleId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.acl.Update(AclRuleBody, CalendarId, RuleId, gShellServiceAccount);
+                return mainBase.acl.Update(AclRuleBody, CalendarId, RuleId, StandardQueryParams);
             }
 
 
@@ -254,12 +201,12 @@ namespace gShell.Cmdlets.Calendar{
             /// <param name="CalendarId">Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you
             /// want to access the primary calendar of the currently logged in user, use the "primary" keyword.</param>
             /// <param name="properties">The optional properties for this method.</param>
-            public Google.Apis.Calendar.v3.Data.Channel Watch (Google.Apis.Calendar.v3.Data.Channel ChannelBody, string CalendarId, gCalendar.Acl.AclWatchProperties properties= null)
+            public Google.Apis.Calendar.v3.Data.Channel Watch (Google.Apis.Calendar.v3.Data.Channel ChannelBody, string CalendarId, gCalendar.Acl.AclWatchProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
                 properties = properties ?? new gCalendar.Acl.AclWatchProperties();
 
-                return mainBase.acl.Watch(ChannelBody, CalendarId, properties, gShellServiceAccount);
+                return mainBase.acl.Watch(ChannelBody, CalendarId, properties, StandardQueryParams);
             }
 
 
@@ -280,10 +227,10 @@ namespace gShell.Cmdlets.Calendar{
             /// <summary>Deletes an entry on the user's calendar list.</summary>
             /// <param name="CalendarId">Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you
             /// want to access the primary calendar of the currently logged in user, use the "primary" keyword.</param>
-            public void Delete (string CalendarId)
+            public void Delete (string CalendarId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                mainBase.calendarList.Delete(CalendarId, gShellServiceAccount);
+                mainBase.calendarList.Delete(CalendarId, StandardQueryParams);
             }
 
 
@@ -291,10 +238,10 @@ namespace gShell.Cmdlets.Calendar{
             /// <summary>Returns an entry on the user's calendar list.</summary>
             /// <param name="CalendarId">Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you
             /// want to access the primary calendar of the currently logged in user, use the "primary" keyword.</param>
-            public Google.Apis.Calendar.v3.Data.CalendarListEntry Get (string CalendarId)
+            public Google.Apis.Calendar.v3.Data.CalendarListEntry Get (string CalendarId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.calendarList.Get(CalendarId, gShellServiceAccount);
+                return mainBase.calendarList.Get(CalendarId, StandardQueryParams);
             }
 
 
@@ -302,12 +249,12 @@ namespace gShell.Cmdlets.Calendar{
             /// <summary>Adds an entry to the user's calendar list.</summary>
             /// <param name="CalendarListEntryBody">The body of the request.</param>
             /// <param name="properties">The optional properties for this method.</param>
-            public Google.Apis.Calendar.v3.Data.CalendarListEntry Insert (Google.Apis.Calendar.v3.Data.CalendarListEntry CalendarListEntryBody, gCalendar.CalendarList.CalendarListInsertProperties properties= null)
+            public Google.Apis.Calendar.v3.Data.CalendarListEntry Insert (Google.Apis.Calendar.v3.Data.CalendarListEntry CalendarListEntryBody, gCalendar.CalendarList.CalendarListInsertProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
                 properties = properties ?? new gCalendar.CalendarList.CalendarListInsertProperties();
 
-                return mainBase.calendarList.Insert(CalendarListEntryBody, properties, gShellServiceAccount);
+                return mainBase.calendarList.Insert(CalendarListEntryBody, properties, StandardQueryParams);
             }
 
 
@@ -315,14 +262,14 @@ namespace gShell.Cmdlets.Calendar{
             /// <summary>Returns entries on the user's calendar list.</summary>
             /// <param name="properties">The optional properties for this method.</param>
 
-            public List<Google.Apis.Calendar.v3.Data.CalendarList> List(gCalendar.CalendarList.CalendarListListProperties properties= null)
+            public List<Google.Apis.Calendar.v3.Data.CalendarList> List(gCalendar.CalendarList.CalendarListListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
                 properties = properties ?? new gCalendar.CalendarList.CalendarListListProperties();
                 properties.StartProgressBar = StartProgressBar;
                 properties.UpdateProgressBar = UpdateProgressBar;
 
-                return mainBase.calendarList.List(properties, gShellServiceAccount);
+                return mainBase.calendarList.List(properties);
             }
 
             /// <summary>Updates an entry on the user's calendar list. This method supports patch semantics.</summary>
@@ -330,12 +277,12 @@ namespace gShell.Cmdlets.Calendar{
             /// <param name="CalendarId">Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you
             /// want to access the primary calendar of the currently logged in user, use the "primary" keyword.</param>
             /// <param name="properties">The optional properties for this method.</param>
-            public Google.Apis.Calendar.v3.Data.CalendarListEntry Patch (Google.Apis.Calendar.v3.Data.CalendarListEntry CalendarListEntryBody, string CalendarId, gCalendar.CalendarList.CalendarListPatchProperties properties= null)
+            public Google.Apis.Calendar.v3.Data.CalendarListEntry Patch (Google.Apis.Calendar.v3.Data.CalendarListEntry CalendarListEntryBody, string CalendarId, gCalendar.CalendarList.CalendarListPatchProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
                 properties = properties ?? new gCalendar.CalendarList.CalendarListPatchProperties();
 
-                return mainBase.calendarList.Patch(CalendarListEntryBody, CalendarId, properties, gShellServiceAccount);
+                return mainBase.calendarList.Patch(CalendarListEntryBody, CalendarId, properties, StandardQueryParams);
             }
 
 
@@ -345,12 +292,12 @@ namespace gShell.Cmdlets.Calendar{
             /// <param name="CalendarId">Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you
             /// want to access the primary calendar of the currently logged in user, use the "primary" keyword.</param>
             /// <param name="properties">The optional properties for this method.</param>
-            public Google.Apis.Calendar.v3.Data.CalendarListEntry Update (Google.Apis.Calendar.v3.Data.CalendarListEntry CalendarListEntryBody, string CalendarId, gCalendar.CalendarList.CalendarListUpdateProperties properties= null)
+            public Google.Apis.Calendar.v3.Data.CalendarListEntry Update (Google.Apis.Calendar.v3.Data.CalendarListEntry CalendarListEntryBody, string CalendarId, gCalendar.CalendarList.CalendarListUpdateProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
                 properties = properties ?? new gCalendar.CalendarList.CalendarListUpdateProperties();
 
-                return mainBase.calendarList.Update(CalendarListEntryBody, CalendarId, properties, gShellServiceAccount);
+                return mainBase.calendarList.Update(CalendarListEntryBody, CalendarId, properties, StandardQueryParams);
             }
 
 
@@ -358,12 +305,12 @@ namespace gShell.Cmdlets.Calendar{
             /// <summary>Watch for changes to CalendarList resources.</summary>
             /// <param name="ChannelBody">The body of the request.</param>
             /// <param name="properties">The optional properties for this method.</param>
-            public Google.Apis.Calendar.v3.Data.Channel Watch (Google.Apis.Calendar.v3.Data.Channel ChannelBody, gCalendar.CalendarList.CalendarListWatchProperties properties= null)
+            public Google.Apis.Calendar.v3.Data.Channel Watch (Google.Apis.Calendar.v3.Data.Channel ChannelBody, gCalendar.CalendarList.CalendarListWatchProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
                 properties = properties ?? new gCalendar.CalendarList.CalendarListWatchProperties();
 
-                return mainBase.calendarList.Watch(ChannelBody, properties, gShellServiceAccount);
+                return mainBase.calendarList.Watch(ChannelBody, properties, StandardQueryParams);
             }
 
 
@@ -385,10 +332,10 @@ namespace gShell.Cmdlets.Calendar{
             /// calendar of an account.</summary>
             /// <param name="CalendarId">Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you
             /// want to access the primary calendar of the currently logged in user, use the "primary" keyword.</param>
-            public void Clear (string CalendarId)
+            public void Clear (string CalendarId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                mainBase.calendars.Clear(CalendarId, gShellServiceAccount);
+                mainBase.calendars.Clear(CalendarId, StandardQueryParams);
             }
 
 
@@ -397,10 +344,10 @@ namespace gShell.Cmdlets.Calendar{
             /// calendars.</summary>
             /// <param name="CalendarId">Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you
             /// want to access the primary calendar of the currently logged in user, use the "primary" keyword.</param>
-            public void Delete (string CalendarId)
+            public void Delete (string CalendarId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                mainBase.calendars.Delete(CalendarId, gShellServiceAccount);
+                mainBase.calendars.Delete(CalendarId, StandardQueryParams);
             }
 
 
@@ -408,20 +355,20 @@ namespace gShell.Cmdlets.Calendar{
             /// <summary>Returns metadata for a calendar.</summary>
             /// <param name="CalendarId">Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you
             /// want to access the primary calendar of the currently logged in user, use the "primary" keyword.</param>
-            public Google.Apis.Calendar.v3.Data.Calendar Get (string CalendarId)
+            public Google.Apis.Calendar.v3.Data.Calendar Get (string CalendarId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.calendars.Get(CalendarId, gShellServiceAccount);
+                return mainBase.calendars.Get(CalendarId, StandardQueryParams);
             }
 
 
 
             /// <summary>Creates a secondary calendar.</summary>
             /// <param name="CalendarBody">The body of the request.</param>
-            public Google.Apis.Calendar.v3.Data.Calendar Insert (Google.Apis.Calendar.v3.Data.Calendar CalendarBody)
+            public Google.Apis.Calendar.v3.Data.Calendar Insert (Google.Apis.Calendar.v3.Data.Calendar CalendarBody, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.calendars.Insert(CalendarBody, gShellServiceAccount);
+                return mainBase.calendars.Insert(CalendarBody, StandardQueryParams);
             }
 
 
@@ -430,10 +377,10 @@ namespace gShell.Cmdlets.Calendar{
             /// <param name="CalendarBody">The body of the request.</param>
             /// <param name="CalendarId">Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you
             /// want to access the primary calendar of the currently logged in user, use the "primary" keyword.</param>
-            public Google.Apis.Calendar.v3.Data.Calendar Patch (Google.Apis.Calendar.v3.Data.Calendar CalendarBody, string CalendarId)
+            public Google.Apis.Calendar.v3.Data.Calendar Patch (Google.Apis.Calendar.v3.Data.Calendar CalendarBody, string CalendarId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.calendars.Patch(CalendarBody, CalendarId, gShellServiceAccount);
+                return mainBase.calendars.Patch(CalendarBody, CalendarId, StandardQueryParams);
             }
 
 
@@ -442,10 +389,10 @@ namespace gShell.Cmdlets.Calendar{
             /// <param name="CalendarBody">The body of the request.</param>
             /// <param name="CalendarId">Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you
             /// want to access the primary calendar of the currently logged in user, use the "primary" keyword.</param>
-            public Google.Apis.Calendar.v3.Data.Calendar Update (Google.Apis.Calendar.v3.Data.Calendar CalendarBody, string CalendarId)
+            public Google.Apis.Calendar.v3.Data.Calendar Update (Google.Apis.Calendar.v3.Data.Calendar CalendarBody, string CalendarId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.calendars.Update(CalendarBody, CalendarId, gShellServiceAccount);
+                return mainBase.calendars.Update(CalendarBody, CalendarId, StandardQueryParams);
             }
 
 
@@ -465,10 +412,10 @@ namespace gShell.Cmdlets.Calendar{
 
             /// <summary>Stop watching resources through this channel</summary>
             /// <param name="ChannelBody">The body of the request.</param>
-            public void Stop (Google.Apis.Calendar.v3.Data.Channel ChannelBody)
+            public void Stop (Google.Apis.Calendar.v3.Data.Channel ChannelBody, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                mainBase.channels.Stop(ChannelBody, gShellServiceAccount);
+                mainBase.channels.Stop(ChannelBody, StandardQueryParams);
             }
 
 
@@ -487,10 +434,10 @@ namespace gShell.Cmdlets.Calendar{
 
 
             /// <summary>Returns the color definitions for calendars and events.</summary>
-            public Google.Apis.Calendar.v3.Data.Colors Get ()
+            public Google.Apis.Calendar.v3.Data.Colors Get (gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.colors.Get(gShellServiceAccount);
+                return mainBase.colors.Get(StandardQueryParams);
             }
 
 
@@ -514,12 +461,12 @@ namespace gShell.Cmdlets.Calendar{
             ///
             /// <param name="EventId">Event identifier.</param>
             /// <param name="properties">The optional properties for this method.</param>
-            public void Delete (string CalendarId, string EventId, gCalendar.Events.EventsDeleteProperties properties= null)
+            public void Delete (string CalendarId, string EventId, gCalendar.Events.EventsDeleteProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
                 properties = properties ?? new gCalendar.Events.EventsDeleteProperties();
 
-                mainBase.events.Delete(CalendarId, EventId, properties, gShellServiceAccount);
+                mainBase.events.Delete(CalendarId, EventId, properties, StandardQueryParams);
             }
 
 
@@ -530,12 +477,12 @@ namespace gShell.Cmdlets.Calendar{
             ///
             /// <param name="EventId">Event identifier.</param>
             /// <param name="properties">The optional properties for this method.</param>
-            public Google.Apis.Calendar.v3.Data.Event Get (string CalendarId, string EventId, gCalendar.Events.EventsGetProperties properties= null)
+            public Google.Apis.Calendar.v3.Data.Event Get (string CalendarId, string EventId, gCalendar.Events.EventsGetProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
                 properties = properties ?? new gCalendar.Events.EventsGetProperties();
 
-                return mainBase.events.Get(CalendarId, EventId, properties, gShellServiceAccount);
+                return mainBase.events.Get(CalendarId, EventId, properties, StandardQueryParams);
             }
 
 
@@ -546,12 +493,12 @@ namespace gShell.Cmdlets.Calendar{
             /// <param name="CalendarId">Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you
             /// want to access the primary calendar of the currently logged in user, use the "primary" keyword.</param>
             /// <param name="properties">The optional properties for this method.</param>
-            public Google.Apis.Calendar.v3.Data.Event Import (Google.Apis.Calendar.v3.Data.Event EventBody, string CalendarId, gCalendar.Events.EventsImportProperties properties= null)
+            public Google.Apis.Calendar.v3.Data.Event Import (Google.Apis.Calendar.v3.Data.Event EventBody, string CalendarId, gCalendar.Events.EventsImportProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
                 properties = properties ?? new gCalendar.Events.EventsImportProperties();
 
-                return mainBase.events.Import(EventBody, CalendarId, properties, gShellServiceAccount);
+                return mainBase.events.Import(EventBody, CalendarId, properties, StandardQueryParams);
             }
 
 
@@ -561,12 +508,12 @@ namespace gShell.Cmdlets.Calendar{
             /// <param name="CalendarId">Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you
             /// want to access the primary calendar of the currently logged in user, use the "primary" keyword.</param>
             /// <param name="properties">The optional properties for this method.</param>
-            public Google.Apis.Calendar.v3.Data.Event Insert (Google.Apis.Calendar.v3.Data.Event EventBody, string CalendarId, gCalendar.Events.EventsInsertProperties properties= null)
+            public Google.Apis.Calendar.v3.Data.Event Insert (Google.Apis.Calendar.v3.Data.Event EventBody, string CalendarId, gCalendar.Events.EventsInsertProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
                 properties = properties ?? new gCalendar.Events.EventsInsertProperties();
 
-                return mainBase.events.Insert(EventBody, CalendarId, properties, gShellServiceAccount);
+                return mainBase.events.Insert(EventBody, CalendarId, properties, StandardQueryParams);
             }
 
 
@@ -578,7 +525,7 @@ namespace gShell.Cmdlets.Calendar{
             /// <param name="EventId">Recurring event identifier.</param>
             /// <param name="properties">The optional properties for this method.</param>
 
-            public List<Google.Apis.Calendar.v3.Data.Events> Instances(string CalendarId, string EventId, gCalendar.Events.EventsInstancesProperties properties= null)
+            public List<Google.Apis.Calendar.v3.Data.Events> Instances(string CalendarId, string EventId, gCalendar.Events.EventsInstancesProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
                 properties = properties ?? new gCalendar.Events.EventsInstancesProperties();
@@ -593,14 +540,14 @@ namespace gShell.Cmdlets.Calendar{
             /// want to access the primary calendar of the currently logged in user, use the "primary" keyword.</param>
             /// <param name="properties">The optional properties for this method.</param>
 
-            public List<Google.Apis.Calendar.v3.Data.Events> List(string CalendarId, gCalendar.Events.EventsListProperties properties= null)
+            public List<Google.Apis.Calendar.v3.Data.Events> List(string CalendarId, gCalendar.Events.EventsListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
                 properties = properties ?? new gCalendar.Events.EventsListProperties();
                 properties.StartProgressBar = StartProgressBar;
                 properties.UpdateProgressBar = UpdateProgressBar;
 
-                return mainBase.events.List(CalendarId, properties, gShellServiceAccount);
+                return mainBase.events.List(CalendarId, properties);
             }
 
             /// <summary>Moves an event to another calendar, i.e. changes an event's organizer.</summary>
@@ -610,12 +557,12 @@ namespace gShell.Cmdlets.Calendar{
             /// <param name="Destination">Calendar identifier of the target
             /// calendar where the event is to be moved to.</param>
             /// <param name="properties">The optional properties for this method.</param>
-            public Google.Apis.Calendar.v3.Data.Event Move (string CalendarId, string EventId, string Destination, gCalendar.Events.EventsMoveProperties properties= null)
+            public Google.Apis.Calendar.v3.Data.Event Move (string CalendarId, string EventId, string Destination, gCalendar.Events.EventsMoveProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
                 properties = properties ?? new gCalendar.Events.EventsMoveProperties();
 
-                return mainBase.events.Move(CalendarId, EventId, Destination, properties, gShellServiceAccount);
+                return mainBase.events.Move(CalendarId, EventId, Destination, properties, StandardQueryParams);
             }
 
 
@@ -627,12 +574,12 @@ namespace gShell.Cmdlets.Calendar{
             ///
             /// <param name="EventId">Event identifier.</param>
             /// <param name="properties">The optional properties for this method.</param>
-            public Google.Apis.Calendar.v3.Data.Event Patch (Google.Apis.Calendar.v3.Data.Event EventBody, string CalendarId, string EventId, gCalendar.Events.EventsPatchProperties properties= null)
+            public Google.Apis.Calendar.v3.Data.Event Patch (Google.Apis.Calendar.v3.Data.Event EventBody, string CalendarId, string EventId, gCalendar.Events.EventsPatchProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
                 properties = properties ?? new gCalendar.Events.EventsPatchProperties();
 
-                return mainBase.events.Patch(EventBody, CalendarId, EventId, properties, gShellServiceAccount);
+                return mainBase.events.Patch(EventBody, CalendarId, EventId, properties, StandardQueryParams);
             }
 
 
@@ -643,12 +590,12 @@ namespace gShell.Cmdlets.Calendar{
             ///
             /// <param name="Text">The text describing the event to be created.</param>
             /// <param name="properties">The optional properties for this method.</param>
-            public Google.Apis.Calendar.v3.Data.Event QuickAdd (string CalendarId, string Text, gCalendar.Events.EventsQuickAddProperties properties= null)
+            public Google.Apis.Calendar.v3.Data.Event QuickAdd (string CalendarId, string Text, gCalendar.Events.EventsQuickAddProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
                 properties = properties ?? new gCalendar.Events.EventsQuickAddProperties();
 
-                return mainBase.events.QuickAdd(CalendarId, Text, properties, gShellServiceAccount);
+                return mainBase.events.QuickAdd(CalendarId, Text, properties, StandardQueryParams);
             }
 
 
@@ -660,12 +607,12 @@ namespace gShell.Cmdlets.Calendar{
             ///
             /// <param name="EventId">Event identifier.</param>
             /// <param name="properties">The optional properties for this method.</param>
-            public Google.Apis.Calendar.v3.Data.Event Update (Google.Apis.Calendar.v3.Data.Event EventBody, string CalendarId, string EventId, gCalendar.Events.EventsUpdateProperties properties= null)
+            public Google.Apis.Calendar.v3.Data.Event Update (Google.Apis.Calendar.v3.Data.Event EventBody, string CalendarId, string EventId, gCalendar.Events.EventsUpdateProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
                 properties = properties ?? new gCalendar.Events.EventsUpdateProperties();
 
-                return mainBase.events.Update(EventBody, CalendarId, EventId, properties, gShellServiceAccount);
+                return mainBase.events.Update(EventBody, CalendarId, EventId, properties, StandardQueryParams);
             }
 
 
@@ -675,12 +622,12 @@ namespace gShell.Cmdlets.Calendar{
             /// <param name="CalendarId">Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you
             /// want to access the primary calendar of the currently logged in user, use the "primary" keyword.</param>
             /// <param name="properties">The optional properties for this method.</param>
-            public Google.Apis.Calendar.v3.Data.Channel Watch (Google.Apis.Calendar.v3.Data.Channel ChannelBody, string CalendarId, gCalendar.Events.EventsWatchProperties properties= null)
+            public Google.Apis.Calendar.v3.Data.Channel Watch (Google.Apis.Calendar.v3.Data.Channel ChannelBody, string CalendarId, gCalendar.Events.EventsWatchProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
                 properties = properties ?? new gCalendar.Events.EventsWatchProperties();
 
-                return mainBase.events.Watch(ChannelBody, CalendarId, properties, gShellServiceAccount);
+                return mainBase.events.Watch(ChannelBody, CalendarId, properties, StandardQueryParams);
             }
 
 
@@ -700,10 +647,10 @@ namespace gShell.Cmdlets.Calendar{
 
             /// <summary>Returns free/busy information for a set of calendars.</summary>
             /// <param name="FreeBusyRequestBody">The body of the request.</param>
-            public Google.Apis.Calendar.v3.Data.FreeBusyResponse Query (Google.Apis.Calendar.v3.Data.FreeBusyRequest FreeBusyRequestBody)
+            public Google.Apis.Calendar.v3.Data.FreeBusyResponse Query (Google.Apis.Calendar.v3.Data.FreeBusyRequest FreeBusyRequestBody, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.freebusy.Query(FreeBusyRequestBody, gShellServiceAccount);
+                return mainBase.freebusy.Query(FreeBusyRequestBody, StandardQueryParams);
             }
 
 
@@ -723,10 +670,10 @@ namespace gShell.Cmdlets.Calendar{
 
             /// <summary>Returns a single user setting.</summary>
             /// <param name="Setting">The id of the user setting.</param>
-            public Google.Apis.Calendar.v3.Data.Setting Get (string Setting)
+            public Google.Apis.Calendar.v3.Data.Setting Get (string Setting, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
-                return mainBase.settings.Get(Setting, gShellServiceAccount);
+                return mainBase.settings.Get(Setting, StandardQueryParams);
             }
 
 
@@ -734,25 +681,25 @@ namespace gShell.Cmdlets.Calendar{
             /// <summary>Returns all user settings for the authenticated user.</summary>
             /// <param name="properties">The optional properties for this method.</param>
 
-            public List<Google.Apis.Calendar.v3.Data.Settings> List(gCalendar.Settings.SettingsListProperties properties= null)
+            public List<Google.Apis.Calendar.v3.Data.Settings> List(gCalendar.Settings.SettingsListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
                 properties = properties ?? new gCalendar.Settings.SettingsListProperties();
                 properties.StartProgressBar = StartProgressBar;
                 properties.UpdateProgressBar = UpdateProgressBar;
 
-                return mainBase.settings.List(properties, gShellServiceAccount);
+                return mainBase.settings.List(properties);
             }
 
             /// <summary>Watch for changes to Settings resources.</summary>
             /// <param name="ChannelBody">The body of the request.</param>
             /// <param name="properties">The optional properties for this method.</param>
-            public Google.Apis.Calendar.v3.Data.Channel Watch (Google.Apis.Calendar.v3.Data.Channel ChannelBody, gCalendar.Settings.SettingsWatchProperties properties= null)
+            public Google.Apis.Calendar.v3.Data.Channel Watch (Google.Apis.Calendar.v3.Data.Channel ChannelBody, gCalendar.Settings.SettingsWatchProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
 
                 properties = properties ?? new gCalendar.Settings.SettingsWatchProperties();
 
-                return mainBase.settings.Watch(ChannelBody, properties, gShellServiceAccount);
+                return mainBase.settings.Watch(ChannelBody, properties, StandardQueryParams);
             }
 
 
@@ -778,7 +725,7 @@ namespace gShell.dotNet
     using Data = Google.Apis.Calendar.v3.Data;
 
     /// <summary>The dotNet gShell version of the calendar api.</summary>
-    public class Calendar : ServiceWrapper<v3.CalendarService>
+    public class Calendar : ServiceWrapper<v3.CalendarService>, IServiceWrapper<Google.Apis.Services.IClientService>
     {
 
         protected override bool worksWithGmail { get { return true; } }
@@ -790,7 +737,7 @@ namespace gShell.dotNet
 
         protected override v3.CalendarService CreateNewService(string domain, AuthenticatedUserInfo authInfo, string gShellServiceAccount = null)
         {
-            return new v3.CalendarService(OAuth2Base.GetInitializer(domain, authInfo, gShellServiceAccount));
+            return new v3.CalendarService(OAuth2Base.GetInitializer(domain, authInfo));
         }
 
         /// <summary>Returns the api name and version in {name}:{version} format.</summary>
@@ -882,9 +829,19 @@ namespace gShell.dotNet
             ///
             /// <param name="RuleId">ACL rule identifier.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void Delete (string CalendarId, string RuleId, string gShellServiceAccount = null)
+            public void Delete (string CalendarId, string RuleId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
-                GetService(gShellServiceAccount).Acl.Delete(CalendarId, RuleId).Execute();
+                var request = GetService().Acl.Delete(CalendarId, RuleId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
+
+
+
+                request.Execute();
             }
 
             /// <summary>Returns an access control rule.</summary>
@@ -893,9 +850,19 @@ namespace gShell.dotNet
             ///
             /// <param name="RuleId">ACL rule identifier.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Calendar.v3.Data.AclRule Get (string CalendarId, string RuleId, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.AclRule Get (string CalendarId, string RuleId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
-                return GetService(gShellServiceAccount).Acl.Get(CalendarId, RuleId).Execute();
+                var request = GetService().Acl.Get(CalendarId, RuleId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
+
+
+
+                return request.Execute();
             }
 
             /// <summary>Creates an access control rule.</summary>
@@ -903,9 +870,19 @@ namespace gShell.dotNet
             /// <param name="CalendarId">Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you
             /// want to access the primary calendar of the currently logged in user, use the "primary" keyword.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Calendar.v3.Data.AclRule Insert (Google.Apis.Calendar.v3.Data.AclRule AclRuleBody, string CalendarId, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.AclRule Insert (Google.Apis.Calendar.v3.Data.AclRule AclRuleBody, string CalendarId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
-                return GetService(gShellServiceAccount).Acl.Insert(AclRuleBody, CalendarId).Execute();
+                var request = GetService().Acl.Insert(AclRuleBody, CalendarId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
+
+
+
+                return request.Execute();
             }
 
             /// <summary>Returns the rules in the access control list for the calendar.</summary>
@@ -914,11 +891,17 @@ namespace gShell.dotNet
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public List<Google.Apis.Calendar.v3.Data.Acl> List(
-                string CalendarId, AclListProperties properties= null, string gShellServiceAccount = null)
+                string CalendarId, AclListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var results = new List<Google.Apis.Calendar.v3.Data.Acl>();
 
-                v3.AclResource.ListRequest request = GetService(gShellServiceAccount).Acl.List(CalendarId);
+                v3.AclResource.ListRequest request = GetService().Acl.List(CalendarId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
 
                 if (properties != null)
                 {
@@ -931,7 +914,7 @@ namespace gShell.dotNet
                 if (null != properties.StartProgressBar)
                 {
                     properties.StartProgressBar("Gathering Acl",
-                        string.Format("-Collecting Acl 1 to {0}", request.MaxResults.ToString()));
+                        string.Format("-Collecting Acl page 1"));
                 }
 
                 Google.Apis.Calendar.v3.Data.Acl pagedResult = request.Execute();
@@ -949,9 +932,8 @@ namespace gShell.dotNet
                         if (null != properties.UpdateProgressBar)
                         {
                             properties.UpdateProgressBar(5, 10, "Gathering Acl",
-                                    string.Format("-Collecting Acl {0} to {1}",
-                                        (results.Count + 1).ToString(),
-                                        (results.Count + request.MaxResults).ToString()));
+                                    string.Format("-Collecting Acl page {0}",
+                                        (results.Count + 1).ToString()));
                         }
                         pagedResult = request.Execute();
                         results.Add(pagedResult);
@@ -960,7 +942,7 @@ namespace gShell.dotNet
                     if (null != properties.UpdateProgressBar)
                     {
                         properties.UpdateProgressBar(1, 2, "Gathering Acl",
-                                string.Format("-Returning {0} results.", results.Count.ToString()));
+                                string.Format("-Returning {0} pages.", results.Count.ToString()));
                     }
                 }
 
@@ -974,9 +956,19 @@ namespace gShell.dotNet
             ///
             /// <param name="RuleId">ACL rule identifier.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Calendar.v3.Data.AclRule Patch (Google.Apis.Calendar.v3.Data.AclRule AclRuleBody, string CalendarId, string RuleId, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.AclRule Patch (Google.Apis.Calendar.v3.Data.AclRule AclRuleBody, string CalendarId, string RuleId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
-                return GetService(gShellServiceAccount).Acl.Patch(AclRuleBody, CalendarId, RuleId).Execute();
+                var request = GetService().Acl.Patch(AclRuleBody, CalendarId, RuleId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
+
+
+
+                return request.Execute();
             }
 
             /// <summary>Updates an access control rule.</summary>
@@ -986,9 +978,19 @@ namespace gShell.dotNet
             ///
             /// <param name="RuleId">ACL rule identifier.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Calendar.v3.Data.AclRule Update (Google.Apis.Calendar.v3.Data.AclRule AclRuleBody, string CalendarId, string RuleId, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.AclRule Update (Google.Apis.Calendar.v3.Data.AclRule AclRuleBody, string CalendarId, string RuleId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
-                return GetService(gShellServiceAccount).Acl.Update(AclRuleBody, CalendarId, RuleId).Execute();
+                var request = GetService().Acl.Update(AclRuleBody, CalendarId, RuleId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
+
+
+
+                return request.Execute();
             }
 
             /// <summary>Watch for changes to ACL resources.</summary>
@@ -997,9 +999,23 @@ namespace gShell.dotNet
             /// want to access the primary calendar of the currently logged in user, use the "primary" keyword.</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Calendar.v3.Data.Channel Watch (Google.Apis.Calendar.v3.Data.Channel ChannelBody, string CalendarId, AclWatchProperties properties= null, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.Channel Watch (Google.Apis.Calendar.v3.Data.Channel ChannelBody, string CalendarId, AclWatchProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
-                return GetService(gShellServiceAccount).Acl.Watch(ChannelBody, CalendarId).Execute();
+                var request = GetService().Acl.Watch(ChannelBody, CalendarId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
+
+                if (properties != null)    {
+                    request.MaxResults = properties.MaxResults;
+                    request.ShowDeleted = properties.ShowDeleted;
+                    request.SyncToken = properties.SyncToken;
+                }
+
+                return request.Execute();
             }
 
         }
@@ -1081,38 +1097,76 @@ namespace gShell.dotNet
             /// <param name="CalendarId">Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you
             /// want to access the primary calendar of the currently logged in user, use the "primary" keyword.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void Delete (string CalendarId, string gShellServiceAccount = null)
+            public void Delete (string CalendarId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
-                GetService(gShellServiceAccount).CalendarList.Delete(CalendarId).Execute();
+                var request = GetService().CalendarList.Delete(CalendarId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
+
+
+
+                request.Execute();
             }
 
             /// <summary>Returns an entry on the user's calendar list.</summary>
             /// <param name="CalendarId">Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you
             /// want to access the primary calendar of the currently logged in user, use the "primary" keyword.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Calendar.v3.Data.CalendarListEntry Get (string CalendarId, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.CalendarListEntry Get (string CalendarId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
-                return GetService(gShellServiceAccount).CalendarList.Get(CalendarId).Execute();
+                var request = GetService().CalendarList.Get(CalendarId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
+
+
+
+                return request.Execute();
             }
 
             /// <summary>Adds an entry to the user's calendar list.</summary>
             /// <param name="CalendarListEntryBody">The body of the request.</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Calendar.v3.Data.CalendarListEntry Insert (Google.Apis.Calendar.v3.Data.CalendarListEntry CalendarListEntryBody, CalendarListInsertProperties properties= null, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.CalendarListEntry Insert (Google.Apis.Calendar.v3.Data.CalendarListEntry CalendarListEntryBody, CalendarListInsertProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
-                return GetService(gShellServiceAccount).CalendarList.Insert(CalendarListEntryBody).Execute();
+                var request = GetService().CalendarList.Insert(CalendarListEntryBody);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
+
+                if (properties != null)    {
+                    request.ColorRgbFormat = properties.ColorRgbFormat;
+                }
+
+                return request.Execute();
             }
 
             /// <summary>Returns entries on the user's calendar list.</summary>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public List<Google.Apis.Calendar.v3.Data.CalendarList> List(
-                CalendarListListProperties properties= null, string gShellServiceAccount = null)
+                CalendarListListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var results = new List<Google.Apis.Calendar.v3.Data.CalendarList>();
 
-                v3.CalendarListResource.ListRequest request = GetService(gShellServiceAccount).CalendarList.List();
+                v3.CalendarListResource.ListRequest request = GetService().CalendarList.List();
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
 
                 if (properties != null)
                 {
@@ -1127,7 +1181,7 @@ namespace gShell.dotNet
                 if (null != properties.StartProgressBar)
                 {
                     properties.StartProgressBar("Gathering CalendarList",
-                        string.Format("-Collecting CalendarList 1 to {0}", request.MaxResults.ToString()));
+                        string.Format("-Collecting CalendarList page 1"));
                 }
 
                 Google.Apis.Calendar.v3.Data.CalendarList pagedResult = request.Execute();
@@ -1145,9 +1199,8 @@ namespace gShell.dotNet
                         if (null != properties.UpdateProgressBar)
                         {
                             properties.UpdateProgressBar(5, 10, "Gathering CalendarList",
-                                    string.Format("-Collecting CalendarList {0} to {1}",
-                                        (results.Count + 1).ToString(),
-                                        (results.Count + request.MaxResults).ToString()));
+                                    string.Format("-Collecting CalendarList page {0}",
+                                        (results.Count + 1).ToString()));
                         }
                         pagedResult = request.Execute();
                         results.Add(pagedResult);
@@ -1156,7 +1209,7 @@ namespace gShell.dotNet
                     if (null != properties.UpdateProgressBar)
                     {
                         properties.UpdateProgressBar(1, 2, "Gathering CalendarList",
-                                string.Format("-Returning {0} results.", results.Count.ToString()));
+                                string.Format("-Returning {0} pages.", results.Count.ToString()));
                     }
                 }
 
@@ -1169,9 +1222,21 @@ namespace gShell.dotNet
             /// want to access the primary calendar of the currently logged in user, use the "primary" keyword.</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Calendar.v3.Data.CalendarListEntry Patch (Google.Apis.Calendar.v3.Data.CalendarListEntry CalendarListEntryBody, string CalendarId, CalendarListPatchProperties properties= null, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.CalendarListEntry Patch (Google.Apis.Calendar.v3.Data.CalendarListEntry CalendarListEntryBody, string CalendarId, CalendarListPatchProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
-                return GetService(gShellServiceAccount).CalendarList.Patch(CalendarListEntryBody, CalendarId).Execute();
+                var request = GetService().CalendarList.Patch(CalendarListEntryBody, CalendarId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
+
+                if (properties != null)    {
+                    request.ColorRgbFormat = properties.ColorRgbFormat;
+                }
+
+                return request.Execute();
             }
 
             /// <summary>Updates an entry on the user's calendar list.</summary>
@@ -1180,18 +1245,46 @@ namespace gShell.dotNet
             /// want to access the primary calendar of the currently logged in user, use the "primary" keyword.</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Calendar.v3.Data.CalendarListEntry Update (Google.Apis.Calendar.v3.Data.CalendarListEntry CalendarListEntryBody, string CalendarId, CalendarListUpdateProperties properties= null, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.CalendarListEntry Update (Google.Apis.Calendar.v3.Data.CalendarListEntry CalendarListEntryBody, string CalendarId, CalendarListUpdateProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
-                return GetService(gShellServiceAccount).CalendarList.Update(CalendarListEntryBody, CalendarId).Execute();
+                var request = GetService().CalendarList.Update(CalendarListEntryBody, CalendarId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
+
+                if (properties != null)    {
+                    request.ColorRgbFormat = properties.ColorRgbFormat;
+                }
+
+                return request.Execute();
             }
 
             /// <summary>Watch for changes to CalendarList resources.</summary>
             /// <param name="ChannelBody">The body of the request.</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Calendar.v3.Data.Channel Watch (Google.Apis.Calendar.v3.Data.Channel ChannelBody, CalendarListWatchProperties properties= null, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.Channel Watch (Google.Apis.Calendar.v3.Data.Channel ChannelBody, CalendarListWatchProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
-                return GetService(gShellServiceAccount).CalendarList.Watch(ChannelBody).Execute();
+                var request = GetService().CalendarList.Watch(ChannelBody);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
+
+                if (properties != null)    {
+                    request.MaxResults = properties.MaxResults;
+                    request.MinAccessRole = properties.MinAccessRole;
+                    request.ShowDeleted = properties.ShowDeleted;
+                    request.ShowHidden = properties.ShowHidden;
+                    request.SyncToken = properties.SyncToken;
+                }
+
+                return request.Execute();
             }
 
         }
@@ -1208,9 +1301,19 @@ namespace gShell.dotNet
             /// <param name="CalendarId">Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you
             /// want to access the primary calendar of the currently logged in user, use the "primary" keyword.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void Clear (string CalendarId, string gShellServiceAccount = null)
+            public void Clear (string CalendarId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
-                GetService(gShellServiceAccount).Calendars.Clear(CalendarId).Execute();
+                var request = GetService().Calendars.Clear(CalendarId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
+
+
+
+                request.Execute();
             }
 
             /// <summary>Deletes a secondary calendar. Use calendars.clear for clearing all events on primary
@@ -1218,26 +1321,56 @@ namespace gShell.dotNet
             /// <param name="CalendarId">Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you
             /// want to access the primary calendar of the currently logged in user, use the "primary" keyword.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void Delete (string CalendarId, string gShellServiceAccount = null)
+            public void Delete (string CalendarId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
-                GetService(gShellServiceAccount).Calendars.Delete(CalendarId).Execute();
+                var request = GetService().Calendars.Delete(CalendarId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
+
+
+
+                request.Execute();
             }
 
             /// <summary>Returns metadata for a calendar.</summary>
             /// <param name="CalendarId">Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you
             /// want to access the primary calendar of the currently logged in user, use the "primary" keyword.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Calendar.v3.Data.Calendar Get (string CalendarId, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.Calendar Get (string CalendarId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
-                return GetService(gShellServiceAccount).Calendars.Get(CalendarId).Execute();
+                var request = GetService().Calendars.Get(CalendarId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
+
+
+
+                return request.Execute();
             }
 
             /// <summary>Creates a secondary calendar.</summary>
             /// <param name="CalendarBody">The body of the request.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Calendar.v3.Data.Calendar Insert (Google.Apis.Calendar.v3.Data.Calendar CalendarBody, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.Calendar Insert (Google.Apis.Calendar.v3.Data.Calendar CalendarBody, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
-                return GetService(gShellServiceAccount).Calendars.Insert(CalendarBody).Execute();
+                var request = GetService().Calendars.Insert(CalendarBody);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
+
+
+
+                return request.Execute();
             }
 
             /// <summary>Updates metadata for a calendar. This method supports patch semantics.</summary>
@@ -1245,9 +1378,19 @@ namespace gShell.dotNet
             /// <param name="CalendarId">Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you
             /// want to access the primary calendar of the currently logged in user, use the "primary" keyword.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Calendar.v3.Data.Calendar Patch (Google.Apis.Calendar.v3.Data.Calendar CalendarBody, string CalendarId, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.Calendar Patch (Google.Apis.Calendar.v3.Data.Calendar CalendarBody, string CalendarId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
-                return GetService(gShellServiceAccount).Calendars.Patch(CalendarBody, CalendarId).Execute();
+                var request = GetService().Calendars.Patch(CalendarBody, CalendarId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
+
+
+
+                return request.Execute();
             }
 
             /// <summary>Updates metadata for a calendar.</summary>
@@ -1255,9 +1398,19 @@ namespace gShell.dotNet
             /// <param name="CalendarId">Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you
             /// want to access the primary calendar of the currently logged in user, use the "primary" keyword.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Calendar.v3.Data.Calendar Update (Google.Apis.Calendar.v3.Data.Calendar CalendarBody, string CalendarId, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.Calendar Update (Google.Apis.Calendar.v3.Data.Calendar CalendarBody, string CalendarId, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
-                return GetService(gShellServiceAccount).Calendars.Update(CalendarBody, CalendarId).Execute();
+                var request = GetService().Calendars.Update(CalendarBody, CalendarId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
+
+
+
+                return request.Execute();
             }
 
         }
@@ -1272,9 +1425,19 @@ namespace gShell.dotNet
             /// <summary>Stop watching resources through this channel</summary>
             /// <param name="ChannelBody">The body of the request.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void Stop (Google.Apis.Calendar.v3.Data.Channel ChannelBody, string gShellServiceAccount = null)
+            public void Stop (Google.Apis.Calendar.v3.Data.Channel ChannelBody, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
-                GetService(gShellServiceAccount).Channels.Stop(ChannelBody).Execute();
+                var request = GetService().Channels.Stop(ChannelBody);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
+
+
+
+                request.Execute();
             }
 
         }
@@ -1288,9 +1451,19 @@ namespace gShell.dotNet
 
             /// <summary>Returns the color definitions for calendars and events.</summary>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Calendar.v3.Data.Colors Get (string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.Colors Get (gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
-                return GetService(gShellServiceAccount).Colors.Get().Execute();
+                var request = GetService().Colors.Get();
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
+
+
+
+                return request.Execute();
             }
 
         }
@@ -1543,9 +1716,21 @@ namespace gShell.dotNet
             /// <param name="EventId">Event identifier.</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public void Delete (string CalendarId, string EventId, EventsDeleteProperties properties= null, string gShellServiceAccount = null)
+            public void Delete (string CalendarId, string EventId, EventsDeleteProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
-                GetService(gShellServiceAccount).Events.Delete(CalendarId, EventId).Execute();
+                var request = GetService().Events.Delete(CalendarId, EventId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
+
+                if (properties != null)    {
+                    request.SendNotifications = properties.SendNotifications;
+                }
+
+                request.Execute();
             }
 
             /// <summary>Returns an event.</summary>
@@ -1555,9 +1740,23 @@ namespace gShell.dotNet
             /// <param name="EventId">Event identifier.</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Calendar.v3.Data.Event Get (string CalendarId, string EventId, EventsGetProperties properties= null, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.Event Get (string CalendarId, string EventId, EventsGetProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
-                return GetService(gShellServiceAccount).Events.Get(CalendarId, EventId).Execute();
+                var request = GetService().Events.Get(CalendarId, EventId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
+
+                if (properties != null)    {
+                    request.AlwaysIncludeEmail = properties.AlwaysIncludeEmail;
+                    request.MaxAttendees = properties.MaxAttendees;
+                    request.TimeZone = properties.TimeZone;
+                }
+
+                return request.Execute();
             }
 
             /// <summary>Imports an event. This operation is used to add a private copy of an existing event to a
@@ -1567,9 +1766,21 @@ namespace gShell.dotNet
             /// want to access the primary calendar of the currently logged in user, use the "primary" keyword.</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Calendar.v3.Data.Event Import (Google.Apis.Calendar.v3.Data.Event EventBody, string CalendarId, EventsImportProperties properties= null, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.Event Import (Google.Apis.Calendar.v3.Data.Event EventBody, string CalendarId, EventsImportProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
-                return GetService(gShellServiceAccount).Events.Import(EventBody, CalendarId).Execute();
+                var request = GetService().Events.Import(EventBody, CalendarId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
+
+                if (properties != null)    {
+                    request.SupportsAttachments = properties.SupportsAttachments;
+                }
+
+                return request.Execute();
             }
 
             /// <summary>Creates an event.</summary>
@@ -1578,9 +1789,23 @@ namespace gShell.dotNet
             /// want to access the primary calendar of the currently logged in user, use the "primary" keyword.</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Calendar.v3.Data.Event Insert (Google.Apis.Calendar.v3.Data.Event EventBody, string CalendarId, EventsInsertProperties properties= null, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.Event Insert (Google.Apis.Calendar.v3.Data.Event EventBody, string CalendarId, EventsInsertProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
-                return GetService(gShellServiceAccount).Events.Insert(EventBody, CalendarId).Execute();
+                var request = GetService().Events.Insert(EventBody, CalendarId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
+
+                if (properties != null)    {
+                    request.MaxAttendees = properties.MaxAttendees;
+                    request.SendNotifications = properties.SendNotifications;
+                    request.SupportsAttachments = properties.SupportsAttachments;
+                }
+
+                return request.Execute();
             }
 
             /// <summary>Returns instances of the specified recurring event.</summary>
@@ -1591,11 +1816,17 @@ namespace gShell.dotNet
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public List<Google.Apis.Calendar.v3.Data.Events> Instances(
-                string CalendarId, string EventId, EventsInstancesProperties properties= null, string gShellServiceAccount = null)
+                string CalendarId, string EventId, EventsInstancesProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var results = new List<Google.Apis.Calendar.v3.Data.Events>();
 
-                v3.EventsResource.InstancesRequest request = GetService(gShellServiceAccount).Events.Instances(CalendarId, EventId);
+                v3.EventsResource.InstancesRequest request = GetService().Events.Instances(CalendarId, EventId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
 
                 if (properties != null)
                 {
@@ -1613,7 +1844,7 @@ namespace gShell.dotNet
                 if (null != properties.StartProgressBar)
                 {
                     properties.StartProgressBar("Gathering Events",
-                        string.Format("-Collecting Events 1 to {0}", request.MaxResults.ToString()));
+                        string.Format("-Collecting Events page 1"));
                 }
 
                 Google.Apis.Calendar.v3.Data.Events pagedResult = request.Execute();
@@ -1631,9 +1862,8 @@ namespace gShell.dotNet
                         if (null != properties.UpdateProgressBar)
                         {
                             properties.UpdateProgressBar(5, 10, "Gathering Events",
-                                    string.Format("-Collecting Events {0} to {1}",
-                                        (results.Count + 1).ToString(),
-                                        (results.Count + request.MaxResults).ToString()));
+                                    string.Format("-Collecting Events page {0}",
+                                        (results.Count + 1).ToString()));
                         }
                         pagedResult = request.Execute();
                         results.Add(pagedResult);
@@ -1642,7 +1872,7 @@ namespace gShell.dotNet
                     if (null != properties.UpdateProgressBar)
                     {
                         properties.UpdateProgressBar(1, 2, "Gathering Events",
-                                string.Format("-Returning {0} results.", results.Count.ToString()));
+                                string.Format("-Returning {0} pages.", results.Count.ToString()));
                     }
                 }
 
@@ -1655,11 +1885,17 @@ namespace gShell.dotNet
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public List<Google.Apis.Calendar.v3.Data.Events> List(
-                string CalendarId, EventsListProperties properties= null, string gShellServiceAccount = null)
+                string CalendarId, EventsListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var results = new List<Google.Apis.Calendar.v3.Data.Events>();
 
-                v3.EventsResource.ListRequest request = GetService(gShellServiceAccount).Events.List(CalendarId);
+                v3.EventsResource.ListRequest request = GetService().Events.List(CalendarId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
 
                 if (properties != null)
                 {
@@ -1685,7 +1921,7 @@ namespace gShell.dotNet
                 if (null != properties.StartProgressBar)
                 {
                     properties.StartProgressBar("Gathering Events",
-                        string.Format("-Collecting Events 1 to {0}", request.MaxResults.ToString()));
+                        string.Format("-Collecting Events page 1"));
                 }
 
                 Google.Apis.Calendar.v3.Data.Events pagedResult = request.Execute();
@@ -1703,9 +1939,8 @@ namespace gShell.dotNet
                         if (null != properties.UpdateProgressBar)
                         {
                             properties.UpdateProgressBar(5, 10, "Gathering Events",
-                                    string.Format("-Collecting Events {0} to {1}",
-                                        (results.Count + 1).ToString(),
-                                        (results.Count + request.MaxResults).ToString()));
+                                    string.Format("-Collecting Events page {0}",
+                                        (results.Count + 1).ToString()));
                         }
                         pagedResult = request.Execute();
                         results.Add(pagedResult);
@@ -1714,7 +1949,7 @@ namespace gShell.dotNet
                     if (null != properties.UpdateProgressBar)
                     {
                         properties.UpdateProgressBar(1, 2, "Gathering Events",
-                                string.Format("-Returning {0} results.", results.Count.ToString()));
+                                string.Format("-Returning {0} pages.", results.Count.ToString()));
                     }
                 }
 
@@ -1729,9 +1964,21 @@ namespace gShell.dotNet
             /// calendar where the event is to be moved to.</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Calendar.v3.Data.Event Move (string CalendarId, string EventId, string Destination, EventsMoveProperties properties= null, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.Event Move (string CalendarId, string EventId, string Destination, EventsMoveProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
-                return GetService(gShellServiceAccount).Events.Move(CalendarId, EventId, Destination).Execute();
+                var request = GetService().Events.Move(CalendarId, EventId, Destination);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
+
+                if (properties != null)    {
+                    request.SendNotifications = properties.SendNotifications;
+                }
+
+                return request.Execute();
             }
 
             /// <summary>Updates an event. This method supports patch semantics.</summary>
@@ -1742,9 +1989,24 @@ namespace gShell.dotNet
             /// <param name="EventId">Event identifier.</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Calendar.v3.Data.Event Patch (Google.Apis.Calendar.v3.Data.Event EventBody, string CalendarId, string EventId, EventsPatchProperties properties= null, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.Event Patch (Google.Apis.Calendar.v3.Data.Event EventBody, string CalendarId, string EventId, EventsPatchProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
-                return GetService(gShellServiceAccount).Events.Patch(EventBody, CalendarId, EventId).Execute();
+                var request = GetService().Events.Patch(EventBody, CalendarId, EventId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
+
+                if (properties != null)    {
+                    request.AlwaysIncludeEmail = properties.AlwaysIncludeEmail;
+                    request.MaxAttendees = properties.MaxAttendees;
+                    request.SendNotifications = properties.SendNotifications;
+                    request.SupportsAttachments = properties.SupportsAttachments;
+                }
+
+                return request.Execute();
             }
 
             /// <summary>Creates an event based on a simple text string.</summary>
@@ -1754,9 +2016,21 @@ namespace gShell.dotNet
             /// <param name="Text">The text describing the event to be created.</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Calendar.v3.Data.Event QuickAdd (string CalendarId, string Text, EventsQuickAddProperties properties= null, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.Event QuickAdd (string CalendarId, string Text, EventsQuickAddProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
-                return GetService(gShellServiceAccount).Events.QuickAdd(CalendarId, Text).Execute();
+                var request = GetService().Events.QuickAdd(CalendarId, Text);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
+
+                if (properties != null)    {
+                    request.SendNotifications = properties.SendNotifications;
+                }
+
+                return request.Execute();
             }
 
             /// <summary>Updates an event.</summary>
@@ -1767,9 +2041,24 @@ namespace gShell.dotNet
             /// <param name="EventId">Event identifier.</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Calendar.v3.Data.Event Update (Google.Apis.Calendar.v3.Data.Event EventBody, string CalendarId, string EventId, EventsUpdateProperties properties= null, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.Event Update (Google.Apis.Calendar.v3.Data.Event EventBody, string CalendarId, string EventId, EventsUpdateProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
-                return GetService(gShellServiceAccount).Events.Update(EventBody, CalendarId, EventId).Execute();
+                var request = GetService().Events.Update(EventBody, CalendarId, EventId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
+
+                if (properties != null)    {
+                    request.AlwaysIncludeEmail = properties.AlwaysIncludeEmail;
+                    request.MaxAttendees = properties.MaxAttendees;
+                    request.SendNotifications = properties.SendNotifications;
+                    request.SupportsAttachments = properties.SupportsAttachments;
+                }
+
+                return request.Execute();
             }
 
             /// <summary>Watch for changes to Events resources.</summary>
@@ -1778,9 +2067,36 @@ namespace gShell.dotNet
             /// want to access the primary calendar of the currently logged in user, use the "primary" keyword.</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Calendar.v3.Data.Channel Watch (Google.Apis.Calendar.v3.Data.Channel ChannelBody, string CalendarId, EventsWatchProperties properties= null, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.Channel Watch (Google.Apis.Calendar.v3.Data.Channel ChannelBody, string CalendarId, EventsWatchProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
-                return GetService(gShellServiceAccount).Events.Watch(ChannelBody, CalendarId).Execute();
+                var request = GetService().Events.Watch(ChannelBody, CalendarId);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
+
+                if (properties != null)    {
+                    request.AlwaysIncludeEmail = properties.AlwaysIncludeEmail;
+                    request.ICalUID = properties.ICalUID;
+                    request.MaxAttendees = properties.MaxAttendees;
+                    request.MaxResults = properties.MaxResults;
+                    request.OrderBy = properties.OrderBy;
+                    request.PrivateExtendedProperty = properties.PrivateExtendedProperty;
+                    request.Q = properties.Q;
+                    request.SharedExtendedProperty = properties.SharedExtendedProperty;
+                    request.ShowDeleted = properties.ShowDeleted;
+                    request.ShowHiddenInvitations = properties.ShowHiddenInvitations;
+                    request.SingleEvents = properties.SingleEvents;
+                    request.SyncToken = properties.SyncToken;
+                    request.TimeMax = properties.TimeMax;
+                    request.TimeMin = properties.TimeMin;
+                    request.TimeZone = properties.TimeZone;
+                    request.UpdatedMin = properties.UpdatedMin;
+                }
+
+                return request.Execute();
             }
 
         }
@@ -1795,9 +2111,19 @@ namespace gShell.dotNet
             /// <summary>Returns free/busy information for a set of calendars.</summary>
             /// <param name="FreeBusyRequestBody">The body of the request.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Calendar.v3.Data.FreeBusyResponse Query (Google.Apis.Calendar.v3.Data.FreeBusyRequest FreeBusyRequestBody, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.FreeBusyResponse Query (Google.Apis.Calendar.v3.Data.FreeBusyRequest FreeBusyRequestBody, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
-                return GetService(gShellServiceAccount).Freebusy.Query(FreeBusyRequestBody).Execute();
+                var request = GetService().Freebusy.Query(FreeBusyRequestBody);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
+
+
+
+                return request.Execute();
             }
 
         }
@@ -1839,20 +2165,36 @@ namespace gShell.dotNet
             /// <summary>Returns a single user setting.</summary>
             /// <param name="Setting">The id of the user setting.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Calendar.v3.Data.Setting Get (string Setting, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.Setting Get (string Setting, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
-                return GetService(gShellServiceAccount).Settings.Get(Setting).Execute();
+                var request = GetService().Settings.Get(Setting);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
+
+
+
+                return request.Execute();
             }
 
             /// <summary>Returns all user settings for the authenticated user.</summary>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
             public List<Google.Apis.Calendar.v3.Data.Settings> List(
-                SettingsListProperties properties= null, string gShellServiceAccount = null)
+                SettingsListProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 var results = new List<Google.Apis.Calendar.v3.Data.Settings>();
 
-                v3.SettingsResource.ListRequest request = GetService(gShellServiceAccount).Settings.List();
+                v3.SettingsResource.ListRequest request = GetService().Settings.List();
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
 
                 if (properties != null)
                 {
@@ -1864,7 +2206,7 @@ namespace gShell.dotNet
                 if (null != properties.StartProgressBar)
                 {
                     properties.StartProgressBar("Gathering Settings",
-                        string.Format("-Collecting Settings 1 to {0}", request.MaxResults.ToString()));
+                        string.Format("-Collecting Settings page 1"));
                 }
 
                 Google.Apis.Calendar.v3.Data.Settings pagedResult = request.Execute();
@@ -1882,9 +2224,8 @@ namespace gShell.dotNet
                         if (null != properties.UpdateProgressBar)
                         {
                             properties.UpdateProgressBar(5, 10, "Gathering Settings",
-                                    string.Format("-Collecting Settings {0} to {1}",
-                                        (results.Count + 1).ToString(),
-                                        (results.Count + request.MaxResults).ToString()));
+                                    string.Format("-Collecting Settings page {0}",
+                                        (results.Count + 1).ToString()));
                         }
                         pagedResult = request.Execute();
                         results.Add(pagedResult);
@@ -1893,7 +2234,7 @@ namespace gShell.dotNet
                     if (null != properties.UpdateProgressBar)
                     {
                         properties.UpdateProgressBar(1, 2, "Gathering Settings",
-                                string.Format("-Returning {0} results.", results.Count.ToString()));
+                                string.Format("-Returning {0} pages.", results.Count.ToString()));
                     }
                 }
 
@@ -1904,9 +2245,22 @@ namespace gShell.dotNet
             /// <param name="ChannelBody">The body of the request.</param>
             /// <param name="properties">The optional properties for this method.</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Calendar.v3.Data.Channel Watch (Google.Apis.Calendar.v3.Data.Channel ChannelBody, SettingsWatchProperties properties= null, string gShellServiceAccount = null)
+            public Google.Apis.Calendar.v3.Data.Channel Watch (Google.Apis.Calendar.v3.Data.Channel ChannelBody, SettingsWatchProperties properties= null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
-                return GetService(gShellServiceAccount).Settings.Watch(ChannelBody).Execute();
+                var request = GetService().Settings.Watch(ChannelBody);
+
+                if (StandardQueryParams != null) {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
+
+                if (properties != null)    {
+                    request.MaxResults = properties.MaxResults;
+                    request.SyncToken = properties.SyncToken;
+                }
+
+                return request.Execute();
             }
 
         }

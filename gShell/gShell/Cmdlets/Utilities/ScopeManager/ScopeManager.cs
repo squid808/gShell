@@ -22,17 +22,17 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Invoke-ScopeManager</code>
+    ///   <code>PS C:\> Invoke-GShellScopeManager</code>
     ///   <para>This example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
-    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Invoke-ScopeManager">[Wiki page for this Cmdlet]</para>
+    /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Invoke-GShellScopeManager">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
-    [Cmdlet(VerbsLifecycle.Invoke, "ScopeManager",
+    [Cmdlet(VerbsLifecycle.Invoke, "GShellScopeManager",
           SupportsShouldProcess = true,
-          HelpUri = @"https://github.com/squid808/gShell/wiki/Invoke-ScopeManager")]
-    public class InvokeScopeManager : ScopeHandlerBase
+          HelpUri = @"https://github.com/squid808/gShell/wiki/Invoke-GShellScopeManager")]
+    public class InvokeGShellScopeManager : ScopeHandlerBase
     {
         #region Properties
         public static discovery_v1.DiscoveryService service;
@@ -293,7 +293,7 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
                 while (!isReadOnlyChosen)
                 {
                     PrintPretty(string.Format("\nWould you like to view all {0} scopes [a], "+
-                        "the {1} read-only scopes [r] or {2} read-write scopes [w]?",
+                        "the {1} read-only scopes [r] or {2} all other scopes [o]?",
                         possibleScopes.Count.ToString(), readOnlyScopes.Count.ToString(), 
                         actionOnlyScopes.Count.ToString()), "Green");
 
@@ -314,7 +314,7 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
                             useReadOnlyScopes = true;
                             isReadOnlyChosen = true;
                             break;
-                        case "w":
+                        case "o":
                             useReadOnlyScopes = false;
                             isReadOnlyChosen = true;
                             break;
@@ -532,13 +532,17 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
 
         public AuthenticatedUserInfo ChooseScopesAndAuthenticate(string api, string version, ClientSecrets secrets)
         {
-            IEnumerable<string> scopes = ChooseScopes(api, version);
+            var info = new AuthenticatedUserInfo()
+            {
+                apiNameAndVersion = api + ":" + version,
+                scopes = ChooseScopes(api, version)
+            };
 
             string script = "Read-Host '\nYou will now authenticate for this API. Press any key to continue'";
             Collection<PSObject> results = invokablePSInstance.InvokeCommand.InvokeScript(script);
 
             //Now, authenticate.
-            AuthenticatedUserInfo info = OAuth2Base.GetAuthTokenFlow(api + ":" + version, scopes, secrets, force:true);
+            info = OAuth2Base.GetAuthTokenFlow(info, secrets, force: true);
 
             PrintPretty(string.Format("{0}:{1} has been authenticated and saved.", api, version), "green");
 
@@ -573,9 +577,13 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
                         break;
                 }
 
-                scopes = CheckForRequiredScope(scopes);
+                var authUserInfo = new AuthenticatedUserInfo()
+                {
+                    apiNameAndVersion = api + ":" + version,
+                    scopes = CheckForRequiredScope(scopes)
+                };
 
-                AuthenticatedUserInfo info = OAuth2Base.GetAuthTokenFlow(api + ":" + version, scopes, secrets, force:true);
+                AuthenticatedUserInfo info = OAuth2Base.GetAuthTokenFlow(authUserInfo, secrets, force: true);
 
                 return info;
             }

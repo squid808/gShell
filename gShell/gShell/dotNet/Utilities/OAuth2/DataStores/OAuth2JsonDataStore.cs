@@ -32,6 +32,8 @@ namespace gShell.dotNet.Utilities.OAuth2.DataStores
                     JsonSerializer serializer = new JsonSerializer();
                     info = (OAuth2Info)serializer.Deserialize(file, typeof(OAuth2Info));
                 }
+
+                if (info.shouldSaveAgain) { SaveInfo(info); }
             }
 
             return info;

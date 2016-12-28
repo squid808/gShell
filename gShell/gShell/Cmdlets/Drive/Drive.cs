@@ -2,34 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
+using gShell.dotNet.Utilities.OAuth2;
 using Google.Apis.Drive.v3;
 using Google.Apis.Drive.v3.Data;
 using gDrive = gShell.dotNet.Drive;
 
 namespace gShell.Cmdlets.Drive
 {
-    /// <summary>A base class which provides support for service account integration and schema objects.</summary>
-    public abstract class DriveServiceAccountBase : DriveBase
-    {
-        #region Properties
-
-        /// <summary>
-        /// <para type="description">The email account to be targeted by the service account.</para>
-        /// </summary>
-        [Parameter(Mandatory = false)]
-        [ValidateNotNullOrEmpty]
-        public string TargetUserEmail { get; set; }
-
-        #endregion
-
-        protected override void BeginProcessing()
-        {
-            gShellServiceAccount = GetFullEmailAddress(TargetUserEmail, Domain);
-
-            base.BeginProcessing();
-        }
-    }
-
     public enum DriveIdSpaceEnum { drive, appDataFolder }
 
     /// <summary>
@@ -40,7 +19,7 @@ namespace gShell.Cmdlets.Drive
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GDriveFileCapabilitiesDataObj</code>
+    ///   <code>PS C:\> New-GDriveFileCapabilitiesDataObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -128,7 +107,7 @@ namespace gShell.Cmdlets.Drive
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GDriveFileContentHintsDataObj</code>
+    ///   <code>PS C:\> New-GDriveFileContentHintsDataObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -189,7 +168,7 @@ namespace gShell.Cmdlets.Drive
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GDriveFileVideoMediaMetadataDataObj</code>
+    ///   <code>PS C:\> New-GDriveFileVideoMediaMetadataDataObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -257,7 +236,7 @@ namespace gShell.Cmdlets.Drive
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GDriveReplyObj</code>
+    ///   <code>PS C:\> New-GDriveReplyObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -378,7 +357,7 @@ namespace gShell.Cmdlets.Drive
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GDriveCommentQuotedFileContentDataObj</code>
+    ///   <code>PS C:\> New-GDriveCommentQuotedFileContentDataObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -436,7 +415,7 @@ namespace gShell.Cmdlets.Drive
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GDriveContentHintsDataThumbnailDataObj</code>
+    ///   <code>PS C:\> New-GDriveContentHintsDataThumbnailDataObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -494,7 +473,7 @@ namespace gShell.Cmdlets.Drive
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GDrivePermissionObj</code>
+    ///   <code>PS C:\> New-GDrivePermissionObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -618,7 +597,7 @@ namespace gShell.Cmdlets.Drive
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GDriveUserObj</code>
+    ///   <code>PS C:\> New-GDriveUserObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -708,7 +687,7 @@ namespace gShell.Cmdlets.Drive
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GDriveFileImageMediaMetadataDataObj</code>
+    ///   <code>PS C:\> New-GDriveFileImageMediaMetadataDataObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -957,7 +936,7 @@ namespace gShell.Cmdlets.Drive
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GDriveCommentObj</code>
+    ///   <code>PS C:\> New-GDriveCommentObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1066,7 +1045,7 @@ namespace gShell.Cmdlets.Drive
             Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "The full list of replies to the comment in chronological order.")]
-        public IList<Reply> Replies { get; set; }
+        public Reply[] Replies { get; set; }
 
         /// <summary>
         /// <para type="description">Whether the comment has been resolved by one of its replies.</para>
@@ -1111,7 +1090,7 @@ namespace gShell.Cmdlets.Drive
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GDriveFileObj</code>
+    ///   <code>PS C:\> New-GDriveFileObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1352,7 +1331,7 @@ namespace gShell.Cmdlets.Drive
             Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "The owners of the file. Currently, only certain legacy files may have more than one owner.")]
-        public IList<User> Owners { get; set; }
+        public User[] Owners { get; set; }
 
         /// <summary>
         /// <para type="description">The IDs of the parent folders which contain the file.If not specified as part of a create request, the file will be placed directly in the My Drive folder. Update requests must use the addParents and removeParents parameters to modify the values.</para>
@@ -1363,7 +1342,7 @@ namespace gShell.Cmdlets.Drive
             HelpMessage =
                 "The IDs of the parent folders which contain the file.\nIf not specified as part of a create request, the file will be placed directly in the My Drive folder. Update requests must use the addParents and removeParents parameters to modify the values."
             )]
-        public IList<string> Parents { get; set; }
+        public string[] Parents { get; set; }
 
         /// <summary>
         /// <para type="description">The full list of permissions for the file. This is only available if the requesting user can share the file.</para>
@@ -1374,7 +1353,7 @@ namespace gShell.Cmdlets.Drive
             HelpMessage =
                 "The full list of permissions for the file. This is only available if the requesting user can share the file."
             )]
-        public IList<Permission> Permissions { get; set; }
+        public Permission[] Permissions { get; set; }
 
         /// <summary>
         /// <para type="description">A collection of arbitrary key-value pairs which are visible to all apps.Entries with null values are cleared in update and copy requests.</para>
@@ -1445,7 +1424,7 @@ namespace gShell.Cmdlets.Drive
             HelpMessage =
                 "The list of spaces which contain the file. The currently supported values are 'drive', 'appDataFolder' and 'photos'."
             )]
-        public IList<string> Spaces { get; set; }
+        public string[] Spaces { get; set; }
 
         /// <summary>
         /// <para type="description">Whether the user has starred the file.</para>
@@ -1621,7 +1600,7 @@ namespace gShell.Cmdlets.Drive
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GDriveImageMediaMetadataDataLocationDataObj</code>
+    ///   <code>PS C:\> New-GDriveImageMediaMetadataDataLocationDataObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1691,7 +1670,7 @@ namespace gShell.Cmdlets.Drive.About
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GDriveAbout</code>
+    ///   <code>PS C:\> Get-GDriveAbout</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1701,13 +1680,13 @@ namespace gShell.Cmdlets.Drive.About
     [Cmdlet(VerbsCommon.Get, "GDriveAbout",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GDriveAbout")]
-    public class GetGDriveAboutCommand : DriveServiceAccountBase
+    public class GetGDriveAboutCommand : DriveBase
     {
         protected override void ProcessRecord()
         {
             if (ShouldProcess("Drive About", "Get-GDriveAbout"))
             {
-                WriteObject(about.Get());
+                WriteObject(about.Get(StandardQueryParams:StandardQueryParams));
             }
         }
     }
@@ -1722,7 +1701,7 @@ namespace gShell.Cmdlets.Drive.Changes
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GDriveChangeStartPageToken</code>
+    ///   <code>PS C:\> Get-GDriveChangeStartPageToken</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1732,13 +1711,13 @@ namespace gShell.Cmdlets.Drive.Changes
     [Cmdlet(VerbsCommon.Get, "GDriveChangeStartPageToken",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GDriveChangeStartPageToken")]
-    public class GetGDriveChangeStartPageTokenCommand : DriveServiceAccountBase
+    public class GetGDriveChangeStartPageTokenCommand : DriveBase
     {
         protected override void ProcessRecord()
         {
             if (ShouldProcess("Drive Changes", "Get-GDriveChangeStartPageToken"))
             {
-                WriteObject(changes.GetStartPageToken());
+                WriteObject(changes.GetStartPageToken(StandardQueryParams:StandardQueryParams));
             }
         }
     }
@@ -1749,13 +1728,18 @@ namespace gShell.Cmdlets.Drive.Changes
     /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
+    /// <example>
+    ///   <code>PS C:\> Get-GDriveChange -PageToken $SomePageTokenString</code>
+    ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
+    ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
+    /// </example>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Get-GDriveChange">[Wiki page for this Cmdlet]</para>
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.Get, "GDriveChange",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GDriveChange")]
-    public class GetGDriveChangeCommand : DriveServiceAccountBase
+    public class GetGDriveChangeCommand : DriveBase
     {
         #region Properties
 
@@ -1827,7 +1811,7 @@ namespace gShell.Cmdlets.Drive.Changes
                 };
 
 
-                WriteObject(changes.List(PageToken, properties).Changes);
+                WriteObject(changes.List(PageToken, properties, StandardQueryParams: StandardQueryParams).Changes);
             }
         }
     }
@@ -1839,7 +1823,7 @@ namespace gShell.Cmdlets.Drive.Changes
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Watch-GDriveChange -PageToken $SomePageTokenString -ChannelBody $SomeChannelObj</code>
+    ///   <code>PS C:\> Watch-GDriveChange -PageToken $SomePageTokenString -ChannelBody $SomeChannelObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1849,7 +1833,7 @@ namespace gShell.Cmdlets.Drive.Changes
     [Cmdlet(VerbsCommon.Watch, "GDriveChange",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Watch-GDriveChange")]
-    public class WatchGDriveChangeCommand : DriveServiceAccountBase
+    public class WatchGDriveChangeCommand : DriveBase
     {
         #region Properties
 
@@ -1931,7 +1915,7 @@ namespace gShell.Cmdlets.Drive.Changes
                 };
 
 
-                WriteObject(changes.Watch(ChannelBody, PageToken, properties));
+                WriteObject(changes.Watch(ChannelBody, PageToken, properties, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -1946,7 +1930,7 @@ namespace gShell.Cmdlets.Drive.Channels
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Stop-GDriveChannel -ChannelBody $SomeChannelObj</code>
+    ///   <code>PS C:\> Stop-GDriveChannel -ChannelBody $SomeChannelObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1956,7 +1940,7 @@ namespace gShell.Cmdlets.Drive.Channels
     [Cmdlet(VerbsLifecycle.Stop, "GDriveChannel",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Stop-GDriveChannel")]
-    public class StopGDriveChannelCommand : DriveServiceAccountBase
+    public class StopGDriveChannelCommand : DriveBase
     {
         #region Properties
 
@@ -1976,7 +1960,7 @@ namespace gShell.Cmdlets.Drive.Channels
         {
             if (ShouldProcess("Drive Channels", "Stop-GDriveChannel"))
             {
-                channels.Stop(ChannelBody);
+                channels.Stop(ChannelBody, StandardQueryParams: StandardQueryParams);
             }
         }
     }
@@ -1991,7 +1975,7 @@ namespace gShell.Cmdlets.Drive.Comments
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GDriveComment -FileId $SomeFileIdString -CommentBody $SomeCommentObj</code>
+    ///   <code>PS C:\> New-GDriveComment -FileId $SomeFileIdString -CommentBody $SomeCommentObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2001,7 +1985,7 @@ namespace gShell.Cmdlets.Drive.Comments
     [Cmdlet(VerbsCommon.New, "GDriveComment",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/New-GDriveComment")]
-    public class NewGDriveCommentCommand : DriveServiceAccountBase
+    public class NewGDriveCommentCommand : DriveBase
     {
         #region Properties
 
@@ -2030,7 +2014,7 @@ namespace gShell.Cmdlets.Drive.Comments
         {
             if (ShouldProcess("Drive Comments", "New-GDriveComment"))
             {
-                WriteObject(comments.Create(CommentBody, FileId));
+                WriteObject(comments.Create(CommentBody, FileId, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2042,7 +2026,7 @@ namespace gShell.Cmdlets.Drive.Comments
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GDriveComment -FileId $SomeFileIdString -CommentId $SomeCommentIdString</code>
+    ///   <code>PS C:\> Remove-GDriveComment -FileId $SomeFileIdString -CommentId $SomeCommentIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2052,7 +2036,7 @@ namespace gShell.Cmdlets.Drive.Comments
     [Cmdlet(VerbsCommon.Remove, "GDriveComment",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GDriveComment")]
-    public class RemoveGDriveCommentCommand : DriveServiceAccountBase
+    public class RemoveGDriveCommentCommand : DriveBase
     {
         #region Properties
 
@@ -2100,8 +2084,8 @@ namespace gShell.Cmdlets.Drive.Comments
 					try
 					{
 						WriteDebug("Attempting to remove " + toRemoveTarget + "...");
-							
-						comments.Delete(FileId, CommentId);
+
+                        comments.Delete(FileId, CommentId, StandardQueryParams: StandardQueryParams);
 							
 						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
 					}
@@ -2126,12 +2110,12 @@ namespace gShell.Cmdlets.Drive.Comments
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GDriveComment -FileId $SomeFileIdString -CommentId $SomeCommentIdString</code>
+    ///   <code>PS C:\> Get-GDriveComment -FileId $SomeFileIdString -CommentId $SomeCommentIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GDriveComment -FileId $SomeFileIdString -All</code>
+    ///   <code>PS C:\> Get-GDriveComment -FileId $SomeFileIdString -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2141,7 +2125,7 @@ namespace gShell.Cmdlets.Drive.Comments
     [Cmdlet(VerbsCommon.Get, "GDriveComment",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GDriveComment")]
-    public class GetGDriveCommentCommand : DriveServiceAccountBase
+    public class GetGDriveCommentCommand : DriveBase
     {
         #region Properties
 
@@ -2216,7 +2200,7 @@ namespace gShell.Cmdlets.Drive.Comments
                         IncludeDeleted = IncludeDeleted
                     };
 
-                    WriteObject(comments.Get(FileId, CommentId, properties));
+                    WriteObject(comments.Get(FileId, CommentId, properties, StandardQueryParams: StandardQueryParams));
                 }
                 else
                 {
@@ -2227,7 +2211,7 @@ namespace gShell.Cmdlets.Drive.Comments
                         StartModifiedTime = StartModifiedTime
                     };
 
-                    WriteObject(comments.List(FileId, properties).SelectMany(x => x.Comments).ToList());
+                    WriteObject(comments.List(FileId, properties, StandardQueryParams: StandardQueryParams).SelectMany(x => x.Comments).ToList());
                 }
             }
         }
@@ -2240,7 +2224,7 @@ namespace gShell.Cmdlets.Drive.Comments
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Update-GDriveComment -FileId $SomeFileIdString -CommentId $SomeCommentIdString -CommentBody $SomeCommentObj</code>
+    ///   <code>PS C:\> Update-GDriveComment -FileId $SomeFileIdString -CommentId $SomeCommentIdString -CommentBody $SomeCommentObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2250,7 +2234,7 @@ namespace gShell.Cmdlets.Drive.Comments
     [Cmdlet(VerbsData.Update, "GDriveComment",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Update-GDriveComment")]
-    public class UpdateGDriveCommentCommand : DriveServiceAccountBase
+    public class UpdateGDriveCommentCommand : DriveBase
     {
         #region Properties
 
@@ -2288,7 +2272,7 @@ namespace gShell.Cmdlets.Drive.Comments
         {
             if (ShouldProcess("Drive Comments", "Update-GDriveComment"))
             {
-                WriteObject(comments.Update(CommentBody, FileId, CommentId));
+                WriteObject(comments.Update(CommentBody, FileId, CommentId, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2303,7 +2287,7 @@ namespace gShell.Cmdlets.Drive.Files
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Copy-GDriveFile -FileId $SomeFileIdString -FileBody $SomeFileObj</code>
+    ///   <code>PS C:\> Copy-GDriveFile -FileId $SomeFileIdString -FileBody $SomeFileObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2313,7 +2297,7 @@ namespace gShell.Cmdlets.Drive.Files
     [Cmdlet(VerbsCommon.Copy, "GDriveFile",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Copy-GDriveFile")]
-    public class CopyGDriveFileCommand : DriveServiceAccountBase
+    public class CopyGDriveFileCommand : DriveBase
     {
         #region Properties
 
@@ -2381,7 +2365,7 @@ namespace gShell.Cmdlets.Drive.Files
                 };
 
 
-                WriteObject(files.Copy(FileBody, FileId, properties));
+                WriteObject(files.Copy(FileBody, FileId, properties, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2393,7 +2377,7 @@ namespace gShell.Cmdlets.Drive.Files
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GDriveFile -FileBody $SomeFileObj</code>
+    ///   <code>PS C:\> New-GDriveFile -FileBody $SomeFileObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2403,7 +2387,7 @@ namespace gShell.Cmdlets.Drive.Files
     [Cmdlet(VerbsCommon.New, "GDriveFile",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/New-GDriveFile")]
-    public class NewGDriveFileCommand : DriveServiceAccountBase
+    public class NewGDriveFileCommand : DriveBase
     {
         #region Properties
 
@@ -2472,7 +2456,7 @@ namespace gShell.Cmdlets.Drive.Files
                 };
 
 
-                WriteObject(files.Create(FileBody, properties));
+                WriteObject(files.Create(FileBody, properties, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2484,7 +2468,7 @@ namespace gShell.Cmdlets.Drive.Files
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GDriveFile -FileId $SomeFileIdString</code>
+    ///   <code>PS C:\> Remove-GDriveFile -FileId $SomeFileIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2494,7 +2478,7 @@ namespace gShell.Cmdlets.Drive.Files
     [Cmdlet(VerbsCommon.Remove, "GDriveFile",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GDriveFile")]
-    public class RemoveGDriveFileCommand : DriveServiceAccountBase
+    public class RemoveGDriveFileCommand : DriveBase
     {
         #region Properties
 
@@ -2528,8 +2512,8 @@ namespace gShell.Cmdlets.Drive.Files
 					try
 					{
 						WriteDebug("Attempting to remove " + toRemoveTarget + "...");
-							
-						files.Delete(FileId);
+
+                        files.Delete(FileId, StandardQueryParams: StandardQueryParams);
 							
 						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
 					}
@@ -2554,7 +2538,7 @@ namespace gShell.Cmdlets.Drive.Files
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Clear-GDriveTrash</code>
+    ///   <code>PS C:\> Clear-GDriveTrash</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2564,7 +2548,7 @@ namespace gShell.Cmdlets.Drive.Files
     [Cmdlet(VerbsCommon.Clear, "GDriveTrash",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Clear-GDriveTrash")]
-    public class ClearGDriveTrashCommand : DriveServiceAccountBase
+    public class ClearGDriveTrashCommand : DriveBase
     {
         #region Properties
         /// <summary>
@@ -2588,7 +2572,7 @@ namespace gShell.Cmdlets.Drive.Files
 					{
 						WriteDebug("Attempting to remove " + toRemoveTarget + "...");
 
-                        files.EmptyTrash();
+                        files.EmptyTrash(StandardQueryParams:StandardQueryParams);
 							
 						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
 					}
@@ -2613,7 +2597,7 @@ namespace gShell.Cmdlets.Drive.Files
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Export-GDriveFile -FileId $SomeFileIdString -MimeType $SomeMimeTypeString -DownloadPath $SomeDownloadPath</code>
+    ///   <code>PS C:\> Export-GDriveFile -FileId $SomeFileIdString -MimeType $SomeMimeTypeString -DownloadPath $SomeDownloadPath</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2623,7 +2607,7 @@ namespace gShell.Cmdlets.Drive.Files
     [Cmdlet(VerbsData.Export, "GDriveFile",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Export-GDriveFile")]
-    public class ExportGDriveFileCommand : DriveServiceAccountBase
+    public class ExportGDriveFileCommand : DriveBase
     {
         #region Properties
 
@@ -2660,9 +2644,7 @@ namespace gShell.Cmdlets.Drive.Files
         {
             if (ShouldProcess("Drive Files", "Export-GDriveFile"))
             {
-                var properties = new gDrive.Files.FilesExportProperties();
-
-                files.Export(FileId, MimeType, DownloadPath, properties);
+                files.Export(FileId, MimeType, DownloadPath, StandardQueryParams: StandardQueryParams);
             }
         }
     }
@@ -2674,7 +2656,7 @@ namespace gShell.Cmdlets.Drive.Files
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GDriveFileId</code>
+    ///   <code>PS C:\> New-GDriveFileId</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2684,7 +2666,7 @@ namespace gShell.Cmdlets.Drive.Files
     [Cmdlet("New", "GDriveFileId",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/New-GDriveFileId")]
-    public class NewGDriveFileIdCommand : DriveServiceAccountBase
+    public class NewGDriveFileIdCommand : DriveBase
     {
         #region Properties
 
@@ -2721,7 +2703,7 @@ namespace gShell.Cmdlets.Drive.Files
 
                 if (Space.HasValue) properties.Space = Space.Value.ToString();
 
-                WriteObject(files.GenerateIds(properties));
+                WriteObject(files.GenerateIds(properties, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2733,12 +2715,12 @@ namespace gShell.Cmdlets.Drive.Files
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GDriveFile -FileId $SomeFileIdString</code>
+    ///   <code>PS C:\> Get-GDriveFile -FileId $SomeFileIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>List-GDriveFile -All</code>
+    ///   <code>PS C:\> List-GDriveFile -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2749,7 +2731,7 @@ namespace gShell.Cmdlets.Drive.Files
         SupportsShouldProcess = true,
         DefaultParameterSetName = "one",
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GDriveFile")]
-    public class GetGDriveFileCommand : DriveServiceAccountBase
+    public class GetGDriveFileCommand : DriveBase
     {
         #region Properties
 
@@ -2862,7 +2844,7 @@ namespace gShell.Cmdlets.Drive.Files
                         AcknowledgeAbuse = AcknowledgeAbuse
                     };
 
-                    WriteObject(files.Get(FileId, properties));
+                    WriteObject(files.Get(FileId, properties, StandardQueryParams: StandardQueryParams));
                 }
                 else
                 {
@@ -2877,7 +2859,7 @@ namespace gShell.Cmdlets.Drive.Files
 
                     if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
 
-                    WriteObject(files.List(properties).SelectMany(x => x.Files).ToList());
+                    WriteObject(files.List(properties, StandardQueryParams: StandardQueryParams).SelectMany(x => x.Files).ToList());
                 }
             }
         }
@@ -2890,7 +2872,7 @@ namespace gShell.Cmdlets.Drive.Files
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Update-GDriveFile -FileId $SomeFileIdString -FileBody $SomeFileObj</code>
+    ///   <code>PS C:\> Update-GDriveFile -FileId $SomeFileIdString -FileBody $SomeFileObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2900,7 +2882,7 @@ namespace gShell.Cmdlets.Drive.Files
     [Cmdlet(VerbsData.Update, "GDriveFile",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Update-GDriveFile")]
-    public class UpdateGDriveFileCommand : DriveServiceAccountBase
+    public class UpdateGDriveFileCommand : DriveBase
     {
         #region Properties
 
@@ -2986,7 +2968,7 @@ namespace gShell.Cmdlets.Drive.Files
                 };
 
 
-                WriteObject(files.Update(FileBody, FileId, properties));
+                WriteObject(files.Update(FileBody, FileId, properties, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2998,7 +2980,7 @@ namespace gShell.Cmdlets.Drive.Files
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Watch-GDriveFile -FileId $SomeFileIdString -ChannelBody $SomeChannelObj</code>
+    ///   <code>PS C:\> Watch-GDriveFile -FileId $SomeFileIdString -ChannelBody $SomeChannelObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3008,7 +2990,7 @@ namespace gShell.Cmdlets.Drive.Files
     [Cmdlet(VerbsCommon.Watch, "GDriveFile",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Watch-GDriveFile")]
-    public class WatchGDriveFileCommand : DriveServiceAccountBase
+    public class WatchGDriveFileCommand : DriveBase
     {
         #region Properties
 
@@ -3054,7 +3036,7 @@ namespace gShell.Cmdlets.Drive.Files
                 };
 
 
-                WriteObject(files.Watch(ChannelBody, FileId, properties));
+                WriteObject(files.Watch(ChannelBody, FileId, properties, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -3069,7 +3051,7 @@ namespace gShell.Cmdlets.Drive.Permissions
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GDrivePermission -FileId $SomeFileIdString -PermissionBody $SomePermissionObj</code>
+    ///   <code>PS C:\> New-GDrivePermission -FileId $SomeFileIdString -PermissionBody $SomePermissionObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3079,7 +3061,7 @@ namespace gShell.Cmdlets.Drive.Permissions
     [Cmdlet(VerbsCommon.New, "GDrivePermission",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/New-GDrivePermission")]
-    public class NewGDrivePermissionCommand : DriveServiceAccountBase
+    public class NewGDrivePermissionCommand : DriveBase
     {
         #region Properties
 
@@ -3149,7 +3131,7 @@ namespace gShell.Cmdlets.Drive.Permissions
                 };
 
 
-                WriteObject(permissions.Create(PermissionBody, FileId, properties));
+                WriteObject(permissions.Create(PermissionBody, FileId, properties, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -3161,7 +3143,7 @@ namespace gShell.Cmdlets.Drive.Permissions
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GDrivePermission -FileId $SomeFileIdString -PermissionId $SomePermissionIdString</code>
+    ///   <code>PS C:\> Remove-GDrivePermission -FileId $SomeFileIdString -PermissionId $SomePermissionIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3171,7 +3153,7 @@ namespace gShell.Cmdlets.Drive.Permissions
     [Cmdlet(VerbsCommon.Remove, "GDrivePermission",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GDrivePermission")]
-    public class RemoveGDrivePermissionCommand : DriveServiceAccountBase
+    public class RemoveGDrivePermissionCommand : DriveBase
     {
         #region Properties
 
@@ -3214,8 +3196,8 @@ namespace gShell.Cmdlets.Drive.Permissions
 					try
 					{
 						WriteDebug("Attempting to remove " + toRemoveTarget + "...");
-							
-						permissions.Delete(FileId, PermissionId);
+
+                        permissions.Delete(FileId, PermissionId, StandardQueryParams: StandardQueryParams);
 							
 						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
 					}
@@ -3240,12 +3222,12 @@ namespace gShell.Cmdlets.Drive.Permissions
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GDrivePermission -FileId $SomeFileIdString -PermissionId $SomePermissionIdString</code>
+    ///   <code>PS C:\> Get-GDrivePermission -FileId $SomeFileIdString -PermissionId $SomePermissionIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GDrivePermission -FileId $SomeFileIdString -All</code>
+    ///   <code>PS C:\> Get-GDrivePermission -FileId $SomeFileIdString -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3256,7 +3238,7 @@ namespace gShell.Cmdlets.Drive.Permissions
         SupportsShouldProcess = true,
         DefaultParameterSetName = "one",
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GDrivePermission")]
-    public class GetGDrivePermissionCommand : DriveServiceAccountBase
+    public class GetGDrivePermissionCommand : DriveBase
     {
         #region Properties
 
@@ -3296,11 +3278,11 @@ namespace gShell.Cmdlets.Drive.Permissions
             {
                 if (ParameterSetName == "one")
                 {
-                    WriteObject(permissions.Get(FileId, PermissionId));
+                    WriteObject(permissions.Get(FileId, PermissionId, StandardQueryParams: StandardQueryParams));
                 }
                 else
                 {
-                    WriteObject(permissions.List(FileId).Permissions);
+                    WriteObject(permissions.List(FileId, StandardQueryParams: StandardQueryParams).Permissions);
                 }
             }
         }
@@ -3316,7 +3298,7 @@ namespace gShell.Cmdlets.Drive.Replies
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GDriveReply -FileId $SomeFileIdString -CommentId $SomeCommentIdString -ReplyBody $SomeReplyObj</code>
+    ///   <code>PS C:\> New-GDriveReply -FileId $SomeFileIdString -CommentId $SomeCommentIdString -ReplyBody $SomeReplyObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3326,7 +3308,7 @@ namespace gShell.Cmdlets.Drive.Replies
     [Cmdlet(VerbsCommon.New, "GDriveReply",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/New-GDriveReply")]
-    public class NewGDriveReplyCommand : DriveServiceAccountBase
+    public class NewGDriveReplyCommand : DriveBase
     {
         #region Properties
 
@@ -3364,7 +3346,7 @@ namespace gShell.Cmdlets.Drive.Replies
         {
             if (ShouldProcess("Drive Replies", "New-GDriveReply"))
             {
-                WriteObject(replies.Create(ReplyBody, FileId, CommentId));
+                WriteObject(replies.Create(ReplyBody, FileId, CommentId, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -3376,7 +3358,7 @@ namespace gShell.Cmdlets.Drive.Replies
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GDriveReply -FileId $SomeFileIdString -CommentId $SomeCommentIdString -ReplyId $SomeReplyIdString</code>
+    ///   <code>PS C:\> Remove-GDriveReply -FileId $SomeFileIdString -CommentId $SomeCommentIdString -ReplyId $SomeReplyIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3386,7 +3368,7 @@ namespace gShell.Cmdlets.Drive.Replies
     [Cmdlet(VerbsCommon.Remove, "GDriveReply",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GDriveReply")]
-    public class RemoveGDriveReplyCommand : DriveServiceAccountBase
+    public class RemoveGDriveReplyCommand : DriveBase
     {
         #region Properties
 
@@ -3438,8 +3420,8 @@ namespace gShell.Cmdlets.Drive.Replies
 					try
 					{
 						WriteDebug("Attempting to remove " + toRemoveTarget + "...");
-							
-						replies.Delete(FileId, CommentId, ReplyId);
+
+                        replies.Delete(FileId, CommentId, ReplyId, StandardQueryParams: StandardQueryParams);
 							
 						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
 					}
@@ -3464,12 +3446,12 @@ namespace gShell.Cmdlets.Drive.Replies
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GDriveReply -FileId $SomeFileIdString -CommentId $SomeCommentIdString -ReplyId $SomeReplyIdString</code>
+    ///   <code>PS C:\> Get-GDriveReply -FileId $SomeFileIdString -CommentId $SomeCommentIdString -ReplyId $SomeReplyIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GDriveReply -FileId $SomeFileIdString -CommentId $SomeCommentIdString -All</code>
+    ///   <code>PS C:\> Get-GDriveReply -FileId $SomeFileIdString -CommentId $SomeCommentIdString -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3480,7 +3462,7 @@ namespace gShell.Cmdlets.Drive.Replies
         SupportsShouldProcess = true,
         DefaultParameterSetName = "one",
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GDriveReply")]
-    public class GetGDriveReplyCommand : DriveServiceAccountBase
+    public class GetGDriveReplyCommand : DriveBase
     {
         #region Properties
 
@@ -3554,7 +3536,7 @@ namespace gShell.Cmdlets.Drive.Replies
                         IncludeDeleted = IncludeDeleted
                     };
 
-                    WriteObject(replies.Get(FileId, CommentId, ReplyId, properties));
+                    WriteObject(replies.Get(FileId, CommentId, ReplyId, properties, StandardQueryParams: StandardQueryParams));
                 }
                 else
                 {
@@ -3564,7 +3546,7 @@ namespace gShell.Cmdlets.Drive.Replies
                         PageSize = PageSize
                     };
 
-                    WriteObject(replies.List(FileId, CommentId, properties).SelectMany(x => x.Replies).ToList());
+                    WriteObject(replies.List(FileId, CommentId, properties, StandardQueryParams: StandardQueryParams).SelectMany(x => x.Replies).ToList());
                 }
             }
         }
@@ -3580,7 +3562,7 @@ namespace gShell.Cmdlets.Drive.Revisions
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GDriveRevision -FileId $SomeFileIdString -RevisionId $SomeRevisionIdString</code>
+    ///   <code>PS C:\> Remove-GDriveRevision -FileId $SomeFileIdString -RevisionId $SomeRevisionIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3590,7 +3572,7 @@ namespace gShell.Cmdlets.Drive.Revisions
     [Cmdlet(VerbsCommon.Remove, "GDriveRevision",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GDriveRevision")]
-    public class RemoveGDriveRevisionCommand : DriveServiceAccountBase
+    public class RemoveGDriveRevisionCommand : DriveBase
     {
         #region Properties
 
@@ -3634,7 +3616,7 @@ namespace gShell.Cmdlets.Drive.Revisions
 					{
 						WriteDebug("Attempting to remove " + toRemoveTarget + "...");
 
-                        revisions.Delete(FileId, RevisionId);
+                        revisions.Delete(FileId, RevisionId, StandardQueryParams: StandardQueryParams);
 							
 						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
 					}
@@ -3659,12 +3641,12 @@ namespace gShell.Cmdlets.Drive.Revisions
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GDriveRevision -FileId $SomeFileIdString -RevisionId $SomeRevisionIdString</code>
+    ///   <code>PS C:\> Get-GDriveRevision -FileId $SomeFileIdString -RevisionId $SomeRevisionIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GDriveRevision -FileId $SomeFileIdString -All</code>
+    ///   <code>PS C:\> Get-GDriveRevision -FileId $SomeFileIdString -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3675,7 +3657,7 @@ namespace gShell.Cmdlets.Drive.Revisions
         SupportsShouldProcess = true,
         DefaultParameterSetName = "one",
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GDriveRevision")]
-    public class GetGDriveRevisionCommand : DriveServiceAccountBase
+    public class GetGDriveRevisionCommand : DriveBase
     {
         #region Properties
 
@@ -3732,11 +3714,11 @@ namespace gShell.Cmdlets.Drive.Revisions
                         AcknowledgeAbuse = AcknowledgeAbuse
                     };
 
-                    WriteObject(revisions.Get(FileId, RevisionId, properties));
+                    WriteObject(revisions.Get(FileId, RevisionId, properties, StandardQueryParams: StandardQueryParams));
                 }
                 else
                 {
-                    WriteObject(revisions.List(FileId).Revisions);
+                    WriteObject(revisions.List(FileId, StandardQueryParams: StandardQueryParams).SelectMany(x => x.Revisions).ToList());
                 }
             }
         }

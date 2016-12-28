@@ -13,6 +13,40 @@ namespace gShell.Cmdlets.Adminsettings
     /// <summary>The account handling options for Route.</summary>
     public enum RouteAccountHandlingEnum
     { allAccounts, provisionedAccounts, unknownAccounts }
+
+    public abstract class AdminsettingsCmdletBase : AdminsettingsBase {
+        #region Parameters
+        /// <summary>
+        /// <para type="description">The target domain for this admin settings cmdlet.</para>
+        /// </summary>
+        [Parameter(
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The target domain for this admin settings cmdlet.")]
+        [ValidateNotNullOrEmpty]
+        public string Domain { get; set; }
+        #endregion
+
+        protected override void BeginProcessing()
+        {
+            WriteWarning("The Admin Settings API is deprecated and is scheduled to be sunset on August 16, 2017. See the following URL for more information: https://developers.google.com/admin-sdk/admin-settings/");
+
+            var secrets = CheckForClientSecrets();
+            if (secrets != null)
+            {
+                var scopeAuthObj = EnsureScopesExist(GAuthId, Scopes);
+                ServiceWrapperDictionary[mainBaseType].BuildService(Authenticate(scopeAuthObj, secrets));
+
+                GWriteProgress = new gWriteProgress(WriteProgress);
+            }
+            else
+            {
+                WriteError(new ErrorRecord(null, (new Exception(
+                    "Client Secrets must be set before running cmdlets. Run 'Get-Help "
+                    + "Set-gShellClientSecrets -online' for more information."))));
+            }
+        }
+    }
 }
 
 namespace gShell.Cmdlets.Adminsettings.DefaultLanguage
@@ -26,7 +60,7 @@ namespace gShell.Cmdlets.Adminsettings.DefaultLanguage
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAdminSettingsDefaultLanguage</code>
+    ///   <code>PS C:\> Get-GAdminSettingsDefaultLanguage</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -36,7 +70,7 @@ namespace gShell.Cmdlets.Adminsettings.DefaultLanguage
     [Cmdlet(VerbsCommon.Get, "GAdminSettingsDefaultLanguage",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAdminSettingsDefaultLanguage")]
-    public class GetGAdminSettingsDefaultLanguageCommand : AdminsettingsBase
+    public class GetGAdminSettingsDefaultLanguageCommand : AdminsettingsCmdletBase
     {
         protected override void ProcessRecord()
         {
@@ -54,12 +88,12 @@ namespace gShell.Cmdlets.Adminsettings.DefaultLanguage
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GAdminSettingsDefaultLanguage -DefaultLanguage English_United_States</code>
+    ///   <code>PS C:\> Set-GAdminSettingsDefaultLanguage -DefaultLanguage English_United_States</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Set-GAdminSettingsDefaultLanguage -LanguageAbbreviation en_US</code>
+    ///   <code>PS C:\> Set-GAdminSettingsDefaultLanguage -LanguageAbbreviation en_US</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -69,7 +103,7 @@ namespace gShell.Cmdlets.Adminsettings.DefaultLanguage
     [Cmdlet(VerbsCommon.Set, "GAdminSettingsDefaultLanguage",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAdminSettingsDefaultLanguage")]
-    public class SetGAdminSettingsDefaultLanguageCommand : AdminsettingsBase
+    public class SetGAdminSettingsDefaultLanguageCommand : AdminsettingsCmdletBase
     {
         #region Properties
 
@@ -124,7 +158,7 @@ namespace gShell.Cmdlets.Adminsettings.OrganizationName
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAdminSettingsOrganizationName</code>
+    ///   <code>PS C:\> Get-GAdminSettingsOrganizationName</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -134,7 +168,7 @@ namespace gShell.Cmdlets.Adminsettings.OrganizationName
     [Cmdlet(VerbsCommon.Get, "GAdminSettingsOrganizationName",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAdminSettingsOrganizationName")]
-    public class GetGAdminSettingsOrganizationNameCommand : AdminsettingsBase
+    public class GetGAdminSettingsOrganizationNameCommand : AdminsettingsCmdletBase
     {
         protected override void ProcessRecord()
         {
@@ -152,7 +186,7 @@ namespace gShell.Cmdlets.Adminsettings.OrganizationName
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GAdminSettingsOrganizationName -OrganizationName $SomeOrganizationNameString</code>
+    ///   <code>PS C:\> Set-GAdminSettingsOrganizationName -OrganizationName $SomeOrganizationNameString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -162,7 +196,7 @@ namespace gShell.Cmdlets.Adminsettings.OrganizationName
     [Cmdlet(VerbsCommon.Set, "GAdminSettingsOrganizationName",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAdminSettingsOrganizationName")]
-    public class SetGAdminSettingsOrganizationNameCommand : AdminsettingsBase
+    public class SetGAdminSettingsOrganizationNameCommand : AdminsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -199,7 +233,7 @@ namespace gShell.Cmdlets.Adminsettings.MaximumUsers
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAdminSettingsMaximumUsers</code>
+    ///   <code>PS C:\> Get-GAdminSettingsMaximumUsers</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -209,7 +243,7 @@ namespace gShell.Cmdlets.Adminsettings.MaximumUsers
     [Cmdlet(VerbsCommon.Get, "GAdminSettingsMaximumUsers",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAdminSettingsMaximumUsers")]
-    public class GetGAdminSettingsMaximumUsersCommand : AdminsettingsBase
+    public class GetGAdminSettingsMaximumUsersCommand : AdminsettingsCmdletBase
     {
         protected override void ProcessRecord()
         {
@@ -230,7 +264,7 @@ namespace gShell.Cmdlets.Adminsettings.CurrentUsers
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAdminSettingsCurrentUsers</code>
+    ///   <code>PS C:\> Get-GAdminSettingsCurrentUsers</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -240,7 +274,7 @@ namespace gShell.Cmdlets.Adminsettings.CurrentUsers
     [Cmdlet(VerbsCommon.Get, "GAdminSettingsCurrentUsers",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAdminSettingsCurrentUsers")]
-    public class GetGAdminSettingsCurrentUsersCommand : AdminsettingsBase
+    public class GetGAdminSettingsCurrentUsersCommand : AdminsettingsCmdletBase
     {
         protected override void ProcessRecord()
         {
@@ -261,7 +295,7 @@ namespace gShell.Cmdlets.Adminsettings.ProductVersion
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAdminSettingsProductVersion</code>
+    ///   <code>PS C:\> Get-GAdminSettingsProductVersion</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -271,7 +305,7 @@ namespace gShell.Cmdlets.Adminsettings.ProductVersion
     [Cmdlet(VerbsCommon.Get, "GAdminSettingsProductVersion",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAdminSettingsProductVersion")]
-    public class GetGAdminSettingsProductVersionCommand : AdminsettingsBase
+    public class GetGAdminSettingsProductVersionCommand : AdminsettingsCmdletBase
     {
         protected override void ProcessRecord()
         {
@@ -292,7 +326,7 @@ namespace gShell.Cmdlets.Adminsettings.CustomerPin
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAdminSettingsCustomerPin</code>
+    ///   <code>PS C:\> Get-GAdminSettingsCustomerPin</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -302,7 +336,7 @@ namespace gShell.Cmdlets.Adminsettings.CustomerPin
     [Cmdlet(VerbsCommon.Get, "GAdminSettingsCustomerPin",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAdminSettingsCustomerPin")]
-    public class GetGAdminSettingsCustomerPinCommand : AdminsettingsBase
+    public class GetGAdminSettingsCustomerPinCommand : AdminsettingsCmdletBase
     {
         protected override void ProcessRecord()
         {
@@ -323,7 +357,7 @@ namespace gShell.Cmdlets.Adminsettings.CreationTime
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAdminSettingsCreationTime</code>
+    ///   <code>PS C:\> Get-GAdminSettingsCreationTime</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -333,7 +367,7 @@ namespace gShell.Cmdlets.Adminsettings.CreationTime
     [Cmdlet(VerbsCommon.Get, "GAdminSettingsCreationTime",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAdminSettingsCreationTime")]
-    public class GetGAdminSettingsCreationTimeCommand : AdminsettingsBase
+    public class GetGAdminSettingsCreationTimeCommand : AdminsettingsCmdletBase
     {
         protected override void ProcessRecord()
         {
@@ -354,7 +388,7 @@ namespace gShell.Cmdlets.Adminsettings.CountryCode
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAdminSettingsCountryCode</code>
+    ///   <code>PS C:\> Get-GAdminSettingsCountryCode</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -364,7 +398,7 @@ namespace gShell.Cmdlets.Adminsettings.CountryCode
     [Cmdlet(VerbsCommon.Get, "GAdminSettingsCountryCode",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAdminSettingsCountryCode")]
-    public class GetGAdminSettingsCountryCodeCommand : AdminsettingsBase
+    public class GetGAdminSettingsCountryCodeCommand : AdminsettingsCmdletBase
     {
         protected override void ProcessRecord()
         {
@@ -385,7 +419,7 @@ namespace gShell.Cmdlets.Adminsettings.AdminSecondaryEmail
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAdminSettingsAdminSecondaryEmail</code>
+    ///   <code>PS C:\> Get-GAdminSettingsAdminSecondaryEmail</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -395,7 +429,7 @@ namespace gShell.Cmdlets.Adminsettings.AdminSecondaryEmail
     [Cmdlet(VerbsCommon.Get, "GAdminSettingsAdminSecondaryEmail",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAdminSettingsAdminSecondaryEmail")]
-    public class GetGAdminSettingsAdminSecondaryEmailCommand : AdminsettingsBase
+    public class GetGAdminSettingsAdminSecondaryEmailCommand : AdminsettingsCmdletBase
     {
         protected override void ProcessRecord()
         {
@@ -413,7 +447,7 @@ namespace gShell.Cmdlets.Adminsettings.AdminSecondaryEmail
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GAdminSettingsAdminSecondaryEmail -AdminSecondaryEmail $SomeSecondaryEmailString</code>
+    ///   <code>PS C:\> Set-GAdminSettingsAdminSecondaryEmail -AdminSecondaryEmail $SomeSecondaryEmailString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -423,7 +457,7 @@ namespace gShell.Cmdlets.Adminsettings.AdminSecondaryEmail
     [Cmdlet(VerbsCommon.Set, "GAdminSettingAdminSecondaryEmails",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAdminSettingsAdminSecondaryEmail")]
-    public class SetGAdminSettingsAdminSecondaryEmailCommand : AdminsettingsBase
+    public class SetGAdminSettingsAdminSecondaryEmailCommand : AdminsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -462,7 +496,7 @@ namespace gShell.Cmdlets.Adminsettings.CustomLogo
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GAdminSettingsCustomLogo -Path $SomeFilePath</code>
+    ///   <code>PS C:\> Set-GAdminSettingsCustomLogo -Path $SomeFilePath</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -472,7 +506,7 @@ namespace gShell.Cmdlets.Adminsettings.CustomLogo
     [Cmdlet(VerbsCommon.Set, "GAdminSettingsCustomLogo",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAdminSettingsCustomLogo")]
-    public class SetGAdminSettingsCustomLogoCommand : AdminsettingsBase
+    public class SetGAdminSettingsCustomLogoCommand : AdminsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -510,7 +544,7 @@ namespace gShell.Cmdlets.Adminsettings.MxVerificationRecords
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAdminSettingsMxVerificationRecords</code>
+    ///   <code>PS C:\> Get-GAdminSettingsMxVerificationRecords</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -520,7 +554,7 @@ namespace gShell.Cmdlets.Adminsettings.MxVerificationRecords
     [Cmdlet(VerbsCommon.Get, "GAdminSettingsMxVerificationRecords",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAdminSettingsMxVerificationRecords")]
-    public class GetGAdminSettingsMxVerificationRecordsCommand : AdminsettingsBase
+    public class GetGAdminSettingsMxVerificationRecordsCommand : AdminsettingsCmdletBase
     {
         protected override void ProcessRecord()
         {
@@ -538,7 +572,7 @@ namespace gShell.Cmdlets.Adminsettings.MxVerificationRecords
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GAdminSettingsMxVerificationRecords -Verified</code>
+    ///   <code>PS C:\> Set-GAdminSettingsMxVerificationRecords -Verified</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -548,7 +582,7 @@ namespace gShell.Cmdlets.Adminsettings.MxVerificationRecords
     [Cmdlet(VerbsCommon.Set, "GAdminSettingsMxVerificationRecords",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAdminSettingsMxVerificationRecords")]
-    public class SetGAdminSettingsMxVerificationRecordsCommand : AdminsettingsBase
+    public class SetGAdminSettingsMxVerificationRecordsCommand : AdminsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -590,7 +624,7 @@ namespace gShell.Cmdlets.Adminsettings.SsoSettings
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAdminSettingsSsoSettings</code>
+    ///   <code>PS C:\> Get-GAdminSettingsSsoSettings</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -600,7 +634,7 @@ namespace gShell.Cmdlets.Adminsettings.SsoSettings
     [Cmdlet(VerbsCommon.Get, "GAdminSettingsSsoSettings",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAdminSettingsSsoSettings")]
-    public class GetGAdminSettingsSsoSettingsCommand : AdminsettingsBase
+    public class GetGAdminSettingsSsoSettingsCommand : AdminsettingsCmdletBase
     {
         protected override void ProcessRecord()
         {
@@ -618,7 +652,7 @@ namespace gShell.Cmdlets.Adminsettings.SsoSettings
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GAdminSettingsSsoSettings -SamlSignonUri $SomeSamlSignonUriString -SamlLogoutUri $SomeSamlLogoutUriString
+    ///   <code>PS C:\> Set-GAdminSettingsSsoSettings -SamlSignonUri $SomeSamlSignonUriString -SamlLogoutUri $SomeSamlLogoutUriString
     ///     -UseDomainSpecificIssuer $SomeUseDomainSpecificIssuerBool -ChangePasswordUri $SomeChangePasswordUriString -EnableSSO
     ///     $SomeEnableSSOBool -SsoWhitelist $SomeSsoWhitelistString -UseDomainSpecificIssuer $SomeUseDomainSpecificIssuerBool</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
@@ -630,7 +664,7 @@ namespace gShell.Cmdlets.Adminsettings.SsoSettings
     [Cmdlet(VerbsCommon.Set, "GAdminSettingsSsoSettings",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAdminSettingsSsoSettings")]
-    public class SetGAdminSettingsSsoSettingsCommand : AdminsettingsBase
+    public class SetGAdminSettingsSsoSettingsCommand : AdminsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -723,7 +757,7 @@ namespace gShell.Cmdlets.Adminsettings.SsoSigningKey
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAdminSettingsSsoSigningKey</code>
+    ///   <code>PS C:\> Get-GAdminSettingsSsoSigningKey</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -733,7 +767,7 @@ namespace gShell.Cmdlets.Adminsettings.SsoSigningKey
     [Cmdlet(VerbsCommon.Get, "GAdminSettingsSsoSigningKey",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAdminSettingsSsoSigningKey")]
-    public class GetGAdminSettingsSsoSigningKeyCommand : AdminsettingsBase
+    public class GetGAdminSettingsSsoSigningKeyCommand : AdminsettingsCmdletBase
     {
         protected override void ProcessRecord()
         {
@@ -751,7 +785,7 @@ namespace gShell.Cmdlets.Adminsettings.SsoSigningKey
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GAdminSettingsSsoSigningKey -SigningKey $SomeSigningKeyString</code>
+    ///   <code>PS C:\> Set-GAdminSettingsSsoSigningKey -SigningKey $SomeSigningKeyString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -761,7 +795,7 @@ namespace gShell.Cmdlets.Adminsettings.SsoSigningKey
     [Cmdlet(VerbsCommon.Set, "GAdminSettingsSsoSigningKey",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAdminSettingsSsoSigningKey")]
-    public class SetGAdminSettingsSsoSigningKeyCommand : AdminsettingsBase
+    public class SetGAdminSettingsSsoSigningKeyCommand : AdminsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -798,7 +832,7 @@ namespace gShell.Cmdlets.Adminsettings.EmailGateway
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GAdminSettingsEmailGateway</code>
+    ///   <code>PS C:\> Get-GAdminSettingsEmailGateway</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -808,7 +842,7 @@ namespace gShell.Cmdlets.Adminsettings.EmailGateway
     [Cmdlet(VerbsCommon.Get, "GAdminSettingsEmailGateway",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAdminSettingsEmailGateway")]
-    public class GetGAdminSettingsEmailGatewayCommand : AdminsettingsBase
+    public class GetGAdminSettingsEmailGatewayCommand : AdminsettingsCmdletBase
     {
         protected override void ProcessRecord()
         {
@@ -826,7 +860,7 @@ namespace gShell.Cmdlets.Adminsettings.EmailGateway
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GAdminSettingsEmailGateway -SmartHost $SomeSmartHostString -SmtpMode SMTP</code>
+    ///   <code>PS C:\> Set-GAdminSettingsEmailGateway -SmartHost $SomeSmartHostString -SmtpMode SMTP</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -836,7 +870,7 @@ namespace gShell.Cmdlets.Adminsettings.EmailGateway
     [Cmdlet(VerbsCommon.Set, "GAdminSettingsEmailGateway",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAdminSettingsEmailGateway")]
-    public class SetGAdminSettingsEmailGatewayCommand : AdminsettingsBase
+    public class SetGAdminSettingsEmailGatewayCommand : AdminsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -883,7 +917,7 @@ namespace gShell.Cmdlets.Adminsettings.EmailRouting
     /// Part of the gShell Project, relating to the Google Admin Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GAdminSettingsEmailRouting -RouteDestination $SomeRouteDestinationString -RouteRewriteTo $SomeRouteRewriteToBool
+    ///   <code>PS C:\> Set-GAdminSettingsEmailRouting -RouteDestination $SomeRouteDestinationString -RouteRewriteTo $SomeRouteRewriteToBool
     ///     -RouteEnabled $SomeRouteEnabledBool -BounceNotifications $SomeBounceNotificationsBool -AccountHandling allAccounts</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
@@ -894,7 +928,7 @@ namespace gShell.Cmdlets.Adminsettings.EmailRouting
     [Cmdlet(VerbsCommon.Set, "GAdminSettingsEmailRouting",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GAdminSettingsEmailRouting")]
-    public class SetGAdminSettingsEmailRoutingCommand : AdminsettingsBase
+    public class SetGAdminSettingsEmailRoutingCommand : AdminsettingsCmdletBase
     {
         #region Properties
         /// <summary>

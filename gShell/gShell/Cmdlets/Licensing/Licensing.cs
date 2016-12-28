@@ -15,17 +15,17 @@ namespace gShell.Cmdlets.Licensing
     /// Part of the gShell Project, relating to the Google Licensing API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GLicenseAssignment -ProductId $SomeProductIdString -SkuId $SomeSkuIdString -UserId $SomeUserIdString</code>
+    ///   <code>PS C:\> Get-GLicenseAssignment -ProductId $SomeProductIdString -SkuId $SomeSkuIdString -UserId $SomeUserIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GLicenseAssignment -ListForProduct -ProductId $SomeProductIdString -CustomerId $SomeCustomerIdString</code>
+    ///   <code>PS C:\> Get-GLicenseAssignment -ListForProduct -ProductId $SomeProductIdString -CustomerId $SomeCustomerIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GLicenseAssignment -ListForProductAndSku -ProductId $SomeProductIdString -SkuId $SomeSkuIdString -CustomerId $SomeCustomerIdString</code>
+    ///   <code>PS C:\> Get-GLicenseAssignment -ListForProductAndSku -ProductId $SomeProductIdString -SkuId $SomeSkuIdString -CustomerId $SomeCustomerIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -145,7 +145,7 @@ namespace gShell.Cmdlets.Licensing
             {
                 if (ParameterSetName == "one")
                 {
-                    WriteObject(licenseAssignments.Get(ProductId, SkuId, UserId));
+                    WriteObject(licenseAssignments.Get(ProductId, SkuId, UserId, StandardQueryParams: StandardQueryParams));
                 }
                 else if (ParameterSetName == "product")
                 {
@@ -156,7 +156,7 @@ namespace gShell.Cmdlets.Licensing
 
                     if (MaxResults.HasValue) { properties.TotalResults = this.MaxResults.Value; }
 
-                    WriteObject(licenseAssignments.ListForProduct(ProductId, CustomerId, properties));
+                    WriteObject(licenseAssignments.ListForProduct(ProductId, CustomerId, properties, StandardQueryParams: StandardQueryParams));
                 }
                 else
                 {
@@ -167,7 +167,7 @@ namespace gShell.Cmdlets.Licensing
 
                     if (MaxResults.HasValue) { properties.TotalResults = this.MaxResults.Value; }
 
-                    WriteObject(licenseAssignments.ListForProductAndSku(ProductId, SkuId, CustomerId, properties));
+                    WriteObject(licenseAssignments.ListForProductAndSku(ProductId, SkuId, CustomerId, properties, StandardQueryParams: StandardQueryParams));
                 }
             }
         }
@@ -180,7 +180,7 @@ namespace gShell.Cmdlets.Licensing
     /// Part of the gShell Project, relating to the Google Licensing API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GLicenseAssignment -ProductId $SomeProductIdString -SkuId $SomeSkuIdString -UserId $SomeUserIdString -LicenseAssignmentBody $SomeLicenseAssignmentObj</code>
+    ///   <code>PS C:\> Set-GLicenseAssignment -ProductId $SomeProductIdString -SkuId $SomeSkuIdString -UserId $SomeUserIdString -LicenseAssignmentBody $SomeLicenseAssignmentObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -271,7 +271,7 @@ namespace gShell.Cmdlets.Licensing
 
             if (ShouldProcess("Licensing", "Set-GLicenseAssignment"))
             {
-                WriteObject(licenseAssignments.Patch(body, ProductId, SkuId, UserId));
+                WriteObject(licenseAssignments.Patch(body, ProductId, SkuId, UserId, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -283,7 +283,7 @@ namespace gShell.Cmdlets.Licensing
     /// Part of the gShell Project, relating to the Google Licensing API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GLicenseAssignment -ProductId $SomeProductIdString -SkuId $SomeSkuIdString -UserId $SomeUserId</code>
+    ///   <code>PS C:\> New-GLicenseAssignment -ProductId $SomeProductIdString -SkuId $SomeSkuIdString -UserId $SomeUserId</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -334,7 +334,7 @@ namespace gShell.Cmdlets.Licensing
 
             if (ShouldProcess("Licensing", "New-GLicenseAssignment"))
             {
-                WriteObject(licenseAssignments.Insert(body, ProductId, SkuId));
+                WriteObject(licenseAssignments.Insert(body, ProductId, SkuId, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -346,7 +346,7 @@ namespace gShell.Cmdlets.Licensing
     /// Part of the gShell Project, relating to the Google Licensing API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GLicenseAssignment -ProductId $SomeProductIdString -SkuId $SomeSkuIdString -UserId $SomeUserIdString</code>
+    ///   <code>PS C:\> Remove-GLicenseAssignment -ProductId $SomeProductIdString -SkuId $SomeSkuIdString -UserId $SomeUserIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -409,7 +409,7 @@ namespace gShell.Cmdlets.Licensing
 					{
 						WriteDebug("Attempting to remove " + toRemoveTarget + "...");
 
-                        licenseAssignments.Delete(ProductId, SkuId, UserId);
+                        licenseAssignments.Delete(ProductId, SkuId, UserId, StandardQueryParams: StandardQueryParams);
 							
 						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
 					}

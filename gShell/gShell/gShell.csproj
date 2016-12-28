@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\XmlDoc2CmdletDoc.0.2.4\build\XmlDoc2CmdletDoc.props" Condition="Exists('..\packages\XmlDoc2CmdletDoc.0.2.4\build\XmlDoc2CmdletDoc.props')" />
+  <Import Project="..\packages\XmlDoc2CmdletDoc.0.2.5\build\XmlDoc2CmdletDoc.props" Condition="Exists('..\packages\XmlDoc2CmdletDoc.0.2.5\build\XmlDoc2CmdletDoc.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -13,7 +13,7 @@
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>69fd9632</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>50ddc854</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -141,7 +141,11 @@
     <Compile Include="Cmdlets\Reports\Reports.cs" />
     <Compile Include="Cmdlets\Reseller\Reseller.cs" />
     <Compile Include="Cmdlets\SharedContacts\SharedContacts.cs" />
+    <Compile Include="Cmdlets\Utilities\NewGShellStandardQueryParameters.cs" />
     <Compile Include="Cmdlets\Utilities\JsonKeyModel.cs" />
+    <Compile Include="Cmdlets\Utilities\OAuth2\AuthenticatedCmdletBase.cs" />
+    <Compile Include="Cmdlets\Utilities\OAuth2\StandardParamsCmdletBase.cs" />
+    <Compile Include="Cmdlets\Utilities\OAuth2\ServiceAccountCmdletBase.cs" />
     <Compile Include="dotNet\Adminsettings\Google.Apis.admin.Adminsettings.adminsettings_v1.cs" />
     <Compile Include="dotNet\Adminsettings\Google.Apis.admin.Adminsettings.adminsettings_v1_gshell_dotnet.cs" />
     <Compile Include="dotNet\Calendar\Google.Apis.Calendar.v3.cs" />
@@ -190,6 +194,7 @@
     <Compile Include="dotNet\Utilities\OAuth2\DataStores\OAuth2JsonDataStore.cs" />
     <Compile Include="dotNet\Utilities\OAuth2\DataStores\OAuth2BinDataStore.cs" />
     <Compile Include="dotNet\Utilities\OAuth2\ServiceAccount.cs" />
+    <Compile Include="dotNet\Utilities\OAuth2\StandardQueryParameters.cs" />
     <Compile Include="dotNet\Utilities\SavedFile.cs" />
     <Compile Include="Cmdlets\Utilities\ScopeManager\ScopeManager.cs" />
     <Compile Include="dotNet\Utilities\Settings\gShellSettings.cs" />
@@ -215,10 +220,10 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
-    <Error Condition="!Exists('..\packages\XmlDoc2CmdletDoc.0.2.4\build\XmlDoc2CmdletDoc.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\XmlDoc2CmdletDoc.0.2.4\build\XmlDoc2CmdletDoc.props'))" />
-    <Error Condition="!Exists('..\packages\XmlDoc2CmdletDoc.0.2.4\build\XmlDoc2CmdletDoc.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\XmlDoc2CmdletDoc.0.2.4\build\XmlDoc2CmdletDoc.targets'))" />
+    <Error Condition="!Exists('..\packages\XmlDoc2CmdletDoc.0.2.5\build\XmlDoc2CmdletDoc.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\XmlDoc2CmdletDoc.0.2.5\build\XmlDoc2CmdletDoc.props'))" />
+    <Error Condition="!Exists('..\packages\XmlDoc2CmdletDoc.0.2.5\build\XmlDoc2CmdletDoc.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\XmlDoc2CmdletDoc.0.2.5\build\XmlDoc2CmdletDoc.targets'))" />
   </Target>
-  <Import Project="..\packages\XmlDoc2CmdletDoc.0.2.4\build\XmlDoc2CmdletDoc.targets" Condition="Exists('..\packages\XmlDoc2CmdletDoc.0.2.4\build\XmlDoc2CmdletDoc.targets')" />
+  <Import Project="..\packages\XmlDoc2CmdletDoc.0.2.5\build\XmlDoc2CmdletDoc.targets" Condition="Exists('..\packages\XmlDoc2CmdletDoc.0.2.5\build\XmlDoc2CmdletDoc.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

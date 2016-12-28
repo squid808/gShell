@@ -34,6 +34,41 @@ namespace gShell.Cmdlets.Emailsettings
 
     public enum GeneralPageSizeEnum
     { _25 = 25, _50 = 50, _100 = 100 }
+
+    public abstract class EmailsettingsCmdletBase : EmailsettingsBase
+    {
+        #region Parameters
+        /// <summary>
+        /// <para type="description">The target domain for this email settings cmdlet.</para>
+        /// </summary>
+        [Parameter(
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The target domain for this email settings cmdlet.")]
+        [ValidateNotNullOrEmpty]
+        public string Domain { get; set; }
+        #endregion
+
+        protected override void BeginProcessing()
+        {
+            WriteWarning("The Email Settings API is deprecated and will be turned off on July 7, 2017. Migrate to the Gmail API as soon as possible to avoid disruptions to your application. See the following URL for more information: https://developers.google.com/admin-sdk/email-settings/");
+
+            var secrets = CheckForClientSecrets();
+            if (secrets != null)
+            {
+                var scopeAuthObj = EnsureScopesExist(GAuthId, Scopes);
+                ServiceWrapperDictionary[mainBaseType].BuildService(Authenticate(scopeAuthObj, secrets));
+
+                GWriteProgress = new gWriteProgress(WriteProgress);
+            }
+            else
+            {
+                WriteError(new ErrorRecord(null, (new Exception(
+                    "Client Secrets must be set before running cmdlets. Run 'Get-Help "
+                    + "Set-gShellClientSecrets -online' for more information."))));
+            }
+        }
+    }
 }
 
 namespace gShell.Cmdlets.Emailsettings.Delegation
@@ -45,7 +80,7 @@ namespace gShell.Cmdlets.Emailsettings.Delegation
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GEmailSettingsDelegation -UserName $SomeUserNameString</code>
+    ///   <code>PS C:\> Get-GEmailSettingsDelegation -UserName $SomeUserNameString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -55,7 +90,7 @@ namespace gShell.Cmdlets.Emailsettings.Delegation
     [Cmdlet(VerbsCommon.Get, "GEmailSettingsDelegation",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GEmailSettingsDelegation")]
-    public class GetGEmailSettingsDelegationCommand : EmailsettingsBase
+    public class GetGEmailSettingsDelegationCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -84,7 +119,7 @@ namespace gShell.Cmdlets.Emailsettings.Delegation
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GEmailSettingsDelegation -UserName $SomeUserNameString -Address $SomeAddressString</code>
+    ///   <code>PS C:\> New-GEmailSettingsDelegation -UserName $SomeUserNameString -Address $SomeAddressString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -94,7 +129,7 @@ namespace gShell.Cmdlets.Emailsettings.Delegation
     [Cmdlet(VerbsCommon.New, "GEmailSettingsDelegation",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GEmailSettingsDelegation")]
-    public class NewGEmailSettingsDelegationCommand : EmailsettingsBase
+    public class NewGEmailSettingsDelegationCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -137,7 +172,7 @@ namespace gShell.Cmdlets.Emailsettings.Delegation
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GEmailSettingsDelegation -UserName $SomeUserNameString -DelegateEmail $SomeDelegateEmailString</code>
+    ///   <code>PS C:\> Remove-GEmailSettingsDelegation -UserName $SomeUserNameString -DelegateEmail $SomeDelegateEmailString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -147,7 +182,7 @@ namespace gShell.Cmdlets.Emailsettings.Delegation
     [Cmdlet(VerbsCommon.Remove, "GEmailSettingsDelegation",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GEmailSettingsDelegation")]
-    public class RemoveGEmailSettingsDelegationCommand : EmailsettingsBase
+    public class RemoveGEmailSettingsDelegationCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -218,7 +253,7 @@ namespace gShell.Cmdlets.Emailsettings.Filters
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GEmailSettingsFilter -UserName $SomeUserNameString</code>
+    ///   <code>PS C:\> New-GEmailSettingsFilter -UserName $SomeUserNameString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -228,7 +263,7 @@ namespace gShell.Cmdlets.Emailsettings.Filters
     [Cmdlet(VerbsCommon.New, "GEmailSettingsFilter",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GEmailSettingsFilter")]
-    public class NewGEmailSettingsFilterCommand : EmailsettingsBase
+    public class NewGEmailSettingsFilterCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -399,13 +434,13 @@ namespace gShell.Cmdlets.Emailsettings.Filters
 namespace gShell.Cmdlets.Emailsettings.Forwarding
 {
     /// <summary>
-    /// <para type="synopsis"></para>
-    /// <para type="description"></para>
+    /// <para type="synopsis">Retrieve Google Mail forwarding settings</para>
+    /// <para type="description">Retrieve Google Mail forwarding settings</para>
     /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GEmailSettingsForwarding -UserName $SomeUserNameString</code>
+    ///   <code>PS C:\> Get-GEmailSettingsForwarding -UserName $SomeUserNameString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -415,7 +450,7 @@ namespace gShell.Cmdlets.Emailsettings.Forwarding
     [Cmdlet(VerbsCommon.Get, "GEmailSettingsForwarding",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GEmailSettingsForwarding")]
-    public class NewGEmailSettingsForwardingCommand : EmailsettingsBase
+    public class NewGEmailSettingsForwardingCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -438,13 +473,13 @@ namespace gShell.Cmdlets.Emailsettings.Forwarding
     }
 
     /// <summary>
-    /// <para type="synopsis"></para>
-    /// <para type="description"></para>
+    /// <para type="synopsis">Update Google Mail forwarding settings</para>
+    /// <para type="description">Update Google Mail forwarding settings</para>
     /// <list type="alertSet"><item><term>About this Cmdlet</term><description>
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GEmailSettingsForwarding -UserName $SomeUserNameString</code>
+    ///   <code>PS C:\> Set-GEmailSettingsForwarding -UserName $SomeUserNameString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -454,7 +489,7 @@ namespace gShell.Cmdlets.Emailsettings.Forwarding
     [Cmdlet(VerbsCommon.Set, "GEmailSettingsForwarding",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GEmailSettingsForwarding")]
-    public class SetGEmailSettingsForwardingCommand : EmailsettingsBase
+    public class SetGEmailSettingsForwardingCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -520,7 +555,7 @@ namespace gShell.Cmdlets.Emailsettings.General
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GEmailSettingsGeneral -UserName $SomeUserNameString</code>
+    ///   <code>PS C:\> Set-GEmailSettingsGeneral -UserName $SomeUserNameString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -530,7 +565,7 @@ namespace gShell.Cmdlets.Emailsettings.General
     [Cmdlet(VerbsCommon.Set, "GEmailSettingsGeneral",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GEmailSettingsGeneral")]
-    public class SetGEmailSettingsGeneralCommand : EmailsettingsBase
+    public class SetGEmailSettingsGeneralCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -620,7 +655,7 @@ namespace gShell.Cmdlets.Emailsettings.Imap
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GEmailSettingsImap -UserName $SomeUserNameString</code>
+    ///   <code>PS C:\> Get-GEmailSettingsImap -UserName $SomeUserNameString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -630,7 +665,7 @@ namespace gShell.Cmdlets.Emailsettings.Imap
     [Cmdlet(VerbsCommon.Get, "GEmailSettingsImap",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GEmailSettingsImap")]
-    public class GetGEmailSettingsImapCommand : EmailsettingsBase
+    public class GetGEmailSettingsImapCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -659,7 +694,7 @@ namespace gShell.Cmdlets.Emailsettings.Imap
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GEmailSettingsImap -UserName $SomeUserNameString</code>
+    ///   <code>PS C:\> Set-GEmailSettingsImap -UserName $SomeUserNameString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -669,7 +704,7 @@ namespace gShell.Cmdlets.Emailsettings.Imap
     [Cmdlet(VerbsCommon.Set, "GEmailSettingsImap",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GEmailSettingsImap")]
-    public class SetGEmailSettingsImapCommand : EmailsettingsBase
+    public class SetGEmailSettingsImapCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -715,7 +750,7 @@ namespace gShell.Cmdlets.Emailsettings.Label
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GEmailSettingsLabel -UserName $SomeUserNameString</code>
+    ///   <code>PS C:\> Get-GEmailSettingsLabel -UserName $SomeUserNameString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -725,7 +760,7 @@ namespace gShell.Cmdlets.Emailsettings.Label
     [Cmdlet(VerbsCommon.Get, "GEmailSettingsLabel",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GEmailSettingsLabel")]
-    public class GetEmailSettingsLabelCommand : EmailsettingsBase
+    public class GetEmailSettingsLabelCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -754,7 +789,7 @@ namespace gShell.Cmdlets.Emailsettings.Label
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GEmailSettingsLabel -UserName $SomeUserNameString</code>
+    ///   <code>PS C:\> New-GEmailSettingsLabel -UserName $SomeUserNameString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -764,7 +799,7 @@ namespace gShell.Cmdlets.Emailsettings.Label
     [Cmdlet(VerbsCommon.New, "GEmailSettingsLabel",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GEmailSettingsLabel")]
-    public class NewEmailSettingsLabelCommand : EmailsettingsBase
+    public class NewEmailSettingsLabelCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -807,7 +842,7 @@ namespace gShell.Cmdlets.Emailsettings.Label
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GEmailSettingsLabel -UserName $SomeUserNameString</code>
+    ///   <code>PS C:\> Remove-GEmailSettingsLabel -UserName $SomeUserNameString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -817,7 +852,7 @@ namespace gShell.Cmdlets.Emailsettings.Label
     [Cmdlet(VerbsCommon.Remove, "GEmailSettingsLabel",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GEmailSettingsLabel")]
-    public class RemoveEmailSettingsLabelCommand : EmailsettingsBase
+    public class RemoveEmailSettingsLabelCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -888,12 +923,12 @@ namespace gShell.Cmdlets.Emailsettings.Language
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GEmailSettingsLanguage -UserName $SomeUserNameString -Language $SomeLanguageEnum</code>
+    ///   <code>PS C:\> Get-GEmailSettingsLanguage -UserName $SomeUserNameString -Language $SomeLanguageEnum</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GEmailSettingsLanguage -UserName $SomeUserNameString -LanguageAbbreviation $SomeLanguageAbbreviationEnum</code>
+    ///   <code>PS C:\> Get-GEmailSettingsLanguage -UserName $SomeUserNameString -LanguageAbbreviation $SomeLanguageAbbreviationEnum</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -903,7 +938,7 @@ namespace gShell.Cmdlets.Emailsettings.Language
     [Cmdlet(VerbsCommon.Set, "GEmailSettingsLanguage",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GEmailSettingsLanguage")]
-    public class SetGEmailSettingsLanguageCommand : EmailsettingsBase
+    public class SetGEmailSettingsLanguageCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -1107,7 +1142,7 @@ namespace gShell.Cmdlets.Emailsettings.Pop
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GEmailSettingsPop -UserName $SomeUserNameString</code>
+    ///   <code>PS C:\> Get-GEmailSettingsPop -UserName $SomeUserNameString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1117,7 +1152,7 @@ namespace gShell.Cmdlets.Emailsettings.Pop
     [Cmdlet(VerbsCommon.Get, "GEmailSettingsPop",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GEmailSettingsPop")]
-    public class GetGEmailSettingsPopCommand : EmailsettingsBase
+    public class GetGEmailSettingsPopCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -1146,7 +1181,7 @@ namespace gShell.Cmdlets.Emailsettings.Pop
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GEmailSettingsPop -UserName $SomeUserNameString -Enable $SomeEnableBool</code>
+    ///   <code>PS C:\> Get-GEmailSettingsPop -UserName $SomeUserNameString -Enable $SomeEnableBool</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1156,7 +1191,7 @@ namespace gShell.Cmdlets.Emailsettings.Pop
     [Cmdlet(VerbsCommon.Set, "GEmailSettingsPop",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GEmailSettingsPop")]
-    public class SetGEmailSettingsPopCommand : EmailsettingsBase
+    public class SetGEmailSettingsPopCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -1222,7 +1257,7 @@ namespace gShell.Cmdlets.Emailsettings.Signature
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GEmailSettingsSignature -UserName $SomeUserNameString</code>
+    ///   <code>PS C:\> Get-GEmailSettingsSignature -UserName $SomeUserNameString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1232,7 +1267,7 @@ namespace gShell.Cmdlets.Emailsettings.Signature
     [Cmdlet(VerbsCommon.Get, "GEmailSettingsSignature",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GEmailSettingsSignature")]
-    public class GetGEmailSettingsSignatureCommand : EmailsettingsBase
+    public class GetGEmailSettingsSignatureCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -1261,7 +1296,7 @@ namespace gShell.Cmdlets.Emailsettings.Signature
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GEmailSettingsSignature -UserName $SomeUserNameString -Signature $SomeSignatureString</code>
+    ///   <code>PS C:\> Set-GEmailSettingsSignature -UserName $SomeUserNameString -Signature $SomeSignatureString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1271,7 +1306,7 @@ namespace gShell.Cmdlets.Emailsettings.Signature
     [Cmdlet(VerbsCommon.Set, "GEmailSettingsSignature",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GEmailSettingsSignature")]
-    public class SetGEmailSettingsSignatureCommand : EmailsettingsBase
+    public class SetGEmailSettingsSignatureCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -1317,7 +1352,7 @@ namespace gShell.Cmdlets.Emailsettings.SendasAlias
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GEmailSettingsSendasAlias -UserName $SomeUserNameString</code>
+    ///   <code>PS C:\> Get-GEmailSettingsSendasAlias -UserName $SomeUserNameString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1327,7 +1362,7 @@ namespace gShell.Cmdlets.Emailsettings.SendasAlias
     [Cmdlet(VerbsCommon.Get, "GEmailSettingsSendasAlias",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GEmailSettingsSendasAlias")]
-    public class GetGEmailSettingsSendasAliasCommand : EmailsettingsBase
+    public class GetGEmailSettingsSendasAliasCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -1356,7 +1391,7 @@ namespace gShell.Cmdlets.Emailsettings.SendasAlias
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GEmailSettingsSendasAlias -UserName $SomeUserNameString -Name $SomeNameString -Address $SomeAddressString</code>
+    ///   <code>PS C:\> New-GEmailSettingsSendasAlias -UserName $SomeUserNameString -Name $SomeNameString -Address $SomeAddressString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1366,7 +1401,7 @@ namespace gShell.Cmdlets.Emailsettings.SendasAlias
     [Cmdlet(VerbsCommon.New, "GEmailSettingsSendasAlias",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GEmailSettingsSendasAlias")]
-    public class NewGEmailSettingsSendasAliasCommand : EmailsettingsBase
+    public class NewGEmailSettingsSendasAliasCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -1442,7 +1477,7 @@ namespace gShell.Cmdlets.Emailsettings.VacationResponder
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GEmailSettingsVacationResponder -UserName $SomeUserNameString</code>
+    ///   <code>PS C:\> Get-GEmailSettingsVacationResponder -UserName $SomeUserNameString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1452,7 +1487,7 @@ namespace gShell.Cmdlets.Emailsettings.VacationResponder
     [Cmdlet(VerbsCommon.Get, "GEmailSettingsVacationResponder",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GEmailSettingsVacationResponder")]
-    public class GetGEmailSettingsVacationResponderCommand : EmailsettingsBase
+    public class GetGEmailSettingsVacationResponderCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -1481,7 +1516,7 @@ namespace gShell.Cmdlets.Emailsettings.VacationResponder
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GEmailSettingsVacationResponder -UserName $SomeUserNameString -ContactsOnly $SomeContactsOnlyBool
+    ///   <code>PS C:\> Get-GEmailSettingsVacationResponder -UserName $SomeUserNameString -ContactsOnly $SomeContactsOnlyBool
     ///   -Enable $SomeEnableBool -EndDate $SomeEndDateTimeObject -Message $SomeMessageString -StartDate $SomeStartDateTimeObject -Subject $SomeSubjectString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
@@ -1492,7 +1527,7 @@ namespace gShell.Cmdlets.Emailsettings.VacationResponder
     [Cmdlet(VerbsCommon.Set, "GEmailSettingsVacationResponder",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GEmailSettingsVacationResponder")]
-    public class SetGEmailSettingsVacationResponderCommand : EmailsettingsBase
+    public class SetGEmailSettingsVacationResponderCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -1597,7 +1632,7 @@ namespace gShell.Cmdlets.Emailsettings.WebClip
     /// Part of the gShell Project, relating to the Google Email Settings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GEmailSettingsWebClip -UserName $SomeUserNameString -Enable $SomeEnableBool</code>
+    ///   <code>PS C:\> Set-GEmailSettingsWebClip -UserName $SomeUserNameString -Enable $SomeEnableBool</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1607,7 +1642,7 @@ namespace gShell.Cmdlets.Emailsettings.WebClip
     [Cmdlet(VerbsCommon.Set, "GEmailSettingsWebClip",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GEmailSettingsWebClip")]
-    public class SetGEmailSettingsWebClipCommand : EmailsettingsBase
+    public class SetGEmailSettingsWebClipCommand : EmailsettingsCmdletBase
     {
         #region Properties
         /// <summary>

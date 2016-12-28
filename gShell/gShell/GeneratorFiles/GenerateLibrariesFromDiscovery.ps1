@@ -6,7 +6,7 @@ $PythonPath = "$env:USERPROFILE\Documents\apis-client-generator\src"
 
 $Language = "csharp"
 
-function Generate-GshellLibraries ($OutputName, $ApiName, $Version, $OutputPath = "Documents\gShell\gShell\gShell\dotNet", $Variant = "gshell", $JsonPath = "") {
+function Generate-GshellLibraries ($OutputName, $ApiName, $Version, $OutputPath = "Documents\gShell\gShell\gShell\dotNet", $Variant = "gshell", $JsonPath = "z") {
 
     $Output = [System.IO.Path]::Combine("$env:USERPROFILE", $OutputPath, $OutputName)
 

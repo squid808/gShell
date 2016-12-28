@@ -23,6 +23,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using gShell.Cmdlets.Utilities.OAuth2;
+
 namespace gShell.Cmdlets.Adminsettings{
 
     using System;
@@ -41,17 +43,10 @@ namespace gShell.Cmdlets.Adminsettings{
     /// <summary>
     /// A PowerShell-ready wrapper for the Adminsettings api, as well as the resources and methods therein.
     /// </summary>
-    public abstract class AdminsettingsBase : OAuth2CmdletBase
+    public abstract class AdminsettingsBase : AuthenticatedCmdletBase
     {
 
         #region Properties
-
-        /// <summary>
-        /// <para type="description">The domain against which this cmdlet should run.</para>
-        /// </summary>
-        [Parameter(Mandatory = false)]
-        [ValidateNotNullOrEmpty]
-        public string Domain { get; set; }
 
         /// <summary>The gShell dotNet class wrapper base.</summary>
         protected static gAdminsettings mainBase { get; set; }
@@ -102,16 +97,15 @@ namespace gShell.Cmdlets.Adminsettings{
         /// <summary>An instance of the SsoSigningKey gShell dotNet resource.</summary>
         public SsoSigningKey ssoSigningKey { get; set; }
 
-        /// <summary>Returns the api name and version in {name}:{version} format.</summary>
-        protected override string apiNameAndVersion { get { return mainBase.apiNameAndVersion; } }
-
-        /// <summary>Gets or sets the email account the gShell Service Account should impersonate.</summary>
-        protected static string gShellServiceAccount { get; set; }
-
         /// <summary>A collection of scopes for the Adminsettings api.</summary>
-        HashSet<string> Scopes = new HashSet<string> {
+        protected HashSet<string> Scopes = new HashSet<string> {
             "https://apps-apis.google.com/a/feeds/domain/",
         };
+
+        /// <summary>
+        /// Required to be able to store and retrieve the mainBase from the ServiceWrapperDictionary
+        /// </summary>
+        protected override Type mainBaseType { get { return typeof(gAdminsettings); } }
 
         #endregion
 
@@ -119,6 +113,8 @@ namespace gShell.Cmdlets.Adminsettings{
         protected AdminsettingsBase()
         {
             mainBase = new gAdminsettings();
+
+            ServiceWrapperDictionary[mainBaseType] = mainBase;
 
             adminSecondaryEmail = new AdminSecondaryEmail();
             countryCode = new CountryCode();
@@ -135,57 +131,6 @@ namespace gShell.Cmdlets.Adminsettings{
             productVersion = new ProductVersion();
             ssoSettings = new SsoSettings();
             ssoSigningKey = new SsoSigningKey();
-        }
-        #endregion
-
-        #region PowerShell Methods
-        /// <summary>The gShell base implementation of the PowerShell BeginProcessing method.</summary>
-        /// <remarks>If a service account needs to be identified, it should be in a child class that overrides
-        /// and calls this method.</remarks>
-        protected override void BeginProcessing()
-        {
-            var secrets = CheckForClientSecrets();
-            if (secrets != null)
-            {
-                IEnumerable<string> scopes = EnsureScopesExist(Domain, Scopes);
-                Domain = mainBase.BuildService(Authenticate(scopes, secrets, Domain), gShellServiceAccount).domain;
-
-                GWriteProgress = new gWriteProgress(WriteProgress);
-            }
-            else
-            {
-                WriteError(new ErrorRecord(null, (new Exception(
-                    "Client Secrets must be set before running cmdlets. Run 'Get-Help "
-                    + "Set-gShellClientSecrets -online' for more information."))));
-            }
-        }
-
-        /// <summary>The gShell base implementation of the PowerShell EndProcessing method.</summary>
-        /// <remarks>We need to reset the service account after every Cmdlet call to prevent the next
-        /// Cmdlet from inheriting it as well.</remarks>
-        protected override void EndProcessing()
-        {
-            gShellServiceAccount = string.Empty;
-        }
-
-        /// <summary>The gShell base implementation of the PowerShell StopProcessing method.</summary>
-        /// <remarks>We need to reset the service account after every Cmdlet call to prevent the next
-        /// Cmdlet from inheriting it as well.</remarks>
-        protected override void StopProcessing()
-        {
-            gShellServiceAccount = string.Empty;
-        }
-        #endregion
-
-        #region Authentication & Processing
-        /// <summary>Ensure the user, domain and client secret combination work with an authenticated user.</summary>
-        /// <param name="Scopes">The scopes that need to be passed through to the user authentication to Google.</param>
-        /// <param name="Secrets">The client secrets.`</param>
-        /// <param name="Domain">The domain for which this authentication is intended.</param>
-        /// <returns>The AuthenticatedUserInfo for the authenticated user.</returns>
-        protected override AuthenticatedUserInfo Authenticate(IEnumerable<string> Scopes, ClientSecrets Secrets, string Domain = null)
-        {
-            return mainBase.Authenticate(apiNameAndVersion, Scopes, Secrets, Domain);
         }
         #endregion
 
@@ -207,7 +152,7 @@ namespace gShell.Cmdlets.Adminsettings{
             public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.AdminSecondaryEmail Get (string Domain)
             {
 
-                return mainBase.adminSecondaryEmail.Get(Domain, gShellServiceAccount);
+                return mainBase.adminSecondaryEmail.Get(Domain);
             }
 
 
@@ -218,7 +163,7 @@ namespace gShell.Cmdlets.Adminsettings{
             public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.AdminSecondaryEmail Update (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.AdminSecondaryEmail AdminSecondaryEmailBody, string Domain)
             {
 
-                return mainBase.adminSecondaryEmail.Update(AdminSecondaryEmailBody, Domain, gShellServiceAccount);
+                return mainBase.adminSecondaryEmail.Update(AdminSecondaryEmailBody, Domain);
             }
 
 
@@ -241,7 +186,7 @@ namespace gShell.Cmdlets.Adminsettings{
             public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.CountryCode Get (string Domain)
             {
 
-                return mainBase.countryCode.Get(Domain, gShellServiceAccount);
+                return mainBase.countryCode.Get(Domain);
             }
 
 
@@ -264,7 +209,7 @@ namespace gShell.Cmdlets.Adminsettings{
             public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.CreationTime Get (string Domain)
             {
 
-                return mainBase.creationTime.Get(Domain, gShellServiceAccount);
+                return mainBase.creationTime.Get(Domain);
             }
 
 
@@ -287,7 +232,7 @@ namespace gShell.Cmdlets.Adminsettings{
             public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.CurrentNumberOfUsers Get (string Domain)
             {
 
-                return mainBase.currentUsers.Get(Domain, gShellServiceAccount);
+                return mainBase.currentUsers.Get(Domain);
             }
 
 
@@ -311,7 +256,7 @@ namespace gShell.Cmdlets.Adminsettings{
             public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.CustomLogo Update (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.CustomLogo CustomLogoBody, string Domain)
             {
 
-                return mainBase.customLogo.Update(CustomLogoBody, Domain, gShellServiceAccount);
+                return mainBase.customLogo.Update(CustomLogoBody, Domain);
             }
 
 
@@ -334,7 +279,7 @@ namespace gShell.Cmdlets.Adminsettings{
             public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.CustomerPin Get (string Domain)
             {
 
-                return mainBase.customerPin.Get(Domain, gShellServiceAccount);
+                return mainBase.customerPin.Get(Domain);
             }
 
 
@@ -357,7 +302,7 @@ namespace gShell.Cmdlets.Adminsettings{
             public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.DefaultLanguage Get (string Domain)
             {
 
-                return mainBase.defaultLanguage.Get(Domain, gShellServiceAccount);
+                return mainBase.defaultLanguage.Get(Domain);
             }
 
 
@@ -368,7 +313,7 @@ namespace gShell.Cmdlets.Adminsettings{
             public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.DefaultLanguage Update (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.DefaultLanguage DefaultLanguageBody, string Domain)
             {
 
-                return mainBase.defaultLanguage.Update(DefaultLanguageBody, Domain, gShellServiceAccount);
+                return mainBase.defaultLanguage.Update(DefaultLanguageBody, Domain);
             }
 
 
@@ -391,7 +336,7 @@ namespace gShell.Cmdlets.Adminsettings{
             public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.Gateway Get (string Domain)
             {
 
-                return mainBase.emailGateway.Get(Domain, gShellServiceAccount);
+                return mainBase.emailGateway.Get(Domain);
             }
 
 
@@ -402,7 +347,7 @@ namespace gShell.Cmdlets.Adminsettings{
             public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.Gateway Update (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.Gateway GatewayBody, string Domain)
             {
 
-                return mainBase.emailGateway.Update(GatewayBody, Domain, gShellServiceAccount);
+                return mainBase.emailGateway.Update(GatewayBody, Domain);
             }
 
 
@@ -426,7 +371,7 @@ namespace gShell.Cmdlets.Adminsettings{
             public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.Routing Update (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.Routing RoutingBody, string Domain)
             {
 
-                return mainBase.emailRouting.Update(RoutingBody, Domain, gShellServiceAccount);
+                return mainBase.emailRouting.Update(RoutingBody, Domain);
             }
 
 
@@ -449,7 +394,7 @@ namespace gShell.Cmdlets.Adminsettings{
             public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.MaximumNumberOfUsers Get (string Domain)
             {
 
-                return mainBase.maximumUsers.Get(Domain, gShellServiceAccount);
+                return mainBase.maximumUsers.Get(Domain);
             }
 
 
@@ -472,7 +417,7 @@ namespace gShell.Cmdlets.Adminsettings{
             public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.MXVerificationStatus Get (string Domain)
             {
 
-                return mainBase.mxVerificationStatus.Get(Domain, gShellServiceAccount);
+                return mainBase.mxVerificationStatus.Get(Domain);
             }
 
 
@@ -483,7 +428,7 @@ namespace gShell.Cmdlets.Adminsettings{
             public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.MXVerificationStatus Update (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.MXVerificationStatus MXVerificationStatusBody, string Domain)
             {
 
-                return mainBase.mxVerificationStatus.Update(MXVerificationStatusBody, Domain, gShellServiceAccount);
+                return mainBase.mxVerificationStatus.Update(MXVerificationStatusBody, Domain);
             }
 
 
@@ -506,7 +451,7 @@ namespace gShell.Cmdlets.Adminsettings{
             public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.OrganizationName Get (string Domain)
             {
 
-                return mainBase.organizationName.Get(Domain, gShellServiceAccount);
+                return mainBase.organizationName.Get(Domain);
             }
 
 
@@ -517,7 +462,7 @@ namespace gShell.Cmdlets.Adminsettings{
             public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.OrganizationName Update (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.OrganizationName OrganizationNameBody, string Domain)
             {
 
-                return mainBase.organizationName.Update(OrganizationNameBody, Domain, gShellServiceAccount);
+                return mainBase.organizationName.Update(OrganizationNameBody, Domain);
             }
 
 
@@ -540,7 +485,7 @@ namespace gShell.Cmdlets.Adminsettings{
             public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.Edition Get (string Domain)
             {
 
-                return mainBase.productVersion.Get(Domain, gShellServiceAccount);
+                return mainBase.productVersion.Get(Domain);
             }
 
 
@@ -563,7 +508,7 @@ namespace gShell.Cmdlets.Adminsettings{
             public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.SsoSettings Get (string Domain)
             {
 
-                return mainBase.ssoSettings.Get(Domain, gShellServiceAccount);
+                return mainBase.ssoSettings.Get(Domain);
             }
 
 
@@ -574,7 +519,7 @@ namespace gShell.Cmdlets.Adminsettings{
             public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.SsoSettings Update (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.SsoSettings SsoSettingsBody, string Domain)
             {
 
-                return mainBase.ssoSettings.Update(SsoSettingsBody, Domain, gShellServiceAccount);
+                return mainBase.ssoSettings.Update(SsoSettingsBody, Domain);
             }
 
 
@@ -597,7 +542,7 @@ namespace gShell.Cmdlets.Adminsettings{
             public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.SsoSigningKey Get (string Domain)
             {
 
-                return mainBase.ssoSigningKey.Get(Domain, gShellServiceAccount);
+                return mainBase.ssoSigningKey.Get(Domain);
             }
 
 
@@ -608,7 +553,7 @@ namespace gShell.Cmdlets.Adminsettings{
             public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.SsoSigningKey Update (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.SsoSigningKey SsoSigningKeyBody, string Domain)
             {
 
-                return mainBase.ssoSigningKey.Update(SsoSigningKeyBody, Domain, gShellServiceAccount);
+                return mainBase.ssoSigningKey.Update(SsoSigningKeyBody, Domain);
             }
 
 
@@ -634,7 +579,7 @@ namespace gShell.dotNet
     using Data = Google.Apis.admin.Adminsettings.adminsettings_v1.Data;
 
     /// <summary>The dotNet gShell version of the admin api.</summary>
-    public class Adminsettings : ServiceWrapper<adminsettings_v1.AdminsettingsService>
+    public class Adminsettings : ServiceWrapper<adminsettings_v1.AdminsettingsService>, IServiceWrapper<Google.Apis.Services.IClientService>
     {
 
         protected override bool worksWithGmail { get { return false; } }
@@ -644,7 +589,7 @@ namespace gShell.dotNet
         /// <param name="authInfo">The authenticated AuthInfo for this user and domain.</param>
         /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
 
-        protected override adminsettings_v1.AdminsettingsService CreateNewService(string domain, AuthenticatedUserInfo authInfo, string gShellServiceAccount = null)
+        protected override adminsettings_v1.AdminsettingsService CreateNewService(string domain, AuthenticatedUserInfo authInfo, string serviceAccountUser = null)
         {
             return new adminsettings_v1.AdminsettingsService(OAuth2Base.GetGdataInitializer(domain, authInfo));
         }
@@ -730,18 +675,18 @@ namespace gShell.dotNet
 
             /// <param name="Domain"></param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.AdminSecondaryEmail Get (string Domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.AdminSecondaryEmail Get (string Domain)
             {
-                return GetService(gShellServiceAccount).AdminSecondaryEmail.Get(Domain).Execute();
+                return GetService().AdminSecondaryEmail.Get(Domain).Execute();
             }
 
 
             /// <param name="AdminSecondaryEmailBody">The body of the request.</param>
             /// <param name="Domain"></param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.AdminSecondaryEmail Update (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.AdminSecondaryEmail AdminSecondaryEmailBody, string Domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.AdminSecondaryEmail Update (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.AdminSecondaryEmail AdminSecondaryEmailBody, string Domain)
             {
-                return GetService(gShellServiceAccount).AdminSecondaryEmail.Update(AdminSecondaryEmailBody, Domain).Execute();
+                return GetService().AdminSecondaryEmail.Update(AdminSecondaryEmailBody, Domain).Execute();
             }
 
         }
@@ -756,9 +701,9 @@ namespace gShell.dotNet
 
             /// <param name="Domain"></param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.CountryCode Get (string Domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.CountryCode Get (string Domain)
             {
-                return GetService(gShellServiceAccount).CountryCode.Get(Domain).Execute();
+                return GetService().CountryCode.Get(Domain).Execute();
             }
 
         }
@@ -773,9 +718,9 @@ namespace gShell.dotNet
 
             /// <param name="Domain"></param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.CreationTime Get (string Domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.CreationTime Get (string Domain)
             {
-                return GetService(gShellServiceAccount).CreationTime.Get(Domain).Execute();
+                return GetService().CreationTime.Get(Domain).Execute();
             }
 
         }
@@ -790,9 +735,9 @@ namespace gShell.dotNet
 
             /// <param name="Domain"></param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.CurrentNumberOfUsers Get (string Domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.CurrentNumberOfUsers Get (string Domain)
             {
-                return GetService(gShellServiceAccount).CurrentUsers.Get(Domain).Execute();
+                return GetService().CurrentUsers.Get(Domain).Execute();
             }
 
         }
@@ -808,9 +753,9 @@ namespace gShell.dotNet
             /// <param name="CustomLogoBody">The body of the request.</param>
             /// <param name="Domain"></param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.CustomLogo Update (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.CustomLogo CustomLogoBody, string Domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.CustomLogo Update (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.CustomLogo CustomLogoBody, string Domain)
             {
-                return GetService(gShellServiceAccount).CustomLogo.Update(CustomLogoBody, Domain).Execute();
+                return GetService().CustomLogo.Update(CustomLogoBody, Domain).Execute();
             }
 
         }
@@ -825,9 +770,9 @@ namespace gShell.dotNet
 
             /// <param name="Domain"></param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.CustomerPin Get (string Domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.CustomerPin Get (string Domain)
             {
-                return GetService(gShellServiceAccount).CustomerPin.Get(Domain).Execute();
+                return GetService().CustomerPin.Get(Domain).Execute();
             }
 
         }
@@ -842,18 +787,18 @@ namespace gShell.dotNet
 
             /// <param name="Domain"></param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.DefaultLanguage Get (string Domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.DefaultLanguage Get (string Domain)
             {
-                return GetService(gShellServiceAccount).DefaultLanguage.Get(Domain).Execute();
+                return GetService().DefaultLanguage.Get(Domain).Execute();
             }
 
 
             /// <param name="DefaultLanguageBody">The body of the request.</param>
             /// <param name="Domain"></param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.DefaultLanguage Update (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.DefaultLanguage DefaultLanguageBody, string Domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.DefaultLanguage Update (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.DefaultLanguage DefaultLanguageBody, string Domain)
             {
-                return GetService(gShellServiceAccount).DefaultLanguage.Update(DefaultLanguageBody, Domain).Execute();
+                return GetService().DefaultLanguage.Update(DefaultLanguageBody, Domain).Execute();
             }
 
         }
@@ -868,18 +813,18 @@ namespace gShell.dotNet
 
             /// <param name="Domain"></param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.Gateway Get (string Domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.Gateway Get (string Domain)
             {
-                return GetService(gShellServiceAccount).EmailGateway.Get(Domain).Execute();
+                return GetService().EmailGateway.Get(Domain).Execute();
             }
 
 
             /// <param name="GatewayBody">The body of the request.</param>
             /// <param name="Domain"></param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.Gateway Update (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.Gateway GatewayBody, string Domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.Gateway Update (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.Gateway GatewayBody, string Domain)
             {
-                return GetService(gShellServiceAccount).EmailGateway.Update(GatewayBody, Domain).Execute();
+                return GetService().EmailGateway.Update(GatewayBody, Domain).Execute();
             }
 
         }
@@ -895,9 +840,9 @@ namespace gShell.dotNet
             /// <param name="RoutingBody">The body of the request.</param>
             /// <param name="Domain"></param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.Routing Update (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.Routing RoutingBody, string Domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.Routing Update (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.Routing RoutingBody, string Domain)
             {
-                return GetService(gShellServiceAccount).EmailRouting.Update(RoutingBody, Domain).Execute();
+                return GetService().EmailRouting.Update(RoutingBody, Domain).Execute();
             }
 
         }
@@ -912,9 +857,9 @@ namespace gShell.dotNet
 
             /// <param name="Domain"></param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.MaximumNumberOfUsers Get (string Domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.MaximumNumberOfUsers Get (string Domain)
             {
-                return GetService(gShellServiceAccount).MaximumUsers.Get(Domain).Execute();
+                return GetService().MaximumUsers.Get(Domain).Execute();
             }
 
         }
@@ -929,18 +874,18 @@ namespace gShell.dotNet
 
             /// <param name="Domain"></param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.MXVerificationStatus Get (string Domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.MXVerificationStatus Get (string Domain)
             {
-                return GetService(gShellServiceAccount).MxVerificationStatus.Get(Domain).Execute();
+                return GetService().MxVerificationStatus.Get(Domain).Execute();
             }
 
 
             /// <param name="MXVerificationStatusBody">The body of the request.</param>
             /// <param name="Domain"></param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.MXVerificationStatus Update (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.MXVerificationStatus MXVerificationStatusBody, string Domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.MXVerificationStatus Update (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.MXVerificationStatus MXVerificationStatusBody, string Domain)
             {
-                return GetService(gShellServiceAccount).MxVerificationStatus.Update(MXVerificationStatusBody, Domain).Execute();
+                return GetService().MxVerificationStatus.Update(MXVerificationStatusBody, Domain).Execute();
             }
 
         }
@@ -955,18 +900,18 @@ namespace gShell.dotNet
 
             /// <param name="Domain"></param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.OrganizationName Get (string Domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.OrganizationName Get (string Domain)
             {
-                return GetService(gShellServiceAccount).OrganizationName.Get(Domain).Execute();
+                return GetService().OrganizationName.Get(Domain).Execute();
             }
 
 
             /// <param name="OrganizationNameBody">The body of the request.</param>
             /// <param name="Domain"></param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.OrganizationName Update (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.OrganizationName OrganizationNameBody, string Domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.OrganizationName Update (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.OrganizationName OrganizationNameBody, string Domain)
             {
-                return GetService(gShellServiceAccount).OrganizationName.Update(OrganizationNameBody, Domain).Execute();
+                return GetService().OrganizationName.Update(OrganizationNameBody, Domain).Execute();
             }
 
         }
@@ -981,9 +926,9 @@ namespace gShell.dotNet
 
             /// <param name="Domain"></param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.Edition Get (string Domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.Edition Get (string Domain)
             {
-                return GetService(gShellServiceAccount).ProductVersion.Get(Domain).Execute();
+                return GetService().ProductVersion.Get(Domain).Execute();
             }
 
         }
@@ -998,18 +943,18 @@ namespace gShell.dotNet
 
             /// <param name="Domain"></param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.SsoSettings Get (string Domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.SsoSettings Get (string Domain)
             {
-                return GetService(gShellServiceAccount).SsoSettings.Get(Domain).Execute();
+                return GetService().SsoSettings.Get(Domain).Execute();
             }
 
 
             /// <param name="SsoSettingsBody">The body of the request.</param>
             /// <param name="Domain"></param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.SsoSettings Update (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.SsoSettings SsoSettingsBody, string Domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.SsoSettings Update (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.SsoSettings SsoSettingsBody, string Domain)
             {
-                return GetService(gShellServiceAccount).SsoSettings.Update(SsoSettingsBody, Domain).Execute();
+                return GetService().SsoSettings.Update(SsoSettingsBody, Domain).Execute();
             }
 
         }
@@ -1024,18 +969,18 @@ namespace gShell.dotNet
 
             /// <param name="Domain"></param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.SsoSigningKey Get (string Domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.SsoSigningKey Get (string Domain)
             {
-                return GetService(gShellServiceAccount).SsoSigningKey.Get(Domain).Execute();
+                return GetService().SsoSigningKey.Get(Domain).Execute();
             }
 
 
             /// <param name="SsoSigningKeyBody">The body of the request.</param>
             /// <param name="Domain"></param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.SsoSigningKey Update (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.SsoSigningKey SsoSigningKeyBody, string Domain, string gShellServiceAccount = null)
+            public Google.Apis.admin.Adminsettings.adminsettings_v1.Data.SsoSigningKey Update (Google.Apis.admin.Adminsettings.adminsettings_v1.Data.SsoSigningKey SsoSigningKeyBody, string Domain)
             {
-                return GetService(gShellServiceAccount).SsoSigningKey.Update(SsoSigningKeyBody, Domain).Execute();
+                return GetService().SsoSigningKey.Update(SsoSigningKeyBody, Domain).Execute();
             }
 
         }

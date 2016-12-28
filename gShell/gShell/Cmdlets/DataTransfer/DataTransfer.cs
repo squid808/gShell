@@ -40,28 +40,6 @@ namespace gShell.Cmdlets.DataTransfer
         pending
     }
 
-    /// <summary>A base class which provides support for service account integration and schema objects.</summary>
-    public abstract class DataTransferServiceAccountBase : DataTransferBase
-    {
-        #region Properties
-
-        /// <summary>
-        /// <para type="description">The email account to be targeted by the service account.</para>
-        /// </summary>
-        [Parameter(Mandatory = false)]
-        [ValidateNotNullOrEmpty]
-        public string TargetUserEmail { get; set; }
-
-        #endregion
-
-        protected override void BeginProcessing()
-        {
-            gShellServiceAccount = GetFullEmailAddress(TargetUserEmail, Domain);
-
-            base.BeginProcessing();
-        }
-    }
-
     /// <summary>
     /// <para type="synopsis">Creates a new DataTransfer API ApplicationDataTransfer object.</para>
     /// <para type="description">This provides a Cmdlet-Based approach to creating a ApplicationDataTransfer object which may be required as a parameter for some other Cmdlets in the DataTransfer API category.</para>
@@ -70,7 +48,7 @@ namespace gShell.Cmdlets.DataTransfer
     /// Part of the gShell Project, relating to the Google DataTransfer API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GDataTransferApplicationDataObj</code>
+    ///   <code>PS C:\> New-GDataTransferApplicationDataObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -103,7 +81,7 @@ namespace gShell.Cmdlets.DataTransfer
             HelpMessage =
                 "The transfer parameters for the application. These parameters are used to select the data which will get transfered in context of this application."
             )]
-        public IList<ApplicationTransferParam> ApplicationTransferParams { get; set; }
+        public ApplicationTransferParam[] ApplicationTransferParams { get; set; }
 
         /// <summary>
         /// <para type="description">Current status of transfer for this application. (Read-only)</para>
@@ -142,7 +120,7 @@ namespace gShell.Cmdlets.DataTransfer
     /// Part of the gShell Project, relating to the Google DataTransfer API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GDataTransferDataObj</code>
+    ///   <code>PS C:\> New-GDataTransferDataObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -166,7 +144,7 @@ namespace gShell.Cmdlets.DataTransfer
             HelpMessage =
                 "List of per application data transfer resources. It contains data transfer details of the applications associated with this transfer resource. Note that this list is also used to specify the applications for which data transfer has to be done at the time of the transfer resource creation."
             )]
-        public IList<ApplicationDataTransfer> ApplicationDataTransfers { get; set; }
+        public ApplicationDataTransfer[] ApplicationDataTransfers { get; set; }
 
         /// <summary>
         /// <para type="description">The transfer's ID (Read-only).</para>
@@ -242,7 +220,7 @@ namespace gShell.Cmdlets.DataTransfer
     /// Part of the gShell Project, relating to the Google DataTransfer API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GDataTransferApplicationObj</code>
+    ///   <code>PS C:\> New-GDataTransferApplicationObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -284,7 +262,7 @@ namespace gShell.Cmdlets.DataTransfer
             HelpMessage =
                 "The list of all possible transfer parameters for this application. These parameters can be used to select the data of the user in this application to be transfered."
             )]
-        public IList<ApplicationTransferParam> TransferParams { get; set; }
+        public ApplicationTransferParam[] TransferParams { get; set; }
 
         #endregion
 
@@ -312,7 +290,7 @@ namespace gShell.Cmdlets.DataTransfer
     /// Part of the gShell Project, relating to the Google DataTransfer API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GDataTransferApplicationParamObj</code>
+    ///   <code>PS C:\> New-GDataTransferApplicationParamObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -343,7 +321,7 @@ namespace gShell.Cmdlets.DataTransfer
             Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "The value of the coressponding transfer parameter. eg: 'PRIVATE' or 'SHARED'")]
-        public IList<string> Value { get; set; }
+        public string[] Value { get; set; }
 
         #endregion
 
@@ -372,12 +350,12 @@ namespace gShell.Cmdlets.DataTransfer.Applications
     /// Part of the gShell Project, relating to the Google DataTransfer API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GDataTransferApplication -ApplicationId $SomeApplicationIdSystemNullable<long></code>
+    ///   <code>PS C:\> Get-GDataTransferApplication -ApplicationId $SomeApplicationId</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GDataTransferApplication -All</code>
+    ///   <code>PS C:\> Get-GDataTransferApplication -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -387,7 +365,7 @@ namespace gShell.Cmdlets.DataTransfer.Applications
     [Cmdlet(VerbsCommon.Get, "GDataTransferApplication",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GDataTransferApplication")]
-    public class GetGDataTransferApplicationCommand : DataTransferServiceAccountBase
+    public class GetGDataTransferApplicationCommand : DataTransferBase
     {
         #region Properties
 
@@ -438,22 +416,22 @@ namespace gShell.Cmdlets.DataTransfer.Applications
             {
                 if (ParameterSetName == "One")
                 {
-                    WriteObject(applications.Get(ApplicationId));
+                    WriteObject(applications.Get(ApplicationId, StandardQueryParams: StandardQueryParams));
                 }
                 else
                 {
                     var properties = new gDataTransfer.Applications.ApplicationsListProperties
                     {
-                        maxResults = 500
+                        MaxResults = MaxResults = 500
                     };
 
-                    if (!string.IsNullOrWhiteSpace(CustomerId)) properties.customerId = CustomerId;
-                    if (MaxResults.HasValue) properties.totalResults = MaxResults.Value;
+                    if (!string.IsNullOrWhiteSpace(CustomerId)) properties.CustomerId = CustomerId;
+                    if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
 
                     if (ShouldProcess("DataTransfer Applicaiton", "Get-GDataTransferApplication"))
                     {
                         List<Application> results =
-                            applications.List(properties).SelectMany(x => x.Applications).ToList();
+                            applications.List(properties, StandardQueryParams: StandardQueryParams).SelectMany(x => x.Applications).ToList();
 
                         WriteObject(results);
                     }
@@ -472,12 +450,12 @@ namespace gShell.Cmdlets.DataTransfer.Transfers
     /// Part of the gShell Project, relating to the Google DataTransfer API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GDataTransfer -DataTransferId $SomeDataTransferIdString</code>
+    ///   <code>PS C:\> Get-GDataTransfer -DataTransferId $SomeDataTransferIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GDataTransfer -All</code>
+    ///   <code>PS C:\> Get-GDataTransfer -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -487,7 +465,7 @@ namespace gShell.Cmdlets.DataTransfer.Transfers
     [Cmdlet(VerbsCommon.Get, "GDataTransfer",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GDataTransfer")]
-    public class GetGDataTransferCommand : DataTransferServiceAccountBase
+    public class GetGDataTransferCommand : DataTransferBase
     {
         #region Properties
 
@@ -569,21 +547,21 @@ namespace gShell.Cmdlets.DataTransfer.Transfers
             {
                 if (ParameterSetName == "One")
                 {
-                    WriteObject(transfers.Get(DataTransferId));
+                    WriteObject(transfers.Get(DataTransferId, StandardQueryParams: StandardQueryParams));
                 }
                 else
                 {
                     var properties = new gDataTransfer.Transfers.TransfersListProperties
                     {
-                        customerId = CustomerId,
-                        newOwnerUserId = NewOwnerUserId,
-                        oldOwnerUserId = OldOwnerUserId,
-                        status = Status
+                        CustomerId = CustomerId,
+                        NewOwnerUserId = NewOwnerUserId,
+                        OldOwnerUserId = OldOwnerUserId,
+                        Status = Status
                     };
 
-                    if (MaxResults.HasValue) properties.totalResults = MaxResults.Value;
+                    if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
 
-                    WriteObject(transfers.List(properties).SelectMany(x => x.DataTransfers).ToList());
+                    WriteObject(transfers.List(properties, StandardQueryParams: StandardQueryParams).SelectMany(x => x.DataTransfers).ToList());
                 }
             }
         }
@@ -596,7 +574,7 @@ namespace gShell.Cmdlets.DataTransfer.Transfers
     /// Part of the gShell Project, relating to the Google DataTransfer API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GDataTransfer -DataTransferBody $SomeDataTransferObj</code>
+    ///   <code>PS C:\> New-GDataTransfer -DataTransferBody $SomeDataTransferObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -606,7 +584,7 @@ namespace gShell.Cmdlets.DataTransfer.Transfers
     [Cmdlet(VerbsCommon.New, "GDataTransfer",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/New-GDataTransfer")]
-    public class NewGDataTransferCommand : DataTransferServiceAccountBase
+    public class NewGDataTransferCommand : DataTransferBase
     {
         #region Properties
 
@@ -626,7 +604,7 @@ namespace gShell.Cmdlets.DataTransfer.Transfers
         {
             if (ShouldProcess("DataTransfer Transfers", "Insert-GDataTransfer"))
             {
-                WriteObject(transfers.Insert(DataTransferBody));
+                WriteObject(transfers.Insert(DataTransferBody, StandardQueryParams: StandardQueryParams));
             }
         }
     }

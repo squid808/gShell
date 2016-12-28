@@ -1,6 +1,6 @@
 ﻿using System.Management.Automation;
 using System.Collections.Generic;
-
+using gShell.Cmdlets.Utilities.OAuth2;
 using Google.Apis.Auth.OAuth2;
 using Data = Google.Apis.Discovery.v1.Data;
 
@@ -19,6 +19,13 @@ namespace gShell.Cmdlets.Discovery
         protected Apis apis = new Apis();
 
         protected override string apiNameAndVersion { get { return gdiscovery.apiNameAndVersion; } }
+
+        /// <summary>
+        /// <para type="description">A Standard Query Parameters Object.</para>
+        /// </summary>
+        [Parameter(Mandatory = false)]
+        [ValidateNotNullOrEmpty]
+        public StandardQueryParameters StandardQueryParams { get; set; }
         #endregion
 
         #region PowerShell Methods
@@ -29,7 +36,7 @@ namespace gShell.Cmdlets.Discovery
         /// <summary>
         /// A method specific to each inherited object, called during authentication. Must be implemented.
         /// </summary>
-        protected override AuthenticatedUserInfo Authenticate(IEnumerable<string> Scopes, ClientSecrets Secrets, string Domain=null) { return null; }
+        protected override AuthenticatedUserInfo Authenticate(AuthenticatedUserInfo AuthUserInfo, ClientSecrets Secrets) { return null; }
         #endregion
 
         #region Apis
@@ -54,7 +61,7 @@ namespace gShell.Cmdlets.Discovery
     /// Part of the gShell Project, relating to the Google Discovery API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GDiscoveryList</code>
+    ///   <code>PS C:\> Get-GDiscoveryList</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -104,7 +111,7 @@ namespace gShell.Cmdlets.Discovery
                     properties.preferred = true;
                 }
 
-                WriteObject(gdiscovery.apis.List(properties).Items);
+                WriteObject(gdiscovery.apis.List(properties, StandardQueryParams: StandardQueryParams).Items);
             }
         }
     }
@@ -115,7 +122,7 @@ namespace gShell.Cmdlets.Discovery
     /// Part of the gShell Project, relating to the Google Discovery API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GDiscoveryRestData -Api $SomeApiString -Version $SomeVersionString</code>
+    ///   <code>PS C:\> Get-GDiscoveryRestData -Api $SomeApiString -Version $SomeVersionString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -155,7 +162,7 @@ namespace gShell.Cmdlets.Discovery
         {
             if (ShouldProcess("Report Activity", "Get-GRepActivity"))
             {
-                WriteObject(gdiscovery.apis.RestData(Api, Version));
+                WriteObject(gdiscovery.apis.RestData(Api, Version, StandardQueryParams: StandardQueryParams));
             }
         }
     }
