@@ -220,10 +220,6 @@ namespace gShell.Cmdlets.Utilities.OAuth2
 
             //****************//
 
-            WriteWarning("OrigDomain: " + results.originalDomain);
-            WriteWarning("AuthUser: " + user);
-            WriteWarning("AuthDomain: " + domain);
-
             results.userName = user;
             results.domain = domain;
 
