@@ -17,7 +17,7 @@ namespace gShell.Cmdlets.Reseller
     /// Part of the gShell Project, relating to the Google Reseller API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GResellerCustomerObj</code>
+    ///   <code>PS C:\> New-GResellerCustomerObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -125,7 +125,7 @@ namespace gShell.Cmdlets.Reseller
     /// Part of the gShell Project, relating to the Google Reseller API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GResellerSubscriptionPlanDataObj</code>
+    ///   <code>PS C:\> New-GResellerSubscriptionPlanDataObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -193,7 +193,7 @@ namespace gShell.Cmdlets.Reseller
     /// Part of the gShell Project, relating to the Google Reseller API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GResellerSubscriptionObj</code>
+    ///   <code>PS C:\> New-GResellerSubscriptionObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -332,7 +332,7 @@ namespace gShell.Cmdlets.Reseller
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "Read-only field containing an enumerable of all the current suspension reasons for a subscription. It is possible for a subscription to have many concurrent, overlapping suspension reasons. A subscription's STATUS is SUSPENDED until all pending suspensions are removed. Possible options include:  \n- PENDING_TOS_ACCEPTANCE - The customer has not logged in and accepted the Google Apps Resold Terms of Services.  \n- RENEWAL_WITH_TYPE_CANCEL - The customer's commitment ended and their service was cancelled at the end of their term.  \n- RESELLER_INITIATED - A manual suspension invoked by a Reseller.  \n- TRIAL_ENDED - The customer's trial expired without a plan selected.  \n- OTHER - The customer is suspended for an internal Google reason (e.g. abuse or otherwise).")]
-        public System.Collections.Generic.IList<string> SuspensionReasons { get; set; }
+        public string[] SuspensionReasons { get; set; }
 
         /// <summary>
         /// <para type="description">Transfer related information for the subscription.</para>
@@ -390,7 +390,7 @@ namespace gShell.Cmdlets.Reseller
     /// Part of the gShell Project, relating to the Google Reseller API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GResellerSubscriptionTransferInfoDataObj</code>
+    ///   <code>PS C:\> New-GResellerSubscriptionTransferInfoDataObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -447,7 +447,7 @@ namespace gShell.Cmdlets.Reseller
     /// Part of the gShell Project, relating to the Google Reseller API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GResellerRenewalSettingsObj</code>
+    ///   <code>PS C:\> New-GResellerRenewalSettingsObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -495,7 +495,7 @@ namespace gShell.Cmdlets.Reseller
     /// Part of the gShell Project, relating to the Google Reseller API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GResellerSubscriptionTrialSettingsDataObj</code>
+    ///   <code>PS C:\> New-GResellerSubscriptionTrialSettingsDataObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -553,7 +553,7 @@ namespace gShell.Cmdlets.Reseller
     /// Part of the gShell Project, relating to the Google Reseller API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GResellerSeatsObj</code>
+    ///   <code>PS C:\> New-GResellerSeatsObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -623,7 +623,7 @@ namespace gShell.Cmdlets.Reseller.Customers
     /// Part of the gShell Project, relating to the Google Reseller API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GResellerCustomer -CustomerId $SomeCustomerIdString</code>
+    ///   <code>PS C:\> Get-GResellerCustomer -CustomerId $SomeCustomerIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -654,7 +654,7 @@ namespace gShell.Cmdlets.Reseller.Customers
         {
             if (ShouldProcess("Reseller Customer", "Get-GResellerCustomer"))
             {
-                WriteObject(customers.Get(CustomerId));
+                WriteObject(customers.Get(CustomerId, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -666,7 +666,7 @@ namespace gShell.Cmdlets.Reseller.Customers
     /// Part of the gShell Project, relating to the Google Reseller API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GResellerCustomer -CustomerId $SomeCustomerIdString -CustomerBody $SomeCustomerObj</code>
+    ///   <code>PS C:\> Set-GResellerCustomer -CustomerId $SomeCustomerIdString -CustomerBody $SomeCustomerObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -887,7 +887,7 @@ namespace gShell.Cmdlets.Reseller.Customers
             
 
             if (ShouldProcess("Reseller Customer", "Set-GResellerCustomer"))
-                WriteObject(customers.Patch(body, CustomerId));
+                WriteObject(customers.Patch(body, CustomerId, StandardQueryParams: StandardQueryParams));
         }
     }
 
@@ -898,7 +898,7 @@ namespace gShell.Cmdlets.Reseller.Customers
     /// Part of the gShell Project, relating to the Google Reseller API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GResellerCustomer -CustomerBody $SomeCustomerObj</code>
+    ///   <code>PS C:\> New-GResellerCustomer -CustomerBody $SomeCustomerObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1132,7 +1132,7 @@ namespace gShell.Cmdlets.Reseller.Customers
             if (!string.IsNullOrWhiteSpace(CustomerAuthToken)) properties.CustomerAuthToken = this.CustomerAuthToken;
 
             if (ShouldProcess("Reseller Customer", "New-GResellerCustomer"))
-                WriteObject(customers.Insert(body, properties));
+                WriteObject(customers.Insert(body, properties, StandardQueryParams: StandardQueryParams));
         }
     }
 }
@@ -1146,7 +1146,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
     /// Part of the gShell Project, relating to the Google Reseller API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Enable-GResellerSubscription -CustomerId $SomeCustomerIdString -SubscriptionId $SomeSubscriptionIdString</code>
+    ///   <code>PS C:\> Enable-GResellerSubscription -CustomerId $SomeCustomerIdString -SubscriptionId $SomeSubscriptionIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1185,7 +1185,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
         {
             if (ShouldProcess("Reseller Subscription", "Enable-GResellerSubscription"))
             {
-                WriteObject(subscriptions.Activate(CustomerId, SubscriptionId));
+                WriteObject(subscriptions.Activate(CustomerId, SubscriptionId, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -1197,7 +1197,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
     /// Part of the gShell Project, relating to the Google Reseller API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GResellerSubscriptionPlan -CustomerId $SomeCustomerIdString -SubscriptionId $SomeSubscriptionIdString -PlanName $SomePlanName -NumberOfSeats $SomeNumberOfSeatsInt -MaximumNumberOfSeats $SomeMaximumNumberOfSeatsInt -LicensedNumberOfSeats $SomeLicensedNumberOfSeatsInt</code>
+    ///   <code>PS C:\> Set-GResellerSubscriptionPlan -CustomerId $SomeCustomerIdString -SubscriptionId $SomeSubscriptionIdString -PlanName $SomePlanName -NumberOfSeats $SomeNumberOfSeatsInt -MaximumNumberOfSeats $SomeMaximumNumberOfSeatsInt -LicensedNumberOfSeats $SomeLicensedNumberOfSeatsInt</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1313,7 +1313,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
 
             if (ShouldProcess("Reseller Subscription Plan", "Set-GResellerSubscriptionPlan"))
             {
-                WriteObject(subscriptions.ChangePlan(body, CustomerId, SubscriptionId));
+                WriteObject(subscriptions.ChangePlan(body, CustomerId, SubscriptionId, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -1325,7 +1325,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
     /// Part of the gShell Project, relating to the Google Reseller API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GResellerSubscriptionRenewal -CustomerId $SomeCustomerIdString -SubscriptionId $SomeSubscriptionIdString -RenewalSettingsBody $SomeRenewalSettingsObj</code>
+    ///   <code>PS C:\> Set-GResellerSubscriptionRenewal -CustomerId $SomeCustomerIdString -SubscriptionId $SomeSubscriptionIdString -RenewalSettingsBody $SomeRenewalSettingsObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1386,7 +1386,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
 
             if (ShouldProcess("Reseller Subscription Renewal", "Set-GResellerSubscriptionRenewal"))
             {
-                WriteObject(subscriptions.ChangeRenewalSettings(body, CustomerId, SubscriptionId));
+                WriteObject(subscriptions.ChangeRenewalSettings(body, CustomerId, SubscriptionId, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -1398,7 +1398,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
     /// Part of the gShell Project, relating to the Google Reseller API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GResellerSubscriptionSeats -CustomerId $SomeCustomerIdString -SubscriptionId $SomeSubscriptionIdString -NumberOfSeats $SomeNumberOfSeatsInt -MaximumNumberOfSeats $SomeMaximumNumberOfSeatsInt</code>
+    ///   <code>PS C:\> Set-GResellerSubscriptionSeats -CustomerId $SomeCustomerIdString -SubscriptionId $SomeSubscriptionIdString -NumberOfSeats $SomeNumberOfSeatsInt -MaximumNumberOfSeats $SomeMaximumNumberOfSeatsInt</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1463,7 +1463,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
 
             if (ShouldProcess("Reseller Subscription Seats", "Set-GResellerSubscriptionSeats"))
             {
-                WriteObject(subscriptions.ChangeSeats(body, CustomerId, SubscriptionId));
+                WriteObject(subscriptions.ChangeSeats(body, CustomerId, SubscriptionId, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -1475,7 +1475,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
     /// Part of the gShell Project, relating to the Google Reseller API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GResellerSubscription -CustomerId $SomeCustomerIdString -SubscriptionId $SomeSubscriptionIdString -DeletionType Cancel</code>
+    ///   <code>PS C:\> Remove-GResellerSubscription -CustomerId $SomeCustomerIdString -SubscriptionId $SomeSubscriptionIdString -DeletionType Cancel</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1540,7 +1540,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
 					{
 						WriteDebug("Attempting to remove " + toRemoveTarget + "...");
 
-                        subscriptions.Delete(CustomerId, SubscriptionId, DeletionType);
+                        subscriptions.Delete(CustomerId, SubscriptionId, DeletionType, StandardQueryParams: StandardQueryParams);
 							
 						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
 					}
@@ -1565,12 +1565,12 @@ namespace gShell.Cmdlets.Reseller.Subscription
     /// Part of the gShell Project, relating to the Google Reseller API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GResellerSubscription -CustomerId $SomeCustomerIdString -SubscriptionId $SomeSubscriptionIdString</code>
+    ///   <code>PS C:\> Get-GResellerSubscription -CustomerId $SomeCustomerIdString -SubscriptionId $SomeSubscriptionIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GResellerSubscription -CustomerAuthToken $SomeCustomerAuthTokenString</code>
+    ///   <code>PS C:\> Get-GResellerSubscription -CustomerAuthToken $SomeCustomerAuthTokenString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1652,7 +1652,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
             {
                 if (ShouldProcess("Reseller Subscription", "Get-GResellerSubscription"))
                 {
-                    WriteObject(subscriptions.Get(CustomerId, SubscriptionId));
+                    WriteObject(subscriptions.Get(CustomerId, SubscriptionId, StandardQueryParams: StandardQueryParams));
                 }
             }
             else
@@ -1669,7 +1669,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
 
                 if (ShouldProcess("Reseller Subscription", "Get-GResellerSubscription"))
                 {
-                    WriteObject(subscriptions.List(properties).SelectMany(x => x.SubscriptionsValue).ToList());
+                    WriteObject(subscriptions.List(properties, StandardQueryParams: StandardQueryParams).SelectMany(x => x.SubscriptionsValue).ToList());
                 }
             }
         }
@@ -1682,7 +1682,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
     /// Part of the gShell Project, relating to the Google Reseller API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GResellerSubscription -CustomerId $SomeCustomerIdString -SubscriptionBody $SomeSubscriptionObj</code>
+    ///   <code>PS C:\> New-GResellerSubscription -CustomerId $SomeCustomerIdString -SubscriptionBody $SomeSubscriptionObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1990,7 +1990,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
 
             if (ShouldProcess("Reseller Subscription", "New-GResellerSubscription"))
             {
-                WriteObject(subscriptions.Insert(body, TargetCustomerId, properties));
+                WriteObject(subscriptions.Insert(body, TargetCustomerId, properties, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2042,7 +2042,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
         {
             if (ShouldProcess("Reseller Subscription Paid Service", "Start-GResellerSubscriptionPaidService"))
             {
-                WriteObject(subscriptions.StartPaidService(CustomerId, SubscriptionId));
+                WriteObject(subscriptions.StartPaidService(CustomerId, SubscriptionId, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2054,7 +2054,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
     /// Part of the gShell Project, relating to the Google Reseller API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Suspend-GResellerSubscription -CustomerId $SomeCustomerIdString -SubscriptionId $SomeSubscriptionIdString</code>
+    ///   <code>PS C:\> Suspend-GResellerSubscription -CustomerId $SomeCustomerIdString -SubscriptionId $SomeSubscriptionIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2094,7 +2094,7 @@ namespace gShell.Cmdlets.Reseller.Subscription
         {
             if (ShouldProcess("Reseller Subscription", "Suspend-GResellerSubscription"))
             {
-                WriteObject(subscriptions.Suspend(CustomerId, SubscriptionId));
+                WriteObject(subscriptions.Suspend(CustomerId, SubscriptionId, StandardQueryParams: StandardQueryParams));
             }
         }
     }

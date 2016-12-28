@@ -10,6 +10,39 @@ using gSharedContacts = gShell.dotNet.Sharedcontacts;
 
 namespace gShell.Cmdlets.Sharedcontacts
 {
+    public abstract class SharedcontactsCmdletBase : SharedcontactsBase
+    {
+        #region Parameters
+        /// <summary>
+        /// <para type="description">The target domain for this shared contacts cmdlet.</para>
+        /// </summary>
+        [Parameter(
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The target domain for this shared contacts cmdlet.")]
+        [ValidateNotNullOrEmpty]
+        public string Domain { get; set; }
+        #endregion
+
+        protected override void BeginProcessing()
+        {
+            var secrets = CheckForClientSecrets();
+            if (secrets != null)
+            {
+                var scopeAuthObj = EnsureScopesExist(GAuthId, Scopes);
+                ServiceWrapperDictionary[mainBaseType].BuildService(Authenticate(scopeAuthObj, secrets));
+
+                GWriteProgress = new gWriteProgress(WriteProgress);
+            }
+            else
+            {
+                WriteError(new ErrorRecord(null, (new Exception(
+                    "Client Secrets must be set before running cmdlets. Run 'Get-Help "
+                    + "Set-gShellClientSecrets -online' for more information."))));
+            }
+        }
+    }
+
     /// <summary>
     /// <para type="synopsis">Create a new shared contact email object.</para>
     /// <para type="description">Create a new shared contact email object.</para>
@@ -17,7 +50,7 @@ namespace gShell.Cmdlets.Sharedcontacts
     /// Part of the gShell Project, relating to the Google Shared Contacts API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GSharedContactEmailObj</code>
+    ///   <code>PS C:\> New-GSharedContactEmailObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -108,7 +141,7 @@ namespace gShell.Cmdlets.Sharedcontacts
     /// Part of the gShell Project, relating to the Google Shared Contacts API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GSharedContactExtendedPropertyObj</code>
+    ///   <code>PS C:\> New-GSharedContactExtendedPropertyObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -171,7 +204,7 @@ namespace gShell.Cmdlets.Sharedcontacts
     /// Part of the gShell Project, relating to the Google Shared Contacts API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GSharedContactImObj</code>
+    ///   <code>PS C:\> New-GSharedContactImObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -266,7 +299,7 @@ namespace gShell.Cmdlets.Sharedcontacts
     /// Part of the gShell Project, relating to the Google Shared Contacts API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GSharedContactNameObj</code>
+    ///   <code>PS C:\> New-GSharedContactNameObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -370,7 +403,7 @@ namespace gShell.Cmdlets.Sharedcontacts
     /// Part of the gShell Project, relating to the Google Shared Contacts API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GSharedContactOrgObj</code>
+    ///   <code>PS C:\> New-GSharedContactOrgObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -503,7 +536,7 @@ namespace gShell.Cmdlets.Sharedcontacts
     /// Part of the gShell Project, relating to the Google Shared Contacts API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GSharedContactPhoneNumberObj</code>
+    ///   <code>PS C:\> New-GSharedContactPhoneNumberObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -593,7 +626,7 @@ namespace gShell.Cmdlets.Sharedcontacts
     /// Part of the gShell Project, relating to the Google Shared Contacts API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GSharedContactPostalAddressObj</code>
+    ///   <code>PS C:\> New-GSharedContactPostalAddressObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -814,7 +847,7 @@ namespace gShell.Cmdlets.Sharedcontacts
     /// Part of the gShell Project, relating to the Google Shared Contacts API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GSharedContactWhereObj</code>
+    ///   <code>PS C:\> New-GSharedContactWhereObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -904,7 +937,7 @@ namespace gShell.Cmdlets.Sharedcontacts
     /// Part of the gShell Project, relating to the Google Shared Contacts API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GSharedContactEntryLinkObj</code>
+    ///   <code>PS C:\> New-GSharedContactEntryLinkObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -983,12 +1016,12 @@ namespace gShell.Cmdlets.Sharedcontacts
     /// Part of the gShell Project, relating to the Google Shared Contacts API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GSharedContact -Id $SomeIdString</code>
+    ///   <code>PS C:\> Get-GSharedContact -Id $SomeIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GSharedContact -All</code>
+    ///   <code>PS C:\> Get-GSharedContact -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -999,7 +1032,7 @@ namespace gShell.Cmdlets.Sharedcontacts
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GSharedContact",
           DefaultParameterSetName = "all")]
-    public class GetGSharedContact : SharedcontactsBase
+    public class GetGSharedContact : SharedcontactsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -1071,7 +1104,7 @@ namespace gShell.Cmdlets.Sharedcontacts
     /// Part of the gShell Project, relating to the Google Shared Contacts API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GSharedContact</code>
+    ///   <code>PS C:\> New-GSharedContact</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1081,7 +1114,7 @@ namespace gShell.Cmdlets.Sharedcontacts
     [Cmdlet(VerbsCommon.New, "GSharedContact",
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/New-GSharedContact")]
-    public class NewGSharedContact : SharedcontactsBase
+    public class NewGSharedContact : SharedcontactsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -1156,7 +1189,7 @@ namespace gShell.Cmdlets.Sharedcontacts
     /// Part of the gShell Project, relating to the Google Shared Contacts API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GSharedContact -ContactObj $SomeContactObject</code>
+    ///   <code>PS C:\> Set-GSharedContact -ContactObj $SomeContactObject</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1167,7 +1200,7 @@ namespace gShell.Cmdlets.Sharedcontacts
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GSharedContact",
           DefaultParameterSetName = "all")]
-    public class SetGSharedContact : SharedcontactsBase
+    public class SetGSharedContact : SharedcontactsCmdletBase
     {
         #region Properties
         /// <summary>
@@ -1210,12 +1243,12 @@ namespace gShell.Cmdlets.Sharedcontacts
     /// Part of the gShell Project, relating to the Google Shared Contacts API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GSharedContact -ContactObj $SomeContactObject</code>
+    ///   <code>PS C:\> Remove-GSharedContact -ContactObj $SomeContactObject</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GSharedContact -Id $SomeIdString | Remove-GSharedContact</code>
+    ///   <code>PS C:\> Get-GSharedContact -Id $SomeIdString | Remove-GSharedContact</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1226,7 +1259,7 @@ namespace gShell.Cmdlets.Sharedcontacts
         SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GSharedContact",
           DefaultParameterSetName = "all")]
-    public class RemoveGSharedContact : SharedcontactsBase
+    public class RemoveGSharedContact : SharedcontactsCmdletBase
     {
         #region Properties
         /// <summary>

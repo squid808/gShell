@@ -62,9 +62,16 @@ namespace gShell.dotNet
                 public bool preferred = false;
             }
 
-            public Data.DirectoryList List (DiscoveryListProperties properties = null)
+            public Data.DirectoryList List(DiscoveryListProperties properties = null, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
                 discovery_v1.ApisResource.ListRequest request = service.Apis.List();
+
+                if (StandardQueryParams != null)
+                {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
 
                 if (properties != null)
                 {
@@ -75,9 +82,18 @@ namespace gShell.dotNet
                 return request.Execute();
             }
 
-            public Data.RestDescription RestData(string api, string version)
+            public Data.RestDescription RestData(string api, string version, gShell.dotNet.Utilities.OAuth2.StandardQueryParameters StandardQueryParams = null)
             {
-                return service.Apis.GetRest(api, version).Execute();
+                var request = service.Apis.GetRest(api, version);
+
+                if (StandardQueryParams != null)
+                {
+                    request.Fields = StandardQueryParams.fields;
+                    request.QuotaUser = StandardQueryParams.quotaUser;
+                    request.UserIp = StandardQueryParams.userIp;
+                }
+
+                return request.Execute();
             }
         }
 

@@ -65,7 +65,7 @@ namespace Google.Apis.Drive.v3.Data
         [Newtonsoft.Json.JsonPropertyAttribute("importFormats")]
         public virtual System.Collections.Generic.IDictionary<string,System.Collections.Generic.IList<string>> ImportFormats { get; set; } 
 
-        /// <summary>This is always drive#about.</summary>
+        /// <summary>Identifies what kind of resource this is. Value: the fixed string "drive#about".</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("kind")]
         public virtual string Kind { get; set; } 
 
@@ -123,7 +123,7 @@ namespace Google.Apis.Drive.v3.Data
         [Newtonsoft.Json.JsonPropertyAttribute("fileId")]
         public virtual string FileId { get; set; } 
 
-        /// <summary>This is always drive#change.</summary>
+        /// <summary>Identifies what kind of resource this is. Value: the fixed string "drive#change".</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("kind")]
         public virtual string Kind { get; set; } 
 
@@ -161,7 +161,7 @@ namespace Google.Apis.Drive.v3.Data
         [Newtonsoft.Json.JsonPropertyAttribute("changes")]
         public virtual System.Collections.Generic.IList<Change> Changes { get; set; } 
 
-        /// <summary>This is always drive#changeList.</summary>
+        /// <summary>Identifies what kind of resource this is. Value: the fixed string "drive#changeList".</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("kind")]
         public virtual string Kind { get; set; } 
 
@@ -277,7 +277,7 @@ namespace Google.Apis.Drive.v3.Data
         [Newtonsoft.Json.JsonPropertyAttribute("id")]
         public virtual string Id { get; set; } 
 
-        /// <summary>This is always drive#comment.</summary>
+        /// <summary>Identifies what kind of resource this is. Value: the fixed string "drive#comment".</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("kind")]
         public virtual string Kind { get; set; } 
 
@@ -338,7 +338,7 @@ namespace Google.Apis.Drive.v3.Data
         [Newtonsoft.Json.JsonPropertyAttribute("comments")]
         public virtual System.Collections.Generic.IList<Comment> Comments { get; set; } 
 
-        /// <summary>This is always drive#commentList.</summary>
+        /// <summary>Identifies what kind of resource this is. Value: the fixed string "drive#commentList".</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("kind")]
         public virtual string Kind { get; set; } 
 
@@ -413,6 +413,10 @@ namespace Google.Apis.Drive.v3.Data
         [Newtonsoft.Json.JsonPropertyAttribute("fullFileExtension")]
         public virtual string FullFileExtension { get; set; } 
 
+        /// <summary>Whether this file has a thumbnail.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("hasThumbnail")]
+        public virtual System.Nullable<bool> HasThumbnail { get; set; } 
+
         /// <summary>The ID of the file's head revision. This is currently only available for files with binary content
         /// in Drive.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("headRevisionId")]
@@ -434,7 +438,7 @@ namespace Google.Apis.Drive.v3.Data
         [Newtonsoft.Json.JsonPropertyAttribute("isAppAuthorized")]
         public virtual System.Nullable<bool> IsAppAuthorized { get; set; } 
 
-        /// <summary>This is always drive#file.</summary>
+        /// <summary>Identifies what kind of resource this is. Value: the fixed string "drive#file".</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("kind")]
         public virtual string Kind { get; set; } 
 
@@ -453,6 +457,10 @@ namespace Google.Apis.Drive.v3.Data
         /// supported import formats are published in the About resource.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("mimeType")]
         public virtual string MimeType { get; set; } 
+
+        /// <summary>Whether the file has been modified by this user.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("modifiedByMe")]
+        public virtual System.Nullable<bool> ModifiedByMe { get; set; } 
 
         /// <summary>The last time the file was modified by the user (RFC 3339 date-time).</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("modifiedByMeTime")]
@@ -570,10 +578,15 @@ namespace Google.Apis.Drive.v3.Data
         [Newtonsoft.Json.JsonPropertyAttribute("starred")]
         public virtual System.Nullable<bool> Starred { get; set; } 
 
-        /// <summary>A short-lived link to the file's thumbnail, if available. Typically lasts on the order of
-        /// hours.</summary>
+        /// <summary>A short-lived link to the file's thumbnail, if available. Typically lasts on the order of hours.
+        /// Only populated when the requesting app can access the file's content.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("thumbnailLink")]
         public virtual string ThumbnailLink { get; set; } 
+
+        /// <summary>The thumbnail version for use in client-contructable thumbnail URLs or thumbnail cache
+        /// invalidation.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("thumbnailVersion")]
+        public virtual System.Nullable<long> ThumbnailVersion { get; set; } 
 
         /// <summary>Whether the file has been trashed, either explicitly or from a trashed parent folder. Only the
         /// owner may trash a file, and other users cannot see files in the owner's trash.</summary>
@@ -822,7 +835,7 @@ namespace Google.Apis.Drive.v3.Data
         [Newtonsoft.Json.JsonPropertyAttribute("files")]
         public virtual System.Collections.Generic.IList<File> Files { get; set; } 
 
-        /// <summary>This is always drive#fileList.</summary>
+        /// <summary>Identifies what kind of resource this is. Value: the fixed string "drive#fileList".</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("kind")]
         public virtual string Kind { get; set; } 
 
@@ -842,7 +855,7 @@ namespace Google.Apis.Drive.v3.Data
         [Newtonsoft.Json.JsonPropertyAttribute("ids")]
         public virtual System.Collections.Generic.IList<string> Ids { get; set; } 
 
-        /// <summary>This is always drive#generatedIds</summary>
+        /// <summary>Identifies what kind of resource this is. Value: the fixed string "drive#generatedIds".</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("kind")]
         public virtual string Kind { get; set; } 
 
@@ -875,12 +888,30 @@ namespace Google.Apis.Drive.v3.Data
         [Newtonsoft.Json.JsonPropertyAttribute("emailAddress")]
         public virtual string EmailAddress { get; set; } 
 
+        /// <summary>The time at which this permission will expire (RFC 3339 date-time).</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("expirationTime")]
+        public virtual string ExpirationTimeRaw { get; set; }
+
+        /// <summary><seealso cref="System.DateTime"/> representation of <see cref="ExpirationTimeRaw"/>.</summary>
+        [Newtonsoft.Json.JsonIgnore]
+        public virtual System.Nullable<System.DateTime> ExpirationTime
+        {
+            get
+            {
+                return Google.Apis.Util.Utilities.GetDateTimeFromString(ExpirationTimeRaw);
+            }
+            set
+            {
+                ExpirationTimeRaw = Google.Apis.Util.Utilities.GetStringFromDateTime(value);
+            }
+        }
+
         /// <summary>The ID of this permission. This is a unique identifier for the grantee, and is published in User
         /// resources as permissionId.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("id")]
         public virtual string Id { get; set; } 
 
-        /// <summary>This is always drive#permission.</summary>
+        /// <summary>Identifies what kind of resource this is. Value: the fixed string "drive#permission".</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("kind")]
         public virtual string Kind { get; set; } 
 
@@ -904,7 +935,7 @@ namespace Google.Apis.Drive.v3.Data
     /// <summary>A list of permissions for a file.</summary>
     public class PermissionList : Google.Apis.Requests.IDirectResponseSchema
     {
-        /// <summary>This is always drive#permissionList.</summary>
+        /// <summary>Identifies what kind of resource this is. Value: the fixed string "drive#permissionList".</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("kind")]
         public virtual string Kind { get; set; } 
 
@@ -963,7 +994,7 @@ namespace Google.Apis.Drive.v3.Data
         [Newtonsoft.Json.JsonPropertyAttribute("id")]
         public virtual string Id { get; set; } 
 
-        /// <summary>This is always drive#reply.</summary>
+        /// <summary>Identifies what kind of resource this is. Value: the fixed string "drive#reply".</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("kind")]
         public virtual string Kind { get; set; } 
 
@@ -992,7 +1023,7 @@ namespace Google.Apis.Drive.v3.Data
     /// <summary>A list of replies to a comment on a file.</summary>
     public class ReplyList : Google.Apis.Requests.IDirectResponseSchema
     {
-        /// <summary>This is always drive#replyList.</summary>
+        /// <summary>Identifies what kind of resource this is. Value: the fixed string "drive#replyList".</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("kind")]
         public virtual string Kind { get; set; } 
 
@@ -1022,7 +1053,7 @@ namespace Google.Apis.Drive.v3.Data
         [Newtonsoft.Json.JsonPropertyAttribute("keepForever")]
         public virtual System.Nullable<bool> KeepForever { get; set; } 
 
-        /// <summary>This is always drive#revision.</summary>
+        /// <summary>Identifies what kind of resource this is. Value: the fixed string "drive#revision".</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("kind")]
         public virtual string Kind { get; set; } 
 
@@ -1088,9 +1119,14 @@ namespace Google.Apis.Drive.v3.Data
     /// <summary>A list of revisions of a file.</summary>
     public class RevisionList : Google.Apis.Requests.IDirectResponseSchema
     {
-        /// <summary>This is always drive#revisionList.</summary>
+        /// <summary>Identifies what kind of resource this is. Value: the fixed string "drive#revisionList".</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("kind")]
         public virtual string Kind { get; set; } 
+
+        /// <summary>The page token for the next page of revisions. This will be absent if the end of the revisions list
+        /// has been reached.</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("nextPageToken")]
+        public virtual string NextPageToken { get; set; } 
 
         /// <summary>The full list of revisions.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("revisions")]
@@ -1102,7 +1138,7 @@ namespace Google.Apis.Drive.v3.Data
 
     public class StartPageToken : Google.Apis.Requests.IDirectResponseSchema
     {
-        /// <summary>This is always drive#startPageToken.</summary>
+        /// <summary>Identifies what kind of resource this is. Value: the fixed string "drive#startPageToken".</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("kind")]
         public virtual string Kind { get; set; } 
 
@@ -1126,7 +1162,7 @@ namespace Google.Apis.Drive.v3.Data
         [Newtonsoft.Json.JsonPropertyAttribute("emailAddress")]
         public virtual string EmailAddress { get; set; } 
 
-        /// <summary>This is always drive#user.</summary>
+        /// <summary>Identifies what kind of resource this is. Value: the fixed string "drive#user".</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("kind")]
         public virtual string Kind { get; set; } 
 
@@ -3882,6 +3918,11 @@ namespace Google.Apis.Drive.v3
             [Google.Apis.Util.RequestParameterAttribute("permissionId", Google.Apis.Util.RequestParameterType.Path)]
             public virtual string PermissionId { get; private set; }
 
+            /// <summary>Whether to remove the expiration date.</summary>
+            /// [default: false]
+            [Google.Apis.Util.RequestParameterAttribute("removeExpiration", Google.Apis.Util.RequestParameterType.Query)]
+            public virtual System.Nullable<bool> RemoveExpiration { get; set; }
+
             /// <summary>Whether to transfer ownership to the specified user and downgrade the current owner to a
             /// writer. This parameter is required as an acknowledgement of the side effect.</summary>
             /// [default: false]
@@ -3934,6 +3975,15 @@ namespace Google.Apis.Drive.v3
                         IsRequired = true,
                         ParameterType = "path",
                         DefaultValue = null,
+                        Pattern = null,
+                    });
+                RequestParameters.Add(
+                    "removeExpiration", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "removeExpiration",
+                        IsRequired = false,
+                        ParameterType = "query",
+                        DefaultValue = "false",
                         Pattern = null,
                     });
                 RequestParameters.Add(
@@ -4697,6 +4747,18 @@ namespace Google.Apis.Drive.v3
             [Google.Apis.Util.RequestParameterAttribute("fileId", Google.Apis.Util.RequestParameterType.Path)]
             public virtual string FileId { get; private set; }
 
+            /// <summary>The maximum number of revisions to return per page.</summary>
+            /// [default: 200]
+            /// [minimum: 1]
+            /// [maximum: 1000]
+            [Google.Apis.Util.RequestParameterAttribute("pageSize", Google.Apis.Util.RequestParameterType.Query)]
+            public virtual System.Nullable<int> PageSize { get; set; }
+
+            /// <summary>The token for continuing a previous list request on the next page. This should be set to the
+            /// value of 'nextPageToken' from the previous response.</summary>
+            [Google.Apis.Util.RequestParameterAttribute("pageToken", Google.Apis.Util.RequestParameterType.Query)]
+            public virtual string PageToken { get; set; }
+
 
             ///<summary>Gets the method name.</summary>
             public override string MethodName
@@ -4727,6 +4789,24 @@ namespace Google.Apis.Drive.v3
                         Name = "fileId",
                         IsRequired = true,
                         ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+                RequestParameters.Add(
+                    "pageSize", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "pageSize",
+                        IsRequired = false,
+                        ParameterType = "query",
+                        DefaultValue = "200",
+                        Pattern = null,
+                    });
+                RequestParameters.Add(
+                    "pageToken", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "pageToken",
+                        IsRequired = false,
+                        ParameterType = "query",
                         DefaultValue = null,
                         Pattern = null,
                     });

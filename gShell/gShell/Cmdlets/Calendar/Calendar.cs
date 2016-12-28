@@ -32,28 +32,6 @@ using gCalendar = gShell.dotNet.Calendar;
 
 namespace gShell.Cmdlets.Calendar
 {
-    /// <summary>A base class which provides support for service account integration and schema objects.</summary>
-    public abstract class CalendarServiceAccountBase : CalendarBase
-    {
-        #region Properties
-
-        /// <summary>
-        /// <para type="description">The email account to be targeted by the service account.</para>
-        /// </summary>
-        [Parameter(Mandatory = false)]
-        [ValidateNotNullOrEmpty]
-        public string TargetUserEmail { get; set; }
-
-        #endregion
-
-        protected override void BeginProcessing()
-        {
-            gShellServiceAccount = GetFullEmailAddress(TargetUserEmail, Domain);
-
-            base.BeginProcessing();
-        }
-    }
-
     /// <summary>
     /// <para type="synopsis">Creates a new Calendar API AclRule object.</para>
     /// <para type="description">This provides a Cmdlet-Based approach to creating a AclRule object which may be required as a parameter for some other Cmdlets in the Calendar API category.</para>
@@ -62,7 +40,7 @@ namespace gShell.Cmdlets.Calendar
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GCalendarAclRuleObj</code>
+    ///   <code>PS C:\> New-GCalendarAclRuleObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -130,7 +108,7 @@ namespace gShell.Cmdlets.Calendar
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GCalendarAclRuleScopeDataObj</code>
+    ///   <code>PS C:\> New-GCalendarAclRuleScopeDataObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -188,7 +166,7 @@ namespace gShell.Cmdlets.Calendar
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GCalendarChannelObj</code>
+    ///   <code>PS C:\> New-GCalendarChannelObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -316,7 +294,7 @@ namespace gShell.Cmdlets.Calendar
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GCalendarObj</code>
+    ///   <code>PS C:\> New-GCalendarObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -404,7 +382,7 @@ namespace gShell.Cmdlets.Calendar
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GCalendarListEntryObj</code>
+    ///   <code>PS C:\> New-GCalendarListEntryObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -454,7 +432,7 @@ namespace gShell.Cmdlets.Calendar
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "The default reminders that the authenticated user has for this calendar.")]
-        public System.Collections.Generic.IList<EventReminder> DefaultReminders { get; set; }
+        public EventReminder[] DefaultReminders { get; set; }
 
         /// <summary>
         /// <para type="description">Whether this calendar list entry has been deleted from the calendar list. Read-only. Optional. The default is False.</para>
@@ -602,7 +580,7 @@ namespace gShell.Cmdlets.Calendar
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GCalendarListEntryNotificationSettingsDataObj</code>
+    ///   <code>PS C:\> New-GCalendarListEntryNotificationSettingsDataObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -625,7 +603,7 @@ namespace gShell.Cmdlets.Calendar
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "The list of notifications set for this calendar.")]
-        public System.Collections.Generic.IList<CalendarNotification> Notifications { get; set; }
+        public CalendarNotification[] Notifications { get; set; }
         #endregion
 
         protected override void ProcessRecord()
@@ -650,7 +628,7 @@ namespace gShell.Cmdlets.Calendar
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GCalendarNotificationObj</code>
+    ///   <code>PS C:\> New-GCalendarNotificationObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -708,7 +686,7 @@ namespace gShell.Cmdlets.Calendar
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GCalendarEventObj</code>
+    ///   <code>PS C:\> New-GCalendarEventObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -740,7 +718,7 @@ namespace gShell.Cmdlets.Calendar
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "File attachments for the event. Currently only Google Drive attachments are supported.\nIn order to modify attachments the supportsAttachments request parameter should be set to true.\nThere can be at most 25 attachments per event,")]
-        public System.Collections.Generic.IList<EventAttachment> Attachments { get; set; }
+        public EventAttachment[] Attachments { get; set; }
 
         /// <summary>
         /// <para type="description">The attendees of the event. See the Events with attendees guide for more information on scheduling events with other calendar users.</para>
@@ -749,7 +727,7 @@ namespace gShell.Cmdlets.Calendar
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "The attendees of the event. See the Events with attendees guide for more information on scheduling events with other calendar users.")]
-        public System.Collections.Generic.IList<EventAttendee> Attendees { get; set; }
+        public EventAttendee[] Attendees { get; set; }
 
         /// <summary>
         /// <para type="description">Whether attendees may have been omitted from the event's representation. When retrieving an event, this may be due to a restriction specified by the maxAttendee query parameter. When updating an event, this can be used to only update the participant's response. Optional. The default is False.</para>
@@ -947,7 +925,7 @@ namespace gShell.Cmdlets.Calendar
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "List of RRULE, EXRULE, RDATE and EXDATE lines for a recurring event, as specified in RFC5545. Note that DTSTART and DTEND lines are not allowed in this field; event start and end times are specified in the start and end fields. This field is omitted for single events or instances of recurring events.")]
-        public System.Collections.Generic.IList<string> Recurrence { get; set; }
+        public string[] Recurrence { get; set; }
 
         /// <summary>
         /// <para type="description">For an instance of a recurring event, this is the id of the recurring event to which this instance belongs. Immutable.</para>
@@ -1096,7 +1074,7 @@ namespace gShell.Cmdlets.Calendar
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GCalendarEventExtendedPropertiesDataObj</code>
+    ///   <code>PS C:\> New-GCalendarEventExtendedPropertiesDataObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1154,7 +1132,7 @@ namespace gShell.Cmdlets.Calendar
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GCalendarEventGadgetDataObj</code>
+    ///   <code>PS C:\> New-GCalendarEventGadgetDataObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1272,7 +1250,7 @@ namespace gShell.Cmdlets.Calendar
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GCalendarEventOrganizerDataObj</code>
+    ///   <code>PS C:\> New-GCalendarEventOrganizerDataObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1350,7 +1328,7 @@ namespace gShell.Cmdlets.Calendar
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GCalendarEventRemindersDataObj</code>
+    ///   <code>PS C:\> New-GCalendarEventRemindersDataObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1373,7 +1351,7 @@ namespace gShell.Cmdlets.Calendar
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "If the event doesn't use the default reminders, this lists the reminders specific to the event, or, if not set, indicates that no reminders are set for this event. The maximum number of override reminders is 5.")]
-        public System.Collections.Generic.IList<EventReminder> Overrides { get; set; }
+        public EventReminder[] Overrides { get; set; }
 
         /// <summary>
         /// <para type="description">Whether the default reminders of the calendar apply to the event.</para>
@@ -1408,7 +1386,7 @@ namespace gShell.Cmdlets.Calendar
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GCalendarEventSourceDataObj</code>
+    ///   <code>PS C:\> New-GCalendarEventSourceDataObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1466,7 +1444,7 @@ namespace gShell.Cmdlets.Calendar
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GCalendarEventAttachmentObj</code>
+    ///   <code>PS C:\> New-GCalendarEventAttachmentObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1554,7 +1532,7 @@ namespace gShell.Cmdlets.Calendar
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GCalendarEventAttendeeObj</code>
+    ///   <code>PS C:\> New-GCalendarEventAttendeeObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1692,7 +1670,7 @@ namespace gShell.Cmdlets.Calendar
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GCalendarEventDateTimeObj</code>
+    ///   <code>PS C:\> New-GCalendarEventDateTimeObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1760,7 +1738,7 @@ namespace gShell.Cmdlets.Calendar
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GCalendarEventReminderObj</code>
+    ///   <code>PS C:\> New-GCalendarEventReminderObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1820,7 +1798,7 @@ namespace gShell.Cmdlets.Calendar.Acl
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GCalendarAcl -CalendarId $SomeCalendarIdString -RuleId $SomeRuleIdString</code>
+    ///   <code>PS C:\> Remove-GCalendarAcl -CalendarId $SomeCalendarIdString -RuleId $SomeRuleIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1830,7 +1808,7 @@ namespace gShell.Cmdlets.Calendar.Acl
     [Cmdlet(VerbsCommon.Remove, "GCalendarAcl",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GCalendarAcl")]
-    public class RemoveGCalendarAclCommand : CalendarServiceAccountBase
+    public class RemoveGCalendarAclCommand : CalendarBase
     {
         #region Properties
 
@@ -1875,8 +1853,8 @@ namespace gShell.Cmdlets.Calendar.Acl
 					try
 					{
 						WriteDebug("Attempting to remove " + toRemoveTarget + "...");
-							
-						acl.Delete(CalendarId, RuleId);
+
+                        acl.Delete(CalendarId, RuleId, StandardQueryParams: StandardQueryParams);
 							
 						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
 					}
@@ -1901,12 +1879,12 @@ namespace gShell.Cmdlets.Calendar.Acl
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GCalendarAcl -CalendarId $SomeCalendarIdString -RuleId $SomeRuleIdString</code>
+    ///   <code>PS C:\> Get-GCalendarAcl -CalendarId $SomeCalendarIdString -RuleId $SomeRuleIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GCalendarAcl -CalendarId $SomeCalendarIdString -All</code>
+    ///   <code>PS C:\> Get-GCalendarAcl -CalendarId $SomeCalendarIdString -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -1917,7 +1895,7 @@ namespace gShell.Cmdlets.Calendar.Acl
         SupportsShouldProcess = true,
         DefaultParameterSetName = "one",
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GCalendarAcl")]
-    public class GetGCalendarAclCommand : CalendarServiceAccountBase
+    public class GetGCalendarAclCommand : CalendarBase
     {
         #region Properties
 
@@ -1995,7 +1973,7 @@ namespace gShell.Cmdlets.Calendar.Acl
             {
                 if (ParameterSetName == "one")
                 {
-                    WriteObject(acl.Get(CalendarId, RuleId));
+                    WriteObject(acl.Get(CalendarId, RuleId, StandardQueryParams: StandardQueryParams));
                 }
                 else
                 {
@@ -2007,7 +1985,7 @@ namespace gShell.Cmdlets.Calendar.Acl
 
                     if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
 
-                    WriteObject(acl.List(CalendarId, properties).SelectMany(x => x.Items).ToList());
+                    WriteObject(acl.List(CalendarId, properties, StandardQueryParams: StandardQueryParams).SelectMany(x => x.Items).ToList());
                 }
             }
         }
@@ -2020,7 +1998,7 @@ namespace gShell.Cmdlets.Calendar.Acl
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GCalendarAcl -CalendarId $SomeCalendarIdString -AclRuleBody $SomeAclRuleObj</code>
+    ///   <code>PS C:\> New-GCalendarAcl -CalendarId $SomeCalendarIdString -AclRuleBody $SomeAclRuleObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2030,7 +2008,7 @@ namespace gShell.Cmdlets.Calendar.Acl
     [Cmdlet(VerbsCommon.New, "GCalendarAcl",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/New-GCalendarAcl")]
-    public class NewGCalendarAclCommand : CalendarServiceAccountBase
+    public class NewGCalendarAclCommand : CalendarBase
     {
         #region Properties
 
@@ -2046,8 +2024,11 @@ namespace gShell.Cmdlets.Calendar.Acl
         public string CalendarId { get; set; }
 
 
+
+        /// <summary><para type="description">An AclRuleBody object</para></summary>
         [Parameter(Position = 2,
             Mandatory = false,
+            HelpMessage = "An AclRuleBody object",
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
         public AclRule AclRuleBody { get; set; }
@@ -2058,7 +2039,7 @@ namespace gShell.Cmdlets.Calendar.Acl
         {
             if (ShouldProcess("Calendar Acl", "New-GCalendarAcl"))
             {
-                WriteObject(acl.Insert(AclRuleBody, CalendarId));
+                WriteObject(acl.Insert(AclRuleBody, CalendarId, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2070,7 +2051,7 @@ namespace gShell.Cmdlets.Calendar.Acl
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GCalendarAcl -CalendarId $SomeCalendarIdString -RuleId $SomeRuleIdString -AclRuleBody $SomeAclRuleObj</code>
+    ///   <code>PS C:\> Set-GCalendarAcl -CalendarId $SomeCalendarIdString -RuleId $SomeRuleIdString -AclRuleBody $SomeAclRuleObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2080,7 +2061,7 @@ namespace gShell.Cmdlets.Calendar.Acl
     [Cmdlet(VerbsCommon.Set, "GCalendarAcl",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GCalendarAcl")]
-    public class SetGCalendarAclCommand : CalendarServiceAccountBase
+    public class SetGCalendarAclCommand : CalendarBase
     {
         #region Properties
 
@@ -2105,8 +2086,11 @@ namespace gShell.Cmdlets.Calendar.Acl
         public string RuleId { get; set; }
 
 
+
+        /// <summary><para type="description">An AclRuleBody object</para></summary>
         [Parameter(Position = 2,
             Mandatory = false,
+            HelpMessage = "A, AclRuleBody object",
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
         public AclRule AclRuleBody { get; set; }
@@ -2117,7 +2101,7 @@ namespace gShell.Cmdlets.Calendar.Acl
         {
             if (ShouldProcess("Calendar Acl", "Set-GCalendarAcl"))
             {
-                WriteObject(acl.Patch(AclRuleBody, CalendarId, RuleId));
+                WriteObject(acl.Patch(AclRuleBody, CalendarId, RuleId, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2129,7 +2113,7 @@ namespace gShell.Cmdlets.Calendar.Acl
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Watch-GCalendarAcl -CalendarId $SomeCalendarIdString -ChannelBody $SomeChannelObj</code>
+    ///   <code>PS C:\> Watch-GCalendarAcl -CalendarId $SomeCalendarIdString -ChannelBody $SomeChannelObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2139,7 +2123,7 @@ namespace gShell.Cmdlets.Calendar.Acl
     [Cmdlet(VerbsCommon.Watch, "GCalendarAcl",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Watch-GCalendarAcl")]
-    public class WatchGCalendarAclCommand : CalendarServiceAccountBase
+    public class WatchGCalendarAclCommand : CalendarBase
     {
         #region Properties
 
@@ -2155,8 +2139,11 @@ namespace gShell.Cmdlets.Calendar.Acl
         public string CalendarId { get; set; }
 
 
+
+        /// <summary><para type="description">A ChannelBody object</para></summary>
         [Parameter(Position = 0,
             Mandatory = false,
+            HelpMessage = "A ChannelBody object",
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
         public Channel ChannelBody { get; set; }
@@ -2207,7 +2194,7 @@ namespace gShell.Cmdlets.Calendar.Acl
                 };
 
 
-                WriteObject(acl.Watch(ChannelBody, CalendarId, properties));
+                WriteObject(acl.Watch(ChannelBody, CalendarId, properties, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2222,7 +2209,7 @@ namespace gShell.Cmdlets.Calendar.CalendarList
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GCalendarList -CalendarId $SomeCalendarIdString</code>
+    ///   <code>PS C:\> Remove-GCalendarList -CalendarId $SomeCalendarIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2232,7 +2219,7 @@ namespace gShell.Cmdlets.Calendar.CalendarList
     [Cmdlet(VerbsCommon.Remove, "GCalendarList",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GCalendarList")]
-    public class RemoveGCalendarListCommand : CalendarServiceAccountBase
+    public class RemoveGCalendarListCommand : CalendarBase
     {
         #region Properties
 
@@ -2269,7 +2256,7 @@ namespace gShell.Cmdlets.Calendar.CalendarList
 					{
 						WriteDebug("Attempting to remove " + toRemoveTarget + "...");
 
-                        calendarList.Delete(CalendarId);
+                        calendarList.Delete(CalendarId, StandardQueryParams: StandardQueryParams);
 							
 						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
 					}
@@ -2294,12 +2281,12 @@ namespace gShell.Cmdlets.Calendar.CalendarList
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GCalendarList -CalendarId $SomeCalendarIdString</code>
+    ///   <code>PS C:\> Get-GCalendarList -CalendarId $SomeCalendarIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GCalendarList -All</code>
+    ///   <code>PS C:\> Get-GCalendarList -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2310,7 +2297,7 @@ namespace gShell.Cmdlets.Calendar.CalendarList
         SupportsShouldProcess = true,
         DefaultParameterSetName = "one",
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GCalendarList")]
-    public class GetGCalendarListCommand : CalendarServiceAccountBase
+    public class GetGCalendarListCommand : CalendarBase
     {
         #region Properties
 
@@ -2400,7 +2387,7 @@ namespace gShell.Cmdlets.Calendar.CalendarList
             {
                 if (ParameterSetName == "one")
                 {
-                    WriteObject(calendarList.Get(CalendarId));
+                    WriteObject(calendarList.Get(CalendarId, StandardQueryParams: StandardQueryParams));
                 }
                 else
                 {
@@ -2414,7 +2401,7 @@ namespace gShell.Cmdlets.Calendar.CalendarList
 
                     if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
 
-                    WriteObject(calendarList.List(properties).SelectMany(x => x.Items).ToList());
+                    WriteObject(calendarList.List(properties, StandardQueryParams: StandardQueryParams).SelectMany(x => x.Items).ToList());
                 }
             }
         }
@@ -2427,7 +2414,7 @@ namespace gShell.Cmdlets.Calendar.CalendarList
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GCalendarList -CalendarListEntryBody $SomeCalendarListEntryObj</code>
+    ///   <code>PS C:\> New-GCalendarList -CalendarListEntryBody $SomeCalendarListEntryObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2437,12 +2424,15 @@ namespace gShell.Cmdlets.Calendar.CalendarList
     [Cmdlet(VerbsCommon.New, "GCalendarList",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/New-GCalendarList")]
-    public class NewGCalendarListCommand : CalendarServiceAccountBase
+    public class NewGCalendarListCommand : CalendarBase
     {
         #region Properties
 
+
+        /// <summary><para type="description">A CalendarListEntryBody object</para></summary>
         [Parameter(Position = 1,
             Mandatory = false,
+            HelpMessage = "A CalendarListEntryBody object",
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
         public CalendarListEntry CalendarListEntryBody { get; set; }
@@ -2470,7 +2460,7 @@ namespace gShell.Cmdlets.Calendar.CalendarList
                 };
 
 
-                WriteObject(calendarList.Insert(CalendarListEntryBody, properties));
+                WriteObject(calendarList.Insert(CalendarListEntryBody, properties, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2482,7 +2472,7 @@ namespace gShell.Cmdlets.Calendar.CalendarList
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GCalendarList -CalendarId $SomeCalendarIdString -CalendarListEntryBody $SomeCalendarListEntryObj</code>
+    ///   <code>PS C:\> Set-GCalendarList -CalendarId $SomeCalendarIdString -CalendarListEntryBody $SomeCalendarListEntryObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2492,7 +2482,7 @@ namespace gShell.Cmdlets.Calendar.CalendarList
     [Cmdlet(VerbsCommon.Set, "GCalendarList",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GCalendarList")]
-    public class SetGCalendarListCommand : CalendarServiceAccountBase
+    public class SetGCalendarListCommand : CalendarBase
     {
         #region Properties
 
@@ -2508,8 +2498,11 @@ namespace gShell.Cmdlets.Calendar.CalendarList
         public string CalendarId { get; set; }
 
 
+
+        /// <summary><para type="description">A CalendarListEntryBody object</para></summary>
         [Parameter(Position = 1,
             Mandatory = false,
+            HelpMessage = "A CalendarListEntryBody object",
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
         public CalendarListEntry CalendarListEntryBody { get; set; }
@@ -2537,7 +2530,7 @@ namespace gShell.Cmdlets.Calendar.CalendarList
                 };
 
 
-                WriteObject(calendarList.Patch(CalendarListEntryBody, CalendarId, properties));
+                WriteObject(calendarList.Patch(CalendarListEntryBody, CalendarId, properties, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2549,7 +2542,7 @@ namespace gShell.Cmdlets.Calendar.CalendarList
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Watch-GCalendarList -ChannelBody $SomeChannelObj</code>
+    ///   <code>PS C:\> Watch-GCalendarList -ChannelBody $SomeChannelObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2559,12 +2552,15 @@ namespace gShell.Cmdlets.Calendar.CalendarList
     [Cmdlet(VerbsCommon.Watch, "GCalendarList",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Watch-GCalendarList")]
-    public class WatchGCalendarListCommand : CalendarServiceAccountBase
+    public class WatchGCalendarListCommand : CalendarBase
     {
         #region Properties
 
+
+        /// <summary><para type="description">A ChannelBody object</para></summary>
         [Parameter(Position = 0,
             Mandatory = false,
+            HelpMessage = "A ChannelBody object",
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
         public Channel ChannelBody { get; set; }
@@ -2636,7 +2632,7 @@ namespace gShell.Cmdlets.Calendar.CalendarList
                 };
 
 
-                WriteObject(calendarList.Watch(ChannelBody, properties));
+                WriteObject(calendarList.Watch(ChannelBody, properties, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2651,7 +2647,7 @@ namespace gShell.Cmdlets.Calendar.Calendars
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Clear-GCalendar -CalendarId $SomeCalendarIdString</code>
+    ///   <code>PS C:\> Clear-GCalendar -CalendarId $SomeCalendarIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2661,7 +2657,7 @@ namespace gShell.Cmdlets.Calendar.Calendars
     [Cmdlet(VerbsCommon.Clear, "GCalendar",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Clear-GCalendar")]
-    public class ClearGCalendarCommand : CalendarServiceAccountBase
+    public class ClearGCalendarCommand : CalendarBase
     {
         #region Properties
 
@@ -2682,7 +2678,7 @@ namespace gShell.Cmdlets.Calendar.Calendars
         {
             if (ShouldProcess("Calendar Calendars", "Clear-GCalendar"))
             {
-                calendars.Clear(CalendarId);
+                calendars.Clear(CalendarId, StandardQueryParams: StandardQueryParams);
             }
         }
     }
@@ -2694,7 +2690,7 @@ namespace gShell.Cmdlets.Calendar.Calendars
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GCalendar -CalendarId $SomeCalendarIdString</code>
+    ///   <code>PS C:\> Remove-GCalendar -CalendarId $SomeCalendarIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2704,7 +2700,7 @@ namespace gShell.Cmdlets.Calendar.Calendars
     [Cmdlet(VerbsCommon.Remove, "GCalendar",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GCalendar")]
-    public class RemoveGCalendarCommand : CalendarServiceAccountBase
+    public class RemoveGCalendarCommand : CalendarBase
     {
         #region Properties
 
@@ -2741,7 +2737,7 @@ namespace gShell.Cmdlets.Calendar.Calendars
 					{
 						WriteDebug("Attempting to remove " + toRemoveTarget + "...");
 
-                        calendars.Delete(CalendarId);
+                        calendars.Delete(CalendarId, StandardQueryParams: StandardQueryParams);
 							
 						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
 					}
@@ -2766,7 +2762,7 @@ namespace gShell.Cmdlets.Calendar.Calendars
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GCalendar -CalendarId $SomeCalendarIdString</code>
+    ///   <code>PS C:\> Get-GCalendar -CalendarId $SomeCalendarIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2776,7 +2772,7 @@ namespace gShell.Cmdlets.Calendar.Calendars
     [Cmdlet(VerbsCommon.Get, "GCalendar",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GCalendar")]
-    public class GetGCalendarCommand : CalendarServiceAccountBase
+    public class GetGCalendarCommand : CalendarBase
     {
         #region Properties
 
@@ -2797,7 +2793,7 @@ namespace gShell.Cmdlets.Calendar.Calendars
         {
             if (ShouldProcess("Calendar Calendars", "Get-GCalendar"))
             {
-                WriteObject(calendars.Get(CalendarId));
+                WriteObject(calendars.Get(CalendarId, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2809,7 +2805,7 @@ namespace gShell.Cmdlets.Calendar.Calendars
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GCalendar -CalendarBody $SomeCalendarObj</code>
+    ///   <code>PS C:\> New-GCalendar -CalendarBody $SomeCalendarObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2819,12 +2815,15 @@ namespace gShell.Cmdlets.Calendar.Calendars
     [Cmdlet(VerbsCommon.New, "GCalendar",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/New-GCalendar")]
-    public class NewGCalendarCommand : CalendarServiceAccountBase
+    public class NewGCalendarCommand : CalendarBase
     {
         #region Properties
 
+
+        /// <summary><para type="description">A CalendarBody object</para></summary>
         [Parameter(Position = 1,
             Mandatory = false,
+            HelpMessage = "A CalendarBody object",
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
         public Google.Apis.Calendar.v3.Data.Calendar CalendarBody { get; set; }
@@ -2835,7 +2834,7 @@ namespace gShell.Cmdlets.Calendar.Calendars
         {
             if (ShouldProcess("Calendar Calendars", "New-GCalendar"))
             {
-                WriteObject(calendars.Insert(CalendarBody));
+                WriteObject(calendars.Insert(CalendarBody, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2847,7 +2846,7 @@ namespace gShell.Cmdlets.Calendar.Calendars
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GCalendar -CalendarId $SomeCalendarIdString -CalendarBody $SomeCalendarObj</code>
+    ///   <code>PS C:\> Set-GCalendar -CalendarId $SomeCalendarIdString -CalendarBody $SomeCalendarObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2857,7 +2856,7 @@ namespace gShell.Cmdlets.Calendar.Calendars
     [Cmdlet(VerbsCommon.Set, "GCalendar",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GCalendar")]
-    public class SetGCalendarCommand : CalendarServiceAccountBase
+    public class SetGCalendarCommand : CalendarBase
     {
         #region Properties
 
@@ -2873,8 +2872,11 @@ namespace gShell.Cmdlets.Calendar.Calendars
         public string CalendarId { get; set; }
 
 
+
+        /// <summary><para type="description">A CalendarBody object</para></summary>
         [Parameter(Position = 1,
             Mandatory = false,
+            HelpMessage = "A CalendarBody object",
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
         public Google.Apis.Calendar.v3.Data.Calendar CalendarBody { get; set; }
@@ -2885,7 +2887,7 @@ namespace gShell.Cmdlets.Calendar.Calendars
         {
             if (ShouldProcess("Calendar Calendars", "Set-GCalendar"))
             {
-                WriteObject(calendars.Patch(CalendarBody, CalendarId));
+                WriteObject(calendars.Patch(CalendarBody, CalendarId, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2901,7 +2903,7 @@ namespace gShell.Cmdlets.Calendar.Channels
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Stop-GCalendarChannel -ChannelBody $SomeChannelObj</code>
+    ///   <code>PS C:\> Stop-GCalendarChannel -ChannelBody $SomeChannelObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2911,12 +2913,15 @@ namespace gShell.Cmdlets.Calendar.Channels
     [Cmdlet(VerbsLifecycle.Stop, "GCalendarChannel",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Stop-GCalendarChannel")]
-    public class StopGCalendarChannelCommand : CalendarServiceAccountBase
+    public class StopGCalendarChannelCommand : CalendarBase
     {
         #region Properties
 
+
+        /// <summary><para type="description">A ChannelBody object</para></summary>
         [Parameter(Position = 0,
             Mandatory = false,
+            HelpMessage = "A ChannelBody object",
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
         public Channel ChannelBody { get; set; }
@@ -2927,7 +2932,7 @@ namespace gShell.Cmdlets.Calendar.Channels
         {
             if (ShouldProcess("Calendar Channels", "Stop-GCalendarChannel"))
             {
-                channels.Stop(ChannelBody);
+                channels.Stop(ChannelBody, StandardQueryParams: StandardQueryParams);
             }
         }
     }
@@ -2942,7 +2947,7 @@ namespace gShell.Cmdlets.Calendar.Colors
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GCalendarColor</code>
+    ///   <code>PS C:\> Get-GCalendarColor</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2952,7 +2957,7 @@ namespace gShell.Cmdlets.Calendar.Colors
     [Cmdlet(VerbsCommon.Get, "GCalendarColor",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GCalendarColor")]
-    public class GetGCalendarColorCommand : CalendarServiceAccountBase
+    public class GetGCalendarColorCommand : CalendarBase
     {
         #region Properties
 
@@ -2962,7 +2967,7 @@ namespace gShell.Cmdlets.Calendar.Colors
         {
             if (ShouldProcess("Calendar Colors", "Get-GCalendarColor"))
             {
-                WriteObject(colors.Get());
+                WriteObject(colors.Get(StandardQueryParams:StandardQueryParams));
             }
         }
     }
@@ -2977,7 +2982,7 @@ namespace gShell.Cmdlets.Calendar.Events
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Remove-GCalendarEvent -CalendarId $SomeCalendarIdString -EventId $SomeEventIdString</code>
+    ///   <code>PS C:\> Remove-GCalendarEvent -CalendarId $SomeCalendarIdString -EventId $SomeEventIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -2987,7 +2992,7 @@ namespace gShell.Cmdlets.Calendar.Events
     [Cmdlet(VerbsCommon.Remove, "GCalendarEvent",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Remove-GCalendarEvent")]
-    public class RemoveGCalendarEventCommand : CalendarServiceAccountBase
+    public class RemoveGCalendarEventCommand : CalendarBase
     {
         #region Properties
 
@@ -3048,7 +3053,7 @@ namespace gShell.Cmdlets.Calendar.Events
                             SendNotifications = SendNotifications
                         };
 
-                        events.Delete(CalendarId, EventId, properties);
+                        events.Delete(CalendarId, EventId, properties, StandardQueryParams: StandardQueryParams);
 							
 						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
 					}
@@ -3073,12 +3078,12 @@ namespace gShell.Cmdlets.Calendar.Events
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GCalendarEvent -CalendarId $SomeCalendarIdString -EventId $SomeEventIdString</code>
+    ///   <code>PS C:\> Get-GCalendarEvent -CalendarId $SomeCalendarIdString -EventId $SomeEventIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GCalendarEvent -CalendarId $SomeCalendarIdString -All</code>
+    ///   <code>PS C:\> Get-GCalendarEvent -CalendarId $SomeCalendarIdString -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3089,7 +3094,7 @@ namespace gShell.Cmdlets.Calendar.Events
         SupportsShouldProcess = true,
         DefaultParameterSetName = "one",
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GCalendarEvent")]
-    public class GetGCalendarEventCommand : CalendarServiceAccountBase
+    public class GetGCalendarEventCommand : CalendarBase
     {
         #region Properties
 
@@ -3326,7 +3331,7 @@ namespace gShell.Cmdlets.Calendar.Events
                         TimeZone = TimeZone
                     };
 
-                    WriteObject(events.Get(CalendarId, EventId, properties));
+                    WriteObject(events.Get(CalendarId, EventId, properties, StandardQueryParams: StandardQueryParams));
 
                 }
                 else
@@ -3353,7 +3358,7 @@ namespace gShell.Cmdlets.Calendar.Events
 
                     if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
 
-                    var results = events.List(CalendarId, properties).SelectMany(x => x.Items).ToList();
+                    var results = events.List(CalendarId, properties, StandardQueryParams: StandardQueryParams).SelectMany(x => x.Items).ToList();
 
                     WriteObject(results);
                 }
@@ -3368,7 +3373,7 @@ namespace gShell.Cmdlets.Calendar.Events
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Import-GCalendarEvent -CalendarId $SomeCalendarIdString -EventBody $SomeEventObj</code>
+    ///   <code>PS C:\> Import-GCalendarEvent -CalendarId $SomeCalendarIdString -EventBody $SomeEventObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3378,7 +3383,7 @@ namespace gShell.Cmdlets.Calendar.Events
     [Cmdlet(VerbsData.Import, "GCalendarEvent",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Import-GCalendarEvent")]
-    public class ImportGCalendarEventCommand : CalendarServiceAccountBase
+    public class ImportGCalendarEventCommand : CalendarBase
     {
         #region Properties
 
@@ -3394,8 +3399,11 @@ namespace gShell.Cmdlets.Calendar.Events
         public string CalendarId { get; set; }
 
 
+
+        /// <summary><para type="description">A EventBody object</para></summary>
         [Parameter(Position = 2,
             Mandatory = false,
+            HelpMessage = "A EventBody object",
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
         public Event EventBody { get; set; }
@@ -3422,7 +3430,7 @@ namespace gShell.Cmdlets.Calendar.Events
                 };
 
 
-                WriteObject(events.Import(EventBody, CalendarId, properties));
+                WriteObject(events.Import(EventBody, CalendarId, properties, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -3434,7 +3442,7 @@ namespace gShell.Cmdlets.Calendar.Events
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GCalendarEvent -CalendarId $SomeCalendarIdString -EventBody $SomeEventObj</code>
+    ///   <code>PS C:\> New-GCalendarEvent -CalendarId $SomeCalendarIdString -EventBody $SomeEventObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3444,7 +3452,7 @@ namespace gShell.Cmdlets.Calendar.Events
     [Cmdlet(VerbsCommon.New, "GCalendarEvent",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/New-GCalendarEvent")]
-    public class NewGCalendarEventCommand : CalendarServiceAccountBase
+    public class NewGCalendarEventCommand : CalendarBase
     {
         #region Properties
 
@@ -3460,8 +3468,11 @@ namespace gShell.Cmdlets.Calendar.Events
         public string CalendarId { get; set; }
 
 
+
+        /// <summary><para type="description">A EventBody object</para></summary>
         [Parameter(Position = 2,
             Mandatory = false,
+            HelpMessage = "A EventBody object",
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
         public Event EventBody { get; set; }
@@ -3511,7 +3522,7 @@ namespace gShell.Cmdlets.Calendar.Events
                 };
 
 
-                WriteObject(events.Insert(EventBody, CalendarId, properties));
+                WriteObject(events.Insert(EventBody, CalendarId, properties, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -3523,7 +3534,7 @@ namespace gShell.Cmdlets.Calendar.Events
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GCalendarEventInstance -CalendarId $SomeCalendarIdString -EventId $SomeEventIdString</code>
+    ///   <code>PS C:\> Get-GCalendarEventInstance -CalendarId $SomeCalendarIdString -EventId $SomeEventIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3533,7 +3544,7 @@ namespace gShell.Cmdlets.Calendar.Events
     [Cmdlet(VerbsCommon.Get, "GCalendarEventInstance",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GCalendarEventInstance")]
-    public class GetGCalendarEventInstanceCommand : CalendarServiceAccountBase
+    public class GetGCalendarEventInstanceCommand : CalendarBase
     {
         #region Properties
 
@@ -3659,7 +3670,7 @@ namespace gShell.Cmdlets.Calendar.Events
                 };
 
 
-                WriteObject(events.Instances(CalendarId, EventId, properties));
+                WriteObject(events.Instances(CalendarId, EventId, properties, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -3671,7 +3682,7 @@ namespace gShell.Cmdlets.Calendar.Events
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Move-GCalendarEvent -CalendarId $SomeCalendarIdString -EventId $SomeEventIdString -Destination $SomeDestinationString</code>
+    ///   <code>PS C:\> Move-GCalendarEvent -CalendarId $SomeCalendarIdString -EventId $SomeEventIdString -Destination $SomeDestinationString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3681,7 +3692,7 @@ namespace gShell.Cmdlets.Calendar.Events
     [Cmdlet(VerbsCommon.Move, "GCalendarEvent",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Move-GCalendarEvent")]
-    public class MoveGCalendarEventCommand : CalendarServiceAccountBase
+    public class MoveGCalendarEventCommand : CalendarBase
     {
         #region Properties
 
@@ -3735,7 +3746,7 @@ namespace gShell.Cmdlets.Calendar.Events
                 };
 
 
-                WriteObject(events.Move(CalendarId, EventId, Destination, properties));
+                WriteObject(events.Move(CalendarId, EventId, Destination, properties, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -3747,7 +3758,7 @@ namespace gShell.Cmdlets.Calendar.Events
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GCalendarEvent -CalendarId $SomeCalendarIdString -EventId $SomeEventIdString -EventBody $SomeEventObj</code>
+    ///   <code>PS C:\> Set-GCalendarEvent -CalendarId $SomeCalendarIdString -EventId $SomeEventIdString -EventBody $SomeEventObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3757,7 +3768,7 @@ namespace gShell.Cmdlets.Calendar.Events
     [Cmdlet(VerbsCommon.Set, "GCalendarEvent",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Set-GCalendarEvent")]
-    public class SetGCalendarEventCommand : CalendarServiceAccountBase
+    public class SetGCalendarEventCommand : CalendarBase
     {
         #region Properties
 
@@ -3782,8 +3793,11 @@ namespace gShell.Cmdlets.Calendar.Events
         public string EventId { get; set; }
 
 
+
+        /// <summary><para type="description">A EventBody object</para></summary>
         [Parameter(Position = 2,
             Mandatory = false,
+            HelpMessage = "A EventBody object",
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
         public Event EventBody { get; set; }
@@ -3846,7 +3860,7 @@ namespace gShell.Cmdlets.Calendar.Events
                 };
 
 
-                WriteObject(events.Patch(EventBody, CalendarId, EventId, properties));
+                WriteObject(events.Patch(EventBody, CalendarId, EventId, properties, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -3858,7 +3872,7 @@ namespace gShell.Cmdlets.Calendar.Events
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Add-GCalendarEvent -CalendarId $SomeCalendarIdString -Text $SomeTextString</code>
+    ///   <code>PS C:\> Add-GCalendarEvent -CalendarId $SomeCalendarIdString -Text $SomeTextString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3868,7 +3882,7 @@ namespace gShell.Cmdlets.Calendar.Events
     [Cmdlet(VerbsCommon.Add, "GCalendarEvent",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Add-GCalendarEvent")]
-    public class AddGCalendarEventCommand : CalendarServiceAccountBase
+    public class AddGCalendarEventCommand : CalendarBase
     {
         #region Properties
 
@@ -3914,7 +3928,7 @@ namespace gShell.Cmdlets.Calendar.Events
                 };
 
 
-                WriteObject(events.QuickAdd(CalendarId, Text, properties));
+                WriteObject(events.QuickAdd(CalendarId, Text, properties, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -3926,7 +3940,7 @@ namespace gShell.Cmdlets.Calendar.Events
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Update-GCalendarEvent -CalendarId $SomeCalendarIdString -EventId $SomeEventIdString -EventBody $SomeEventObj</code>
+    ///   <code>PS C:\> Update-GCalendarEvent -CalendarId $SomeCalendarIdString -EventId $SomeEventIdString -EventBody $SomeEventObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -3936,7 +3950,7 @@ namespace gShell.Cmdlets.Calendar.Events
     [Cmdlet(VerbsData.Update, "GCalendarEvent",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Update-GCalendarEvent")]
-    public class UpdateGCalendarEventCommand : CalendarServiceAccountBase
+    public class UpdateGCalendarEventCommand : CalendarBase
     {
         #region Properties
 
@@ -3960,8 +3974,11 @@ namespace gShell.Cmdlets.Calendar.Events
             HelpMessage = "Event identifier.")]
         public string EventId { get; set; }
 
-
+        /// <summary>
+        /// <para type="description">An EventBody object.</para>
+        /// </summary>
         [Parameter(Position = 2,
+            HelpMessage = "An EventBody object.",
             Mandatory = false,
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
@@ -4025,7 +4042,7 @@ namespace gShell.Cmdlets.Calendar.Events
                 };
 
 
-                WriteObject(events.Update(EventBody, CalendarId, EventId, properties));
+                WriteObject(events.Update(EventBody, CalendarId, EventId, properties, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -4037,7 +4054,7 @@ namespace gShell.Cmdlets.Calendar.Events
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Watch-GCalendarEvent -CalendarId $SomeCalendarIdString -ChannelBody $SomeChannelObj</code>
+    ///   <code>PS C:\> Watch-GCalendarEvent -CalendarId $SomeCalendarIdString -ChannelBody $SomeChannelObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -4047,7 +4064,7 @@ namespace gShell.Cmdlets.Calendar.Events
     [Cmdlet(VerbsCommon.Watch, "GCalendarEvent",
         SupportsShouldProcess = true,
         HelpUri = @"https://gaithub.com/squid808/gShell/wiki/Watch-GCalendarEvent")]
-    public class WatchGCalendarEventCommand : CalendarServiceAccountBase
+    public class WatchGCalendarEventCommand : CalendarBase
     {
         #region Properties
 
@@ -4063,8 +4080,11 @@ namespace gShell.Cmdlets.Calendar.Events
         public string CalendarId { get; set; }
 
 
+
+        /// <summary><para type="description">A ChannelBody object</para></summary>
         [Parameter(Position = 0,
             Mandatory = false,
+            HelpMessage = "A ChannelBody object",
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
         public Channel ChannelBody { get; set; }
@@ -4265,7 +4285,7 @@ namespace gShell.Cmdlets.Calendar.Events
                 if (this.PrivateExtendedProperty != null) properties.PrivateExtendedProperty = this.PrivateExtendedProperty;
                 if (this.SharedExtendedProperty != null) properties.SharedExtendedProperty = this.SharedExtendedProperty;
 
-                WriteObject(events.Watch(ChannelBody, CalendarId, properties));
+                WriteObject(events.Watch(ChannelBody, CalendarId, properties, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -4280,7 +4300,7 @@ namespace gShell.Cmdlets.Calendar.Freebusy
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GCalendarFreebusy -FreeBusyRequestBody $SomeFreeBusyRequestObj</code>
+    ///   <code>PS C:\> Get-GCalendarFreebusy -FreeBusyRequestBody $SomeFreeBusyRequestObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -4290,11 +4310,15 @@ namespace gShell.Cmdlets.Calendar.Freebusy
     [Cmdlet(VerbsCommon.Get, "GCalendarFreebusy",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GCalendarFreebusy")]
-    public class GetGCalendarFreebusyCommand : CalendarServiceAccountBase
+    public class GetGCalendarFreebusyCommand : CalendarBase
     {
         #region Properties
 
+        /// <summary>
+        /// <para type="description">A FreeBusyRequest object.</para>
+        /// </summary>
         [Parameter(Position = 0,
+            HelpMessage = "A FreeBusyRequest object.",
             Mandatory = false,
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
@@ -4306,7 +4330,7 @@ namespace gShell.Cmdlets.Calendar.Freebusy
         {
             if (ShouldProcess("Calendar Freebusy", "Get-GCalendarFreebusy"))
             {
-                WriteObject(freebusy.Query(FreeBusyRequestBody));
+                WriteObject(freebusy.Query(FreeBusyRequestBody, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -4321,12 +4345,12 @@ namespace gShell.Cmdlets.Calendar.Settings
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GCalendarSettings -Setting $SomeSettingString</code>
+    ///   <code>PS C:\> Get-GCalendarSettings -Setting $SomeSettingString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\>Get-GCalendarSettings -All</code>
+    ///   <code>PS C:\> Get-GCalendarSettings -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -4337,7 +4361,7 @@ namespace gShell.Cmdlets.Calendar.Settings
         SupportsShouldProcess = true,
         DefaultParameterSetName = "one",
         HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GCalendarSettings")]
-    public class GetGCalendarSettingsCommand : CalendarServiceAccountBase
+    public class GetGCalendarSettingsCommand : CalendarBase
     {
         #region Properties
 
@@ -4394,7 +4418,7 @@ namespace gShell.Cmdlets.Calendar.Settings
 
                     if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
 
-                    WriteObject(settings.List(properties).SelectMany(x => x.Items.ToList()));
+                    WriteObject(settings.List(properties, StandardQueryParams: StandardQueryParams).SelectMany(x => x.Items.ToList()));
                 }
             }
         }
@@ -4407,7 +4431,7 @@ namespace gShell.Cmdlets.Calendar.Settings
     /// Part of the gShell Project, relating to the Google Calendar API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Watch-GCalendarSettings -ChannelBody $SomeChannelObj</code>
+    ///   <code>PS C:\> Watch-GCalendarSettings -ChannelBody $SomeChannelObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -4417,12 +4441,15 @@ namespace gShell.Cmdlets.Calendar.Settings
     [Cmdlet(VerbsCommon.Watch, "GCalendarSettings",
         SupportsShouldProcess = true,
         HelpUri = @"https://github.com/squid808/gShell/wiki/Watch-GCalendarSettings")]
-    public class WatchGCalendarSettingsCommand : CalendarServiceAccountBase
+    public class WatchGCalendarSettingsCommand : CalendarBase
     {
         #region Properties
 
+
+        /// <summary><para type="description">A ChannelBody object</para></summary>
         [Parameter(Position = 0,
             Mandatory = false,
+            HelpMessage = "A ChannelBody object",
             ValueFromPipeline = true,
             ValueFromPipelineByPropertyName = true)]
         public Channel ChannelBody { get; set; }
@@ -4461,7 +4488,7 @@ namespace gShell.Cmdlets.Calendar.Settings
                 };
 
 
-                WriteObject(settings.Watch(ChannelBody, properties));
+                WriteObject(settings.Watch(ChannelBody, properties, StandardQueryParams: StandardQueryParams));
             }
         }
     }

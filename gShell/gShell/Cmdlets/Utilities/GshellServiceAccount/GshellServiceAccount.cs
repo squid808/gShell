@@ -11,7 +11,7 @@ namespace gShell.Cmdlets.Utilities.GShellServiceAccount
     /// Part of the gShell Project, relating to the Google Drive API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GShellServiceAccount -Domain $SomeDomainString -Email $SomeEmailString</code>
+    ///   <code>PS C:\> Set-GShellServiceAccount -Domain $SomeDomainString -Email $SomeEmailString</code>
     ///   <para>This example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>

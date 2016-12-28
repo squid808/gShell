@@ -23,6 +23,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using gShell.Cmdlets.Utilities.OAuth2;
+using gShell.dotNet;
+
 namespace gShell.Cmdlets.Groupssettings{
 
     using System;
@@ -41,17 +44,10 @@ namespace gShell.Cmdlets.Groupssettings{
     /// <summary>
     /// A PowerShell-ready wrapper for the Groupssettings api, as well as the resources and methods therein.
     /// </summary>
-    public abstract class GroupssettingsBase : OAuth2CmdletBase
+    public abstract class GroupssettingsBase : AuthenticatedCmdletBase
     {
 
         #region Properties
-
-        /// <summary>
-        /// <para type="description">The domain against which this cmdlet should run.</para>
-        /// </summary>
-        [Parameter(Mandatory = false)]
-        [ValidateNotNullOrEmpty]
-        public string Domain { get; set; }
 
         /// <summary>The gShell dotNet class wrapper base.</summary>
         protected static gGroupssettings mainBase { get; set; }
@@ -60,11 +56,10 @@ namespace gShell.Cmdlets.Groupssettings{
         /// <summary>An instance of the Groups gShell dotNet resource.</summary>
         public Groups groups { get; set; }
 
-        /// <summary>Returns the api name and version in {name}:{version} format.</summary>
-        protected override string apiNameAndVersion { get { return mainBase.apiNameAndVersion; } }
-
-        /// <summary>Gets or sets the email account the gShell Service Account should impersonate.</summary>
-        protected static string gShellServiceAccount { get; set; }
+        /// <summary>
+        /// Required to be able to store and retrieve the mainBase from the ServiceWrapperDictionary
+        /// </summary>
+        protected override Type mainBaseType { get { return typeof(gGroupssettings); } }
         #endregion
 
         #region Constructors
@@ -72,58 +67,10 @@ namespace gShell.Cmdlets.Groupssettings{
         {
             mainBase = new gGroupssettings();
 
+            ServiceWrapperDictionary[mainBaseType] = mainBase;
+
+
             groups = new Groups();
-        }
-        #endregion
-
-        #region PowerShell Methods
-        /// <summary>The gShell base implementation of the PowerShell BeginProcessing method.</summary>
-        /// <remarks>If a service account needs to be identified, it should be in a child class that overrides
-        /// and calls this method.</remarks>
-        protected override void BeginProcessing()
-        {
-            var secrets = CheckForClientSecrets();
-            if (secrets != null)
-            {
-                IEnumerable<string> scopes = EnsureScopesExist(Domain);
-                Domain = mainBase.BuildService(Authenticate(scopes, secrets, Domain), gShellServiceAccount).domain;
-
-                GWriteProgress = new gWriteProgress(WriteProgress);
-            }
-            else
-            {
-                WriteError(new ErrorRecord(null, (new Exception(
-                    "Client Secrets must be set before running cmdlets. Run 'Get-Help "
-                    + "Set-gShellClientSecrets -online' for more information."))));
-            }
-        }
-
-        /// <summary>The gShell base implementation of the PowerShell EndProcessing method.</summary>
-        /// <remarks>We need to reset the service account after every Cmdlet call to prevent the next
-        /// Cmdlet from inheriting it as well.</remarks>
-        protected override void EndProcessing()
-        {
-            gShellServiceAccount = string.Empty;
-        }
-
-        /// <summary>The gShell base implementation of the PowerShell StopProcessing method.</summary>
-        /// <remarks>We need to reset the service account after every Cmdlet call to prevent the next
-        /// Cmdlet from inheriting it as well.</remarks>
-        protected override void StopProcessing()
-        {
-            gShellServiceAccount = string.Empty;
-        }
-        #endregion
-
-        #region Authentication & Processing
-        /// <summary>Ensure the user, domain and client secret combination work with an authenticated user.</summary>
-        /// <param name="Scopes">The scopes that need to be passed through to the user authentication to Google.</param>
-        /// <param name="Secrets">The client secrets.`</param>
-        /// <param name="Domain">The domain for which this authentication is intended.</param>
-        /// <returns>The AuthenticatedUserInfo for the authenticated user.</returns>
-        protected override AuthenticatedUserInfo Authenticate(IEnumerable<string> Scopes, ClientSecrets Secrets, string Domain = null)
-        {
-            return mainBase.Authenticate(apiNameAndVersion, Scopes, Secrets, Domain);
         }
         #endregion
 
@@ -145,7 +92,7 @@ namespace gShell.Cmdlets.Groupssettings{
             public Google.Apis.Groupssettings.v1.Data.Groups Get (string GroupUniqueId)
             {
 
-                return mainBase.groups.Get(GroupUniqueId, gShellServiceAccount);
+                return mainBase.groups.Get(GroupUniqueId);
             }
 
 
@@ -156,7 +103,7 @@ namespace gShell.Cmdlets.Groupssettings{
             public Google.Apis.Groupssettings.v1.Data.Groups Patch (Google.Apis.Groupssettings.v1.Data.Groups GroupsBody, string GroupUniqueId)
             {
 
-                return mainBase.groups.Patch(GroupsBody, GroupUniqueId, gShellServiceAccount);
+                return mainBase.groups.Patch(GroupsBody, GroupUniqueId);
             }
 
 
@@ -167,7 +114,7 @@ namespace gShell.Cmdlets.Groupssettings{
             public Google.Apis.Groupssettings.v1.Data.Groups Update (Google.Apis.Groupssettings.v1.Data.Groups GroupsBody, string GroupUniqueId)
             {
 
-                return mainBase.groups.Update(GroupsBody, GroupUniqueId, gShellServiceAccount);
+                return mainBase.groups.Update(GroupsBody, GroupUniqueId);
             }
 
 
@@ -193,7 +140,7 @@ namespace gShell.dotNet
     using Data = Google.Apis.Groupssettings.v1.Data;
 
     /// <summary>The dotNet gShell version of the groupssettings api.</summary>
-    public class Groupssettings : ServiceWrapper<v1.GroupssettingsService>
+    public class Groupssettings : ServiceWrapper<v1.GroupssettingsService>, IServiceWrapper<Google.Apis.Services.IClientService>
     {
 
         protected override bool worksWithGmail { get { return true; } }
@@ -205,7 +152,7 @@ namespace gShell.dotNet
 
         protected override v1.GroupssettingsService CreateNewService(string domain, AuthenticatedUserInfo authInfo, string gShellServiceAccount = null)
         {
-            return new v1.GroupssettingsService(OAuth2Base.GetInitializer(domain, authInfo, gShellServiceAccount));
+            return new v1.GroupssettingsService(OAuth2Base.GetInitializer(domain, authInfo));
         }
 
         /// <summary>Returns the api name and version in {name}:{version} format.</summary>
@@ -233,27 +180,39 @@ namespace gShell.dotNet
             /// <summary>Gets one resource by id.</summary>
             /// <param name="GroupUniqueId">The resource ID</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Groupssettings.v1.Data.Groups Get (string GroupUniqueId, string gShellServiceAccount = null)
+            public Google.Apis.Groupssettings.v1.Data.Groups Get (string GroupUniqueId)
             {
-                return GetService(gShellServiceAccount).Groups.Get(GroupUniqueId).Execute();
+                var request = GetService().Groups.Get(GroupUniqueId);
+
+
+
+                return request.Execute();
             }
 
             /// <summary>Updates an existing resource. This method supports patch semantics.</summary>
             /// <param name="GroupsBody">The body of the request.</param>
             /// <param name="GroupUniqueId">The resource ID</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Groupssettings.v1.Data.Groups Patch (Google.Apis.Groupssettings.v1.Data.Groups GroupsBody, string GroupUniqueId, string gShellServiceAccount = null)
+            public Google.Apis.Groupssettings.v1.Data.Groups Patch (Google.Apis.Groupssettings.v1.Data.Groups GroupsBody, string GroupUniqueId)
             {
-                return GetService(gShellServiceAccount).Groups.Patch(GroupsBody, GroupUniqueId).Execute();
+                var request = GetService().Groups.Patch(GroupsBody, GroupUniqueId);
+
+
+
+                return request.Execute();
             }
 
             /// <summary>Updates an existing resource.</summary>
             /// <param name="GroupsBody">The body of the request.</param>
             /// <param name="GroupUniqueId">The resource ID</param>
             /// <param name="gShellServiceAccount">The optional email address the service account should impersonate.</param>
-            public Google.Apis.Groupssettings.v1.Data.Groups Update (Google.Apis.Groupssettings.v1.Data.Groups GroupsBody, string GroupUniqueId, string gShellServiceAccount = null)
+            public Google.Apis.Groupssettings.v1.Data.Groups Update (Google.Apis.Groupssettings.v1.Data.Groups GroupsBody, string GroupUniqueId)
             {
-                return GetService(gShellServiceAccount).Groups.Update(GroupsBody, GroupUniqueId).Execute();
+                var request = GetService().Groups.Update(GroupsBody, GroupUniqueId);
+
+
+
+                return request.Execute();
             }
 
         }

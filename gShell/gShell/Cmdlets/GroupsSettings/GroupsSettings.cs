@@ -9,25 +9,7 @@ using gShell.Cmdlets.Emailsettings.Language;
 namespace gShell.Cmdlets.Groupssettings
 {
     /// <summary>A base class which provides support for service account integration and schema objects.</summary>
-    public abstract class GroupssettingsServiceAccountBase : GroupssettingsBase
-    {
-        #region Properties
-
-        /// <summary>
-        /// <para type="description">The email account to be targeted by the service account.</para>
-        /// </summary>
-        [Parameter(Mandatory = false)]
-        [ValidateNotNullOrEmpty]
-        public string TargetUserEmail { get; set; }
-        #endregion
-
-        protected override void BeginProcessing()
-        {
-            gShellServiceAccount = GetFullEmailAddress(TargetUserEmail, Domain);
-
-            base.BeginProcessing();
-        }
-    }
+    public abstract class GroupssettingsServiceAccountBase : GroupssettingsBase { }
 
     /// <summary>
     /// <para type="synopsis">Creates a new Groupssettings API Groups object.</para>
@@ -37,7 +19,7 @@ namespace gShell.Cmdlets.Groupssettings
     /// Part of the gShell Project, relating to the Google Groupssettings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>New-GGroupssettingsObj</code>
+    ///   <code>PS C:\> New-GGroupssettingsObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -419,7 +401,7 @@ namespace gShell.Cmdlets.Groupssettings.Groups
     /// Part of the gShell Project, relating to the Google Groupssettings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Get-GGroupssettings -GroupUniqueId $SomeGroupUniqueIdString</code>
+    ///   <code>PS C:\> Get-GGroupssettings -GroupUniqueId $SomeGroupUniqueIdString</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
@@ -460,7 +442,7 @@ namespace gShell.Cmdlets.Groupssettings.Groups
     /// Part of the gShell Project, relating to the Google Groupssettings API; see Related Links or use the -Online parameter.
     /// </description></item></list>
     /// <example>
-    ///   <code>PS C:\>Set-GGroupssettings -GroupUniqueId $SomeGroupUniqueIdString -GroupsBody $SomeGroupsObj</code>
+    ///   <code>PS C:\> Set-GGroupssettings -GroupUniqueId $SomeGroupUniqueIdString -GroupsBody $SomeGroupsObj</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>

@@ -69,6 +69,8 @@ namespace gShell.dotNet.Utilities.OAuth2.DataStores
                             destFile));
                     }
                 }
+
+                if (savedInfo.shouldSaveAgain) { SaveInfo(savedInfo); }
             }
 
             //ThrowNoOauthSettingsError();

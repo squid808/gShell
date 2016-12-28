@@ -16,18 +16,20 @@ namespace gShell.dotNet.Utilities.OAuth2
         #region Properties
 
         /// <summary> Increment this number any time you happen to change anything in these files. </summary>
-        private int fileVersion = 3;
+        private int fileVersion = 4;
 
         /// <summary> The overall default domain in gShell. </summary>
         public string defaultDomain { get; set; }
-
-        //private string _defaultDomain;
 
         /// <summary> A collection of domains that have at least one authenticated user. </summary>
         public Dictionary<string, OAuth2Domain> domains { get; set; }
 
         /// <summary> Gets or sets the default client secrets. </summary>
         public ClientSecrets defaultClientSecrets { get; set; }
+
+        /// <summary>Indicates to the IOAuth2DataStore upon loading that data has been changed and should be re-savsed before returning.</summary>
+        /// <remarks>This should be used only when changing data upon loading, for instance between different versions of the data files.</remarks>
+        public bool shouldSaveAgain { get; set; }
 
         #endregion
 
@@ -45,10 +47,20 @@ namespace gShell.dotNet.Utilities.OAuth2
         {
             try
             {
-                if (((int)info.GetValue("fileVersion", typeof(int))) < fileVersion)
+                int savedFileVersion = (int) info.GetValue("fileVersion", typeof(int));
+
+                if (savedFileVersion < fileVersion)
                 {
-                    throw new System.InvalidOperationException(
-                        "Authentication file is an old version and needs to be recreated.");
+                    if (savedFileVersion == 3 && fileVersion == 4)
+                    {
+                        //no changes needed
+                        shouldSaveAgain = true;
+                    }
+                    else
+                    {
+                        throw new System.InvalidOperationException(
+                            "Authentication file is an old version and needs to be recreated.");
+                    }
                 }
             }
             catch
@@ -95,6 +107,12 @@ namespace gShell.dotNet.Utilities.OAuth2
 
         /// <summary>The domain this object represents.</summary>
         public string domain { get; set; }
+
+        /// <summary>The Parent Domain for this domain, if any</summary>
+        public string parentDomain { get; set; }
+
+        /// <summary>Child domains associated with this domain, if any</summary>
+        public string[] childDomains { get; set; }
 
         /// <summary> A collection of users keyed by their email username. </summary>
         public Dictionary<string, OAuth2DomainUser> users { get; set; }
@@ -146,6 +164,14 @@ namespace gShell.dotNet.Utilities.OAuth2
                         domain = (string)info.GetValue("domain", typeof(string));
                         break;
 
+                    case "parentDomain":
+                        parentDomain = (string)info.GetValue("parentDomain", typeof(string));
+                        break;
+
+                    case "childDomains":
+                        childDomains = (string[])info.GetValue("childDomains", typeof(string[]));
+                        break;
+
                     case "certType":
                         certType = (CertTypeEnum)info.GetValue("certType", typeof(CertTypeEnum));
 
@@ -177,6 +203,8 @@ namespace gShell.dotNet.Utilities.OAuth2
             info.AddValue("users", users, typeof(Dictionary<string, OAuth2DomainUser>));
             info.AddValue("defaultUser", defaultUser, typeof(string));
             info.AddValue("domain", domain, typeof(string));
+            info.AddValue("parentDomain", parentDomain, typeof(string));
+            info.AddValue("childDomains", childDomains, typeof(string[]));
 
             if (certType.HasValue)
             {

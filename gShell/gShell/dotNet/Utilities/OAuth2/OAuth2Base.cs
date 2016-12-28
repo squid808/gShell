@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Cryptography.X509Certificates;
-
+using gShell.Cmdlets.Utilities.OAuth2;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Auth.OAuth2.Responses;
 using Google.Apis.Oauth2.v2;
@@ -67,31 +67,32 @@ namespace gShell.dotNet.Utilities.OAuth2
 
         //Example call: Authenticate("DirectoryV.3", "myDomain.com", "myUser);
 
-        public static AuthenticatedUserInfo Authenticate(string Api, IEnumerable<string> Scopes, ClientSecrets Secrets,
+        public static AuthenticatedUserInfo Authenticate(AuthenticatedUserInfo AuthUserInfo, ClientSecrets Secrets,
             string Domain = null, string User = null)
         {
-            _currentAuthInfo = GetAuthTokenFlow(Api, Scopes, Secrets, Domain, User);
+            _currentAuthInfo = GetAuthTokenFlow(AuthUserInfo, Secrets);
 
             return currentAuthInfo;
         }
 
         /// <summary>Retrieve an authentication token from memory or from user authentication.</summary>
         /// <remarks>Also fills out the OAuth2Base currentAuthInfo and asyncUserCredential members.</remarks>
-        public static AuthenticatedUserInfo GetAuthTokenFlow(string Api, IEnumerable<string> Scopes, ClientSecrets Secrets,
-            string Domain = null, string UserName = null, bool force = false)
+        public static AuthenticatedUserInfo GetAuthTokenFlow(AuthenticatedUserInfo AuthUserInfo, ClientSecrets Secrets,
+            bool force = false)
         {
             //reset the auth info
-            _currentAuthInfo = new AuthenticatedUserInfo() { scopes = Scopes, apiNameAndVersion = Api };
+            _currentAuthInfo = new AuthenticatedUserInfo() { scopes = AuthUserInfo.scopes, apiNameAndVersion = AuthUserInfo.apiNameAndVersion };
 
             //First, if the domain or user are missing, see if we can fill it in using the defaults
-            Domain = CheckDomain(Domain);
-            if (Domain != null) UserName = CheckUser(Domain, UserName);
+            AuthUserInfo.domain = CheckDomain(AuthUserInfo.domain);
+            if (AuthUserInfo.domain != null) AuthUserInfo.userName = CheckUser(AuthUserInfo.domain, AuthUserInfo.userName);
 
             //First, if we are able to load a key based on the domain and user, we do that and add it to the data store.
             // This will make sure that when we authenticate, the Google Flow has something to load.
-            if (UserName != null && Domain != null && infoConsumer.TokenAndScopesExist(Domain, UserName, Api) && !force)
+            if (AuthUserInfo.userName != null && AuthUserInfo.domain != null && infoConsumer.TokenAndScopesExist(
+                AuthUserInfo.domain, AuthUserInfo.userName, AuthUserInfo.apiNameAndVersion) && !force)
             {
-                OAuth2TokenInfo preTokenInfo = infoConsumer.GetTokenInfo(Domain, UserName, Api);
+                OAuth2TokenInfo preTokenInfo = infoConsumer.GetTokenInfo(AuthUserInfo.domain, AuthUserInfo.userName, AuthUserInfo.apiNameAndVersion);
                 
                 _currentAuthInfo.tokenResponse = preTokenInfo.token;
                 _currentAuthInfo.tokenString = preTokenInfo.tokenString;
@@ -99,13 +100,13 @@ namespace gShell.dotNet.Utilities.OAuth2
             }
 
             //Set the domain and user now, and we'll check them again later while we authorize.
-            _currentAuthInfo.domain = Domain;
-            _currentAuthInfo.userName = UserName;
+            _currentAuthInfo.domain = AuthUserInfo.domain;
+            _currentAuthInfo.userName = AuthUserInfo.userName;
 
             _IsAuthenticating = true;
 
             //Populate asyncUserCredential, but we don't quite save the token yet...
-            AwaitUserCredential(Scopes, Secrets).Wait();
+            AwaitUserCredential(AuthUserInfo.scopes, Secrets).Wait();
 
             _IsAuthenticating = false;
 
@@ -233,6 +234,7 @@ namespace gShell.dotNet.Utilities.OAuth2
         #region Helpers
 
         /// <summary>Checks the stored info to see if this domain matches any stored domains.</summary>
+        /// <returns>Valid domain if provided, default domain if not, null if none available.</returns>
         public static string CheckDomain(string Domain = null)
         {
             //If null, check for a default but only return it if it exists.
@@ -448,18 +450,30 @@ namespace gShell.dotNet.Utilities.OAuth2
             scopes = Scopes;
         }
 
+        /// <summary>The username against which the authentication should look.</summary>
         public string userName { get; set; }
+
+        /// <summary>The domain against which the authentication should look.</summary>
         public string domain { get; set; }
-        public string userEmail
-        {
-            get
-            {
-                return Utils.GetFullEmailAddress(userName, domain);
-            }
-        }
+
+        /// <summary>The original domain provided to authenticate against.</summary>
+        /// <remarks>This could change if primary domains are being used.</remarks>
+        public string originalDomain { get; set; }
+
+        /// <summary>The original username provided to authenticate against.</summary>
+        /// <remarks>This could change if primary domains are being used.</remarks>
+        public string originalUser { get; set; }
+
+        /// <summary>The api name and version in the appropriate api:version format for google.</summary>
         public string apiNameAndVersion { get; set; }
+
+        /// <summary>The scopes chosen for this particular authentication.</summary>
         public IEnumerable<string> scopes { get; set; }
+
+        /// <summary>The token string.</summary>
         public string tokenString { get; set; }
+
+        /// <summary>The token response.</summary>
         public TokenResponse tokenResponse { get; set; }
     }
 }

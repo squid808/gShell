@@ -76,7 +76,7 @@ namespace Google.Apis.admin.Directory.directory_v1.Data
     {
         /// <summary>List of alias objects.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("aliases")]
-        public virtual System.Collections.Generic.IList<Alias> AliasesValue { get; set; } 
+        public virtual System.Collections.Generic.IList<object> AliasesValue { get; set; } 
 
         /// <summary>ETag of the resource.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("etag")]
@@ -423,6 +423,20 @@ namespace Google.Apis.admin.Directory.directory_v1.Data
         }
     }    
 
+    /// <summary>JSON request template for firing actions on ChromeOs Device in Directory Devices API.</summary>
+    public class ChromeOsDeviceAction : Google.Apis.Requests.IDirectResponseSchema
+    {
+        /// <summary>Action to be taken on the ChromeOs Device</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("action")]
+        public virtual string Action { get; set; } 
+
+        [Newtonsoft.Json.JsonPropertyAttribute("deprovisionReason")]
+        public virtual string DeprovisionReason { get; set; } 
+
+        /// <summary>The ETag of the item.</summary>
+        public virtual string ETag { get; set; }
+    }    
+
     /// <summary>JSON response template for List Chrome OS Devices operation in Directory API.</summary>
     public class ChromeOsDevices : Google.Apis.Requests.IDirectResponseSchema
     {
@@ -733,6 +747,10 @@ namespace Google.Apis.admin.Directory.directory_v1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("role")]
         public virtual string Role { get; set; } 
 
+        /// <summary>Status of member (Immutable)</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("status")]
+        public virtual string Status { get; set; } 
+
         /// <summary>Type of member (Immutable)</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("type")]
         public virtual string Type { get; set; } 
@@ -775,6 +793,14 @@ namespace Google.Apis.admin.Directory.directory_v1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("basebandVersion")]
         public virtual string BasebandVersion { get; set; } 
 
+        /// <summary>Mobile Device Bootloader version (Read-only)</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("bootloaderVersion")]
+        public virtual string BootloaderVersion { get; set; } 
+
+        /// <summary>Mobile Device Brand (Read-only)</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("brand")]
+        public virtual string Brand { get; set; } 
+
         /// <summary>Mobile Device Build number (Read-only)</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("buildNumber")]
         public virtual string BuildNumber { get; set; } 
@@ -795,9 +821,17 @@ namespace Google.Apis.admin.Directory.directory_v1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("deviceId")]
         public virtual string DeviceId { get; set; } 
 
+        /// <summary>DevicePasswordStatus (Read-only)</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("devicePasswordStatus")]
+        public virtual string DevicePasswordStatus { get; set; } 
+
         /// <summary>List of owner user's email addresses (Read-only)</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("email")]
         public virtual System.Collections.Generic.IList<string> Email { get; set; } 
+
+        /// <summary>Mobile Device Encryption Status (Read-only)</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("encryptionStatus")]
+        public virtual string EncryptionStatus { get; set; } 
 
         /// <summary>ETag of the resource.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("etag")]
@@ -821,6 +855,10 @@ namespace Google.Apis.admin.Directory.directory_v1.Data
                 FirstSyncRaw = Google.Apis.Util.Utilities.GetStringFromDateTime(value);
             }
         }
+
+        /// <summary>Mobile Device Hardware (Read-only)</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("hardware")]
+        public virtual string Hardware { get; set; } 
 
         /// <summary>Mobile Device Hardware Id (Read-only)</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("hardwareId")]
@@ -861,6 +899,10 @@ namespace Google.Apis.admin.Directory.directory_v1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("managedAccountIsOnOwnerProfile")]
         public virtual System.Nullable<bool> ManagedAccountIsOnOwnerProfile { get; set; } 
 
+        /// <summary>Mobile Device manufacturer (Read-only)</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("manufacturer")]
+        public virtual string Manufacturer { get; set; } 
+
         /// <summary>Mobile Device MEID number (Read-only)</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("meid")]
         public virtual string Meid { get; set; } 
@@ -885,9 +927,21 @@ namespace Google.Apis.admin.Directory.directory_v1.Data
         [Newtonsoft.Json.JsonPropertyAttribute("otherAccountsInfo")]
         public virtual System.Collections.Generic.IList<string> OtherAccountsInfo { get; set; } 
 
+        /// <summary>DMAgentPermission (Read-only)</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("privilege")]
+        public virtual string Privilege { get; set; } 
+
+        /// <summary>Mobile Device release version version (Read-only)</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("releaseVersion")]
+        public virtual string ReleaseVersion { get; set; } 
+
         /// <summary>Unique identifier of Mobile Device (Read-only)</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("resourceId")]
         public virtual string ResourceId { get; set; } 
+
+        /// <summary>Mobile Device Security patch level (Read-only)</summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("securityPatchLevel")]
+        public virtual System.Nullable<long> SecurityPatchLevel { get; set; } 
 
         /// <summary>Mobile Device SSN or Serial Number (Read-only)</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("serialNumber")]
@@ -2791,6 +2845,90 @@ namespace Google.Apis.admin.Directory.directory_v1
         }
 
 
+        /// <summary>Take action on Chrome OS Device</summary>
+        /// <param name="body">The body of the request.</param>
+        /// <param name="customerId">Immutable id of the Google Apps account</param>
+        /// <param name="resourceId">Immutable
+        /// id of Chrome OS Device</param>
+        public virtual ActionRequest Action(Google.Apis.admin.Directory.directory_v1.Data.ChromeOsDeviceAction body, string customerId, string resourceId)
+        {
+            return new ActionRequest(service, body, customerId, resourceId);
+        }
+
+        /// <summary>Take action on Chrome OS Device</summary>
+        public class ActionRequest : DirectoryBaseServiceRequest<string>
+        {
+            /// <summary>Constructs a new Action request.</summary>
+            public ActionRequest(Google.Apis.Services.IClientService service, Google.Apis.admin.Directory.directory_v1.Data.ChromeOsDeviceAction body, string customerId, string resourceId)
+                : base(service)
+            {
+                CustomerId = customerId;
+                ResourceId = resourceId;
+                Body = body;
+                InitParameters();
+            }
+
+
+            /// <summary>Immutable id of the Google Apps account</summary>
+            [Google.Apis.Util.RequestParameterAttribute("customerId", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string CustomerId { get; private set; }
+
+            /// <summary>Immutable id of Chrome OS Device</summary>
+            [Google.Apis.Util.RequestParameterAttribute("resourceId", Google.Apis.Util.RequestParameterType.Path)]
+            public virtual string ResourceId { get; private set; }
+
+
+            /// <summary>Gets or sets the body of this request.</summary>
+            Google.Apis.admin.Directory.directory_v1.Data.ChromeOsDeviceAction Body { get; set; }
+
+            ///<summary>Returns the body of the request.</summary>
+            protected override object GetBody() { return Body; }
+
+            ///<summary>Gets the method name.</summary>
+            public override string MethodName
+            {
+                get { return "action"; }
+            }
+
+            ///<summary>Gets the HTTP method.</summary>
+            public override string HttpMethod
+            {
+                get { return "POST"; }
+            }
+
+            ///<summary>Gets the REST path.</summary>
+            public override string RestPath
+            {
+                get { return "customer/{customerId}/devices/chromeos/{resourceId}/action"; }
+            }
+
+            /// <summary>Initializes Action parameter list.</summary>
+            protected override void InitParameters()
+            {
+                base.InitParameters();
+
+                RequestParameters.Add(
+                    "customerId", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "customerId",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+                RequestParameters.Add(
+                    "resourceId", new Google.Apis.Discovery.Parameter
+                    {
+                        Name = "resourceId",
+                        IsRequired = true,
+                        ParameterType = "path",
+                        DefaultValue = null,
+                        Pattern = null,
+                    });
+            }
+
+        }
+
         /// <summary>Retrieve Chrome OS Device</summary>
         /// <param name="customerId">Immutable id of the Google Apps account</param>
         /// <param name="deviceId">Immutable id
@@ -3318,14 +3456,14 @@ namespace Google.Apis.admin.Directory.directory_v1
         }
 
 
-        /// <summary>Retrives a customer.</summary>
+        /// <summary>Retrieves a customer.</summary>
         /// <param name="customerKey">Id of the customer to be retrieved</param>
         public virtual GetRequest Get(string customerKey)
         {
             return new GetRequest(service, customerKey);
         }
 
-        /// <summary>Retrives a customer.</summary>
+        /// <summary>Retrieves a customer.</summary>
         public class GetRequest : DirectoryBaseServiceRequest<Google.Apis.admin.Directory.directory_v1.Data.Customer>
         {
             /// <summary>Constructs a new Get request.</summary>
@@ -3917,7 +4055,7 @@ namespace Google.Apis.admin.Directory.directory_v1
 
         }
 
-        /// <summary>Retrives a domain of the customer.</summary>
+        /// <summary>Retrieves a domain of the customer.</summary>
         /// <param name="customer">Immutable id of the Google Apps account.</param>
         /// <param name="domainName">Name of
         /// domain to be retrieved</param>
@@ -3926,7 +4064,7 @@ namespace Google.Apis.admin.Directory.directory_v1
             return new GetRequest(service, customer, domainName);
         }
 
-        /// <summary>Retrives a domain of the customer.</summary>
+        /// <summary>Retrieves a domain of the customer.</summary>
         public class GetRequest : DirectoryBaseServiceRequest<Google.Apis.admin.Directory.directory_v1.Data.Domains>
         {
             /// <summary>Constructs a new Get request.</summary>
