@@ -3291,7 +3291,7 @@ namespace gShell.Cmdlets.Directory.GAGroup
     /// <para type="link" uri="https://github.com/squid808/gShell/wiki/Getting-Started">[Getting started with gShell]</para>
     /// </summary>
     [Cmdlet(VerbsCommon.Get, "GAGroup",
-          DefaultParameterSetName = "OneUser",
+          DefaultParameterSetName = "OneGroup",
           SupportsShouldProcess = true,
           HelpUri = @"https://github.com/squid808/gShell/wiki/Get-GAGroup")]
     public class GetGAGroupCommand : DirectoryBase
