@@ -3361,6 +3361,11 @@ namespace gShell.Cmdlets.Directory.GAGroup
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "The domain name. Use this field to get fields from only one domain. To return all domains for a customer account, use the customer query parameter instead.")]
+        [Parameter(Position = 5,
+            ParameterSetName = "OneUser",
+        Mandatory = false,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The domain name. Use this field to get fields from only one domain. To return all domains for a customer account, use the customer query parameter instead.")]
         [ValidateNotNullOrEmpty]
         public string Domain { get; set; }
 
@@ -3373,7 +3378,10 @@ namespace gShell.Cmdlets.Directory.GAGroup
                 case "OneUser":
                     if (ShouldProcess(GroupKey, "Get-GAGroup"))
                     {
-                        Customer = string.IsNullOrWhiteSpace(Customer) ? "my_customer" : Customer;
+                        if (string.IsNullOrWhiteSpace(Customer) && string.IsNullOrWhiteSpace(Domain))
+                        {
+                            Customer = "my_customer";
+                        }
 
                         var properties = new dotNet.Directory.Groups.GroupsListProperties()
                         {
@@ -3381,7 +3389,7 @@ namespace gShell.Cmdlets.Directory.GAGroup
                         };
 
                         if (!string.IsNullOrWhiteSpace(this.Customer)) properties.Customer = this.Customer;
-                        else properties.Domain = this.GAuthId;
+                        if (!string.IsNullOrWhiteSpace(this.Domain)) properties.Domain = this.Domain;
 
                         if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
 
