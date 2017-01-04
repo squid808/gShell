@@ -1854,7 +1854,7 @@ namespace gShell.Cmdlets.Calendar.Acl
 					{
 						WriteDebug("Attempting to remove " + toRemoveTarget + "...");
 
-                        acl.Delete(CalendarId, RuleId, StandardQueryParams: StandardQueryParams);
+                        acl.Delete(CalendarId, RuleId, ServiceAccount: gShellServiceAccount, StandardQueryParams: StandardQueryParams);
 							
 						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
 					}
@@ -1973,7 +1973,7 @@ namespace gShell.Cmdlets.Calendar.Acl
             {
                 if (ParameterSetName == "one")
                 {
-                    WriteObject(acl.Get(CalendarId, RuleId, StandardQueryParams: StandardQueryParams));
+                    WriteObject(acl.Get(CalendarId, RuleId, ServiceAccount: gShellServiceAccount, StandardQueryParams: StandardQueryParams));
                 }
                 else
                 {
@@ -1985,7 +1985,7 @@ namespace gShell.Cmdlets.Calendar.Acl
 
                     if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
 
-                    WriteObject(acl.List(CalendarId, properties, StandardQueryParams: StandardQueryParams).SelectMany(x => x.Items).ToList());
+                    WriteObject(acl.List(CalendarId, properties, ServiceAccount: gShellServiceAccount, StandardQueryParams: StandardQueryParams).SelectMany(x => x.Items).ToList());
                 }
             }
         }
@@ -2039,7 +2039,7 @@ namespace gShell.Cmdlets.Calendar.Acl
         {
             if (ShouldProcess("Calendar Acl", "New-GCalendarAcl"))
             {
-                WriteObject(acl.Insert(AclRuleBody, CalendarId, StandardQueryParams: StandardQueryParams));
+                WriteObject(acl.Insert(AclRuleBody, CalendarId, ServiceAccount: gShellServiceAccount, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2101,7 +2101,7 @@ namespace gShell.Cmdlets.Calendar.Acl
         {
             if (ShouldProcess("Calendar Acl", "Set-GCalendarAcl"))
             {
-                WriteObject(acl.Patch(AclRuleBody, CalendarId, RuleId, StandardQueryParams: StandardQueryParams));
+                WriteObject(acl.Patch(AclRuleBody, CalendarId, RuleId, ServiceAccount: gShellServiceAccount, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2194,7 +2194,7 @@ namespace gShell.Cmdlets.Calendar.Acl
                 };
 
 
-                WriteObject(acl.Watch(ChannelBody, CalendarId, properties, StandardQueryParams: StandardQueryParams));
+                WriteObject(acl.Watch(ChannelBody, CalendarId, properties, ServiceAccount: gShellServiceAccount, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2256,7 +2256,7 @@ namespace gShell.Cmdlets.Calendar.CalendarList
 					{
 						WriteDebug("Attempting to remove " + toRemoveTarget + "...");
 
-                        calendarList.Delete(CalendarId, StandardQueryParams: StandardQueryParams);
+                        calendarList.Delete(CalendarId, ServiceAccount: gShellServiceAccount, StandardQueryParams: StandardQueryParams);
 							
 						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
 					}
@@ -2387,7 +2387,7 @@ namespace gShell.Cmdlets.Calendar.CalendarList
             {
                 if (ParameterSetName == "one")
                 {
-                    WriteObject(calendarList.Get(CalendarId, StandardQueryParams: StandardQueryParams));
+                    WriteObject(calendarList.Get(CalendarId, ServiceAccount: gShellServiceAccount, StandardQueryParams: StandardQueryParams));
                 }
                 else
                 {
@@ -2401,7 +2401,7 @@ namespace gShell.Cmdlets.Calendar.CalendarList
 
                     if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
 
-                    WriteObject(calendarList.List(properties, StandardQueryParams: StandardQueryParams).SelectMany(x => x.Items).ToList());
+                    WriteObject(calendarList.List(properties, ServiceAccount: gShellServiceAccount, StandardQueryParams: StandardQueryParams).SelectMany(x => x.Items).ToList());
                 }
             }
         }
@@ -2460,7 +2460,7 @@ namespace gShell.Cmdlets.Calendar.CalendarList
                 };
 
 
-                WriteObject(calendarList.Insert(CalendarListEntryBody, properties, StandardQueryParams: StandardQueryParams));
+                WriteObject(calendarList.Insert(CalendarListEntryBody, properties, ServiceAccount: gShellServiceAccount, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2530,7 +2530,7 @@ namespace gShell.Cmdlets.Calendar.CalendarList
                 };
 
 
-                WriteObject(calendarList.Patch(CalendarListEntryBody, CalendarId, properties, StandardQueryParams: StandardQueryParams));
+                WriteObject(calendarList.Patch(CalendarListEntryBody, CalendarId, properties, ServiceAccount: gShellServiceAccount, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2632,7 +2632,7 @@ namespace gShell.Cmdlets.Calendar.CalendarList
                 };
 
 
-                WriteObject(calendarList.Watch(ChannelBody, properties, StandardQueryParams: StandardQueryParams));
+                WriteObject(calendarList.Watch(ChannelBody, properties, ServiceAccount: gShellServiceAccount, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2678,7 +2678,7 @@ namespace gShell.Cmdlets.Calendar.Calendars
         {
             if (ShouldProcess("Calendar Calendars", "Clear-GCalendar"))
             {
-                calendars.Clear(CalendarId, StandardQueryParams: StandardQueryParams);
+                calendars.Clear(CalendarId, ServiceAccount: gShellServiceAccount, StandardQueryParams: StandardQueryParams);
             }
         }
     }
@@ -2737,7 +2737,7 @@ namespace gShell.Cmdlets.Calendar.Calendars
 					{
 						WriteDebug("Attempting to remove " + toRemoveTarget + "...");
 
-                        calendars.Delete(CalendarId, StandardQueryParams: StandardQueryParams);
+                        calendars.Delete(CalendarId, ServiceAccount: gShellServiceAccount, StandardQueryParams: StandardQueryParams);
 							
 						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
 					}
@@ -2793,7 +2793,7 @@ namespace gShell.Cmdlets.Calendar.Calendars
         {
             if (ShouldProcess("Calendar Calendars", "Get-GCalendar"))
             {
-                WriteObject(calendars.Get(CalendarId, StandardQueryParams: StandardQueryParams));
+                WriteObject(calendars.Get(CalendarId, ServiceAccount: gShellServiceAccount, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2834,7 +2834,7 @@ namespace gShell.Cmdlets.Calendar.Calendars
         {
             if (ShouldProcess("Calendar Calendars", "New-GCalendar"))
             {
-                WriteObject(calendars.Insert(CalendarBody, StandardQueryParams: StandardQueryParams));
+                WriteObject(calendars.Insert(CalendarBody, ServiceAccount: gShellServiceAccount, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2887,7 +2887,7 @@ namespace gShell.Cmdlets.Calendar.Calendars
         {
             if (ShouldProcess("Calendar Calendars", "Set-GCalendar"))
             {
-                WriteObject(calendars.Patch(CalendarBody, CalendarId, StandardQueryParams: StandardQueryParams));
+                WriteObject(calendars.Patch(CalendarBody, CalendarId, ServiceAccount: gShellServiceAccount, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -2932,7 +2932,7 @@ namespace gShell.Cmdlets.Calendar.Channels
         {
             if (ShouldProcess("Calendar Channels", "Stop-GCalendarChannel"))
             {
-                channels.Stop(ChannelBody, StandardQueryParams: StandardQueryParams);
+                channels.Stop(ChannelBody, ServiceAccount: gShellServiceAccount, StandardQueryParams: StandardQueryParams);
             }
         }
     }
@@ -2967,7 +2967,7 @@ namespace gShell.Cmdlets.Calendar.Colors
         {
             if (ShouldProcess("Calendar Colors", "Get-GCalendarColor"))
             {
-                WriteObject(colors.Get(StandardQueryParams:StandardQueryParams));
+                WriteObject(colors.Get(ServiceAccount: gShellServiceAccount, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -3053,7 +3053,7 @@ namespace gShell.Cmdlets.Calendar.Events
                             SendNotifications = SendNotifications
                         };
 
-                        events.Delete(CalendarId, EventId, properties, StandardQueryParams: StandardQueryParams);
+                        events.Delete(CalendarId, EventId, properties, ServiceAccount: gShellServiceAccount, StandardQueryParams: StandardQueryParams);
 							
 						WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
 					}
@@ -3331,7 +3331,7 @@ namespace gShell.Cmdlets.Calendar.Events
                         TimeZone = TimeZone
                     };
 
-                    WriteObject(events.Get(CalendarId, EventId, properties, StandardQueryParams: StandardQueryParams));
+                    WriteObject(events.Get(CalendarId, EventId, properties, ServiceAccount: gShellServiceAccount, StandardQueryParams: StandardQueryParams));
 
                 }
                 else
@@ -3358,7 +3358,7 @@ namespace gShell.Cmdlets.Calendar.Events
 
                     if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
 
-                    var results = events.List(CalendarId, properties, StandardQueryParams: StandardQueryParams).SelectMany(x => x.Items).ToList();
+                    var results = events.List(CalendarId, properties, ServiceAccount: gShellServiceAccount, StandardQueryParams: StandardQueryParams).SelectMany(x => x.Items).ToList();
 
                     WriteObject(results);
                 }
@@ -3430,7 +3430,7 @@ namespace gShell.Cmdlets.Calendar.Events
                 };
 
 
-                WriteObject(events.Import(EventBody, CalendarId, properties, StandardQueryParams: StandardQueryParams));
+                WriteObject(events.Import(EventBody, CalendarId, properties, ServiceAccount: gShellServiceAccount, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -3522,7 +3522,7 @@ namespace gShell.Cmdlets.Calendar.Events
                 };
 
 
-                WriteObject(events.Insert(EventBody, CalendarId, properties, StandardQueryParams: StandardQueryParams));
+                WriteObject(events.Insert(EventBody, CalendarId, properties, ServiceAccount: gShellServiceAccount, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -3670,7 +3670,7 @@ namespace gShell.Cmdlets.Calendar.Events
                 };
 
 
-                WriteObject(events.Instances(CalendarId, EventId, properties, StandardQueryParams: StandardQueryParams));
+                WriteObject(events.Instances(CalendarId, EventId, properties, ServiceAccount: gShellServiceAccount, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -3746,7 +3746,7 @@ namespace gShell.Cmdlets.Calendar.Events
                 };
 
 
-                WriteObject(events.Move(CalendarId, EventId, Destination, properties, StandardQueryParams: StandardQueryParams));
+                WriteObject(events.Move(CalendarId, EventId, Destination, properties, ServiceAccount: gShellServiceAccount, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -3860,7 +3860,7 @@ namespace gShell.Cmdlets.Calendar.Events
                 };
 
 
-                WriteObject(events.Patch(EventBody, CalendarId, EventId, properties, StandardQueryParams: StandardQueryParams));
+                WriteObject(events.Patch(EventBody, CalendarId, EventId, properties, ServiceAccount: gShellServiceAccount, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -3928,7 +3928,7 @@ namespace gShell.Cmdlets.Calendar.Events
                 };
 
 
-                WriteObject(events.QuickAdd(CalendarId, Text, properties, StandardQueryParams: StandardQueryParams));
+                WriteObject(events.QuickAdd(CalendarId, Text, properties, ServiceAccount: gShellServiceAccount, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -4042,7 +4042,7 @@ namespace gShell.Cmdlets.Calendar.Events
                 };
 
 
-                WriteObject(events.Update(EventBody, CalendarId, EventId, properties, StandardQueryParams: StandardQueryParams));
+                WriteObject(events.Update(EventBody, CalendarId, EventId, properties, ServiceAccount: gShellServiceAccount, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -4285,7 +4285,7 @@ namespace gShell.Cmdlets.Calendar.Events
                 if (this.PrivateExtendedProperty != null) properties.PrivateExtendedProperty = this.PrivateExtendedProperty;
                 if (this.SharedExtendedProperty != null) properties.SharedExtendedProperty = this.SharedExtendedProperty;
 
-                WriteObject(events.Watch(ChannelBody, CalendarId, properties, StandardQueryParams: StandardQueryParams));
+                WriteObject(events.Watch(ChannelBody, CalendarId, properties, ServiceAccount: gShellServiceAccount, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -4330,7 +4330,7 @@ namespace gShell.Cmdlets.Calendar.Freebusy
         {
             if (ShouldProcess("Calendar Freebusy", "Get-GCalendarFreebusy"))
             {
-                WriteObject(freebusy.Query(FreeBusyRequestBody, StandardQueryParams: StandardQueryParams));
+                WriteObject(freebusy.Query(FreeBusyRequestBody, ServiceAccount: gShellServiceAccount, StandardQueryParams: StandardQueryParams));
             }
         }
     }
@@ -4407,7 +4407,7 @@ namespace gShell.Cmdlets.Calendar.Settings
             {
                 if (ParameterSetName == "one")
                 {
-                    WriteObject(settings.Get(Setting));
+                    WriteObject(settings.Get(Setting, ServiceAccount: gShellServiceAccount, StandardQueryParams: StandardQueryParams));
                 }
                 else
                 {
@@ -4418,7 +4418,7 @@ namespace gShell.Cmdlets.Calendar.Settings
 
                     if (MaxResults.HasValue) properties.TotalResults = MaxResults.Value;
 
-                    WriteObject(settings.List(properties, StandardQueryParams: StandardQueryParams).SelectMany(x => x.Items.ToList()));
+                    WriteObject(settings.List(properties, ServiceAccount: gShellServiceAccount, StandardQueryParams: StandardQueryParams).SelectMany(x => x.Items.ToList()));
                 }
             }
         }
@@ -4488,7 +4488,7 @@ namespace gShell.Cmdlets.Calendar.Settings
                 };
 
 
-                WriteObject(settings.Watch(ChannelBody, properties, StandardQueryParams: StandardQueryParams));
+                WriteObject(settings.Watch(ChannelBody, properties, ServiceAccount: gShellServiceAccount, StandardQueryParams: StandardQueryParams));
             }
         }
     }

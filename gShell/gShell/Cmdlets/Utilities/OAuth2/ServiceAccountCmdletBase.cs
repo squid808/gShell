@@ -45,7 +45,7 @@ namespace gShell.Cmdlets.Utilities.OAuth2
                     }
 
                     gShellServiceAccount = GetFullEmailAddress(TargetUserEmail, authUserInfo.domain);
-                    ServiceWrapperDictionary[mainBaseType].BuildService(Authenticate(authUserInfo, secrets), TargetUserEmail);
+                    ServiceWrapperDictionary[mainBaseType].BuildService(Authenticate(authUserInfo, secrets), gShellServiceAccount);
                 }
 
                 GWriteProgress = new gWriteProgress(WriteProgress);

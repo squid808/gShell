@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("gShell")]
-[assembly: AssemblyDescription("PowerShell cmdlets for Google Apis")]
+[assembly: AssemblyDescription("PowerShell cmdlets for G Suite Admin SDK")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Spencer Varney")]
 [assembly: AssemblyProduct("gShell")]
-[assembly: AssemblyCopyright("Copyright ©  2016")]
+[assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.9.7.0")]
-[assembly: AssemblyFileVersion("0.9.7.0")]
+[assembly: AssemblyVersion("0.10.1.0")]
+[assembly: AssemblyFileVersion("0.10.1.0")]
