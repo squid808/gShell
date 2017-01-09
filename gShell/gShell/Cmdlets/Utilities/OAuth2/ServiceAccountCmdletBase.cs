@@ -39,13 +39,19 @@ namespace gShell.Cmdlets.Utilities.OAuth2
                 {
                     if (!OAuth2Base.infoConsumer.ServiceAccountExists(authUserInfo.domain))
                     {
-                        WriteWarning("No service account was found for domain " + authUserInfo.domain + ". Please set a service" +
-                            " account with Set-GShellServiceAccount, or see https://github.com/squid808/gShell/wiki/Service-Accounts" +
-                            " for more information.");
+                        WriteWarning("No service account was found for domain " + authUserInfo.domain +
+                                     ". Please set a service" +
+                                     " account with Set-GShellServiceAccount, or see https://github.com/squid808/gShell/wiki/Service-Accounts" +
+                                     " for more information.");
                     }
 
                     gShellServiceAccount = GetFullEmailAddress(TargetUserEmail, authUserInfo.domain);
-                    ServiceWrapperDictionary[mainBaseType].BuildService(Authenticate(authUserInfo, secrets), gShellServiceAccount);
+                    ServiceWrapperDictionary[mainBaseType].BuildService(Authenticate(authUserInfo, secrets),
+                        gShellServiceAccount);
+                }
+                else
+                {
+                    gShellServiceAccount = null;
                 }
 
                 GWriteProgress = new gWriteProgress(WriteProgress);
@@ -63,7 +69,7 @@ namespace gShell.Cmdlets.Utilities.OAuth2
         /// Cmdlet from inheriting it as well.</remarks>
         protected override void EndProcessing()
         {
-            gShellServiceAccount = string.Empty;
+            gShellServiceAccount = null;
         }
 
         /// <summary>The gShell base implementation of the PowerShell StopProcessing method.</summary>
@@ -71,7 +77,7 @@ namespace gShell.Cmdlets.Utilities.OAuth2
         /// Cmdlet from inheriting it as well.</remarks>
         protected override void StopProcessing()
         {
-            gShellServiceAccount = string.Empty;
+            gShellServiceAccount = null;
         }
 
     }
