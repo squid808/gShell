@@ -2680,13 +2680,34 @@ namespace gShell.Cmdlets.Gmail.Users.Messages.Attachments
         [ValidateNotNullOrEmpty]
         public string Id { get; set; }
 
+        /// <summary>
+        /// <para type="description">The target download path of the file, including filename and extension.</para>
+        /// </summary>
+        [Parameter(Position = 3,
+            Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "The target download path of the file, including filename and extension.")]
+        public string DownloadPath { get; set; }
         #endregion
 
         protected override void ProcessRecord()
         {
             if (ShouldProcess("Gmail User", "Get-GGmailAttachments"))
             {
-                WriteObject(users.messages.attachments.Get(UserId, MessageId, Id, ServiceAccount: gShellServiceAccount, StandardQueryParams: StandardQueryParams));
+                var result = users.messages.attachments.Get(UserId, MessageId, Id, ServiceAccount: gShellServiceAccount,
+                    StandardQueryParams: StandardQueryParams);
+
+                if (!string.IsNullOrWhiteSpace(DownloadPath))
+                {
+                    //var bytes = Convert.FromBase64String(result.Data);
+                    var bytes = dotNet.Utilities.Utils.UrlTokenDecode(result.Data);
+
+                    System.IO.File.WriteAllBytes(DownloadPath, bytes);
+                }
+                else
+                {
+                    WriteObject(result);   
+                }
             }
         }
     }
