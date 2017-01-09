@@ -2720,7 +2720,7 @@ namespace gShell.Cmdlets.Drive.Files
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
     /// <example>
-    ///   <code>PS C:\> List-GDriveFile -All</code>
+    ///   <code>PS C:\> Get-GDriveFile -All</code>
     ///   <para>This automatically generated example serves to show the bare minimum required to call this Cmdlet.</para>
     ///   <para>Additional examples may be added, viewed and edited by users on the community wiki at the URL found in the related links.</para>
     /// </example>
