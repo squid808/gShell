@@ -3316,6 +3316,15 @@ namespace gShell.Cmdlets.Calendar.Events
             )]
         public DateTime? UpdatedMin { get; set; }
 
+        /// <summary>
+        /// <para type="description">A switch to list all results</para>
+        /// </summary>
+        [Parameter(Position = 17,
+        ParameterSetName = "list",
+        Mandatory = false,
+        HelpMessage = "A switch to list all results.")]
+        public SwitchParameter All { get; set; }
+
         #endregion
 
         protected override void ProcessRecord()
