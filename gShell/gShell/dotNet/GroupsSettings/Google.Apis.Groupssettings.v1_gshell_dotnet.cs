@@ -152,7 +152,7 @@ namespace gShell.dotNet
 
         protected override v1.GroupssettingsService CreateNewService(string domain, AuthenticatedUserInfo authInfo, string gShellServiceAccount = null)
         {
-            return new v1.GroupssettingsService(OAuth2Base.GetInitializer(domain, authInfo));
+            return new v1.GroupssettingsService(OAuth2Base.GetGdataInitializer(domain, authInfo));
         }
 
         /// <summary>Returns the api name and version in {name}:{version} format.</summary>

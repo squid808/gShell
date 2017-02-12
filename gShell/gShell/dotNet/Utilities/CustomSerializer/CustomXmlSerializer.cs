@@ -634,7 +634,15 @@ namespace gShell.dotNet.CustomSerializer.Xml
 
             //GetTypeProperties(type);
 
-            Dictionary<string, string> dict = properties.ToDictionary(x => x.Attribute("name").Value, x => x.Attribute("value").Value);
+            Dictionary<string, string> dict;
+            if (type.Namespace.ToLower().Contains("groupssettings"))
+            {
+                dict = properties.ToDictionary(x => x.Name.LocalName, x => x.Value);
+            }
+            else
+            {
+                dict = properties.ToDictionary(x => x.Attribute("name").Value, x => x.Attribute("value").Value);
+            }
 
             foreach (PropertyInfo info in reflectedTypeProperties[type])
             {
@@ -691,20 +699,27 @@ namespace gShell.dotNet.CustomSerializer.Xml
             //Prepare a collection of collections
             List<List<XElement>> propertyCollections = new List<List<XElement>>();
 
-            //Get all entry elements
-            var entryElements = xmlString.Elements(mainNS + "entry");
-
-            //For each element, retrieve a list of the properties
-            if (entryElements != null && entryElements.Count() > 0)
+            if (targetType.Namespace.ToLower().Contains("groupssettings"))
             {
-                foreach (XElement item in entryElements)
-                {
-                    propertyCollections.Add(item.Elements(appNS + "property").ToList());
-                }
+                propertyCollections.Add(xmlString.Elements().ToList());
             }
             else
             {
-                propertyCollections.Add(xmlString.Elements(appNS + "property").ToList());
+                //Get all entry elements
+                var entryElements = xmlString.Elements(mainNS + "entry");
+
+                //For each element, retrieve a list of the properties
+                if (entryElements != null && entryElements.Count() > 0)
+                {
+                    foreach (XElement item in entryElements)
+                    {
+                        propertyCollections.Add(item.Elements(appNS + "property").ToList());
+                    }
+                }
+                else
+                {
+                    propertyCollections.Add(xmlString.Elements(appNS + "property").ToList());
+                }
             }
 
             //Prepare and gather a collection of result objects
