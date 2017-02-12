@@ -573,12 +573,15 @@ namespace gShell.dotNet.CustomSerializer.Xml
         {
             Type type = obj.GetType();
 
+            bool isGroupsSetting = type.Namespace.ToLower().Contains("groupssettings");
+
             string result = string.Empty;
 
             XmlWriterSettings settings = new XmlWriterSettings();
-            settings.OmitXmlDeclaration = false;
+            settings.OmitXmlDeclaration = isGroupsSetting ? true : false;
             settings.ConformanceLevel = ConformanceLevel.Document;
             settings.NewLineOnAttributes = false;
+            settings.Encoding = new UTF8Encoding(false);
 
             //use memorystream to allow gathering of utf-8
             //http://www.timvw.be/2007/01/08/generating-utf-8-with-systemxmlxmlwriter/
@@ -586,7 +589,10 @@ namespace gShell.dotNet.CustomSerializer.Xml
             {
                 using (XmlWriter writer = XmlWriter.Create(ms, settings))
                 {
-                    writer.WriteStartElement("atom", "entry", "http://www.w3.org/2005/Atom");
+                    if (isGroupsSetting)
+                        { writer.WriteStartElement(null, "entry", "http://www.w3.org/2005/Atom"); }
+                    else
+                        { writer.WriteStartElement("atom", "entry", "http://www.w3.org/2005/Atom"); }
                     writer.WriteAttributeString("xmlns", "apps", null, "http://schemas.google.com/apps/2006");
 
                     foreach (var property in reflectedTypeProperties[type])
@@ -597,10 +603,22 @@ namespace gShell.dotNet.CustomSerializer.Xml
                         {
                             string displayName = propertyDisplayNames[property];
 
-                            writer.WriteStartElement("apps", "property", null);
-                            writer.WriteAttributeString("name", displayName);
-                            writer.WriteAttributeString("value", value.ToString());
-                            writer.WriteEndElement();
+                            if (isGroupsSetting)
+                            {
+                                if (displayName != "kind")
+                                {
+                                    writer.WriteStartElement("apps", displayName, null);
+                                    writer.WriteString(value.ToString());
+                                    writer.WriteEndElement();
+                                }
+                            }
+                            else
+                            {
+                                writer.WriteStartElement("apps", "property", null);
+                                writer.WriteAttributeString("name", displayName);
+                                writer.WriteAttributeString("value", value.ToString());
+                                writer.WriteEndElement();
+                            }
                         }
                     }
 
