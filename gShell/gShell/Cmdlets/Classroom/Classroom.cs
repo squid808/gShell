@@ -2436,7 +2436,7 @@ namespace gShell.Cmdlets.Classroom.Courses
         {
             if (ShouldProcess("Classroom Courses", "New-GClassroomCourse"))
             {
-                WriteObject(courses.Create(CourseBody, StandardQueryParams: StandardQueryParams));
+                WriteObject(courses.Create(CourseBody, StandardQueryParams: StandardQueryParams, ServiceAccount: gShellServiceAccount));
             }
         }
     }
@@ -2495,7 +2495,7 @@ namespace gShell.Cmdlets.Classroom.Courses
                     {
                         WriteDebug("Attempting to remove " + toRemoveTarget + "...");
 
-                        WriteObject(courses.Delete(Id, StandardQueryParams: StandardQueryParams));
+                        WriteObject(courses.Delete(Id, StandardQueryParams: StandardQueryParams, ServiceAccount: gShellServiceAccount));
 
                         WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
                     }
@@ -2605,7 +2605,7 @@ namespace gShell.Cmdlets.Classroom.Courses
             {
                 if (ParameterSetName == "one")
                 {
-                    WriteObject(courses.Get(Id, StandardQueryParams: StandardQueryParams));
+                    WriteObject(courses.Get(Id, StandardQueryParams: StandardQueryParams, ServiceAccount: gShellServiceAccount));
                 }
                 else
                 {
@@ -2616,7 +2616,7 @@ namespace gShell.Cmdlets.Classroom.Courses
                         PageSize = PageSize
                     };
 
-                    WriteObject(courses.List(properties, StandardQueryParams: StandardQueryParams).SelectMany(x => x.Courses).ToList());
+                    WriteObject(courses.List(properties, StandardQueryParams: StandardQueryParams, ServiceAccount: gShellServiceAccount).SelectMany(x => x.Courses).ToList());
                 }
             }
         }
@@ -2686,7 +2686,7 @@ namespace gShell.Cmdlets.Classroom.Courses
                     UpdateMask = UpdateMask
                 };
 
-                WriteObject(courses.Patch(CourseBody, Id, properties, StandardQueryParams: StandardQueryParams));
+                WriteObject(courses.Patch(CourseBody, Id, properties, StandardQueryParams: StandardQueryParams, ServiceAccount: gShellServiceAccount));
             }
         }
     }
@@ -2745,7 +2745,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Aliases
         {
             if (ShouldProcess("Classroom Aliases", "New-GClassroomAlias"))
             {
-                WriteObject(courses.aliases.Create(CourseAliasBody, CourseId, StandardQueryParams: StandardQueryParams));
+                WriteObject(courses.aliases.Create(CourseAliasBody, CourseId, StandardQueryParams: StandardQueryParams, ServiceAccount: gShellServiceAccount));
             }
         }
     }
@@ -2813,7 +2813,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Aliases
                     {
                         WriteDebug("Attempting to remove " + toRemoveTarget + "...");
 
-                        WriteObject(courses.aliases.Delete(CourseId, Alias, StandardQueryParams: StandardQueryParams));
+                        WriteObject(courses.aliases.Delete(CourseId, Alias, StandardQueryParams: StandardQueryParams, ServiceAccount: gShellServiceAccount));
 
                         WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
                     }
@@ -2885,7 +2885,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Aliases
                     PageSize = PageSize
                 };
 
-                WriteObject(courses.aliases.List(CourseId, properties, StandardQueryParams: StandardQueryParams).SelectMany(x => x.Aliases).ToList());
+                WriteObject(courses.aliases.List(CourseId, properties, StandardQueryParams: StandardQueryParams, ServiceAccount: gShellServiceAccount).SelectMany(x => x.Aliases).ToList());
             }
         }
     }
@@ -2958,7 +2958,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Students
                 };
 
 
-                WriteObject(courses.students.Create(StudentBody, CourseId, properties, StandardQueryParams: StandardQueryParams));
+                WriteObject(courses.students.Create(StudentBody, CourseId, properties, StandardQueryParams: StandardQueryParams, ServiceAccount: gShellServiceAccount));
             }
         }
     }
@@ -3028,7 +3028,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Students
                     {
                         WriteDebug("Attempting to remove " + toRemoveTarget + "...");
 
-                        WriteObject(courses.students.Delete(CourseId, UserId, StandardQueryParams: StandardQueryParams));
+                        WriteObject(courses.students.Delete(CourseId, UserId, StandardQueryParams: StandardQueryParams, ServiceAccount: gShellServiceAccount));
 
                         WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
                     }
@@ -3125,7 +3125,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Students
             {
                 if (ParameterSetName == "one")
                 {
-                    WriteObject(courses.students.Get(CourseId, UserId, StandardQueryParams: StandardQueryParams));
+                    WriteObject(courses.students.Get(CourseId, UserId, StandardQueryParams: StandardQueryParams, ServiceAccount: gShellServiceAccount));
                 }
                 else
                 {
@@ -3134,7 +3134,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Students
                         PageSize = PageSize
                     };
 
-                    WriteObject(courses.students.List(CourseId, properties, StandardQueryParams: StandardQueryParams).SelectMany(x => x.Students).ToList());
+                    WriteObject(courses.students.List(CourseId, properties, StandardQueryParams: StandardQueryParams, ServiceAccount: gShellServiceAccount).SelectMany(x => x.Students).ToList());
                 }
             }
         }
@@ -3191,7 +3191,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Teachers
         {
             if (ShouldProcess("Classroom Teachers", "New-GClassroomTeacher"))
             {
-                WriteObject(courses.teachers.Create(TeacherBody, CourseId, StandardQueryParams: StandardQueryParams));
+                WriteObject(courses.teachers.Create(TeacherBody, CourseId, StandardQueryParams: StandardQueryParams, ServiceAccount: gShellServiceAccount));
             }
         }
     }
@@ -3261,7 +3261,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Teachers
                     {
                         WriteDebug("Attempting to remove " + toRemoveTarget + "...");
 
-                        WriteObject(courses.teachers.Delete(CourseId, UserId, StandardQueryParams: StandardQueryParams));
+                        WriteObject(courses.teachers.Delete(CourseId, UserId, StandardQueryParams: StandardQueryParams, ServiceAccount: gShellServiceAccount));
 
                         WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
                     }
@@ -3358,7 +3358,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Teachers
             {
                 if (ParameterSetName == "one")
                 {
-                    WriteObject(courses.teachers.Get(CourseId, UserId, StandardQueryParams: StandardQueryParams));
+                    WriteObject(courses.teachers.Get(CourseId, UserId, StandardQueryParams: StandardQueryParams, ServiceAccount: gShellServiceAccount));
                 }
                 else
                 {
@@ -3367,7 +3367,7 @@ namespace gShell.Cmdlets.Classroom.Courses.Teachers
                         PageSize = PageSize
                     };
 
-                    WriteObject(courses.teachers.List(CourseId, properties, StandardQueryParams: StandardQueryParams).SelectMany(x => x.Teachers).ToList());
+                    WriteObject(courses.teachers.List(CourseId, properties, StandardQueryParams: StandardQueryParams, ServiceAccount: gShellServiceAccount).SelectMany(x => x.Teachers).ToList());
                 }
             }
         }
@@ -3412,7 +3412,7 @@ namespace gShell.Cmdlets.Classroom.Invitations
         {
             if (ShouldProcess("Classroom Invitations", "Approve-GClassroomInvitation"))
             {
-                WriteObject(invitations.Accept(Id, StandardQueryParams: StandardQueryParams));
+                WriteObject(invitations.Accept(Id, StandardQueryParams: StandardQueryParams, ServiceAccount: gShellServiceAccount));
             }
         }
     }
@@ -3454,7 +3454,7 @@ namespace gShell.Cmdlets.Classroom.Invitations
         {
             if (ShouldProcess("Classroom Invitations", "New-GClassroomInvitation"))
             {
-                WriteObject(invitations.Create(InvitationBody, StandardQueryParams: StandardQueryParams));
+                WriteObject(invitations.Create(InvitationBody, StandardQueryParams: StandardQueryParams, ServiceAccount: gShellServiceAccount));
             }
         }
     }
@@ -3511,7 +3511,7 @@ namespace gShell.Cmdlets.Classroom.Invitations
                     {
                         WriteDebug("Attempting to remove " + toRemoveTarget + "...");
 
-                        WriteObject(invitations.Delete(Id, StandardQueryParams: StandardQueryParams));
+                        WriteObject(invitations.Delete(Id, StandardQueryParams: StandardQueryParams, ServiceAccount: gShellServiceAccount));
 
                         WriteVerbose("Removal of " + toRemoveTarget + " completed without error.");
                     }
@@ -3628,7 +3628,7 @@ namespace gShell.Cmdlets.Classroom.Invitations
                         PageSize = PageSize
                     };
 
-                    WriteObject(invitations.List(properties, StandardQueryParams: StandardQueryParams).SelectMany(x => x.Invitations).ToList());
+                    WriteObject(invitations.List(properties, StandardQueryParams: StandardQueryParams, ServiceAccount: gShellServiceAccount).SelectMany(x => x.Invitations).ToList());
                 }
             }
         }
@@ -3675,7 +3675,7 @@ namespace gShell.Cmdlets.Classroom.UserProfiles
         {
             if (ShouldProcess("Classroom UserProfiles", "Get-GClassroomUserProfile"))
             {
-                WriteObject(userProfiles.Get(UserId, StandardQueryParams: StandardQueryParams));
+                WriteObject(userProfiles.Get(UserId, StandardQueryParams: StandardQueryParams, ServiceAccount: gShellServiceAccount));
             }
         }
     }
@@ -3731,7 +3731,7 @@ namespace gShell.Cmdlets.Classroom.Courses.CourseWork
             if (ShouldProcess("Classroom CourseWork", "New-GClassroomCourseWork"))
             {
 
-                WriteObject(courses.courseWork.Create(CourseWorkBody, CourseId, StandardQueryParams: StandardQueryParams));
+                WriteObject(courses.courseWork.Create(CourseWorkBody, CourseId, StandardQueryParams: StandardQueryParams, ServiceAccount: gShellServiceAccount));
             }
 
         }
@@ -3841,7 +3841,7 @@ namespace gShell.Cmdlets.Classroom.Courses.CourseWork
                     };
 
 
-                    WriteObject(courses.courseWork.List(CourseId, properties, StandardQueryParams: StandardQueryParams));
+                    WriteObject(courses.courseWork.List(CourseId, properties, StandardQueryParams: StandardQueryParams, ServiceAccount: gShellServiceAccount));
                 }
             }
         }
@@ -3965,7 +3965,7 @@ namespace gShell.Cmdlets.Classroom.Courses.CourseWork.StudentSubmissions
                         PageSize = this.PageSize
                     };
 
-                    WriteObject(courses.courseWork.studentSubmissions.List(CourseId, CourseWorkId, properties, StandardQueryParams: StandardQueryParams));
+                    WriteObject(courses.courseWork.studentSubmissions.List(CourseId, CourseWorkId, properties, StandardQueryParams: StandardQueryParams, ServiceAccount: gShellServiceAccount));
                 }
             }
 
@@ -4041,7 +4041,7 @@ namespace gShell.Cmdlets.Classroom.Courses.CourseWork.StudentSubmissions
                         AddAttachments = this.AddAttachments
                     };
 
-                WriteObject(courses.courseWork.studentSubmissions.ModifyAttachments(ModifyAttachmentsRequestBody, CourseId, CourseWorkId, Id, StandardQueryParams: StandardQueryParams));
+                WriteObject(courses.courseWork.studentSubmissions.ModifyAttachments(ModifyAttachmentsRequestBody, CourseId, CourseWorkId, Id, StandardQueryParams: StandardQueryParams, ServiceAccount: gShellServiceAccount));
             }
 
         }
@@ -4171,17 +4171,17 @@ namespace gShell.Cmdlets.Classroom.Courses.CourseWork.StudentSubmissions
                 if (ParameterSetName == "reclaim")
                 {
                     var body = new Google.Apis.Classroom.v1.Data.ReclaimStudentSubmissionRequest();
-                    WriteObject(courses.courseWork.studentSubmissions.Reclaim(body, CourseId, CourseWorkId, Id, StandardQueryParams: StandardQueryParams));
+                    WriteObject(courses.courseWork.studentSubmissions.Reclaim(body, CourseId, CourseWorkId, Id, StandardQueryParams: StandardQueryParams, ServiceAccount: gShellServiceAccount));
                 }
                 else if (ParameterSetName == "return")
                 {
                     var body = new Google.Apis.Classroom.v1.Data.ReturnStudentSubmissionRequest();
-                    WriteObject(courses.courseWork.studentSubmissions.ClassroomReturn(body, CourseId, CourseWorkId, Id, StandardQueryParams: StandardQueryParams));
+                    WriteObject(courses.courseWork.studentSubmissions.ClassroomReturn(body, CourseId, CourseWorkId, Id, StandardQueryParams: StandardQueryParams, ServiceAccount: gShellServiceAccount));
                 }
                 else if (ParameterSetName == "turnIn")
                 {
                     var body = new Google.Apis.Classroom.v1.Data.TurnInStudentSubmissionRequest();
-                    WriteObject(courses.courseWork.studentSubmissions.TurnIn(body, CourseId, CourseWorkId, Id, StandardQueryParams: StandardQueryParams));
+                    WriteObject(courses.courseWork.studentSubmissions.TurnIn(body, CourseId, CourseWorkId, Id, StandardQueryParams: StandardQueryParams, ServiceAccount: gShellServiceAccount));
                 }
                 else
                 {
@@ -4192,7 +4192,7 @@ namespace gShell.Cmdlets.Classroom.Courses.CourseWork.StudentSubmissions
                     };
 
                     WriteObject(courses.courseWork.studentSubmissions.Patch(StudentSubmissionBody, CourseId,
-                        CourseWorkId, Id, properties, StandardQueryParams: StandardQueryParams));
+                        CourseWorkId, Id, properties, StandardQueryParams: StandardQueryParams, ServiceAccount: gShellServiceAccount));
                 }
             }
 
@@ -4248,7 +4248,7 @@ namespace gShell.Cmdlets.Classroom.UserProfiles.GuardianInvitations
 
             if (ShouldProcess("Classroom GuardianInvitations", "Create-GClassroomGuardianInvitation"))
             {
-                WriteObject(userProfiles.guardianInvitations.Create(GuardianInvitationBody, StudentId, StandardQueryParams: StandardQueryParams));
+                WriteObject(userProfiles.guardianInvitations.Create(GuardianInvitationBody, StudentId, StandardQueryParams: StandardQueryParams, ServiceAccount: gShellServiceAccount));
             }
         }
     }
@@ -4346,7 +4346,7 @@ namespace gShell.Cmdlets.Classroom.UserProfiles.GuardianInvitations
             {
                 if (ParameterSetName == "one")
                 {
-                    WriteObject(userProfiles.guardianInvitations.Get(StudentId, InvitationId, StandardQueryParams: StandardQueryParams));
+                    WriteObject(userProfiles.guardianInvitations.Get(StudentId, InvitationId, StandardQueryParams: StandardQueryParams, ServiceAccount: gShellServiceAccount));
                 }
                 else
                 {
@@ -4357,7 +4357,7 @@ namespace gShell.Cmdlets.Classroom.UserProfiles.GuardianInvitations
                         PageSize = this.PageSize
                     };
 
-                    WriteObject(userProfiles.guardianInvitations.List(StudentId, properties, StandardQueryParams: StandardQueryParams));
+                    WriteObject(userProfiles.guardianInvitations.List(StudentId, properties, StandardQueryParams: StandardQueryParams, ServiceAccount: gShellServiceAccount));
                 }
             }
 
@@ -4436,7 +4436,7 @@ namespace gShell.Cmdlets.Classroom.UserProfiles.GuardianInvitations
                 };
 
 
-                WriteObject(userProfiles.guardianInvitations.Patch(GuardianInvitationBody, StudentId, InvitationId, properties, StandardQueryParams: StandardQueryParams));
+                WriteObject(userProfiles.guardianInvitations.Patch(GuardianInvitationBody, StudentId, InvitationId, properties, StandardQueryParams: StandardQueryParams, ServiceAccount: gShellServiceAccount));
             }
 
         }
@@ -4506,7 +4506,7 @@ namespace gShell.Cmdlets.Classroom.UserProfiles.Guardians
 			        try
 			        {
 
-                        WriteObject(userProfiles.guardians.Delete(StudentId, GuardianId, StandardQueryParams: StandardQueryParams));
+                        WriteObject(userProfiles.guardians.Delete(StudentId, GuardianId, StandardQueryParams: StandardQueryParams, ServiceAccount: gShellServiceAccount));
 			        }
                     catch (Exception e)
                     {
@@ -4597,7 +4597,7 @@ namespace gShell.Cmdlets.Classroom.UserProfiles.Guardians
             {
                 if (ParameterSetName == "one")
                 {
-                    WriteObject(userProfiles.guardians.Get(StudentId, GuardianId, StandardQueryParams: StandardQueryParams));
+                    WriteObject(userProfiles.guardians.Get(StudentId, GuardianId, StandardQueryParams: StandardQueryParams, ServiceAccount: gShellServiceAccount));
                 }
                 else
                 {
