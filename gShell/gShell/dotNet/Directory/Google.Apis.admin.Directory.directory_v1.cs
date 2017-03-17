@@ -1500,7 +1500,7 @@ namespace Google.Apis.admin.Directory.directory_v1.Data
     public class User : Google.Apis.Requests.IDirectResponseSchema
     {
         [Newtonsoft.Json.JsonPropertyAttribute("addresses")]
-        public virtual object Addresses { get; set; } 
+        public virtual Data.UserAddress[] Addresses { get; set; } 
 
         /// <summary>Indicates if user has agreed to terms (Read-only)</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("agreedToTerms")]
@@ -1558,14 +1558,14 @@ namespace Google.Apis.admin.Directory.directory_v1.Data
         }
 
         [Newtonsoft.Json.JsonPropertyAttribute("emails")]
-        public virtual object Emails { get; set; } 
+        public virtual Data.UserEmail[] Emails { get; set; } 
 
         /// <summary>ETag of the resource.</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("etag")]
         public virtual string ETag { get; set; } 
 
         [Newtonsoft.Json.JsonPropertyAttribute("externalIds")]
-        public virtual object ExternalIds { get; set; } 
+        public virtual Data.UserExternalId[] ExternalIds { get; set; } 
 
         /// <summary>Hash function name for password. Supported are MD5, SHA-1 and crypt</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("hashFunction")]
@@ -1576,7 +1576,7 @@ namespace Google.Apis.admin.Directory.directory_v1.Data
         public virtual string Id { get; set; } 
 
         [Newtonsoft.Json.JsonPropertyAttribute("ims")]
-        public virtual object Ims { get; set; } 
+        public virtual Data.UserIm[] Ims { get; set; } 
 
         /// <summary>Boolean indicating if user is included in Global Address List</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("includeInGlobalAddressList")]
@@ -1636,21 +1636,21 @@ namespace Google.Apis.admin.Directory.directory_v1.Data
         public virtual string OrgUnitPath { get; set; } 
 
         [Newtonsoft.Json.JsonPropertyAttribute("organizations")]
-        public virtual object Organizations { get; set; } 
+        public virtual Data.UserOrganization[] Organizations { get; set; } 
 
         /// <summary>User's password</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("password")]
         public virtual string Password { get; set; } 
 
         [Newtonsoft.Json.JsonPropertyAttribute("phones")]
-        public virtual object Phones { get; set; } 
+        public virtual Data.UserPhone[] Phones { get; set; } 
 
         /// <summary>username of User</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("primaryEmail")]
         public virtual string PrimaryEmail { get; set; } 
 
         [Newtonsoft.Json.JsonPropertyAttribute("relations")]
-        public virtual object Relations { get; set; } 
+        public virtual Data.UserRelation[] Relations { get; set; } 
 
         /// <summary>Indicates if user is suspended</summary>
         [Newtonsoft.Json.JsonPropertyAttribute("suspended")]
@@ -1669,7 +1669,7 @@ namespace Google.Apis.admin.Directory.directory_v1.Data
         public virtual string ThumbnailPhotoUrl { get; set; } 
 
         [Newtonsoft.Json.JsonPropertyAttribute("websites")]
-        public virtual object Websites { get; set; } 
+        public virtual Data.UserWebsite[] Websites { get; set; } 
 
     }    
 

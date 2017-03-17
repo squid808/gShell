@@ -966,7 +966,7 @@ namespace gShell.Cmdlets.Directory
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "An Addresses Object")]
-        public object Addresses { get; set; }
+        public Data.UserAddress[] Addresses { get; set; }
 
         /// <summary>
         /// <para type="description">Indicates if user has agreed to terms (Read-only)</para>
@@ -1038,7 +1038,7 @@ namespace gShell.Cmdlets.Directory
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "An Emails object")]
-        public object Emails { get; set; }
+        public Data.UserEmail[] Emails { get; set; }
 
         /// <summary>
         /// An ExternalIds object
@@ -1047,7 +1047,7 @@ namespace gShell.Cmdlets.Directory
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "An ExternalIds object")]
-        public object ExternalIds { get; set; }
+        public Data.UserExternalId[] ExternalIds { get; set; }
 
         /// <summary>
         /// <para type="description">Hash function name for password. Supported are MD5, SHA-1 and crypt</para>
@@ -1074,7 +1074,7 @@ namespace gShell.Cmdlets.Directory
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "An Ims object")]
-        public object Ims { get; set; }
+        public Data.UserIm[] Ims { get; set; }
 
         /// <summary>
         /// <para type="description">Boolean indicating if user is included in Global Address List</para>
@@ -1173,7 +1173,7 @@ namespace gShell.Cmdlets.Directory
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "An Organizations object")]
-        public object Organizations { get; set; }
+        public Data.UserOrganization[] Organizations { get; set; }
 
         /// <summary>
         /// <para type="description">User's password</para>
@@ -1191,7 +1191,7 @@ namespace gShell.Cmdlets.Directory
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage="A Phones object")]
-        public object Phones { get; set; }
+        public Data.UserPhone[] Phones { get; set; }
 
         /// <summary>
         /// <para type="description">username of User</para>
@@ -1209,7 +1209,7 @@ namespace gShell.Cmdlets.Directory
         Mandatory = false,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "A Relations object")]
-        public object Relations { get; set; }
+        public Data.UserRelation[] Relations { get; set; }
 
         /// <summary>
         /// <para type="description">Indicates if user is suspended</para>
@@ -1255,7 +1255,7 @@ namespace gShell.Cmdlets.Directory
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "A Websites object")]
         #endregion
-        public object Websites { get; set; }
+        public Data.UserWebsite[] Websites { get; set; }
 
         protected override void ProcessRecord()
         {
