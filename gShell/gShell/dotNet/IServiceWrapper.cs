@@ -6,12 +6,6 @@ using Google.Apis.Auth.OAuth2;
 
 namespace gShell.dotNet
 {
-    //public interface IServiceWrapper<T> where T : BaseClientService
-    //{
-    //    /// <summary>Initialize and return a new service with the given domain.</summary>
-    //    AuthenticatedUserInfo BuildService(AuthenticatedUserInfo authInfo, string serviceAccountUser = null);
-    //}
-
     public interface IServiceWrapper<T> where T : IClientService
     {
         string apiNameAndVersion { get; }

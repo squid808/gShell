@@ -297,7 +297,7 @@ namespace gShell.Cmdlets.Utilities.ScopeHandler
                         possibleScopes.Count.ToString(), readOnlyScopes.Count.ToString(), 
                         actionOnlyScopes.Count.ToString()), "Green");
 
-                    string readOnlyResultScript = "Read-Host '\nEnter your choice: '";
+                    string readOnlyResultScript = "Read-Host '\nEnter your choice'";
 
                     Collection<PSObject> readOnlyResultResults = 
                         invokablePSInstance.InvokeCommand.InvokeScript(readOnlyResultScript);

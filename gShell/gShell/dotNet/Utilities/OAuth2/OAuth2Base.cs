@@ -12,6 +12,7 @@ using Google.Apis.Services;
 
 using gShell.dotNet.CustomSerializer.Json;
 using gShell.dotNet.CustomSerializer.Xml;
+using Google.Apis.Json;
 using Newtonsoft.Json;
 
 namespace gShell.dotNet.Utilities.OAuth2
@@ -114,6 +115,21 @@ namespace gShell.dotNet.Utilities.OAuth2
             {
                 //Now that we have asyncUserCredential filled out, we can actually save the token if we need to.
                 memoryObjectDataStore.StoreAsync<TokenResponse>(string.Empty, AuthTokenTempSwap).Wait();
+
+                AuthUserInfo.domain = CheckDomain(AuthUserInfo.originalDomain);
+                if (AuthUserInfo.domain != null) AuthUserInfo.userName = CheckUser(AuthUserInfo.domain, AuthUserInfo.userName);
+
+                OAuth2TokenInfo preTokenInfo = infoConsumer.GetTokenInfo(AuthUserInfo.domain, AuthUserInfo.userName, AuthUserInfo.apiNameAndVersion);
+
+                _currentAuthInfo.tokenResponse = preTokenInfo.token;
+                _currentAuthInfo.tokenString = preTokenInfo.tokenString;
+                _currentAuthInfo.scopes = preTokenInfo.scopes; //overwrite any coming in with what is saved
+                
+                ////set this up since it is storing async, and may not be ready in time to load
+                //_currentAuthInfo.tokenResponse = AuthTokenTempSwap;
+                //_currentAuthInfo.tokenString = NewtonsoftJsonSerializer.Instance.Serialize(AuthTokenTempSwap);
+
+                //clear the auth temp swap
                 AuthTokenTempSwap = null;
             }
 
@@ -393,14 +409,15 @@ namespace gShell.dotNet.Utilities.OAuth2
 
             var scopes = authInfo.scopes;
 
-            if (authInfo.apiNameAndVersion.Contains("gmail"))
-            {
-                scopes = new string[] { "https://mail.google.com/" };
-            }
-            else if (authInfo.apiNameAndVersion.Contains("drive"))
-            {
-                scopes = new string[] { "https://www.googleapis.com/auth/drive" };
-            }
+            ////TODO: this has to match exactly what the service account has been authorized for, and nothing more!
+            //if (authInfo.apiNameAndVersion.Contains("gmail"))
+            //{
+            //    scopes = new string[] { "https://mail.google.com/" };
+            //}
+            //else if (authInfo.apiNameAndVersion.Contains("drive"))
+            //{
+            //    scopes = new string[] { "https://www.googleapis.com/auth/drive" };
+            //}
 
             ServiceAccountCredential credential = null;
 

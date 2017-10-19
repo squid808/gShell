@@ -8042,7 +8042,7 @@ namespace gShell.Cmdlets.Directory.GAUserPhoto
 
                 body.PhotoData = Utils.LoadImageToBase64(Path);
 
-                WriteObject(users.photos.Update(body, UserKey, StandardQueryParams: StandardQueryParams));
+                WriteObject(users.photos.Patch(body, UserKey, StandardQueryParams: StandardQueryParams));
             }
         }
     }

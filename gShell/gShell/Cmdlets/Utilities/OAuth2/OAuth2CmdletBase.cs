@@ -250,6 +250,12 @@ namespace gShell.Cmdlets.Utilities.OAuth2
                         apiNameAndVersion.Split(':')[1],
                         forcedScopes);
 
+                    if (!string.IsNullOrWhiteSpace(GAuthId))
+                    {
+                        results.domain = GetDomainFromEmail(GAuthId);
+                        results.originalDomain = results.domain;
+                    }
+
                     return results;
                 }
                 else
