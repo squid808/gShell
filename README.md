@@ -78,7 +78,7 @@ PS C:\> $AllMembers | Export-Csv -Path "C:\AllGroupMemberships.csv" -NoTypeInfor
 
 ----
 PS C:\> (Get-Content "C:\AllGroupMemberships.csv")[0..1]
-#Let's look directly at the CSV file...
+# Let's look directly at the CSV file...
 
 "Group","Email","ETag","Id","Kind","Role","Status","Type"
 "songcharacters@mydomain.com","bobbymcgee@mydomain.com",
