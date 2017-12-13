@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\XmlDoc2CmdletDoc.0.2.5\build\XmlDoc2CmdletDoc.props" Condition="Exists('..\packages\XmlDoc2CmdletDoc.0.2.5\build\XmlDoc2CmdletDoc.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{150FF6C8-7AC1-41A1-AEF4-69151D7D3D19}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>gShell</RootNamespace>
+    <AssemblyName>gShell</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>50ddc854</NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DocumentationFile>bin\Debug\gShell.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.7.4137.9688, Culture=neutral, PublicKeyToken=a4292a325f69b123, processorArchitecture=MSIL">
+      <HintPath>..\packages\BouncyCastle.1.7.0\lib\Net40-Client\BouncyCastle.Crypto.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis, Version=1.10.0.25332, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.10.0\lib\net40\Google.Apis.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.Auth, Version=1.10.0.25333, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.1.10.0\lib\net40\Google.Apis.Auth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.Auth.PlatformServices, Version=1.10.0.25333, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.1.10.0\lib\net40\Google.Apis.Auth.PlatformServices.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.Core, Version=1.10.0.25331, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Core.1.10.0\lib\portable-net40+sl50+win+wpa81+wp80\Google.Apis.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.Discovery.v1, Version=1.10.0.53, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Discovery.v1.1.10.0.530\lib\portable-net40+sl50+win+wpa81+wp80\Google.Apis.Discovery.v1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.Oauth2.v2, Version=1.10.0.100, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Oauth2.v2.1.10.0.1000\lib\portable-net40+sl50+win+wpa81+wp80\Google.Apis.Oauth2.v2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.PlatformServices, Version=1.10.0.25332, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.10.0\lib\net40\Google.Apis.PlatformServices.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.PowerShell.Commands.Utility, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\WindowsPowerShell\3.0\Microsoft.PowerShell.Commands.Utility.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop, Version=1.0.168.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\WindowsPowerShell\3.0\System.Management.Automation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Extensions, Version=2.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives, Version=4.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Primitives.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Zlib.Portable, Version=1.11.0.0, Culture=neutral, PublicKeyToken=431cba815f6a8b5b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Zlib.Portable.Signed.1.11.0\lib\portable-net4+sl5+wp8+win8+wpa81+MonoTouch+MonoAndroid\Zlib.Portable.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Cmdlets\AdminSettings\AdminSettings.cs" />
+    <Compile Include="Cmdlets\Calendar\Calendar.cs" />
+    <Compile Include="Cmdlets\Classroom\Classroom.cs" />
+    <Compile Include="Cmdlets\DataTransfer\DataTransfer.cs" />
+    <Compile Include="Cmdlets\Directory\Directory.cs" />
+    <Compile Include="Cmdlets\Directory\gShellUserObject.cs" />
+    <Compile Include="Cmdlets\Discovery\DiscoveryBase.cs" />
+    <Compile Include="Cmdlets\Drive\Drive.cs" />
+    <Compile Include="Cmdlets\EmailSettings\EmailSettings.cs" />
+    <Compile Include="Cmdlets\Gmail\Gmail.cs" />
+    <Compile Include="Cmdlets\GroupsMigration\GroupsMigration.cs" />
+    <Compile Include="Cmdlets\GroupsSettings\GroupsSettings.cs" />
+    <Compile Include="Cmdlets\Licensing\Licensing.cs" />
+    <Compile Include="Cmdlets\Reports\Reports.cs" />
+    <Compile Include="Cmdlets\Reseller\Reseller.cs" />
+    <Compile Include="Cmdlets\SharedContacts\SharedContacts.cs" />
+    <Compile Include="Cmdlets\Utilities\NewGShellStandardQueryParameters.cs" />
+    <Compile Include="Cmdlets\Utilities\JsonKeyModel.cs" />
+    <Compile Include="Cmdlets\Utilities\OAuth2\AuthenticatedCmdletBase.cs" />
+    <Compile Include="Cmdlets\Utilities\OAuth2\StandardParamsCmdletBase.cs" />
+    <Compile Include="Cmdlets\Utilities\OAuth2\ServiceAccountCmdletBase.cs" />
+    <Compile Include="dotNet\Adminsettings\Google.Apis.admin.Adminsettings.adminsettings_v1.cs" />
+    <Compile Include="dotNet\Adminsettings\Google.Apis.admin.Adminsettings.adminsettings_v1_gshell_dotnet.cs" />
+    <Compile Include="dotNet\Calendar\Google.Apis.Calendar.v3.cs" />
+    <Compile Include="dotNet\Calendar\Google.Apis.Calendar.v3_gshell_dotnet.cs" />
+    <Compile Include="dotNet\Classroom\Google.Apis.Classroom.v1.cs" />
+    <Compile Include="dotNet\Classroom\Google.Apis.Classroom.v1_gshell_dotnet.cs" />
+    <Compile Include="dotNet\DataTransfer\Google.Apis.admin.DataTransfer.datatransfer_v1.cs" />
+    <Compile Include="dotNet\DataTransfer\Google.Apis.admin.DataTransfer.datatransfer_v1_gshell_dotnet.cs" />
+    <Compile Include="dotNet\Directory\Google.Apis.admin.Directory.directory_v1.cs" />
+    <Compile Include="dotNet\Directory\Google.Apis.admin.Directory.directory_v1_gshell_dotnet.cs" />
+    <Compile Include="dotNet\Drive\Google.Apis.Drive.v3.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="dotNet\Drive\Google.Apis.Drive.v3_gshell_dotnet.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="dotNet\Emailsettings\Google.Apis.admin.Emailsettings.emailsettings_v1.cs" />
+    <Compile Include="dotNet\Emailsettings\Google.Apis.admin.Emailsettings.emailsettings_v1_gshell_dotnet.cs" />
+    <Compile Include="dotNet\Discovery\Discovery.cs" />
+    <Compile Include="dotNet\Gmail\Google.Apis.Gmail.v1.cs" />
+    <Compile Include="dotNet\Gmail\Google.Apis.Gmail.v1_gshell_dotnet.cs" />
+    <Compile Include="dotNet\GroupsMigration\Google.Apis.GroupsMigration.v1.cs" />
+    <Compile Include="dotNet\GroupsMigration\Google.Apis.GroupsMigration.v1_gshell_dotnet.cs" />
+    <Compile Include="dotNet\GroupsSettings\Google.Apis.Groupssettings.v1.cs" />
+    <Compile Include="dotNet\GroupsSettings\Google.Apis.Groupssettings.v1_gshell_dotnet.cs" />
+    <Compile Include="dotNet\IServiceWrapper.cs" />
+    <Compile Include="dotNet\Licensing\Google.Apis.Licensing.v1.cs" />
+    <Compile Include="dotNet\Licensing\Google.Apis.Licensing.v1_gshell_dotnet.cs" />
+    <Compile Include="dotNet\Reports\Google.Apis.admin.Reports.reports_v1.cs" />
+    <Compile Include="dotNet\Reports\Google.Apis.admin.Reports.reports_v1_gshell_dotnet.cs" />
+    <Compile Include="dotNet\Reseller\Google.Apis.Reseller.v1.cs" />
+    <Compile Include="dotNet\Reseller\Google.Apis.Reseller.v1_gshell_dotnet.cs" />
+    <Compile Include="dotNet\SharedContacts\Google.Apis.admin.Sharedcontacts.sharedcontacts_v3.cs" />
+    <Compile Include="dotNet\SharedContacts\Google.Apis.admin.Sharedcontacts.sharedcontacts_v3_gshell_dotnet.cs" />
+    <Compile Include="dotNet\Utilities\CustomSerializer\CustomJsonSerializer.cs" />
+    <Compile Include="dotNet\Utilities\CustomSerializer\CustomXmlSerializer.cs" />
+    <Compile Include="dotNet\Utilities\OAuth2\DataStores\DataStoreBase.cs" />
+    <Compile Include="dotNet\Utilities\OAuth2\DataStores\IOAuth2DataStore.cs" />
+    <Compile Include="dotNet\Utilities\OAuth2\OAuth2Base.cs" />
+    <Compile Include="dotNet\ServiceWrapper.cs" />
+    <Compile Include="dotNet\Utilities\MemoryObjectDataStore.cs" />
+    <Compile Include="Cmdlets\Utilities\GshellSavedDomain\GshellDomain.cs" />
+    <Compile Include="Cmdlets\Utilities\OAuth2\OAuth2CmdletBase.cs" />
+    <Compile Include="dotNet\Utilities\OAuth2\OAuth2Info.cs" />
+    <Compile Include="dotNet\Utilities\OAuth2\OAuth2InfoConsumer.cs" />
+    <Compile Include="dotNet\Utilities\OAuth2\DataStores\OAuth2JsonDataStore.cs" />
+    <Compile Include="dotNet\Utilities\OAuth2\DataStores\OAuth2BinDataStore.cs" />
+    <Compile Include="dotNet\Utilities\OAuth2\ServiceAccount.cs" />
+    <Compile Include="dotNet\Utilities\OAuth2\StandardQueryParameters.cs" />
+    <Compile Include="dotNet\Utilities\SavedFile.cs" />
+    <Compile Include="Cmdlets\Utilities\ScopeManager\ScopeManager.cs" />
+    <Compile Include="dotNet\Utilities\Settings\gShellSettings.cs" />
+    <Compile Include="dotNet\Utilities\Utils.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Cmdlets\Utilities\GshellServiceAccount\GshellServiceAccount.cs" />
+    <Compile Include="Cmdlets\Utilities\UtilityBase.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
+    <Error Condition="!Exists('..\packages\XmlDoc2CmdletDoc.0.2.5\build\XmlDoc2CmdletDoc.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\XmlDoc2CmdletDoc.0.2.5\build\XmlDoc2CmdletDoc.props'))" />
+    <Error Condition="!Exists('..\packages\XmlDoc2CmdletDoc.0.2.5\build\XmlDoc2CmdletDoc.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\XmlDoc2CmdletDoc.0.2.5\build\XmlDoc2CmdletDoc.targets'))" />
+  </Target>
+  <Import Project="..\packages\XmlDoc2CmdletDoc.0.2.5\build\XmlDoc2CmdletDoc.targets" Condition="Exists('..\packages\XmlDoc2CmdletDoc.0.2.5\build\XmlDoc2CmdletDoc.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
