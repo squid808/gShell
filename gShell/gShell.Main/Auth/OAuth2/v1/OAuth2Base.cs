@@ -303,6 +303,11 @@ namespace gShell.Main.Auth.OAuth2.v1
 
         #region Accessors
 
+        public static void ReloadInfoConsumer()
+        {
+            _infoConsumer = new OAuth2InfoConsumer();
+        }
+
         /// <summary>Set the Client Id and Secret.</summary>
         public static void SetClientSecrets(string ClientId, string ClientSecret, string Domain = null, string UserEmail = null)
         {

@@ -8,14 +8,10 @@ using Google.Apis.Auth.OAuth2;
 
 namespace gShell.Main.Auth.OAuth2.v1
 {
-    public class ScopeHandlerBase : OAuth2CmdletBase
+    public abstract class ScopeHandlerBase : OAuth2CmdletBase
     {
         #region Properties
-        protected override string apiNameAndVersion { get { return null; } }
 
-        //protected override ScopeInfo[] scopeInfos { get { return _scopeInfos; } }
-
-        //protected virtual ScopeInfo[] scopeInfos { get; set; }
         #endregion
 
         #region PowerShell Methods
@@ -31,53 +27,53 @@ namespace gShell.Main.Auth.OAuth2.v1
 
         #region SubClasses
 
-        /// <summary> A collection of the information representing an API. </summary>
-        public class ApiChoice
-        {
-            public int Choice;
-            /// <summary> The API in Name:Version format, eg. admin:discovery_v1 or calendar:v2 </summary>
-            public string API
-            {
-                get
-                {
-                    return string.Format("{0}:{1}", Name, Version);
-                }
-            }
-            public string Version { get; set; }
-            public string Name { get; set; }
+        ///// <summary> A collection of the information representing an API. </summary>
+        //public class ApiChoice
+        //{
+        //    public int Choice;
+        //    /// <summary> The API in Name:Version format, eg. admin:discovery_v1 or calendar:v2 </summary>
+        //    public string API
+        //    {
+        //        get
+        //        {
+        //            return string.Format("{0}:{1}", Name, Version);
+        //        }
+        //    }
+        //    public string Version { get; set; }
+        //    public string Name { get; set; }
 
-            public ApiChoice(int choice, string version, string name)
-            {
-                Choice = choice;
-                Version = version;
-                Name = name;
-            }
+        //    public ApiChoice(int choice, string version, string name)
+        //    {
+        //        Choice = choice;
+        //        Version = version;
+        //        Name = name;
+        //    }
 
-            public override string ToString()
-            {
-                return string.Format("[{0}]\t{1}", Choice, API);
-            }
-        }
+        //    public override string ToString()
+        //    {
+        //        return string.Format("[{0}]\t{1}", Choice, API);
+        //    }
+        //}
 
-        public class ApiInfo
-        {
-            public string description;
-            public string id;
-            public string name
-            {
-                get
-                {
-                    return id.Split(':')[0];
-                }
-            }
-            public string version
-            {
-                get
-                {
-                    return id.Split(':')[1];
-                }
-            }
-        }
+        //public class ApiInfo
+        //{
+        //    public string description;
+        //    public string id;
+        //    public string name
+        //    {
+        //        get
+        //        {
+        //            return id.Split(':')[0];
+        //        }
+        //    }
+        //    public string version
+        //    {
+        //        get
+        //        {
+        //            return id.Split(':')[1];
+        //        }
+        //    }
+        //}
 
         public class ScopeChoice
         {
@@ -100,28 +96,6 @@ namespace gShell.Main.Auth.OAuth2.v1
             {
                 return string.Format("[{0}] {1}\t{2} - {3}", IsChecked ? CheckMark : " ", Choice, Scope, Description);
             }
-        }
-
-        #endregion
-
-        #region Properties
-
-        ///// <summary>
-        ///// An invokable instance of the PSCmdlet class or a descendent.
-        ///// </summary>
-        ///// <remarks>
-        ///// In some cases where this class isn't called as part of it's own cmdlet, when we have to create it as a
-        ///// separate class to work with another cmdlet, we need to supply that class as the instance to work with.
-        ///// </remarks>
-        //private PSCmdlet invokablePSInstance { get; set; }
-        
-        public ScopeHandlerBase()
-        {
-            invokablePSInstance = this;
-        }
-        public ScopeHandlerBase(PSCmdlet instance)
-        {
-            invokablePSInstance = instance;
         }
 
         #endregion
@@ -178,7 +152,7 @@ namespace gShell.Main.Auth.OAuth2.v1
         /// <summary>
         /// Part of a loop that will return a chosen subset of scopes from an Api's list.
         /// </summary>
-        public HashSet<string> ChooseApiScopesLoop(string api, string version, ScopeInfo[] scopeInfos = null)
+        public static HashSet<string> ChooseApiScopesLoop(PSCmdlet invokableInstance, string api, string version, ScopeInfo[] scopeInfos = null)
         {
             bool? useReadOnlyScopes = null;
             bool isReadOnlyChosen = false;
@@ -194,7 +168,7 @@ namespace gShell.Main.Auth.OAuth2.v1
                 #region ReadOnly Choice
                 while (!isReadOnlyChosen)
                 {
-                    PrintPretty(string.Format("\nWould you like to view all {0} scopes [a], " +
+                    PrintPretty(invokableInstance, string.Format("\nWould you like to view all {0} scopes [a], " +
                                               "the {1} read-only scopes [r] or {2} all other scopes [o]?",
                         possibleScopes.Count.ToString(), readOnlyScopes.Count.ToString(),
                         actionOnlyScopes.Count.ToString()), "Green");
@@ -202,7 +176,7 @@ namespace gShell.Main.Auth.OAuth2.v1
                     string readOnlyResultScript = "Read-Host '\nEnter your choice'";
 
                     Collection<PSObject> readOnlyResultResults =
-                        invokablePSInstance.InvokeCommand.InvokeScript(readOnlyResultScript);
+                        invokableInstance.InvokeCommand.InvokeScript(readOnlyResultScript);
 
                     string readOnlyResultResult = readOnlyResultResults[0].ToString().Substring(0, 1).ToLower();
 
@@ -221,7 +195,7 @@ namespace gShell.Main.Auth.OAuth2.v1
                             isReadOnlyChosen = true;
                             break;
                         default:
-                            PrintPretty("\nInvalid choice, please try again.", "Red");
+                            PrintPretty(invokableInstance, "\nInvalid choice, please try again.", "Red");
                             break;
                     }
                 }
@@ -253,14 +227,14 @@ namespace gShell.Main.Auth.OAuth2.v1
                 //intChoices = new HashSet<int>(); //in case we loop, reset it
 
                 #region Print Choices
-                PrintPretty("\n" + api + ":" + version + " - " + "\n", "Green");
+                PrintPretty(invokableInstance, "\n" + api + ":" + version + " - " + "\n", "Green");
                 if (!hasSelectedOnce)
                 {
-                    PrintPretty("\nPlease select the scope(s) you'd like to grant gShell permission to:\n", "Green");
+                    PrintPretty(invokableInstance, "\nPlease select the scope(s) you'd like to grant gShell permission to:\n", "Green");
                 }
                 else
                 {
-                    PrintPretty("\nPlease confirm the scope(s) you'd like to grant gShell permission to:\n", "Green");
+                    PrintPretty(invokableInstance, "\nPlease confirm the scope(s) you'd like to grant gShell permission to:\n", "Green");
                 }
 
                 if (allPossibleChoices == null)
@@ -281,7 +255,7 @@ namespace gShell.Main.Auth.OAuth2.v1
                 {
                     string color = "Yellow";
                     if (choice.IsChecked) color = "DarkYellow";
-                    PrintPretty(choice.ToString(), color);
+                    PrintPretty(invokableInstance, choice.ToString(), color);
                 }
                 #endregion
 
@@ -296,7 +270,7 @@ namespace gShell.Main.Auth.OAuth2.v1
                     script = "Read-Host '\nToggle your choices separated by commas or hit [enter] to finish and authenticate'";
                 }
 
-                Collection<PSObject> results = invokablePSInstance.InvokeCommand.InvokeScript(script);
+                Collection<PSObject> results = invokableInstance.InvokeCommand.InvokeScript(script);
                 string rList = results[0].ToString().Replace(" ", "");
 
                 List<string> stringChoices = new List<string>(rList.Split(','));
@@ -310,13 +284,13 @@ namespace gShell.Main.Auth.OAuth2.v1
 
                         if (checkedCount > 20)
                         {
-                            WriteWarning(
+                            invokableInstance.WriteWarning(
                                 string.Format(
                                     "You have chosen {0} scopes. Scope counts greater than 20 may cause some scopes to be ignored by Google. To proceed anyways, enter Y. Otherwise, enter N to go back and choose your scopes again.",
                                     checkedCount));
                             var bigScopeScript = "Read-Host";
                             Collection<PSObject> bigScopesResult =
-                                invokablePSInstance.InvokeCommand.InvokeScript(bigScopeScript);
+                                invokableInstance.InvokeCommand.InvokeScript(bigScopeScript);
                             string bigScopesResultOne = bigScopesResult[0].ToString();
 
                             if (!string.IsNullOrWhiteSpace(bigScopesResultOne)
@@ -335,7 +309,7 @@ namespace gShell.Main.Auth.OAuth2.v1
                 }
                 else if (stringChoices.Count == 0 && !hasSelectedOnce)
                 {
-                    PrintPretty("\nPlease choose one or more scopes to authenticate", "Red");
+                    PrintPretty(invokableInstance, "\nPlease choose one or more scopes to authenticate", "Red");
                     properlySelected = false;
                     hasSelectedOnce = false;
                     break;
@@ -385,7 +359,7 @@ namespace gShell.Main.Auth.OAuth2.v1
                         }
                         else
                         {
-                            PrintPretty("\nOne or more selections not within bounds. Please try again.\n", "Red");
+                            PrintPretty(invokableInstance, "\nOne or more selections not within bounds. Please try again.\n", "Red");
                             properlySelected = false;
                             break;
                         }
@@ -401,7 +375,7 @@ namespace gShell.Main.Auth.OAuth2.v1
                 }
                 catch
                 {
-                    PrintPretty("\nInvalid Selection, try again\n", "Red");
+                    PrintPretty(invokableInstance, "\nInvalid Selection, try again\n", "Red");
                     properlySelected = false;
                     hasSelectedOnce = false;
                 }
@@ -418,14 +392,14 @@ namespace gShell.Main.Auth.OAuth2.v1
             return scopesResult;
         }
 
-        public IEnumerable<string> ChooseScopes(string api, string version, HashSet<string> providedScopes = null, ScopeInfo[] scopeInfos = null)
+        public static IEnumerable<string> ChooseScopes(PSCmdlet invokableInstance, string api, string version, HashSet<string> providedScopes = null, ScopeInfo[] scopeInfos = null)
         {
 
             HashSet<string> scopes;
 
             if (providedScopes == null)
             {
-                scopes = ChooseApiScopesLoop(api, version, scopeInfos);
+                scopes = ChooseApiScopesLoop(invokableInstance, api, version, scopeInfos);
             }
             else
             {
@@ -433,25 +407,25 @@ namespace gShell.Main.Auth.OAuth2.v1
             }
 
             scopes = CheckForRequiredScope(scopes);
-            PrintPretty("Scopes have been chosen, thank you.", "green");
+            PrintPretty(invokableInstance, "Scopes have been chosen, thank you.", "green");
             return scopes;
         }
 
-        public AuthenticatedUserInfo ChooseScopesAndAuthenticate(string api, string version, ClientSecrets secrets, ScopeInfo[] scopeInfos = null)
+        public static AuthenticatedUserInfo ChooseScopesAndAuthenticate(PSCmdlet invokableInstance, string api, string version, ClientSecrets secrets, ScopeInfo[] scopeInfos = null)
         {
             var info = new AuthenticatedUserInfo()
             {
                 apiNameAndVersion = api + ":" + version,
-                scopes = ChooseScopes(api, version, scopeInfos: scopeInfos)
+                scopes = ChooseScopes(invokableInstance, api, version, scopeInfos: scopeInfos)
             };
 
             string script = "Read-Host '\nYou will now authenticate for this API. Press any key to continue'";
-            Collection<PSObject> results = invokablePSInstance.InvokeCommand.InvokeScript(script);
+            Collection<PSObject> results = invokableInstance.InvokeCommand.InvokeScript(script);
 
             //Now, authenticate.
             info = OAuth2Base.GetAuthTokenFlow(info, secrets, force: true);
 
-            PrintPretty(string.Format("{0}:{1} has been authenticated and saved.", api, version), "green");
+            PrintPretty(invokableInstance, string.Format("{0}:{1} has been authenticated and saved.", api, version), "green");
 
             return info;
         }
@@ -506,7 +480,7 @@ namespace gShell.Main.Auth.OAuth2.v1
         #region Helper Methods
 
         /// <summary>Ensures the required scopes (email) are in the scopes hash.</summary>
-        public HashSet<string> CheckForRequiredScope(HashSet<string> scopes)
+        public static HashSet<string> CheckForRequiredScope(HashSet<string> scopes)
         {
             if (!scopes.Contains("https://www.googleapis.com/auth/userinfo.email"))
             {

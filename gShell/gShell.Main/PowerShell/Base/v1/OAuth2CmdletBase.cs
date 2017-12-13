@@ -32,21 +32,24 @@ namespace gShell.Main.PowerShell.Base.v1
         /// <summary>A static implementation of GWriteProgress.</summary>
         protected static gWriteProgress GWriteProgress { get; set; }
 
-        protected abstract string apiNameAndVersion { get; }
-
-        //protected abstract ScopeInfo[] scopeInfos { get; }
+        protected abstract IApiInfo ApiInfo { get; }
 
         /// <summary>A copy of the OAuth2Base authUserInfo, able to be overwritten or discarded after each use.</summary>
         protected AuthenticatedUserInfo authUserInfo { get; set; }
 
-        /// <summary>
-        /// An invokable instance of the PSCmdlet class or a descendent.
-        /// </summary>
-        /// <remarks>
-        /// In some cases where this class isn't called as part of it's own cmdlet, when we have to create it as a
-        /// separate class to work with another cmdlet, we need to supply that class as the instance to work with.
-        /// </remarks>
-        protected PSCmdlet invokablePSInstance { get; set; }
+        ///// <summary>
+        ///// An invokable instance of the PSCmdlet class or a descendent.
+        ///// </summary>
+        ///// <remarks>
+        ///// In some cases where this class isn't called as part of it's own cmdlet, when we have to create it as a
+        ///// separate class to work with another cmdlet, we need to supply that class as the instance to work with.
+        ///// </remarks>
+        //protected PSCmdlet invokablePSInstance { get; set; }
+
+        ///// <summary>
+        ///// The scopes for a given API - to be set in child constructors.
+        ///// </summary>
+        //protected IScopesCollection scopesCollection { get; set; }
 
         #endregion
 
@@ -233,7 +236,7 @@ namespace gShell.Main.PowerShell.Base.v1
 
             //if no domain is returned, none was provided or none was found as default.
             if (string.IsNullOrWhiteSpace(domain) || string.IsNullOrWhiteSpace(user) || 
-                !OAuth2Base.infoConsumer.TokenAndScopesExist(domain, user, apiNameAndVersion))
+                !OAuth2Base.infoConsumer.TokenAndScopesExist(domain, user, ApiInfo.ApiNameAndVersion))
             {
                 string domainText = null;
 
@@ -244,19 +247,21 @@ namespace gShell.Main.PowerShell.Base.v1
 
                 WriteWarning(string.Format("The Cmdlet you've just started {0}doesn't"
                     + " seem to have any saved authentication for this API ({1}). In order to continue you'll need to"
-                    + " choose which permissions gShell can use for this API.", domainText, apiNameAndVersion));
+                    + " choose which permissions gShell can use for this API.", domainText, ApiInfo.ApiNameAndVersion));
 
                 string chooseApiNowScript = "Read-Host '\nWould you like to choose your API scopes now? y or n'";
                 Collection<PSObject> chooseApiNowResults = this.InvokeCommand.InvokeScript(chooseApiNowScript);
                 string result = chooseApiNowResults[0].ToString().Substring(0, 1).ToLower();
                 if (result == "y")
                 {
-                    ScopeHandlerBase scopeBase = new ScopeHandlerBase(this);
+                    //ScopeHandlerBase scopeBase = new ScopeHandlerBase(this);
 
-                    results.scopes = scopeBase.ChooseScopes(
-                        apiNameAndVersion.Split(':')[0],
-                        apiNameAndVersion.Split(':')[1],
-                        forcedScopes);
+                    results.scopes = ScopeHandlerBase.ChooseScopes(
+                        this,
+                        ApiInfo.ApiName,
+                        ApiInfo.ApiVersion,
+                        forcedScopes,
+                        ApiInfo.ScopeInfos);
 
                     if (!string.IsNullOrWhiteSpace(GAuthId))
                     {
@@ -273,7 +278,7 @@ namespace gShell.Main.PowerShell.Base.v1
             }
             else
             {
-                results.scopes = OAuth2Base.infoConsumer.GetTokenInfo(domain, user, apiNameAndVersion).scopes;
+                results.scopes = OAuth2Base.infoConsumer.GetTokenInfo(domain, user, ApiInfo.ApiNameAndVersion).scopes;
                 return results;
             }
 
@@ -302,23 +307,18 @@ namespace gShell.Main.PowerShell.Base.v1
         /// <summary>
         /// Prompt the user to enter their client secrets or to enter a file path to existing information.
         /// </summary>
-        public ClientSecrets PromptForClientSecrets()
+        public ClientSecrets PromptForClientSecrets(PSCmdlet invokableInstance)
         {
-            if (invokablePSInstance == null)
-            {
-                invokablePSInstance = this;
-            }
-
-            PrintPretty("Please enter your project's client ID, or the full path to an existing gShell Auth json file:\n", "Green");
+            PrintPretty(invokableInstance, "Please enter your project's client ID, or the full path to an existing gShell Auth json file:\n", "Green");
 
             string firstInput = null;
 
-            firstInput = firstInput.Replace("\"", "");
-
             while (string.IsNullOrWhiteSpace(firstInput))
             {
-                firstInput = ReadUserStringInput(invokablePSInstance, "Client ID or File Path");
+                firstInput = ReadUserStringInput(invokableInstance, "Client ID or File Path");
             }
+
+            firstInput = firstInput.Replace("\"", "");
 
             if (System.IO.Path.IsPathRooted(firstInput))
             {
@@ -339,18 +339,18 @@ namespace gShell.Main.PowerShell.Base.v1
 
                 gShellSettingsLoader.Save(settings);
                 
-                PrintPretty("Your settings have been saved and will now be redirected to the file you provided.", "Green");
+                PrintPretty(invokableInstance, "Your settings have been saved and will now be redirected to the file you provided.", "Green");
             }
             else
             {
                 firstInput = firstInput.Trim();
-                PrintPretty("Please input your project's client secret:","Green");
+                PrintPretty(invokableInstance, "Please input your project's client secret:","Green");
 
                 string clientSecret = null;
 
                 while (string.IsNullOrWhiteSpace(clientSecret))
                 {
-                    clientSecret = ReadUserStringInput(invokablePSInstance, "Client Secret");
+                    clientSecret = ReadUserStringInput(invokableInstance, "Client Secret");
                 }
 
                 clientSecret = clientSecret.Replace("\"", "");
@@ -366,8 +366,11 @@ namespace gShell.Main.PowerShell.Base.v1
 
                 var filePath = OAuth2Base.infoConsumer.GetSettingsFilePath();
 
-                PrintPretty(string.Format("Thank you, your client ID and Secret have been saved to {0}.",filePath), "Green");
+                PrintPretty(invokableInstance, string.Format("Thank you, your client ID and Secret have been saved to {0}.", filePath), "Green");
             }
+
+            //need to reload what we have
+            OAuth2Base.ReloadInfoConsumer();
 
             return CheckForClientSecrets();
         }
@@ -537,20 +540,20 @@ namespace gShell.Main.PowerShell.Base.v1
         /// <summary>
         /// Print to PowerShell using invoke and write-host so as not to return any types via WriteObject
         /// </summary>
-        public void PrintPretty(string message, string color)
+        public static void PrintPretty(PSCmdlet invokableInstance, string message, string color)
         {
             string script = "Write-Host (\"" + message + "\") -ForegroundColor " + color;
-            invokablePSInstance.InvokeCommand.InvokeScript(script);
+            invokableInstance.InvokeCommand.InvokeScript(script);
         }
 
         /// <summary>
         /// Easily parse input from powershell from the user.
         /// </summary>
         /// <remarks>Put in a while loop and continue while results are null.</remarks>
-        public string ReadUserStringInput(PSCmdlet instance, string message)
+        public string ReadUserStringInput(PSCmdlet invokableInstance, string message)
         {
             string script = "Read-Host '\n'" + message;
-            Collection<PSObject> results = invokablePSInstance.InvokeCommand.InvokeScript(script);
+            Collection<PSObject> results = invokableInstance.InvokeCommand.InvokeScript(script);
 
             string inputText = results[0].ToString();
 
@@ -558,7 +561,7 @@ namespace gShell.Main.PowerShell.Base.v1
             {
                 return inputText;
             } else {
-                PrintPretty("\nInvalid Selection, please try again\n", "Red");
+                PrintPretty(invokableInstance, "\nInvalid Selection, please try again\n", "Red");
                 return null;
             }
         }

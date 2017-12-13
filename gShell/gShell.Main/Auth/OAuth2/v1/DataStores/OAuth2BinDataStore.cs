@@ -19,7 +19,25 @@ namespace gShell.Main.Auth.OAuth2.v1.DataStores
         
         private static byte[] s_aditionalEntropy = { 8, 4, 5, 6, 6, 5, 6, 5, 9, 7, 2, 5, 9, 6, 1, 7, 3, 9 };
 
-        public override string fileName { get { return "gShell_OAuth2.bin"; } }
+        public override string fileName
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(_fileName))
+                {
+                    return defaultName;
+                }
+                else
+                {
+                    return _fileName;
+                }
+            }
+            set { _fileName = value; }
+        }
+
+        private string _fileName;
+
+        private const string defaultName = "gShell_OAuth2.bin";
 
         #endregion
 

@@ -47,9 +47,7 @@ namespace gShell.Main.Apis.Services.v1
             }
         }
 
-        public abstract string apiNameAndVersion { get; }
-
-        //public abstract ScopeInfo[] scopeInfos { get; }
+        public abstract IApiInfo ApiInfo { get; }
         #endregion
 
         #region Constructors
@@ -120,7 +118,7 @@ namespace gShell.Main.Apis.Services.v1
                 if (!services.ContainsKey(authInfo))
                 {
                     //this sets the OAuth2Base current domain and default domain, if necessary
-                    T service = CreateNewService(OAuth2Base.GetAppName(apiNameAndVersion), authInfo);
+                    T service = CreateNewService(OAuth2Base.GetAppName(ApiInfo.ApiNameAndVersion), authInfo);
 
                     //current domain should be set at this point 
                     if (authInfo.domain == "gmail.com" && !worksWithGmail)
@@ -142,7 +140,7 @@ namespace gShell.Main.Apis.Services.v1
 
                 if (!serviceAccountServices[authInfo].ContainsKey(serviceAccountUser))
                 {
-                    T service = CreateNewService(OAuth2Base.GetAppName(apiNameAndVersion), authInfo, serviceAccountUser);
+                    T service = CreateNewService(OAuth2Base.GetAppName(ApiInfo.ApiNameAndVersion), authInfo, serviceAccountUser);
 
                     if (authInfo.domain == "gmail.com" && !worksWithGmail)
                     {

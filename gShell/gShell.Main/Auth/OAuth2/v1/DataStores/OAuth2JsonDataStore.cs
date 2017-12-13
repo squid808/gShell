@@ -9,11 +9,29 @@ namespace gShell.Main.Auth.OAuth2.v1.DataStores
     /// <remarks>
     /// This file is saved without encryption.
     /// </remarks>
-    class OAuth2JsonDataStore : DataStoreBase, IOAuth2DataStore
+    class OAuth2JsonDataStore : DataStoreBase
     {
         #region Parameters
 
-        public override string fileName { get { return "gShell_OAuth2.json"; } }
+        public override string fileName
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(_fileName))
+                {
+                    return defaultName;
+                }
+                else
+                {
+                    return _fileName;
+                }
+            }
+            set { _fileName = value; }
+        }
+
+        private string _fileName;
+
+        private const string defaultName = "gShell_OAuth2.json";
 
         #endregion
 

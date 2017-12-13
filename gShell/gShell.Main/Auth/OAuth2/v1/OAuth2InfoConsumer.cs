@@ -55,24 +55,14 @@ namespace gShell.Main.Auth.OAuth2.v1
                 _dataStore = new OAuth2BinDataStore(dataStoreLocation);
             }
 
-            info = dataStore.LoadInfo();
-            if (info == null)
-            {
-                info = new OAuth2Info();
-                dataStore.SaveInfo(info);
-            }
+            LoadInfo();
         }
 
         /// <summary>Create the consumer using a custom DataStore.</summary>
         public OAuth2InfoConsumer(IOAuth2DataStore DataStore)
         {
             _dataStore = DataStore;
-            info = dataStore.LoadInfo();
-            if (info == null)
-            {
-                info = new OAuth2Info();
-                dataStore.SaveInfo(info);
-            }
+            LoadInfo();
         }
 
         #endregion
@@ -82,6 +72,22 @@ namespace gShell.Main.Auth.OAuth2.v1
         public string GetSettingsFilePath()
         {
             return dataStore.destFile;
+        }
+
+        public void ReloadInfo()
+        {
+            _settings = gShellSettingsLoader.Load();
+            LoadInfo();
+        }
+
+        private void LoadInfo()
+        {
+            info = dataStore.LoadInfo();
+            if (info == null)
+            {
+                info = new OAuth2Info();
+                dataStore.SaveInfo(info);
+            }
         }
 
         #endregion

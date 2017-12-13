@@ -9,7 +9,9 @@ namespace gShell.Main.PowerShell.Base.v1
 
         protected override AuthenticatedUserInfo Authenticate(AuthenticatedUserInfo AuthUserInfo, ClientSecrets Secrets) { return null; }
 
-        protected override string apiNameAndVersion { get { return "gShellUtils"; } }
+        protected override IApiInfo ApiInfo { get { return null; } }
+
+        //protected override string apiNameAndVersion { get { return "gShellUtils"; } }
 
         //protected override ScopeInfo[] scopeInfos { get { return null; } }
     }

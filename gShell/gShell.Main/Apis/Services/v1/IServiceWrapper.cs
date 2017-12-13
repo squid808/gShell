@@ -6,9 +6,7 @@ namespace gShell.Main.Apis.Services.v1
 {
     public interface IServiceWrapper<T> where T : IClientService
     {
-        string apiNameAndVersion { get; }
-
-        //ScopeInfo[] scopeInfos { get; }
+        IApiInfo ApiInfo { get; }
 
         /// <summary>
         /// Authenticates the given domain and creates a service for it, if necessary. 

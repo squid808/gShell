@@ -23,7 +23,7 @@ namespace gShell.Main.PowerShell.Base.v1
 
         protected override void BeginProcessing()
         {
-            var secrets = CheckForClientSecrets() ?? PromptForClientSecrets();
+            var secrets = CheckForClientSecrets() ?? PromptForClientSecrets(this);
 
             //TODO: figure out the correct ordering of these requests, and add the service account email to the build service
             authUserInfo = EnsureScopesExist(GAuthId);

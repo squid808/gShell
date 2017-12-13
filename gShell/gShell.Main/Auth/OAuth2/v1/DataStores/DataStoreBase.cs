@@ -4,7 +4,7 @@ namespace gShell.Main.Auth.OAuth2.v1.DataStores
 {
     public abstract class DataStoreBase : IOAuth2DataStore
     {
-        public abstract string fileName { get; }
+        public abstract string fileName { get; set; }
 
         public string destFolder { get; set; }
 
@@ -12,7 +12,17 @@ namespace gShell.Main.Auth.OAuth2.v1.DataStores
 
         public DataStoreBase(string DestinationFolder)
         {
-            destFolder = DestinationFolder;
+            var attr = File.GetAttributes(DestinationFolder);
+
+            if (!attr.HasFlag(FileAttributes.Directory))
+            {
+                destFolder = Path.GetDirectoryName(DestinationFolder);
+                fileName = Path.GetFileName(DestinationFolder);
+            }
+            else
+            {
+                destFolder = DestinationFolder;
+            }
         }
 
         protected void CheckOrCreateDirectory()

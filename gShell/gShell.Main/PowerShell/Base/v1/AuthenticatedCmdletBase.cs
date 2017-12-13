@@ -25,10 +25,10 @@ namespace gShell.Main.PowerShell.Base.v1
         public IServiceWrapper<BaseClientService> serviceWrapper { get; set; }
 
         /// <summary>Returns the api name and version in {name}:{version} format.</summary>
-        protected override string apiNameAndVersion {
-            get
-            { return ServiceWrapperDictionary[serviceWrapperType].apiNameAndVersion; }
-        }
+        //protected override string apiNameAndVersion {
+        //    get
+        //    { return ServiceWrapperDictionary[serviceWrapperType].apiNameAndVersion; }
+        //}
 
         //protected override ScopeInfo[] scopeInfos
         //{
@@ -47,7 +47,7 @@ namespace gShell.Main.PowerShell.Base.v1
         /// and calls this method.</remarks>
         protected override void BeginProcessing()
         {
-            var secrets = CheckForClientSecrets() ?? PromptForClientSecrets();
+            var secrets = CheckForClientSecrets() ?? PromptForClientSecrets(this);
 
             authUserInfo = EnsureScopesExist(GAuthId);
             ServiceWrapperDictionary[serviceWrapperType].BuildService(Authenticate(authUserInfo, secrets));
@@ -63,7 +63,7 @@ namespace gShell.Main.PowerShell.Base.v1
         /// <returns>The AuthenticatedUserInfo for the authenticated user.</returns>
         protected override AuthenticatedUserInfo Authenticate(AuthenticatedUserInfo authUserInfo, ClientSecrets Secrets)
         {
-            authUserInfo.apiNameAndVersion = apiNameAndVersion;
+            authUserInfo.apiNameAndVersion = ApiInfo.ApiNameAndVersion;
 
             return ServiceWrapperDictionary[serviceWrapperType].Authenticate(authUserInfo, Secrets);
         }
