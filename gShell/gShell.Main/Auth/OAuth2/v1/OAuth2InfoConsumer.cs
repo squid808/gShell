@@ -77,6 +77,15 @@ namespace gShell.Main.Auth.OAuth2.v1
 
         #endregion
 
+        #region Accessors
+
+        public string GetSettingsFilePath()
+        {
+            return dataStore.destFile;
+        }
+
+        #endregion
+
         #region Domains
 
         /// <summary>Get a domain.</summary>

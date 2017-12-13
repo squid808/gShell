@@ -23,41 +23,33 @@ namespace gShell.Main.PowerShell.Base.v1
 
         protected override void BeginProcessing()
         {
-            var secrets = CheckForClientSecrets();
-            if (secrets != null)
+            var secrets = CheckForClientSecrets() ?? PromptForClientSecrets();
+
+            //TODO: figure out the correct ordering of these requests, and add the service account email to the build service
+            authUserInfo = EnsureScopesExist(GAuthId);
+            //need the gauthID first anyways to ensure that they have permissions, and to look up the service account
+            ServiceWrapperDictionary[serviceWrapperType].BuildService(Authenticate(authUserInfo, secrets));
+
+            if (!string.IsNullOrWhiteSpace(TargetUserEmail))
             {
-                //TODO: figure out the correct ordering of these requests, and add the service account email to the build service
-                authUserInfo = EnsureScopesExist(GAuthId);
-                //need the gauthID first anyways to ensure that they have permissions, and to look up the service account
-                ServiceWrapperDictionary[serviceWrapperType].BuildService(Authenticate(authUserInfo, secrets));
-
-                if (!string.IsNullOrWhiteSpace(TargetUserEmail))
+                if (!OAuth2Base.infoConsumer.ServiceAccountExists(authUserInfo.domain))
                 {
-                    if (!OAuth2Base.infoConsumer.ServiceAccountExists(authUserInfo.domain))
-                    {
-                        WriteWarning("No service account was found for domain " + authUserInfo.domain +
-                                     ". Please set a service" +
-                                     " account with Set-GShellServiceAccount, or see https://github.com/squid808/gShell/wiki/Service-Accounts" +
-                                     " for more information.");
-                    }
-
-                    gShellServiceAccount = GetFullEmailAddress(TargetUserEmail, authUserInfo.domain);
-                    ServiceWrapperDictionary[serviceWrapperType].BuildService(Authenticate(authUserInfo, secrets),
-                        gShellServiceAccount);
-                }
-                else
-                {
-                    gShellServiceAccount = null;
+                    WriteWarning("No service account was found for domain " + authUserInfo.domain +
+                                    ". Please set a service" +
+                                    " account with Set-GShellServiceAccount, or see https://github.com/squid808/gShell/wiki/Service-Accounts" +
+                                    " for more information.");
                 }
 
-                GWriteProgress = new gWriteProgress(WriteProgress);
+                gShellServiceAccount = GetFullEmailAddress(TargetUserEmail, authUserInfo.domain);
+                ServiceWrapperDictionary[serviceWrapperType].BuildService(Authenticate(authUserInfo, secrets),
+                    gShellServiceAccount);
             }
             else
             {
-                WriteError(new ErrorRecord(null, (new Exception(
-                    "Client Secrets must be set before running cmdlets. Run 'Get-Help "
-                    + "Set-gShellClientSecrets -online' for more information."))));
+                gShellServiceAccount = null;
             }
+
+            GWriteProgress = new gWriteProgress(WriteProgress);
         }
 
         /// <summary>The gShell base implementation of the PowerShell EndProcessing method.</summary>

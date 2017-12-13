@@ -4,7 +4,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Management.Automation;
 using System.Reflection;
+using System.Runtime.ExceptionServices;
 using gShell.Main.Auth.OAuth2.v1;
+using gShell.Main.Settings;
 using gShell.Main.Utilities;
 using Google.Apis.Auth.OAuth2;
 
@@ -297,17 +299,77 @@ namespace gShell.Main.PowerShell.Base.v1
         }
 
         
-
-        public void PromptForClientSecrets()
+        /// <summary>
+        /// Prompt the user to enter their client secrets or to enter a file path to existing information.
+        /// </summary>
+        public ClientSecrets PromptForClientSecrets()
         {
             if (invokablePSInstance == null)
             {
                 invokablePSInstance = this;
             }
 
-            PrintPretty("Please choose an API to explore its scope options:\n", "Green");
+            PrintPretty("Please enter your project's client ID, or the full path to an existing gShell Auth json file:\n", "Green");
 
-            System.IO.Path.IsPathRooted("");
+            string firstInput = null;
+
+            firstInput = firstInput.Replace("\"", "");
+
+            while (string.IsNullOrWhiteSpace(firstInput))
+            {
+                firstInput = ReadUserStringInput(invokablePSInstance, "Client ID or File Path");
+            }
+
+            if (System.IO.Path.IsPathRooted(firstInput))
+            {
+                if (!System.IO.File.Exists(firstInput)) { throw new System.IO.FileNotFoundException(); }
+
+                gShellSettings settings = gShellSettingsLoader.Load();
+
+                //assume that files are json, even if they lack a file extension
+                settings.SerializeType = gShellSettings.SerializeTypes.Json;
+
+                if (System.IO.Path.GetExtension(firstInput) == ".bin")
+                {
+                    settings.SerializeType = gShellSettings.SerializeTypes.Bin;
+                }
+
+                settings.AuthInfoPath = firstInput;
+                OAuth2InfoConsumer.UpdateSettings(settings);
+
+                gShellSettingsLoader.Save(settings);
+                
+                PrintPretty("Your settings have been saved and will now be redirected to the file you provided.", "Green");
+            }
+            else
+            {
+                firstInput = firstInput.Trim();
+                PrintPretty("Please input your project's client secret:","Green");
+
+                string clientSecret = null;
+
+                while (string.IsNullOrWhiteSpace(clientSecret))
+                {
+                    clientSecret = ReadUserStringInput(invokablePSInstance, "Client Secret");
+                }
+
+                clientSecret = clientSecret.Replace("\"", "");
+
+                if (ShouldProcess("ClientSecrets", "Set-GShellClientSecrets"))
+                {
+                    OAuth2Base.infoConsumer.SetDefaultClientSecrets(new ClientSecrets()
+                    {
+                        ClientId = firstInput,
+                        ClientSecret = clientSecret
+                    });
+                }
+
+                var filePath = OAuth2Base.infoConsumer.GetSettingsFilePath();
+
+                PrintPretty(string.Format("Thank you, your client ID and Secret have been saved to {0}.",filePath), "Green");
+            }
+
+            return CheckForClientSecrets();
         }
         #endregion
 

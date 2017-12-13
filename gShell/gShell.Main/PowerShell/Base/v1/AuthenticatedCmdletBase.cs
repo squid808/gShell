@@ -47,20 +47,12 @@ namespace gShell.Main.PowerShell.Base.v1
         /// and calls this method.</remarks>
         protected override void BeginProcessing()
         {
-            var secrets = CheckForClientSecrets();
-            if (secrets != null)
-            {
-                authUserInfo = EnsureScopesExist(GAuthId);
-                ServiceWrapperDictionary[serviceWrapperType].BuildService(Authenticate(authUserInfo, secrets));
+            var secrets = CheckForClientSecrets() ?? PromptForClientSecrets();
 
-                GWriteProgress = new gWriteProgress(WriteProgress);
-            }
-            else
-            {
-                WriteError(new ErrorRecord(new Exception(
-                    "Client Secrets must be set before running cmdlets. Run 'Get-Help "
-                    + "Set-gShellClientSecrets -online' for more information."), "", ErrorCategory.AuthenticationError, null));
-            }
+            authUserInfo = EnsureScopesExist(GAuthId);
+            ServiceWrapperDictionary[serviceWrapperType].BuildService(Authenticate(authUserInfo, secrets));
+
+            GWriteProgress = new gWriteProgress(WriteProgress);
         }
 
         #region Authentication & Processing
