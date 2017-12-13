@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using Newtonsoft.Json;
 
-namespace gShell.dotNet.Utilities.OAuth2.DataStores
+namespace gShell.Main.Auth.OAuth2.v1.DataStores
 {
     /// <summary>
     /// Responsible solely for the saving and loading of the OAuth2 information from a local serialized file.

@@ -1,15 +1,10 @@
 ﻿using System;
 using System.IO;
 using Google.Apis.Json;
-using Newtonsoft.Json;
 using Google.Apis.Services;
+using Newtonsoft.Json;
 
-using System.ServiceModel.Syndication;
-using System.Xml;
-using System.Xml.Linq;
-using System.Xml.Serialization;
-
-namespace gShell.dotNet.CustomSerializer.Json
+namespace gShell.Main.Auth.OAuth2.v1
 {
 
     /// <summary>

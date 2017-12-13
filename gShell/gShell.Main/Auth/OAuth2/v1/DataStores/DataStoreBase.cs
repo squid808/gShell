@@ -1,7 +1,6 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 
-namespace gShell.dotNet.Utilities.OAuth2.DataStores
+namespace gShell.Main.Auth.OAuth2.v1.DataStores
 {
     public abstract class DataStoreBase : IOAuth2DataStore
     {

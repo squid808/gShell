@@ -1,13 +1,11 @@
-﻿using System;
-using System.IO;
-using System.Security.Cryptography;
+﻿using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-
+using System.Security.Cryptography;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Auth.OAuth2.Responses;
 
-namespace gShell.dotNet.Utilities.OAuth2.DataStores
+namespace gShell.Main.Auth.OAuth2.v1.DataStores
 {
     /// <summary>
     /// Responsible solely for the saving and loading of the OAuth2 information from a local serialized file.
@@ -109,58 +107,4 @@ namespace gShell.dotNet.Utilities.OAuth2.DataStores
 
         #endregion
     }
-
-    #region Serialization Surrogates
-
-    public class TokenResponseSurrogate : ISerializationSurrogate
-    {
-        void ISerializationSurrogate.GetObjectData(object obj, SerializationInfo info, StreamingContext context)
-        {
-            TokenResponse token = (TokenResponse)obj;
-
-            info.AddValue("AccessToken", token.AccessToken);
-            info.AddValue("ExpiresInSeconds", token.ExpiresInSeconds);
-            info.AddValue("Issued", token.Issued);
-            info.AddValue("RefreshToken", token.RefreshToken);
-            info.AddValue("Scope", token.Scope);
-            info.AddValue("TokenType", token.TokenType);
-        }
-
-        object ISerializationSurrogate.SetObjectData(object obj, SerializationInfo info, StreamingContext context, ISurrogateSelector selector)
-        {
-            TokenResponse token = (TokenResponse)obj;
-
-            token.AccessToken = info.GetString("AccessToken");
-            token.ExpiresInSeconds = info.GetInt64("ExpiresInSeconds");
-            token.Issued = info.GetDateTime("Issued");
-            token.RefreshToken = info.GetString("RefreshToken");
-            token.Scope = info.GetString("Scope");
-            token.TokenType = info.GetString("TokenType");
-
-            return token;
-        }
-    }
-
-    public class ClientSecretsSurrogate : ISerializationSurrogate
-    {
-        void ISerializationSurrogate.GetObjectData(object obj, SerializationInfo info, StreamingContext context)
-        {
-            ClientSecrets secrets = (ClientSecrets)obj;
-
-            info.AddValue("ClientId", secrets.ClientId);
-            info.AddValue("ClientSecret", secrets.ClientSecret);
-        }
-
-        object ISerializationSurrogate.SetObjectData(object obj, SerializationInfo info, StreamingContext context, ISurrogateSelector selector)
-        {
-            ClientSecrets secrets = (ClientSecrets)obj;
-
-            secrets.ClientId = info.GetString("ClientId");
-            secrets.ClientSecret = info.GetString("ClientSecret");
-
-            return secrets;
-        }
-    }
-
-    #endregion
 }

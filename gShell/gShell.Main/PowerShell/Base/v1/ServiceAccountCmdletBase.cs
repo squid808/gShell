@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Management.Automation;
-using System.Text;
-using System.Threading.Tasks;
-using gShell.dotNet.Utilities.OAuth2;
+using gShell.Main.Auth.OAuth2.v1;
 
-namespace gShell.Cmdlets.Utilities.OAuth2
+namespace gShell.Main.PowerShell.Base.v1
 {
-    public abstract class ServiceAccountCmdletBase : StandardParamsCmdletBase
+    public abstract class ServiceAccountCmdletBase : AuthenticatedCmdletBase
     {
         /// <summary>Gets or sets the email account the gShell Service Account should impersonate.</summary>
         protected static string gShellServiceAccount { get; set; }
@@ -33,7 +29,7 @@ namespace gShell.Cmdlets.Utilities.OAuth2
                 //TODO: figure out the correct ordering of these requests, and add the service account email to the build service
                 authUserInfo = EnsureScopesExist(GAuthId);
                 //need the gauthID first anyways to ensure that they have permissions, and to look up the service account
-                ServiceWrapperDictionary[mainBaseType].BuildService(Authenticate(authUserInfo, secrets));
+                ServiceWrapperDictionary[serviceWrapperType].BuildService(Authenticate(authUserInfo, secrets));
 
                 if (!string.IsNullOrWhiteSpace(TargetUserEmail))
                 {
@@ -46,7 +42,7 @@ namespace gShell.Cmdlets.Utilities.OAuth2
                     }
 
                     gShellServiceAccount = GetFullEmailAddress(TargetUserEmail, authUserInfo.domain);
-                    ServiceWrapperDictionary[mainBaseType].BuildService(Authenticate(authUserInfo, secrets),
+                    ServiceWrapperDictionary[serviceWrapperType].BuildService(Authenticate(authUserInfo, secrets),
                         gShellServiceAccount);
                 }
                 else

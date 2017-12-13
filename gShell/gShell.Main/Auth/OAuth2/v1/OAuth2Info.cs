@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Security.Cryptography.X509Certificates;
-
+using gShell.Main.Utilities;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Auth.OAuth2.Responses;
 
-
-namespace gShell.dotNet.Utilities.OAuth2
+namespace gShell.Main.Auth.OAuth2.v1
 {
     /// <summary> A collection of OAuthDomain objects that can be serialized to disk for secure storage. </summary>
     [Serializable]

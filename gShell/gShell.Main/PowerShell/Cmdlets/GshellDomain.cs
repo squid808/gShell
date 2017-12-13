@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Management.Automation;
-using gShell.dotNet.Utilities;
-using gShell.dotNet.Utilities.OAuth2;
-using gShell.dotNet.Utilities.Settings;
+using gShell.Main.Auth.OAuth2.v1;
+using gShell.Main.PowerShell.Base.v1;
+using gShell.Main.Settings;
+using gShell.Main.Utilities;
 
-namespace gShell.Cmdlets.Utilities.gShellDomain
+namespace gShell.Main.PowerShell.Cmdlets
 {
     /// <summary>
     /// <para type="synopsis">Retrieve one or all domains for which gShell has information saved.</para>

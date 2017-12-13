@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using gShell.Cmdlets.Utilities.OAuth2;
+using gShell.Main.Auth.OAuth2.v1;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
-using gShell.dotNet.Utilities.OAuth2;
 
-namespace gShell.dotNet
+namespace gShell.Main.Apis.Services.v1
 {
     /// <summary>
     /// This class is a base for any classes that wish to wrap a google apps service with the gShell authentication
@@ -49,6 +48,8 @@ namespace gShell.dotNet
         }
 
         public abstract string apiNameAndVersion { get; }
+
+        //public abstract ScopeInfo[] scopeInfos { get; }
         #endregion
 
         #region Constructors

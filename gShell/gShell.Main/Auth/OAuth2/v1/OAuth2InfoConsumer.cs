@@ -1,14 +1,11 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
-
+using gShell.Main.Auth.OAuth2.v1.DataStores;
+using gShell.Main.Settings;
 using Google.Apis.Auth.OAuth2;
-using gShell.dotNet.Utilities.OAuth2.DataStores;
-using gShell.dotNet.Utilities.Settings;
 
-namespace gShell.dotNet.Utilities.OAuth2
+namespace gShell.Main.Auth.OAuth2.v1
 {
     /// <summary>
     /// Maintains a copy of the OAuth2 Info in memory and acts as a mediator for saving and loading information to and 
@@ -366,7 +363,7 @@ namespace gShell.dotNet.Utilities.OAuth2
         {
             if (TokenAndScopesExist(Domain, UserName, Api))
             {
-                return info.domains[Domain].users[UserName].tokenAndScopesByApi[Api];
+                return info.domains[Domain].users[UserName].tokenAndScopesByApi[Api.ToLower()];
             }
             else
             {
@@ -387,7 +384,7 @@ namespace gShell.dotNet.Utilities.OAuth2
                 });
             }
 
-            info.domains[Domain].users[UserName].tokenAndScopesByApi[Api] = new OAuth2TokenInfo(Scopes, TokenString, TokenResponse);
+            info.domains[Domain].users[UserName].tokenAndScopesByApi[Api.ToLower()] = new OAuth2TokenInfo(Scopes, TokenString, TokenResponse);
 
             dataStore.SaveInfo(info);
         }
@@ -397,7 +394,7 @@ namespace gShell.dotNet.Utilities.OAuth2
         {
             if (DomainExists(Domain) && UserExists(Domain, UserName))
             {
-                return (info.domains[Domain].users[UserName].tokenAndScopesByApi.ContainsKey(Api));
+                return (info.domains[Domain].users[UserName].tokenAndScopesByApi.ContainsKey(Api.ToLower()));
             }
             else
             {
@@ -410,7 +407,7 @@ namespace gShell.dotNet.Utilities.OAuth2
         {
             if (TokenAndScopesExist(Domain, UserName, Api))
             {
-                info.domains[Domain].users[UserName].tokenAndScopesByApi.Remove(Api);
+                info.domains[Domain].users[UserName].tokenAndScopesByApi.Remove(Api.ToLower());
             }
 
             dataStore.SaveInfo(info);

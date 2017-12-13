@@ -1,21 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Security.Cryptography.X509Certificates;
-using gShell.Cmdlets.Utilities.OAuth2;
+using System.Threading.Tasks;
+using gShell.Main.Auth.OAuth2.v1.DataStores;
+using gShell.Main.PowerShell.Base.v1;
+using gShell.Main.Utilities;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Auth.OAuth2.Responses;
 using Google.Apis.Oauth2.v2;
 using Google.Apis.Oauth2.v2.Data;
 using Google.Apis.Services;
-
-using gShell.dotNet.CustomSerializer.Json;
-using gShell.dotNet.CustomSerializer.Xml;
-using Google.Apis.Json;
 using Newtonsoft.Json;
 
-namespace gShell.dotNet.Utilities.OAuth2
+namespace gShell.Main.Auth.OAuth2.v1
 {
     /// <summary>
     /// Responsible for acting as a relay between the info consumer and the API calls; handles the authentication for
@@ -84,9 +82,14 @@ namespace gShell.dotNet.Utilities.OAuth2
             //reset the auth info
             _currentAuthInfo = new AuthenticatedUserInfo() { scopes = AuthUserInfo.scopes, apiNameAndVersion = AuthUserInfo.apiNameAndVersion };
 
-            //First, if the domain or user are missing, see if we can fill it in using the defaults
-            AuthUserInfo.domain = CheckDomain(AuthUserInfo.domain);
-            if (AuthUserInfo.domain != null) AuthUserInfo.userName = CheckUser(AuthUserInfo.domain, AuthUserInfo.userName);
+            //if we're forcing the authentication, we don't want to load any defaults
+            if (!force)
+            {
+                //First, if the domain or user are missing, see if we can fill it in using the defaults
+                AuthUserInfo.domain = CheckDomain(AuthUserInfo.domain);
+                if (AuthUserInfo.domain != null)
+                    AuthUserInfo.userName = CheckUser(AuthUserInfo.domain, AuthUserInfo.userName);
+            }
 
             //First, if we are able to load a key based on the domain and user, we do that and add it to the data store.
             // This will make sure that when we authenticate, the Google Flow has something to load.
@@ -151,7 +154,14 @@ namespace gShell.dotNet.Utilities.OAuth2
             {
                 Userinfoplus userInfoPlus = oService.Userinfo.Get().Execute();
                 _currentAuthInfo.userName = Utils.GetUserFromEmail(userInfoPlus.Email);
-                _currentAuthInfo.domain = userInfoPlus.Hd;
+                if (!string.IsNullOrWhiteSpace(userInfoPlus.Hd))
+                {
+                    _currentAuthInfo.domain = userInfoPlus.Hd;
+                }
+                else
+                {
+                    _currentAuthInfo.domain = Utils.GetDomainFromEmail(userInfoPlus.Email);
+                }
             }
         }
 
@@ -165,7 +175,8 @@ namespace gShell.dotNet.Utilities.OAuth2
             if (!string.IsNullOrWhiteSpace(TokenString) && TokenString != currentAuthInfo.tokenString)
             {
                 //Sets the user and domain first, if they don't already exist
-                infoConsumer.SetTokenAndScopes(currentAuthInfo.domain, currentAuthInfo.userName, currentAuthInfo.apiNameAndVersion, TokenString, TokenResponse, currentAuthInfo.scopes.ToList());
+                infoConsumer.SetTokenAndScopes(currentAuthInfo.domain, currentAuthInfo.userName, 
+                    currentAuthInfo.apiNameAndVersion, TokenString, TokenResponse, currentAuthInfo.scopes.ToList());
 
                 if (infoConsumer.GetDefaultDomain() == null)
                 {
@@ -387,22 +398,6 @@ namespace gShell.dotNet.Utilities.OAuth2
             return initializer;
         }
 
-        /// <summary>
-        /// Returns an initializer used to create a new service for GData APIs.
-        /// </summary>
-        public static BaseClientService.Initializer GetGdataInitializer(string AppName, AuthenticatedUserInfo authInfo)
-        {
-            gXmlInitializer initializer = new gXmlInitializer()
-            {
-                HttpClientInitializer = asyncUserCredential,
-                ApplicationName = AppName,
-                //GZipEnabled = false
-            };
-
-            return initializer;
-        }
-
-
         public static BaseClientService.Initializer GetServiceInitializer(string appName, AuthenticatedUserInfo authInfo, string serviceAccountUser)
         {
             var serviceAccount = infoConsumer.GetServiceAccount(authInfo.domain);
@@ -449,48 +444,5 @@ namespace gShell.dotNet.Utilities.OAuth2
             return init;
         }
         #endregion
-    }
-
-    /// <summary>
-    /// Contains all information that results from authenticating a user and gathering a token, and everything
-    /// that might be required to store a token. Does not store the token itself for uses other than comparison.
-    /// </summary>
-    public class AuthenticatedUserInfo
-    {
-        public AuthenticatedUserInfo() { }
-
-        public AuthenticatedUserInfo(string User, string UserDomain, string Api, IEnumerable<string> Scopes)
-        {
-            userName = Utils.GetUserFromEmail(User);
-            domain = Utils.GetDomainFromEmail(UserDomain);
-            apiNameAndVersion = Api;
-            scopes = Scopes;
-        }
-
-        /// <summary>The username against which the authentication should look.</summary>
-        public string userName { get; set; }
-
-        /// <summary>The domain against which the authentication should look.</summary>
-        public string domain { get; set; }
-
-        /// <summary>The original domain provided to authenticate against.</summary>
-        /// <remarks>This could change if primary domains are being used.</remarks>
-        public string originalDomain { get; set; }
-
-        /// <summary>The original username provided to authenticate against.</summary>
-        /// <remarks>This could change if primary domains are being used.</remarks>
-        public string originalUser { get; set; }
-
-        /// <summary>The api name and version in the appropriate api:version format for google.</summary>
-        public string apiNameAndVersion { get; set; }
-
-        /// <summary>The scopes chosen for this particular authentication.</summary>
-        public IEnumerable<string> scopes { get; set; }
-
-        /// <summary>The token string.</summary>
-        public string tokenString { get; set; }
-
-        /// <summary>The token response.</summary>
-        public TokenResponse tokenResponse { get; set; }
     }
 }

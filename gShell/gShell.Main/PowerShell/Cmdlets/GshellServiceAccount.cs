@@ -1,8 +1,7 @@
 ﻿using System.Management.Automation;
+using gShell.Main.Auth.OAuth2.v1;
 
-using gShell.dotNet.Utilities.OAuth2;
-
-namespace gShell.Cmdlets.Utilities.GShellServiceAccount
+namespace gShell.Main.PowerShell.Cmdlets
 {
     /// <summary>
     /// <para type="synopsis">Set a service account for a Google Apps domain.</para>

@@ -1,38 +1,39 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Management.Automation;
-using System.Reflection;
-using gShell.dotNet;
-using gShell.dotNet.Utilities.OAuth2;
+using gShell.Main.Apis.Services.v1;
+using gShell.Main.Auth.OAuth2.v1;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 
-namespace gShell.Cmdlets.Utilities.OAuth2
+namespace gShell.Main.PowerShell.Base.v1
 {
     public abstract class AuthenticatedCmdletBase : OAuth2CmdletBase
     {
         /// <summary>
-        /// A collection of the service wrapper objects (mainBase) necessary to call the Authenticate and BuildService methods.
+        /// A collection of the service wrapper objects (serviceWrapper) necessary to call the Authenticate and BuildService methods.
         /// </summary>
         protected static Dictionary<Type, IServiceWrapper<IClientService>> ServiceWrapperDictionary
             = new Dictionary<Type, IServiceWrapper<IClientService>>();
 
         /// <summary>
-        /// Required to be able to store and retrieve the mainBase from the ServiceWrapperDictionary
+        /// Required to be able to store and retrieve the serviceWrapper from the ServiceWrapperDictionary
         /// </summary>
-        protected abstract Type mainBaseType { get; }
+        protected abstract Type serviceWrapperType { get; }
 
         /// <summary>The gShell dotNet class wrapper base.</summary>
-        public IServiceWrapper<BaseClientService> mainBase { get; set; }
+        public IServiceWrapper<BaseClientService> serviceWrapper { get; set; }
 
         /// <summary>Returns the api name and version in {name}:{version} format.</summary>
         protected override string apiNameAndVersion {
             get
-            {
-                return ServiceWrapperDictionary[mainBaseType].apiNameAndVersion;
-            }
+            { return ServiceWrapperDictionary[serviceWrapperType].apiNameAndVersion; }
         }
+
+        //protected override ScopeInfo[] scopeInfos
+        //{
+        //    get { return ServiceWrapperDictionary[serviceWrapperType].scopeInfos; }
+        //}
 
         /// <summary>
         /// <para type="description">The GAuthId representing the gShell auth credentials this cmdlet should use to run.</para>
@@ -50,7 +51,7 @@ namespace gShell.Cmdlets.Utilities.OAuth2
             if (secrets != null)
             {
                 authUserInfo = EnsureScopesExist(GAuthId);
-                ServiceWrapperDictionary[mainBaseType].BuildService(Authenticate(authUserInfo, secrets));
+                ServiceWrapperDictionary[serviceWrapperType].BuildService(Authenticate(authUserInfo, secrets));
 
                 GWriteProgress = new gWriteProgress(WriteProgress);
             }
@@ -72,7 +73,7 @@ namespace gShell.Cmdlets.Utilities.OAuth2
         {
             authUserInfo.apiNameAndVersion = apiNameAndVersion;
 
-            return ServiceWrapperDictionary[mainBaseType].Authenticate(authUserInfo, Secrets);
+            return ServiceWrapperDictionary[serviceWrapperType].Authenticate(authUserInfo, Secrets);
         }
         #endregion
     }

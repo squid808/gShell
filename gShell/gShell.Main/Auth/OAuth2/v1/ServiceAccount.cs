@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography.X509Certificates;
 
-namespace gShell.dotNet.Utilities.OAuth2
+namespace gShell.Main.Auth.OAuth2.v1
 {
     /// <summary>A container for all necessary information for using a service account.</summary>
     public class ServiceAccount

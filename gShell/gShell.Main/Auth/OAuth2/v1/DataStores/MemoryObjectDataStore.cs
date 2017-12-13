@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-
 using Google.Apis.Auth.OAuth2.Responses;
 using Google.Apis.Json;
 using Google.Apis.Util.Store;
 
-using gShell.dotNet.Utilities.OAuth2;
-
-namespace gShell.dotNet.Utilities
+namespace gShell.Main.Auth.OAuth2.v1.DataStores
 {
     /// <summary>
     /// The data store that is used by the authorization flow from Google. Only called when authorizing.
@@ -109,6 +106,8 @@ namespace gShell.dotNet.Utilities
                     if (OAuth2Base.currentAuthInfo.domain == null || OAuth2Base.currentAuthInfo.userName == null)
                     {
                         OAuth2Base.SetAuthenticatedUserInfo();
+                        OAuth2Base.currentAuthInfo.originalDomain = OAuth2Base.currentAuthInfo.domain;
+                        OAuth2Base.currentAuthInfo.originalUser = OAuth2Base.currentAuthInfo.userName;
                     }
 
                     OAuth2Base.SaveToken(tokenString, tokenResponse);
@@ -120,7 +119,7 @@ namespace gShell.dotNet.Utilities
                 }
             }
 
-            return TaskEx.Delay(0);
+            return Task.Delay(0);
         }
 
         #endregion

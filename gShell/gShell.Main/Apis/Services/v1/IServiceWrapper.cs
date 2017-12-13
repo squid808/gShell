@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
-using gShell.Cmdlets.Utilities.OAuth2;
-using Google.Apis.Services;
-using gShell.dotNet.Utilities.OAuth2;
+﻿using gShell.Main.Auth.OAuth2.v1;
 using Google.Apis.Auth.OAuth2;
+using Google.Apis.Services;
 
-namespace gShell.dotNet
+namespace gShell.Main.Apis.Services.v1
 {
     public interface IServiceWrapper<T> where T : IClientService
     {
         string apiNameAndVersion { get; }
+
+        //ScopeInfo[] scopeInfos { get; }
 
         /// <summary>
         /// Authenticates the given domain and creates a service for it, if necessary. 

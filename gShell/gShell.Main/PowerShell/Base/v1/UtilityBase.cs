@@ -1,10 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Management.Automation;
-using gShell.Cmdlets.Utilities.OAuth2;
+﻿using gShell.Main.Auth.OAuth2.v1;
 using Google.Apis.Auth.OAuth2;
-using gShell.dotNet.Utilities.OAuth2;
 
-namespace gShell.Cmdlets.Utilities
+namespace gShell.Main.PowerShell.Base.v1
 {
     public abstract class UtilityBase : OAuth2CmdletBase
     {
@@ -13,5 +10,7 @@ namespace gShell.Cmdlets.Utilities
         protected override AuthenticatedUserInfo Authenticate(AuthenticatedUserInfo AuthUserInfo, ClientSecrets Secrets) { return null; }
 
         protected override string apiNameAndVersion { get { return "gShellUtils"; } }
+
+        //protected override ScopeInfo[] scopeInfos { get { return null; } }
     }
 }

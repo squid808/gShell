@@ -4,16 +4,11 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Management.Automation;
 using System.Reflection;
-
+using gShell.Main.Auth.OAuth2.v1;
+using gShell.Main.Utilities;
 using Google.Apis.Auth.OAuth2;
-using Google.Apis.Util;
 
-using gShell.Cmdlets.Utilities.ScopeHandler;
-using gShell.dotNet.Utilities.OAuth2;
-using gShell.dotNet.Utilities;
-using Google.Apis.admin.Directory.directory_v1.Data;
-
-namespace gShell.Cmdlets.Utilities.OAuth2
+namespace gShell.Main.PowerShell.Base.v1
 {
     /// <summary>
     /// The base from which all gShell cmdlet type classes must derive containing
@@ -37,8 +32,19 @@ namespace gShell.Cmdlets.Utilities.OAuth2
 
         protected abstract string apiNameAndVersion { get; }
 
+        //protected abstract ScopeInfo[] scopeInfos { get; }
+
         /// <summary>A copy of the OAuth2Base authUserInfo, able to be overwritten or discarded after each use.</summary>
         protected AuthenticatedUserInfo authUserInfo { get; set; }
+
+        /// <summary>
+        /// An invokable instance of the PSCmdlet class or a descendent.
+        /// </summary>
+        /// <remarks>
+        /// In some cases where this class isn't called as part of it's own cmdlet, when we have to create it as a
+        /// separate class to work with another cmdlet, we need to supply that class as the instance to work with.
+        /// </remarks>
+        protected PSCmdlet invokablePSInstance { get; set; }
 
         #endregion
 
@@ -289,6 +295,20 @@ namespace gShell.Cmdlets.Utilities.OAuth2
 
             return null;
         }
+
+        
+
+        public void PromptForClientSecrets()
+        {
+            if (invokablePSInstance == null)
+            {
+                invokablePSInstance = this;
+            }
+
+            PrintPretty("Please choose an API to explore its scope options:\n", "Green");
+
+            System.IO.Path.IsPathRooted("");
+        }
         #endregion
 
         #region ProgressBar Methods
@@ -449,27 +469,38 @@ namespace gShell.Cmdlets.Utilities.OAuth2
             return Utils.GetDomainFromEmail(email);
         }
         #endregion
-    }
 
-    /// <summary>
-    /// Class required to check the expiration of a token. A bit silly if you ask me.
-    /// </summary>
-    public sealed class Clock : IClock 
-    {
-        public DateTime Now
+        #region PS Input
+
+        /// <summary>
+        /// Print to PowerShell using invoke and write-host so as not to return any types via WriteObject
+        /// </summary>
+        public void PrintPretty(string message, string color)
         {
-            get
+            string script = "Write-Host (\"" + message + "\") -ForegroundColor " + color;
+            invokablePSInstance.InvokeCommand.InvokeScript(script);
+        }
+
+        /// <summary>
+        /// Easily parse input from powershell from the user.
+        /// </summary>
+        /// <remarks>Put in a while loop and continue while results are null.</remarks>
+        public string ReadUserStringInput(PSCmdlet instance, string message)
+        {
+            string script = "Read-Host '\n'" + message;
+            Collection<PSObject> results = invokablePSInstance.InvokeCommand.InvokeScript(script);
+
+            string inputText = results[0].ToString();
+
+            if (!string.IsNullOrWhiteSpace(inputText))
             {
-                return DateTime.Now;
+                return inputText;
+            } else {
+                PrintPretty("\nInvalid Selection, please try again\n", "Red");
+                return null;
             }
         }
 
-        public DateTime UtcNow
-        {
-            get
-            {
-                return DateTime.UtcNow;
-            }
-        }
+        #endregion
     }
 }

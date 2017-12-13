@@ -1,8 +1,7 @@
 ﻿using System;
 using System.IO;
-using gShell.dotNet.Utilities.OAuth2;
 
-namespace gShell.dotNet.Utilities
+namespace gShell.Main.Utilities
 {
     public class Utils
     {
