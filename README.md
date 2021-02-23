@@ -1,3 +1,19 @@
+# gShell is out of date - use at your own risk
+Unfortunately, gShell is no longer actively maintained. This means there are some dependencies with known vulnerabilities that need to be resolved. This lack of maintenance is a direct result of a career shift away from a windows environment with a strong focus elsewhere. While I would love to continue contributing, my work life balance does not currently allow for this. 
+
+All hope is not yet lost! I was working on a way to auto generate the code for gShell (windows only, not Core - sorry!) and was about 85% of the way to a working version [here](https://github.com/squid808/gShellApiGenerator). The goal was to automate the entire stream from reading the API docs to generating the codebase to committing it to Nuget. Most of the gShell pieces that you may already know and love were working, but it probably needs some polish.
+
+I wish you the best of luck, and maybe someday I can get back in the game.
+
+Regards,
+
+squid808
+
+
+
+---
+
+
 # Welcome to gShell!
 
 ## PowerShell Cmdlets for G Suite Administration
